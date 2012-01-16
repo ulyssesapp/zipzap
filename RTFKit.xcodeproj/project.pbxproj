@@ -1,0 +1,405 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		50317D3B14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
+		50317D4D14C494C800F23C04 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D4C14C494C800F23C04 /* SenTestingKit.framework */; };
+		50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
+		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
+		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
+		50317D6C14C4951D00F23C04 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
+		50317D6D14C4951D00F23C04 /* RTFKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 50317D6A14C4951C00F23C04 /* RTFKit.m */; };
+		50317D7314C4953800F23C04 /* RTFKitTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D7114C4953800F23C04 /* RTFKitTests.h */; };
+		50317D7914C495EF00F23C04 /* RTFKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50317D7214C4953800F23C04 /* RTFKitTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		50317D4F14C494C800F23C04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50317D2E14C494C800F23C04 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50317D3614C494C800F23C04;
+			remoteInfo = RTFKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		50317D3714C494C800F23C04 /* RTFKit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = RTFKit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		50317D3A14C494C800F23C04 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		50317D3D14C494C800F23C04 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		50317D3E14C494C800F23C04 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		50317D3F14C494C800F23C04 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		50317D4B14C494C800F23C04 /* RTFKitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTFKitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50317D4C14C494C800F23C04 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTFKit-Prefix.pch"; sourceTree = "<group>"; };
+		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
+		50317D6A14C4951C00F23C04 /* RTFKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTFKit.m; sourceTree = "<group>"; };
+		50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RTFKitTests-Info.plist"; sourceTree = "<group>"; };
+		50317D7114C4953800F23C04 /* RTFKitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKitTests.h; sourceTree = "<group>"; };
+		50317D7214C4953800F23C04 /* RTFKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTFKitTests.m; sourceTree = "<group>"; };
+		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		50317D3414C494C800F23C04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50317D3B14C494C800F23C04 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50317D4714C494C800F23C04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50317D4D14C494C800F23C04 /* SenTestingKit.framework in Frameworks */,
+				50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */,
+				50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		50317D2C14C494C800F23C04 = {
+			isa = PBXGroup;
+			children = (
+				50317D6714C4951C00F23C04 /* Source */,
+				50317D6F14C4953800F23C04 /* Tests */,
+				50317D3914C494C800F23C04 /* Frameworks */,
+				50317D3814C494C800F23C04 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		50317D3814C494C800F23C04 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				50317D3714C494C800F23C04 /* RTFKit.dylib */,
+				50317D4B14C494C800F23C04 /* RTFKitTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		50317D3914C494C800F23C04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50317D3A14C494C800F23C04 /* Cocoa.framework */,
+				50317D4C14C494C800F23C04 /* SenTestingKit.framework */,
+				50317D3C14C494C800F23C04 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		50317D3C14C494C800F23C04 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50317D3D14C494C800F23C04 /* AppKit.framework */,
+				50317D3E14C494C800F23C04 /* CoreData.framework */,
+				50317D3F14C494C800F23C04 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		50317D6714C4951C00F23C04 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				50317D6914C4951C00F23C04 /* RTFKit.h */,
+				50317D6A14C4951C00F23C04 /* RTFKit.m */,
+				50317D6E14C4952300F23C04 /* Other */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		50317D6E14C4952300F23C04 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		50317D6F14C4953800F23C04 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				50317D7114C4953800F23C04 /* RTFKitTests.h */,
+				50317D7214C4953800F23C04 /* RTFKitTests.m */,
+				50317D7514C4954000F23C04 /* Other */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		50317D7514C4954000F23C04 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */,
+				50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		50317D3514C494C800F23C04 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */,
+				50317D6C14C4951D00F23C04 /* RTFKit.h in Headers */,
+				50317D7314C4953800F23C04 /* RTFKitTests.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		50317D3614C494C800F23C04 /* RTFKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50317D5D14C494C800F23C04 /* Build configuration list for PBXNativeTarget "RTFKit" */;
+			buildPhases = (
+				50317D3314C494C800F23C04 /* Sources */,
+				50317D3414C494C800F23C04 /* Frameworks */,
+				50317D3514C494C800F23C04 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RTFKit;
+			productName = RTFKit;
+			productReference = 50317D3714C494C800F23C04 /* RTFKit.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		50317D4A14C494C800F23C04 /* RTFKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50317D6014C494C800F23C04 /* Build configuration list for PBXNativeTarget "RTFKitTests" */;
+			buildPhases = (
+				50317D4614C494C800F23C04 /* Sources */,
+				50317D4714C494C800F23C04 /* Frameworks */,
+				50317D4814C494C800F23C04 /* Resources */,
+				50317D4914C494C800F23C04 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50317D5014C494C800F23C04 /* PBXTargetDependency */,
+			);
+			name = RTFKitTests;
+			productName = RTFKitTests;
+			productReference = 50317D4B14C494C800F23C04 /* RTFKitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		50317D2E14C494C800F23C04 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "The Soulmen";
+			};
+			buildConfigurationList = 50317D3114C494C800F23C04 /* Build configuration list for PBXProject "RTFKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 50317D2C14C494C800F23C04;
+			productRefGroup = 50317D3814C494C800F23C04 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				50317D3614C494C800F23C04 /* RTFKit */,
+				50317D4A14C494C800F23C04 /* RTFKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		50317D4814C494C800F23C04 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		50317D4914C494C800F23C04 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		50317D3314C494C800F23C04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50317D6D14C4951D00F23C04 /* RTFKit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50317D4614C494C800F23C04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50317D7914C495EF00F23C04 /* RTFKitTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		50317D5014C494C800F23C04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50317D3614C494C800F23C04 /* RTFKit */;
+			targetProxy = 50317D4F14C494C800F23C04 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		50317D5B14C494C800F23C04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		50317D5C14C494C800F23C04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		50317D5E14C494C800F23C04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/RTFKit-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		50317D5F14C494C800F23C04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Source/RTFKit-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		50317D6114C494C800F23C04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/RTFKitTests-Prefix.pch";
+				INFOPLIST_FILE = "Tests/RTFKitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		50317D6214C494C800F23C04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/RTFKitTests-Prefix.pch";
+				INFOPLIST_FILE = "Tests/RTFKitTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		50317D3114C494C800F23C04 /* Build configuration list for PBXProject "RTFKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50317D5B14C494C800F23C04 /* Debug */,
+				50317D5C14C494C800F23C04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50317D5D14C494C800F23C04 /* Build configuration list for PBXNativeTarget "RTFKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50317D5E14C494C800F23C04 /* Debug */,
+				50317D5F14C494C800F23C04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50317D6014C494C800F23C04 /* Build configuration list for PBXNativeTarget "RTFKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50317D6114C494C800F23C04 /* Debug */,
+				50317D6214C494C800F23C04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 50317D2E14C494C800F23C04 /* Project object */;
+}
