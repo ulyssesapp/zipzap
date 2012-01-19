@@ -15,50 +15,17 @@
 
 - (id)initWithContent:(NSAttributedString *)content;
 
+- (id)getHeaderForPageMask: (RKPageSelectionMask)pageMask;
+- (id)setHeader: (NSAttributedString *)header forPageMask: (RKPageSelectionMask)pageMask;
+
+- (id)getFooterForPageMask: (RKPageSelectionMask)pageMask;
+- (id)setFooter: (NSAttributedString *)header forPageMask: (RKPageSelectionMask)pageMask;
+
+
 /*
  @abstract Content of the section
  */
 @property(nonatomic, strong) NSAttributedString *content;
-
-/*
-  @abstract Header
- */
-@property(nonatomic, strong) NSAttributedString *header;
-
-/*
- @abstract Footer
- */
-@property(nonatomic, strong) NSAttributedString *footer;
-
-/*
- @abstract Header (front page)
- */
-@property(nonatomic, strong) NSAttributedString *headerFrontPage;
-
-/*
- @abstract Footer (front page)
- */
-@property(nonatomic, strong) NSAttributedString *footerFrontPage;
-
-/*
- @abstract Header (left page)
- */
-@property(nonatomic, strong) NSAttributedString *headerLeftPage;
-
-/*
- @abstract Footer (left page)
- */
-@property(nonatomic, strong) NSAttributedString *footerLeftPage;
-
-/*
- @abstract Header (right page)
- */
-@property(nonatomic, strong) NSAttributedString *headerRightPage;
-
-/*
- @abstract Footer (right page)
- */
-@property(nonatomic, strong) NSAttributedString *footerRightPage;
 
 /*
  @abstract Endnote placement
