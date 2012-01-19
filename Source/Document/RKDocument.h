@@ -50,7 +50,7 @@
 */
 @property(nonatomic, strong) NSDictionary *metadata;
 
-#pragma mark -FORMATTING
+#pragma mark - Formatting
 
 /*!
  @abstract Specifies whether hyphenation is enabled in this document.
