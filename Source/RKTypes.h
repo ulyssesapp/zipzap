@@ -9,44 +9,39 @@
 #ifndef RTFKit_RKTypes_h
 #define RTFKit_RKTypes_h
 
-/*
- * @abstract Specifies the placement of footnotes inside a document
- *
+/*!
+ @abstract Specifies the placement of footnotes inside a document
  */
 typedef enum {
     RKFootnotePlacementSamePage = 0,
     RKFootnotePlacementDocumentEnd = 1
 } RKFootnotePlacement;
 
-/*
- * @abstract Specifies the orientation of a page
- *
+/*!
+ @abstract Specifies the orientation of a page
  */
 typedef enum {
     RKPageOrientationPortrait = 0,
     RKPageOrientationLandscape = 1
 } RKPageOrientation;
 
-/*
- * @abstract Specifies the insets of a page
- *
+/*!
+ @abstract Specifies the insets of a page
  */
 typedef struct {
     CGFloat top, left, bottom, right;
 } RKPageInsets;
 
-/*
- * @abstract Specifies the placement of endnotes inside a section
- *
+/*!
+ @abstract Specifies the placement of endnotes inside a section
  */
 typedef enum {
     RKEndnotesPlacementDocumentEnd = 0,
     RKEndnotesPlacementSectionEnd = 1
 } RKEndnotePlacement;
 
-/*
- * @abstract Specifies the style of page numbering inside a section
- *
+/*!
+ @abstract Specifies the style of page numbering inside a section
  */
 typedef enum {
     RKPageNumberingDecimal = 0,
@@ -55,5 +50,16 @@ typedef enum {
     RKPageNumberingAlphabeticLowerCase = 3,
     RKPageNumberingAlphabeticUpperCase = 4
 } RKPageNumberingStyle;
+
+/*!
+ @abstract Possible selections for page headers and footers
+ */
+typedef enum {
+    RKPageMaskLeftPage  = 1<<0,
+    RKPageMaskRightPage = 1<<1,
+    RKPageMaskFirstPage = 1<<2,
+    
+    RKPageMaskAllPages  = 0xFFFF
+}RKPageSelectionMask;
 
 #endif
