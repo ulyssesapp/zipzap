@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKDocument : SenTestCase
+@interface RKDocumentTest : SenTestCase
 
 @end
