@@ -10,6 +10,6 @@
 
 @implementation RKDocument
 
-@synthesize sections, metadata, isHyphenationEnabled, footnotePlacement, pageHeight, pageWidth, pageInsets, pageOrientation;
+@synthesize sections, metadata, hyphenationEnabled, footnotePlacement, pageHeight, pageWidth, pageInsets, pageOrientation;
 
 @end
