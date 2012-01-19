@@ -63,14 +63,9 @@
 @property(nonatomic) RKFootnotePlacement footnotePlacement;
 
 /*!
- @abstract Page height in points
+ @abstract Page size in points
  */
-@property(nonatomic) CGFloat pageHeight;
-
-/*!
- @abstract Page width in points
- */
-@property(nonatomic) CGFloat pageWidth;
+@property(nonatomic) NSSize pageSize;
 
 /*!
  @abstract Page insets in points
