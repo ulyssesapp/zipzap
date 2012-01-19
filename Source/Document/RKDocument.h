@@ -39,30 +39,24 @@ typedef enum {
  */
 @property(nonatomic, strong) NSArray *sections;
 
-/*
- * Document Informations
- *
- */
+#pragma mark -META DATA
 
 /*!
- @abstract Document Information: Title
+ @abstract Document title
  */
 @property(nonatomic, strong) NSString *title;
 
 /*!
- @abstract Document Information: Copyright
+ @abstract Copyright information
  */
 @property(nonatomic, strong) NSString *copyright;
 
 /*!
- @abstract Document Information: Author
+ @abstract Document author
  */
 @property(nonatomic, strong) NSString *author;
 
-/*
- * Document Formatting Options
- *
- */
+#pragma mark -FORMATTING
 
 /*!
  @abstract Specifies whether hyphenation is enabled in this document.
@@ -70,42 +64,42 @@ typedef enum {
 @property(nonatomic) BOOL hyphenationEnabled;
 
 /*!
- @abstract Document Formatting: Footnotes vs. Endnotes
+ @abstract Specifies the placement of footnotes within the document
  */
 @property(nonatomic) RKFootnotePlacement footnotePlacement;
 
 /*!
- @abstract Document Formatting: Page height in points
+ @abstract Page height in points
  */
 @property(nonatomic) CGFloat pageHeight;
 
 /*!
- @abstract Document Formatting: Page width in TWIPS
+ @abstract Page width in points
  */
 @property(nonatomic) CGFloat pageWidth;
 
 /*!
- @abstract Document Formatting: Paper orientation
+ @abstract Page orientation
  */
 @property(nonatomic) NSPrintingOrientation pageOrientation;
 
 /*!
- @abstract Document Formatting: Left page margin
+ @abstract Left page margin in points
  */
 @property(nonatomic) CGFloat marginLeft;
 
 /*!
- @abstract Document Formatting: Right page margin 
+ @abstract Right page margin in points
  */
 @property(nonatomic) CGFloat marginRight;
 
 /*!
- @abstract Document Formatting: Top page margin 
+ @abstract Top page margin in points
  */
 @property(nonatomic) CGFloat marginTop;
 
 /*!
- @abstract Document Formatting: Bottom page margin 
+ @abstract Bottom page margin in points
  */
 @property(nonatomic) CGFloat marginBottom;
 
