@@ -7,7 +7,7 @@
 //
 #import <RKTypes.h>
 
-/*
+/*!
  @abstract Representation of an RTF section
  @discussion An RTF section is an area of the document that has own headlines, footers and custom layouting options.
  */
@@ -22,27 +22,27 @@
 - (id)setFooter: (NSAttributedString *)header forPageMask: (RKPageSelectionMask)pageMask;
 
 
-/*
+/*!
  @abstract Content of the section
  */
 @property(nonatomic, strong) NSAttributedString *content;
 
-/*
+/*!
  @abstract Endnote placement
  */
 @property(nonatomic) RKEndnotePlacement endnotePlacement;
 
-/*
+/*!
  @abstract Multicolumn layout
  */
 @property(nonatomic) NSInteger numbersOfColumns;
 
-/*
+/*!
  @abstract Starting page number
  */
 @property(nonatomic) NSInteger numberOfFirstPage;
 
-/*
+/*!
  @abstract Page number style
  */
 @property(nonatomic) RKPageNumberingStyle pageNumberingStyle;
