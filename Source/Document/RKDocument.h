@@ -24,11 +24,6 @@ typedef enum {
 @interface RKDocument : NSObject
 
 /*!
- @abstract Adds a further text section to the document.
- */
-- (void)addSection: (RKSection*)section;
-
-/*!
  @abstract Exports the document as RTF with embedded pictures
  */
 - (NSData*)exportAsRTF;
@@ -42,7 +37,7 @@ typedef enum {
 /*!
  @abstract The sections a document consists of.
  */
-@property(strong,readonly) NSArray *sections;
+@property(strong) NSArray *sections;
 
 /*
  * Document Informations
