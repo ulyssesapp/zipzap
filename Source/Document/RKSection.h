@@ -6,26 +6,17 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 typedef enum {
-    RKEndNotesAtDocumentEnd = 0,
-    RKEndNotesAtSectionEnd = 1
-}RKEndNotePlacement;
+    RKEndnotesPlacementDocumentEnd = 0,
+    RKEndnotesPlacementSectionEnd = 1
+}RKEndnotePlacement;
 
 typedef enum {
-    RKDecimalPageNumbering = 0,
-    RKLowerCaseRomanPageNumbering = 1,
-    RKUpperCaseRomanPageNumbering = 2,
-    RKLowerCaseAlphabeticPageNumbering = 3,
-    RKUpperCaseAlphabeticPageNumbering = 4
+    RKPageNumberingDecimal = 0,
+    RKPageNumberingRomanLowerCase = 1,
+    RKPageNumberingRomanUpperCase = 2,
+    RKPageNumberingAlphabeticLowerCase = 3,
+    RKPageNumberingAlphabeticUpperCase = 4
 }RKPageNumberingStyle;
-
-typedef enum {
-    RKLeftToRightTopToBottom = 0,
-    RKRightToLeftTopToBottom = 1,
-    RKTopToBottomLeftToRight = 2,
-    RKBottomToTopLeftToRight = 3,
-    RKTopToBottomRightToLeft = 4,
-    RKBottomToTopRightToLeft = 5
-}RKTextOrientation;
 
 /*
  @abstract Representation of an RTF section
@@ -97,9 +88,5 @@ typedef enum {
  */
 @property(readwrite) RKPageNumberingStyle pageNumberingStyle;
 
-/*
- @abstract Text orientation
- */
-@property(readwrite) RKTextOrientation textOrientation;
 
 @end

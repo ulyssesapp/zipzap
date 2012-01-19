@@ -8,14 +8,14 @@
 @class RKSection;
 
 typedef enum {
-    RKFootNotes = 0,
-    RKEndNotes = 1
-}RKFootNotePlacement;
+    RKFootnotePlacementSamePage = 0,
+    RKFootnotePlacementDocumentEnd = 1
+}RKFootnotePlacement;
 
 typedef enum {
-    RKPortrait = 0,
-    RKLandscape = 1,
-}RKDocumentOrientation;
+    RKPageOrientationPortrait = 0,
+    RKPageOrientationLandscape = 1
+}RKPageOrientation;
 
 /*
  @abstract Representation of an RTF document
@@ -77,22 +77,22 @@ typedef enum {
 /*!
  @abstract Document Formatting: Footnotes vs. Endnotes
  */
-@property(readwrite) RKFootNotePlacement footnotePlacement;
+@property(readwrite) RKFootnotePlacement footnotePlacement;
 
 /*!
- @abstract Document Formatting: Paper height in TWIPS
+ @abstract Document Formatting: Page height in points
  */
-@property(readwrite) CGFloat paperHeight;
+@property(readwrite) CGFloat pageHeight;
 
 /*!
- @abstract Document Formatting: Paper width in TWIPS
+ @abstract Document Formatting: Page width in TWIPS
  */
-@property(readwrite) CGFloat paperWidth;
+@property(readwrite) CGFloat pageWidth;
 
 /*!
  @abstract Document Formatting: Paper orientation
  */
-@property(readwrite) RKDocumentOrientation paperOrientation;
+@property(readwrite) NSPrintingOrientation pageOrientation;
 
 /*!
  @abstract Document Formatting: Left page margin
