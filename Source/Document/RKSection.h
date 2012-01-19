@@ -47,5 +47,4 @@
  */
 @property(nonatomic) RKPageNumberingStyle pageNumberingStyle;
 
-
 @end
