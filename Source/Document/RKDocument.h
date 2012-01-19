@@ -31,22 +31,24 @@
  */
 @property(nonatomic, strong) NSArray *sections;
 
-#pragma mark -META DATA
-
 /*!
- @abstract Document title
- */
-@property(nonatomic, strong) NSString *title;
+ @abstract Document meta data
+ @discussion A dictionary of document meta data. It is allowed to place arbitrary meta properties here. The RTF definition provides the following meta data:
 
-/*!
- @abstract Copyright information
- */
-@property(nonatomic, strong) NSString *copyright;
-
-/*!
- @abstract Document author
- */
-@property(nonatomic, strong) NSString *author;
+    NSTitleDocumentAttribute
+    NSCompanyDocumentAttribute
+    NSCopyrightDocumentAttribute
+    NSSubjectDocumentAttribute
+    NSAuthorDocumentAttribute
+    NSKeywordsDocumentAttribute
+    NSCommentDocumentAttribute
+    NSEditorDocumentAttribute
+    NSCreationTimeDocumentAttribute
+    NSModificationTimeDocumentAttribute
+    NSManagerDocumentAttribute
+    NSCategoryDocumentAttribute
+*/
+@property(nonatomic, strong) NSDictionary *metadata;
 
 #pragma mark -FORMATTING
 
