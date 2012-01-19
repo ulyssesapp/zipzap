@@ -35,12 +35,12 @@
 /*!
  @abstract Multicolumn layout
  */
-@property(nonatomic) NSInteger numbersOfColumns;
+@property(nonatomic) NSUInteger numbersOfColumns;
 
 /*!
  @abstract Starting page number
  */
-@property(nonatomic) NSInteger numberOfFirstPage;
+@property(nonatomic) NSUInteger numberOfFirstPage;
 
 /*!
  @abstract Page number style
