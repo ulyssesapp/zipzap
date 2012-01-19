@@ -10,8 +10,6 @@
 
 @implementation RKDocument
 
-@synthesize sections;
-@synthesize title, author, copyright;
-@synthesize hyphenation, footnotePlacement, paperHeight, paperWidth, paperOrientation, marginLeft, marginRight, marginTop, marginBottom;
+@synthesize sections, title, author, copyright, isHyphenationEnabled, footnotePlacement, pageHeight, pageWidth, pageInsets, pageOrientation;
 
 @end
