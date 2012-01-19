@@ -18,6 +18,14 @@ typedef enum {
 }RKPageOrientation;
 
 /*
+ * @abstract Specifies the insets of a page
+ *
+ */
+typedef struct {
+    CGFloat top, left, bottom, right;
+} RKPageInsets;
+
+/*
  @abstract Representation of an RTF document
  @discussion An RTF document is composed of multiple sections and provides settings for document formatting and meta data.
  */
@@ -79,28 +87,15 @@ typedef enum {
 @property(nonatomic) CGFloat pageWidth;
 
 /*!
+ @abstract Page insets in points
+ */
+@property(nonatomic) RKPageInsets pageInsets;
+
+/*!
  @abstract Page orientation
  */
 @property(nonatomic) RKPageOrientation pageOrientation;
 
-/*!
- @abstract Left page margin in points
- */
-@property(nonatomic) CGFloat marginLeft;
 
-/*!
- @abstract Right page margin in points
- */
-@property(nonatomic) CGFloat marginRight;
-
-/*!
- @abstract Top page margin in points
- */
-@property(nonatomic) CGFloat marginTop;
-
-/*!
- @abstract Bottom page margin in points
- */
-@property(nonatomic) CGFloat marginBottom;
 
 @end
