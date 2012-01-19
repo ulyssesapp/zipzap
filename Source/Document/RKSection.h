@@ -15,6 +15,9 @@
 
 - (id)initWithContent:(NSAttributedString *)content;
 
+/*
+ @abstract Content of the section
+ */
 @property(nonatomic, strong) NSAttributedString *content;
 
 /*
@@ -60,12 +63,12 @@
 /*
  @abstract Endnote placement
  */
-@property(nonatomic) RKEndnotePlacement endnote;
+@property(nonatomic) RKEndnotePlacement endnotePlacement;
 
 /*
  @abstract Multicolumn layout
  */
-@property(nonatomic) NSInteger columnCount;
+@property(nonatomic) NSInteger numbersOfColumns;
 
 /*
  @abstract Starting page number
