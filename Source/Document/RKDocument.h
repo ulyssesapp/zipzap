@@ -81,7 +81,7 @@ typedef enum {
 /*!
  @abstract Page orientation
  */
-@property(nonatomic) NSPrintingOrientation pageOrientation;
+@property(nonatomic) RKPageOrientation pageOrientation;
 
 /*!
  @abstract Left page margin in points
