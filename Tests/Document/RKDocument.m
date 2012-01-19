@@ -8,7 +8,7 @@
 
 #import "RKDocument.h"
 
-@implementation RKDocument
+@implementation RKDocumentTest
 
 // All code under test must be linked into the Unit Test bundle
 - (void)testMath
