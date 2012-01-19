@@ -20,6 +20,10 @@ typedef enum {
     RKLandscape = 1,
 }RKDocumentOrientation;
 
+/*
+ @abstract Representation of an RTF document
+ @discussion An RTF document is composed of multiple sections and provides settings for document formatting and meta data.
+ */
 @interface RKDocument : NSObject
 
 /*!
