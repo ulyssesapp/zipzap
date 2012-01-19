@@ -47,7 +47,7 @@ typedef enum {
 /*!
  @abstract Document Information: Title
  */
-@property(nonatomic,strong) NSString *title;
+@property(nonatomic, strong) NSString *title;
 
 /*!
  @abstract Document Information: Copyright
@@ -65,9 +65,9 @@ typedef enum {
  */
 
 /*!
- @abstract Document Formatting: Hyphenation setting
+ @abstract Specifies whether hyphenation is enabled in this document.
  */
-@property(nonatomic, getter=usesHyphenation) BOOL hyphenation;
+@property(nonatomic) BOOL hyphenationEnabled;
 
 /*!
  @abstract Document Formatting: Footnotes vs. Endnotes
