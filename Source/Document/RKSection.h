@@ -101,34 +101,4 @@ typedef enum {
  */
 @property(readwrite) RKTextOrientation textOrientation;
 
-/*!
- @abstract Section Formatting: Paper height in TWIPS
- */
-@property(readwrite) CGFloat paperHeight;
-
-/*!
- @abstract Section Formatting: Paper width in TWIPS
- */
-@property(readwrite) CGFloat paperWidth;
-
-/*!
- @abstract Section Formatting: Left page margin
- */
-@property(readwrite) CGFloat marginLeft;
-
-/*!
- @abstract Section Formatting: Right page margin 
- */
-@property(readwrite) CGFloat marginRight;
-
-/*!
- @abstract Section Formatting: Top page margin 
- */
-@property(readwrite) CGFloat marginTop;
-
-/*!
- @abstract Section Formatting: Bottom page margin 
- */
-@property(readwrite) CGFloat marginBottom;
-
 @end
