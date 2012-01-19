@@ -5,18 +5,7 @@
 //  Created by Friedrich Gräter on 19.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
-typedef enum {
-    RKEndnotesPlacementDocumentEnd = 0,
-    RKEndnotesPlacementSectionEnd = 1
-}RKEndnotePlacement;
-
-typedef enum {
-    RKPageNumberingDecimal = 0,
-    RKPageNumberingRomanLowerCase = 1,
-    RKPageNumberingRomanUpperCase = 2,
-    RKPageNumberingAlphabeticLowerCase = 3,
-    RKPageNumberingAlphabeticUpperCase = 4
-}RKPageNumberingStyle;
+#import <RKTypes.h>
 
 /*
  @abstract Representation of an RTF section

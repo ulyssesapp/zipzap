@@ -5,25 +5,9 @@
 //  Created by Friedrich Gräter on 19.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
+#import <RKTypes.h>
+
 @class RKSection;
-
-typedef enum {
-    RKFootnotePlacementSamePage = 0,
-    RKFootnotePlacementDocumentEnd = 1
-}RKFootnotePlacement;
-
-typedef enum {
-    RKPageOrientationPortrait = 0,
-    RKPageOrientationLandscape = 1
-}RKPageOrientation;
-
-/*
- * @abstract Specifies the insets of a page
- *
- */
-typedef struct {
-    CGFloat top, left, bottom, right;
-} RKPageInsets;
 
 /*
  @abstract Representation of an RTF document
