@@ -28,11 +28,6 @@
 @property(nonatomic, strong) NSAttributedString *content;
 
 /*!
- @abstract Endnote placement
- */
-@property(nonatomic) RKEndnotePlacement endnotePlacement;
-
-/*!
  @abstract Multicolumn layout
  */
 @property(nonatomic) NSUInteger numbersOfColumns;

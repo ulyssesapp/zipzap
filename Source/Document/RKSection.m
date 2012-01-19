@@ -10,6 +10,6 @@
 
 @implementation RKSection
 
-@synthesize content, endnotePlacement, numbersOfColumns, numberOfFirstPage, pageNumberingStyle;
+@synthesize content, numbersOfColumns, numberOfFirstPage, pageNumberingStyle;
 
 @end

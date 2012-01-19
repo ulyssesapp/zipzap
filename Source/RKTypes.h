@@ -33,14 +33,6 @@ typedef struct {
 } RKPageInsets;
 
 /*!
- @abstract Specifies the placement of endnotes inside a section
- */
-typedef enum {
-    RKEndnotesPlacementDocumentEnd  = 0,
-    RKEndnotesPlacementSectionEnd   = 1
-} RKEndnotePlacement;
-
-/*!
  @abstract Specifies the style of page numbering inside a section
  */
 typedef enum {
