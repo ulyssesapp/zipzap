@@ -53,7 +53,7 @@
 /*!
  @abstract Specifies whether hyphenation is enabled in this document.
  */
-@property(nonatomic) BOOL hyphenationEnabled;
+@property(nonatomic) BOOL isHyphenationEnabled;
 
 /*!
  @abstract Specifies the placement of footnotes within the document
