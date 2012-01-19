@@ -18,13 +18,13 @@
 /*!
  @abstract Exports the document as RTF with embedded pictures
  */
-- (NSData*)exportAsRTF;
+- (NSData *)exportAsRTF;
 
 /*!
  @abstract Exports the document as RTFD 
  @discussion Creates a file wrapper containing the RTF and all referenced pictures
  */
-- (NSFileWrapper*)exportAsRTFD;
+- (NSFileWrapper *)exportAsRTFD;
 
 /*!
  @abstract The sections a document consists of.

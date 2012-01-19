@@ -13,7 +13,7 @@
  */
 @interface RKSection : NSObject
 
-- (id)initWithContent:(NSAttributedString*)content;
+- (id)initWithContent:(NSAttributedString *)content;
 
 @property(nonatomic, strong) NSAttributedString *content;
 
@@ -60,7 +60,7 @@
 /*
  @abstract Endnote placement
  */
-@property(nonatomic) RKEndnotePlacement endnotes;
+@property(nonatomic) RKEndnotePlacement endnote;
 
 /*
  @abstract Multicolumn layout

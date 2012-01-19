@@ -16,7 +16,7 @@
 typedef enum {
     RKFootnotePlacementSamePage = 0,
     RKFootnotePlacementDocumentEnd = 1
-}RKFootnotePlacement;
+} RKFootnotePlacement;
 
 /*
  * @abstract Specifies the orientation of a page
@@ -25,7 +25,7 @@ typedef enum {
 typedef enum {
     RKPageOrientationPortrait = 0,
     RKPageOrientationLandscape = 1
-}RKPageOrientation;
+} RKPageOrientation;
 
 /*
  * @abstract Specifies the insets of a page
@@ -42,7 +42,7 @@ typedef struct {
 typedef enum {
     RKEndnotesPlacementDocumentEnd = 0,
     RKEndnotesPlacementSectionEnd = 1
-}RKEndnotePlacement;
+} RKEndnotePlacement;
 
 /*
  * @abstract Specifies the style of page numbering inside a section
@@ -54,6 +54,6 @@ typedef enum {
     RKPageNumberingRomanUpperCase = 2,
     RKPageNumberingAlphabeticLowerCase = 3,
     RKPageNumberingAlphabeticUpperCase = 4
-}RKPageNumberingStyle;
+} RKPageNumberingStyle;
 
 #endif
