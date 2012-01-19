@@ -73,7 +73,7 @@
 /*
  @abstract Starting page number
  */
-@property(nonatomic) NSInteger startingPageNumber;
+@property(nonatomic) NSInteger numberOfFirstPage;
 
 /*
  @abstract Page number style
