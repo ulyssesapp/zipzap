@@ -15,11 +15,11 @@
 
 - (id)initWithContent:(NSAttributedString *)content;
 
-- (id)getHeaderForPageMask: (RKPageSelectionMask)pageMask;
-- (id)setHeader: (NSAttributedString *)header forPageMask: (RKPageSelectionMask)pageMask;
+- (NSAttributedString *)headerForPage: (RKPageSelectionMask)pageMask;
+- (void)setHeader: (NSAttributedString *)header forPages: (RKPageSelectionMask)pageMask;
 
-- (id)getFooterForPageMask: (RKPageSelectionMask)pageMask;
-- (id)setFooter: (NSAttributedString *)header forPageMask: (RKPageSelectionMask)pageMask;
+- (NSAttributedString *)footerForPage: (RKPageSelectionMask)pageMask;
+- (void)setFooter: (NSAttributedString *)header forPages: (RKPageSelectionMask)pageMask;
 
 
 /*!
