@@ -37,7 +37,7 @@ typedef enum {
 /*!
  @abstract The sections a document consists of.
  */
-@property(strong) NSArray *sections;
+@property(nonatomic, strong) NSArray *sections;
 
 /*
  * Document Informations
@@ -47,17 +47,17 @@ typedef enum {
 /*!
  @abstract Document Information: Title
  */
-@property(strong,readwrite) NSString *title;
+@property(nonatomic,strong) NSString *title;
 
 /*!
  @abstract Document Information: Copyright
  */
-@property(strong,readwrite) NSString *copyright;
+@property(nonatomic, strong) NSString *copyright;
 
 /*!
  @abstract Document Information: Author
  */
-@property(strong,readwrite) NSString *author;
+@property(nonatomic, strong) NSString *author;
 
 /*
  * Document Formatting Options
@@ -67,46 +67,46 @@ typedef enum {
 /*!
  @abstract Document Formatting: Hyphenation setting
  */
-@property(readwrite, getter=usesHyphenation) BOOL hyphenation;
+@property(nonatomic, getter=usesHyphenation) BOOL hyphenation;
 
 /*!
  @abstract Document Formatting: Footnotes vs. Endnotes
  */
-@property(readwrite) RKFootnotePlacement footnotePlacement;
+@property(nonatomic) RKFootnotePlacement footnotePlacement;
 
 /*!
  @abstract Document Formatting: Page height in points
  */
-@property(readwrite) CGFloat pageHeight;
+@property(nonatomic) CGFloat pageHeight;
 
 /*!
  @abstract Document Formatting: Page width in TWIPS
  */
-@property(readwrite) CGFloat pageWidth;
+@property(nonatomic) CGFloat pageWidth;
 
 /*!
  @abstract Document Formatting: Paper orientation
  */
-@property(readwrite) NSPrintingOrientation pageOrientation;
+@property(nonatomic) NSPrintingOrientation pageOrientation;
 
 /*!
  @abstract Document Formatting: Left page margin
  */
-@property(readwrite) CGFloat marginLeft;
+@property(nonatomic) CGFloat marginLeft;
 
 /*!
  @abstract Document Formatting: Right page margin 
  */
-@property(readwrite) CGFloat marginRight;
+@property(nonatomic) CGFloat marginRight;
 
 /*!
  @abstract Document Formatting: Top page margin 
  */
-@property(readwrite) CGFloat marginTop;
+@property(nonatomic) CGFloat marginTop;
 
 /*!
  @abstract Document Formatting: Bottom page margin 
  */
-@property(readwrite) CGFloat marginBottom;
+@property(nonatomic) CGFloat marginBottom;
 
 @end

@@ -26,67 +26,67 @@ typedef enum {
 
 - (id)initWithContent:(NSAttributedString*)content;
 
-@property(strong,readwrite) NSAttributedString *content;
+@property(nonatomic, strong) NSAttributedString *content;
 
 /*
   @abstract Header
  */
-@property(strong,readwrite) NSAttributedString *header;
+@property(nonatomic, strong) NSAttributedString *header;
 
 /*
  @abstract Footer
  */
-@property(strong,readwrite) NSAttributedString *footer;
+@property(nonatomic, strong) NSAttributedString *footer;
 
 /*
  @abstract Header (front page)
  */
-@property(strong,readwrite) NSAttributedString *headerFrontPage;
+@property(nonatomic, strong) NSAttributedString *headerFrontPage;
 
 /*
  @abstract Footer (front page)
  */
-@property(strong,readwrite) NSAttributedString *footerFrontPage;
+@property(nonatomic, strong) NSAttributedString *footerFrontPage;
 
 /*
  @abstract Header (left page)
  */
-@property(strong,readwrite) NSAttributedString *headerLeftPage;
+@property(nonatomic, strong) NSAttributedString *headerLeftPage;
 
 /*
  @abstract Footer (left page)
  */
-@property(strong,readwrite) NSAttributedString *footerLeftPage;
+@property(nonatomic, strong) NSAttributedString *footerLeftPage;
 
 /*
  @abstract Header (right page)
  */
-@property(strong,readwrite) NSAttributedString *headerRightPage;
+@property(nonatomic, strong) NSAttributedString *headerRightPage;
 
 /*
  @abstract Footer (right page)
  */
-@property(strong,readwrite) NSAttributedString *footerRightPage;
+@property(nonatomic, strong) NSAttributedString *footerRightPage;
 
 /*
  @abstract Endnote placement
  */
-@property(readwrite) RKEndNotePlacement endnotes;
+@property(nonatomic) RKEndnotePlacement endnotes;
 
 /*
  @abstract Multicolumn layout
  */
-@property(readwrite) NSInteger columnCount;
+@property(nonatomic) NSInteger columnCount;
 
 /*
  @abstract Starting page number
  */
-@property(readwrite) NSInteger startingPageNumber;
+@property(nonatomic) NSInteger startingPageNumber;
 
 /*
  @abstract Page number style
  */
-@property(readwrite) RKPageNumberingStyle pageNumberingStyle;
+@property(nonatomic) RKPageNumberingStyle pageNumberingStyle;
 
 
 @end
