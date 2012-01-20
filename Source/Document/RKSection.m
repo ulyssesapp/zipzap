@@ -59,4 +59,33 @@ typedef enum {
     return self;
 }
 
+- (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask
+{
+    if ((pageMask == RKPageMaskFirstPage) || (pageMask == RKPageMaskAllPages))
+        return headers[RKFirstPage];
+    
+    if (pageMask == RKPageMaskLeftPage)
+        return headers[RKLeftPage];
+    
+    if (pageMask == RKPageMaskRightPage)
+        return headers[RKRightPage];
+    
+    return nil;
+}
+
+- (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
+{
+    sameHeaderForAllPages = (pageMask == RKPageMaskAllPages);
+    
+    if (pageMask & RKPageMaskFirstPage)
+        headers[RKFirstPage] = header;
+
+    if (pageMask & RKPageMaskLeftPage)
+        headers[RKLeftPage] = header;
+
+    if (pageMask & RKPageMaskRightPage)
+        headers[RKRightPage] = header;
+}
+
+
 @end

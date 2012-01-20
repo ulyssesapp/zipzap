@@ -38,4 +38,63 @@
     STAssertEquals(section.sameFooterForAllPages, YES, @"Headers for first / left / right page are not identical by default");
 }
 
+- (void)testHeaderForAllPages
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
+
+    [section setHeader:someHeader forPages:RKPageMaskAllPages];
+    
+    STAssertEquals(section.sameHeaderForAllPages, YES, @"Header not recognized for all pages");
+
+    STAssertEquals([section headerForPage:RKPageMaskFirstPage], someHeader, @"Header not set for first page");
+    STAssertEquals([section headerForPage:RKPageMaskLeftPage], someHeader, @"Header not set for left page");
+    STAssertEquals([section headerForPage:RKPageMaskRightPage], someHeader, @"Header not set for right page");
+}
+
+- (void)testHeaderForFirstPage
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
+    
+    [section setHeader:someHeader forPages:RKPageMaskFirstPage];
+    
+    STAssertEquals(section.sameHeaderForAllPages, NO, @"Header wrongly recognized for all pages");
+    
+    STAssertTrue([section headerForPage:RKPageMaskLeftPage] != someHeader, @"Header wrongly set for left page");
+    STAssertTrue([section headerForPage:RKPageMaskRightPage] != someHeader, @"Header wrongly set for right page");
+    
+    STAssertEquals([section headerForPage:RKPageMaskFirstPage], someHeader, @"Header not set for first page");
+}
+
+- (void)testHeaderForLeftPage
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
+    
+    [section setHeader:someHeader forPages:RKPageMaskLeftPage];
+    
+    STAssertEquals(section.sameHeaderForAllPages, NO, @"Header wrongly recognized for all pages");
+    
+    STAssertTrue([section headerForPage:RKPageMaskFirstPage] != someHeader, @"Header wrongly set for first page");
+    STAssertTrue([section headerForPage:RKPageMaskRightPage] != someHeader, @"Header wrongly set for right page");
+
+    STAssertEquals([section headerForPage:RKPageMaskLeftPage], someHeader, @"Header not set for left page");
+}
+
+- (void)testHeaderForRightPage
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
+    
+    [section setHeader:someHeader forPages:RKPageMaskRightPage];
+    
+    STAssertEquals(section.sameHeaderForAllPages, NO, @"Header wrongly recognized for all pages");
+    
+    STAssertTrue([section headerForPage:RKPageMaskFirstPage] != someHeader, @"Header wrongly set for first page");
+    STAssertTrue([section headerForPage:RKPageMaskLeftPage] != someHeader, @"Header wrongly set for left page");
+    
+    STAssertEquals([section headerForPage:RKPageMaskRightPage], someHeader, @"Header not set for right page");
+}
+
 @end
