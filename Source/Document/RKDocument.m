@@ -24,12 +24,14 @@
 +(RKDocument *)simpleDocumentWithAttributedString:(NSAttributedString *)string
 {
     RKDocument *document = [[RKDocument alloc] initWithAttributedString:string];
-    
+        
     return document;
 }
 
 - (id)initWithSections:(NSArray *)initialSections
 {
+     NSAssert(initialSections != nil, @"Sections used for initialization must not be nil");
+    
     self = [self init];
     
     if (self) {
@@ -41,6 +43,8 @@
 
 - (id)initWithAttributedString: (NSAttributedString *)string
 {
+    NSAssert(string != nil, @"Initialization string must not be nil");
+    
     RKSection *section = [RKSection sectionWithContent: string];
     NSArray *initialSections = [NSArray arrayWithObject:section];
 
