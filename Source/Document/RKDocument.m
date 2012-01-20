@@ -21,6 +21,13 @@
     return document;
 }
 
++(RKDocument *)simpleDocumentWithAttributedString:(NSAttributedString *)string
+{
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:string];
+    
+    return document;
+}
+
 - (id)initWithSections:(NSArray *)initialSections
 {
     self = [self init];
@@ -30,6 +37,14 @@
     }
     
     return self;
+}
+
+- (id)initWithAttributedString: (NSAttributedString *)string
+{
+    RKSection *section = [RKSection sectionWithContent: string];
+    NSArray *initialSections = [NSArray arrayWithObject:section];
+
+    return [self initWithSections:initialSections];
 }
 
 @end
