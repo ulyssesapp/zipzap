@@ -87,5 +87,32 @@ typedef enum {
         headers[RKRightPage] = header;
 }
 
+- (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
+{
+    if (pageMask == RKPageMaskFirstPage)
+        return footers[RKFirstPage];
+    
+    if (pageMask == RKPageMaskLeftPage)
+        return footers[RKLeftPage];
+    
+    if (pageMask == RKPageMaskRightPage)
+        return footers[RKRightPage];
+    
+    return nil;   
+}
+
+- (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
+{
+    sameFooterForAllPages = (pageMask == RKPageMaskAllPages);
+    
+    if ((pageMask == RKPageMaskFirstPage) || (pageMask == RKPageMaskAllPages))
+        footers[RKFirstPage] = footer;
+    
+    if (pageMask & RKPageMaskLeftPage)
+        footers[RKLeftPage] = footer;
+    
+    if (pageMask & RKPageMaskRightPage)
+        footers[RKRightPage] = footer;
+}
 
 @end
