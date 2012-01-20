@@ -13,14 +13,26 @@
  */
 @interface RKSection : NSObject
 
++ (id)sectionWithContent:(NSAttributedString *)content;
+
+- (id)init;
 - (id)initWithContent:(NSAttributedString *)content;
 
-- (NSAttributedString *)headerForPage: (RKPageSelectionMask)pageMask;
-- (void)setHeader: (NSAttributedString *)header forPages: (RKPageSelectionMask)pageMask;
+- (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask;
+- (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask;
 
-- (NSAttributedString *)footerForPage: (RKPageSelectionMask)pageMask;
-- (void)setFooter: (NSAttributedString *)header forPages: (RKPageSelectionMask)pageMask;
+- (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask;
+- (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask;
 
+/*!
+  @abstract Specifies whether the same header is used for first / left / right pages
+ */
+@property(nonatomic, readonly) BOOL sameHeaderForAllPages;
+
+/*!
+ @abstract Specifies whether the same footer is used for first / left / right pages
+ */
+@property(nonatomic, readonly) BOOL sameFooterForAllPages;
 
 /*!
  @abstract Content of the section
@@ -30,7 +42,7 @@
 /*!
  @abstract Multicolumn layout
  */
-@property(nonatomic) NSUInteger numbersOfColumns;
+@property(nonatomic) NSUInteger numberOfColumns;
 
 /*!
  @abstract Starting page number
