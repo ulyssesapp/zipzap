@@ -42,6 +42,8 @@
 
 -(id)initWithContent:(NSAttributedString *)initialContent
 {
+     NSAssert(initialContent != nil, @"Initial content string must not be nil");    
+    
     self = [self init];
     
     if (self) {
@@ -52,7 +54,10 @@
 }
 
 - (NSAttributedString *)frametextForPage:(RKPageSelectionMask)pageMask fromTextMap:(NSMapTable *)frametextMap
-{ 
+{
+    NSAssert(!(pageMask & (~RKPageMaskFirstPage)) || !(pageMask & (~RKPageMaskLeftPage)) || !(pageMask & (~RKPageMaskRightPage)), 
+             @"Invalid page mask used in query.");
+    
     if ((pageMask == RKPageMaskFirstPage) || (pageMask == RKPageMaskAllPages))
         return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:RKPageMaskFirstPage]];
     
