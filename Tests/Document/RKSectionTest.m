@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 #import "RKSectionTest.h"
+
 #import "RKSection.h"
 #import "RKSectionInternal.h"
 
 @implementation RKSectionTest
 
-// All code under test must be linked into the Unit Test bundle
 - (void)testEmptySection
 {
     RKSection *section = [RKSection new];
