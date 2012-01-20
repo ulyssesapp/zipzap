@@ -8,19 +8,10 @@
 
 #import "RKSection.h"
 
-// Possible types of headers and footers
-typedef enum {
-    RKFirstPage = 0,
-    RKLeftPage = 1,
-    RKRightPage = 2,
-    
-    RKHighestPage = 3
-}RKPageSelection;
-
 @implementation RKSection
 {
-    NSAttributedString* headers[RKHighestPage];
-    NSAttributedString* footers[RKHighestPage];
+    NSMapTable* headers;
+    NSMapTable* footers;
 }
 
 @synthesize content, numberOfColumns, numberOfFirstPage, pageNumberingStyle;
@@ -40,6 +31,9 @@ typedef enum {
         numberOfColumns = 1;
         numberOfFirstPage = 1;
         pageNumberingStyle = RKPageNumberingDecimal;
+        
+        headers = [NSMapTable new];
+        footers = [NSMapTable new];
     }
     
     return self;
@@ -56,56 +50,50 @@ typedef enum {
     return self;
 }
 
-- (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask
-{
+- (NSAttributedString *)frametextForPage:(RKPageSelectionMask)pageMask fromTextMap:(NSMapTable *)frametextMap
+{ 
     if ((pageMask == RKPageMaskFirstPage) || (pageMask == RKPageMaskAllPages))
-        return headers[RKFirstPage];
+        return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:RKPageMaskFirstPage]];
     
     if (pageMask == RKPageMaskLeftPage)
-        return headers[RKLeftPage];
+        return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:RKPageMaskLeftPage]];
     
     if (pageMask == RKPageMaskRightPage)
-        return headers[RKRightPage];
+        return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:RKPageMaskRightPage]];
     
-    return nil;
+    return nil; 
+}
+
+- (void)setFrametext:(NSAttributedString *)text forPage:(RKPageSelectionMask)pageMask toTextMap:(NSMapTable *)frametextMap
+{
+    if (pageMask & RKPageMaskFirstPage)
+        [frametextMap setObject:text forKey:[NSNumber numberWithUnsignedInteger:RKPageMaskFirstPage]];
+    
+    if (pageMask & RKPageMaskLeftPage)
+        [frametextMap setObject:text forKey:[NSNumber numberWithUnsignedInteger:RKPageMaskLeftPage]];
+    
+    if (pageMask & RKPageMaskRightPage)
+        [frametextMap setObject:text forKey:[NSNumber numberWithUnsignedInteger:RKPageMaskRightPage]];
+}
+
+- (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask
+{
+    return [self frametextForPage:pageMask fromTextMap:headers];
 }
 
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
 {
-    if (pageMask & RKPageMaskFirstPage)
-        headers[RKFirstPage] = header;
-
-    if (pageMask & RKPageMaskLeftPage)
-        headers[RKLeftPage] = header;
-
-    if (pageMask & RKPageMaskRightPage)
-        headers[RKRightPage] = header;
+    [self setFrametext:header forPage:pageMask toTextMap:headers];
 }
 
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
 {
-    if (pageMask == RKPageMaskFirstPage)
-        return footers[RKFirstPage];
-    
-    if (pageMask == RKPageMaskLeftPage)
-        return footers[RKLeftPage];
-    
-    if (pageMask == RKPageMaskRightPage)
-        return footers[RKRightPage];
-    
-    return nil;   
+    return [self frametextForPage:pageMask fromTextMap:footers];
 }
 
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
-    if ((pageMask == RKPageMaskFirstPage) || (pageMask == RKPageMaskAllPages))
-        footers[RKFirstPage] = footer;
-    
-    if (pageMask & RKPageMaskLeftPage)
-        footers[RKLeftPage] = footer;
-    
-    if (pageMask & RKPageMaskRightPage)
-        footers[RKRightPage] = footer;
+   [self setFrametext:footer forPage:pageMask toTextMap:footers];
 }
 
 @end
