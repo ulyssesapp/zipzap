@@ -25,6 +25,13 @@ typedef enum {
 
 @synthesize content, numberOfColumns, numberOfFirstPage, pageNumberingStyle, sameHeaderForAllPages, sameFooterForAllPages;
 
++(id)sectionWithContent:(NSAttributedString *)content
+{
+    RKSection *section = [[RKSection alloc] initWithContent:content];
+
+    return section;
+}
+
 -(id)init
 {
     self = [super init];
@@ -36,6 +43,17 @@ typedef enum {
         
         sameHeaderForAllPages = true;
         sameFooterForAllPages = true;
+    }
+    
+    return self;
+}
+
+-(id)initWithContent:(NSAttributedString *)initialContent
+{
+    self = [self init];
+    
+    if (self) {
+        content = initialContent;
     }
     
     return self;
