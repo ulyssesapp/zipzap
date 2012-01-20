@@ -15,7 +15,11 @@
  */
 @interface RKDocument : NSObject
 
-+ (RKDocument *)simpleDocumentWithAttributedString: (NSAttributedString *)string;
++ (RKDocument *)simpleDocumentWithSections:(NSArray *)sections;
++ (RKDocument *)simpleDocumentWithAttributedString:(NSAttributedString *)string;
+
+- (id)initWithAttributedString:(NSAttributedString *)string;
+- (id)initWithSections:(NSArray *)array;
 
 /*!
  @abstract Exports the document as RTF with embedded pictures
