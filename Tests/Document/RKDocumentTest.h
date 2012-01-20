@@ -1,5 +1,5 @@
 //
-//  RKDocument.h
+//  RKDocumentTest.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 19.01.12.

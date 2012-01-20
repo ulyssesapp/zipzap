@@ -7,9 +7,29 @@
 //
 
 #import "RKDocument.h"
+#import "RKSection.h"
+#import "RKExport.h"
 
 @implementation RKDocument
 
 @synthesize sections, metadata, hyphenationEnabled, footnotePlacement, pageSize, pageInsets, pageOrientation;
+
++ (RKDocument *)simpleDocumentWithSections:(NSArray *)initialSections
+{
+    RKDocument *document = [[RKDocument alloc] initWithSections:initialSections];
+
+    return document;
+}
+
+- (id)initWithSections:(NSArray *)initialSections
+{
+    self = [self init];
+    
+    if (self) {
+        self.sections = initialSections;
+    }
+    
+    return self;
+}
 
 @end
