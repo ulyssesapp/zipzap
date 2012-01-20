@@ -23,7 +23,7 @@ typedef enum {
     NSAttributedString* footers[RKHighestPage];
 }
 
-@synthesize content, numberOfColumns, numberOfFirstPage, pageNumberingStyle, sameHeaderForAllPages, sameFooterForAllPages;
+@synthesize content, numberOfColumns, numberOfFirstPage, pageNumberingStyle;
 
 +(id)sectionWithContent:(NSAttributedString *)content
 {
@@ -40,9 +40,6 @@ typedef enum {
         numberOfColumns = 1;
         numberOfFirstPage = 1;
         pageNumberingStyle = RKPageNumberingDecimal;
-        
-        sameHeaderForAllPages = true;
-        sameFooterForAllPages = true;
     }
     
     return self;
@@ -75,8 +72,6 @@ typedef enum {
 
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
 {
-    sameHeaderForAllPages = (pageMask == RKPageMaskAllPages);
-    
     if (pageMask & RKPageMaskFirstPage)
         headers[RKFirstPage] = header;
 
@@ -103,8 +98,6 @@ typedef enum {
 
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
-    sameFooterForAllPages = (pageMask == RKPageMaskAllPages);
-    
     if ((pageMask == RKPageMaskFirstPage) || (pageMask == RKPageMaskAllPages))
         footers[RKFirstPage] = footer;
     

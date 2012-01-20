@@ -25,16 +25,6 @@
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask;
 
 /*!
-  @abstract Specifies whether the same header is used for first / left / right pages
- */
-@property(nonatomic, readonly) BOOL sameHeaderForAllPages;
-
-/*!
- @abstract Specifies whether the same footer is used for first / left / right pages
- */
-@property(nonatomic, readonly) BOOL sameFooterForAllPages;
-
-/*!
  @abstract Content of the section
  */
 @property(nonatomic, strong) NSAttributedString *content;
