@@ -33,6 +33,7 @@
     STAssertEquals(section.pageNumberingStyle, RKPageNumberingDecimal, @"Page numbering style is not set to decimals by default");
 }
 
+// Tests the internal functionality used to set headers and footers for all pages
 - (void)testFrameTextForAllPages
 {
     RKSection *section = [RKSection new];
@@ -46,6 +47,7 @@
     STAssertEquals([section frametextForPage:RKPageMaskRightPage fromTextMap:textmap], someText, @"Header not set for right page");
 }
 
+// Tests the internal functionality used to set headers and footers for the first page only
 - (void)testFrameTextForFirstPage
 {
     RKSection *section = [RKSection new];
@@ -59,6 +61,7 @@
     STAssertTrue([section frametextForPage:RKPageMaskRightPage fromTextMap:textmap] == nil, @"Header wrongly set for right page");
 }
 
+// Tests the internal functionality used to set headers and footers for the left page only
 - (void)testFrameTextForLeftPage
 {
     RKSection *section = [RKSection new];
@@ -72,6 +75,7 @@
     STAssertTrue([section frametextForPage:RKPageMaskRightPage fromTextMap:textmap] == nil, @"Header wrongly set for right page");
 }
 
+// Tests the internal functionality used to set headers and footers for the right page only
 - (void)testFrameTextForRightPage
 {
     RKSection *section = [RKSection new];
@@ -85,6 +89,7 @@
     STAssertTrue([section frametextForPage:RKPageMaskLeftPage fromTextMap:textmap] == nil, @"Header wrongly set for legt page");
 }
 
+// Tests the externally visible interface of RKSection to set headers
 - (void)testSetHeader
 {
     RKSection *section = [RKSection new];
@@ -96,6 +101,7 @@
     STAssertTrue([section footerForPage:RKPageMaskFirstPage] == nil, @"Footer must not be set");
 }
 
+// Tests the externally visible interface of RKSection to set footers
 - (void)testSetFooter
 {
     RKSection *section = [RKSection new];
