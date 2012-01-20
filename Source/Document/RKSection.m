@@ -7,6 +7,7 @@
 //
 
 #import "RKSection.h"
+#import "RKSectionInternal.h"
 
 @implementation RKSection
 {
@@ -14,7 +15,7 @@
     NSMapTable* footers;
 }
 
-@synthesize content, numberOfColumns, numberOfFirstPage, pageNumberingStyle;
+@synthesize content, numberOfColumns, numberOfFirstPage, pageNumberingStyle, headers, footers;
 
 +(id)sectionWithContent:(NSAttributedString *)content
 {
@@ -64,7 +65,7 @@
     return nil; 
 }
 
-- (void)setFrametext:(NSAttributedString *)text forPage:(RKPageSelectionMask)pageMask toTextMap:(NSMapTable *)frametextMap
+- (void)setFrametext:(NSAttributedString *)text forPages:(RKPageSelectionMask)pageMask toTextMap:(NSMapTable *)frametextMap
 {
     if (pageMask & RKPageMaskFirstPage)
         [frametextMap setObject:text forKey:[NSNumber numberWithUnsignedInteger:RKPageMaskFirstPage]];
@@ -83,7 +84,7 @@
 
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
 {
-    [self setFrametext:header forPage:pageMask toTextMap:headers];
+    [self setFrametext:header forPages:pageMask toTextMap:headers];
 }
 
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
@@ -93,7 +94,7 @@
 
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
-   [self setFrametext:footer forPage:pageMask toTextMap:footers];
+   [self setFrametext:footer forPages:pageMask toTextMap:footers];
 }
 
 @end

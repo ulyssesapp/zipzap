@@ -7,6 +7,7 @@
 //
 #import "RKSectionTest.h"
 #import "RKSection.h"
+#import "RKSectionInternal.h"
 
 @implementation RKSectionTest
 
@@ -32,106 +33,78 @@
     STAssertEquals(section.pageNumberingStyle, RKPageNumberingDecimal, @"Page numbering style is not set to decimals by default");
 }
 
-- (void)testHeaderForAllPages
+- (void)testFrameTextForAllPages
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
+    NSMapTable *textmap = [NSMapTable new];
+    
+    [section setFrametext:someText forPages:RKPageMaskAllPages toTextMap:textmap];
+    
+    STAssertEquals([section frametextForPage:RKPageMaskFirstPage fromTextMap:textmap], someText, @"Header not set for first page");
+    STAssertEquals([section frametextForPage:RKPageMaskLeftPage fromTextMap:textmap], someText, @"Header not set for left page");
+    STAssertEquals([section frametextForPage:RKPageMaskRightPage fromTextMap:textmap], someText, @"Header not set for right page");
+}
+
+- (void)testFrameTextForFirstPage
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
+    NSMapTable *textmap = [NSMapTable new];
+    
+    [section setFrametext:someText forPages:RKPageMaskFirstPage toTextMap:textmap];
+    
+    STAssertEquals([section frametextForPage:RKPageMaskFirstPage fromTextMap:textmap], someText, @"Header not set for first page");
+    STAssertTrue([section frametextForPage:RKPageMaskLeftPage fromTextMap:textmap] == nil, @"Header wrongly set for left page");
+    STAssertTrue([section frametextForPage:RKPageMaskRightPage fromTextMap:textmap] == nil, @"Header wrongly set for right page");
+}
+
+- (void)testFrameTextForLeftPage
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
+    NSMapTable *textmap = [NSMapTable new];
+    
+    [section setFrametext:someText forPages:RKPageMaskLeftPage toTextMap:textmap];
+    
+    STAssertEquals([section frametextForPage:RKPageMaskLeftPage fromTextMap:textmap], someText, @"Header not set for left page");
+    STAssertTrue([section frametextForPage:RKPageMaskFirstPage fromTextMap:textmap] == nil, @"Header wrongly set for first page");
+    STAssertTrue([section frametextForPage:RKPageMaskRightPage fromTextMap:textmap] == nil, @"Header wrongly set for right page");
+}
+
+- (void)testFrameTextForRightPage
+{
+    RKSection *section = [RKSection new];
+    NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
+    NSMapTable *textmap = [NSMapTable new];
+    
+    [section setFrametext:someText forPages:RKPageMaskRightPage toTextMap:textmap];
+    
+    STAssertEquals([section frametextForPage:RKPageMaskRightPage fromTextMap:textmap], someText, @"Header not set for right page");
+    STAssertTrue([section frametextForPage:RKPageMaskFirstPage fromTextMap:textmap] == nil, @"Header wrongly set for first page");
+    STAssertTrue([section frametextForPage:RKPageMaskLeftPage fromTextMap:textmap] == nil, @"Header wrongly set for legt page");
+}
+
+- (void)testSetHeader
 {
     RKSection *section = [RKSection new];
     NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
-
+    
     [section setHeader:someHeader forPages:RKPageMaskAllPages];
     
-    STAssertEquals([section headerForPage:RKPageMaskFirstPage], someHeader, @"Header not set for first page");
-    STAssertEquals([section headerForPage:RKPageMaskLeftPage], someHeader, @"Header not set for left page");
-    STAssertEquals([section headerForPage:RKPageMaskRightPage], someHeader, @"Header not set for right page");
+    STAssertEquals([section headerForPage:RKPageMaskFirstPage], someHeader, @"Header not set");
+    STAssertTrue([section footerForPage:RKPageMaskFirstPage] == nil, @"Footer must not be set");
 }
 
-- (void)testHeaderForFirstPage
-{
-    RKSection *section = [RKSection new];
-    NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
-    
-    [section setHeader:someHeader forPages:RKPageMaskFirstPage];
-    
-    STAssertTrue([section headerForPage:RKPageMaskLeftPage] != someHeader, @"Header wrongly set for left page");
-    STAssertTrue([section headerForPage:RKPageMaskRightPage] != someHeader, @"Header wrongly set for right page");
-    
-    STAssertEquals([section headerForPage:RKPageMaskFirstPage], someHeader, @"Header not set for first page");
-}
-
-- (void)testHeaderForLeftPage
-{
-    RKSection *section = [RKSection new];
-    NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
-    
-    [section setHeader:someHeader forPages:RKPageMaskLeftPage];
-    
-    STAssertTrue([section headerForPage:RKPageMaskFirstPage] != someHeader, @"Header wrongly set for first page");
-    STAssertTrue([section headerForPage:RKPageMaskRightPage] != someHeader, @"Header wrongly set for right page");
-
-    STAssertEquals([section headerForPage:RKPageMaskLeftPage], someHeader, @"Header not set for left page");
-}
-
-- (void)testHeaderForRightPage
-{
-    RKSection *section = [RKSection new];
-    NSAttributedString *someHeader = [[NSAttributedString alloc] initWithString:@"Some Header"];
-    
-    [section setHeader:someHeader forPages:RKPageMaskRightPage];
-    
-    STAssertTrue([section headerForPage:RKPageMaskFirstPage] != someHeader, @"Header wrongly set for first page");
-    STAssertTrue([section headerForPage:RKPageMaskLeftPage] != someHeader, @"Header wrongly set for left page");
-    
-    STAssertEquals([section headerForPage:RKPageMaskRightPage], someHeader, @"Header not set for right page");
-}
-
-- (void)testFooterForAllPages
+- (void)testSetFooter
 {
     RKSection *section = [RKSection new];
     NSAttributedString *someFooter = [[NSAttributedString alloc] initWithString:@"Some Footer"];
     
     [section setFooter:someFooter forPages:RKPageMaskAllPages];
-    
-    STAssertEquals([section footerForPage:RKPageMaskFirstPage], someFooter, @"Footer not set for first page");
-    STAssertEquals([section footerForPage:RKPageMaskLeftPage], someFooter, @"Footer not set for left page");
-    STAssertEquals([section footerForPage:RKPageMaskRightPage], someFooter, @"Footer not set for right page");
-}
 
-- (void)testFooterForFirstPage
-{
-    RKSection *section = [RKSection new];
-    NSAttributedString *someFooter = [[NSAttributedString alloc] initWithString:@"Some Footer"];
-    
-    [section setFooter:someFooter forPages:RKPageMaskFirstPage];
-    
-    STAssertTrue([section footerForPage:RKPageMaskLeftPage] != someFooter, @"Footer wrongly set for left page");
-    STAssertTrue([section footerForPage:RKPageMaskRightPage] != someFooter, @"Footer wrongly set for right page");
-    
-    STAssertEquals([section footerForPage:RKPageMaskFirstPage], someFooter, @"Footer not set for first page");
-}
-
-- (void)testFooterForLeftPage
-{
-    RKSection *section = [RKSection new];
-    NSAttributedString *someFooter = [[NSAttributedString alloc] initWithString:@"Some Footer"];
-    
-    [section setFooter:someFooter forPages:RKPageMaskLeftPage];
-    
-    STAssertTrue([section footerForPage:RKPageMaskFirstPage] != someFooter, @"Footer wrongly set for first page");
-    STAssertTrue([section footerForPage:RKPageMaskRightPage] != someFooter, @"Footer wrongly set for right page");
-    
-    STAssertEquals([section footerForPage:RKPageMaskLeftPage], someFooter, @"Footer not set for left page");
-}
-
-- (void)testFooterForRightPage
-{
-    RKSection *section = [RKSection new];
-    NSAttributedString *someFooter = [[NSAttributedString alloc] initWithString:@"Some Footer"];
-    
-    [section setFooter:someFooter forPages:RKPageMaskRightPage];
-    
-    STAssertTrue([section footerForPage:RKPageMaskFirstPage] != someFooter, @"Footer wrongly set for first page");
-    STAssertTrue([section footerForPage:RKPageMaskLeftPage] != someFooter, @"Footer wrongly set for left page");
-    
-    STAssertEquals([section footerForPage:RKPageMaskRightPage], someFooter, @"Footer not set for right page");
+    STAssertTrue([section headerForPage:RKPageMaskFirstPage] == nil, @"Header must not be set");
+    STAssertEquals([section footerForPage:RKPageMaskFirstPage], someFooter, @"Footer not set");
 }
 
 @end
