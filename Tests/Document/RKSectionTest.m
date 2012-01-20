@@ -31,6 +31,9 @@
     STAssertEquals(section.numberOfColumns, (NSUInteger)1, @"Number of columns not initialized to 1 by default");
     STAssertEquals(section.numberOfFirstPage, (NSUInteger)1, @"Number of first page is not initialized to 1 by default");
     STAssertEquals(section.pageNumberingStyle, RKPageNumberingDecimal, @"Page numbering style is not set to decimals by default");
+
+    // Testing assertion
+    STAssertThrows([RKSection sectionWithContent:nil], @"No assertion on empty content string");
 }
 
 // Tests the internal functionality used to set headers and footers when setting all pages
