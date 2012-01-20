@@ -102,10 +102,10 @@
     
     [section setFooter:someFooter forPages:RKPageMaskFirstPage];
     
-    STAssertTrue([section footerForPage:RKPageMaskLeftPage] != someFooter, @"Header wrongly set for left page");
-    STAssertTrue([section footerForPage:RKPageMaskRightPage] != someFooter, @"Header wrongly set for right page");
+    STAssertTrue([section footerForPage:RKPageMaskLeftPage] != someFooter, @"Footer wrongly set for left page");
+    STAssertTrue([section footerForPage:RKPageMaskRightPage] != someFooter, @"Footer wrongly set for right page");
     
-    STAssertEquals([section footerForPage:RKPageMaskFirstPage], someFooter, @"Header not set for first page");
+    STAssertEquals([section footerForPage:RKPageMaskFirstPage], someFooter, @"Footer not set for first page");
 }
 
 - (void)testFooterForLeftPage
@@ -115,10 +115,10 @@
     
     [section setFooter:someFooter forPages:RKPageMaskLeftPage];
     
-    STAssertTrue([section footerForPage:RKPageMaskFirstPage] != someFooter, @"Header wrongly set for first page");
-    STAssertTrue([section footerForPage:RKPageMaskRightPage] != someFooter, @"Header wrongly set for right page");
+    STAssertTrue([section footerForPage:RKPageMaskFirstPage] != someFooter, @"Footer wrongly set for first page");
+    STAssertTrue([section footerForPage:RKPageMaskRightPage] != someFooter, @"Footer wrongly set for right page");
     
-    STAssertEquals([section footerForPage:RKPageMaskLeftPage], someFooter, @"Header not set for left page");
+    STAssertEquals([section footerForPage:RKPageMaskLeftPage], someFooter, @"Footer not set for left page");
 }
 
 - (void)testFooterForRightPage
@@ -128,10 +128,10 @@
     
     [section setFooter:someFooter forPages:RKPageMaskRightPage];
     
-    STAssertTrue([section footerForPage:RKPageMaskFirstPage] != someFooter, @"Header wrongly set for first page");
-    STAssertTrue([section footerForPage:RKPageMaskLeftPage] != someFooter, @"Header wrongly set for left page");
+    STAssertTrue([section footerForPage:RKPageMaskFirstPage] != someFooter, @"Footer wrongly set for first page");
+    STAssertTrue([section footerForPage:RKPageMaskLeftPage] != someFooter, @"Footer wrongly set for left page");
     
-    STAssertEquals([section footerForPage:RKPageMaskRightPage], someFooter, @"Header not set for right page");
+    STAssertEquals([section footerForPage:RKPageMaskRightPage], someFooter, @"Footer not set for right page");
 }
 
 @end
