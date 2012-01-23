@@ -17,14 +17,12 @@
 
 @synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle, headers, footers;
 
-+(id)sectionWithContent:(NSAttributedString *)content
++ (id)sectionWithContent:(NSAttributedString *)content
 {
-    RKSection *section = [[RKSection alloc] initWithContent:content];
-
-    return section;
+    return [[RKSection alloc] initWithContent:content];
 }
 
--(id)init
+- (id)init
 {
     self = [super init];
     
@@ -40,7 +38,7 @@
     return self;
 }
 
--(id)initWithContent:(NSAttributedString *)initialContent
+- (id)initWithContent:(NSAttributedString *)initialContent
 {
      NSAssert(initialContent != nil, @"Initial content string must not be nil");    
     
