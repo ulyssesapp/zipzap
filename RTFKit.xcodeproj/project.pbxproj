@@ -13,7 +13,6 @@
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
 		50317D6C14C4951D00F23C04 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
-		50317D6D14C4951D00F23C04 /* RTFKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 50317D6A14C4951C00F23C04 /* RTFKit.m */; };
 		50317D7314C4953800F23C04 /* RTFKitTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D7114C4953800F23C04 /* RTFKitTests.h */; };
 		50317D7914C495EF00F23C04 /* RTFKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50317D7214C4953800F23C04 /* RTFKitTests.m */; };
 		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
@@ -51,7 +50,6 @@
 		50317D4C14C494C800F23C04 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTFKit-Prefix.pch"; sourceTree = "<group>"; };
 		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
-		50317D6A14C4951C00F23C04 /* RTFKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTFKit.m; sourceTree = "<group>"; };
 		50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RTFKitTests-Info.plist"; sourceTree = "<group>"; };
 		50317D7114C4953800F23C04 /* RTFKitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKitTests.h; sourceTree = "<group>"; };
 		50317D7214C4953800F23C04 /* RTFKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTFKitTests.m; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 				79F673AB14C84A65005D03FA /* Document */,
 				79F673A914C84A5A005D03FA /* Export */,
 				50317D6914C4951C00F23C04 /* RTFKit.h */,
-				50317D6A14C4951C00F23C04 /* RTFKit.m */,
 				50317D6E14C4952300F23C04 /* Other */,
 			);
 			path = Source;
@@ -328,7 +325,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50317D6D14C4951D00F23C04 /* RTFKit.m in Sources */,
 				79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */,
 				79F673B914C84AE0005D03FA /* RKSection.m in Sources */,
 				79F673D014C883EB005D03FA /* RKExport.m in Sources */,
