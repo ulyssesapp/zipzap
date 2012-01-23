@@ -58,7 +58,7 @@
 /*!
  @abstract Starting page number
  */
-@property(nonatomic) NSUInteger numberOfFirstPage;
+@property(nonatomic) NSUInteger indexOfFirstPage;
 
 /*!
  @abstract Page number style

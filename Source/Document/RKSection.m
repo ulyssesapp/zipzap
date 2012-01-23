@@ -15,7 +15,7 @@
     NSMapTable* footers;
 }
 
-@synthesize content, numberOfColumns, numberOfFirstPage, pageNumberingStyle, headers, footers;
+@synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle, headers, footers;
 
 +(id)sectionWithContent:(NSAttributedString *)content
 {
@@ -30,7 +30,7 @@
     
     if (self) {
         numberOfColumns = 1;
-        numberOfFirstPage = 1;
+        indexOfFirstPage = 1;
         pageNumberingStyle = RKPageNumberingDecimal;
         
         headers = [NSMapTable new];
