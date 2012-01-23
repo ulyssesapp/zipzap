@@ -42,4 +42,18 @@
     return [self initWithSections: [NSArray arrayWithObject: [RKSection sectionWithContent: string]]];
 }
 
+- (NSData *)RTF
+{
+    return [RKWriter RTFfromDocument:self];
+}
+
+/*!
+ @abstract Exports the document as RTFD 
+ @discussion Creates a file wrapper containing the RTF and all referenced pictures
+ */
+- (NSFileWrapper *)RTFD
+{
+    return [RKWriter RTFDfromDocument:self];    
+}
+
 @end
