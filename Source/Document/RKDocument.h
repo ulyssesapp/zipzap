@@ -7,6 +7,7 @@
 //
 #import "RKTypes.h"
 
+
 @class RKSection;
 
 /*
@@ -15,10 +16,17 @@
  */
 @interface RKDocument : NSObject
 
-+ (RKDocument *)simpleDocumentWithSections:(NSArray *)sections;
-+ (RKDocument *)simpleDocumentWithAttributedString:(NSAttributedString *)string;
++ (RKDocument *)documentWithSections:(NSArray *)sections;
++ (RKDocument *)documentWithAttributedString:(NSAttributedString *)string;
 
+/*!
+ @abstract Initializes a document with a single attributed string representing its content
+ */
 - (id)initWithAttributedString:(NSAttributedString *)string;
+
+/*!
+ @abstract Initializes a document with an array of sections
+ */
 - (id)initWithSections:(NSArray *)array;
 
 /*!
@@ -55,6 +63,7 @@
     NSCategoryDocumentAttribute
 */
 @property(nonatomic, strong) NSDictionary *metadata;
+
 
 #pragma mark - Formatting
 

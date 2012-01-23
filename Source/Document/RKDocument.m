@@ -14,14 +14,14 @@
 
 @synthesize sections, metadata, hyphenationEnabled, footnotePlacement, pageSize, pageInsets, pageOrientation;
 
-+ (RKDocument *)simpleDocumentWithSections:(NSArray *)initialSections
++ (RKDocument *)documentWithSections:(NSArray *)initialSections
 {
     RKDocument *document = [[RKDocument alloc] initWithSections:initialSections];
 
     return document;
 }
 
-+(RKDocument *)simpleDocumentWithAttributedString:(NSAttributedString *)string
++(RKDocument *)documentWithAttributedString:(NSAttributedString *)string
 {
     RKDocument *document = [[RKDocument alloc] initWithAttributedString:string];
         
