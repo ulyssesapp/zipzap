@@ -5,10 +5,6 @@
 //  Created by Friedrich Gräter on 19.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
-
-#ifndef RTFKit_RKTypes_h
-#define RTFKit_RKTypes_h
-
 /*!
  @abstract Specifies the placement of footnotes inside a document
  */
@@ -53,5 +49,3 @@ typedef enum {
     
     RKPageMaskAllPages  = 0xFFFF
 }RKPageSelectionMask;
-
-#endif
