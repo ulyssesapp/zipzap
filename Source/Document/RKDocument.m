@@ -16,22 +16,16 @@
 
 + (RKDocument *)documentWithSections:(NSArray *)initialSections
 {
-    RKDocument *document = [[RKDocument alloc] initWithSections:initialSections];
-
-    return document;
+    return [[RKDocument alloc] initWithSections: initialSections];
 }
 
-+(RKDocument *)documentWithAttributedString:(NSAttributedString *)string
++ (RKDocument *)documentWithAttributedString:(NSAttributedString *)string
 {
-    RKDocument *document = [[RKDocument alloc] initWithAttributedString:string];
-        
-    return document;
+    return [[RKDocument alloc] initWithAttributedString: string];
 }
 
 - (id)initWithSections:(NSArray *)initialSections
 {
-     NSAssert(initialSections != nil, @"Sections used for initialization must not be nil");
-    
     self = [self init];
     
     if (self) {
@@ -41,14 +35,11 @@
     return self;
 }
 
-- (id)initWithAttributedString: (NSAttributedString *)string
+- (id)initWithAttributedString:(NSAttributedString *)string
 {
     NSAssert(string != nil, @"Initialization string must not be nil");
     
-    RKSection *section = [RKSection sectionWithContent: string];
-    NSArray *initialSections = [NSArray arrayWithObject:section];
-
-    return [self initWithSections:initialSections];
+    return [self initWithSections: [NSArray arrayWithObject: [RKSection sectionWithContent: string]]];
 }
 
 @end
