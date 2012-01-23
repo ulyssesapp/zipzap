@@ -8,7 +8,6 @@
 #import "RKSectionTest.h"
 
 #import "RKSection.h"
-#import "RKSectionInternal.h"
 
 @implementation RKSectionTest
 
@@ -17,7 +16,7 @@
     RKSection *section = [RKSection new];
     
     STAssertEquals(section.numberOfColumns, (NSUInteger)1, @"Number of columns not initialized to 1 by default");
-    STAssertEquals(section.numberOfFirstPage, (NSUInteger)1, @"Number of first page is not initialized to 1 by default");
+    STAssertEquals(section.indexOfFirstPage, (NSUInteger)1, @"Number of first page is not initialized to 1 by default");
     STAssertEquals(section.pageNumberingStyle, RKPageNumberingDecimal, @"Page numbering style is not set to decimals by default");
 }
 
@@ -29,7 +28,7 @@
     STAssertEquals(section.content, someString, @"Content not properly initialized");
     
     STAssertEquals(section.numberOfColumns, (NSUInteger)1, @"Number of columns not initialized to 1 by default");
-    STAssertEquals(section.numberOfFirstPage, (NSUInteger)1, @"Number of first page is not initialized to 1 by default");
+    STAssertEquals(section.indexOfFirstPage, (NSUInteger)1, @"Number of first page is not initialized to 1 by default");
     STAssertEquals(section.pageNumberingStyle, RKPageNumberingDecimal, @"Page numbering style is not set to decimals by default");
 
     // Testing assertion
