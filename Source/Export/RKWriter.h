@@ -1,5 +1,5 @@
 //
-//  RKExport.h
+//  RKWriter.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 19.01.12.
@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RKExport : NSObject
+@class RKDocument;
+
+/*!
+ @abstract The RTF exporter
+ */
+@interface RKWriter : NSObject
 
 @end
