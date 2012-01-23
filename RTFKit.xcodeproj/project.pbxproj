@@ -16,13 +16,19 @@
 		50317D6D14C4951D00F23C04 /* RTFKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 50317D6A14C4951C00F23C04 /* RTFKit.m */; };
 		50317D7314C4953800F23C04 /* RTFKitTests.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D7114C4953800F23C04 /* RTFKitTests.h */; };
 		50317D7914C495EF00F23C04 /* RTFKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 50317D7214C4953800F23C04 /* RTFKitTests.m */; };
+		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
 		79F673AE14C84A9E005D03FA /* RKDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673AC14C84A9E005D03FA /* RKDocument.h */; };
 		79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
 		79F673B014C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
-		79F673B514C84ACC005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673B414C84ACC005D03FA /* RKDocument.m */; };
+		79F673B514C84ACC005D03FA /* RKDocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673B414C84ACC005D03FA /* RKDocumentTest.m */; };
 		79F673B814C84AE0005D03FA /* RKSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673B614C84AE0005D03FA /* RKSection.h */; };
 		79F673B914C84AE0005D03FA /* RKSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673B714C84AE0005D03FA /* RKSection.m */; };
 		79F673BA14C84AE0005D03FA /* RKSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673B714C84AE0005D03FA /* RKSection.m */; };
+		79F673CC14C875BB005D03FA /* RKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673CB14C875BA005D03FA /* RKTypes.h */; };
+		79F673CF14C883EB005D03FA /* RKExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673CD14C883EB005D03FA /* RKExport.h */; };
+		79F673D014C883EB005D03FA /* RKExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673CE14C883EB005D03FA /* RKExport.m */; };
+		79F673D114C883EB005D03FA /* RKExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673CE14C883EB005D03FA /* RKExport.m */; };
+		79F673D414C88404005D03FA /* RKExportTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673D314C88404005D03FA /* RKExportTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,12 +56,19 @@
 		50317D7114C4953800F23C04 /* RTFKitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKitTests.h; sourceTree = "<group>"; };
 		50317D7214C4953800F23C04 /* RTFKitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTFKitTests.m; sourceTree = "<group>"; };
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
+		797DA1C814C97E05000DDAF3 /* RKSectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSectionTest.h; path = Document/RKSectionTest.h; sourceTree = "<group>"; };
+		797DA1C914C97E05000DDAF3 /* RKSectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSectionTest.m; path = Document/RKSectionTest.m; sourceTree = "<group>"; };
 		79F673AC14C84A9E005D03FA /* RKDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocument.h; path = Document/RKDocument.h; sourceTree = "<group>"; };
 		79F673AD14C84A9E005D03FA /* RKDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocument.m; path = Document/RKDocument.m; sourceTree = "<group>"; };
-		79F673B314C84ACC005D03FA /* RKDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocument.h; path = Document/RKDocument.h; sourceTree = "<group>"; };
-		79F673B414C84ACC005D03FA /* RKDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocument.m; path = Document/RKDocument.m; sourceTree = "<group>"; };
+		79F673B314C84ACC005D03FA /* RKDocumentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentTest.h; path = Document/RKDocumentTest.h; sourceTree = "<group>"; };
+		79F673B414C84ACC005D03FA /* RKDocumentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocumentTest.m; path = Document/RKDocumentTest.m; sourceTree = "<group>"; };
 		79F673B614C84AE0005D03FA /* RKSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSection.h; path = Document/RKSection.h; sourceTree = "<group>"; };
 		79F673B714C84AE0005D03FA /* RKSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSection.m; path = Document/RKSection.m; sourceTree = "<group>"; };
+		79F673CB14C875BA005D03FA /* RKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKTypes.h; sourceTree = "<group>"; };
+		79F673CD14C883EB005D03FA /* RKExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKExport.h; path = Export/RKExport.h; sourceTree = "<group>"; };
+		79F673CE14C883EB005D03FA /* RKExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKExport.m; path = Export/RKExport.m; sourceTree = "<group>"; };
+		79F673D214C88404005D03FA /* RKExportTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKExportTest.h; sourceTree = "<group>"; };
+		79F673D314C88404005D03FA /* RKExportTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKExportTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +135,7 @@
 		50317D6714C4951C00F23C04 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				79F673CB14C875BA005D03FA /* RKTypes.h */,
 				79F673AB14C84A65005D03FA /* Document */,
 				79F673A914C84A5A005D03FA /* Export */,
 				50317D6914C4951C00F23C04 /* RTFKit.h */,
@@ -163,6 +177,8 @@
 		79F673A914C84A5A005D03FA /* Export */ = {
 			isa = PBXGroup;
 			children = (
+				79F673CD14C883EB005D03FA /* RKExport.h */,
+				79F673CE14C883EB005D03FA /* RKExport.m */,
 			);
 			name = Export;
 			sourceTree = "<group>";
@@ -181,8 +197,10 @@
 		79F673B114C84AA3005D03FA /* Document */ = {
 			isa = PBXGroup;
 			children = (
-				79F673B314C84ACC005D03FA /* RKDocument.h */,
-				79F673B414C84ACC005D03FA /* RKDocument.m */,
+				79F673B314C84ACC005D03FA /* RKDocumentTest.h */,
+				79F673B414C84ACC005D03FA /* RKDocumentTest.m */,
+				797DA1C814C97E05000DDAF3 /* RKSectionTest.h */,
+				797DA1C914C97E05000DDAF3 /* RKSectionTest.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -190,6 +208,8 @@
 		79F673B214C84AA9005D03FA /* Export */ = {
 			isa = PBXGroup;
 			children = (
+				79F673D214C88404005D03FA /* RKExportTest.h */,
+				79F673D314C88404005D03FA /* RKExportTest.m */,
 			);
 			name = Export;
 			sourceTree = "<group>";
@@ -206,6 +226,8 @@
 				50317D7314C4953800F23C04 /* RTFKitTests.h in Headers */,
 				79F673AE14C84A9E005D03FA /* RKDocument.h in Headers */,
 				79F673B814C84AE0005D03FA /* RKSection.h in Headers */,
+				79F673CC14C875BB005D03FA /* RKTypes.h in Headers */,
+				79F673CF14C883EB005D03FA /* RKExport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +331,7 @@
 				50317D6D14C4951D00F23C04 /* RTFKit.m in Sources */,
 				79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */,
 				79F673B914C84AE0005D03FA /* RKSection.m in Sources */,
+				79F673D014C883EB005D03FA /* RKExport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,8 +341,11 @@
 			files = (
 				50317D7914C495EF00F23C04 /* RTFKitTests.m in Sources */,
 				79F673B014C84A9E005D03FA /* RKDocument.m in Sources */,
-				79F673B514C84ACC005D03FA /* RKDocument.m in Sources */,
+				79F673B514C84ACC005D03FA /* RKDocumentTest.m in Sources */,
 				79F673BA14C84AE0005D03FA /* RKSection.m in Sources */,
+				79F673D114C883EB005D03FA /* RKExport.m in Sources */,
+				79F673D414C88404005D03FA /* RKExportTest.m in Sources */,
+				797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

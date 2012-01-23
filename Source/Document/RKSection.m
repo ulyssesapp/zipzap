@@ -7,15 +7,31 @@
 //
 
 #import "RKSection.h"
-#import "RKSectionInternal.h"
 
-@implementation RKSection
+/*!
+ @abstract Internal methods
+ */
+@interface RKSection ()
 {
     NSMapTable *headers;
     NSMapTable *footers;
 }
 
-@synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle, headers, footers;
+/*!
+ @abstract Internally used to retrieve a text in a header/footer mapping for a given page type mask
+ */
+- (NSAttributedString *)frametextForPage:(RKPageSelectionMask)pageMask fromTextMap:(NSMapTable *)frametextMap;
+
+/*!
+ @abstract Internally used to set a text in a header/footer mapping for a given page type mask
+ */
+- (void)setFrametext:(NSAttributedString *)text forPages:(RKPageSelectionMask)pageMask toTextMap:(NSMapTable *)frametextMap;
+@end
+
+
+@implementation RKSection
+
+@synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle;
 
 + (id)sectionWithContent:(NSAttributedString *)content
 {
