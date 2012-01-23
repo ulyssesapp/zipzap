@@ -11,8 +11,8 @@
 
 @implementation RKSection
 {
-    NSMapTable* headers;
-    NSMapTable* footers;
+    NSMapTable *headers;
+    NSMapTable *footers;
 }
 
 @synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle, headers, footers;
