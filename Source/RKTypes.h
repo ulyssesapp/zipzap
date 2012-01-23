@@ -43,9 +43,9 @@ typedef enum {
  @abstract Possible selections for page headers and footers
  */
 typedef enum {
-    RKPageMaskLeftPage  = 1<<0,
-    RKPageMaskRightPage = 1<<1,
-    RKPageMaskFirstPage = 1<<2,
+    RKPageSelectionLeft  = 1<<0,
+    RKPageSelectionRight = 1<<1,
+    RKPageSelectionFirst = 1<<2,
     
-    RKPageMaskAllPages  = 0xFFFF
+    RKPageSelectorAll  = 0xFFFF
 }RKPageSelectionMask;
