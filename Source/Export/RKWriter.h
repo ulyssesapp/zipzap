@@ -15,4 +15,14 @@
  */
 @interface RKWriter : NSObject
 
+/*!
+ @abstract Builds an RTF from an RTFDocument
+ */
++ (NSData *)RTFfromDocument:(RKDocument *)document;
+
+/*!
+ @abstract Builds an RTF from an RTFDocument
+ */
++ (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document;
+
 @end
