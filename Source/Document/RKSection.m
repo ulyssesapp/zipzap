@@ -72,16 +72,7 @@
     NSAssert(!(pageMask & (~RKPageMaskFirstPage)) || !(pageMask & (~RKPageMaskLeftPage)) || !(pageMask & (~RKPageMaskRightPage)), 
              @"Invalid page mask used in query.");
     
-    if ((pageMask == RKPageMaskFirstPage) || (pageMask == RKPageMaskAllPages))
-        return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:RKPageMaskFirstPage]];
-    
-    if (pageMask == RKPageMaskLeftPage)
-        return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:RKPageMaskLeftPage]];
-    
-    if (pageMask == RKPageMaskRightPage)
-        return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:RKPageMaskRightPage]];
-    
-    return nil; 
+    return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:pageMask]];
 }
 
 - (void)setFrametext:(NSAttributedString *)text forPages:(RKPageSelectionMask)pageMask toTextMap:(NSMapTable *)frametextMap
