@@ -18,14 +18,14 @@
 }
 
 /*!
- @abstract Internally used to retrieve a text in a header/footer mapping for a given page type mask
+ @abstract Internally used to retrieve an object from a map related to a certain page selector
  */
-- (NSAttributedString *)frametextForPage:(RKPageSelectionMask)pageMask fromTextMap:(NSMapTable *)frametextMap;
+- (id)objectForPage:(RKPageSelectionMask)pageMask fromMap:(NSMapTable *)map;
 
 /*!
- @abstract Internally used to set a text in a header/footer mapping for a given page type mask
+ @abstract Internally used to store an object in a map relate to a certain page selector
  */
-- (void)setFrametext:(NSAttributedString *)text forPages:(RKPageSelectionMask)pageMask toTextMap:(NSMapTable *)frametextMap;
+- (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map;
 @end
 
 
@@ -67,44 +67,48 @@
     return self;
 }
 
-- (NSAttributedString *)frametextForPage:(RKPageSelectionMask)pageMask fromTextMap:(NSMapTable *)frametextMap
-{
-    NSAssert(!(pageMask & (~RKPageSelectionFirst)) || !(pageMask & (~RKPageSelectionLeft)) || !(pageMask & (~RKPageSelectionRight)), 
-             @"Invalid page mask used in query.");
-    
-    return [frametextMap objectForKey:[NSNumber numberWithUnsignedInteger:pageMask]];
-}
-
-- (void)setFrametext:(NSAttributedString *)text forPages:(RKPageSelectionMask)pageMask toTextMap:(NSMapTable *)frametextMap
-{
-    if (pageMask & RKPageSelectionFirst)
-        [frametextMap setObject:text forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionFirst]];
-    
-    if (pageMask & RKPageSelectionLeft)
-        [frametextMap setObject:text forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionLeft]];
-    
-    if (pageMask & RKPageSelectionRight)
-        [frametextMap setObject:text forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionRight]];
-}
+#pragma mark - Header and Footer
 
 - (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self frametextForPage:pageMask fromTextMap:headers];
+    return [self objectForPage:pageMask fromMap:headers];
 }
 
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
 {
-    [self setFrametext:header forPages:pageMask toTextMap:headers];
+    [self setObject:header forPages:pageMask toMap:headers];
 }
 
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self frametextForPage:pageMask fromTextMap:footers];
+    return [self objectForPage:pageMask fromMap:footers];
 }
 
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
-   [self setFrametext:footer forPages:pageMask toTextMap:footers];
+   [self setObject:footer forPages:pageMask toMap:footers];
+}
+
+#pragma mark -
+
+- (id)objectForPage:(RKPageSelectionMask)pageMask fromMap:(NSMapTable *)map
+{
+    NSAssert(!(pageMask & (~RKPageSelectionFirst)) || !(pageMask & (~RKPageSelectionLeft)) || !(pageMask & (~RKPageSelectionRight)), 
+             @"Invalid page mask used in query.");
+    
+    return [map objectForKey:[NSNumber numberWithUnsignedInteger:pageMask]];
+}
+
+- (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map
+{
+    if (pageMask & RKPageSelectionFirst)
+        [map setObject:object forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionFirst]];
+    
+    if (pageMask & RKPageSelectionLeft)
+        [map setObject:object forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionLeft]];
+    
+    if (pageMask & RKPageSelectionRight)
+        [map setObject:object forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionRight]];
 }
 
 @end

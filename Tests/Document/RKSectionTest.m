@@ -42,11 +42,11 @@
     NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
     NSMapTable *textmap = [NSMapTable new];
     
-    [section setFrametext:someText forPages:RKPageSelectorAll toTextMap:textmap];
+    [section setObject:someText forPages:RKPageSelectorAll toMap:textmap];
     
-    STAssertEquals([section frametextForPage:RKPageSelectionFirst fromTextMap:textmap], someText, @"Header not set for first page");
-    STAssertEquals([section frametextForPage:RKPageSelectionLeft fromTextMap:textmap], someText, @"Header not set for left page");
-    STAssertEquals([section frametextForPage:RKPageSelectionRight fromTextMap:textmap], someText, @"Header not set for right page");
+    STAssertEquals([section objectForPage:RKPageSelectionFirst fromMap:textmap], someText, @"Header not set for first page");
+    STAssertEquals([section objectForPage:RKPageSelectionLeft fromMap:textmap], someText, @"Header not set for left page");
+    STAssertEquals([section objectForPage:RKPageSelectionRight fromMap:textmap], someText, @"Header not set for right page");
 }
 
 // Tests the internal functionality used to set headers and footers when setting the first page only
@@ -56,11 +56,11 @@
     NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
     NSMapTable *textmap = [NSMapTable new];
     
-    [section setFrametext:someText forPages:RKPageSelectionFirst toTextMap:textmap];
+    [section setObject:someText forPages:RKPageSelectionFirst toMap:textmap];
     
-    STAssertEquals([section frametextForPage:RKPageSelectionFirst fromTextMap:textmap], someText, @"Header not set for first page");
-    STAssertTrue([section frametextForPage:RKPageSelectionLeft fromTextMap:textmap] == nil, @"Header wrongly set for left page");
-    STAssertTrue([section frametextForPage:RKPageSelectionRight fromTextMap:textmap] == nil, @"Header wrongly set for right page");
+    STAssertEquals([section objectForPage:RKPageSelectionFirst fromMap:textmap], someText, @"Header not set for first page");
+    STAssertTrue([section objectForPage:RKPageSelectionLeft fromMap:textmap] == nil, @"Header wrongly set for left page");
+    STAssertTrue([section objectForPage:RKPageSelectionRight fromMap:textmap] == nil, @"Header wrongly set for right page");
 }
 
 // Tests the internal functionality used to set headers and footers when setting the left page only
@@ -70,11 +70,11 @@
     NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
     NSMapTable *textmap = [NSMapTable new];
     
-    [section setFrametext:someText forPages:RKPageSelectionLeft toTextMap:textmap];
+    [section setObject:someText forPages:RKPageSelectionLeft toMap:textmap];
     
-    STAssertEquals([section frametextForPage:RKPageSelectionLeft fromTextMap:textmap], someText, @"Header not set for left page");
-    STAssertTrue([section frametextForPage:RKPageSelectionFirst fromTextMap:textmap] == nil, @"Header wrongly set for first page");
-    STAssertTrue([section frametextForPage:RKPageSelectionRight fromTextMap:textmap] == nil, @"Header wrongly set for right page");
+    STAssertEquals([section objectForPage:RKPageSelectionLeft fromMap:textmap], someText, @"Header not set for left page");
+    STAssertTrue([section objectForPage:RKPageSelectionFirst fromMap:textmap] == nil, @"Header wrongly set for first page");
+    STAssertTrue([section objectForPage:RKPageSelectionRight fromMap:textmap] == nil, @"Header wrongly set for right page");
 }
 
 // Tests the internal functionality used to set headers and footers  when setting the right page only
@@ -84,11 +84,11 @@
     NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
     NSMapTable *textmap = [NSMapTable new];
     
-    [section setFrametext:someText forPages:RKPageSelectionRight toTextMap:textmap];
+    [section setObject:someText forPages:RKPageSelectionRight toMap:textmap];
     
-    STAssertEquals([section frametextForPage:RKPageSelectionRight fromTextMap:textmap], someText, @"Header not set for right page");
-    STAssertTrue([section frametextForPage:RKPageSelectionFirst fromTextMap:textmap] == nil, @"Header wrongly set for first page");
-    STAssertTrue([section frametextForPage:RKPageSelectionLeft fromTextMap:textmap] == nil, @"Header wrongly set for legt page");
+    STAssertEquals([section objectForPage:RKPageSelectionRight fromMap:textmap], someText, @"Header not set for right page");
+    STAssertTrue([section objectForPage:RKPageSelectionFirst fromMap:textmap] == nil, @"Header wrongly set for first page");
+    STAssertTrue([section objectForPage:RKPageSelectionLeft fromMap:textmap] == nil, @"Header wrongly set for legt page");
 }
 
 // Tests the internal functionality used to set headers and footers for empty setting
@@ -97,9 +97,9 @@
     RKSection *section = [RKSection new];
     NSMapTable *textmap = [NSMapTable new];
     
-    STAssertTrue([section frametextForPage:RKPageSelectionFirst fromTextMap:textmap] == nil, @"Header set for first page");
-    STAssertTrue([section frametextForPage:RKPageSelectionLeft fromTextMap:textmap] == nil, @"Header set for left page");
-    STAssertTrue([section frametextForPage:RKPageSelectionRight fromTextMap:textmap] == nil, @"Header set for right page");
+    STAssertTrue([section objectForPage:RKPageSelectionFirst fromMap:textmap] == nil, @"Header set for first page");
+    STAssertTrue([section objectForPage:RKPageSelectionLeft fromMap:textmap] == nil, @"Header set for left page");
+    STAssertTrue([section objectForPage:RKPageSelectionRight fromMap:textmap] == nil, @"Header set for right page");
 }
 
 // Tests the internal functionality used to set headers and footers for invalid page selection
@@ -109,9 +109,9 @@
     NSAttributedString *someText = [[NSAttributedString alloc] initWithString:@"Some Text"];
     NSMapTable *textmap = [NSMapTable new];
     
-    [section setFrametext:someText forPages:RKPageSelectorAll toTextMap:textmap];
+    [section setObject:someText forPages:RKPageSelectorAll toMap:textmap];
     
-    STAssertThrows([section frametextForPage:(RKPageSelectionFirst|RKPageSelectionLeft) fromTextMap:textmap], @"Expecting assertion failure");
+    STAssertThrows([section objectForPage:(RKPageSelectionFirst|RKPageSelectionLeft) fromMap:textmap], @"Expecting assertion failure");
 }
 
 // Tests the externally visible interface of RKSection to set headers
