@@ -13,11 +13,6 @@
 @end
 
 @interface RKSection ()
-{
-    NSMapTable *headers;
-    NSMapTable *footers;
-}
-
     - (NSAttributedString *)objectForPage:(RKPageSelectionMask)pageMask fromMap:(NSMapTable *)map;
     - (void)setObject:(NSAttributedString *)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map;
 @end
