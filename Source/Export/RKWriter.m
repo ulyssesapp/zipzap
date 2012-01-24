@@ -8,6 +8,10 @@
 
 #import "RKWriter.h"
 
+@interface RKWriter ()
+
+@end
+
 @implementation RKWriter
 
 @end

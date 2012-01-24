@@ -11,7 +11,7 @@
 @class RKDocument;
 
 /*!
- @abstract The RTF exporter
+ @abstract The internally used RTF writer
  */
 @interface RKWriter : NSObject
 
