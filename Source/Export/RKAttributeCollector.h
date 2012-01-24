@@ -6,8 +6,12 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "RKDocument.h"
 
-@interface RKDefinitionsCollector : NSObject
+@class RKDocument;
+
+@interface RKAttributeCollector : NSObject
+
++(NSDictionary *)collectHeaderDefinitionsFromDocument:(RKDocument *)document;
 
 @end
