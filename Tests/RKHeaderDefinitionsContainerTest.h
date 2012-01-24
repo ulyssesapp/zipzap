@@ -1,5 +1,5 @@
 //
-//  RKAttributeCollectorTest.h
+//  RKHeaderDefinitionsContainerTest.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 23.01.12.
@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKAttributeCollectorTest : SenTestCase
+@interface RKHeaderDefinitionsContainerTest : SenTestCase
 
 @end

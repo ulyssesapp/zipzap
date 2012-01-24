@@ -14,10 +14,10 @@
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
 		50317D6C14C4951D00F23C04 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
 		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
-		798253B414CD88B10080BC3D /* RKAttributeCollector.h in Headers */ = {isa = PBXBuildFile; fileRef = 798253B214CD88B10080BC3D /* RKAttributeCollector.h */; };
-		798253B514CD88B10080BC3D /* RKAttributeCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKAttributeCollector.m */; };
-		798253B614CD88B10080BC3D /* RKAttributeCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKAttributeCollector.m */; };
-		798253BA14CD89810080BC3D /* RKAttributeCollectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B914CD89810080BC3D /* RKAttributeCollectorTest.m */; };
+		798253B414CD88B10080BC3D /* RKHeaderDefinitionsContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 798253B214CD88B10080BC3D /* RKHeaderDefinitionsContainer.h */; };
+		798253B514CD88B10080BC3D /* RKHeaderDefinitionsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKHeaderDefinitionsContainer.m */; };
+		798253B614CD88B10080BC3D /* RKHeaderDefinitionsContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKHeaderDefinitionsContainer.m */; };
+		798253BA14CD89810080BC3D /* RKHeaderDefinitionsContainerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B914CD89810080BC3D /* RKHeaderDefinitionsContainerTest.m */; };
 		79F673AE14C84A9E005D03FA /* RKDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673AC14C84A9E005D03FA /* RKDocument.h */; };
 		79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
 		79F673B014C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
@@ -56,10 +56,10 @@
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
 		797DA1C814C97E05000DDAF3 /* RKSectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSectionTest.h; path = Document/RKSectionTest.h; sourceTree = "<group>"; };
 		797DA1C914C97E05000DDAF3 /* RKSectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSectionTest.m; path = Document/RKSectionTest.m; sourceTree = "<group>"; };
-		798253B214CD88B10080BC3D /* RKAttributeCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAttributeCollector.h; path = Export/RKAttributeCollector.h; sourceTree = "<group>"; };
-		798253B314CD88B10080BC3D /* RKAttributeCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAttributeCollector.m; path = Export/RKAttributeCollector.m; sourceTree = "<group>"; };
-		798253B814CD89810080BC3D /* RKAttributeCollectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKAttributeCollectorTest.h; sourceTree = "<group>"; };
-		798253B914CD89810080BC3D /* RKAttributeCollectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKAttributeCollectorTest.m; sourceTree = "<group>"; };
+		798253B214CD88B10080BC3D /* RKHeaderDefinitionsContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKHeaderDefinitionsContainer.h; path = Export/RKHeaderDefinitionsContainer.h; sourceTree = "<group>"; };
+		798253B314CD88B10080BC3D /* RKHeaderDefinitionsContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKHeaderDefinitionsContainer.m; path = Export/RKHeaderDefinitionsContainer.m; sourceTree = "<group>"; };
+		798253B814CD89810080BC3D /* RKHeaderDefinitionsContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKHeaderDefinitionsContainerTest.h; sourceTree = "<group>"; };
+		798253B914CD89810080BC3D /* RKHeaderDefinitionsContainerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKHeaderDefinitionsContainerTest.m; sourceTree = "<group>"; };
 		79F673AC14C84A9E005D03FA /* RKDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocument.h; path = Document/RKDocument.h; sourceTree = "<group>"; };
 		79F673AD14C84A9E005D03FA /* RKDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocument.m; path = Document/RKDocument.m; sourceTree = "<group>"; };
 		79F673B314C84ACC005D03FA /* RKDocumentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentTest.h; path = Document/RKDocumentTest.h; sourceTree = "<group>"; };
@@ -178,8 +178,8 @@
 			children = (
 				79F673CD14C883EB005D03FA /* RKWriter.h */,
 				79F673CE14C883EB005D03FA /* RKWriter.m */,
-				798253B214CD88B10080BC3D /* RKAttributeCollector.h */,
-				798253B314CD88B10080BC3D /* RKAttributeCollector.m */,
+				798253B214CD88B10080BC3D /* RKHeaderDefinitionsContainer.h */,
+				798253B314CD88B10080BC3D /* RKHeaderDefinitionsContainer.m */,
 			);
 			name = Export;
 			sourceTree = "<group>";
@@ -211,8 +211,8 @@
 			children = (
 				79F673D214C88404005D03FA /* RKWriterTest.h */,
 				79F673D314C88404005D03FA /* RKWriterTest.m */,
-				798253B814CD89810080BC3D /* RKAttributeCollectorTest.h */,
-				798253B914CD89810080BC3D /* RKAttributeCollectorTest.m */,
+				798253B814CD89810080BC3D /* RKHeaderDefinitionsContainerTest.h */,
+				798253B914CD89810080BC3D /* RKHeaderDefinitionsContainerTest.m */,
 			);
 			name = Export;
 			sourceTree = "<group>";
@@ -230,7 +230,7 @@
 				79F673B814C84AE0005D03FA /* RKSection.h in Headers */,
 				79F673CC14C875BB005D03FA /* RKTypes.h in Headers */,
 				79F673CF14C883EB005D03FA /* RKWriter.h in Headers */,
-				798253B414CD88B10080BC3D /* RKAttributeCollector.h in Headers */,
+				798253B414CD88B10080BC3D /* RKHeaderDefinitionsContainer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +334,7 @@
 				79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */,
 				79F673B914C84AE0005D03FA /* RKSection.m in Sources */,
 				79F673D014C883EB005D03FA /* RKWriter.m in Sources */,
-				798253B514CD88B10080BC3D /* RKAttributeCollector.m in Sources */,
+				798253B514CD88B10080BC3D /* RKHeaderDefinitionsContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,8 +348,8 @@
 				79F673D114C883EB005D03FA /* RKWriter.m in Sources */,
 				79F673D414C88404005D03FA /* RKWriterTest.m in Sources */,
 				797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */,
-				798253B614CD88B10080BC3D /* RKAttributeCollector.m in Sources */,
-				798253BA14CD89810080BC3D /* RKAttributeCollectorTest.m in Sources */,
+				798253B614CD88B10080BC3D /* RKHeaderDefinitionsContainer.m in Sources */,
+				798253BA14CD89810080BC3D /* RKHeaderDefinitionsContainerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +371,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
