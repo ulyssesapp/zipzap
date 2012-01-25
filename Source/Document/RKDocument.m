@@ -44,7 +44,7 @@
 
 - (NSData *)RTF
 {
-    return [RKWriter RTFfromDocument:self];
+    return [RKWriter RTFfromDocument: self];
 }
 
 /*!
@@ -53,7 +53,7 @@
  */
 - (NSFileWrapper *)RTFD
 {
-    return [RKWriter RTFDfromDocument:self];    
+    return [RKWriter RTFDfromDocument: self];    
 }
 
 @end
