@@ -90,7 +90,7 @@
         index = [colors count] - 1;
     }
     
-    return index;
+    return index + 1;
 }
 
 - (NSArray *)collectedFonts
