@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RKWriterTest : NSObject
+@interface RKWriterTest : SenTestCase
 
 @end
