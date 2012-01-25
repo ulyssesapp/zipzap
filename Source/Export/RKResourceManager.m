@@ -6,18 +6,18 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKHeaderDefinitionsContainer.h"
+#import "RKResourceManager.h"
 #import "RKSection.h"
 
 @class RKDocument, RKSection;
 
-@interface RKHeaderDefinitionsContainer()
+@interface RKResourceManager()
 {
     NSMutableArray *fonts;
     NSMutableArray *colors;
 }
 
-- (RKHeaderDefinitionsContainer *)init;
+- (RKResourceManager *)init;
 
 /*!
   @abstract Adds the name of the font (without traits) to the set of registered fonts
@@ -31,26 +31,9 @@
 
 @end
 
-@implementation RKHeaderDefinitionsContainer
+@implementation RKResourceManager
 
-+ (RKHeaderDefinitionsContainer *)headerDefinitionsFromDocument:(RKDocument *)document
-{
-    RKHeaderDefinitionsContainer *definitions = [[RKHeaderDefinitionsContainer alloc] init];
-    
-    for (RKSection *section in document.sections) {
-        NSRange fullRange = NSMakeRange(0, [section.content length]);
-        
-        [section.content enumerateAttributesInRange:fullRange options:0 usingBlock:^(NSDictionary *attributes, NSRange range, BOOL *stop) {
-                [definitions addFontAttribute:[attributes objectForKey:NSFontAttributeName]];
-                [definitions addColorAttribute:[attributes objectForKey:NSBackgroundColorAttributeName]];
-                [definitions addColorAttribute:[attributes objectForKey:NSForegroundColorAttributeName]];
-            }];
-    }
-    
-    return definitions;
-}
-
-- (RKHeaderDefinitionsContainer *)init
+- (RKResourceManager *)init
 {
     self = [super init];
     
@@ -82,12 +65,32 @@
 
 - (NSUInteger)indexOfFont:(NSFont *)font
 {
-    return [fonts indexOfObject: [font familyName]];
+    NSAssert(font, @"No font given");
+    
+    NSString *familyName = [font familyName];
+    NSUInteger index = [fonts indexOfObject: familyName];
+    
+    if (index == NSNotFound) {
+        [fonts addObject: familyName];
+        index = [fonts count] - 1;
+    }
+    
+    return index;
 }
 
 - (NSUInteger)indexOfColor:(NSColor *)color
 {
-    return [colors indexOfObject: [color colorWithAlphaComponent: (CGFloat)1.0]];
+    NSAssert(color, @"No color given");
+    
+    NSColor *rgbColor = [color colorWithAlphaComponent: (CGFloat)1.0];
+    NSUInteger index = [colors indexOfObject: rgbColor];
+    
+    if (index == NSNotFound) {
+        [colors addObject: rgbColor];
+        index = [colors count] - 1;
+    }
+    
+    return index;
 }
 
 - (NSArray *)collectedFonts

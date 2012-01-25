@@ -1,5 +1,5 @@
 //
-//  RKHeaderDefinitionsContainer.h
+//  RKResourceManager.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 23.01.12.
@@ -11,14 +11,11 @@
 @class RKDocument;
 
 /*!
- @abstract Collects font and color definitions from an RKDocument as required for the document header
+ @abstract Manages files, font and color definitions from an RKDocument
  */
-@interface RKHeaderDefinitionsContainer : NSObject
+@interface RKResourceManager : NSObject
 
-/*!
- @abstract Collects font and color definitions and stores them to a dictionary
- */
-+ (RKHeaderDefinitionsContainer *)headerDefinitionsFromDocument:(RKDocument *)document;
+- (RKResourceManager *)init;
 
 /*!
  @abstract Returns the index of a font
@@ -31,12 +28,12 @@
 - (NSUInteger)indexOfColor:(NSColor *)color;
 
 /*!
- @abstract Returns the collected fonts
+ @abstract Returns the collected font families sorted by their indices
  */
 - (NSArray *)collectedFonts;
 
 /*!
- @abstract Returns the collected colors
+ @abstract Returns the collected colors sorted by their indices
  */
 - (NSArray *)collectedColors;
 

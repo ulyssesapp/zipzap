@@ -1,5 +1,5 @@
 //
-//  RKHeaderDefinitionsContainerTest.h
+//  RKResourceManagerTest.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 23.01.12.
@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKHeaderDefinitionsContainerTest : SenTestCase
+@interface RKResourceManagerTest : SenTestCase
 
 @end
