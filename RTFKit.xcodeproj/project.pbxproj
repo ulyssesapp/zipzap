@@ -19,6 +19,7 @@
 		798253B614CD88B10080BC3D /* RKResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKResourceManager.m */; };
 		79A3597C14D00AB70076A5F7 /* RKResourceManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A3597914D00AB70076A5F7 /* RKResourceManagerTest.m */; };
 		79A3597D14D00AB70076A5F7 /* RKWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A3597B14D00AB70076A5F7 /* RKWriterTest.m */; };
+		79A3597F14D024A80076A5F7 /* Test Data in Resources */ = {isa = PBXBuildFile; fileRef = 79A3597E14D024A80076A5F7 /* Test Data */; };
 		79F673AE14C84A9E005D03FA /* RKDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673AC14C84A9E005D03FA /* RKDocument.h */; };
 		79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
 		79F673B014C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
@@ -62,6 +63,7 @@
 		79A3597914D00AB70076A5F7 /* RKResourceManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourceManagerTest.m; path = Export/RKResourceManagerTest.m; sourceTree = "<group>"; };
 		79A3597A14D00AB70076A5F7 /* RKWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriterTest.h; path = Export/RKWriterTest.h; sourceTree = "<group>"; };
 		79A3597B14D00AB70076A5F7 /* RKWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriterTest.m; path = Export/RKWriterTest.m; sourceTree = "<group>"; };
+		79A3597E14D024A80076A5F7 /* Test Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Test Data"; sourceTree = "<group>"; };
 		79F673AC14C84A9E005D03FA /* RKDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocument.h; path = Document/RKDocument.h; sourceTree = "<group>"; };
 		79F673AD14C84A9E005D03FA /* RKDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocument.m; path = Document/RKDocument.m; sourceTree = "<group>"; };
 		79F673B314C84ACC005D03FA /* RKDocumentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentTest.h; path = Document/RKDocumentTest.h; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			children = (
 				50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */,
 				50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */,
+				79A3597E14D024A80076A5F7 /* Test Data */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A3597F14D024A80076A5F7 /* Test Data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
