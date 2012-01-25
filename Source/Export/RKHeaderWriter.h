@@ -19,5 +19,4 @@
  */
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourceManager *)resources;
 
-
 @end

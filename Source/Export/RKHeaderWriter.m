@@ -7,6 +7,7 @@
 //
 
 #import "RKHeaderWriter.h"
+#import "RKResourceManager.h"
 
 @interface RKHeaderWriter()
 /*!
@@ -34,20 +35,27 @@
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourceManager *)resources
 {
-    return [NSString stringWithFormat:@"\rtf1\ansi\ansicpg1252%@%@%@%@",
+    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252%@\n%@\n%@\n%@\n",
             [RKHeaderWriter fontTableFromResourceManager:resources],
             [RKHeaderWriter colorTableFromResourceManager:resources],
             [RKHeaderWriter documentInfoFromDocument:document],
             [RKHeaderWriter documentFormatFromDocument:document]
-            ];
+           ];
 }
 
-/*!
- @abstract Generates the font table using a resource manager
- */
 + (NSString *)fontTableFromResourceManager:(RKResourceManager *)resources
 {
+    NSMutableString *fontTable = [NSMutableString stringWithString:@"{\\fonttbl"];
+    NSUInteger index = 0;
     
+    for (NSString *fontFamilyName in resources.collectedFonts) {
+        [fontTable appendFormat:@"\\f%i\\fnil\\fcharset0 %@;", index, fontFamilyName];
+        index ++;
+    }
+    
+    [fontTable appendString: @"}"];
+    
+    return fontTable;
 }
 
 @end
