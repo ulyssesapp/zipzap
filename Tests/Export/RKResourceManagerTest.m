@@ -29,7 +29,7 @@
 
 }
 
-- (void)testCollectingColors
+- (void)testIndexingColors
 {
     RKResourceManager *resourceManager = [[RKResourceManager alloc] init];
     
