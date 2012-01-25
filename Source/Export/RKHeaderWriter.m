@@ -23,7 +23,7 @@
 /*!
  @abstract Generates the document informations from a document
  */
-+ (NSString *)documentInfoFromDocument:(RKDocument *)document;
++ (NSString *)documentMetaDataFromDocument:(RKDocument *)document;
 
 /*!
  @abstract Generates the document layout settings from a document
@@ -38,7 +38,7 @@
     return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252%@\n%@\n%@\n%@\n",
             [RKHeaderWriter fontTableFromResourceManager:resources],
             [RKHeaderWriter colorTableFromResourceManager:resources],
-            [RKHeaderWriter documentInfoFromDocument:document],
+            [RKHeaderWriter documentMetaDataFromDocument:document],
             [RKHeaderWriter documentFormatFromDocument:document]
            ];
 }
@@ -56,6 +56,28 @@
     [fontTable appendString: @"}"];
     
     return fontTable;
+}
+
++ (NSString *)colorTableFromResourceManager:(RKResourceManager *)resources
+{
+    NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl"];
+    
+    for (NSColor *color in resources.collectedColors) {
+        [colorTable appendFormat:@"\\red%i\\green%i\\blue%i;", 
+         (NSUInteger)([color redComponent] * 255.0f), 
+         (NSUInteger)([color greenComponent] * 255.0f),
+         (NSUInteger)([color blueComponent] * 255.0f)
+        ];
+    }
+    
+    [colorTable appendString: @"}"];
+    
+    return colorTable;
+}
+
++ (NSString *)documentMetaDataFromDocument:(RKDocument *)document
+{
+    
 }
 
 @end
