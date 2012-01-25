@@ -18,12 +18,14 @@
 - (RKResourceManager *)init;
 
 /*!
- @abstract Returns the index of a font
+ @abstract Returns the index of a font. If the font is not indexed, it will be registered.
+ @discussion Only the family name of a font is registered, due to the requirements of the RTF header.
  */
 - (NSUInteger)indexOfFont:(NSFont *)font;
 
 /*!
- @abstract Returns the index of a color
+ @abstract Returns the index of a color. If the color is not indexed, it will be registered.
+ @discussion Colors will be registered without the alpha channel, due to the requirements of the RTF header.
  */
 - (NSUInteger)indexOfColor:(NSColor *)color;
 
