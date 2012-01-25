@@ -6,8 +6,11 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKBodyWriterTest.h"
+#import "RKDocument.h"
+#import "RKResourceManager.h"
+#import "RKHeaderWriter.h"
 
 @implementation RKBodyWriterTest
+
 
 @end
