@@ -22,6 +22,22 @@
 {
     NSDateComponents *customComponents = [[NSDateComponents alloc] init];
 
+    // Date with two digits
+    [customComponents setYear:2001];
+    [customComponents setMonth:12];
+    [customComponents setDay:13];
+    [customComponents setHour:14];
+    [customComponents setMinute:15];
+    [customComponents setSecond:16];
+    
+    NSDate *customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
+    
+    STAssertEqualObjects([RKConversion RTFDate: customDate],
+                         @"\\yr2001 \\mo12 \\dy13 \\hr14 \\min15 \\sec16",
+                         @"Invalid date conversion"
+                         );
+    
+    // Date with single digits
     [customComponents setYear:2001];
     [customComponents setMonth:2];
     [customComponents setDay:3];
@@ -29,12 +45,12 @@
     [customComponents setMinute:5];
     [customComponents setSecond:6];
     
-    NSDate *customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
+   customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
     
     STAssertEqualObjects([RKConversion RTFDate: customDate],
-                         @"\\yr2001 \\mo02 \\dy03 \\hr04 \\min05 \\sec06",
+                         @"\\yr2001 \\mo2 \\dy3 \\hr4 \\min5 \\sec6",
                          @"Invalid date conversion"
-                         );
+                         );    
 }
 
 @end

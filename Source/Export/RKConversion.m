@@ -21,7 +21,7 @@
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
-    [dateFormatter setDateFormat:@"'\\yr'yyyy '\\mo'MM '\\dy'dd '\\hr'HH '\\min'mm '\\sec'ss"];
+    [dateFormatter setDateFormat:@"'\\yr'yyyy '\\mo'M '\\dy'd '\\hr'H '\\min'm '\\sec's"];
     
     return [dateFormatter stringFromDate:date];  
 }
