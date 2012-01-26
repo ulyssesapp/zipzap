@@ -13,9 +13,9 @@
 
 - (void)testConvertToRTFString
 {
-    STAssertEqualObjects([RKConversion safeRTFString: @"\\"], @"\\\\", @"Invalid backslash conversion");
-    STAssertEqualObjects([RKConversion safeRTFString: @"{"], @"\\{", @"Invalid conversion of {");
-    STAssertEqualObjects([RKConversion safeRTFString: @"}"], @"\\}", @"Invalid conversion of }");
+    STAssertEqualObjects([@"\\" RTFEscapedString], @"\\\\", @"Invalid backslash conversion");
+    STAssertEqualObjects([@"{" RTFEscapedString], @"\\{", @"Invalid conversion of {");
+    STAssertEqualObjects([@"}" RTFEscapedString], @"\\}", @"Invalid conversion of }");
 }
 
 - (void)testConvertToRTFDate
@@ -32,7 +32,7 @@
     
     NSDate *customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
     
-    STAssertEqualObjects([RKConversion RTFDate: customDate],
+    STAssertEqualObjects([customDate RTFDate],
                          @"\\yr2001 \\mo12 \\dy13 \\hr14 \\min15 \\sec16",
                          @"Invalid date conversion"
                          );
@@ -47,7 +47,7 @@
     
    customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
     
-    STAssertEqualObjects([RKConversion RTFDate: customDate],
+    STAssertEqualObjects([customDate RTFDate],
                          @"\\yr2001 \\mo2 \\dy3 \\hr4 \\min5 \\sec6",
                          @"Invalid date conversion"
                          );    

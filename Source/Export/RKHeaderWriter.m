@@ -118,10 +118,10 @@ static NSDictionary *metaDataDescriptions;
             NSString *convertedValue;
             
             if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: @"s"]) {
-                convertedValue = [RKConversion safeRTFString: itemValue];
+                convertedValue = [itemValue RTFEscapedString];
             }
              else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: @"d"]) {
-                convertedValue = [RKConversion RTFDate: itemValue];
+                convertedValue = [itemValue RTFDate];
             }
             else {
                 NSAssert(false, @"Invalid meta data definitions");

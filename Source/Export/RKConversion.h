@@ -6,17 +6,21 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface RKConversion : NSObject
+@interface NSString (RKConversion)
 
 /*!
- @abstract Escapes a string to be stored directly in an RTF document
- @discussion Escapes the characters \ { }
+ @abstract Escapes a string for usages within an RTF file
+ @discussion Replaces \ { } and all characters outside the ANSI CP1252
  */
-+ (NSString *)safeRTFString:(NSString *)string;
+- (NSString *)RTFEscapedString;
+
+@end
+
+@interface NSDate (RKConversion)
 
 /*!
- @abstract Converts a date to the string representation used inside the RTF header
+ @abstract Converts a date to the date string representation used by RTF
  */
-+ (NSString *)RTFDate:(NSDate *)date;
+- (NSString *)RTFDate;
 
 @end

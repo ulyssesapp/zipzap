@@ -8,23 +8,26 @@
 
 #import "RKConversion.h"
 
-@implementation RKConversion
+@implementation NSString (RKConversion)
 
-+ (NSString *)safeRTFString:(NSString *)string
+- (NSString *)RTFEscapedString
 {
-    return [[[string stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"]
+    return [[[self stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"]
                 stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"]
                     stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
 }
 
-+ (NSString *)RTFDate:(NSDate *)date
+@end
+
+@implementation NSDate (RKConversion)
+
+- (NSString *)RTFDate
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 
     [dateFormatter setDateFormat:@"'\\yr'yyyy '\\mo'M '\\dy'd '\\hr'H '\\min'm '\\sec's"];
     
-    return [dateFormatter stringFromDate:date];  
+    return [dateFormatter stringFromDate:self];  
 }
 
 @end
-
