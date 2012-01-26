@@ -27,7 +27,7 @@
     
     if (self) {
         fonts = [NSMutableArray new];
-        colors = [NSMutableArray new];
+        colors = [NSMutableArray arrayWithObject: [NSColor blackColor]];
     }
     
     return self;
@@ -60,8 +60,7 @@
         index = [colors count] - 1;
     }
     
-    // RTF color indexing has offset 1
-    return index + 1;
+    return index;
 }
 
 - (NSArray *)fontFamilyNames

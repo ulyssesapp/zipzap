@@ -93,11 +93,13 @@ static NSDictionary *metaDataDescriptions;
     NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl"];
     
     [resources.colors enumerateObjectsUsingBlock:^(NSColor *color, NSUInteger index, BOOL *stop) {
-        [colorTable appendFormat:@"\\red%i\\green%i\\blue%i;", 
-         (NSUInteger)([color redComponent] * 255.0f), 
-         (NSUInteger)([color greenComponent] * 255.0f),
-         (NSUInteger)([color blueComponent] * 255.0f)
-         ];
+        if (index > 0) {
+            [colorTable appendFormat:@"\\red%i\\green%i\\blue%i;", 
+             (NSUInteger)([color redComponent] * 255.0f), 
+             (NSUInteger)([color greenComponent] * 255.0f),
+             (NSUInteger)([color blueComponent] * 255.0f)
+             ];
+        }
     }];
     
     [colorTable appendString: @"}"];
