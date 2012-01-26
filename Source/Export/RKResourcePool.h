@@ -1,5 +1,5 @@
 //
-//  RKResourceManager.h
+//  RKResourcePool.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 23.01.12.
@@ -13,7 +13,7 @@
 /*!
  @abstract Manages files, font and color definitions from an RKDocument
  */
-@interface RKResourceManager : NSObject
+@interface RKResourcePool : NSObject
 
 /*!
  @abstract Returns the index of a font. If the font is not indexed, it will be registered.

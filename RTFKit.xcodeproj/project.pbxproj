@@ -14,10 +14,10 @@
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
 		50317D6C14C4951D00F23C04 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
 		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
-		798253B414CD88B10080BC3D /* RKResourceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 798253B214CD88B10080BC3D /* RKResourceManager.h */; };
-		798253B514CD88B10080BC3D /* RKResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKResourceManager.m */; };
-		798253B614CD88B10080BC3D /* RKResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKResourceManager.m */; };
-		79A3597C14D00AB70076A5F7 /* RKResourceManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A3597914D00AB70076A5F7 /* RKResourceManagerTest.m */; };
+		798253B414CD88B10080BC3D /* RKResourcePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 798253B214CD88B10080BC3D /* RKResourcePool.h */; };
+		798253B514CD88B10080BC3D /* RKResourcePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKResourcePool.m */; };
+		798253B614CD88B10080BC3D /* RKResourcePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 798253B314CD88B10080BC3D /* RKResourcePool.m */; };
+		79A3597C14D00AB70076A5F7 /* RKResourcePoolTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A3597914D00AB70076A5F7 /* RKResourcePoolTest.m */; };
 		79A3597D14D00AB70076A5F7 /* RKWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A3597B14D00AB70076A5F7 /* RKWriterTest.m */; };
 		79A3597F14D024A80076A5F7 /* Test Data in Resources */ = {isa = PBXBuildFile; fileRef = 79A3597E14D024A80076A5F7 /* Test Data */; };
 		79A3598214D0418C0076A5F7 /* RKHeaderWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79A3598014D0418C0076A5F7 /* RKHeaderWriter.h */; };
@@ -67,10 +67,10 @@
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
 		797DA1C814C97E05000DDAF3 /* RKSectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSectionTest.h; path = Document/RKSectionTest.h; sourceTree = "<group>"; };
 		797DA1C914C97E05000DDAF3 /* RKSectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSectionTest.m; path = Document/RKSectionTest.m; sourceTree = "<group>"; };
-		798253B214CD88B10080BC3D /* RKResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKResourceManager.h; path = Export/RKResourceManager.h; sourceTree = "<group>"; };
-		798253B314CD88B10080BC3D /* RKResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourceManager.m; path = Export/RKResourceManager.m; sourceTree = "<group>"; };
-		79A3597814D00AB70076A5F7 /* RKResourceManagerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKResourceManagerTest.h; path = Export/RKResourceManagerTest.h; sourceTree = "<group>"; };
-		79A3597914D00AB70076A5F7 /* RKResourceManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourceManagerTest.m; path = Export/RKResourceManagerTest.m; sourceTree = "<group>"; };
+		798253B214CD88B10080BC3D /* RKResourcePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKResourcePool.h; path = Export/RKResourcePool.h; sourceTree = "<group>"; };
+		798253B314CD88B10080BC3D /* RKResourcePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourcePool.m; path = Export/RKResourcePool.m; sourceTree = "<group>"; };
+		79A3597814D00AB70076A5F7 /* RKResourcePoolTest.h */ = {isa = PBXFileReference; fileEncoding = 4; name = RKResourcePoolTest.h; path = Export/RKResourcePoolTest.h; sourceTree = "<group>"; };
+		79A3597914D00AB70076A5F7 /* RKResourcePoolTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourcePoolTest.m; path = Export/RKResourcePoolTest.m; sourceTree = "<group>"; };
 		79A3597A14D00AB70076A5F7 /* RKWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriterTest.h; path = Export/RKWriterTest.h; sourceTree = "<group>"; };
 		79A3597B14D00AB70076A5F7 /* RKWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriterTest.m; path = Export/RKWriterTest.m; sourceTree = "<group>"; };
 		79A3597E14D024A80076A5F7 /* Test Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Test Data"; sourceTree = "<group>"; };
@@ -203,8 +203,8 @@
 			children = (
 				79F673CD14C883EB005D03FA /* RKWriter.h */,
 				79F673CE14C883EB005D03FA /* RKWriter.m */,
-				798253B214CD88B10080BC3D /* RKResourceManager.h */,
-				798253B314CD88B10080BC3D /* RKResourceManager.m */,
+				798253B214CD88B10080BC3D /* RKResourcePool.h */,
+				798253B314CD88B10080BC3D /* RKResourcePool.m */,
 				79A3598014D0418C0076A5F7 /* RKHeaderWriter.h */,
 				79A3598114D0418C0076A5F7 /* RKHeaderWriter.m */,
 				79A3598A14D0424E0076A5F7 /* RKBodyWriter.h */,
@@ -240,8 +240,8 @@
 		79F673B214C84AA9005D03FA /* Export */ = {
 			isa = PBXGroup;
 			children = (
-				79A3597814D00AB70076A5F7 /* RKResourceManagerTest.h */,
-				79A3597914D00AB70076A5F7 /* RKResourceManagerTest.m */,
+				79A3597814D00AB70076A5F7 /* RKResourcePoolTest.h */,
+				79A3597914D00AB70076A5F7 /* RKResourcePoolTest.m */,
 				79A3597A14D00AB70076A5F7 /* RKWriterTest.h */,
 				79A3597B14D00AB70076A5F7 /* RKWriterTest.m */,
 				79A3598514D041A10076A5F7 /* RKHeaderWriterTest.h */,
@@ -267,7 +267,7 @@
 				79F673B814C84AE0005D03FA /* RKSection.h in Headers */,
 				79F673CC14C875BB005D03FA /* RKTypes.h in Headers */,
 				79F673CF14C883EB005D03FA /* RKWriter.h in Headers */,
-				798253B414CD88B10080BC3D /* RKResourceManager.h in Headers */,
+				798253B414CD88B10080BC3D /* RKResourcePool.h in Headers */,
 				79A3598214D0418C0076A5F7 /* RKHeaderWriter.h in Headers */,
 				79A3598C14D0424E0076A5F7 /* RKBodyWriter.h in Headers */,
 				79A3599314D05E480076A5F7 /* RKConversion.h in Headers */,
@@ -375,7 +375,7 @@
 				79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */,
 				79F673B914C84AE0005D03FA /* RKSection.m in Sources */,
 				79F673D014C883EB005D03FA /* RKWriter.m in Sources */,
-				798253B514CD88B10080BC3D /* RKResourceManager.m in Sources */,
+				798253B514CD88B10080BC3D /* RKResourcePool.m in Sources */,
 				79A3598314D0418C0076A5F7 /* RKHeaderWriter.m in Sources */,
 				79A3598D14D0424E0076A5F7 /* RKBodyWriter.m in Sources */,
 				79A3599414D05E480076A5F7 /* RKConversion.m in Sources */,
@@ -391,8 +391,8 @@
 				79F673BA14C84AE0005D03FA /* RKSection.m in Sources */,
 				79F673D114C883EB005D03FA /* RKWriter.m in Sources */,
 				797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */,
-				798253B614CD88B10080BC3D /* RKResourceManager.m in Sources */,
-				79A3597C14D00AB70076A5F7 /* RKResourceManagerTest.m in Sources */,
+				798253B614CD88B10080BC3D /* RKResourcePool.m in Sources */,
+				79A3597C14D00AB70076A5F7 /* RKResourcePoolTest.m in Sources */,
 				79A3597D14D00AB70076A5F7 /* RKWriterTest.m in Sources */,
 				79A3598414D0418C0076A5F7 /* RKHeaderWriter.m in Sources */,
 				79A3598914D041A20076A5F7 /* RKHeaderWriterTest.m in Sources */,

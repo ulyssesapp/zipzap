@@ -7,7 +7,7 @@
 //
 
 #import "RKHeaderWriter.h"
-#import "RKResourceManager.h"
+#import "RKResourcePool.h"
 #import "RKConversion.h"
 
 // Used to access the metaDataDescriptions 
@@ -22,12 +22,12 @@ enum {
 /*!
  @abstract Generates the font table using a resource manager
  */
-+ (NSString *)fontTableFromResourceManager:(RKResourceManager *)resources;
++ (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the color table using a resource manager
  */
-+ (NSString *)colorTableFromResourceManager:(RKResourceManager *)resources;
++ (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the document informations from a document
@@ -65,7 +65,7 @@ static NSDictionary *metaDataDescriptions;
                            ];
 }
 
-+ (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourceManager *)resources
++ (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
 {
     return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252%@\n%@\n%@\n%@\n",
             [RKHeaderWriter fontTableFromResourceManager:resources],
@@ -75,7 +75,7 @@ static NSDictionary *metaDataDescriptions;
            ];
 }
 
-+ (NSString *)fontTableFromResourceManager:(RKResourceManager *)resources
++ (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources
 {
     NSMutableString *fontTable = [NSMutableString stringWithString:@"{\\fonttbl"];
     NSUInteger index = 0;
@@ -90,7 +90,7 @@ static NSDictionary *metaDataDescriptions;
     return fontTable;
 }
 
-+ (NSString *)colorTableFromResourceManager:(RKResourceManager *)resources
++ (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources
 {
     NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl"];
     

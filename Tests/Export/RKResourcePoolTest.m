@@ -1,19 +1,19 @@
 //
-//  RKResourceManagerTest.m
+//  RKResourcePoolTest.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 23.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKResourceManagerTest.h"
-#import "RKResourceManager.h"
+#import "RKResourcePoolTest.h"
+#import "RKResourcePool.h"
 
-@implementation RKResourceManagerTest
+@implementation RKResourcePoolTest
 
 - (void)testIndexingFonts
 {
-    RKResourceManager *resourceManager = [[RKResourceManager alloc] init];
+    RKResourcePool *resourceManager = [[RKResourcePool alloc] init];
   
     // Find font regardless of its traits and size
     STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Helvetica" size:8]], (NSUInteger)0, @"Font not indexed");
@@ -31,7 +31,7 @@
 
 - (void)testIndexingColors
 {
-    RKResourceManager *resourceManager = [[RKResourceManager alloc] init];
+    RKResourcePool *resourceManager = [[RKResourcePool alloc] init];
     
     // Find color regardless of its alpha channel
     STAssertEquals([resourceManager indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.2 blue:0.1 alpha:0.1]], (NSUInteger)1, @"Color not indexed");

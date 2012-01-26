@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKResourceManager;
+@class RKResourcePool;
 @class RKDocument;
 
 /*!
@@ -17,6 +17,6 @@
 /*!
  @abstract Generates the header content of a RTF document based on a set of filtered resources (e.g. fonts, colors)
  */
-+ (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourceManager *)resources;
++ (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources;
 
 @end

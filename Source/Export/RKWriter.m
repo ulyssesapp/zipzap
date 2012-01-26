@@ -7,7 +7,7 @@
 //
 
 #import "RKWriter.h"
-#import "RKResourceManager.h"
+#import "RKResourcePool.h"
 #import "RKHeaderWriter.h"
 #import "RKBodyWriter.h"
 
@@ -30,7 +30,7 @@
 
 + (NSString *)RTFStringFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments
 {
-    RKResourceManager *resources;
+    RKResourcePool *resources;
     NSString *head, *body;
 
     body = [RKBodyWriter RTFBodyFromDocument:document usingRTFDAttachments:rtfdAttachments resources:&resources];

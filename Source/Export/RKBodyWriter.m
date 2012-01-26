@@ -7,14 +7,14 @@
 //
 
 #import "RKDocument.h"
-#import "RKResourceManager.h"
+#import "RKResourcePool.h"
 #import "RKBodyWriter.h"
 
 @implementation RKBodyWriter
 
-+ (NSString *)RTFBodyFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments resources:(RKResourceManager **)resources
++ (NSString *)RTFBodyFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments resources:(RKResourcePool **)resources
 {
-    *resources = [[RKResourceManager alloc] init];
+    *resources = [[RKResourcePool alloc] init];
     
     return @"";
 }

@@ -7,7 +7,7 @@
 //
 
 #import "RKDocument.h"
-#import "RKResourceManager.h"
+#import "RKResourcePool.h"
 #import "RKHeaderWriter.h"
 
 @implementation RKBodyWriterTest

@@ -8,12 +8,12 @@
 
 #import "RKHeaderWriterTest.h"
 #import "RKBodyWriter.h"
-#import "RKResourceManager.h"
+#import "RKResourcePool.h"
 #import "RKHeaderWriter.h"
 
 @interface RKHeaderWriter ()
-+ (NSString *)fontTableFromResourceManager:(RKResourceManager *)resources;
-+ (NSString *)colorTableFromResourceManager:(RKResourceManager *)resources;
++ (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
 + (NSString *)documentMetaDataFromDocument:(RKDocument *)document;
 + (NSString *)documentFormatFromDocument:(RKDocument *)document;
 @end
@@ -36,7 +36,7 @@
 
 - (void)testGeneratingFontTable
 {
-    RKResourceManager *resources = [[RKResourceManager alloc] init];
+    RKResourcePool *resources = [[RKResourcePool alloc] init];
     
     // Register some fonts
     [resources indexOfFont:[NSFont fontWithName:@"Times-Roman" size:8]];
@@ -58,7 +58,7 @@
 
 - (void)testGeneratingColorTable
 {
-    RKResourceManager *resources = [[RKResourceManager alloc] init];
+    RKResourcePool *resources = [[RKResourcePool alloc] init];
     
     // Register some fonts
     [resources indexOfColor:[NSColor colorWithSRGBRed:0 green:1 blue:0.5 alpha:1]];

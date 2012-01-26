@@ -1,17 +1,17 @@
 //
-//  RKHeaderDefinitionsContainer.m
+//  RKResourcePool.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 23.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKResourceManager.h"
+#import "RKResourcePool.h"
 #import "RKSection.h"
 
 @class RKDocument, RKSection;
 
-@interface RKResourceManager()
+@interface RKResourcePool()
 {
     NSMutableArray *fonts;
     NSMutableArray *colors;
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation RKResourceManager
+@implementation RKResourcePool
 
 - (id)init
 {
