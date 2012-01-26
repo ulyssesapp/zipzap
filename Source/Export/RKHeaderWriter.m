@@ -170,8 +170,9 @@ static NSDictionary *metaDataDescriptions;
                               (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
                               ]];   
     
+    // We disable ANSI replacements for UNICODE charracters in general
     // To prevent conflicts with text following the formatting tags, add a space
-    [attributes appendFormat:@" "];
+    [attributes appendFormat:@"\\uc0 "];
 
     return attributes;
 }

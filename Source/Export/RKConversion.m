@@ -12,9 +12,31 @@
 
 - (NSString *)RTFEscapedString
 {
-    return [[[self stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"]
-                stringByReplacingOccurrencesOfString:@"{" withString:@"\\{"]
-                    stringByReplacingOccurrencesOfString:@"}" withString:@"\\}"];
+    NSMutableString *escapedString = [NSMutableString new];
+    
+    for (NSUInteger position = 0; position < [self length]; position ++) {
+        unichar currentChar = [self characterAtIndex:position];
+        
+        switch (currentChar) {
+            // Charracters that have to be escaped due to the RTF standard
+            case '\\':
+            case '}':
+            case '{':
+                [escapedString appendFormat:@"\\%c", currentChar];
+                break;
+                
+            default:
+                if (currentChar > 127) {
+                    // All Non-ASCII are converted to \uN commands
+                    [escapedString appendFormat:@"\\u%u", currentChar];
+                }
+                else {
+                    [escapedString appendFormat:@"%c", currentChar];
+                }
+        }
+    }
+    
+    return escapedString;
 }
 
 @end

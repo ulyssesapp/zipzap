@@ -136,7 +136,8 @@
                           "\\margt2000"
                           "\\margl4000"
                           "\\margr6000"
-                          "\\margb8000 ",
+                          "\\margb8000"
+                          "\\uc0 ",
                           @"Document formatting options not correctly translated"
                          );
 
@@ -153,7 +154,8 @@
                          "\\margt2000"
                          "\\margl4000"
                          "\\margr6000"
-                         "\\margb8000 ",
+                         "\\margb8000"
+                         "\\uc0 ",
                          @"Document formatting options not correctly translated"
                          );    
     
@@ -170,7 +172,8 @@
                          "\\margt2000"
                          "\\margl4000"
                          "\\margr6000"
-                         "\\margb8000 ",
+                         "\\margb8000"
+                         "\\uc0 ",
                          @"Document formatting options not correctly translated"
                          );  
 }
