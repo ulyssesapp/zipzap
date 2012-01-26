@@ -19,6 +19,20 @@
 
 @implementation RKHeaderWriterTest
 
+- (NSDate *)customDateWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day hour:(NSUInteger)hour minute:(NSUInteger)minute second:(NSUInteger)second
+{
+    NSDateComponents *customComponents = [[NSDateComponents alloc] init];
+    
+    [customComponents setYear:year];
+    [customComponents setMonth:month];
+    [customComponents setDay:day];
+    [customComponents setHour:hour];
+    [customComponents setMinute:minute];
+    [customComponents setSecond:second];
+    
+    return [[NSCalendar currentCalendar] dateFromComponents:customComponents];
+}
+
 - (void)testGeneratingFontTable
 {
     RKResourceManager *resources = [[RKResourceManager alloc] init];
@@ -73,8 +87,8 @@
                                  @"Keywords",       NSKeywordsDocumentAttribute,
                                  @"Comment",        NSCommentDocumentAttribute,
                                  @"Editor",         NSEditorDocumentAttribute,
-                                 [NSDate dateWithString:@"2001-02-03 04:05:06 +0100"],  NSCreationTimeDocumentAttribute,
-                                 [NSDate dateWithString:@"2006-05-04 03:02:01 +0100"],  NSModificationTimeDocumentAttribute,
+                                 [self customDateWithYear:2001 month:2 day:3 hour:4 minute:5 second:6],  NSCreationTimeDocumentAttribute,
+                                 [self customDateWithYear:2006 month:5 day:4 hour:3 minute:2 second:1],  NSModificationTimeDocumentAttribute,
                                  @"Manager",        NSManagerDocumentAttribute,
                                  @"Category",       NSCategoryDocumentAttribute,
                                  nil
@@ -83,22 +97,22 @@
     [document setMetadata: metaData];
     
     STAssertEqualObjects([RKHeaderWriter documentMetaDataFromDocument:document],
-                          @"{\\title Title \\{\\} \\\\ }"
-                           "{\\company Company}"
-                           "{\\copyright Copyright}"
-                           "{\\subject Subject}"
-                           "{\\author Author}"
-                           "{\\keywords Keywords}"
-                           "{\\comment Comment}"
-                           "{\\editor Editor}"
-                           "{\\creatim \\yr2001 \\mo2 \\dy3 \\hr4 \\min5 \\sec6}"
-                           "{\\revtim \\yr2006 \\mo5 \\dy4 \\hr3 \\min2 \\sec1}"
-                           "{\\manager Manager}"
-                           "{\\category Category}",
+                          @"{\\info"
+                                "{\\title Title \\{\\} \\\\ }"
+                                "{\\*\\company Company}"
+                                "{\\*\\copyright Copyright}"
+                                "{\\subject Subject}"
+                                "{\\author Author}"
+                                "{\\keywords Keywords}"
+                                "{\\doccomm Comment}"
+                                "{\\editor Editor}"
+                                "{\\creatim \\yr2001 \\mo2 \\dy3 \\hr4 \\min5 \\sec6}"
+                                "{\\revtim \\yr2006 \\mo5 \\dy4 \\hr3 \\min2 \\sec1}"
+                                "{\\manager Manager}"
+                                "{\\category Category}"
+                            "}",
                           @"Invalid document meta data"
                          );
-
 }
-
 
 @end
