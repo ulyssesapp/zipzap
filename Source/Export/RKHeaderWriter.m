@@ -78,12 +78,10 @@ static NSDictionary *metaDataDescriptions;
 + (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources
 {
     NSMutableString *fontTable = [NSMutableString stringWithString:@"{\\fonttbl"];
-    NSUInteger index = 0;
     
-    for (NSString *fontFamilyName in resources.fontFamilyNames) {
+    [resources.fontFamilyNames enumerateObjectsUsingBlock:^(NSString *fontFamilyName, NSUInteger index, BOOL *stop) {
         [fontTable appendFormat:@"\\f%i\\fnil\\fcharset0 %@;", index, fontFamilyName];
-        index ++;
-    }
+    }];
     
     [fontTable appendString: @"}"];
     
@@ -94,13 +92,13 @@ static NSDictionary *metaDataDescriptions;
 {
     NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl"];
     
-    for (NSColor *color in resources.colors) {
+    [resources.colors enumerateObjectsUsingBlock:^(NSColor *color, NSUInteger index, BOOL *stop) {
         [colorTable appendFormat:@"\\red%i\\green%i\\blue%i;", 
          (NSUInteger)([color redComponent] * 255.0f), 
          (NSUInteger)([color greenComponent] * 255.0f),
          (NSUInteger)([color blueComponent] * 255.0f)
-        ];
-    }
+         ];
+    }];
     
     [colorTable appendString: @"}"];
     
