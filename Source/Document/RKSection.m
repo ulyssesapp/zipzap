@@ -97,19 +97,19 @@
     NSAssert(!(pageMask & (~RKPageSelectionFirst)) || !(pageMask & (~RKPageSelectionLeft)) || !(pageMask & (~RKPageSelectionRight)), 
              @"Invalid page mask used in query.");
     
-    return [map objectForKey:[NSNumber numberWithUnsignedInteger:pageMask]];
+    return [map objectForKey: [NSNumber numberWithUnsignedInteger:pageMask]];
 }
 
 - (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map
 {
     if (pageMask & RKPageSelectionFirst)
-        [map setObject:object forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionFirst]];
+        [map setObject:object forKey: [NSNumber numberWithUnsignedInteger:RKPageSelectionFirst]];
     
     if (pageMask & RKPageSelectionLeft)
-        [map setObject:object forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionLeft]];
+        [map setObject:object forKey: [NSNumber numberWithUnsignedInteger:RKPageSelectionLeft]];
     
     if (pageMask & RKPageSelectionRight)
-        [map setObject:object forKey:[NSNumber numberWithUnsignedInteger:RKPageSelectionRight]];
+        [map setObject:object forKey: [NSNumber numberWithUnsignedInteger:RKPageSelectionRight]];
 }
 
 @end
