@@ -15,6 +15,9 @@
  */
 @interface RKResourceManager : NSObject
 
+/*!
+ @abstract Designated initializer
+ */
 - (RKResourceManager *)init;
 
 /*!

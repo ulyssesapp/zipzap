@@ -17,6 +17,11 @@
 @interface RKDocument : NSObject
 
 /*!
+ @abstract Designated initializer
+ */
+- (void)init;
+
+/*!
  @abstract Creates a document based on an array of sections
  */
 + (RKDocument *)documentWithSections:(NSArray *)sections;

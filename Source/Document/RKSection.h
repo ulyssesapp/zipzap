@@ -19,6 +19,9 @@
  */
 + (id)sectionWithContent:(NSAttributedString *)content;
 
+/*!
+ @abstract Designated initializer
+ */
 - (id)init;
 
 /*!
