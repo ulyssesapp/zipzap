@@ -8,13 +8,20 @@
 
 #import "RKDocument.h"
 #import "RKResourcePool.h"
+#import "RKSectionWriter.h"
 #import "RKBodyWriter.h"
 
 @implementation RKBodyWriter
 
 + (NSString *)RTFBodyFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
+    NSMutableString *body = [NSMutableString new];
     
+    for (RKSection *section in document.sections) {
+        [body appendString: [RKSectionWriter RTFFromSection:section withAttachmentPolicy:attachmentPolicy resources:resources]];
+    }
+    
+    return body;
 }
 
 @end
