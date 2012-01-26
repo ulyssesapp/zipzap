@@ -17,9 +17,14 @@
 {
     NSMutableString *body = [NSMutableString new];
     
-    for (RKSection *section in document.sections) {
+    [document.sections enumerateObjectsUsingBlock:^(id section, NSUInteger index, BOOL *stop) {
         [body appendString: [RKSectionWriter RTFFromSection:section withAttachmentPolicy:attachmentPolicy resources:resources]];
-    }
+        
+        // Place a section separator only if we have more than one section
+        if (index < [document.sections count] - 1) {
+            [body appendString: @"\n\\sect\\sectd"];
+        }
+    }];
     
     return body;
 }
