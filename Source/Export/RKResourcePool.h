@@ -16,14 +16,14 @@
 @interface RKResourcePool : NSObject
 
 /*!
- @abstract Returns the index of a font. If the font is not indexed, it will be registered.
- @discussion Only the family name of a font is registered, due to the requirements of the RTF header.
+ @abstract Returns the index of a font. 
+ @discussion If the font is not indexed, it will be registered. Only the family name of a font is registered.
  */
 - (NSUInteger)indexOfFont:(NSFont *)font;
 
 /*!
- @abstract Returns the index of a color. If the color is not indexed, it will be registered.
- @discussion Colors will be registered without the alpha channel, due to the requirements of the RTF header.
+ @abstract Returns the index of a color. 
+ @discussion If the color is not indexed, it will be registered. Colors will be registered without the alpha channel.
  */
 - (NSUInteger)indexOfColor:(NSColor *)color;
 
