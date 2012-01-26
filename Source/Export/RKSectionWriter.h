@@ -8,8 +8,17 @@
 
 #import "RKWriter.h"
 
+@class RKResourcePool;
+
+/*!
+ @abstract Translates the content of an RTF section
+ */
 @interface RKSectionWriter : NSObject
 
+/*!
+ @abstract Translates an RKSection to RTF
+ @discussion Requires an attachment policy to specify how attached files are exported and a resource pool to collect fonts and colors.
+ */
 + (NSString *)RTFFromSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 @end

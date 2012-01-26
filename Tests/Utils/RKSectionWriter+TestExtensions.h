@@ -6,9 +6,16 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#ifndef RTFKit_RKSectionWriter_TestExtensions_h
-#define RTFKit_RKSectionWriter_TestExtensions_h
+#import "RKSection.h"
+#import "RKSectionWriter.h"
+#import "RKResourcePool.h"
+#import "RKWriter.h"
 
+@interface RKSectionWriter (TestExtensions)
 
++ (NSString *)sectionAttributesForSection:(RKSection *)section;
++ (NSString *)headersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSString *)footersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSString *)contentForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
-#endif
+@end
