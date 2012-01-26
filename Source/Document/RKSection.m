@@ -26,6 +26,7 @@
  @abstract Internally used to store an object in a map relate to a certain page selector
  */
 - (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map;
+
 @end
 
 
