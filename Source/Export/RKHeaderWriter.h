@@ -15,7 +15,8 @@
 @interface RKHeaderWriter : NSObject
 
 /*!
- @abstract Generates the header content of a RTF document based on a set of filtered resources (e.g. fonts, colors)
+ @abstract Generates the header content of a RTF document.
+ @discussion Requires a pool of filtered resources (e.g. fonts, colors)
  */
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources;
 

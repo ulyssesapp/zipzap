@@ -17,7 +17,7 @@
 
 /*!
  @abstract Generates the body content of a RTF document
- @discussion All resources collected during the operation are passed as an output argument
+ @discussion Requires an attachment policy to specify how attached files are exported and a resource pool to collect fonts and colors.
  */
 + (NSString *)RTFBodyFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)RKAttachmentPolicy resources:(RKResourcePool *)resources;
 
