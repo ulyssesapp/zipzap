@@ -80,7 +80,7 @@
                                  nil
                                 ];
 
-    [document setMetadata:metaData];
+    [document setMetadata: metaData];
     
     STAssertEqualObjects([RKHeaderWriter documentMetaDataFromDocument:document],
                           @"{\\title Title \\{\\} \\\\ }"
