@@ -16,7 +16,15 @@
  */
 @interface RKDocument : NSObject
 
+/*!
+ @abstract Creates a document based on an array of sections
+ */
 + (RKDocument *)documentWithSections:(NSArray *)sections;
+
+/*!
+ @abstract Creates a document based on an attributed string. 
+ @discussion The section containing the string will be automatically created.
+ */
 + (RKDocument *)documentWithAttributedString:(NSAttributedString *)string;
 
 /*!
