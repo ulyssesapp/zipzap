@@ -60,6 +60,7 @@
         index = [colors count] - 1;
     }
     
+    // RTF color indexing has offset 1
     return index + 1;
 }
 
