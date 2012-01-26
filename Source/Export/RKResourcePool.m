@@ -17,16 +17,6 @@
     NSMutableArray *colors;
 }
 
-/*!
-  @abstract Adds the name of the font (without traits) to the set of registered fonts
- */
-- (void)addFontAttribute:(NSFont *)font;
-
-/*!
- @abstract Adds a color as RGB color to the set of registered colors
- */
-- (void)addColorAttribute:(NSColor *)color;
-
 @end
 
 @implementation RKResourcePool
@@ -41,24 +31,6 @@
     }
     
     return self;
-}
-
-- (void)addFontAttribute:(NSFont *)font
-{
-    NSString *fontFamily = [font familyName];
-    
-    if (![fonts containsObject:fontFamily] && fontFamily)
-        [fonts addObject:fontFamily];
-}
-
-
-- (void)addColorAttribute:(NSColor *)color
-{
-    NSColor *rgbColor = [color colorWithAlphaComponent: (CGFloat)1.0];
-    
-    if (![colors containsObject:rgbColor] && rgbColor)
-        [colors addObject:rgbColor];
-   
 }
 
 - (NSUInteger)indexOfFont:(NSFont *)font
