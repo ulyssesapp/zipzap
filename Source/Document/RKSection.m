@@ -48,8 +48,8 @@
         indexOfFirstPage = 1;
         pageNumberingStyle = RKPageNumberingDecimal;
         
-        headers = [NSMapTable new];
-        footers = [NSMapTable new];
+        headers = [NSMapTable mapTableWithStrongToStrongObjects];
+        footers = [NSMapTable mapTableWithStrongToStrongObjects];
     }
     
     return self;
