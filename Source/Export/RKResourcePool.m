@@ -37,7 +37,7 @@
 {
     NSAssert(font, @"No font given");
     
-    NSString *familyName = [font familyName];
+    NSString *familyName = font.familyName;
     NSUInteger index = [fonts indexOfObject: familyName];
     
     if (index == NSNotFound) {
@@ -52,11 +52,11 @@
 {
     NSAssert(color, @"No color given");
     
-    NSColor *rgbColor = [color colorWithAlphaComponent: (CGFloat)1.0];
-    NSUInteger index = [colors indexOfObject: rgbColor];
+    NSColor *opaqueColor = [color colorWithAlphaComponent: 1.0];
+    NSUInteger index = [colors indexOfObject: opaqueColor];
     
     if (index == NSNotFound) {
-        [colors addObject: rgbColor];
+        [colors addObject: opaqueColor];
         index = [colors count] - 1;
     }
     
