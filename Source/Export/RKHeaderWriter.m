@@ -135,4 +135,44 @@ static NSDictionary *metaDataDescriptions;
     return infoTable;
 }
 
++ (NSString *)documentFormatFromDocument:(RKDocument *)document
+{
+    NSMutableString *attributes = [NSMutableString string];
+    
+    if (document.hyphenationEnabled)
+        [attributes appendFormat:@"\\hyphauto"];
+    
+    switch (document.footnotePlacement) {
+        case RKFootnotePlacementSamePage:
+            [attributes appendFormat:@"\\fet0"];
+            break;
+        case RKFootnotePlacementDocumentEnd:
+            [attributes appendFormat:@"\\fet1\\enddoc\\aenddoc"];
+            break;
+        case RKFootnotePlacementSectionEnd:
+            [attributes appendFormat:@"\\fet1\\endnotes\\aendnotes"];
+            break;
+    }
+    
+    if (document.pageOrientation == RKPageOrientationLandscape)
+        [attributes appendFormat:@"\\landscape"];
+    
+    [attributes appendFormat:[NSString stringWithFormat:@"\\paperw%u\\paperh%u", 
+                                (NSUInteger)RKPointsToTwips(document.pageSize.width), 
+                                (NSUInteger)RKPointsToTwips(document.pageSize.height)
+                              ]];
+    
+    [attributes appendFormat:[NSString stringWithFormat:@"\\margt%u\\margl%u\\margr%u\\margb%u", 
+                              (NSUInteger)RKPointsToTwips(document.pageInsets.top), 
+                              (NSUInteger)RKPointsToTwips(document.pageInsets.left), 
+                              (NSUInteger)RKPointsToTwips(document.pageInsets.right), 
+                              (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
+                              ]];   
+    
+    // To prevent conflicts with text following the formatting tags, add a space
+    [attributes appendFormat:@" "];
+
+    return attributes;
+}
+
 @end

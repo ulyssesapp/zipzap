@@ -115,4 +115,64 @@
                          );
 }
 
+- (void)testGeneratingDocumentFormattingData
+{
+    RKDocument *document = [[RKDocument alloc] init];
+    RKPageInsets insets = {.top = 100.0, .left = 200.0, .right = 300.0, .bottom = 400.0};
+
+    // Test setting: Hyphenation, Footnotes, Overriding default size / margins, portrait format
+    [document setHyphenationEnabled:YES];
+    [document setFootnotePlacement:RKFootnotePlacementSamePage];
+    [document setPageSize:NSMakeSize(100.0, 200.0)];
+    [document setPageInsets:insets];
+    [document setPageOrientation:RKPageOrientationPortrait];
+
+    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+                         @"\\hyphauto"
+                          "\\fet0"
+                          "\\paperw2000"
+                          "\\paperh4000"
+                          "\\margt2000"
+                          "\\margl4000"
+                          "\\margr6000"
+                          "\\margb8000 ",
+                          @"Document formatting options not correctly translated"
+                         );
+
+    // Test setting: No Hyphenation, Document endnotes, landscape format    
+    [document setHyphenationEnabled:NO];
+    [document setFootnotePlacement:RKFootnotePlacementDocumentEnd];
+    [document setPageOrientation:RKPageOrientationLandscape];
+    
+    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+                         @"\\fet1\\enddoc\\aenddoc"
+                         "\\landscape"
+                         "\\paperw2000"
+                         "\\paperh4000"
+                         "\\margt2000"
+                         "\\margl4000"
+                         "\\margr6000"
+                         "\\margb8000 ",
+                         @"Document formatting options not correctly translated"
+                         );    
+    
+    // Test setting: No Hyphenation, Section endnotes, landscape format    
+    [document setHyphenationEnabled:NO];
+    [document setFootnotePlacement:RKFootnotePlacementSectionEnd];
+    [document setPageOrientation:RKPageOrientationLandscape];
+    
+    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+                         @ "\\fet1\\endnotes\\aendnotes"
+                         "\\landscape"
+                         "\\paperw2000"
+                         "\\paperh4000"
+                         "\\margt2000"
+                         "\\margl4000"
+                         "\\margr6000"
+                         "\\margb8000 ",
+                         @"Document formatting options not correctly translated"
+                         );  
+}
+
+
 @end
