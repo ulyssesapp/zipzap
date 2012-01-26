@@ -12,16 +12,14 @@
 
 @implementation RKDocumentTest
 
-// Create a document with a given array of sections
 - (void)testSimpleDocumentWithSection
 {
     NSArray *someArray = [NSArray new];
     RKDocument *document = [RKDocument documentWithSections:someArray];
-    
+
     STAssertEqualObjects(document.sections, someArray, @"Initialization failure");
 }
 
-// Create a document with a given attributed string
 - (void)testSimpleDocumentWithAttributedString
 {
     NSAttributedString *someString = [[NSAttributedString alloc] initWithString:@"Some String"];

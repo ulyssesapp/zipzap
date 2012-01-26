@@ -39,4 +39,10 @@
     return [NSString stringWithFormat:@"{%@\n%@}\n", head, body];
 }
 
++ (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
+{
+    NSAssert(false, @"Not implemented");
+    return nil;
+}
+
 @end

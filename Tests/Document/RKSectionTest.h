@@ -5,7 +5,7 @@
 //  Created by Friedrich Gräter on 20.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
-#import <SenTestingKit/SenTestingKit.h>
+
 #import "RKSection.h"
 
 @interface RKSectionTest : SenTestCase

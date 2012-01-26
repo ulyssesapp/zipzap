@@ -38,6 +38,7 @@ enum {
  @abstract Generates the document layout settings from a document
  */
 + (NSString *)documentFormatFromDocument:(RKDocument *)document;
+
 @end
 
 @implementation RKHeaderWriter

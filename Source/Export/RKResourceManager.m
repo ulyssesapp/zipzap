@@ -17,8 +17,6 @@
     NSMutableArray *colors;
 }
 
-- (RKResourceManager *)init;
-
 /*!
   @abstract Adds the name of the font (without traits) to the set of registered fonts
  */
@@ -33,13 +31,13 @@
 
 @implementation RKResourceManager
 
-- (RKResourceManager *)init
+- (id)init
 {
     self = [super init];
     
     if (self) {
-        fonts = [NSMutableArray array];
-        colors = [NSMutableArray array];
+        fonts = [NSMutableArray new];
+        colors = [NSMutableArray new];
     }
     
     return self;

@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
-
 @interface RKWriterTest : SenTestCase
 
 @end

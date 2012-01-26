@@ -7,7 +7,6 @@
 //
 
 #import "RKBodyWriter.h"
-#import <SenTestingKit/SenTestingKit.h>
 
 @interface RKBodyWriterTest : SenTestCase
 

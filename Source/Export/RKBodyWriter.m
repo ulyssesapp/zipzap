@@ -12,7 +12,7 @@
 
 @implementation RKBodyWriter
 
-+ (NSString *)RTFBodyFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments resources:(RKResourceManager *__autoreleasing *)resources
++ (NSString *)RTFBodyFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments resources:(RKResourceManager **)resources
 {
     *resources = [[RKResourceManager alloc] init];
     

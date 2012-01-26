@@ -9,6 +9,7 @@
 #import "RKHeaderWriterTest.h"
 #import "RKBodyWriter.h"
 #import "RKResourceManager.h"
+#import "RKHeaderWriter.h"
 
 @interface RKHeaderWriter ()
 + (NSString *)fontTableFromResourceManager:(RKResourceManager *)resources;
