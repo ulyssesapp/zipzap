@@ -16,11 +16,6 @@
 @interface RKResourceManager : NSObject
 
 /*!
- @abstract Designated initializer
- */
-- (RKResourceManager *)init;
-
-/*!
  @abstract Returns the index of a font. If the font is not indexed, it will be registered.
  @discussion Only the family name of a font is registered, due to the requirements of the RTF header.
  */

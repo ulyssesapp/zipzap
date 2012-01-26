@@ -20,11 +20,6 @@
 + (id)sectionWithContent:(NSAttributedString *)content;
 
 /*!
- @abstract Designated initializer
- */
-- (id)init;
-
-/*!
  @abstract Initializes a section with a given content
  */
 - (id)initWithContent:(NSAttributedString *)content;
