@@ -10,7 +10,8 @@
  */
 typedef enum {
     RKFootnotePlacementSamePage     = 0,
-    RKFootnotePlacementDocumentEnd  = 1
+    RKFootnotePlacementDocumentEnd  = 1,
+    RKFootnotePlacementSectionEnd   = 2
 } RKFootnotePlacement;
 
 /*!
@@ -50,3 +51,14 @@ typedef enum {
     RKPageSelectorAll  = 0xFFFF
 }RKPageSelectionMask;
 
+/*!
+ @abstract Simple conversions from Points to TWIPS
+ @discussion (1 TWIP = 1 / 20 Point = 1 / 1440 inch)
+ */
+#define RKPointsToTwips(__points)       ((__points) * 20)
+
+/*!
+ @abstract Simple conversions from TWIPS to Points
+ @see RKTwipsToPoints
+ */
+#define RKTwipsToPoints(__twips)        ((__twips) / 20)
