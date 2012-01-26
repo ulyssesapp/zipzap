@@ -10,4 +10,9 @@
 
 @implementation RKAttributedStringWriter
 
++ (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
+{
+    return @"";
+}
+
 @end
