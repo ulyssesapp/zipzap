@@ -20,9 +20,18 @@
 
 - (void)testConvertToRTFDate
 {
-    #warning FIXME: Adapt date to time zone
+    NSDateComponents *customComponents = [[NSDateComponents alloc] init];
 
-    STAssertEqualObjects([RKConversion RTFDate: [NSDate dateWithString: @"2001-02-03 04:05:06 +0100"]],
+    [customComponents setYear:2001];
+    [customComponents setMonth:2];
+    [customComponents setDay:3];
+    [customComponents setHour:4];
+    [customComponents setMinute:5];
+    [customComponents setSecond:6];
+    
+    NSDate *customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
+    
+    STAssertEqualObjects([RKConversion RTFDate: customDate],
                          @"\\yr2001 \\mo02 \\dy03 \\hr04 \\min05 \\sec06",
                          @"Invalid date conversion"
                          );
