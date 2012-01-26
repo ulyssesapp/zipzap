@@ -12,9 +12,9 @@
 
 @implementation RKBodyWriter
 
-+ (NSString *)RTFBodyFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments resources:(RKResourcePool *)resources
++ (NSString *)RTFBodyFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    return @"";
+    
 }
 
 @end

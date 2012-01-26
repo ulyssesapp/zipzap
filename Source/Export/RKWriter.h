@@ -8,10 +8,21 @@
 
 @class RKDocument;
 
+typedef enum {
+    RKIgnoreAttachedFiles = 0,
+    RKEmbedAttachedFiles = 1,
+    RKReferenceAttachedFilesInRTFD = 2
+}RKAttachmentPolicy;
+
 /*!
  @abstract The internally used RTF writer
  */
 @interface RKWriter : NSObject
+
+/*!
+ @abstract Builds an RTF document without attached files
+ */
++ (NSData *)PlainRTFfromDocument:(RKDocument *)document;
 
 /*!
  @abstract Builds an RTF from an RTFDocument

@@ -68,6 +68,11 @@
     return [RKWriter RTFfromDocument: self];
 }
 
+- (NSData *)PlainRTF
+{
+    return [RKWriter PlainRTFfromDocument: self];
+}
+
 - (NSFileWrapper *)RTFD
 {
     return [RKWriter RTFDfromDocument: self];    

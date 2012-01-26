@@ -43,6 +43,11 @@
 - (NSData *)RTF;
 
 /*!
+ @abstract Exports the document as RTF without pictures
+ */
+- (NSData *)PlainRTF;
+
+/*!
  @abstract Exports the document as RTFD 
  @discussion Creates a file wrapper containing the RTF and all referenced pictures
  */
