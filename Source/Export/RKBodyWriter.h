@@ -17,6 +17,6 @@
  @abstract Generates the body content of a RTF document
  @discussion All resources collected during the operation are passed as an output argument
  */
-+ (NSString *)RTFBodyFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments resources:(RKResourcePool **)resources;
++ (NSString *)RTFBodyFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments resources:(RKResourcePool *)resources;
 
 @end

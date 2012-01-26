@@ -30,9 +30,9 @@
 
 + (NSString *)RTFStringFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments
 {
-    RKResourcePool *resources;
+    RKResourcePool *resources = [[RKResourcePool alloc] init];
 
-    NSString *body = [RKBodyWriter RTFBodyFromDocument:document usingRTFDAttachments:rtfdAttachments resources:&resources];
+    NSString *body = [RKBodyWriter RTFBodyFromDocument:document usingRTFDAttachments:rtfdAttachments resources:resources];
     NSString *head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];
 
     return [NSString stringWithFormat:@"{%@\n%@}\n", head, body];
