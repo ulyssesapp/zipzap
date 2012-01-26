@@ -25,16 +25,15 @@
 
 + (NSData *)RTFfromDocument:(RKDocument *)document
 {
-    return [[RKWriter RTFStringFromDocument:document usingRTFDAttachments:NO] dataUsingEncoding:NSASCIIStringEncoding];
+    return [[self RTFStringFromDocument:document usingRTFDAttachments:NO] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 + (NSString *)RTFStringFromDocument:(RKDocument *)document usingRTFDAttachments:(BOOL)rtfdAttachments
 {
     RKResourcePool *resources;
-    NSString *head, *body;
 
-    body = [RKBodyWriter RTFBodyFromDocument:document usingRTFDAttachments:rtfdAttachments resources:&resources];
-    head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];
+    NSString *body = [RKBodyWriter RTFBodyFromDocument:document usingRTFDAttachments:rtfdAttachments resources:&resources];
+    NSString *head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];
 
     return [NSString stringWithFormat:@"{%@\n%@}\n", head, body];
 }
