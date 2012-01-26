@@ -24,6 +24,27 @@
     return [[RKDocument alloc] initWithAttributedString: string];
 }
 
+- (id)init
+{
+    self = [super init];
+    
+    if (self) {
+        NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
+        
+        self.pageSize = [printInfo paperSize];
+        self.pageInsets = (RKPageInsets){.top = [printInfo topMargin], 
+                                         .left = [printInfo leftMargin], 
+                                         .right = [printInfo rightMargin], 
+                                         .bottom = [printInfo bottomMargin] 
+                                        };
+
+        self.pageOrientation = RKPageOrientationPortrait;
+        self.hyphenationEnabled = NO;
+    }
+    
+    return self;
+}
+
 - (id)initWithSections:(NSArray *)initialSections
 {
     self = [self init];
