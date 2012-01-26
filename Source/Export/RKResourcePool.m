@@ -63,12 +63,12 @@
     return index + 1;
 }
 
-- (NSArray *)collectedFonts
+- (NSArray *)fontFamilyNames
 {
     return [fonts copy];
 }
 
-- (NSArray *)collectedColors
+- (NSArray *)colors
 {
     return [colors copy];
 }

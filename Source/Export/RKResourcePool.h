@@ -30,11 +30,11 @@
 /*!
  @abstract Returns the collected font families sorted by their indices
  */
-- (NSArray *)collectedFonts;
+- (NSArray *)fontFamilyNames;
 
 /*!
  @abstract Returns the collected colors sorted by their indices
  */
-- (NSArray *)collectedColors;
+- (NSArray *)colors;
 
 @end

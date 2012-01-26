@@ -80,7 +80,7 @@ static NSDictionary *metaDataDescriptions;
     NSMutableString *fontTable = [NSMutableString stringWithString:@"{\\fonttbl"];
     NSUInteger index = 0;
     
-    for (NSString *fontFamilyName in resources.collectedFonts) {
+    for (NSString *fontFamilyName in resources.fontFamilyNames) {
         [fontTable appendFormat:@"\\f%i\\fnil\\fcharset0 %@;", index, fontFamilyName];
         index ++;
     }
@@ -94,7 +94,7 @@ static NSDictionary *metaDataDescriptions;
 {
     NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl"];
     
-    for (NSColor *color in resources.collectedColors) {
+    for (NSColor *color in resources.colors) {
         [colorTable appendFormat:@"\\red%i\\green%i\\blue%i;", 
          (NSUInteger)([color redComponent] * 255.0f), 
          (NSUInteger)([color greenComponent] * 255.0f),
