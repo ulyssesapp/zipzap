@@ -8,6 +8,9 @@
 
 @class RKDocument, RKResourcePool;
 
+/*!
+ @abstract Generates the body of a RTF document
+ */
 @interface RKBodyWriter : NSObject
 
 /*!

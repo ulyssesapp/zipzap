@@ -10,7 +10,7 @@
 @class RKDocument;
 
 /*!
- @abstract Used to generate the header of an RTF file
+ @abstract Generates the header of an RTF file
  */
 @interface RKHeaderWriter : NSObject
 
