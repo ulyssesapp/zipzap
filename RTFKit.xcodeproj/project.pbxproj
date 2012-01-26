@@ -69,7 +69,7 @@
 		797DA1C914C97E05000DDAF3 /* RKSectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSectionTest.m; path = Document/RKSectionTest.m; sourceTree = "<group>"; };
 		798253B214CD88B10080BC3D /* RKResourcePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKResourcePool.h; path = Export/RKResourcePool.h; sourceTree = "<group>"; };
 		798253B314CD88B10080BC3D /* RKResourcePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourcePool.m; path = Export/RKResourcePool.m; sourceTree = "<group>"; };
-		79A3597814D00AB70076A5F7 /* RKResourcePoolTest.h */ = {isa = PBXFileReference; fileEncoding = 4; name = RKResourcePoolTest.h; path = Export/RKResourcePoolTest.h; sourceTree = "<group>"; };
+		79A3597814D00AB70076A5F7 /* RKResourcePoolTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKResourcePoolTest.h; path = Export/RKResourcePoolTest.h; sourceTree = "<group>"; };
 		79A3597914D00AB70076A5F7 /* RKResourcePoolTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourcePoolTest.m; path = Export/RKResourcePoolTest.m; sourceTree = "<group>"; };
 		79A3597A14D00AB70076A5F7 /* RKWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriterTest.h; path = Export/RKWriterTest.h; sourceTree = "<group>"; };
 		79A3597B14D00AB70076A5F7 /* RKWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriterTest.m; path = Export/RKWriterTest.m; sourceTree = "<group>"; };
@@ -86,6 +86,8 @@
 		79A3599D14D17B970076A5F7 /* RKBodyWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKBodyWriterTest.m; path = Export/RKBodyWriterTest.m; sourceTree = "<group>"; };
 		79A3599E14D17B980076A5F7 /* RKConversionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKConversionTest.h; path = Export/RKConversionTest.h; sourceTree = "<group>"; };
 		79A3599F14D17B9A0076A5F7 /* RKConversionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKConversionTest.m; path = Export/RKConversionTest.m; sourceTree = "<group>"; };
+		79A359A314D1A3650076A5F7 /* RKSection+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSection+TestExtensions.h"; path = "Utils/RKSection+TestExtensions.h"; sourceTree = "<group>"; };
+		79A359A414D1A38C0076A5F7 /* RKHeaderWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKHeaderWriter+TestExtensions.h"; path = "Utils/RKHeaderWriter+TestExtensions.h"; sourceTree = "<group>"; };
 		79F673AC14C84A9E005D03FA /* RKDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocument.h; path = Document/RKDocument.h; sourceTree = "<group>"; };
 		79F673AD14C84A9E005D03FA /* RKDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocument.m; path = Document/RKDocument.m; sourceTree = "<group>"; };
 		79F673B314C84ACC005D03FA /* RKDocumentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentTest.h; path = Document/RKDocumentTest.h; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			children = (
 				79F673B214C84AA9005D03FA /* Export */,
 				79F673B114C84AA3005D03FA /* Document */,
+				79A359A214D1A1D10076A5F7 /* Utils */,
 				50317D7514C4954000F23C04 /* Other */,
 			);
 			path = Tests;
@@ -196,6 +199,15 @@
 				79A3597E14D024A80076A5F7 /* Test Data */,
 			);
 			name = Other;
+			sourceTree = "<group>";
+		};
+		79A359A214D1A1D10076A5F7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				79A359A314D1A3650076A5F7 /* RKSection+TestExtensions.h */,
+				79A359A414D1A38C0076A5F7 /* RKHeaderWriter+TestExtensions.h */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		79F673A914C84A5A005D03FA /* Export */ = {

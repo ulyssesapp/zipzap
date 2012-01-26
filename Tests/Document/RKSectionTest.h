@@ -11,8 +11,3 @@
 @interface RKSectionTest : SenTestCase
 
 @end
-
-@interface RKSection ()
-    - (NSAttributedString *)objectForPage:(RKPageSelectionMask)pageMask fromMap:(NSMapTable *)map;
-    - (void)setObject:(NSAttributedString *)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map;
-@end

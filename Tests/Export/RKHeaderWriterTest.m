@@ -10,13 +10,8 @@
 #import "RKBodyWriter.h"
 #import "RKResourcePool.h"
 #import "RKHeaderWriter.h"
+#import "RKHeaderWriter+TestExtensions.h"
 
-@interface RKHeaderWriter ()
-+ (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources;
-+ (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
-+ (NSString *)documentMetaDataFromDocument:(RKDocument *)document;
-+ (NSString *)documentFormatFromDocument:(RKDocument *)document;
-@end
 
 @implementation RKHeaderWriterTest
 
