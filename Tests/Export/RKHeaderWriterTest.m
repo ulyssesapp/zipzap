@@ -62,7 +62,7 @@
     
     // Generate the header
     STAssertEqualObjects([RKHeaderWriter colorTableFromResourceManager:resources], 
-                         @"{\\colortbl"
+                         @"{\\colortbl;"
                          "\\red255\\green255\\blue255;"
                          "\\red0\\green255\\blue127;"
                          "\\red25\\green51\\blue76;"

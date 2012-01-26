@@ -67,7 +67,7 @@ static NSDictionary *metaDataDescriptions;
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
 {
-    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252%@\n%@\n%@\n%@\n",
+    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n",
             [RKHeaderWriter fontTableFromResourceManager:resources],
             [RKHeaderWriter colorTableFromResourceManager:resources],
             [RKHeaderWriter documentMetaDataFromDocument:document],
@@ -90,7 +90,7 @@ static NSDictionary *metaDataDescriptions;
 
 + (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl"];
+    NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl;"];
     
     [resources.colors enumerateObjectsUsingBlock:^(NSColor *color, NSUInteger index, BOOL *stop) {
         if (index > 0) {

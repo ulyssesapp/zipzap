@@ -25,12 +25,12 @@
 /*!
  @abstract Compares the content of two RTF files. Newlines and tabs are ignored
  */
-- (bool)compareRTFString:(NSString *)stringA withString:(NSString *)stringB;
+- (BOOL)compareRTFString:(NSString *)stringA withString:(NSString *)stringB;
 
 /*!
  @abstract Loads a test document from TestData and compares it charwise with the given RTF output. Ignores newlines and tabs.
  */
-- (bool)compareRTF:(NSData *)rtf withTestDocument:(NSString *)name;
+- (BOOL)compareRTF:(NSData *)rtf withTestDocument:(NSString *)name;
 
 @end
 
@@ -61,16 +61,16 @@
     return noTabs;
 }
 
-- (bool)compareRTFString:(NSString *)stringA withString:(NSString *)stringB
+- (BOOL)compareRTFString:(NSString *)stringA withString:(NSString *)stringB
 {
     return [[self normalizeRTFString: stringA] isEqualToString: [self normalizeRTFString: stringB]];
 }
 
-- (bool)compareRTF:(NSData *)rtf withTestDocument:(NSString *)name
+- (BOOL)compareRTF:(NSData *)rtf withTestDocument:(NSString *)name
 {
     NSString *rtfContent = [[NSString alloc] initWithData:rtf encoding:NSASCIIStringEncoding];
     NSString *testContent = [self loadTestDocument: name];
-    
+
     return [self compareRTFString:rtfContent withString:testContent];
 }
 
