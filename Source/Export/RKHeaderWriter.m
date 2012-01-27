@@ -10,7 +10,7 @@
 #import "RKResourcePool.h"
 #import "RKConversion.h"
 
-// Used to access the metaDataDescriptions 
+// Used to access the RKHeaderWriterMetadataDescriptions 
 enum {
     RKMetaDescriptionAccessorKey = 0,
     RKMetaDescriptionExportedTag = 1,
@@ -43,12 +43,13 @@ enum {
 
 @implementation RKHeaderWriter
 
-static NSDictionary *metaDataDescriptions;
+NSDictionary *RKHeaderWriterMetadataDescriptions;
 
 + (void)initialize
 {
     // An ordered lookup table mapping from the field keys to the field titles and types representing RTF document meta data
-    metaDataDescriptions = [NSArray arrayWithObjects:
+    RKHeaderWriterMetadataDescriptions = 
+                           [NSArray arrayWithObjects:
                             [NSArray arrayWithObjects: NSTitleDocumentAttribute,                @"\\title",         @"s", nil],
                             [NSArray arrayWithObjects: NSCompanyDocumentAttribute,              @"\\*\\company",    @"s", nil],
                             [NSArray arrayWithObjects: NSCopyrightDocumentAttribute,            @"\\*\\copyright",  @"s", nil],
@@ -111,7 +112,7 @@ static NSDictionary *metaDataDescriptions;
 {
     NSMutableString *infoTable = [NSMutableString stringWithString:@"{\\info"];
     
-    for (NSArray *description in metaDataDescriptions) {
+    for (NSArray *description in RKHeaderWriterMetadataDescriptions) {
         id itemValue = [document.metadata objectForKey:[description objectAtIndex:RKMetaDescriptionAccessorKey]];
         
         if (itemValue) {
