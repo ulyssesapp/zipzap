@@ -66,7 +66,7 @@
 
 - (NSData *)plainRTF
 {
-    return [RKWriter PlainRTFfromDocument: self];
+    return [RKWriter plainRTFfromDocument: self];
 }
 
 - (NSFileWrapper *)RTFD
