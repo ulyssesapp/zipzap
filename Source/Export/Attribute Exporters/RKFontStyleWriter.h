@@ -16,6 +16,7 @@
 /*!
  @abstract Adds tags for all font styles
  */
-+ (void)tagFontStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString resources:(RKResourcePool *)resources;
++ (void)tag:(RKTaggedString *)taggedString withFontStylesOfAttributedString:(NSAttributedString *)attributedString resources:(RKResourcePool *)resources;
+
 
 @end

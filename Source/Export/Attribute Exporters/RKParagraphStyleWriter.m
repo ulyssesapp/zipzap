@@ -20,7 +20,7 @@
 
 @implementation RKParagraphStyleWriter
 
-+ (void)tagParagraphStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString
++ (void)tag:(RKTaggedString *)taggedString withParagraphStylesOfAttributedString:(NSAttributedString *)attributedString
 {
     [attributedString enumerateAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, [attributedString length]) 
                                  options:0 

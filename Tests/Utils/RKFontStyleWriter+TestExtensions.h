@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-@protocol RKFontStyleWriter_TestExtensions <NSObject>
+@interface RKFontStyleWriter_TestExtensions (TEstExtensions)
 
 @end

@@ -186,7 +186,7 @@
     
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
     
-    [RKParagraphStyleWriter tagParagraphStyles:taggedString fromAttributedString:attributedString];
+    [RKParagraphStyleWriter tag:taggedString withParagraphStylesOfAttributedString:attributedString];
 
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"\\pard\\qc "

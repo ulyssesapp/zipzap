@@ -16,6 +16,6 @@
 /*!
  @abstract Adds tags for all paragraph styles
  */
-+ (void)tagParagraphStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString;
++ (void)tag:(RKTaggedString *)taggedString withParagraphStylesOfAttributedString:(NSAttributedString *)attributedString;
 
 @end

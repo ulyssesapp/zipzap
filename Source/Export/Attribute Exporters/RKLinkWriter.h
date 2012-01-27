@@ -16,7 +16,7 @@
 /*!
  @abstract Adds tags for all link styles
  */
-+ (void)tagLinkStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString;
++ (void)tag:(RKTaggedString *)taggedString withLinkStylesOfAttributedString:(NSAttributedString *)attributedString;
 
 
 @end

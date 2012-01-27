@@ -10,7 +10,7 @@
 
 @implementation RKLinkWriter
 
-+ (void)tagLinkStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString
++ (void)tag:(RKTaggedString *)taggedString withLinkStylesOfAttributedString:(NSAttributedString *)attributedString
 {
     
 }

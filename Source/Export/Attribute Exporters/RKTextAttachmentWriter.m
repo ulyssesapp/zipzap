@@ -13,7 +13,7 @@
 
 @implementation RKTextAttachmentWriter
 
-+ (void)tagTextAttachmentStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (void)tag:(RKTaggedString *)taggedString withTextAttachmentsOfAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
     
 }

@@ -40,13 +40,13 @@
 
     // Adds paragraphs, fonts and text attachment. 
     // These operations are ordered by the placement priority of the generated tags in the RTF file. 
-    [RKParagraphStyleWriter tagParagraphStyles:taggedString fromAttributedString:attributedString];
+    [RKParagraphStyleWriter tag:taggedString withParagraphStylesOfAttributedString:attributedString];
 
-    [RKFontStyleWriter tagFontStyles:taggedString fromAttributedString:attributedString resources:resources];
+    [RKFontStyleWriter tag:taggedString withFontStylesOfAttributedString:attributedString resources:resources];
 
-    [RKLinkWriter tagLinkStyles:taggedString fromAttributedString:attributedString];
+    [RKLinkWriter tag:taggedString withLinkStylesOfAttributedString:attributedString];
 
-    [RKTextAttachmentWriter tagTextAttachmentStyles:taggedString fromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources];
+    [RKTextAttachmentWriter tag:taggedString withTextAttachmentsOfAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources];
     
     return taggedString;
 }
