@@ -141,29 +141,34 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
 {
     NSMutableString *attributes = [NSMutableString string];
     
+    // Hyphenation settings
     if (document.hyphenationEnabled)
-        [attributes appendFormat:@"\\hyphauto"];
+        [attributes appendString:@"\\hyphauto"];
     
+    // Footnote settings
     switch (document.footnotePlacement) {
         case RKFootnotePlacementSamePage:
-            [attributes appendFormat:@"\\fet0"];
+            [attributes appendString:@"\\fet0"];
             break;
         case RKFootnotePlacementDocumentEnd:
-            [attributes appendFormat:@"\\fet1\\enddoc\\aenddoc"];
+            [attributes appendString:@"\\fet1\\enddoc\\aenddoc"];
             break;
         case RKFootnotePlacementSectionEnd:
-            [attributes appendFormat:@"\\fet1\\endnotes\\aendnotes"];
+            [attributes appendString:@"\\fet1\\endnotes\\aendnotes"];
             break;
     }
     
+    // Page orientation
     if (document.pageOrientation == RKPageOrientationLandscape)
-        [attributes appendFormat:@"\\landscape"];
+        [attributes appendString:@"\\landscape"];
     
+    // Paper size
     [attributes appendFormat:[NSString stringWithFormat:@"\\paperw%u\\paperh%u", 
                                 (NSUInteger)RKPointsToTwips(document.pageSize.width), 
                                 (NSUInteger)RKPointsToTwips(document.pageSize.height)
                               ]];
     
+    // Margins
     [attributes appendFormat:[NSString stringWithFormat:@"\\margt%u\\margl%u\\margr%u\\margb%u", 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.top), 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.left), 
@@ -173,7 +178,7 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
     
     // We disable ANSI replacements for UNICODE charracters in general
     // To prevent conflicts with text following the formatting tags, add a space
-    [attributes appendFormat:@"\\uc0 "];
+    [attributes appendString:@"\\uc0 "];
 
     return attributes;
 }
