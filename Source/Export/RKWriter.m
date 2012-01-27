@@ -41,7 +41,7 @@
 
 + (NSString *)RTFStringFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy
 {
-    RKResourcePool *resources = [[RKResourcePool alloc] init];
+    RKResourcePool *resources = [RKResourcePool new];
 
     NSString *body = [RKBodyWriter RTFBodyFromDocument:document withAttachmentPolicy:attachmentPolicy resources:resources];
     NSString *head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];

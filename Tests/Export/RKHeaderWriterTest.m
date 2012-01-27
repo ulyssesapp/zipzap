@@ -17,7 +17,7 @@
 
 - (NSDate *)customDateWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day hour:(NSUInteger)hour minute:(NSUInteger)minute second:(NSUInteger)second
 {
-    NSDateComponents *customComponents = [[NSDateComponents alloc] init];
+    NSDateComponents *customComponents = [NSDateComponents new];
     
     [customComponents setYear:year];
     [customComponents setMonth:month];
@@ -31,7 +31,7 @@
 
 - (void)testGeneratingFontTable
 {
-    RKResourcePool *resources = [[RKResourcePool alloc] init];
+    RKResourcePool *resources = [RKResourcePool new];
     
     // Register some fonts
     [resources indexOfFont:[NSFont fontWithName:@"Times-Roman" size:8]];
@@ -53,7 +53,7 @@
 
 - (void)testGeneratingColorTable
 {
-    RKResourcePool *resources = [[RKResourcePool alloc] init];
+    RKResourcePool *resources = [RKResourcePool new];
     
     // Register some fonts
     [resources indexOfColor:[NSColor colorWithSRGBRed:0 green:1 blue:0.5 alpha:1]];
@@ -74,7 +74,7 @@
 
 - (void)testGeneratingDocumentInfo
 {
-    RKDocument *document = [[RKDocument alloc] init];
+    RKDocument *document = [RKDocument new];
     NSDictionary *metaData = [NSDictionary dictionaryWithObjectsAndKeys:
                                  @"Title {} \\ ",    NSTitleDocumentAttribute,
                                  @"Company",        NSCompanyDocumentAttribute,
@@ -114,7 +114,7 @@
 
 - (void)testGeneratingDocumentFormattingData
 {
-    RKDocument *document = [[RKDocument alloc] init];
+    RKDocument *document = [RKDocument new];
     RKPageInsets insets = {.top = 100.0, .left = 200.0, .right = 300.0, .bottom = 400.0};
 
     // Test setting: Hyphenation, Footnotes, Overriding default size / margins, portrait format

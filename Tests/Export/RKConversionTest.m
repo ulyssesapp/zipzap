@@ -26,7 +26,7 @@
 
 - (void)testConvertToRTFDate
 {
-    NSDateComponents *customComponents = [[NSDateComponents alloc] init];
+    NSDateComponents *customComponents = [NSDateComponents new];
 
     // Date with two digits
     [customComponents setYear:2001];

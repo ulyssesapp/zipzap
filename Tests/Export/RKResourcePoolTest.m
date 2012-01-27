@@ -13,7 +13,7 @@
 
 - (void)testIndexingFonts
 {
-    RKResourcePool *resourceManager = [[RKResourcePool alloc] init];
+    RKResourcePool *resourceManager = [RKResourcePool new];
   
     // Find font regardless of its traits and size
     STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Helvetica" size:8]], (NSUInteger)0, @"Font not indexed");
@@ -31,7 +31,7 @@
 
 - (void)testIndexingColors
 {
-    RKResourcePool *resourceManager = [[RKResourcePool alloc] init];
+    RKResourcePool *resourceManager = [RKResourcePool new];
     
     // Find color regardless of its alpha channel
     STAssertEquals([resourceManager indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.2 blue:0.1 alpha:0.1]], (NSUInteger)2, @"Color not indexed");
