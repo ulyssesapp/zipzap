@@ -68,7 +68,7 @@
     return [RKWriter RTFfromDocument: self];
 }
 
-- (NSData *)PlainRTF
+- (NSData *)plainRTF
 {
     return [RKWriter PlainRTFfromDocument: self];
 }

@@ -45,7 +45,7 @@
 /*!
  @abstract Exports the document as RTF without pictures
  */
-- (NSData *)PlainRTF;
+- (NSData *)plainRTF;
 
 /*!
  @abstract Exports the document as RTFD 
