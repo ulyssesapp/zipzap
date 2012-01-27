@@ -6,9 +6,30 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKTaggedString.h"
 #import "RKAttributedStringWriter.h"
 
 @interface RKAttributedStringWriter ()
+
+/*!
+ @abstract Converts an attributed string to a tagged string
+ */
++ (RKTaggedString *)taggedStringFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
+
+/*!
+ @abstract Adds tags for all paragraph styles
+ */
++ (void)tagParagraphStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString;
+
+/*!
+ @abstract Adds tags for all font styles
+ */
++ (void)tagFontStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString resources:resources;
+
+/*!
+ @abstract Adds tags for all font styles
+ */
++ (void)tagAttachmentStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:attachmentPolicy resources:resources;
 
 /*!
  @abstract Converts a paragraph style to RTF
@@ -21,7 +42,50 @@
 
 + (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    return @"";
+    RKTaggedString *taggedString = [self taggedStringFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources];
+    NSString *attachmentCharracterString = [NSString stringWithFormat:@"%C", NSAttachmentCharacter];
+
+    
+    // Return the tagged string and remove all useless attachment charracters
+    return [[taggedString flattenedString] stringByReplacingOccurrencesOfString:attachmentCharracterString withString:@"" ];
+}
+
++ (RKTaggedString *)taggedStringFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
+{
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
+
+    // Adds paragraphs, fonts and text attachment. 
+    // These operations are ordered by the placement priority of the generated tags in the RTF file. 
+    [self tagParagraphStyles:taggedString fromAttributedString:attributedString];
+    [self tagFontStyles:taggedString fromAttributedString:attributedString resources:resources];
+    [self tagAttachmentStyles:taggedString fromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources];
+    
+    return taggedString;
+}
+
+
+/*!
+ @abstract Adds tags for all paragraph styles
+ */
++ (void)tagParagraphStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString
+{
+    
+}
+
+/*!
+ @abstract Adds tags for all font styles
+ */
++ (void)tagFontStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString resources:resources
+{
+    
+}
+
+/*!
+ @abstract Adds tags for all font styles
+ */
++ (void)tagAttachmentStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:attachmentPolicy resources:resources
+{
+    
 }
 
 + (NSString *)RTFfromParagraphStyle:(NSParagraphStyle *)paragraphStyle
