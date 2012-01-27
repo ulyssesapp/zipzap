@@ -6,8 +6,16 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@class RKTaggedString;
 
+/*!
+ @abstract Writes out all tags required for a paragraph style
+ */
 @interface RKParagraphStyleWriter : NSObject
+
+/*!
+ @abstract Adds tags for all paragraph styles
+ */
++ (void)tagParagraphStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString;
 
 @end

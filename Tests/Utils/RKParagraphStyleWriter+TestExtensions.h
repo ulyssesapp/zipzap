@@ -1,12 +1,12 @@
 //
-//  RKAttributedStringWriter+TextExtensions.h
+//  RKParagraphStyleWriter+TextExtensions.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 27.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface RKAttributedStringWriter (TestExtensions)
+@interface RKParagraphStyleWriter (TestExtensions)
 
 + (NSString *)RTFfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
 

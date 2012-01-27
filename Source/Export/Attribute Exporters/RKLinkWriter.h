@@ -6,8 +6,17 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@class RKTaggedString;
 
+/*!
+ @abstract Writes out all tags required for a link style
+ */
 @interface RKLinkWriter : NSObject
+
+/*!
+ @abstract Adds tags for all link styles
+ */
++ (void)tagLinkStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString;
+
 
 @end

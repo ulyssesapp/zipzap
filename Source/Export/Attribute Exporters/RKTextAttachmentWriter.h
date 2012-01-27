@@ -6,8 +6,18 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "RKWriter.h"
 
+@class RKResourcePool, RKTaggedString;
+
+/*!
+ @abstract Writes out all tags required for text attachments
+ */
 @interface RKTextAttachmentWriter : NSObject
+
+/*!
+ @abstract Adds tags for all font styles
+ */
++ (void)tagTextAttachmentStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 @end

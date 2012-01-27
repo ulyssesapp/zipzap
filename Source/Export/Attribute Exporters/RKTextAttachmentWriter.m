@@ -7,7 +7,15 @@
 //
 
 #import "RKTextAttachmentWriter.h"
+#import "RKTaggedString.h"
+#import "RKResourcePool.h"
+#import "RKWriter.h"
 
 @implementation RKTextAttachmentWriter
+
++ (void)tagTextAttachmentStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
+{
+    
+}
 
 @end

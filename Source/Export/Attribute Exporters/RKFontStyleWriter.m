@@ -7,7 +7,14 @@
 //
 
 #import "RKFontStyleWriter.h"
+#import "RKTaggedString.h"
+#import "RKResourcePool.h"
 
 @implementation RKFontStyleWriter
+
++ (void)tagFontStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString resources:(RKResourcePool *)resources;
+{
+    
+}
 
 @end
