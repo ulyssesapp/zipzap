@@ -84,4 +84,12 @@
     STAssertTrue([self compareRTF:converted withTestDocument:@"empty"], @"Invalid empty document creation");
 }
 
+- (void)testGeneratingSimpleRTFDocument
+{
+    RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@"abcdefä \\ { }"]];
+    NSData *converted = [document RTF];
+    
+    STAssertTrue([self compareRTF:converted withTestDocument:@"simple"], @"Invalid empty document creation");
+}
+
 @end
