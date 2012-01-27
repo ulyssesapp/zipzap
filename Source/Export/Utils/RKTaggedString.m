@@ -7,12 +7,18 @@
 //
 
 #import "RKTaggedString.h"
+#import "RKConversion.h"
 
 @interface RKTaggedString ()
 {
     NSMutableDictionary *tagPlacement;
     NSString *originalString;
 }
+
+/*!
+ @abstract Appends an excerp of the original string to another string while converting it to the escaped RTF variant
+ */
+- (void)appendSourceStringToString:(NSMutableString *)flattenedString inRange:(NSRange)range;
 
 @end
 
@@ -62,7 +68,14 @@
     [tags addObject: tag];
 }
 
-- (NSString *)flattenedString
+- (void)appendSourceStringToString:(NSMutableString *)flattenedString inRange:(NSRange)range
+{
+    NSString *safeOriginalString = [[originalString substringWithRange:range] RTFEscapedString];
+    
+    [flattenedString appendString:safeOriginalString];
+}
+
+- (NSString *)flattenedRTFString
 {
     __block NSMutableString *flattened = [NSMutableString new];
     __block NSUInteger lastSourceOffset = 0;
@@ -72,7 +85,7 @@
         NSUInteger currentSourceOffset = [mapIndex unsignedIntegerValue];
 
         // Copy all untagged chars
-        [flattened appendString: [originalString substringWithRange: NSMakeRange(lastSourceOffset, currentSourceOffset - lastSourceOffset)]];
+        [self appendSourceStringToString:flattened inRange:NSMakeRange(lastSourceOffset, currentSourceOffset - lastSourceOffset)];
      
         lastSourceOffset = currentSourceOffset;
         
@@ -86,7 +99,7 @@
     
     // Append remaining string
     if (lastSourceOffset < [originalString length]) {
-        [flattened appendString: [originalString substringWithRange: NSMakeRange(lastSourceOffset, [originalString length] - lastSourceOffset)]];
+        [self appendSourceStringToString:flattened inRange:NSMakeRange(lastSourceOffset, [originalString length] - lastSourceOffset)];
     }
         
     return flattened;

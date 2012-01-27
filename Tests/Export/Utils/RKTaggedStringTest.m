@@ -14,7 +14,7 @@
 
 - (RKTaggedString *)sampleStringWithTags
 {
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abcdefg"];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"äbcd{fg"];
     
     // Simple associations
     [taggedString associateTag:@"1-1" atPosition:1];
@@ -87,13 +87,13 @@
 
     [taggedString associateTag:@"[tag with different length]" atPosition:1];
     
-    NSString *flattened = [taggedString flattenedString];
+    NSString *flattened = [taggedString flattenedRTFString];
     
-    STAssertEqualObjects(flattened, @"a"
+    STAssertEqualObjects(flattened, @"\\u228"
                                      "1-11-21-3[tag with different length]b"
                                      "c"
                                      "3-1d"
-                                     "4-14-2e"
+                                     "4-14-2\\{"
                                      "f"
                                      "g",
                           @"Flattening failed"
@@ -107,14 +107,14 @@
     [taggedString associateTag:@"7-1" atPosition:7];    
     [taggedString associateTag:@"[tag with different length]" atPosition:1];
     
-    NSString *flattened = [taggedString flattenedString];
+    NSString *flattened = [taggedString flattenedRTFString];
     
     STAssertEqualObjects(flattened, 
-                         @"a"
+                         @"\\u228"
                           "1-11-21-3[tag with different length]b"
                           "c"
                           "3-1d"
-                          "4-14-2e"
+                          "4-14-2\\{"
                           "f"
                           "g"
                           "7-1",
@@ -129,14 +129,14 @@
     [taggedString associateTag:@"0-1" atPosition:0];    
     [taggedString associateTag:@"[tag with different length]" atPosition:1];
     
-    NSString *flattened = [taggedString flattenedString];
+    NSString *flattened = [taggedString flattenedRTFString];
     
     STAssertEqualObjects(flattened, 
-                         @"0-1a"
+                         @"0-1\\u228"
                           "1-11-21-3[tag with different length]b"
                           "c"
                           "3-1d"
-                          "4-14-2e"
+                          "4-14-2\\{"
                           "f"
                           "g",
                          @"Flattening failed"
@@ -151,14 +151,14 @@
     [taggedString associateTag:@"7-1" atPosition:7];    
     [taggedString associateTag:@"[tag with different length]" atPosition:1];
     
-    NSString *flattened = [taggedString flattenedString];
+    NSString *flattened = [taggedString flattenedRTFString];
     
     STAssertEqualObjects(flattened, 
-                         @"0-1a"
+                         @"0-1\\u228"
                          "1-11-21-3[tag with different length]b"
                          "c"
                          "3-1d"
-                         "4-14-2e"
+                         "4-14-2\\{"
                          "f"
                          "g"
                          "7-1",

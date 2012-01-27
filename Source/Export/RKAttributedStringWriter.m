@@ -31,7 +31,7 @@
     NSString *attachmentCharracterString = [NSString stringWithFormat:@"%C", NSAttachmentCharacter];
     
     // Return the tagged string and remove all useless attachment charracters
-    return [[taggedString flattenedString] stringByReplacingOccurrencesOfString:attachmentCharracterString withString:@"" ];
+    return [[taggedString flattenedRTFString] stringByReplacingOccurrencesOfString:attachmentCharracterString withString:@"" ];
 }
 
 + (RKTaggedString *)taggedStringFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources

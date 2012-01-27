@@ -29,8 +29,8 @@
 - (void)associateTag:(NSString *)tag atPosition:(NSUInteger)position;
 
 /*!
- @abstract Creates a flat variant of the string that contains all tags
+ @abstract Creates a flat variant of the string that contains all tags. All non-tag charracters are converted to an escaped RTF string
  */
-- (NSString *)flattenedString;
+- (NSString *)flattenedRTFString;
 
 @end

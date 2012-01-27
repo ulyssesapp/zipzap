@@ -8,4 +8,5 @@
 
     #import "RTFKit.h"
     #import "RKResourcePool.h"
+    #import "RKTaggedString.h"
 #endif
