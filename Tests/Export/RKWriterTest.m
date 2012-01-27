@@ -55,8 +55,9 @@
     NSString *noNewlines = [rtf stringByReplacingOccurrencesOfString:@"\n" withString:@" " options:NSRegularExpressionSearch range:NSMakeRange(0, [rtf length])];
     NSString *noLinefeeds = [noNewlines stringByReplacingOccurrencesOfString:@"\r" withString:@" " options:NSRegularExpressionSearch range:NSMakeRange(0, [rtf length])];
     NSString *noTabs = [noLinefeeds stringByReplacingOccurrencesOfString:@"\t" withString:@" " options:NSRegularExpressionSearch range:NSMakeRange(0, [rtf length])];
-
-    return noTabs;
+    NSString *noMultiSpaces = [noTabs stringByReplacingOccurrencesOfString:@"  " withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [rtf length])];
+    
+    return noMultiSpaces;
 }
 
 - (BOOL)compareRTFString:(NSString *)stringA withString:(NSString *)stringB
@@ -69,6 +70,7 @@
     NSString *rtfContent = [[NSString alloc] initWithData:rtf encoding:NSASCIIStringEncoding];
     NSString *testContent = [self loadTestDocument: name];
 
+    NSLog(@"\n'%@'\n'%@'", [self normalizeRTFString: rtfContent], [self normalizeRTFString: testContent]);
     return [self compareRTFString:rtfContent withString:testContent];
 }
 
