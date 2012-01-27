@@ -132,6 +132,7 @@
 		7987909F14D2FE100046F8AB /* RKTextAttachmentWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentWriterTest.m; path = "Export/Attribute Exporters/RKTextAttachmentWriterTest.m"; sourceTree = "<group>"; };
 		798790A114D2FE230046F8AB /* RKLinkWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkWriterTest.h; path = "Export/Attribute Exporters/RKLinkWriterTest.h"; sourceTree = "<group>"; };
 		798790A214D2FE230046F8AB /* RKLinkWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkWriterTest.m; path = "Export/Attribute Exporters/RKLinkWriterTest.m"; sourceTree = "<group>"; };
+		798790A414D30EA10046F8AB /* RKFontStyleWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKFontStyleWriter+TestExtensions.h"; path = "Utils/RKFontStyleWriter+TestExtensions.h"; sourceTree = "<group>"; };
 		79A3597A14D00AB70076A5F7 /* RKWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriterTest.h; path = Export/RKWriterTest.h; sourceTree = "<group>"; };
 		79A3597B14D00AB70076A5F7 /* RKWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriterTest.m; path = Export/RKWriterTest.m; sourceTree = "<group>"; };
 		79A3597E14D024A80076A5F7 /* Test Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Test Data"; sourceTree = "<group>"; };
@@ -327,6 +328,7 @@
 				7987903D14D2BD220046F8AB /* RKParagraphStyleWriter+TestExtensions.h */,
 				7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */,
 				7987904D14D2DF7E0046F8AB /* RKTaggedString+TestExtensions.h */,
+				798790A414D30EA10046F8AB /* RKFontStyleWriter+TestExtensions.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
