@@ -33,7 +33,7 @@ typedef struct {
 /*!
  @abstract Generates the insets of a page
  */
-#define RKPageInsetsMake(__top, __left, __bottom, __right)      ((RKPageInsets){.top = __top, .left = __left, .bottom = __bottom, .right = __right})
+#define RKPageInsetsMake(__top, __left, __right, __bottom)      ((RKPageInsets){.top = __top, .left = __left, .right = __right, .bottom = __bottom})
 
 /*!
  @abstract Specifies the style of page numbering inside a section
