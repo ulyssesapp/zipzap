@@ -8,11 +8,17 @@
 
 @class RKDocument;
 
+/*!
+ @abstract Attachment policies for RTF generation
+ @const RKAttachmentPolicyIgnore Ignore all attachments
+        RKAttachmentPolicyEmbed Embed all attachments as \pict commands as in RTF
+        RKAttachmentPolicyReference Create references to all attachments for RTFD generation
+ */
 typedef enum {
-    RKIgnoreAttachedFiles = 0,
-    RKEmbedAttachedFiles = 1,
-    RKReferenceAttachedFilesInRTFD = 2
-}RKAttachmentPolicy;
+    RKAttachmentPolicyIgnore = 0,
+    RKAttachmentPolicyEmbed = 1,
+    RKAttachmentPolicyReference = 2
+} RKAttachmentPolicy;
 
 /*!
  @abstract The internally used RTF writer

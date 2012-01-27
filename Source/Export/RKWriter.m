@@ -25,12 +25,12 @@
 
 + (NSData *)RTFfromDocument:(RKDocument *)document
 {
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKEmbedAttachedFiles] dataUsingEncoding:NSASCIIStringEncoding];
+    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 + (NSData *)PlainRTFfromDocument:(RKDocument *)document
 {
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKIgnoreAttachedFiles] dataUsingEncoding:NSASCIIStringEncoding];
+    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
