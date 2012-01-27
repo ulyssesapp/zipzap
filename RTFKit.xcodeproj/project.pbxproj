@@ -81,6 +81,7 @@
 		7987903814D1BCE40046F8AB /* RKAttributedStringWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAttributedStringWriterTest.h; path = Export/RKAttributedStringWriterTest.h; sourceTree = "<group>"; };
 		7987903914D1BCE40046F8AB /* RKAttributedStringWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAttributedStringWriterTest.m; path = Export/RKAttributedStringWriterTest.m; sourceTree = "<group>"; };
 		7987903B14D1C1920046F8AB /* RKSectionWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSectionWriter+TestExtensions.h"; path = "Utils/RKSectionWriter+TestExtensions.h"; sourceTree = "<group>"; };
+		7987903D14D2BD220046F8AB /* RKAttributedStringWriter+TextExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKAttributedStringWriter+TextExtensions.h"; path = "Utils/RKAttributedStringWriter+TextExtensions.h"; sourceTree = "<group>"; };
 		79A3597814D00AB70076A5F7 /* RKResourcePoolTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKResourcePoolTest.h; path = Export/RKResourcePoolTest.h; sourceTree = "<group>"; };
 		79A3597914D00AB70076A5F7 /* RKResourcePoolTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKResourcePoolTest.m; path = Export/RKResourcePoolTest.m; sourceTree = "<group>"; };
 		79A3597A14D00AB70076A5F7 /* RKWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriterTest.h; path = Export/RKWriterTest.h; sourceTree = "<group>"; };
@@ -223,6 +224,7 @@
 				79A359A314D1A3650076A5F7 /* RKSection+TestExtensions.h */,
 				79A359A414D1A38C0076A5F7 /* RKHeaderWriter+TestExtensions.h */,
 				7987903B14D1C1920046F8AB /* RKSectionWriter+TestExtensions.h */,
+				7987903D14D2BD220046F8AB /* RKAttributedStringWriter+TextExtensions.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
