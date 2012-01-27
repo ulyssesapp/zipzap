@@ -28,7 +28,7 @@
     return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
-+ (NSData *)PlainRTFfromDocument:(RKDocument *)document
++ (NSData *)plainRTFfromDocument:(RKDocument *)document
 {
     return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore] dataUsingEncoding:NSASCIIStringEncoding];
 }

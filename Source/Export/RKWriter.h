@@ -28,7 +28,7 @@ typedef enum {
 /*!
  @abstract Builds an RTF document without attached files
  */
-+ (NSData *)PlainRTFfromDocument:(RKDocument *)document;
++ (NSData *)plainRTFfromDocument:(RKDocument *)document;
 
 /*!
  @abstract Builds an RTF from an RTFDocument
