@@ -32,11 +32,7 @@
         NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
         
         self.pageSize = [printInfo paperSize];
-        self.pageInsets = (RKPageInsets){.top = [printInfo topMargin], 
-                                         .left = [printInfo leftMargin], 
-                                         .right = [printInfo rightMargin], 
-                                         .bottom = [printInfo bottomMargin] 
-                                        };
+        self.pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
 
         self.pageOrientation = RKPageOrientationPortrait;
         self.hyphenationEnabled = NO;

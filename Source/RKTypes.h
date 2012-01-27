@@ -29,6 +29,12 @@ typedef struct {
     CGFloat top, left, bottom, right;
 } RKPageInsets;
 
+
+/*!
+ @abstract Generates the insets of a page
+ */
+#define RKPageInsetsMake(__top, __left, __bottom, __right)      ((RKPageInsets){.top = __top, .left = __left, .bottom = __bottom, .right = __right})
+
 /*!
  @abstract Specifies the style of page numbering inside a section
  */
@@ -55,10 +61,10 @@ typedef enum {
  @abstract Simple conversions from Points to TWIPS
  @discussion (1 TWIP = 1 / 20 Point = 1 / 1440 inch)
  */
-#define RKPointsToTwips(__points)       ((__points) * 20)
+#define RKPointsToTwips(__points)       ((__points) * (typeof(__points))20)
 
 /*!
  @abstract Simple conversions from TWIPS to Points
  @see RKTwipsToPoints
  */
-#define RKTwipsToPoints(__twips)        ((__twips) / 20)
+#define RKTwipsToPoints(__twips)        ((__twips) / (typeof(__twips))20)
