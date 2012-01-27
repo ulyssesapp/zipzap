@@ -7,7 +7,6 @@
 //
 
 #import "RKResourcePoolTest.h"
-#import "RKResourcePool.h"
 
 @implementation RKResourcePoolTest
 

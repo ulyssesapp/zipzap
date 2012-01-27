@@ -7,7 +7,6 @@
 //
 #import "RKSectionTest.h"
 #import "RKSection+TestExtensions.h"
-#import "RKSection.h"
 
 @implementation RKSectionTest
 

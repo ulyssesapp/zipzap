@@ -8,7 +8,6 @@
 
 #import "RKHeaderWriterTest.h"
 #import "RKBodyWriter.h"
-#import "RKResourcePool.h"
 #import "RKHeaderWriter.h"
 #import "RKHeaderWriter+TestExtensions.h"
 

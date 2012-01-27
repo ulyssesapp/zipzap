@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKSection.h"
 #import "RKSectionWriterTest.h"
 #import "RKSectionWriter+TestExtensions.h"
 

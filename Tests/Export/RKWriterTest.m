@@ -7,8 +7,6 @@
 //
 
 #import "RKWriterTest.h"
-#import "RKWriter.h"
-#import "RKDocument.h"
 
 @interface RKWriterTest()
 

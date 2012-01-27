@@ -5,4 +5,7 @@
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
 	#import <SenTestingKit/SenTestingKit.h>
+
+    #import "RTFKit.h"
+    #import "RKResourcePool.h"
 #endif

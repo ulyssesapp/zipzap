@@ -7,9 +7,6 @@
 //
 #import "RKDocumentTest.h"
 
-#import "RKDocument.h"
-#import "RKSection.h"
-
 @implementation RKDocumentTest
 
 - (void)testSimpleDocumentWithSection
