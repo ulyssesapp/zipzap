@@ -50,18 +50,18 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
     // An ordered lookup table mapping from the field keys to the field titles and types representing RTF document meta data
     RKHeaderWriterMetadataDescriptions = 
                            [NSArray arrayWithObjects:
-                            [NSArray arrayWithObjects: NSTitleDocumentAttribute,                @"\\title",         @"s", nil],
-                            [NSArray arrayWithObjects: NSCompanyDocumentAttribute,              @"\\*\\company",    @"s", nil],
-                            [NSArray arrayWithObjects: NSCopyrightDocumentAttribute,            @"\\*\\copyright",  @"s", nil],
-                            [NSArray arrayWithObjects: NSSubjectDocumentAttribute,              @"\\subject",       @"s", nil],
-                            [NSArray arrayWithObjects: NSAuthorDocumentAttribute,               @"\\author",        @"s", nil],
-                            [NSArray arrayWithObjects: NSKeywordsDocumentAttribute,             @"\\keywords",      @"s", nil],
-                            [NSArray arrayWithObjects: NSCommentDocumentAttribute,              @"\\doccomm",       @"s", nil],
-                            [NSArray arrayWithObjects: NSEditorDocumentAttribute,               @"\\editor",        @"s", nil],
-                            [NSArray arrayWithObjects: NSCreationTimeDocumentAttribute,         @"\\creatim",       @"d", nil],
-                            [NSArray arrayWithObjects: NSModificationTimeDocumentAttribute,     @"\\revtim",        @"d", nil],
-                            [NSArray arrayWithObjects: NSManagerDocumentAttribute,              @"\\manager",       @"s", nil],
-                            [NSArray arrayWithObjects: NSCategoryDocumentAttribute,             @"\\category",      @"s", nil],
+                            [NSArray arrayWithObjects: NSTitleDocumentAttribute,                @"\\title",         [NSString class], nil],
+                            [NSArray arrayWithObjects: NSCompanyDocumentAttribute,              @"\\*\\company",    [NSString class], nil],
+                            [NSArray arrayWithObjects: NSCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class], nil],
+                            [NSArray arrayWithObjects: NSSubjectDocumentAttribute,              @"\\subject",       [NSString class], nil],
+                            [NSArray arrayWithObjects: NSAuthorDocumentAttribute,               @"\\author",        [NSString class], nil],
+                            [NSArray arrayWithObjects: NSKeywordsDocumentAttribute,             @"\\keywords",      [NSString class], nil],
+                            [NSArray arrayWithObjects: NSCommentDocumentAttribute,              @"\\doccomm",       [NSString class], nil],
+                            [NSArray arrayWithObjects: NSEditorDocumentAttribute,               @"\\editor",        [NSString class], nil],
+                            [NSArray arrayWithObjects: NSCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class], nil],
+                            [NSArray arrayWithObjects: NSModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class], nil],
+                            [NSArray arrayWithObjects: NSManagerDocumentAttribute,              @"\\manager",       [NSString class], nil],
+                            [NSArray arrayWithObjects: NSCategoryDocumentAttribute,             @"\\category",      [NSString class], nil],
                             nil
                            ];
 }
@@ -118,10 +118,10 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
         if (itemValue) {
             NSString *convertedValue;
             
-            if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: @"s"]) {
+            if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: [NSString class]]) {
                 convertedValue = [itemValue RTFEscapedString];
             }
-             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: @"d"]) {
+             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: [NSDate class]]) {
                 convertedValue = [itemValue RTFDate];
             }
             else {
