@@ -22,7 +22,15 @@
 
 + (void)tagParagraphStyles:(RKTaggedString *)taggedString fromAttributedString:(NSAttributedString *)attributedString
 {
-    
+    [attributedString enumerateAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, [attributedString length]) 
+                                 options:0 
+                              usingBlock:
+     ^(NSParagraphStyle *paragraphStyle, NSRange range, BOOL *stop) {
+         NSString *paragraphHeader = [self RTFfromParagraphStyle:paragraphStyle];
+
+         [taggedString associateTag:paragraphHeader atPosition:range.location];
+         [taggedString associateTag:@"\\par\n" atPosition:(range.location + range.length)];
+    }];
 }
 
 + (NSString *)RTFfromParagraphStyle:(NSParagraphStyle *)paragraphStyle

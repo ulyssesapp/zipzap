@@ -12,9 +12,9 @@
 
 @implementation RKParagraphStyleWriterTest
 
-- (void)testTranslateDefaultParagraphStyle
+- (NSMutableParagraphStyle *)defaultParagraphStyle
 {
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];    
     
     // Paragraph Style with defaults
     paragraphStyle.alignment = NSNaturalTextAlignment;
@@ -33,6 +33,13 @@
     
     paragraphStyle.tabStops = [NSArray new];
     
+    return paragraphStyle;
+}
+
+- (void)testTranslateDefaultParagraphStyle
+{
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
+    
     // Test with default settings
     STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
                          @"\\pard"
@@ -44,7 +51,7 @@
 
 - (void)testTranslateAlignmentStyles
 {
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     
     // Paragraph Style with defaults
     paragraphStyle.alignment = NSNaturalTextAlignment;
@@ -115,7 +122,7 @@
 
 - (void)testTranslateNonDefaultParagraphStyle
 {
-    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     
     paragraphStyle.alignment = NSRightTextAlignment;
     
@@ -162,6 +169,34 @@
                          " ",
                          @"Invalid translation"
                          ); 
+}
+
+- (void)testParagraphTagging
+{
+    NSMutableParagraphStyle *paragraphStyleA = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleB = [self defaultParagraphStyle];
+    
+    paragraphStyleA.alignment = NSCenterTextAlignment;
+    paragraphStyleB.alignment = NSRightTextAlignment;
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaabbb"];
+
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleA range:NSMakeRange(0, 3)];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleB range:NSMakeRange(3, 3)];
+    
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
+    
+    [RKParagraphStyleWriter tagParagraphStyles:taggedString fromAttributedString:attributedString];
+
+    STAssertEqualObjects([taggedString flattenedRTFString], 
+                         @"\\pard\\qc "
+                          "aaa"
+                          "\\par\n"
+                          "\\pard\\qr "
+                          "bbb"
+                          "\\par\n", 
+                         @"Invalid flattening"
+                        );
 }
 
 @end
