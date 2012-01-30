@@ -192,4 +192,24 @@
     STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
 }
 
+- (void)testStrikethroughStyle
+{
+    RKTaggedString *taggedString;
+    
+    // Default style
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];
+    [RKInlineStyleWriter tag:taggedString withStrikethroughStyle:0 inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid strikethrough style");
+ 
+    // Single style
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];
+    [RKInlineStyleWriter tag:taggedString withStrikethroughStyle:NSUnderlineStyleSingle inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\strike b\\strike0 c", @"Invalid strikethrough style");
+
+    // Double style
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];
+    [RKInlineStyleWriter tag:taggedString withStrikethroughStyle:NSUnderlineStyleDouble inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\striked1 b\\striked0 c", @"Invalid strikethrough style");
+}
+
 @end

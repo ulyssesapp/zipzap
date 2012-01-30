@@ -203,4 +203,24 @@
     [taggedString associateTag:[NSString stringWithFormat:@"\\ulc0 ", colorIndex] atPosition:(range.location + range.length)];
 }
 
++ (void)tag:(RKTaggedString *)taggedString withStrikethroughStyle:(NSUInteger)strikethroughStyle inRange:(NSRange)range
+{
+    // No strike through
+    if (strikethroughStyle == NSUnderlineStyleNone)
+        return;
+
+    // Convert unsupported strikethrough styles to \strike, 
+    NSString *opening = @"\\strike ";
+    NSString *closing = @"\\strike0 ";
+
+    // Currently only \\strikedN is supported as alternative
+    if ((strikethroughStyle & NSUnderlineStyleDouble) == NSUnderlineStyleDouble) {
+        opening = @"\\striked1 ";
+        closing = @"\\striked0 ";
+    }
+
+    [taggedString associateTag:opening atPosition:range.location];
+    [taggedString associateTag:closing atPosition:(range.location + range.length)];
+}
+
 @end
