@@ -41,7 +41,7 @@
     NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter RTFOpeningTagfromParagraphStyle:paragraphStyle],
                          @"\\pard"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -72,7 +72,7 @@
     
     
     // Natural alignment
-    STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter RTFOpeningTagfromParagraphStyle:paragraphStyle],
                          @"\\pard"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -82,7 +82,7 @@
     // Left alignment
     paragraphStyle.alignment = NSLeftTextAlignment;    
     
-    STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter RTFOpeningTagfromParagraphStyle:paragraphStyle],
                          @"\\pard\\ql"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -92,7 +92,7 @@
     // Center alignment
     paragraphStyle.alignment = NSCenterTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter RTFOpeningTagfromParagraphStyle:paragraphStyle],
                          @"\\pard\\qc"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -102,7 +102,7 @@
     // Right alignment
     paragraphStyle.alignment = NSRightTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter RTFOpeningTagfromParagraphStyle:paragraphStyle],
                          @"\\pard\\qr"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -112,7 +112,7 @@
     // Right alignment
     paragraphStyle.alignment = NSJustifiedTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter RTFOpeningTagfromParagraphStyle:paragraphStyle],
                          @"\\pard\\qj"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -147,7 +147,7 @@
                                ];
     
     // Right alligned
-    STAssertEqualObjects([RKParagraphStyleWriter RTFfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter RTFOpeningTagfromParagraphStyle:paragraphStyle],
                          @"\\pard"
                          "\\qr"
                          "\\fl20"

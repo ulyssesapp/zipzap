@@ -12,9 +12,9 @@
 @interface RKParagraphStyleWriter ()
 
 /*!
- @abstract Generates the required tag for a paragraph style
+ @abstract Generates the required opening tags for a paragraph style
  */
-+ (NSString *)RTFfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
++ (NSString *)RTFOpeningTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
 
 @end
 
@@ -26,14 +26,16 @@
                                  options:0 
                               usingBlock:
      ^(NSParagraphStyle *paragraphStyle, NSRange range, BOOL *stop) {
-         NSString *paragraphHeader = [self RTFfromParagraphStyle:paragraphStyle];
+         if (paragraphStyle) {
+             NSString *paragraphHeader = [self RTFOpeningTagfromParagraphStyle:paragraphStyle];
 
-         [taggedString associateTag:paragraphHeader atPosition:range.location];
-         [taggedString associateTag:@"\\par\n" atPosition:(range.location + range.length)];
+             [taggedString associateTag:paragraphHeader atPosition:range.location];
+             [taggedString associateTag:@"\\par\n" atPosition:(range.location + range.length)];
+         }
     }];
 }
 
-+ (NSString *)RTFfromParagraphStyle:(NSParagraphStyle *)paragraphStyle
++ (NSString *)RTFOpeningTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle
 {
     NSMutableString *rtf = [NSMutableString stringWithString:@"\\pard"];
     

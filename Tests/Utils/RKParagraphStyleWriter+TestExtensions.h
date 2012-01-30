@@ -8,6 +8,6 @@
 
 @interface RKParagraphStyleWriter (TestExtensions)
 
-+ (NSString *)RTFfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
++ (NSString *)RTFOpeningTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
 
 @end
