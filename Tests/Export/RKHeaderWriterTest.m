@@ -41,9 +41,9 @@
     // Generate the header
     STAssertEqualObjects([RKHeaderWriter fontTableFromResourceManager:resources], 
                          @"{\\fonttbl"
-                          "\\f0\\fnil\\fcharset0 Times;"
+                          "\\f0\\fnil\\fcharset0 Times-Roman;"
                           "\\f1\\fnil\\fcharset0 Helvetica;"
-                          "\\f2\\fnil\\fcharset0 Menlo;"
+                          "\\f2\\fnil\\fcharset0 Menlo-Regular;"
                           "\\f3\\fnil\\fcharset0 Monaco;"
                           "}",
                          @"Invalid font table generated"

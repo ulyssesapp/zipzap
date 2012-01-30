@@ -1,5 +1,5 @@
 //
-//  RKFontStyleWriter.h
+//  RKInlineStyleWriter.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 27.01.12.
@@ -11,7 +11,7 @@
 /*!
  @abstract Writes out all tags required for font styles
  */
-@interface RKFontStyleWriter : NSObject
+@interface RKInlineStyleWriter : NSObject
 
 /*!
  @abstract Adds tags for all font styles

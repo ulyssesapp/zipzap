@@ -10,7 +10,7 @@
 #import "RKAttributedStringWriter.h"
 
 #import "RKParagraphStyleWriter.h"
-#import "RKFontStyleWriter.h"
+#import "RKInlineStyleWriter.h"
 #import "RKLinkWriter.h"
 #import "RKTextAttachmentWriter.h"
 
@@ -42,7 +42,7 @@
     // These operations are ordered by the placement priority of the generated tags in the RTF file. 
     [RKParagraphStyleWriter tag:taggedString withParagraphStylesOfAttributedString:attributedString];
 
-    [RKFontStyleWriter tag:taggedString withFontStylesOfAttributedString:attributedString resources:resources];
+    [RKInlineStyleWriter tag:taggedString withFontStylesOfAttributedString:attributedString resources:resources];
 
     [RKLinkWriter tag:taggedString withLinkStylesOfAttributedString:attributedString];
 
