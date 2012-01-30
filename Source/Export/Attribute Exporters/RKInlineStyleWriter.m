@@ -10,6 +10,11 @@
 #import "RKTaggedString.h"
 #import "RKResourcePool.h"
 
+/*!
+ @abstract A common bitmask of the NSUnderlinePattern constant
+ */
+#define RKUnderlinePatternMask          0x700
+
 @interface RKInlineStyleWriter ()
 
 /*!
@@ -30,7 +35,7 @@
 /*!
  @abstract Generates the required tag of a underline style attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withUnderlineStyle:(NSUInteger)underlineStyle inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)tag:(RKTaggedString *)taggedString withUnderlineStyle:(NSUInteger)underlineStyle inRange:(NSRange)range;
 
 /*!
  @abstract Generates the required tag of a underline color attribute
@@ -40,7 +45,7 @@
 /*!
  @abstract Generates the required tag of a strikethrough style attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withStrikethroughStyle:(NSUInteger)underlineStyle inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)tag:(RKTaggedString *)taggedString withStrikethroughStyle:(NSUInteger)underlineStyle inRange:(NSRange)range;
 
 /*!
  @abstract Generates the required tag of a strikethrough color attribute
@@ -50,7 +55,7 @@
 /*!
  @abstract Generates the required tag of a stroke width attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withStrokeWidth:(CGFloat)strokeWidth inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)tag:(RKTaggedString *)taggedString withStrokeWidth:(CGFloat)strokeWidth inRange:(NSRange)range;
 
 /*!
  @abstract Generates the required tag of a stroke color attribute
@@ -65,7 +70,7 @@
 /*!
  @abstract Generates the required tag of a superscript style attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withSuperscriptMode:(NSInteger)mode inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)tag:(RKTaggedString *)taggedString withSuperscriptMode:(NSInteger)mode inRange:(NSRange)range;
 
 @end
 
@@ -137,6 +142,54 @@
     }
     
     [taggedString associateTag:[NSString stringWithFormat:@"\\cf%lu ", colorIndex] atPosition:range.location];
+}
+
++ (void)tag:(RKTaggedString *)taggedString withUnderlineStyle:(NSUInteger)underlineStyle inRange:(NSRange)range
+{
+    // No underlining
+    if (underlineStyle == NSUnderlineStyleNone)
+        return;
+    
+    // Word-wise underlining (must precede other tags)
+    if (underlineStyle & NSUnderlineByWordMask) {
+        [taggedString associateTag:@"\\ulw " atPosition:range.location];
+    }
+
+    // Never write \\ulw \\ul, since this is misinterpreted by several RTF interpreters
+    if (underlineStyle != (NSUnderlineByWordMask | NSUnderlineStyleSingle)) {
+        // Determine pattern flag
+        NSString *patternString = @"";
+        
+        switch (underlineStyle & RKUnderlinePatternMask) {
+            case NSUnderlinePatternDash:
+                patternString = @"dash";
+                break;
+            case NSUnderlinePatternDashDot:
+                patternString = @"dashd";
+                break;
+            case NSUnderlinePatternDashDotDot:
+                patternString = @"dashdd";
+                break;
+        }
+
+        // Determine style flag
+        NSString *styleString = @"";
+
+        if ((underlineStyle & NSUnderlineStyleDouble) == NSUnderlineStyleDouble) {
+            // Underlining mode double (cannot be combined with dash-styles
+            styleString = @"db";
+            patternString = @"";
+        }
+        else if ((underlineStyle & NSUnderlineStyleThick) == NSUnderlineStyleThick) {
+            styleString = @"th";
+        }
+        
+        // Generate \\ul<STYLE><PATTERN> flag
+        [taggedString associateTag:[NSString stringWithFormat:@"\\ul%@%@ ", styleString, patternString] atPosition:range.location];
+    }
+    
+    // Add the deactivating tag
+    [taggedString associateTag:@"\\ulnone " atPosition:(range.location + range.length)];
 }
 
 @end
