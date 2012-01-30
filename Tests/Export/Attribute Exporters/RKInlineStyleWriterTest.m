@@ -233,4 +233,67 @@
     STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
 }
 
+- (void)testStrokeWidth
+{
+    RKTaggedString *taggedString;
+    
+    // Default color
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withStrokeWidth:0 inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
+    
+    // Setting a color
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withStrokeWidth:30 inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\outl\\strokewidth30 b\\outl0\\strokewidth0 c", @"Invalid stroke width");
+}
+
+- (void)testStrokeColor
+{
+    RKTaggedString *taggedString;
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    // Default color
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withStrokeColor:nil inRange:NSMakeRange(1,1) resources:resources];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid strikethrough style");
+    
+    // Setting a color
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withStrokeColor:[NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:0.5] inRange:NSMakeRange(1,1) resources:resources];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\strokec2 b\\strokec0 c", @"Invalid strikethrough style");
+    
+    // Test resource manager
+    NSArray *colors = [resources colors];
+    STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
+    STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
+}
+
+- (void)testShadow
+{
+    RKTaggedString *taggedString;
+    RKResourcePool *resources = [RKResourcePool new];    
+    NSShadow *shadow = [NSShadow new];
+    
+    [shadow setShadowColor:[NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:0.5]];
+    [shadow setShadowOffset:NSMakeSize(2.0, 3.0)];
+    [shadow setShadowBlurRadius:4.0];
+    
+    // Default color
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withShadowStyle:nil inRange:NSMakeRange(1,1) resources:resources];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
+    
+    // Setting a shadow
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withShadowStyle:shadow inRange:NSMakeRange(1,1) resources:resources];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\shad\\shadx40\\shady60\\shadr80\\shadc2 b\\shad0 c", @"Invalid shadow");
+
+    // Test resource manager
+    NSArray *colors = [resources colors];
+    STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
+    STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
+}
+
 @end
+

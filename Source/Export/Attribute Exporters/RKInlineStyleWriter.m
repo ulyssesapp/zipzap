@@ -226,7 +226,7 @@
     [taggedString associateTag:closing atPosition:(range.location + range.length)];
     
     // We add the Apple proprietary tag, to ensure full support of the text system
-    [taggedString associateTag:[NSString stringWithFormat:@"\\strikestyle%U ", strikethroughStyle] atPosition:range.location];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\strikestyle%u ", strikethroughStyle] atPosition:range.location];
 
 }
 
@@ -237,8 +237,47 @@
     
     NSUInteger colorIndex = [resources indexOfColor:color];
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\strikec%U ", colorIndex] atPosition:range.location];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\strikec%u ", colorIndex] atPosition:range.location];
     [taggedString associateTag:[NSString stringWithFormat:@"\\strikec0 ", colorIndex] atPosition:(range.location + range.length)];
 }
 
++ (void)tag:(RKTaggedString *)taggedString withStrokeWidth:(CGFloat)strokeWidth inRange:(NSRange)range
+{
+    if (strokeWidth == 0)
+        return;
+    
+    [taggedString associateTag:[NSString stringWithFormat:@"\\outl\\strokewidth%i ", (NSUInteger)strokeWidth] atPosition:range.location];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\outl0\\strokewidth0 ", (NSUInteger)strokeWidth] atPosition:(range.location + range.length)];
+}
+
++ (void)tag:(RKTaggedString *)taggedString withStrokeColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
+{
+    if (color == nil)
+        return;
+    
+    NSUInteger colorIndex = [resources indexOfColor:color];
+    
+    [taggedString associateTag:[NSString stringWithFormat:@"\\strokec%U ", colorIndex] atPosition:range.location];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\strokec0 ", colorIndex] atPosition:(range.location + range.length)];
+}
+
++ (void)tag:(RKTaggedString *)taggedString withShadowStyle:(NSShadow *)shadow inRange:(NSRange)range resources:(RKResourcePool *)resources
+{
+    if (shadow == nil)
+        return;
+    
+     NSUInteger colorIndex = [resources indexOfColor:[shadow shadowColor]];
+    
+    [taggedString associateTag:[NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
+                                (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
+                                (NSUInteger)RKPointsToTwips([shadow shadowOffset].height),
+                                (NSUInteger)RKPointsToTwips([shadow shadowBlurRadius]),
+                                colorIndex
+                               ]
+                    atPosition:range.location];
+    
+    [taggedString associateTag:@"\\shad0 " atPosition:(range.location + range.length)];
+}
+
 @end
+
