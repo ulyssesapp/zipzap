@@ -41,11 +41,11 @@
 	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:@"rtf" subdirectory:@"Test Data"];
     NSString *content;
     
-	if (url) {
-		__autoreleasing NSError *error;
-        content = [NSString stringWithContentsOfURL:url usedEncoding:NULL error:&error];
-		STAssertNotNil(content, @"Load failed with error: %@", error);
-	}
+    STAssertNotNil(url, @"Cannot build URL");
+    
+	NSError *error;
+    content = [NSString stringWithContentsOfURL:url usedEncoding:NULL error:&error];
+	STAssertNotNil(content, @"Load failed with error: %@", error);
     
     return content;
 }
