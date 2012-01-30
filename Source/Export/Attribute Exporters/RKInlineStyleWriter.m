@@ -192,4 +192,15 @@
     [taggedString associateTag:@"\\ulnone " atPosition:(range.location + range.length)];
 }
 
++ (void)tag:(RKTaggedString *)taggedString withUnderlineColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
+{
+    if (color == nil)
+        return;
+    
+    NSUInteger colorIndex = [resources indexOfColor:color];
+    
+    [taggedString associateTag:[NSString stringWithFormat:@"\\ulc%U ", colorIndex] atPosition:range.location];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\ulc0 ", colorIndex] atPosition:(range.location + range.length)];
+}
+
 @end
