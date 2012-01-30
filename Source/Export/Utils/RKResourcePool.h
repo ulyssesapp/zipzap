@@ -28,6 +28,11 @@
 - (NSUInteger)indexOfColor:(NSColor *)color;
 
 /*!
+ @abstract Registers a reference file resources
+ */
+- (void)registerFile:(NSFileWrapper *)file;
+
+/*!
  @abstract Returns the collected font families sorted by their indices
  */
 - (NSArray *)fontFamilyNames;
@@ -36,5 +41,10 @@
  @abstract Returns the collected colors sorted by their indices
  */
 - (NSArray *)colors;
+
+/*!
+ @abstract Returns the collected files
+ */
+- (NSArray *)files;
 
 @end

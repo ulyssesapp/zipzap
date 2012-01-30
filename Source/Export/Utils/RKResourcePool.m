@@ -15,6 +15,7 @@
 {
     NSMutableArray *fonts;
     NSMutableArray *colors;
+    NSMutableArray *files;
 }
 
 @end
@@ -68,6 +69,15 @@
     return index;
 }
 
+- (void)registerFile:(NSFileWrapper *)file
+{
+    NSAssert(file, @"No file given");
+    
+    if (![files containsObject:file]) {
+        [files addObject:file];
+    }
+}
+
 - (NSArray *)fontFamilyNames
 {
     return [fonts copy];
@@ -76,6 +86,11 @@
 - (NSArray *)colors
 {
     return [colors copy];
+}
+
+- (NSArray *)files
+{
+    return [files copy];
 }
 
 @end
