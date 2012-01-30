@@ -315,5 +315,77 @@
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\sub b\\sub0 c", @"Invalid subscript mode");
 }
 
+- (void)testAttributeDispatch
+{
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc" ];
+    
+    // Fonts + Traits
+    [attributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo-Bold" size:100] range:NSMakeRange(1,1)];
+    
+    // Text colors
+    [attributedString addAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithSRGBRed:1 green:0 blue:0 alpha:0.5] range:NSMakeRange(1,1)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[NSColor colorWithSRGBRed:1 green:0 blue:0 alpha:0.5] range:NSMakeRange(1,1)];
+
+    // Underlining
+    [attributedString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithUnsignedInteger:1] range:NSMakeRange(1,1)];
+    [attributedString addAttribute:NSUnderlineColorAttributeName value:[NSColor colorWithSRGBRed:1 green:0 blue:0 alpha:0.5] range:NSMakeRange(1,1)];
+
+    // Strikethrough
+    [attributedString addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithUnsignedInteger:1] range:NSMakeRange(1,1)];
+    [attributedString addAttribute:NSStrikethroughColorAttributeName value:[NSColor colorWithSRGBRed:1 green:0 blue:0 alpha:0.5] range:NSMakeRange(1,1)];
+
+    // Outlining
+    [attributedString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:30] range:NSMakeRange(1,1)];
+    [attributedString addAttribute:NSStrokeColorAttributeName value:[NSColor colorWithSRGBRed:1 green:0 blue:0 alpha:0.5] range:NSMakeRange(1,1)];
+
+    // Shadow
+    NSShadow *shadow = [NSShadow new];
+    
+    [shadow setShadowColor:[NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:0.5]];
+    [shadow setShadowOffset:NSMakeSize(2.0, 3.0)];
+    [shadow setShadowBlurRadius:4.0];
+    
+    [attributedString addAttribute:NSShadowAttributeName value:shadow range:NSMakeRange(1,1)];
+    
+    // Superscript
+    [attributedString addAttribute:NSSuperscriptAttributeName value:[NSNumber numberWithInteger:-1] range:NSMakeRange(1,1)];
+    
+    // Generating a string with all attributes used
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    [RKInlineStyleWriter tag:taggedString withInlineStylesOfAttributedString:attributedString resources:resources];
+    
+    STAssertEqualObjects([taggedString flattenedRTFString], 
+                         @"\\f0 \\fs12 \\cb1 \\cf0 a"
+                          "\\f1 \\fs100 \\b "
+                          "\\cb2 "
+                          "\\cf2 "
+                          "\\ul\\ulstyle1 "
+                          "\\ulc2 "
+                          "\\strike\\strikestyle1 "
+                          "\\strikec2 "
+                          "\\outl\\strokewidth30 "
+                          "\\strokec2 "
+                          "\\shad\\shadx40\\shady60\\shadr80\\shadc2 "
+                          "\\sub "
+                          "b"
+                          "\\b0 "
+                          "\\f0 \\fs12 "
+                          "\\cb1 "
+                          "\\cf0 "
+                          "\\ulnone "
+                          "\\ulc0 "
+                          "\\strike0 "
+                          "\\strikec0 "
+                          "\\outl0\\strokewidth0 "
+                          "\\strokec0 "
+                          "\\shad0 "
+                          "\\sub0 "
+                          "c",
+                         @"Invalid tagging"
+                         );
+}
+
 @end
 

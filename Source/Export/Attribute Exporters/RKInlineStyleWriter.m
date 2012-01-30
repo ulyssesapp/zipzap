@@ -84,7 +84,54 @@
     }];
     
     // Tag background color styles
+    [attributedString enumerateAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withBackgroundColor:color inRange:range resources:resources];
+    }];   
+
+    // Tag foreground color styles
+    [attributedString enumerateAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withForegroundColor:color inRange:range resources:resources];
+    }];   
+
+    // Tag underline styles
+    [attributedString enumerateAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withUnderlineStyle:[style unsignedIntegerValue] inRange:range];
+    }];   
     
+    // Tag underline color styles
+    [attributedString enumerateAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withUnderlineColor:color inRange:range resources:resources];
+    }];     
+
+    // Tag strikethrough styles
+    [attributedString enumerateAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withStrikethroughStyle:[style unsignedIntegerValue] inRange:range];
+    }];   
+    
+    // Tag strikethrough color styles
+    [attributedString enumerateAttribute:NSStrikethroughColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withStrikethroughColor:color inRange:range resources:resources];
+    }];        
+    
+    // Tag stroke width styles
+    [attributedString enumerateAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withStrokeWidth:[style doubleValue] inRange:range];
+    }];   
+    
+    // Tag stroke color styles
+    [attributedString enumerateAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withStrokeColor:color inRange:range resources:resources];
+    }];   
+
+    // Tag shadow styles
+    [attributedString enumerateAttribute:NSShadowAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSShadow *style, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withShadowStyle:style inRange:range resources:resources];
+    }];   
+
+    // Tag superscript / subscript styles
+    [attributedString enumerateAttribute:NSSuperscriptAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
+        [RKInlineStyleWriter tag:taggedString withSuperscriptMode:[style integerValue] inRange:range];
+    }];   
 }
 
 + (void)tag:(RKTaggedString *)taggedString withFont:(NSFont *)font inRange:(NSRange)range resources:(RKResourcePool *)resources
