@@ -237,12 +237,12 @@
 {
     RKTaggedString *taggedString;
     
-    // Default color
+    // Default width
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withStrokeWidth:0 inRange:NSMakeRange(1,1)];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
     
-    // Setting a color
+    // Setting a width
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withStrokeWidth:30 inRange:NSMakeRange(1,1)];
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\outl\\strokewidth30 b\\outl0\\strokewidth0 c", @"Invalid stroke width");
@@ -279,7 +279,7 @@
     [shadow setShadowOffset:NSMakeSize(2.0, 3.0)];
     [shadow setShadowBlurRadius:4.0];
     
-    // Default color
+    // Default shadow
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withShadowStyle:nil inRange:NSMakeRange(1,1) resources:resources];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
@@ -293,6 +293,26 @@
     NSArray *colors = [resources colors];
     STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
     STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
+}
+
+- (void)testSuperscriptMode
+{
+    RKTaggedString *taggedString;
+    
+    // Default mode
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withSuperscriptMode:0 inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
+    
+    // Setting superscript
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withSuperscriptMode:1 inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\sup b\\sup0 c", @"Invalid superscript mode");
+
+    // Setting subscript
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withSuperscriptMode:-1 inRange:NSMakeRange(1,1)];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\sub b\\sub0 c", @"Invalid subscript mode");
 }
 
 @end

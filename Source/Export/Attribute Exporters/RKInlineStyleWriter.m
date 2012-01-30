@@ -266,7 +266,7 @@
     if (shadow == nil)
         return;
     
-     NSUInteger colorIndex = [resources indexOfColor:[shadow shadowColor]];
+    NSUInteger colorIndex = [resources indexOfColor:[shadow shadowColor]];
     
     [taggedString associateTag:[NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
                                 (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
@@ -279,5 +279,20 @@
     [taggedString associateTag:@"\\shad0 " atPosition:(range.location + range.length)];
 }
 
++ (void)tag:(RKTaggedString *)taggedString withSuperscriptMode:(NSInteger)mode inRange:(NSRange)range
+{
+    if (mode == 0) 
+        return;
+    
+    if (mode > 0) {
+        [taggedString associateTag:[NSString stringWithFormat:@"\\sup "] atPosition:range.location];
+        [taggedString associateTag:[NSString stringWithFormat:@"\\sup0 "] atPosition:(range.location + range.length)];
+    }
+    else if (mode < 0) {
+        [taggedString associateTag:[NSString stringWithFormat:@"\\sub "] atPosition:range.location];
+        [taggedString associateTag:[NSString stringWithFormat:@"\\sub0 "] atPosition:(range.location + range.length)];
+    }
+}
+    
 @end
 
