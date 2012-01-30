@@ -42,7 +42,7 @@
     // These operations are ordered by the placement priority of the generated tags in the RTF file. 
     [RKParagraphStyleWriter tag:taggedString withParagraphStylesOfAttributedString:attributedString];
 
-    [RKInlineStyleWriter tag:taggedString withFontStylesOfAttributedString:attributedString resources:resources];
+    [RKInlineStyleWriter tag:taggedString withInlineStylesOfAttributedString:attributedString resources:resources];
 
     [RKLinkWriter tag:taggedString withLinkStylesOfAttributedString:attributedString];
 

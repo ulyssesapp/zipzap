@@ -12,17 +12,21 @@
 
 @implementation RKInlineStyleWriterTest
 
-- (void)testTagSingleFontStyle
+- (void)testTagFontStyle
 {
-    NSFont *font = [NSFont fontWithName:@"Helvetica-BoldOblique" size:16];
+    NSFont *font = [NSFont fontWithName:@"Times-BoldItalic" size:16];
     RKTaggedString *string = [RKTaggedString taggedStringWithString:@"abcd"];
     RKResourcePool *resources = [RKResourcePool new];
-    
+
+    // Tagging defined font
     [RKInlineStyleWriter tag:string withFont:font inRange:NSMakeRange(1, 2) resources:resources];
+
+    // Tagging default font
+    [RKInlineStyleWriter tag:string withFont:nil inRange:NSMakeRange(3, 1) resources:resources];    
     
-    // Test tagging
     STAssertEqualObjects([string flattenedRTFString],
                          @"a"
+                          // Defined font
                           "\\f0 "
                           "\\fs16 "
                           "\\b "
@@ -30,54 +34,76 @@
                           "bc"
                           "\\b0 "
                           "\\i0 "
+                          // Default font
+                          "\\f1 "
+                          "\\fs12 "
                           "d",
                          @"Invalid font style"
                          );
     
     // Test resource manager
     NSArray *fontFamilies = [resources fontFamilyNames];
-    STAssertEquals([fontFamilies count], (NSUInteger)1, @"Invalid font family count");
-    STAssertEqualObjects([fontFamilies objectAtIndex:0], @"Helvetica", @"Invalid font family");    
+    STAssertEquals([fontFamilies count], (NSUInteger)2, @"Invalid font family count");
+    STAssertEqualObjects([fontFamilies objectAtIndex:0], @"Times-Roman", @"Invalid font family");
+    STAssertEqualObjects([fontFamilies objectAtIndex:1], @"Helvetica", @"Invalid font family");  
 }
 
-- (void)testTagMultipleFontStyles
+- (void)testBackgroundColorStyle
 {
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abcdef"];
-    NSFont *fontA = [NSFont fontWithName:@"Times-Roman" size:8];
-    NSFont *fontB = [NSFont fontWithName:@"Helvetica-BoldOblique" size:16];
+    NSColor *color = [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:0.5];
+    RKTaggedString *string = [RKTaggedString taggedStringWithString:@"abcd"];
     RKResourcePool *resources = [RKResourcePool new];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
-    
-    [attributedString addAttribute:NSFontAttributeName value:fontA range:NSMakeRange(0, 2)];
-    [attributedString addAttribute:NSFontAttributeName value:fontB range:NSMakeRange(2, 2)];
 
-    [RKInlineStyleWriter tag:taggedString withFontStylesOfAttributedString:attributedString resources:resources];
+    // Defined color
+    [RKInlineStyleWriter tag:string withBackgroundColor:color inRange:NSMakeRange(1,2) resources:resources];
+    // Default color
+    [RKInlineStyleWriter tag:string withBackgroundColor:nil inRange:NSMakeRange(3,2) resources:resources];
+
     
-    // Test tagging
-    STAssertEqualObjects([taggedString flattenedRTFString],
-                         @"\\f0 "
-                          "\\fs8 "
-                          "ab"
-                          "\\f1 "
-                          "\\fs16 "
-                          "\\b "
-                          "\\i "
-                          "cd"
-                          "\\b0 "
-                          "\\i0 "
-                          // Default of the text system is Helvetica, 12pt
-                          "\\f1 "
-                          "\\fs12 "
-                          "ef",
-                         @"Invalid font styles"
+    STAssertEqualObjects([string flattenedRTFString],
+                         @"a"
+                         // Defined color
+                         "\\cb2 "
+                         "bc"
+                         // Default color
+                         "\\cb1 "
+                         "d",
+                         @"Invalid font style"
                          );
-
-    // Test resource manager
-    NSArray *fontFamilies = [resources fontFamilyNames];
-    STAssertEquals([fontFamilies count], (NSUInteger)2, @"Invalid font family count");
-    STAssertEqualObjects([fontFamilies objectAtIndex:0], @"Times-Roman", @"Invalid font family");    
-    STAssertEqualObjects([fontFamilies objectAtIndex:1], @"Helvetica", @"Invalid font family");    
     
+    // Test resource manager
+    NSArray *colors = [resources colors];
+    STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
+    STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
+}
+
+- (void)testForegroundColorStyle
+{
+    NSColor *color = [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:0.5];
+    RKTaggedString *string = [RKTaggedString taggedStringWithString:@"abcd"];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    // Defined color
+    [RKInlineStyleWriter tag:string withForegroundColor:color inRange:NSMakeRange(1,2) resources:resources];
+    // Default color
+    [RKInlineStyleWriter tag:string withForegroundColor:nil inRange:NSMakeRange(3,2) resources:resources];
+    
+    
+    STAssertEqualObjects([string flattenedRTFString],
+                         @"a"
+                         // Defined color
+                         "\\cf2 "
+                         "bc"
+                         // Default color
+                         "\\cf0 "
+                         "d",
+                         @"Invalid font style"
+                         );
+    
+    // Test resource manager
+    NSArray *colors = [resources colors];
+    STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
+    STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
 }
 
 @end
