@@ -11,4 +11,33 @@
 
 @implementation RKTextAttachmentWriterTest
 
+- (NSFileWrapper *)attachmentWithName:(NSString *)name withExtension:(NSString *)extension
+{
+	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:extension subdirectory:@"Test Data/resources"];
+    NSFileWrapper *wrapper;
+    
+    STAssertNotNil(url, @"Cannot build URL");
+    
+    NSError *error;
+    wrapper = [[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:&error];
+    STAssertNotNil(wrapper, @"Load failed with error: %@", error);
+    
+    return wrapper;
+}
+
+- (void)testPictureAttachments
+{
+    
+}
+
+- (void)testPictureAttachmentsWithConversion
+{
+    
+}
+
+- (void)testMovieAttachments
+{
+    
+}
+
 @end
