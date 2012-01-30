@@ -17,7 +17,7 @@
 
 /*!
  @abstract Returns the index of a font. 
- @discussion If the font is not indexed, it will be registered. Only the family name of a font is registered.
+ @discussion If the font is not indexed, it will be registered. The font name is stored with all non-standard traits (e.g. Roman, Condensed). Standard traits (Bold, Italic) are removed.
  */
 - (NSUInteger)indexOfFont:(NSFont *)font;
 

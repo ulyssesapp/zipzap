@@ -41,7 +41,7 @@
 {
     NSAssert(font, @"No font given");
     
-    NSString *familyName = font.familyName;
+    NSString *familyName = [[[NSFontManager sharedFontManager] convertFont:font toNotHaveTrait:NSBoldFontMask|NSItalicFontMask] fontName];
     NSUInteger index = [fonts indexOfObject: familyName];
     
     if (index == NSNotFound) {

@@ -20,12 +20,20 @@
 
     // Different font names should deliver a different index
     STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Times-Roman" size:18]], (NSUInteger)1, @"Missing font or size not ignored");
-    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Verdana" size:28]], (NSUInteger)2, @"Missing font");
+    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Menlo" size:28]], (NSUInteger)2, @"Missing font");
 
     // Indexing the same fonts again should deliver the same index
     STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Times-Italic" size:99]], (NSUInteger)1, @"Index not reused or traits/size not ignored");
     STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Helvetica-Bold" size:99]], (NSUInteger)0, @"Index not reused or traits/size not ignored");
 
+    NSArray *collectedFonts = [resourceManager fontFamilyNames];
+
+    STAssertEquals([collectedFonts count], (NSUInteger)3, @"Unexpected font count");
+
+    // Non-standard traits are kept
+    STAssertEqualObjects([collectedFonts objectAtIndex:0], @"Helvetica", @"Unexpected font");
+    STAssertEqualObjects([collectedFonts objectAtIndex:1], @"Times-Roman", @"Unexpected font");
+    STAssertEqualObjects([collectedFonts objectAtIndex:2], @"Menlo-Regular", @"Unexpected font");
 }
 
 - (void)testIndexingColors
