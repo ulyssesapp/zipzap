@@ -118,57 +118,57 @@
     // Single line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:NSUnderlineStyleSingle inRange:NSMakeRange(1,1) ];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ul b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ul\\ulstyle1 b\\ulnone c", @"Invalid underline style");
 
     // Double line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:NSUnderlineStyleDouble inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldb b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldb\\ulstyle9 b\\ulnone c", @"Invalid underline style");
 
     // Thick line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:NSUnderlineStyleThick inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulth b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulth\\ulstyle2 b\\ulnone c", @"Invalid underline style");
 
     // Dashed line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleSingle | NSUnderlinePatternDash) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldash b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldash\\ulstyle513 b\\ulnone c", @"Invalid underline style");
 
     // Dash-Dot line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleSingle | NSUnderlinePatternDashDot) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldashd b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldashd\\ulstyle769 b\\ulnone c", @"Invalid underline style");
 
     // Dash-Dot-Dot line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleSingle | NSUnderlinePatternDashDotDot) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldashdd b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\uldashdd\\ulstyle1025 b\\ulnone c", @"Invalid underline style");
 
     // Thick Dashed line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleThick | NSUnderlinePatternDash) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulthdash b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulthdash\\ulstyle514 b\\ulnone c", @"Invalid underline style");
     
     // Thick Dash-Dot line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleThick | NSUnderlinePatternDashDot) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulthdashd b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulthdashd\\ulstyle770 b\\ulnone c", @"Invalid underline style");
     
     // Thick Dash-Dot-Dot line
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleThick | NSUnderlinePatternDashDotDot) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulthdashdd b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulthdashdd\\ulstyle1026 b\\ulnone c", @"Invalid underline style");
     
     // Wordwise, single underline
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];  
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleSingle | NSUnderlineByWordMask) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulw b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulw\\ulstyle32769 b\\ulnone c", @"Invalid underline style");
 
     // Wordwise, double underline (additional styles are placed after \ulw)
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];  
     [RKInlineStyleWriter tag:taggedString withUnderlineStyle:(NSUnderlineStyleDouble | NSUnderlineByWordMask) inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulw \\uldb b\\ulnone c", @"Invalid underline style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulw\\uldb\\ulstyle32777 b\\ulnone c", @"Invalid underline style");
 }
 
 - (void)testUnderlineColor
@@ -204,12 +204,33 @@
     // Single style
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     [RKInlineStyleWriter tag:taggedString withStrikethroughStyle:NSUnderlineStyleSingle inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\strike b\\strike0 c", @"Invalid strikethrough style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\strike\\strikestyle1 b\\strike0 c", @"Invalid strikethrough style");
 
     // Double style
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     [RKInlineStyleWriter tag:taggedString withStrikethroughStyle:NSUnderlineStyleDouble inRange:NSMakeRange(1,1)];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\striked1 b\\striked0 c", @"Invalid strikethrough style");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\striked1\\strikestyle9 b\\striked0 c", @"Invalid strikethrough style");
+}
+
+- (void)testStrikethroughColor
+{
+    RKTaggedString *taggedString;
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    // Default color
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withStrikethroughColor:nil inRange:NSMakeRange(1,1) resources:resources];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid strikethrough style");
+    
+    // Setting a color
+    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
+    [RKInlineStyleWriter tag:taggedString withStrikethroughColor:[NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1] inRange:NSMakeRange(1,1) resources:resources];
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\strikec2 b\\strikec0 c", @"Invalid strikethrough style");
+    
+    // Test resource manager
+    NSArray *colors = [resources colors];
+    STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
+    STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
 }
 
 @end

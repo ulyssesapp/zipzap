@@ -152,7 +152,7 @@
     
     // Word-wise underlining (must precede other tags)
     if (underlineStyle & NSUnderlineByWordMask) {
-        [taggedString associateTag:@"\\ulw " atPosition:range.location];
+        [taggedString associateTag:@"\\ulw" atPosition:range.location];
     }
 
     // Never write \\ulw \\ul, since this is misinterpreted by several RTF interpreters
@@ -185,11 +185,14 @@
         }
         
         // Generate \\ul<STYLE><PATTERN> flag
-        [taggedString associateTag:[NSString stringWithFormat:@"\\ul%@%@ ", styleString, patternString] atPosition:range.location];
+        [taggedString associateTag:[NSString stringWithFormat:@"\\ul%@%@", styleString, patternString] atPosition:range.location];
     }
     
     // Add the deactivating tag
     [taggedString associateTag:@"\\ulnone " atPosition:(range.location + range.length)];
+
+    // We add the Apple proprietary tag, to ensure full support of the text system
+    [taggedString associateTag:[NSString stringWithFormat:@"\\ulstyle%U ", underlineStyle] atPosition:range.location];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withUnderlineColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
@@ -210,17 +213,32 @@
         return;
 
     // Convert unsupported strikethrough styles to \strike, 
-    NSString *opening = @"\\strike ";
+    NSString *opening = @"\\strike";
     NSString *closing = @"\\strike0 ";
 
     // Currently only \\strikedN is supported as alternative
     if ((strikethroughStyle & NSUnderlineStyleDouble) == NSUnderlineStyleDouble) {
-        opening = @"\\striked1 ";
+        opening = @"\\striked1";
         closing = @"\\striked0 ";
     }
-
+    
     [taggedString associateTag:opening atPosition:range.location];
     [taggedString associateTag:closing atPosition:(range.location + range.length)];
+    
+    // We add the Apple proprietary tag, to ensure full support of the text system
+    [taggedString associateTag:[NSString stringWithFormat:@"\\strikestyle%U ", strikethroughStyle] atPosition:range.location];
+
+}
+
++ (void)tag:(RKTaggedString *)taggedString withStrikethroughColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
+{
+    if (color == nil)
+        return;
+    
+    NSUInteger colorIndex = [resources indexOfColor:color];
+    
+    [taggedString associateTag:[NSString stringWithFormat:@"\\strikec%U ", colorIndex] atPosition:range.location];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\strikec0 ", colorIndex] atPosition:(range.location + range.length)];
 }
 
 @end
