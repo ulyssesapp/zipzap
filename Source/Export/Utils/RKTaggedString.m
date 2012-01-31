@@ -57,7 +57,7 @@
     return originalString;
 }
 
-- (void)associateTag:(NSString *)tag atPosition:(NSUInteger)position
+- (void)registerTag:(NSString *)tag forPosition:(NSUInteger)position
 {
     if (position > [originalString length]) {
         [NSException raise:NSRangeException format:@"Position %u beyond string bounds of %u.", position, [originalString length]];

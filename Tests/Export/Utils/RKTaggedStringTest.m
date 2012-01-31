@@ -17,15 +17,15 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"äbcd{fg"];
     
     // Simple associations
-    [taggedString associateTag:@"1-1" atPosition:1];
-    [taggedString associateTag:@"3-1" atPosition:3];
+    [taggedString registerTag:@"1-1" forPosition:1];
+    [taggedString registerTag:@"3-1" forPosition:3];
     
     // Multiple associations at the same position, to show position saving
-    [taggedString associateTag:@"1-2" atPosition:1];
-    [taggedString associateTag:@"1-3" atPosition:1];
+    [taggedString registerTag:@"1-2" forPosition:1];
+    [taggedString registerTag:@"1-3" forPosition:1];
     
-    [taggedString associateTag:@"4-1" atPosition:4];
-    [taggedString associateTag:@"4-2" atPosition:4];
+    [taggedString registerTag:@"4-1" forPosition:4];
+    [taggedString registerTag:@"4-2" forPosition:4];
     
     return taggedString;
 }
@@ -35,8 +35,8 @@
     RKTaggedString *taggedString = [self sampleStringWithTags];
     
     // Exception when leaving the string boundaries
-    STAssertThrows([taggedString associateTag:@"8-1" atPosition:8], @"Placement beyond boundaries possible");    
-    STAssertThrows([taggedString associateTag:@"1000-1" atPosition:1000], @"Placement beyond boundaries possible");    
+    STAssertThrows([taggedString registerTag:@"8-1" forPosition:8], @"Placement beyond boundaries possible");    
+    STAssertThrows([taggedString registerTag:@"1000-1" forPosition:1000], @"Placement beyond boundaries possible");    
     
     
 }
@@ -46,10 +46,10 @@
     RKTaggedString *taggedString = [self sampleStringWithTags];
 
     // Insert a tag before the first element
-    [taggedString associateTag:@"0-1" atPosition:0];
+    [taggedString registerTag:@"0-1" forPosition:0];
     
     // Append a tag beyond the last element
-    [taggedString associateTag:@"7-1" atPosition:7];    
+    [taggedString registerTag:@"7-1" forPosition:7];    
     
     // Verifying index table
     NSDictionary *tagPlacement = [taggedString _getTagPositions];
@@ -85,7 +85,7 @@
 {
     RKTaggedString *taggedString = [self sampleStringWithTags];
 
-    [taggedString associateTag:@"[tag with different length]" atPosition:1];
+    [taggedString registerTag:@"[tag with different length]" forPosition:1];
     
     NSString *flattened = [taggedString flattenedRTFString];
     
@@ -104,8 +104,8 @@
 {
     RKTaggedString *taggedString = [self sampleStringWithTags];
  
-    [taggedString associateTag:@"7-1" atPosition:7];    
-    [taggedString associateTag:@"[tag with different length]" atPosition:1];
+    [taggedString registerTag:@"7-1" forPosition:7];    
+    [taggedString registerTag:@"[tag with different length]" forPosition:1];
     
     NSString *flattened = [taggedString flattenedRTFString];
     
@@ -126,8 +126,8 @@
 {
     RKTaggedString *taggedString = [self sampleStringWithTags];
     
-    [taggedString associateTag:@"0-1" atPosition:0];    
-    [taggedString associateTag:@"[tag with different length]" atPosition:1];
+    [taggedString registerTag:@"0-1" forPosition:0];    
+    [taggedString registerTag:@"[tag with different length]" forPosition:1];
     
     NSString *flattened = [taggedString flattenedRTFString];
     
@@ -147,9 +147,9 @@
 {
     RKTaggedString *taggedString = [self sampleStringWithTags];
     
-    [taggedString associateTag:@"0-1" atPosition:0];    
-    [taggedString associateTag:@"7-1" atPosition:7];    
-    [taggedString associateTag:@"[tag with different length]" atPosition:1];
+    [taggedString registerTag:@"0-1" forPosition:0];    
+    [taggedString registerTag:@"7-1" forPosition:7];    
+    [taggedString registerTag:@"[tag with different length]" forPosition:1];
     
     NSString *flattened = [taggedString flattenedRTFString];
     

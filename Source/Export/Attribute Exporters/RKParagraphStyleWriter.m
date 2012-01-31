@@ -29,8 +29,8 @@
          if (paragraphStyle) {
              NSString *paragraphHeader = [self RTFOpeningTagfromParagraphStyle:paragraphStyle];
 
-             [taggedString associateTag:paragraphHeader atPosition:range.location];
-             [taggedString associateTag:@"\\par\n" atPosition:(range.location + range.length)];
+             [taggedString registerTag:paragraphHeader forPosition:range.location];
+             [taggedString registerTag:@"\\par\n" forPosition:(range.location + range.length)];
          }
     }];
 }

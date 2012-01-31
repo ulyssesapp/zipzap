@@ -25,10 +25,10 @@
     if (!url)
         return;
     
-    [taggedString associateTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", [url absoluteString]]
-                    atPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", [url absoluteString]]
+                    forPosition:range.location];
 
-    [taggedString associateTag:@"}}" atPosition:(range.location + range.length)];
+    [taggedString registerTag:@"}}" forPosition:(range.location + range.length)];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withLinkStylesOfAttributedString:(NSAttributedString *)attributedString

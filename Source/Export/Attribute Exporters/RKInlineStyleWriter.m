@@ -146,20 +146,20 @@
     NSUInteger fontIndex = [resources indexOfFont:font];
     
     // Add font and size tag
-    [taggedString associateTag:[NSString stringWithFormat:@"\\f%u ", fontIndex] atPosition:openPosition];
-    [taggedString associateTag:[NSString stringWithFormat:@"\\fs%u ", (NSUInteger)font.pointSize] atPosition:openPosition];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\f%u ", fontIndex] forPosition:openPosition];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\fs%u ", (NSUInteger)font.pointSize] forPosition:openPosition];
     
     // Add trait tags
     NSUInteger fontTraits = [[NSFontManager sharedFontManager] traitsOfFont:font];
     
     if (fontTraits & NSBoldFontMask) {
-        [taggedString associateTag:@"\\b " atPosition:openPosition];
-        [taggedString associateTag:@"\\b0 " atPosition:closePosition];
+        [taggedString registerTag:@"\\b " forPosition:openPosition];
+        [taggedString registerTag:@"\\b0 " forPosition:closePosition];
     }
     
     if (fontTraits & NSItalicFontMask) {
-        [taggedString associateTag:@"\\i " atPosition:openPosition];
-        [taggedString associateTag:@"\\i0 " atPosition:closePosition];
+        [taggedString registerTag:@"\\i " forPosition:openPosition];
+        [taggedString registerTag:@"\\i0 " forPosition:closePosition];
     }   
 }
 
@@ -167,14 +167,14 @@
 {
     NSUInteger colorIndex = (color == nil) ? 1 : [resources indexOfColor:color];
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\cb%lu ", colorIndex] atPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\cb%lu ", colorIndex] forPosition:range.location];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withForegroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     NSUInteger colorIndex = (color == nil) ? 0 : [resources indexOfColor:color];
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\cf%lu ", colorIndex] atPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\cf%lu ", colorIndex] forPosition:range.location];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withUnderlineStyle:(NSUInteger)underlineStyle inRange:(NSRange)range
@@ -185,7 +185,7 @@
     
     // Word-wise underlining (must precede other tags)
     if (underlineStyle & NSUnderlineByWordMask) {
-        [taggedString associateTag:@"\\ulw" atPosition:range.location];
+        [taggedString registerTag:@"\\ulw" forPosition:range.location];
     }
 
     // Never write \\ulw \\ul, since this is misinterpreted by several RTF interpreters
@@ -218,14 +218,14 @@
         }
         
         // Generate \\ul<STYLE><PATTERN> flag
-        [taggedString associateTag:[NSString stringWithFormat:@"\\ul%@%@", styleString, patternString] atPosition:range.location];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\ul%@%@", styleString, patternString] forPosition:range.location];
     }
     
     // Add the deactivating tag
-    [taggedString associateTag:@"\\ulnone " atPosition:(range.location + range.length)];
+    [taggedString registerTag:@"\\ulnone " forPosition:(range.location + range.length)];
 
     // We add the Apple proprietary tag, to ensure full support of the text system
-    [taggedString associateTag:[NSString stringWithFormat:@"\\ulstyle%U ", underlineStyle] atPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\ulstyle%U ", underlineStyle] forPosition:range.location];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withUnderlineColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
@@ -235,8 +235,8 @@
     
     NSUInteger colorIndex = [resources indexOfColor:color];
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\ulc%U ", colorIndex] atPosition:range.location];
-    [taggedString associateTag:[NSString stringWithFormat:@"\\ulc0 ", colorIndex] atPosition:(range.location + range.length)];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\ulc%U ", colorIndex] forPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\ulc0 ", colorIndex] forPosition:(range.location + range.length)];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withStrikethroughStyle:(NSUInteger)strikethroughStyle inRange:(NSRange)range
@@ -255,11 +255,11 @@
         closing = @"\\striked0 ";
     }
     
-    [taggedString associateTag:opening atPosition:range.location];
-    [taggedString associateTag:closing atPosition:(range.location + range.length)];
+    [taggedString registerTag:opening forPosition:range.location];
+    [taggedString registerTag:closing forPosition:(range.location + range.length)];
     
     // We add the Apple proprietary tag, to ensure full support of the text system
-    [taggedString associateTag:[NSString stringWithFormat:@"\\strikestyle%u ", strikethroughStyle] atPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\strikestyle%u ", strikethroughStyle] forPosition:range.location];
 
 }
 
@@ -270,8 +270,8 @@
     
     NSUInteger colorIndex = [resources indexOfColor:color];
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\strikec%u ", colorIndex] atPosition:range.location];
-    [taggedString associateTag:[NSString stringWithFormat:@"\\strikec0 ", colorIndex] atPosition:(range.location + range.length)];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\strikec%u ", colorIndex] forPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\strikec0 ", colorIndex] forPosition:(range.location + range.length)];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withStrokeWidth:(CGFloat)strokeWidth inRange:(NSRange)range
@@ -279,8 +279,8 @@
     if (strokeWidth == 0)
         return;
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\outl\\strokewidth%i ", (NSUInteger)strokeWidth] atPosition:range.location];
-    [taggedString associateTag:[NSString stringWithFormat:@"\\outl0\\strokewidth0 ", (NSUInteger)strokeWidth] atPosition:(range.location + range.length)];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%i ", (NSUInteger)strokeWidth] forPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\outl0\\strokewidth0 ", (NSUInteger)strokeWidth] forPosition:(range.location + range.length)];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withStrokeColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
@@ -290,8 +290,8 @@
     
     NSUInteger colorIndex = [resources indexOfColor:color];
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\strokec%U ", colorIndex] atPosition:range.location];
-    [taggedString associateTag:[NSString stringWithFormat:@"\\strokec0 ", colorIndex] atPosition:(range.location + range.length)];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\strokec%U ", colorIndex] forPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\strokec0 ", colorIndex] forPosition:(range.location + range.length)];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withShadowStyle:(NSShadow *)shadow inRange:(NSRange)range resources:(RKResourcePool *)resources
@@ -301,15 +301,15 @@
     
     NSUInteger colorIndex = [resources indexOfColor:[shadow shadowColor]];
     
-    [taggedString associateTag:[NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
+    [taggedString registerTag:[NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
                                 (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
                                 (NSUInteger)RKPointsToTwips([shadow shadowOffset].height),
                                 (NSUInteger)RKPointsToTwips([shadow shadowBlurRadius]),
                                 colorIndex
                                ]
-                    atPosition:range.location];
+                    forPosition:range.location];
     
-    [taggedString associateTag:@"\\shad0 " atPosition:(range.location + range.length)];
+    [taggedString registerTag:@"\\shad0 " forPosition:(range.location + range.length)];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withSuperscriptMode:(NSInteger)mode inRange:(NSRange)range
@@ -318,12 +318,12 @@
         return;
     
     if (mode > 0) {
-        [taggedString associateTag:[NSString stringWithFormat:@"\\sup "] atPosition:range.location];
-        [taggedString associateTag:[NSString stringWithFormat:@"\\sup0 "] atPosition:(range.location + range.length)];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\sup "] forPosition:range.location];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\sup0 "] forPosition:(range.location + range.length)];
     }
     else if (mode < 0) {
-        [taggedString associateTag:[NSString stringWithFormat:@"\\sub "] atPosition:range.location];
-        [taggedString associateTag:[NSString stringWithFormat:@"\\sub0 "] atPosition:(range.location + range.length)];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\sub "] forPosition:range.location];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\sub0 "] forPosition:(range.location + range.length)];
     }
 }
     

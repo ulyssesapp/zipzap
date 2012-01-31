@@ -26,7 +26,7 @@
  @discussion When flattening the string, the order of adding tags to the tagged string is kept
              Throws an exception if the position is beyond the string boundaries
  */
-- (void)associateTag:(NSString *)tag atPosition:(NSUInteger)position;
+- (void)registerTag:(NSString *)tag forPosition:(NSUInteger)position;
 
 /*!
  @abstract Creates a flat variant of the string. 
