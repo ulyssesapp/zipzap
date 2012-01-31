@@ -118,10 +118,10 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
         if (itemValue) {
             NSString *convertedValue;
             
-            if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: [NSString class]]) {
+            if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSString class]]) {
                 convertedValue = [itemValue RTFEscapedString];
             }
-             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqualTo: [NSDate class]]) {
+             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSDate class]]) {
                 convertedValue = [itemValue RTFDate];
             }
             else {

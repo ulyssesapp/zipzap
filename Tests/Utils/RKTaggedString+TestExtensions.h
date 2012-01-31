@@ -8,6 +8,6 @@
 
 @interface RKTaggedString (TestExtensions)
 
-- (NSDictionary *)_getTagPlacement;
+- (NSDictionary *)_getTagPositions;
 
 @end

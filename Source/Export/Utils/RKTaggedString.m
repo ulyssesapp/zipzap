@@ -11,14 +11,15 @@
 
 @interface RKTaggedString ()
 {
-    NSMutableDictionary *tagPlacement;
+    NSMutableDictionary *tagPositions;
     NSString *originalString;
 }
 
 /*!
- @abstract Appends an excerp of the original string to another string while converting it to the escaped RTF variant
+ @abstract Appends an excerpt of the original string to a string
+ @discussion All characters are escaped for RTF output
  */
-- (void)appendSourceStringToString:(NSMutableString *)flattenedString inRange:(NSRange)range;
+- (void)appendOriginalStringRange:(NSRange)range toString:(NSMutableString *)flattenedString;
 
 @end
 
@@ -34,7 +35,7 @@
     self = [super init];
 
     if (self) {
-        tagPlacement = [NSMutableDictionary new];
+        tagPositions = [NSMutableDictionary new];
     }
     
     return self;
@@ -51,6 +52,11 @@
     return self;
 }
 
+- (NSString *)untaggedString
+{
+    return originalString;
+}
+
 - (void)associateTag:(NSString *)tag atPosition:(NSUInteger)position
 {
     if (position > [originalString length]) {
@@ -58,17 +64,17 @@
     }
     
     NSNumber *mapIndex = [NSNumber numberWithUnsignedInteger:position];
-    NSMutableArray *tags = [tagPlacement objectForKey:mapIndex];
+    NSMutableArray *tags = [tagPositions objectForKey:mapIndex];
     
     if (!tags) {
         tags = [NSMutableArray new];
-        [tagPlacement setObject:tags forKey:mapIndex];
+        [tagPositions setObject:tags forKey:mapIndex];
     }
     
     [tags addObject: tag];
 }
 
-- (void)appendSourceStringToString:(NSMutableString *)flattenedString inRange:(NSRange)range
+- (void)appendOriginalStringRange:(NSRange)range toString:(NSMutableString *)flattenedString
 {
     NSString *safeOriginalString = [[originalString substringWithRange:range] RTFEscapedString];
     
@@ -81,16 +87,16 @@
     __block NSUInteger lastSourceOffset = 0;
     
     // Iterate over all tag positions
-    [[[tagPlacement allKeys] sortedArrayUsingSelector:@selector(compare:)] enumerateObjectsUsingBlock:^(NSNumber *mapIndex, NSUInteger idx, BOOL *stop) {
+    [[[tagPositions allKeys] sortedArrayUsingSelector:@selector(compare:)] enumerateObjectsUsingBlock:^(NSNumber *mapIndex, NSUInteger idx, BOOL *stop) {
         NSUInteger currentSourceOffset = [mapIndex unsignedIntegerValue];
 
         // Copy all untagged chars
-        [self appendSourceStringToString:flattened inRange:NSMakeRange(lastSourceOffset, currentSourceOffset - lastSourceOffset)];
+        [self appendOriginalStringRange:NSMakeRange(lastSourceOffset, currentSourceOffset - lastSourceOffset) toString:flattened];
      
         lastSourceOffset = currentSourceOffset;
         
         // Insert tags
-        NSArray *tags = [tagPlacement objectForKey:mapIndex];
+        NSArray *tags = [tagPositions objectForKey:mapIndex];
         
         [tags enumerateObjectsUsingBlock:^(NSString *tag, NSUInteger tagIndex, BOOL *stop) {
             [flattened appendString: tag];
@@ -99,7 +105,7 @@
     
     // Append remaining string
     if (lastSourceOffset < [originalString length]) {
-        [self appendSourceStringToString:flattened inRange:NSMakeRange(lastSourceOffset, [originalString length] - lastSourceOffset)];
+        [self appendOriginalStringRange:NSMakeRange(lastSourceOffset, [originalString length] - lastSourceOffset) toString:flattened];
     }
         
     return flattened;

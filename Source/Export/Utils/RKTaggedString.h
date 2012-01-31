@@ -7,7 +7,7 @@
 //
 
 /*!
- @abstract Represents tags that should be inserted into a string by keeping the original string positions
+ @abstract A string that allows the placement of tags
  */
 @interface RKTaggedString : NSObject
 
@@ -24,13 +24,20 @@
 /*!
  @abstract Associates a tag with a certain string position
  @discussion When flattening the string, the order of adding tags to the tagged string is kept
- @throw Throws an exception if the position is beyond the string boundaries
+             Throws an exception if the position is beyond the string boundaries
  */
 - (void)associateTag:(NSString *)tag atPosition:(NSUInteger)position;
 
 /*!
- @abstract Creates a flat variant of the string that contains all tags. All non-tag charracters are converted to an escaped RTF string
+ @abstract Creates a flat variant of the string. 
+ @discussion All tags are integrated into the string. All non-tag charracters are converted to an 
+            escaped RTF string. Substrings that have been marked for removal are removed.
  */
 - (NSString *)flattenedRTFString;
+
+/*!
+ @abstract Returns the original string
+ */
+- (NSString *)untaggedString;
 
 @end

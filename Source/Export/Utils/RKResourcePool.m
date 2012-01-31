@@ -15,7 +15,7 @@
 {
     NSMutableArray *fonts;
     NSMutableArray *colors;
-    NSMutableArray *files;
+    NSMutableArray *fileWrappers;
 }
 
 @end
@@ -29,6 +29,7 @@
     if (self) {
         fonts = [NSMutableArray new];
         colors = [NSMutableArray new];
+        fileWrappers = [NSMutableArray new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
         [self indexOfColor: [NSColor colorWithSRGBRed:0 green:0.0 blue:0.0 alpha:1.0]];
@@ -69,28 +70,28 @@
     return index;
 }
 
-- (void)registerFile:(NSFileWrapper *)file
+- (void)registerFileWrapper:(NSFileWrapper *)fileWrapper
 {
-    NSAssert(file, @"No file given");
+    NSAssert(fileWrapper, @"No file given");
     
-    if (![files containsObject:file]) {
-        [files addObject:file];
+    if (![fileWrappers containsObject:fileWrapper]) {
+        [fileWrappers addObject:fileWrapper];
     }
 }
 
 - (NSArray *)fontFamilyNames
 {
-    return [fonts copy];
+    return fonts;
 }
 
 - (NSArray *)colors
 {
-    return [colors copy];
+    return colors;
 }
 
-- (NSArray *)files
+- (NSArray *)fileWrappers
 {
-    return [files copy];
+    return fileWrappers;
 }
 
 @end

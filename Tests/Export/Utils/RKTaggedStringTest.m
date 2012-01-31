@@ -52,7 +52,7 @@
     [taggedString associateTag:@"7-1" atPosition:7];    
     
     // Verifying index table
-    NSDictionary *tagPlacement = [taggedString _getTagPlacement];
+    NSDictionary *tagPlacement = [taggedString _getTagPositions];
     
     STAssertEquals(tagPlacement.count, (NSUInteger)5, @"Invalid elements count");
     

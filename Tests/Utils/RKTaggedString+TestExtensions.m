@@ -12,9 +12,9 @@
 
 @implementation RKTaggedString (TestExtensions)
 
-- (NSDictionary *)_getTagPlacement
+- (NSDictionary *)_getTagPositions
 {
-    return object_getIvar(self, class_getInstanceVariable([self class], "tagPlacement"));
+    return object_getIvar(self, class_getInstanceVariable([self class], "tagPositions"));
 }
 
 @end

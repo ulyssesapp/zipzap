@@ -59,13 +59,13 @@
     }
     
     // Indentation
-    if (paragraphStyle.firstLineHeadIndent != .0)
+    if (paragraphStyle.firstLineHeadIndent != 0)
         [rtf appendFormat:@"\\fl%i", (NSInteger)RKPointsToTwips(paragraphStyle.firstLineHeadIndent)];
     
-    if (paragraphStyle.headIndent != .0)
+    if (paragraphStyle.headIndent != 0)
         [rtf appendFormat:@"\\culi%i", (NSInteger)RKPointsToTwips(paragraphStyle.headIndent)];
     
-    if (paragraphStyle.tailIndent != .0)
+    if (paragraphStyle.tailIndent != 0)
         [rtf appendFormat:@"\\ri%i", (NSInteger)RKPointsToTwips(paragraphStyle.tailIndent)];
     
     // Line spacing

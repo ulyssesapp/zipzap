@@ -144,14 +144,14 @@
         font = [NSFont fontWithName:@"Helvetica" size:12];
     
     NSUInteger fontIndex = [resources indexOfFont:font];
-    NSUInteger fontSize = [font pointSize];
-    NSUInteger fontTraits = [[NSFontManager sharedFontManager] traitsOfFont:font];
     
     // Add font and size tag
-    [taggedString associateTag:[NSString stringWithFormat:@"\\f%U ", fontIndex] atPosition:openPosition];
-    [taggedString associateTag:[NSString stringWithFormat:@"\\fs%U ", fontSize] atPosition:openPosition];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\f%u ", fontIndex] atPosition:openPosition];
+    [taggedString associateTag:[NSString stringWithFormat:@"\\fs%u ", (NSUInteger)font.pointSize] atPosition:openPosition];
     
     // Add trait tags
+    NSUInteger fontTraits = [[NSFontManager sharedFontManager] traitsOfFont:font];
+    
     if (fontTraits & NSBoldFontMask) {
         [taggedString associateTag:@"\\b " atPosition:openPosition];
         [taggedString associateTag:@"\\b0 " atPosition:closePosition];
@@ -165,28 +165,14 @@
 
 + (void)tag:(RKTaggedString *)taggedString withBackgroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
-    NSUInteger colorIndex;
-    
-    if (color == nil) {
-        colorIndex = 1;
-    }
-     else {
-        colorIndex = [resources indexOfColor:color];
-     }
+    NSUInteger colorIndex = (color == nil) ? 1 : [resources indexOfColor:color];
     
     [taggedString associateTag:[NSString stringWithFormat:@"\\cb%lu ", colorIndex] atPosition:range.location];
 }
 
 + (void)tag:(RKTaggedString *)taggedString withForegroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
-    NSUInteger colorIndex;
-    
-    if (color == nil) {
-        colorIndex = 0;
-    }
-    else {
-        colorIndex = [resources indexOfColor:color];
-    }
+    NSUInteger colorIndex = (color == nil) ? 0 : [resources indexOfColor:color];
     
     [taggedString associateTag:[NSString stringWithFormat:@"\\cf%lu ", colorIndex] atPosition:range.location];
 }
