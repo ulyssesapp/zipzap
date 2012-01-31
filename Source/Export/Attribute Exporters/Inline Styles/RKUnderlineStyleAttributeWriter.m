@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKUnderlineStyleAttributeWriter.h"
 
 /*!
@@ -14,6 +15,11 @@
 #define RKUnderlinePatternMask          0x700
 
 @implementation RKUnderlineStyleAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSUnderlineStyleAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSNumber *)underlineStyleObject
              toTaggedString:(RKTaggedString *)taggedString 

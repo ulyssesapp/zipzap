@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKParagraphStyleWriter.h"
 #import "RKTaggedString.h"
 
@@ -19,6 +20,11 @@
 @end
 
 @implementation RKParagraphStyleWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSParagraphStyleAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSParagraphStyle *)paragraphStyle
              toTaggedString:(RKTaggedString *)taggedString 

@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKSuperscriptAttributeWriter.h"
 
 @implementation RKSuperscriptAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSSuperscriptAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSNumber *)superScriptModeObject
              toTaggedString:(RKTaggedString *)taggedString 

@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKStrikethroughColorAttributeWriter.h"
 
 @implementation RKStrikethroughColorAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrikethroughColorAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSColor *)color
              toTaggedString:(RKTaggedString *)taggedString 

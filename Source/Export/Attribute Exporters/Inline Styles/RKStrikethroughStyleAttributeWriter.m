@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKStrikethroughStyleAttributeWriter.h"
 
 @implementation RKStrikethroughStyleAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrikethroughStyleAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSNumber *)strikethroughStyleObject
              toTaggedString:(RKTaggedString *)taggedString 

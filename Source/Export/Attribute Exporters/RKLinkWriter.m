@@ -6,10 +6,16 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKTaggedString.h"
 #import "RKLinkWriter.h"
 
 @implementation RKLinkWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSLinkAttributeName];
+}
 
 + (void)addTagsForAttribute:(id)value
              toTaggedString:(RKTaggedString *)taggedString 

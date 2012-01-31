@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKFontAttributeWriter.h"
 
 @implementation RKFontAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSFontAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSFont *)font
              toTaggedString:(RKTaggedString *)taggedString 

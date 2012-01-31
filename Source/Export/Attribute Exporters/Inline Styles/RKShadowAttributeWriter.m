@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKShadowAttributeWriter.h"
 
 @implementation RKShadowAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSShadowAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSShadow *)shadow
              toTaggedString:(RKTaggedString *)taggedString 

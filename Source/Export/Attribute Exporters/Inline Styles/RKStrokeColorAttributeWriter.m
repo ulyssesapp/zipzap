@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKStrokeColorAttributeWriter.h"
 
 @implementation RKStrokeColorAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrokeColorAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSColor *)color
              toTaggedString:(RKTaggedString *)taggedString 

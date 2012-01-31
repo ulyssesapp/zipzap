@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKForegroundColorAttributeWriter.h"
 
 @implementation RKForegroundColorAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSForegroundColorAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSColor *)color
              toTaggedString:(RKTaggedString *)taggedString 

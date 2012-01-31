@@ -17,6 +17,12 @@
 @interface RKAttributedStringWriter : NSObject
 
 /*!
+ @abstract Registers a handler class for writing out an attribute to RTF
+ @discussion The class has to inherit from RKAttributeWriter
+ */
++ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName;
+
+/*!
  @abstract Converts an attributes string to RTF
  */
 + (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;

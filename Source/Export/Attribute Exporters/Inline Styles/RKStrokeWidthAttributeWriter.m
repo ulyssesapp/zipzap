@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKStrokeWidthAttributeWriter.h"
 
 @implementation RKStrokeWidthAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrokeWidthAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSNumber *)strokeWidthObject
              toTaggedString:(RKTaggedString *)taggedString 

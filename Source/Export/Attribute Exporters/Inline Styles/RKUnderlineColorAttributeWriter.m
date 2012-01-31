@@ -6,9 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKAttributedStringWriter.h"
 #import "RKUnderlineColorAttributeWriter.h"
 
 @implementation RKUnderlineColorAttributeWriter
+
++ (void)load
+{
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSUnderlineColorAttributeName];
+}
 
 + (void)addTagsForAttribute:(NSColor *)color
              toTaggedString:(RKTaggedString *)taggedString 

@@ -10,8 +10,6 @@
 #import "RKAttributedStringWriter.h"
 
 #import "RKParagraphStyleWriter.h"
-#import "RKLinkWriter.h"
-#import "RKTextAttachmentWriter.h"
 
 @interface RKAttributedStringWriter ()
 
@@ -26,12 +24,14 @@
 
 NSDictionary *attributeHandlers;
 
-+ (void)registerHandler:(NSInvocation *)handler forAttribute:(NSString *)attributeName withAttributeType:(NSObject *)type withPriority:(NSInteger)priority
++ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName
 {
     if (attributeHandlers == nil)
         attributeHandlers = [NSDictionary new];
     
-    
+    [attributeHandlers setValue:attributeWriter forKey:attributeName];
+        
+    NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
 }
 
 + (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
@@ -47,15 +47,12 @@ NSDictionary *attributeHandlers;
 {
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
 
-    // These operations are ordered by the placement priority of the generated tags in the RTF file. 
- /*   [RKParagraphStyleWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:attachmentPolicy resources:resources];
-
-    [RKInlineStyleWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:attachmentPolicy resources:resources];
-
-    [RKLinkWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:attachmentPolicy resources:resources];
-
-    [RKTextAttachmentWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:attachmentPolicy resources:resources];
-   */ 
+    [attributeHandlers enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id handler, BOOL *stop) {
+       [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(Class value, NSRange range, BOOL *stop) {
+           [handler addTagsForAttribute:value toTaggedString:taggedString inRange:range withAttachmentPolicy:attachmentPolicy resources:resources];
+       }];
+    }];
+    
     return taggedString;
 }
 
