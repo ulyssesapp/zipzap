@@ -37,8 +37,6 @@
     // Exception when leaving the string boundaries
     STAssertThrows([taggedString registerTag:@"8-1" forPosition:8], @"Placement beyond boundaries possible");    
     STAssertThrows([taggedString registerTag:@"1000-1" forPosition:1000], @"Placement beyond boundaries possible");    
-    
-    
 }
 
 - (void)testAssociateTags
@@ -163,6 +161,46 @@
                          "g"
                          "7-1",
                          @"Flattening failed"
+                         );
+}
+
+- (void)testFlatteningWithRemove
+{
+    RKTaggedString *taggedString = [self sampleStringWithTags];
+
+    [taggedString registerTag:@"0-1" forPosition:0];    
+    [taggedString registerTag:@"7-1" forPosition:7];    
+    [taggedString registerTag:@"[tag with different length]" forPosition:1];    
+    
+    [taggedString removeRange:NSMakeRange(0, 1)];
+    [taggedString removeRange:NSMakeRange(2, 3)];
+    [taggedString removeRange:NSMakeRange(6, 1)];
+
+    NSString *flattened = [taggedString flattenedRTFString];
+    
+    STAssertEqualObjects(flattened, 
+                         @"0-1"
+                         "1-11-21-3[tag with different length]b"
+                         ""
+                         "3-1"
+                         "4-14-2"
+                         "f"
+                         ""
+                         "7-1",
+                         @"Flattening failed"
+                         );
+}
+
+- (void)testPrioritizedElement
+{
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
+    
+    [taggedString registerTag:@"-Last-" forPosition:1];
+    [taggedString registerPrioritizedTag:@"-First-" forPosition:1];
+    
+    STAssertEqualObjects([taggedString flattenedRTFString], 
+                         @"a-First--Last-bc",
+                         @"Invalid tag ordering"
                          );
 }
 

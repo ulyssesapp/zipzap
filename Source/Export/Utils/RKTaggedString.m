@@ -12,12 +12,19 @@
 @interface RKTaggedString ()
 {
     NSMutableDictionary *tagPositions;
+    NSMutableIndexSet *removedRanges;
     NSString *originalString;
 }
 
 /*!
+ @abstract Returns the tag array for a certain position
+ @discussion Throws an exception if an invalid position is used
+ */
+- (NSMutableArray *)arrayForPosition:(NSUInteger)position;
+
+/*!
  @abstract Appends an excerpt of the original string to a string
- @discussion All characters are escaped for RTF output
+ @discussion All characters are escaped for RTF output. Characters inside ranges that have been removed are also not copied.
  */
 - (void)appendOriginalStringRange:(NSRange)range toString:(NSMutableString *)flattenedString;
 
@@ -36,6 +43,7 @@
 
     if (self) {
         tagPositions = [NSMutableDictionary new];
+        removedRanges = [NSMutableIndexSet new];
     }
     
     return self;
@@ -57,7 +65,7 @@
     return originalString;
 }
 
-- (void)registerTag:(NSString *)tag forPosition:(NSUInteger)position
+- (NSMutableArray *)arrayForPosition:(NSUInteger)position
 {
     if (position > [originalString length]) {
         [NSException raise:NSRangeException format:@"Position %u beyond string bounded by %u.", position, [originalString length]];
@@ -71,14 +79,35 @@
         [tagPositions setObject:tags forKey:mapIndex];
     }
     
+    return tags;
+}
+
+- (void)registerTag:(NSString *)tag forPosition:(NSUInteger)position
+{
+    NSMutableArray *tags = [self arrayForPosition:position];
+    
     [tags addObject: tag];
+}
+
+- (void)registerPrioritizedTag:(NSString *)tag forPosition:(NSUInteger)position
+{
+    NSMutableArray *tags = [self arrayForPosition:position];
+    
+    [tags insertObject:tag atIndex:0];
 }
 
 - (void)appendOriginalStringRange:(NSRange)range toString:(NSMutableString *)flattenedString
 {
-    NSString *safeOriginalString = [[originalString substringWithRange:range] RTFEscapedString];
-    
-    [flattenedString appendString:safeOriginalString];
+    for (NSUInteger position = range.location; position < (range.location + range.length); position ++) {
+        if (![removedRanges containsIndex:position]) {
+            [flattenedString appendString: [[originalString substringWithRange:NSMakeRange(position, 1)] RTFEscapedString]];
+        }
+    }
+}
+
+- (void)removeRange:(NSRange)range
+{
+    [removedRanges addIndexesInRange:range];
 }
 
 - (NSString *)flattenedRTFString
