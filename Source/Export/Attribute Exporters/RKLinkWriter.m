@@ -11,18 +11,20 @@
 
 @implementation RKLinkWriter
 
-+ (void)addTagsForAttributedString:(NSAttributedString *)attributedString toTaggedString:(RKTaggedString *)taggedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (void)addTagsForAttribute:(id)value
+             toTaggedString:(RKTaggedString *)taggedString 
+                    inRange:(NSRange)range
+       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                  resources:(RKResourcePool *)resources
 {
-    [attributedString enumerateAttribute:NSLinkAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        if (value) {
-            NSString *absoluteUrl = ([value isKindOfClass: [NSString class]]) ? value : [value absoluteString];
+    if (value) {
+        NSString *absoluteUrl = ([value isKindOfClass: [NSString class]]) ? value : [value absoluteString];
             
-            [taggedString registerTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", absoluteUrl]
+        [taggedString registerTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", absoluteUrl]
                       forPosition:range.location];
         
-            [taggedString registerTag:@"}}" forPosition:(range.location + range.length)];
-        }
-    }];
+        [taggedString registerTag:@"}}" forPosition:(range.location + range.length)];
+    }
 }
                                                                                  
 @end

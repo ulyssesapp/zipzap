@@ -16,11 +16,9 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abcd"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
     
-    [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://the-soulmen.com/"] range:NSMakeRange(1, 1)];
-    [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://example.com/"] range:NSMakeRange(2, 1)];
+    [RKLinkWriter addTagsForAttribute:[NSURL URLWithString:@"http://the-soulmen.com/"] toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:nil];
+    [RKLinkWriter addTagsForAttribute:@"http://example.com/" toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:0 resources:nil];
     
-    [RKLinkWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:0 resources:nil];
-
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
                           "{\\field{\\*\\fldinst{HYPERLINK \"http://the-soulmen.com/\"}}{\\fldrslt b}}"

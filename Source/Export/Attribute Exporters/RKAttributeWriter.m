@@ -1,25 +1,25 @@
 //
-//  RKTextAttachmentWriter.m
+//  RKAttributeWriter.m
 //  RTFKit
 //
-//  Created by Friedrich Gräter on 27.01.12.
+//  Created by Friedrich Gräter on 31.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextAttachmentWriter.h"
-#import "RKTaggedString.h"
-#import "RKResourcePool.h"
-#import "RKWriter.h"
+#import "RKAttributeWriter.h"
 
-@implementation RKTextAttachmentWriter
+@implementation RKAttributeWriter
 
-+ (void)addTagsForAttribute:(NSParagraphStyle *)paragraphStyle
+/*!
+ @abstract Adds a tag for a certain attribute
+ */
++ (void)addTagsForAttribute:(id)value
              toTaggedString:(RKTaggedString *)taggedString 
                     inRange:(NSRange)range
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    
+    NSAssert(false, @"Missing method of abstract class");
 }
 
 @end

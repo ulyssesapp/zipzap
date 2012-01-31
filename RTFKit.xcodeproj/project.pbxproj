@@ -13,14 +13,58 @@
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
 		50317D6C14C4951D00F23C04 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
+		796EAB3714D85383001E8401 /* RKFontAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB3514D85383001E8401 /* RKFontAttributeWriter.h */; };
+		796EAB3814D85383001E8401 /* RKFontAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB3614D85383001E8401 /* RKFontAttributeWriter.m */; };
+		796EAB3914D85383001E8401 /* RKFontAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB3614D85383001E8401 /* RKFontAttributeWriter.m */; };
+		796EAB3C14D853AC001E8401 /* RKAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB3A14D853AB001E8401 /* RKAttributeWriter.h */; };
+		796EAB3D14D853AC001E8401 /* RKAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB3B14D853AB001E8401 /* RKAttributeWriter.m */; };
+		796EAB3E14D853AC001E8401 /* RKAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB3B14D853AB001E8401 /* RKAttributeWriter.m */; };
+		796EAB4114D85442001E8401 /* RKBackgroundColorAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB3F14D85442001E8401 /* RKBackgroundColorAttributeWriter.h */; };
+		796EAB4214D85442001E8401 /* RKBackgroundColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4014D85442001E8401 /* RKBackgroundColorAttributeWriter.m */; };
+		796EAB4314D85442001E8401 /* RKBackgroundColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4014D85442001E8401 /* RKBackgroundColorAttributeWriter.m */; };
+		796EAB4614D85454001E8401 /* RKForegroundColorAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB4414D85454001E8401 /* RKForegroundColorAttributeWriter.h */; };
+		796EAB4714D85454001E8401 /* RKForegroundColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4514D85454001E8401 /* RKForegroundColorAttributeWriter.m */; };
+		796EAB4814D85454001E8401 /* RKForegroundColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4514D85454001E8401 /* RKForegroundColorAttributeWriter.m */; };
+		796EAB4B14D85468001E8401 /* RKUnderlineStyleAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB4914D85468001E8401 /* RKUnderlineStyleAttributeWriter.h */; };
+		796EAB4C14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4A14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m */; };
+		796EAB4D14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4A14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m */; };
+		796EAB5014D85477001E8401 /* RKUnderlineColorAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB4E14D85476001E8401 /* RKUnderlineColorAttributeWriter.h */; };
+		796EAB5114D85477001E8401 /* RKUnderlineColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4F14D85477001E8401 /* RKUnderlineColorAttributeWriter.m */; };
+		796EAB5214D85477001E8401 /* RKUnderlineColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB4F14D85477001E8401 /* RKUnderlineColorAttributeWriter.m */; };
+		796EAB5514D85490001E8401 /* RKStrikethroughStyleAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB5314D85490001E8401 /* RKStrikethroughStyleAttributeWriter.h */; };
+		796EAB5614D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB5414D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m */; };
+		796EAB5714D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB5414D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m */; };
+		796EAB5A14D8549F001E8401 /* RKStrikethroughColorAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB5814D8549F001E8401 /* RKStrikethroughColorAttributeWriter.h */; };
+		796EAB5B14D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB5914D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m */; };
+		796EAB5C14D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB5914D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m */; };
+		796EAB5F14D854B5001E8401 /* RKStrokeWidthAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB5D14D854B5001E8401 /* RKStrokeWidthAttributeWriter.h */; };
+		796EAB6014D854B5001E8401 /* RKStrokeWidthAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB5E14D854B5001E8401 /* RKStrokeWidthAttributeWriter.m */; };
+		796EAB6114D854B5001E8401 /* RKStrokeWidthAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB5E14D854B5001E8401 /* RKStrokeWidthAttributeWriter.m */; };
+		796EAB6414D854C7001E8401 /* RKStrokeColorAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB6214D854C7001E8401 /* RKStrokeColorAttributeWriter.h */; };
+		796EAB6514D854C7001E8401 /* RKStrokeColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB6314D854C7001E8401 /* RKStrokeColorAttributeWriter.m */; };
+		796EAB6614D854C7001E8401 /* RKStrokeColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB6314D854C7001E8401 /* RKStrokeColorAttributeWriter.m */; };
+		796EAB6914D854D5001E8401 /* RKShadowAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB6714D854D4001E8401 /* RKShadowAttributeWriter.h */; };
+		796EAB6A14D854D5001E8401 /* RKShadowAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB6814D854D4001E8401 /* RKShadowAttributeWriter.m */; };
+		796EAB6B14D854D5001E8401 /* RKShadowAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB6814D854D4001E8401 /* RKShadowAttributeWriter.m */; };
+		796EAB6E14D854E3001E8401 /* RKSuperscriptAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB6C14D854E2001E8401 /* RKSuperscriptAttributeWriter.h */; };
+		796EAB6F14D854E3001E8401 /* RKSuperscriptAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB6D14D854E3001E8401 /* RKSuperscriptAttributeWriter.m */; };
+		796EAB7014D854E3001E8401 /* RKSuperscriptAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB6D14D854E3001E8401 /* RKSuperscriptAttributeWriter.m */; };
+		796EAB7414D85825001E8401 /* RKFontAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB7314D85825001E8401 /* RKFontAttributeWriterTest.m */; };
+		796EAB7714D8584A001E8401 /* RKBackgroundColorAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB7614D8584A001E8401 /* RKBackgroundColorAttributeWriterTest.m */; };
+		796EAB7A14D8585D001E8401 /* RKForegroundColorAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB7914D8585D001E8401 /* RKForegroundColorAttributeWriterTest.m */; };
+		796EAB7D14D85874001E8401 /* RKUnderlineStyleAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB7C14D85874001E8401 /* RKUnderlineStyleAttributeWriterTest.m */; };
+		796EAB8014D85886001E8401 /* RKUnderlineColorAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB7F14D85886001E8401 /* RKUnderlineColorAttributeWriterTest.m */; };
+		796EAB8314D8589A001E8401 /* RKStrikethroughStyleAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB8214D8589A001E8401 /* RKStrikethroughStyleAttributeWriterTest.m */; };
+		796EAB8614D858AA001E8401 /* RKStrikethroughColorAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB8514D858A9001E8401 /* RKStrikethroughColorAttributeWriterTest.m */; };
+		796EAB8C14D858D2001E8401 /* RKStrokeWidthAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB8B14D858D2001E8401 /* RKStrokeWidthAttributeWriterTest.m */; };
+		796EAB8F14D858E9001E8401 /* RKStrokeColorAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB8E14D858E8001E8401 /* RKStrokeColorAttributeWriterTest.m */; };
+		796EAB9214D858F9001E8401 /* RKSuperscriptAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB9114D858F8001E8401 /* RKSuperscriptAttributeWriterTest.m */; };
+		796EAB9514D85C66001E8401 /* RKShadowAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB9414D85C65001E8401 /* RKShadowAttributeWriterTest.m */; };
 		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
 		7987903514D1BC5D0046F8AB /* RKAttributedStringWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7987903314D1BC5C0046F8AB /* RKAttributedStringWriter.h */; };
 		7987903614D1BC5D0046F8AB /* RKAttributedStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987903414D1BC5D0046F8AB /* RKAttributedStringWriter.m */; };
 		7987903A14D1BCE40046F8AB /* RKAttributedStringWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987903914D1BCE40046F8AB /* RKAttributedStringWriterTest.m */; };
 		7987904F14D2E0320046F8AB /* RKTaggedString+TestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */; };
-		7987906E14D2FAFB0046F8AB /* RKInlineStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7987906614D2FAFB0046F8AB /* RKInlineStyleWriter.h */; };
-		7987906F14D2FAFB0046F8AB /* RKInlineStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987906714D2FAFB0046F8AB /* RKInlineStyleWriter.m */; };
-		7987907014D2FAFB0046F8AB /* RKInlineStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987906714D2FAFB0046F8AB /* RKInlineStyleWriter.m */; };
 		7987907114D2FAFB0046F8AB /* RKLinkWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7987906814D2FAFB0046F8AB /* RKLinkWriter.h */; };
 		7987907214D2FAFB0046F8AB /* RKLinkWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987906914D2FAFB0046F8AB /* RKLinkWriter.m */; };
 		7987907314D2FAFB0046F8AB /* RKLinkWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987906914D2FAFB0046F8AB /* RKLinkWriter.m */; };
@@ -43,7 +87,6 @@
 		7987909214D2FB470046F8AB /* RKResourcePoolTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987908E14D2FB470046F8AB /* RKResourcePoolTest.m */; };
 		7987909314D2FB470046F8AB /* RKTaggedStringTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987909014D2FB470046F8AB /* RKTaggedStringTest.m */; };
 		7987909714D2FDDB0046F8AB /* RKParagraphStyleWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987909614D2FDDB0046F8AB /* RKParagraphStyleWriterTest.m */; };
-		7987909A14D2FDED0046F8AB /* RKInlineStyleWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987909914D2FDED0046F8AB /* RKInlineStyleWriterTest.m */; };
 		798790A014D2FE100046F8AB /* RKTextAttachmentWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987909F14D2FE100046F8AB /* RKTextAttachmentWriterTest.m */; };
 		798790A314D2FE240046F8AB /* RKLinkWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 798790A214D2FE230046F8AB /* RKLinkWriterTest.m */; };
 		79A3597D14D00AB70076A5F7 /* RKWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A3597B14D00AB70076A5F7 /* RKWriterTest.m */; };
@@ -94,6 +137,52 @@
 		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
 		50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RTFKitTests-Info.plist"; sourceTree = "<group>"; };
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
+		796EAB3514D85383001E8401 /* RKFontAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFontAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKFontAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB3614D85383001E8401 /* RKFontAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFontAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKFontAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB3A14D853AB001E8401 /* RKAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAttributeWriter.h; path = "Export/Attribute Exporters/RKAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB3B14D853AB001E8401 /* RKAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAttributeWriter.m; path = "Export/Attribute Exporters/RKAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB3F14D85442001E8401 /* RKBackgroundColorAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKBackgroundColorAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKBackgroundColorAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB4014D85442001E8401 /* RKBackgroundColorAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKBackgroundColorAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKBackgroundColorAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB4414D85454001E8401 /* RKForegroundColorAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKForegroundColorAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKForegroundColorAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB4514D85454001E8401 /* RKForegroundColorAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKForegroundColorAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKForegroundColorAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB4914D85468001E8401 /* RKUnderlineStyleAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKUnderlineStyleAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineStyleAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB4A14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineStyleAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineStyleAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB4E14D85476001E8401 /* RKUnderlineColorAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKUnderlineColorAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineColorAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB4F14D85477001E8401 /* RKUnderlineColorAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineColorAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineColorAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB5314D85490001E8401 /* RKStrikethroughStyleAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrikethroughStyleAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughStyleAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB5414D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrikethroughStyleAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughStyleAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB5814D8549F001E8401 /* RKStrikethroughColorAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrikethroughColorAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughColorAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB5914D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrikethroughColorAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughColorAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB5D14D854B5001E8401 /* RKStrokeWidthAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrokeWidthAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKStrokeWidthAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB5E14D854B5001E8401 /* RKStrokeWidthAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrokeWidthAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKStrokeWidthAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB6214D854C7001E8401 /* RKStrokeColorAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrokeColorAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKStrokeColorAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB6314D854C7001E8401 /* RKStrokeColorAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrokeColorAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKStrokeColorAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB6714D854D4001E8401 /* RKShadowAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKShadowAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKShadowAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB6814D854D4001E8401 /* RKShadowAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKShadowAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKShadowAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB6C14D854E2001E8401 /* RKSuperscriptAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSuperscriptAttributeWriter.h; path = "Export/Attribute Exporters/Inline Styles/RKSuperscriptAttributeWriter.h"; sourceTree = "<group>"; };
+		796EAB6D14D854E3001E8401 /* RKSuperscriptAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSuperscriptAttributeWriter.m; path = "Export/Attribute Exporters/Inline Styles/RKSuperscriptAttributeWriter.m"; sourceTree = "<group>"; };
+		796EAB7214D85825001E8401 /* RKFontAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFontAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKFontAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB7314D85825001E8401 /* RKFontAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFontAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKFontAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB7514D8584A001E8401 /* RKBackgroundColorAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKBackgroundColorAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKBackgroundColorAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB7614D8584A001E8401 /* RKBackgroundColorAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKBackgroundColorAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKBackgroundColorAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB7814D8585C001E8401 /* RKForegroundColorAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKForegroundColorAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKForegroundColorAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB7914D8585D001E8401 /* RKForegroundColorAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKForegroundColorAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKForegroundColorAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB7B14D85874001E8401 /* RKUnderlineStyleAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKUnderlineStyleAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineStyleAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB7C14D85874001E8401 /* RKUnderlineStyleAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineStyleAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineStyleAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB7E14D85886001E8401 /* RKUnderlineColorAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKUnderlineColorAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineColorAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB7F14D85886001E8401 /* RKUnderlineColorAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineColorAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKUnderlineColorAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB8114D85899001E8401 /* RKStrikethroughStyleAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrikethroughStyleAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughStyleAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB8214D8589A001E8401 /* RKStrikethroughStyleAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrikethroughStyleAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughStyleAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB8414D858A9001E8401 /* RKStrikethroughColorAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrikethroughColorAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughColorAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB8514D858A9001E8401 /* RKStrikethroughColorAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrikethroughColorAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKStrikethroughColorAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB8A14D858D1001E8401 /* RKStrokeWidthAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrokeWidthAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKStrokeWidthAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB8B14D858D2001E8401 /* RKStrokeWidthAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrokeWidthAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKStrokeWidthAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB8D14D858E7001E8401 /* RKStrokeColorAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStrokeColorAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKStrokeColorAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB8E14D858E8001E8401 /* RKStrokeColorAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStrokeColorAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKStrokeColorAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB9014D858F7001E8401 /* RKSuperscriptAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSuperscriptAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKSuperscriptAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB9114D858F8001E8401 /* RKSuperscriptAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSuperscriptAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKSuperscriptAttributeWriterTest.m"; sourceTree = "<group>"; };
+		796EAB9314D85C64001E8401 /* RKShadowAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKShadowAttributeWriterTest.h; path = "Export/Attribute Exporters/Inline Styles/RKShadowAttributeWriterTest.h"; sourceTree = "<group>"; };
+		796EAB9414D85C65001E8401 /* RKShadowAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKShadowAttributeWriterTest.m; path = "Export/Attribute Exporters/Inline Styles/RKShadowAttributeWriterTest.m"; sourceTree = "<group>"; };
 		797DA1C814C97E05000DDAF3 /* RKSectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSectionTest.h; path = Document/RKSectionTest.h; sourceTree = "<group>"; };
 		797DA1C914C97E05000DDAF3 /* RKSectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSectionTest.m; path = Document/RKSectionTest.m; sourceTree = "<group>"; };
 		7987903314D1BC5C0046F8AB /* RKAttributedStringWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAttributedStringWriter.h; path = Export/RKAttributedStringWriter.h; sourceTree = "<group>"; };
@@ -104,8 +193,6 @@
 		7987903D14D2BD220046F8AB /* RKParagraphStyleWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKParagraphStyleWriter+TestExtensions.h"; path = "Utils/RKParagraphStyleWriter+TestExtensions.h"; sourceTree = "<group>"; };
 		7987904D14D2DF7E0046F8AB /* RKTaggedString+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKTaggedString+TestExtensions.h"; path = "Utils/RKTaggedString+TestExtensions.h"; sourceTree = "<group>"; };
 		7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKTaggedString+TestExtensions.m"; path = "Utils/RKTaggedString+TestExtensions.m"; sourceTree = "<group>"; };
-		7987906614D2FAFB0046F8AB /* RKInlineStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKInlineStyleWriter.h; path = "Export/Attribute Exporters/RKInlineStyleWriter.h"; sourceTree = "<group>"; };
-		7987906714D2FAFB0046F8AB /* RKInlineStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKInlineStyleWriter.m; path = "Export/Attribute Exporters/RKInlineStyleWriter.m"; sourceTree = "<group>"; };
 		7987906814D2FAFB0046F8AB /* RKLinkWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkWriter.h; path = "Export/Attribute Exporters/RKLinkWriter.h"; sourceTree = "<group>"; };
 		7987906914D2FAFB0046F8AB /* RKLinkWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkWriter.m; path = "Export/Attribute Exporters/RKLinkWriter.m"; sourceTree = "<group>"; };
 		7987906A14D2FAFB0046F8AB /* RKParagraphStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWriter.h; path = "Export/Attribute Exporters/RKParagraphStyleWriter.h"; sourceTree = "<group>"; };
@@ -126,13 +213,10 @@
 		7987909014D2FB470046F8AB /* RKTaggedStringTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTaggedStringTest.m; path = Export/Utils/RKTaggedStringTest.m; sourceTree = "<group>"; };
 		7987909514D2FDDB0046F8AB /* RKParagraphStyleWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWriterTest.h; path = "Export/Attribute Exporters/RKParagraphStyleWriterTest.h"; sourceTree = "<group>"; };
 		7987909614D2FDDB0046F8AB /* RKParagraphStyleWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWriterTest.m; path = "Export/Attribute Exporters/RKParagraphStyleWriterTest.m"; sourceTree = "<group>"; };
-		7987909814D2FDED0046F8AB /* RKInlineStyleWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; name = RKInlineStyleWriterTest.h; path = "Export/Attribute Exporters/RKInlineStyleWriterTest.h"; sourceTree = "<group>"; };
-		7987909914D2FDED0046F8AB /* RKInlineStyleWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKInlineStyleWriterTest.m; path = "Export/Attribute Exporters/RKInlineStyleWriterTest.m"; sourceTree = "<group>"; };
 		7987909E14D2FE100046F8AB /* RKTextAttachmentWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextAttachmentWriterTest.h; path = "Export/Attribute Exporters/RKTextAttachmentWriterTest.h"; sourceTree = "<group>"; };
 		7987909F14D2FE100046F8AB /* RKTextAttachmentWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentWriterTest.m; path = "Export/Attribute Exporters/RKTextAttachmentWriterTest.m"; sourceTree = "<group>"; };
 		798790A114D2FE230046F8AB /* RKLinkWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkWriterTest.h; path = "Export/Attribute Exporters/RKLinkWriterTest.h"; sourceTree = "<group>"; };
 		798790A214D2FE230046F8AB /* RKLinkWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkWriterTest.m; path = "Export/Attribute Exporters/RKLinkWriterTest.m"; sourceTree = "<group>"; };
-		798790A414D30EA10046F8AB /* RKInlineStyleWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; name = "RKInlineStyleWriter+TestExtensions.h"; path = "Utils/RKInlineStyleWriter+TestExtensions.h"; sourceTree = "<group>"; };
 		79A3597A14D00AB70076A5F7 /* RKWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriterTest.h; path = Export/RKWriterTest.h; sourceTree = "<group>"; };
 		79A3597B14D00AB70076A5F7 /* RKWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriterTest.m; path = Export/RKWriterTest.m; sourceTree = "<group>"; };
 		79A3597E14D024A80076A5F7 /* Test Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Test Data"; sourceTree = "<group>"; };
@@ -263,11 +347,70 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
+		796EAB3414D8536A001E8401 /* Inline Styles */ = {
+			isa = PBXGroup;
+			children = (
+				796EAB3514D85383001E8401 /* RKFontAttributeWriter.h */,
+				796EAB3614D85383001E8401 /* RKFontAttributeWriter.m */,
+				796EAB3F14D85442001E8401 /* RKBackgroundColorAttributeWriter.h */,
+				796EAB4014D85442001E8401 /* RKBackgroundColorAttributeWriter.m */,
+				796EAB4414D85454001E8401 /* RKForegroundColorAttributeWriter.h */,
+				796EAB4514D85454001E8401 /* RKForegroundColorAttributeWriter.m */,
+				796EAB4914D85468001E8401 /* RKUnderlineStyleAttributeWriter.h */,
+				796EAB4A14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m */,
+				796EAB4E14D85476001E8401 /* RKUnderlineColorAttributeWriter.h */,
+				796EAB4F14D85477001E8401 /* RKUnderlineColorAttributeWriter.m */,
+				796EAB5314D85490001E8401 /* RKStrikethroughStyleAttributeWriter.h */,
+				796EAB5414D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m */,
+				796EAB5814D8549F001E8401 /* RKStrikethroughColorAttributeWriter.h */,
+				796EAB5914D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m */,
+				796EAB5D14D854B5001E8401 /* RKStrokeWidthAttributeWriter.h */,
+				796EAB5E14D854B5001E8401 /* RKStrokeWidthAttributeWriter.m */,
+				796EAB6214D854C7001E8401 /* RKStrokeColorAttributeWriter.h */,
+				796EAB6314D854C7001E8401 /* RKStrokeColorAttributeWriter.m */,
+				796EAB6714D854D4001E8401 /* RKShadowAttributeWriter.h */,
+				796EAB6814D854D4001E8401 /* RKShadowAttributeWriter.m */,
+				796EAB6C14D854E2001E8401 /* RKSuperscriptAttributeWriter.h */,
+				796EAB6D14D854E3001E8401 /* RKSuperscriptAttributeWriter.m */,
+			);
+			name = "Inline Styles";
+			sourceTree = "<group>";
+		};
+		796EAB7114D857DF001E8401 /* Inline Styles */ = {
+			isa = PBXGroup;
+			children = (
+				796EAB7214D85825001E8401 /* RKFontAttributeWriterTest.h */,
+				796EAB7314D85825001E8401 /* RKFontAttributeWriterTest.m */,
+				796EAB7514D8584A001E8401 /* RKBackgroundColorAttributeWriterTest.h */,
+				796EAB7614D8584A001E8401 /* RKBackgroundColorAttributeWriterTest.m */,
+				796EAB7814D8585C001E8401 /* RKForegroundColorAttributeWriterTest.h */,
+				796EAB7914D8585D001E8401 /* RKForegroundColorAttributeWriterTest.m */,
+				796EAB7B14D85874001E8401 /* RKUnderlineStyleAttributeWriterTest.h */,
+				796EAB7C14D85874001E8401 /* RKUnderlineStyleAttributeWriterTest.m */,
+				796EAB7E14D85886001E8401 /* RKUnderlineColorAttributeWriterTest.h */,
+				796EAB7F14D85886001E8401 /* RKUnderlineColorAttributeWriterTest.m */,
+				796EAB8114D85899001E8401 /* RKStrikethroughStyleAttributeWriterTest.h */,
+				796EAB8214D8589A001E8401 /* RKStrikethroughStyleAttributeWriterTest.m */,
+				796EAB8414D858A9001E8401 /* RKStrikethroughColorAttributeWriterTest.h */,
+				796EAB8514D858A9001E8401 /* RKStrikethroughColorAttributeWriterTest.m */,
+				796EAB8A14D858D1001E8401 /* RKStrokeWidthAttributeWriterTest.h */,
+				796EAB8B14D858D2001E8401 /* RKStrokeWidthAttributeWriterTest.m */,
+				796EAB8D14D858E7001E8401 /* RKStrokeColorAttributeWriterTest.h */,
+				796EAB8E14D858E8001E8401 /* RKStrokeColorAttributeWriterTest.m */,
+				796EAB9314D85C64001E8401 /* RKShadowAttributeWriterTest.h */,
+				796EAB9414D85C65001E8401 /* RKShadowAttributeWriterTest.m */,
+				796EAB9014D858F7001E8401 /* RKSuperscriptAttributeWriterTest.h */,
+				796EAB9114D858F8001E8401 /* RKSuperscriptAttributeWriterTest.m */,
+			);
+			name = "Inline Styles";
+			sourceTree = "<group>";
+		};
 		7987906414D2FA6F0046F8AB /* Attribute Exporters */ = {
 			isa = PBXGroup;
 			children = (
-				7987906614D2FAFB0046F8AB /* RKInlineStyleWriter.h */,
-				7987906714D2FAFB0046F8AB /* RKInlineStyleWriter.m */,
+				796EAB3414D8536A001E8401 /* Inline Styles */,
+				796EAB3A14D853AB001E8401 /* RKAttributeWriter.h */,
+				796EAB3B14D853AB001E8401 /* RKAttributeWriter.m */,
 				7987906814D2FAFB0046F8AB /* RKLinkWriter.h */,
 				7987906914D2FAFB0046F8AB /* RKLinkWriter.m */,
 				7987906A14D2FAFB0046F8AB /* RKParagraphStyleWriter.h */,
@@ -307,8 +450,7 @@
 		7987908A14D2FB130046F8AB /* Attribute Exporters */ = {
 			isa = PBXGroup;
 			children = (
-				7987909814D2FDED0046F8AB /* RKInlineStyleWriterTest.h */,
-				7987909914D2FDED0046F8AB /* RKInlineStyleWriterTest.m */,
+				796EAB7114D857DF001E8401 /* Inline Styles */,
 				798790A114D2FE230046F8AB /* RKLinkWriterTest.h */,
 				798790A214D2FE230046F8AB /* RKLinkWriterTest.m */,
 				7987909514D2FDDB0046F8AB /* RKParagraphStyleWriterTest.h */,
@@ -328,7 +470,6 @@
 				7987903D14D2BD220046F8AB /* RKParagraphStyleWriter+TestExtensions.h */,
 				7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */,
 				7987904D14D2DF7E0046F8AB /* RKTaggedString+TestExtensions.h */,
-				798790A414D30EA10046F8AB /* RKInlineStyleWriter+TestExtensions.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -410,13 +551,24 @@
 				79A3598C14D0424E0076A5F7 /* RKBodyWriter.h in Headers */,
 				79A359A714D1A4B70076A5F7 /* RKSectionWriter.h in Headers */,
 				7987903514D1BC5D0046F8AB /* RKAttributedStringWriter.h in Headers */,
-				7987906E14D2FAFB0046F8AB /* RKInlineStyleWriter.h in Headers */,
 				7987907114D2FAFB0046F8AB /* RKLinkWriter.h in Headers */,
 				7987907414D2FAFB0046F8AB /* RKParagraphStyleWriter.h in Headers */,
 				7987907714D2FAFC0046F8AB /* RKTextAttachmentWriter.h in Headers */,
 				7987908014D2FB060046F8AB /* RKConversion.h in Headers */,
 				7987908314D2FB060046F8AB /* RKResourcePool.h in Headers */,
 				7987908614D2FB060046F8AB /* RKTaggedString.h in Headers */,
+				796EAB3714D85383001E8401 /* RKFontAttributeWriter.h in Headers */,
+				796EAB3C14D853AC001E8401 /* RKAttributeWriter.h in Headers */,
+				796EAB4114D85442001E8401 /* RKBackgroundColorAttributeWriter.h in Headers */,
+				796EAB4614D85454001E8401 /* RKForegroundColorAttributeWriter.h in Headers */,
+				796EAB4B14D85468001E8401 /* RKUnderlineStyleAttributeWriter.h in Headers */,
+				796EAB5014D85477001E8401 /* RKUnderlineColorAttributeWriter.h in Headers */,
+				796EAB5514D85490001E8401 /* RKStrikethroughStyleAttributeWriter.h in Headers */,
+				796EAB5A14D8549F001E8401 /* RKStrikethroughColorAttributeWriter.h in Headers */,
+				796EAB5F14D854B5001E8401 /* RKStrokeWidthAttributeWriter.h in Headers */,
+				796EAB6414D854C7001E8401 /* RKStrokeColorAttributeWriter.h in Headers */,
+				796EAB6914D854D5001E8401 /* RKShadowAttributeWriter.h in Headers */,
+				796EAB6E14D854E3001E8401 /* RKSuperscriptAttributeWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,13 +677,24 @@
 				79A3598D14D0424E0076A5F7 /* RKBodyWriter.m in Sources */,
 				79A359A814D1A4B70076A5F7 /* RKSectionWriter.m in Sources */,
 				7987903614D1BC5D0046F8AB /* RKAttributedStringWriter.m in Sources */,
-				7987906F14D2FAFB0046F8AB /* RKInlineStyleWriter.m in Sources */,
 				7987907214D2FAFB0046F8AB /* RKLinkWriter.m in Sources */,
 				7987907514D2FAFC0046F8AB /* RKParagraphStyleWriter.m in Sources */,
 				7987907814D2FAFC0046F8AB /* RKTextAttachmentWriter.m in Sources */,
 				7987908114D2FB060046F8AB /* RKConversion.m in Sources */,
 				7987908414D2FB060046F8AB /* RKResourcePool.m in Sources */,
 				7987908714D2FB060046F8AB /* RKTaggedString.m in Sources */,
+				796EAB3814D85383001E8401 /* RKFontAttributeWriter.m in Sources */,
+				796EAB3D14D853AC001E8401 /* RKAttributeWriter.m in Sources */,
+				796EAB4214D85442001E8401 /* RKBackgroundColorAttributeWriter.m in Sources */,
+				796EAB4714D85454001E8401 /* RKForegroundColorAttributeWriter.m in Sources */,
+				796EAB4C14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */,
+				796EAB5114D85477001E8401 /* RKUnderlineColorAttributeWriter.m in Sources */,
+				796EAB5614D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m in Sources */,
+				796EAB5B14D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m in Sources */,
+				796EAB6014D854B5001E8401 /* RKStrokeWidthAttributeWriter.m in Sources */,
+				796EAB6514D854C7001E8401 /* RKStrokeColorAttributeWriter.m in Sources */,
+				796EAB6A14D854D5001E8401 /* RKShadowAttributeWriter.m in Sources */,
+				796EAB6F14D854E3001E8401 /* RKSuperscriptAttributeWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,7 +715,6 @@
 				79A359AC14D1A4CD0076A5F7 /* RKSectionWriterTest.m in Sources */,
 				7987903A14D1BCE40046F8AB /* RKAttributedStringWriterTest.m in Sources */,
 				7987904F14D2E0320046F8AB /* RKTaggedString+TestExtensions.m in Sources */,
-				7987907014D2FAFB0046F8AB /* RKInlineStyleWriter.m in Sources */,
 				7987907314D2FAFB0046F8AB /* RKLinkWriter.m in Sources */,
 				7987907614D2FAFC0046F8AB /* RKParagraphStyleWriter.m in Sources */,
 				7987907914D2FAFC0046F8AB /* RKTextAttachmentWriter.m in Sources */,
@@ -563,9 +725,31 @@
 				7987909214D2FB470046F8AB /* RKResourcePoolTest.m in Sources */,
 				7987909314D2FB470046F8AB /* RKTaggedStringTest.m in Sources */,
 				7987909714D2FDDB0046F8AB /* RKParagraphStyleWriterTest.m in Sources */,
-				7987909A14D2FDED0046F8AB /* RKInlineStyleWriterTest.m in Sources */,
 				798790A014D2FE100046F8AB /* RKTextAttachmentWriterTest.m in Sources */,
 				798790A314D2FE240046F8AB /* RKLinkWriterTest.m in Sources */,
+				796EAB3914D85383001E8401 /* RKFontAttributeWriter.m in Sources */,
+				796EAB3E14D853AC001E8401 /* RKAttributeWriter.m in Sources */,
+				796EAB4314D85442001E8401 /* RKBackgroundColorAttributeWriter.m in Sources */,
+				796EAB4814D85454001E8401 /* RKForegroundColorAttributeWriter.m in Sources */,
+				796EAB4D14D85468001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */,
+				796EAB5214D85477001E8401 /* RKUnderlineColorAttributeWriter.m in Sources */,
+				796EAB5714D85490001E8401 /* RKStrikethroughStyleAttributeWriter.m in Sources */,
+				796EAB5C14D8549F001E8401 /* RKStrikethroughColorAttributeWriter.m in Sources */,
+				796EAB6114D854B5001E8401 /* RKStrokeWidthAttributeWriter.m in Sources */,
+				796EAB6614D854C7001E8401 /* RKStrokeColorAttributeWriter.m in Sources */,
+				796EAB6B14D854D5001E8401 /* RKShadowAttributeWriter.m in Sources */,
+				796EAB7014D854E3001E8401 /* RKSuperscriptAttributeWriter.m in Sources */,
+				796EAB7414D85825001E8401 /* RKFontAttributeWriterTest.m in Sources */,
+				796EAB7714D8584A001E8401 /* RKBackgroundColorAttributeWriterTest.m in Sources */,
+				796EAB7A14D8585D001E8401 /* RKForegroundColorAttributeWriterTest.m in Sources */,
+				796EAB7D14D85874001E8401 /* RKUnderlineStyleAttributeWriterTest.m in Sources */,
+				796EAB8014D85886001E8401 /* RKUnderlineColorAttributeWriterTest.m in Sources */,
+				796EAB8314D8589A001E8401 /* RKStrikethroughStyleAttributeWriterTest.m in Sources */,
+				796EAB8614D858AA001E8401 /* RKStrikethroughColorAttributeWriterTest.m in Sources */,
+				796EAB8C14D858D2001E8401 /* RKStrokeWidthAttributeWriterTest.m in Sources */,
+				796EAB8F14D858E9001E8401 /* RKStrokeColorAttributeWriterTest.m in Sources */,
+				796EAB9214D858F9001E8401 /* RKSuperscriptAttributeWriterTest.m in Sources */,
+				796EAB9514D85C66001E8401 /* RKShadowAttributeWriterTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

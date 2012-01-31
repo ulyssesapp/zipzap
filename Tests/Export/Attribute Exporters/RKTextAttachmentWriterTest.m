@@ -10,7 +10,7 @@
 #import "RKTextAttachmentWriter.h"
 
 @implementation RKTextAttachmentWriterTest
-
+/*
 - (NSFileWrapper *)attachmentWithName:(NSString *)name withExtension:(NSString *)extension
 {
 	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:extension subdirectory:@"Test Data/resources"];
@@ -25,19 +25,36 @@
     return wrapper;
 }
 
-- (void)testPictureAttachments
+- (void)testPictureAttachmentsIgnoring
+{
+    NSFileWrapper *picture = [self attachmentWithName:@"image" withExtension:@"png"];
+    
+    
+}
+
+- (void)testPictureAttachmentsEmbedding
+{
+    NSFileWrapper *picture = 
+}
+
+- (void)testPictureAttachmentsEmbeddingWithConversion
 {
     
 }
 
-- (void)testPictureAttachmentsWithConversion
+- (void)testPictureAttachmentsEmbeddingWithInvalidFileFormat
 {
     
+}
+
+- (void)testPictureAttachmentsReferencing
+{
+    NSFileWrapper *picture 
 }
 
 - (void)testMovieAttachments
 {
     
-}
+}*/
 
 @end

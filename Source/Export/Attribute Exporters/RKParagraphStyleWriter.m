@@ -20,19 +20,18 @@
 
 @implementation RKParagraphStyleWriter
 
-+ (void)addTagsForAttributedString:(NSAttributedString *)attributedString toTaggedString:(RKTaggedString *)taggedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (void)addTagsForAttribute:(NSParagraphStyle *)paragraphStyle
+             toTaggedString:(RKTaggedString *)taggedString 
+                    inRange:(NSRange)range
+       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                  resources:(RKResourcePool *)resources
 {
-    [attributedString enumerateAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, [attributedString length]) 
-                                 options:0 
-                              usingBlock:
-     ^(NSParagraphStyle *paragraphStyle, NSRange range, BOOL *stop) {
-         if (paragraphStyle) {
-             NSString *paragraphHeader = [self RTFOpeningTagfromParagraphStyle:paragraphStyle];
+     if (paragraphStyle) {
+         NSString *paragraphHeader = [self RTFOpeningTagfromParagraphStyle:paragraphStyle];
 
-             [taggedString registerTag:paragraphHeader forPosition:range.location];
-             [taggedString registerTag:@"\\par\n" forPosition:(range.location + range.length)];
-         }
-    }];
+         [taggedString registerTag:paragraphHeader forPosition:range.location];
+         [taggedString registerTag:@"\\par\n" forPosition:(range.location + range.length)];
+     }
 }
 
 + (NSString *)RTFOpeningTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle

@@ -8,6 +8,7 @@
 
 #import "RKResourcePool.h"
 #import "RKWriter.h"
+#import "RKAttributeWriter.h"
 
 /*!
  @abstract Translates an attributed string to RTF

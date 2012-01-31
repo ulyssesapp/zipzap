@@ -179,15 +179,11 @@
     paragraphStyleA.alignment = NSCenterTextAlignment;
     paragraphStyleB.alignment = NSRightTextAlignment;
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaabbb"];
-
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleA range:NSMakeRange(0, 3)];
-    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleB range:NSMakeRange(3, 3)];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"aaabbb"];
     
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
+    [RKParagraphStyleWriter addTagsForAttribute:paragraphStyleA toTaggedString:taggedString inRange:NSMakeRange(0, 3) withAttachmentPolicy:0 resources:nil];
+    [RKParagraphStyleWriter addTagsForAttribute:paragraphStyleB toTaggedString:taggedString inRange:NSMakeRange(3, 3) withAttachmentPolicy:0 resources:nil];
     
-    [RKParagraphStyleWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:0 resources:nil];
-
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"\\pard\\qc "
                           "aaa"
