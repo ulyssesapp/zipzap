@@ -6,7 +6,9 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKTaggedString;
+#import "RKWriter.h"
+
+@class RKTaggedString, RKResourcePool;
 
 /*!
  @abstract Writes out all tags required for a link style
@@ -16,7 +18,6 @@
 /*!
  @abstract Adds tags for all link styles
  */
-+ (void)tag:(RKTaggedString *)taggedString withLinkStylesOfAttributedString:(NSAttributedString *)attributedString;
-
++ (void)addTagsForAttributedString:(NSAttributedString *)attributedString toTaggedString:(RKTaggedString *)taggedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 @end

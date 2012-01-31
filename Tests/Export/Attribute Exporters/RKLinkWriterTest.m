@@ -19,7 +19,7 @@
     [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://the-soulmen.com/"] range:NSMakeRange(1, 1)];
     [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://example.com/"] range:NSMakeRange(2, 1)];
     
-    [RKLinkWriter tag:taggedString withLinkStylesOfAttributedString:attributedString];
+    [RKLinkWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:0 resources:nil];
 
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"

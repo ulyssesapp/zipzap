@@ -18,6 +18,6 @@
 /*!
  @abstract Adds tags for all font styles
  */
-+ (void)tag:(RKTaggedString *)taggedString withTextAttachmentsOfAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (void)addTagsForAttributedString:(NSAttributedString *)attributedString toTaggedString:(RKTaggedString *)taggedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 @end

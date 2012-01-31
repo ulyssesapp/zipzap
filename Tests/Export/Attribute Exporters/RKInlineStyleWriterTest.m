@@ -354,7 +354,7 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
     RKResourcePool *resources = [RKResourcePool new];
     
-    [RKInlineStyleWriter tag:taggedString withInlineStylesOfAttributedString:attributedString resources:resources];
+    [RKInlineStyleWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:0 resources:resources];
     
     NSString *flattened = [taggedString flattenedRTFString];
 

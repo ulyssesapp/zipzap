@@ -6,7 +6,9 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKTaggedString;
+#import "RKWriter.h"
+
+@class RKTaggedString, RKResourcePool;
 
 /*!
  @abstract Writes out all tags required for a paragraph style
@@ -16,6 +18,6 @@
 /*!
  @abstract Adds tags for all paragraph styles
  */
-+ (void)tag:(RKTaggedString *)taggedString withParagraphStylesOfAttributedString:(NSAttributedString *)attributedString;
++ (void)addTagsForAttributedString:(NSAttributedString *)attributedString toTaggedString:(RKTaggedString *)taggedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 @end

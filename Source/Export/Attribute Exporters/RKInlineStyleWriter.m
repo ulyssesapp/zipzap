@@ -77,11 +77,11 @@
 
 @implementation RKInlineStyleWriter
 
-NSDictionary *inlineAttributes;
+NSDictionary *inlineAttributesDispatchTable;
 
 + (void)load
 {
-    inlineAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+    inlineAttributesDispatchTable = [NSDictionary dictionaryWithObjectsAndKeys:
                             @"addTagsForFont:toTaggedString:inRange:resources:",                NSFontAttributeName,
                             @"addTagsForBackgroundColor:toTaggedString:inRange:resources:",     NSBackgroundColorAttributeName,
                             @"addTagsForForegroundColor:toTaggedString:inRange:resources:",     NSForegroundColorAttributeName,
@@ -97,13 +97,15 @@ NSDictionary *inlineAttributes;
                         ];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withInlineStylesOfAttributedString:(NSAttributedString *)attributedString resources:(RKResourcePool *)resources
++ (void)addTagsForAttributedString:(NSAttributedString *)attributedString toTaggedString:(RKTaggedString *)taggedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    [inlineAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, NSString *methodSignature, BOOL *stop) {
+    // Iterate over all dispatch entries available for attributes
+    [inlineAttributesDispatchTable enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, NSString *methodSignature, BOOL *stop) {
         SEL methodSelector = NSSelectorFromString(methodSignature);
         
         NSAssert([self respondsToSelector: methodSelector], @"Invalid selector for attribute method");
         
+        // For each attribute name call an appropriate method to tag the output string
         [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
             objc_msgSend(self, methodSelector, value, taggedString, range, resources);
         }];

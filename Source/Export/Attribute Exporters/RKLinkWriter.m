@@ -9,39 +9,20 @@
 #import "RKTaggedString.h"
 #import "RKLinkWriter.h"
 
-@interface RKLinkWriter ()
-
-/*!
- @abstract Generates the required tag of a link attribute
- */
-+ (void)tag:(RKTaggedString *)taggedString withLink:(NSURL *)url inRange:(NSRange)range;
-
-@end
-
 @implementation RKLinkWriter
 
-+ (void)tag:(RKTaggedString *)taggedString withLink:(NSURL *)url inRange:(NSRange)range
-{
-    if (!url)
-        return;
-    
-    [taggedString registerTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", [url absoluteString]]
-                    forPosition:range.location];
-
-    [taggedString registerTag:@"}}" forPosition:(range.location + range.length)];
-}
-
-+ (void)tag:(RKTaggedString *)taggedString withLinkStylesOfAttributedString:(NSAttributedString *)attributedString
++ (void)addTagsForAttributedString:(NSAttributedString *)attributedString toTaggedString:(RKTaggedString *)taggedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
     [attributedString enumerateAttribute:NSLinkAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        if ([value isKindOfClass: [NSString class]]) {
-            value = [NSURL URLWithString:value];
-        }
+        if (value) {
+            NSString *absoluteUrl = ([value isKindOfClass: [NSString class]]) ? value : [value absoluteString];
+            
+            [taggedString registerTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", absoluteUrl]
+                      forPosition:range.location];
         
-        [RKLinkWriter tag:taggedString withLink:value inRange:range];
+            [taggedString registerTag:@"}}" forPosition:(range.location + range.length)];
+        }
     }];
 }
-
-                                                                                 
                                                                                  
 @end
