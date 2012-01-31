@@ -10,131 +10,107 @@
 #import "RKTaggedString.h"
 #import "RKResourcePool.h"
 
+#import "objc/objc-runtime.h"
+
 /*!
  @abstract A common bitmask of the NSUnderlinePattern constant
  */
 #define RKUnderlinePatternMask          0x700
 
 @interface RKInlineStyleWriter ()
-
 /*!
  @abstract Generates the required opening and closing tags of a single font attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withFont:(NSFont *)font inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForFont:(NSFont *)font toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a background color attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withBackgroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForBackgroundColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a foreground color attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withForegroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForForegroundColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a underline style attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withUnderlineStyle:(NSUInteger)underlineStyle inRange:(NSRange)range;
++ (void)addTagsForUnderlineStyle:(NSNumber *)underlineStyleObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a underline color attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withUnderlineColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForUnderlineColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a strikethrough style attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withStrikethroughStyle:(NSUInteger)underlineStyle inRange:(NSRange)range;
++ (void)addTagsForStrikethroughStyle:(NSNumber *)strikethroughStyleObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a strikethrough color attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withStrikethroughColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForStrikethroughColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a stroke width attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withStrokeWidth:(CGFloat)strokeWidth inRange:(NSRange)range;
++ (void)addTagsForStrokeWidth:(NSNumber *)strokeWidthObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a stroke color attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withStrokeColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForStrokeColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a shadow style attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withShadowStyle:(NSShadow *)shadow inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForShadow:(NSShadow *)shadow toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the required tag of a superscript style attribute
  */
-+ (void)tag:(RKTaggedString *)taggedString withSuperscriptMode:(NSInteger)mode inRange:(NSRange)range;
++ (void)addTagsForSuperscriptMode:(NSNumber *)superScriptModeObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 @end
 
 @implementation RKInlineStyleWriter
 
-+ (void)tag:(RKTaggedString *)taggedString withInlineStylesOfAttributedString:(NSAttributedString *)attributedString resources:(RKResourcePool *)resources
+NSDictionary *inlineAttributes;
+
++ (void)load
 {
-    // Tag font styles
-    [attributedString enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSFont *font, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withFont:font inRange:range resources:resources];
-    }];
-    
-    // Tag background color styles
-    [attributedString enumerateAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withBackgroundColor:color inRange:range resources:resources];
-    }];   
-
-    // Tag foreground color styles
-    [attributedString enumerateAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withForegroundColor:color inRange:range resources:resources];
-    }];   
-
-    // Tag underline styles
-    [attributedString enumerateAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withUnderlineStyle:[style unsignedIntegerValue] inRange:range];
-    }];   
-    
-    // Tag underline color styles
-    [attributedString enumerateAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withUnderlineColor:color inRange:range resources:resources];
-    }];     
-
-    // Tag strikethrough styles
-    [attributedString enumerateAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withStrikethroughStyle:[style unsignedIntegerValue] inRange:range];
-    }];   
-    
-    // Tag strikethrough color styles
-    [attributedString enumerateAttribute:NSStrikethroughColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withStrikethroughColor:color inRange:range resources:resources];
-    }];        
-    
-    // Tag stroke width styles
-    [attributedString enumerateAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withStrokeWidth:[style doubleValue] inRange:range];
-    }];   
-    
-    // Tag stroke color styles
-    [attributedString enumerateAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withStrokeColor:color inRange:range resources:resources];
-    }];   
-
-    // Tag shadow styles
-    [attributedString enumerateAttribute:NSShadowAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSShadow *style, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withShadowStyle:style inRange:range resources:resources];
-    }];   
-
-    // Tag superscript / subscript styles
-    [attributedString enumerateAttribute:NSSuperscriptAttributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(NSNumber *style, NSRange range, BOOL *stop) {
-        [RKInlineStyleWriter tag:taggedString withSuperscriptMode:[style integerValue] inRange:range];
-    }];   
+    inlineAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @"addTagsForFont:toTaggedString:inRange:resources:",                NSFontAttributeName,
+                            @"addTagsForBackgroundColor:toTaggedString:inRange:resources:",     NSBackgroundColorAttributeName,
+                            @"addTagsForForegroundColor:toTaggedString:inRange:resources:",     NSForegroundColorAttributeName,
+                            @"addTagsForUnderlineStyle:toTaggedString:inRange:resources:",      NSUnderlineStyleAttributeName,
+                            @"addTagsForUnderlineColor:toTaggedString:inRange:resources:",      NSUnderlineColorAttributeName,
+                            @"addTagsForStrikethroughStyle:toTaggedString:inRange:resources:",  NSStrikethroughStyleAttributeName,
+                            @"addTagsForStrikethroughColor:toTaggedString:inRange:resources:",  NSStrikethroughColorAttributeName,
+                            @"addTagsForStrokeWidth:toTaggedString:inRange:resources:",         NSStrokeWidthAttributeName,
+                            @"addTagsForStrokeColor:toTaggedString:inRange:resources:",         NSStrokeColorAttributeName,
+                            @"addTagsForShadow:toTaggedString:inRange:resources:",              NSShadowAttributeName,
+                            @"addTagsForSuperscriptMode:toTaggedString:inRange:resources:",     NSSuperscriptAttributeName,
+                            nil
+                        ];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withFont:(NSFont *)font inRange:(NSRange)range resources:(RKResourcePool *)resources
++ (void)tag:(RKTaggedString *)taggedString withInlineStylesOfAttributedString:(NSAttributedString *)attributedString resources:(RKResourcePool *)resources
+{
+    [inlineAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, NSString *methodSignature, BOOL *stop) {
+        SEL methodSelector = NSSelectorFromString(methodSignature);
+        
+        NSAssert([self respondsToSelector: methodSelector], @"Invalid selector for attribute method");
+        
+        [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+            objc_msgSend(self, methodSelector, value, taggedString, range, resources);
+        }];
+    }];
+}
+
++ (void)addTagsForFont:(NSFont *)font toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     NSUInteger openPosition = range.location;
     NSUInteger closePosition = range.location + range.length;
@@ -163,22 +139,24 @@
     }   
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withBackgroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
++ (void)addTagsForBackgroundColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     NSUInteger colorIndex = (color == nil) ? 1 : [resources indexOfColor:color];
     
     [taggedString registerTag:[NSString stringWithFormat:@"\\cb%lu ", colorIndex] forPosition:range.location];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withForegroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
++ (void)addTagsForForegroundColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     NSUInteger colorIndex = (color == nil) ? 0 : [resources indexOfColor:color];
     
     [taggedString registerTag:[NSString stringWithFormat:@"\\cf%lu ", colorIndex] forPosition:range.location];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withUnderlineStyle:(NSUInteger)underlineStyle inRange:(NSRange)range
++ (void)addTagsForUnderlineStyle:(NSNumber *)underlineStyleObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
+    NSUInteger underlineStyle = [underlineStyleObject unsignedIntegerValue];
+    
     // No underlining
     if (underlineStyle == NSUnderlineStyleNone)
         return;
@@ -228,7 +206,7 @@
     [taggedString registerTag:[NSString stringWithFormat:@"\\ulstyle%U ", underlineStyle] forPosition:range.location];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withUnderlineColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
++ (void)addTagsForUnderlineColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     if (color == nil)
         return;
@@ -239,8 +217,10 @@
     [taggedString registerTag:[NSString stringWithFormat:@"\\ulc0 ", colorIndex] forPosition:(range.location + range.length)];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withStrikethroughStyle:(NSUInteger)strikethroughStyle inRange:(NSRange)range
++ (void)addTagsForStrikethroughStyle:(NSNumber *)strikethroughStyleObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
+    NSUInteger strikethroughStyle = [strikethroughStyleObject unsignedIntegerValue];
+
     // No strike through
     if (strikethroughStyle == NSUnderlineStyleNone)
         return;
@@ -263,7 +243,7 @@
 
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withStrikethroughColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
++ (void)addTagsForStrikethroughColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     if (color == nil)
         return;
@@ -274,16 +254,18 @@
     [taggedString registerTag:[NSString stringWithFormat:@"\\strikec0 ", colorIndex] forPosition:(range.location + range.length)];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withStrokeWidth:(CGFloat)strokeWidth inRange:(NSRange)range
++ (void)addTagsForStrokeWidth:(NSNumber *)strokeWidthObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
+    NSInteger strokeWidth = [strokeWidthObject integerValue];
+    
     if (strokeWidth == 0)
         return;
     
-    [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%i ", (NSUInteger)strokeWidth] forPosition:range.location];
-    [taggedString registerTag:[NSString stringWithFormat:@"\\outl0\\strokewidth0 ", (NSUInteger)strokeWidth] forPosition:(range.location + range.length)];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%li ", strokeWidth] forPosition:range.location];
+    [taggedString registerTag:@"\\outl0\\strokewidth0 " forPosition:(range.location + range.length)];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withStrokeColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources
++ (void)addTagsForStrokeColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     if (color == nil)
         return;
@@ -294,7 +276,7 @@
     [taggedString registerTag:[NSString stringWithFormat:@"\\strokec0 ", colorIndex] forPosition:(range.location + range.length)];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withShadowStyle:(NSShadow *)shadow inRange:(NSRange)range resources:(RKResourcePool *)resources
++ (void)addTagsForShadow:(NSShadow *)shadow toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
     if (shadow == nil)
         return;
@@ -312,8 +294,10 @@
     [taggedString registerTag:@"\\shad0 " forPosition:(range.location + range.length)];
 }
 
-+ (void)tag:(RKTaggedString *)taggedString withSuperscriptMode:(NSInteger)mode inRange:(NSRange)range
++ (void)addTagsForSuperscriptMode:(NSNumber *)superScriptModeObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources
 {
+    NSInteger mode = [superScriptModeObject integerValue];
+    
     if (mode == 0) 
         return;
     

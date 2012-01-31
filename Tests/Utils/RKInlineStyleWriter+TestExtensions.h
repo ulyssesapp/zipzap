@@ -9,22 +9,21 @@
 
 @interface RKInlineStyleWriter (TestExtensions)
 
-+ (void)tag:(RKTaggedString *)taggedString withFont:(NSFont *)font inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForFont:(NSFont *)font toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
-+ (void)tag:(RKTaggedString *)taggedString withBackgroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
-+ (void)tag:(RKTaggedString *)taggedString withForegroundColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForBackgroundColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForForegroundColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
-+ (void)tag:(RKTaggedString *)taggedString withUnderlineStyle:(NSUInteger)underlineStyle inRange:(NSRange)range;
-+ (void)tag:(RKTaggedString *)taggedString withUnderlineColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForUnderlineStyle:(NSNumber *)underlineStyleObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForUnderlineColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
-+ (void)tag:(RKTaggedString *)taggedString withStrikethroughStyle:(NSUInteger)underlineStyle inRange:(NSRange)range;
-+ (void)tag:(RKTaggedString *)taggedString withStrikethroughColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForStrikethroughStyle:(NSNumber *)strikethroughStyleObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForStrikethroughColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
-+ (void)tag:(RKTaggedString *)taggedString withStrokeWidth:(CGFloat)strokeWidth inRange:(NSRange)range;
-+ (void)tag:(RKTaggedString *)taggedString withStrokeColor:(NSColor *)color inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForStrokeWidth:(NSNumber *)strokeWidthObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForStrokeColor:(NSColor *)color toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
-+ (void)tag:(RKTaggedString *)taggedString withShadowStyle:(NSShadow *)shadow inRange:(NSRange)range resources:(RKResourcePool *)resources;
-
-+ (void)tag:(RKTaggedString *)taggedString withSuperscriptMode:(NSInteger)mode inRange:(NSRange)range;
++ (void)addTagsForShadow:(NSShadow *)shadow toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (void)addTagsForSuperscriptMode:(NSNumber *)superScriptModeObject toTaggedString:(RKTaggedString *)taggedString inRange:(NSRange)range resources:(RKResourcePool *)resources;
 
 @end
