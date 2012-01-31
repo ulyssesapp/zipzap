@@ -60,7 +60,7 @@
 - (void)registerTag:(NSString *)tag forPosition:(NSUInteger)position
 {
     if (position > [originalString length]) {
-        [NSException raise:NSRangeException format:@"Position %u beyond string bounds of %u.", position, [originalString length]];
+        [NSException raise:NSRangeException format:@"Position %u beyond string bounded by %u.", position, [originalString length]];
     }
     
     NSNumber *mapIndex = [NSNumber numberWithUnsignedInteger:position];
