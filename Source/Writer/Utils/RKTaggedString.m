@@ -109,7 +109,8 @@
     __block NSUInteger lastSourceOffset = 0;
     
     // Iterate over all tag positions
-    [[[tagPositions allKeys] sortedArrayUsingSelector:@selector(compare:)] enumerateObjectsUsingBlock:^(NSNumber *mapIndex, NSUInteger idx, BOOL *stop) {
+    for (NSNumber *mapIndex in [[tagPositions allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
+        
         NSUInteger currentSourceOffset = [mapIndex unsignedIntegerValue];
 
         // Copy all untagged chars
@@ -120,14 +121,14 @@
         // Insert tags
         NSArray *tags = [tagPositions objectForKey:mapIndex];
         
-        [tags enumerateObjectsUsingBlock:^(NSString *tag, NSUInteger tagIndex, BOOL *stop) {
+        for (NSString *tag in tags) {
             [flattened appendString: tag];
-        }];
-    }];
-    
+        };
+    }
+
     // Append remaining string
     if (lastSourceOffset < [originalString length]) {
-        [self appendOriginalStringRange:NSMakeRange(lastSourceOffset, [originalString length] - lastSourceOffset) toString:flattened];
+        [self appendOriginalStringRange:NSMakeRange(lastSourceOffset, originalString.length - lastSourceOffset) toString:flattened];
     }
         
     return flattened;
