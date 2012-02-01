@@ -11,6 +11,6 @@
 /*!
  @abstract Writes out all tags required for text attachments
  */
-@interface RKTextAttachmentWriter : NSObject
+@interface RKTextAttachmentWriter : RKAttributeWriter
 
 @end
