@@ -24,3 +24,13 @@
 - (NSString *)RTFDate;
 
 @end
+
+@interface NSData (RKConversion)
+
+/*!
+ @abstract Converts an NData object to a RTF hex encoding
+ @description Every line contains at most 128 characters
+ */
+- (NSString *)stringWithRTFHexEncoding;
+
+@end

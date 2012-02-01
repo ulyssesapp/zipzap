@@ -53,3 +53,22 @@
 }
 
 @end
+
+@implementation NSData (RKConversion)
+
+- (NSString *)stringWithRTFHexEncoding
+{
+    NSMutableString *encoded = [NSMutableString new];
+    const unsigned char *bytes = [self bytes];
+    
+    for (NSUInteger position = 0; position < [self length]; position ++) {
+        if (!(position % 64) && (position > 0))
+            [encoded appendString:@"\n"];
+        
+        [encoded appendFormat:@"%.2x", (unsigned)bytes[position]];
+    }
+    
+    return encoded;
+}
+
+@end
