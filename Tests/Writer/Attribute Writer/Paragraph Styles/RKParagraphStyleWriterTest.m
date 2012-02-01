@@ -138,6 +138,8 @@
     paragraphStyle.paragraphSpacingBefore = 8.0f;
     paragraphStyle.paragraphSpacing = 9.0f;
     
+    paragraphStyle.baseWritingDirection = NSWritingDirectionRightToLeft;
+    
     paragraphStyle.tabStops = [NSArray arrayWithObjects: 
                                [[NSTextTab alloc] initWithType:NSLeftTabStopType location:10.0f],
                                [[NSTextTab alloc] initWithType:NSCenterTabStopType location:20.0f],
@@ -149,6 +151,7 @@
     // Right alligned
     STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
                          @"\\pard"
+                         "\\rtlpar"
                          "\\qr"
                          "\\fl20"
                          "\\culi40"

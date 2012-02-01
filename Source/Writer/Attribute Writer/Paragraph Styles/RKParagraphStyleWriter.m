@@ -44,6 +44,10 @@
 {
     NSMutableString *rtf = [NSMutableString stringWithString:@"\\pard"];
     
+    // Writing directiong
+    if (paragraphStyle.baseWritingDirection == NSWritingDirectionRightToLeft)
+        [rtf appendString:@"\\rtlpar"];
+    
     // Alignment
     switch (paragraphStyle.alignment) {
         case NSLeftTextAlignment:
