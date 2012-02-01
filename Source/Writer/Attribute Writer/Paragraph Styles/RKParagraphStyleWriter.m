@@ -97,15 +97,15 @@
     for (NSTextTab *tabStop in paragraphStyle.tabStops) {
         switch (tabStop.tabStopType) {
             case NSCenterTabStopType:
-                [rtf appendFormat:@"\\tqc"];
+                [rtf appendString:@"\\tqc"];
                 break;
                 
             case NSRightTabStopType:
-                [rtf appendFormat:@"\\tqr"];
+                [rtf appendString:@"\\tqr"];
                 break;
                 
             case NSDecimalTabStopType:
-                [rtf appendFormat:@"\\tqdec"];
+                [rtf appendString:@"\\tqdec"];
                 break;
         }
         
@@ -113,7 +113,7 @@
     }
     
     // To prevent conflicts with succeeding text, we add a space
-    [rtf appendFormat:@" "];
+    [rtf appendString:@" "];
     
     return rtf;
 }
