@@ -23,7 +23,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSParagraphStyleAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSParagraphStyleAttributeName withPriorization:YES];
 }
 
 + (void)addTagsForAttribute:(NSParagraphStyle *)paragraphStyle

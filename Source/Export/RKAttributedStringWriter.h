@@ -18,7 +18,15 @@
 
 /*!
  @abstract Registers a handler class for writing out an attribute to RTF
- @discussion The class has to inherit from RKAttributeWriter
+ @discussion The class has to inherit from RKAttributeWriter. 
+             If the handler is added with priority, it will be executed before all non-priorized handlers.
+ */
++ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriorization:(BOOL)hasPriority;
+
+
+/*!
+ @abstract Registers a handler class for writing out an attribute to RTF
+ @discussion The class has to inherit from RKAttributeWriter. The handler as a low priority.
  */
 + (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName;
 
