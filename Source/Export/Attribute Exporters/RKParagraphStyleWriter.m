@@ -15,7 +15,7 @@
 /*!
  @abstract Generates the required opening tags for a paragraph style
  */
-+ (NSString *)RTFOpeningTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
++ (NSString *)openingTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
 
 @end
 
@@ -33,14 +33,14 @@
                   resources:(RKResourcePool *)resources
 {
      if (paragraphStyle) {
-         NSString *paragraphHeader = [self RTFOpeningTagfromParagraphStyle:paragraphStyle];
+         NSString *paragraphHeader = [self openingTagfromParagraphStyle:paragraphStyle];
 
          [taggedString registerTag:paragraphHeader forPosition:range.location];
          [taggedString registerTag:@"\\par\n" forPosition:(range.location + range.length)];
      }
 }
 
-+ (NSString *)RTFOpeningTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle
++ (NSString *)openingTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle
 {
     NSMutableString *rtf = [NSMutableString stringWithString:@"\\pard"];
     
@@ -94,7 +94,7 @@
         [rtf appendFormat:@"\\sa%u", (NSUInteger)RKPointsToTwips(paragraphStyle.paragraphSpacing)];
     
     // Translation of tab stops
-    [paragraphStyle.tabStops enumerateObjectsUsingBlock:^(NSTextTab *tabStop, NSUInteger idx, BOOL *stop) {
+    for (NSTextTab *tabStop in paragraphStyle.tabStops) {
         switch (tabStop.tabStopType) {
             case NSCenterTabStopType:
                 [rtf appendFormat:@"\\tqc"];
@@ -110,7 +110,7 @@
         }
         
         [rtf appendFormat:@"\\tx%u", (NSUInteger)RKPointsToTwips(tabStop.location)];
-    }];
+    }
     
     // To prevent conflicts with succeeding text, we add a space
     [rtf appendFormat:@" "];
