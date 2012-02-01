@@ -52,4 +52,27 @@
     STAssertEquals([resourceManager indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.2 blue:0.1 alpha:1]], (NSUInteger)2, @"Index not reused or alpha not ignored");
 }
 
+- (void)testRegisteringFileWrappers
+{
+    RKResourcePool *resourceManager = [RKResourcePool new];
+    
+    const char fileContent[] = {0, 1, 2};
+    NSFileWrapper *originalFileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:[NSData dataWithBytes:fileContent length:3]];
+    
+    [originalFileWrapper setFilename:@"foo.png"];
+    
+    NSString *registeredFilename = [resourceManager registerFileWrapper:originalFileWrapper];
+    
+    STAssertEqualObjects(registeredFilename, @"0.png", @"Invalid filename generated");
+    STAssertEquals(resourceManager.fileWrappers.count, (NSUInteger)1, @"Invalid count of files");
+    
+    NSFileWrapper *registeredFileWrapper = [resourceManager.fileWrappers objectAtIndex:0];
+    
+    STAssertTrue(originalFileWrapper != registeredFileWrapper, @"Identical wrappers");
+    STAssertEqualObjects(registeredFileWrapper.filename, @"0.png", @"Invalid filename");
+    
+    STAssertEqualObjects([registeredFileWrapper regularFileContents], [originalFileWrapper regularFileContents], @"File contents differ");
+    
+}
+
 @end

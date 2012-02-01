@@ -28,9 +28,9 @@
 - (NSUInteger)indexOfColor:(NSColor *)color;
 
 /*!
- @abstract Registers a referenced file
+ @abstract Registers a referenced file and returns a referencable filename
  */
-- (void)registerFileWrapper:(NSFileWrapper *)file;
+- (NSString *)registerFileWrapper:(NSFileWrapper *)file;
 
 /*!
  @abstract Returns the collected font families sorted by their indices

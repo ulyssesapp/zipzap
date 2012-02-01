@@ -70,13 +70,16 @@
     return index;
 }
 
-- (void)registerFileWrapper:(NSFileWrapper *)fileWrapper
+- (NSString *)registerFileWrapper:(NSFileWrapper *)fileWrapper
 {
     NSAssert(fileWrapper, @"No file given");
     
-    if (![fileWrappers containsObject:fileWrapper]) {
-        [fileWrappers addObject:fileWrapper];
-    }
+    NSFileWrapper *referencedFile = [[NSFileWrapper alloc] initRegularFileWithContents:[fileWrapper regularFileContents]];
+    [referencedFile setFilename:[NSString stringWithFormat:@"%u.%@", fileWrappers.count, [[fileWrapper filename] pathExtension]]];
+    
+    [fileWrappers addObject:referencedFile];
+    
+    return referencedFile.filename;
 }
 
 - (NSArray *)fontFamilyNames
