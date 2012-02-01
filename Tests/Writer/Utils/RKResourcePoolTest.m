@@ -75,4 +75,68 @@
     
 }
 
+- (void)testRegisteringTextListHeads
+{
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    NSTextList *headA = [NSTextList new];
+    NSTextList *headB = [NSTextList new];
+
+    NSUInteger headAIndex = [resources indexOfList:headA];
+    NSUInteger headBIndex = [resources indexOfList:headB];
+    
+    STAssertEquals(headAIndex, (NSUInteger)0, @"Invalid head index");
+    STAssertEquals(headBIndex, (NSUInteger)1, @"Invalid head index");
+}
+
+- (void)testRegisteringTextListNestings
+{
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    NSTextList *headA = [NSTextList new];
+    NSTextList *headB = [NSTextList new];
+
+    NSUInteger headAIndex = [resources indexOfList:headA];
+    NSUInteger headBIndex = [resources indexOfList:headB];    
+    
+    NSTextList *levelAA = [NSTextList new];
+    NSTextList *levelAAA = [NSTextList new];
+    NSTextList *levelBB = [NSTextList new];
+    
+    [resources registerLevelSettings:[NSArray arrayWithObjects:headA, levelAA, nil] forListIndex:headAIndex];
+    [resources registerLevelSettings:[NSArray arrayWithObjects:headB, levelBB, nil] forListIndex:headBIndex];
+
+    // Setting lists descriptions
+    NSArray *levelSettingsA = [resources levelDescriptionsOfList:headAIndex];
+
+    STAssertEqualObjects([levelSettingsA objectAtIndex:0], headA, @"Invalid list level descriptor");    
+    STAssertEqualObjects([levelSettingsA objectAtIndex:1], levelAA, @"Invalid list level descriptor");
+
+    NSArray *levelSettingsB = [resources levelDescriptionsOfList:headBIndex];
+    STAssertEqualObjects([levelSettingsB objectAtIndex:0], headB, @"Invalid list level descriptor");    
+    STAssertEqualObjects([levelSettingsB objectAtIndex:1], levelBB, @"Invalid list level descriptor");
+    
+    // Extending list descriptions
+    [resources registerLevelSettings:[NSArray arrayWithObjects:headA, levelAA, levelAAA, nil] forListIndex:headAIndex];
+    
+    levelSettingsA = [resources levelDescriptionsOfList:headAIndex];
+    
+    STAssertEqualObjects([levelSettingsA objectAtIndex:0], headA, @"Invalid list level descriptor");    
+    STAssertEqualObjects([levelSettingsA objectAtIndex:1], levelAA, @"Invalid list level descriptor");
+    STAssertEqualObjects([levelSettingsA objectAtIndex:2], levelAAA, @"Invalid list level descriptor");
+    
+    // Overwriting list descriptions without loosing more nested elements
+    [resources registerLevelSettings:[NSArray arrayWithObjects:headA, levelBB, levelAAA, nil] forListIndex:headAIndex];
+    
+    levelSettingsA = [resources levelDescriptionsOfList:headAIndex];
+    
+    STAssertEqualObjects([levelSettingsA objectAtIndex:0], headA, @"Invalid list level descriptor");    
+    STAssertEqualObjects([levelSettingsA objectAtIndex:1], levelBB, @"Invalid list level descriptor");
+    STAssertEqualObjects([levelSettingsA objectAtIndex:2], levelAAA, @"Invalid list level descriptor");
+
+    // Never overwrite head element
+    STAssertThrows(([resources registerLevelSettings:[NSArray arrayWithObjects:headB, levelAA, levelAAA, nil] forListIndex:headAIndex]), @"Head element was overwritten");
+}
+    
+
 @end

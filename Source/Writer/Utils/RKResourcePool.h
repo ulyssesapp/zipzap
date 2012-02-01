@@ -33,6 +33,18 @@
 - (NSString *)registerFileWrapper:(NSFileWrapper *)file;
 
 /*!
+ @abstract Returns the index of a list
+ @descriptor The given NSTextList should be the head element of a nested list
+ */
+- (NSUInteger)indexOfList:(NSTextList *)listHead;
+
+/*!
+ @abstract Sets the first list level descriptions of a certain text list
+ @discussion If more nested level descriptions are already known, these existing description will not be overwritten
+ */
+- (void)registerLevelSettings:(NSArray *)listNestings forListIndex:(NSUInteger)listIndex;
+
+/*!
  @abstract Returns the collected font families sorted by their indices
  @discussion Elements are NSString
  */
@@ -49,5 +61,11 @@
  @discussion Elements are NSFileWrapper
  */
 - (NSArray *)fileWrappers;
+
+/*!
+ @abstract Returns the level descriptions of a list
+ @discussion Returns an array of arrays of NSTextList
+ */
+- (NSArray *)levelDescriptionsOfList:(NSUInteger)listIndex;
 
 @end
