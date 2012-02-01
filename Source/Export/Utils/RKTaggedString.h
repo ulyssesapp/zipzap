@@ -29,12 +29,6 @@
 - (void)registerTag:(NSString *)tag forPosition:(NSUInteger)position;
 
 /*!
- @abstract Associates a tag with a certain string position. The tag will placed at a prioritized position before all other tags.
- @discussion See registerTag
- */
-- (void)registerPrioritizedTag:(NSString *)tag forPosition:(NSUInteger)position;
-
-/*!
  @abstract Specifies a string range as to be removed in the flattened variant of the string
  */
 - (void)removeRange:(NSRange)range;

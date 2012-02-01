@@ -191,17 +191,4 @@
                          );
 }
 
-- (void)testPrioritizedElement
-{
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
-    
-    [taggedString registerTag:@"-Last-" forPosition:1];
-    [taggedString registerPrioritizedTag:@"-First-" forPosition:1];
-    
-    STAssertEqualObjects([taggedString flattenedRTFString], 
-                         @"a-First--Last-bc",
-                         @"Invalid tag ordering"
-                         );
-}
-
 @end
