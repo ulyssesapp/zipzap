@@ -109,7 +109,7 @@
     __block NSUInteger lastSourceOffset = 0;
     
     // Iterate over all tag positions
-    for (NSNumber *mapIndex in [[tagPositions allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
+    for (NSNumber *mapIndex in [[tagPositions allKeys] sortedArrayUsingSelector: @selector(compare:)]) {
         
         NSUInteger currentSourceOffset = [mapIndex unsignedIntegerValue];
 
@@ -119,7 +119,7 @@
         lastSourceOffset = currentSourceOffset;
         
         // Insert tags
-        NSArray *tags = [tagPositions objectForKey:mapIndex];
+        NSArray *tags = [tagPositions objectForKey: mapIndex];
         
         for (NSString *tag in tags) {
             [flattened appendString: tag];
