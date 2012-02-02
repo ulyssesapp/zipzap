@@ -9,38 +9,47 @@
 #import "RKAttributedStringWriter.h"
 #import "RKParagraphStyleWriter.h"
 #import "RKTaggedString.h"
+#import "RKResourcePool.h"
 
 @interface RKParagraphStyleWriter ()
 
 /*!
  @abstract Generates the required opening tags for a paragraph style
  */
-+ (NSString *)openingTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
++ (NSString *)openingTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
+
+/*!
+ @abstract Generates the required formatting information for a text list
+ */
++ (NSString *)openingTagsForTextLists:(NSArray *)textLists
+                  ofAttributedString:(NSAttributedString *)attributedString 
+                             inRange:(NSRange)range 
+                           resources:(RKResourcePool *)resources;
 
 @end
 
 @implementation RKParagraphStyleWriter
 
-+ (void)load
-{
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSParagraphStyleAttributeName withPriorization:YES];
-}
-
-+ (void)addTagsForAttribute:(NSParagraphStyle *)paragraphStyle
++ (void)addTagsForAttributedString:(NSAttributedString *)attributedString
              toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-     if (paragraphStyle) {
-         NSString *paragraphHeader = [self openingTagfromParagraphStyle:paragraphStyle];
+     [attributedString enumerateAttribute:NSParagraphStyleAttributeName 
+                                  inRange:NSMakeRange(0, [attributedString length])
+                                  options:0 
+                               usingBlock:^(NSParagraphStyle *paragraphStyle, NSRange range, BOOL *stop) 
+    {
+         NSString *paragraphHeader = [self openingTagFromParagraphStyle:paragraphStyle];
+         NSString *listHeader = [self openingTagsForTextLists:paragraphStyle.textLists ofAttributedString:attributedString inRange:range resources:resources];
 
          [taggedString registerTag:paragraphHeader forPosition:range.location];
+         [taggedString registerTag:listHeader forPosition:range.location];
          [taggedString registerTag:@"\\par\n" forPosition:(range.location + range.length)];
-     }
+     }];
 }
 
-+ (NSString *)openingTagfromParagraphStyle:(NSParagraphStyle *)paragraphStyle
++ (NSString *)openingTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle
 {
     NSMutableString *rtf = [NSMutableString stringWithString:@"\\pard"];
     
@@ -120,6 +129,14 @@
     [rtf appendString:@" "];
     
     return rtf;
+}
+
++ (NSString *)openingTagsForTextLists:(NSArray *)textLists
+                   ofAttributedString:(NSAttributedString *)attributedString 
+                              inRange:(NSRange)range 
+                            resources:(RKResourcePool *)resources;
+{
+    return @"";
 }
 
 @end

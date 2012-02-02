@@ -55,9 +55,6 @@
 		796EABE014D947D5001E8401 /* RKUnderlineStyleAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABC014D947D5001E8401 /* RKUnderlineStyleAttributeWriter.h */; };
 		796EABE114D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABC114D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m */; };
 		796EABE214D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABC114D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m */; };
-		796EABEA14D947E2001E8401 /* RKParagraphStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABE514D947E2001E8401 /* RKParagraphStyleWriter.h */; };
-		796EABEB14D947E2001E8401 /* RKParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABE614D947E2001E8401 /* RKParagraphStyleWriter.m */; };
-		796EABEC14D947E2001E8401 /* RKParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABE614D947E2001E8401 /* RKParagraphStyleWriter.m */; };
 		796EABF514D947EB001E8401 /* RKAttributedStringWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABED14D947EB001E8401 /* RKAttributedStringWriter.h */; };
 		796EABF614D947EB001E8401 /* RKAttributedStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABEE14D947EB001E8401 /* RKAttributedStringWriter.m */; };
 		796EABF714D947EB001E8401 /* RKAttributedStringWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABEE14D947EB001E8401 /* RKAttributedStringWriter.m */; };
@@ -92,7 +89,6 @@
 		796EAC3B14D9485B001E8401 /* RKSuperscriptAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC2E14D9485B001E8401 /* RKSuperscriptAttributeWriterTest.m */; };
 		796EAC3C14D9485B001E8401 /* RKUnderlineColorAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC3014D9485B001E8401 /* RKUnderlineColorAttributeWriterTest.m */; };
 		796EAC3D14D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC3214D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.m */; };
-		796EAC4014D94863001E8401 /* RKParagraphStyleWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC3F14D94863001E8401 /* RKParagraphStyleWriterTest.m */; };
 		796EAC4314D9486F001E8401 /* RKWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC4214D9486F001E8401 /* RKWriterTest.m */; };
 		796EAC4A14D9488B001E8401 /* RKBodyWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC4514D9488B001E8401 /* RKBodyWriterTest.m */; };
 		796EAC4B14D9488B001E8401 /* RKHeaderWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC4714D9488B001E8401 /* RKHeaderWriterTest.m */; };
@@ -106,6 +102,15 @@
 		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
 		7987904F14D2E0320046F8AB /* RKTaggedString+TestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */; };
 		79A3597F14D024A80076A5F7 /* Test Data in Resources */ = {isa = PBXBuildFile; fileRef = 79A3597E14D024A80076A5F7 /* Test Data */; };
+		79F0B28114DA9D65004A3B87 /* RKParagraphStyleWriterTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F0B27F14DA9D65004A3B87 /* RKParagraphStyleWriterTest.h */; };
+		79F0B28514DA9D78004A3B87 /* RKParagraphStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F0B28314DA9D78004A3B87 /* RKParagraphStyleWriter.h */; };
+		79F0B28614DA9D78004A3B87 /* RKParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F0B28414DA9D78004A3B87 /* RKParagraphStyleWriter.m */; };
+		79F0B28714DA9D78004A3B87 /* RKParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F0B28414DA9D78004A3B87 /* RKParagraphStyleWriter.m */; };
+		79F0B28814DA9D83004A3B87 /* RKParagraphStyleWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F0B28014DA9D65004A3B87 /* RKParagraphStyleWriterTest.m */; };
+		79F0B28B14DAA8F6004A3B87 /* RKTextListAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F0B28914DAA8F6004A3B87 /* RKTextListAdditions.h */; };
+		79F0B28C14DAA8F6004A3B87 /* RKTextListAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F0B28A14DAA8F6004A3B87 /* RKTextListAdditions.m */; };
+		79F0B28D14DAA8F6004A3B87 /* RKTextListAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F0B28A14DAA8F6004A3B87 /* RKTextListAdditions.m */; };
+		79F0B29014DAB0BC004A3B87 /* RKTextListAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F0B28F14DAB0BC004A3B87 /* RKTextListAdditionsTest.m */; };
 		79F673AE14C84A9E005D03FA /* RKDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673AC14C84A9E005D03FA /* RKDocument.h */; };
 		79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
 		79F673B014C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
@@ -166,8 +171,6 @@
 		796EABBF14D947D5001E8401 /* RKUnderlineColorAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineColorAttributeWriter.m; path = "Writer/Attribute Writer/Inline Styles/RKUnderlineColorAttributeWriter.m"; sourceTree = "<group>"; };
 		796EABC014D947D5001E8401 /* RKUnderlineStyleAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKUnderlineStyleAttributeWriter.h; path = "Writer/Attribute Writer/Inline Styles/RKUnderlineStyleAttributeWriter.h"; sourceTree = "<group>"; };
 		796EABC114D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineStyleAttributeWriter.m; path = "Writer/Attribute Writer/Inline Styles/RKUnderlineStyleAttributeWriter.m"; sourceTree = "<group>"; };
-		796EABE514D947E2001E8401 /* RKParagraphStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWriter.h; path = "Writer/Attribute Writer/Paragraph Styles/RKParagraphStyleWriter.h"; sourceTree = "<group>"; };
-		796EABE614D947E2001E8401 /* RKParagraphStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWriter.m; path = "Writer/Attribute Writer/Paragraph Styles/RKParagraphStyleWriter.m"; sourceTree = "<group>"; };
 		796EABED14D947EB001E8401 /* RKAttributedStringWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAttributedStringWriter.h; path = "Writer/Structure Writer/RKAttributedStringWriter.h"; sourceTree = "<group>"; };
 		796EABEE14D947EB001E8401 /* RKAttributedStringWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAttributedStringWriter.m; path = "Writer/Structure Writer/RKAttributedStringWriter.m"; sourceTree = "<group>"; };
 		796EABEF14D947EB001E8401 /* RKBodyWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKBodyWriter.h; path = "Writer/Structure Writer/RKBodyWriter.h"; sourceTree = "<group>"; };
@@ -208,8 +211,6 @@
 		796EAC3014D9485B001E8401 /* RKUnderlineColorAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineColorAttributeWriterTest.m; path = "Writer/Attribute Writer/Inline Styles/RKUnderlineColorAttributeWriterTest.m"; sourceTree = "<group>"; };
 		796EAC3114D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKUnderlineStyleAttributeWriterTest.h; path = "Writer/Attribute Writer/Inline Styles/RKUnderlineStyleAttributeWriterTest.h"; sourceTree = "<group>"; };
 		796EAC3214D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUnderlineStyleAttributeWriterTest.m; path = "Writer/Attribute Writer/Inline Styles/RKUnderlineStyleAttributeWriterTest.m"; sourceTree = "<group>"; };
-		796EAC3E14D94863001E8401 /* RKParagraphStyleWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWriterTest.h; path = "Writer/Attribute Writer/Paragraph Styles/RKParagraphStyleWriterTest.h"; sourceTree = "<group>"; };
-		796EAC3F14D94863001E8401 /* RKParagraphStyleWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWriterTest.m; path = "Writer/Attribute Writer/Paragraph Styles/RKParagraphStyleWriterTest.m"; sourceTree = "<group>"; };
 		796EAC4114D9486F001E8401 /* RKWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriterTest.h; path = Writer/RKWriterTest.h; sourceTree = "<group>"; };
 		796EAC4214D9486F001E8401 /* RKWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriterTest.m; path = Writer/RKWriterTest.m; sourceTree = "<group>"; };
 		796EAC4414D9488B001E8401 /* RKBodyWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKBodyWriterTest.h; path = "Writer/Structure Writer/RKBodyWriterTest.h"; sourceTree = "<group>"; };
@@ -235,6 +236,14 @@
 		79A3597E14D024A80076A5F7 /* Test Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Test Data"; sourceTree = "<group>"; };
 		79A359A314D1A3650076A5F7 /* RKSection+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSection+TestExtensions.h"; path = "Utils/RKSection+TestExtensions.h"; sourceTree = "<group>"; };
 		79A359A414D1A38C0076A5F7 /* RKHeaderWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKHeaderWriter+TestExtensions.h"; path = "Utils/RKHeaderWriter+TestExtensions.h"; sourceTree = "<group>"; };
+		79F0B27F14DA9D65004A3B87 /* RKParagraphStyleWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWriterTest.h; path = "Writer/Structure Writer/RKParagraphStyleWriterTest.h"; sourceTree = "<group>"; };
+		79F0B28014DA9D65004A3B87 /* RKParagraphStyleWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWriterTest.m; path = "Writer/Structure Writer/RKParagraphStyleWriterTest.m"; sourceTree = "<group>"; };
+		79F0B28314DA9D78004A3B87 /* RKParagraphStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWriter.h; path = "Writer/Structure Writer/RKParagraphStyleWriter.h"; sourceTree = "<group>"; };
+		79F0B28414DA9D78004A3B87 /* RKParagraphStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWriter.m; path = "Writer/Structure Writer/RKParagraphStyleWriter.m"; sourceTree = "<group>"; };
+		79F0B28914DAA8F6004A3B87 /* RKTextListAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextListAdditions.h; path = Writer/Utils/RKTextListAdditions.h; sourceTree = "<group>"; };
+		79F0B28A14DAA8F6004A3B87 /* RKTextListAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextListAdditions.m; path = Writer/Utils/RKTextListAdditions.m; sourceTree = "<group>"; };
+		79F0B28E14DAB0BC004A3B87 /* RKTextListAdditionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; name = RKTextListAdditionsTest.h; path = Writer/Utils/RKTextListAdditionsTest.h; sourceTree = "<group>"; };
+		79F0B28F14DAB0BC004A3B87 /* RKTextListAdditionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextListAdditionsTest.m; path = Writer/Utils/RKTextListAdditionsTest.m; sourceTree = "<group>"; };
 		79F673AC14C84A9E005D03FA /* RKDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocument.h; path = Document/RKDocument.h; sourceTree = "<group>"; };
 		79F673AD14C84A9E005D03FA /* RKDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocument.m; path = Document/RKDocument.m; sourceTree = "<group>"; };
 		79F673B314C84ACC005D03FA /* RKDocumentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentTest.h; path = Document/RKDocumentTest.h; sourceTree = "<group>"; };
@@ -363,7 +372,6 @@
 			children = (
 				796EAB9F14D947A6001E8401 /* Attachments */,
 				796EABA014D947B0001E8401 /* Inline Styles */,
-				796EABA114D947B7001E8401 /* Paragraph Styles */,
 				796EAC5614D9491B001E8401 /* RKAttributeWriter.h */,
 				796EAC5714D9491B001E8401 /* RKAttributeWriter.m */,
 			);
@@ -373,6 +381,8 @@
 		796EAB9814D9477D001E8401 /* Structure Writer */ = {
 			isa = PBXGroup;
 			children = (
+				79F0B28314DA9D78004A3B87 /* RKParagraphStyleWriter.h */,
+				79F0B28414DA9D78004A3B87 /* RKParagraphStyleWriter.m */,
 				796EABED14D947EB001E8401 /* RKAttributedStringWriter.h */,
 				796EABEE14D947EB001E8401 /* RKAttributedStringWriter.m */,
 				796EABEF14D947EB001E8401 /* RKBodyWriter.h */,
@@ -394,6 +404,8 @@
 				796EAC0414D947F6001E8401 /* RKResourcePool.m */,
 				796EAC0514D947F6001E8401 /* RKTaggedString.h */,
 				796EAC0614D947F6001E8401 /* RKTaggedString.m */,
+				79F0B28914DAA8F6004A3B87 /* RKTextListAdditions.h */,
+				79F0B28A14DAA8F6004A3B87 /* RKTextListAdditions.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -438,15 +450,6 @@
 			name = "Inline Styles";
 			sourceTree = "<group>";
 		};
-		796EABA114D947B7001E8401 /* Paragraph Styles */ = {
-			isa = PBXGroup;
-			children = (
-				796EABE514D947E2001E8401 /* RKParagraphStyleWriter.h */,
-				796EABE614D947E2001E8401 /* RKParagraphStyleWriter.m */,
-			);
-			name = "Paragraph Styles";
-			sourceTree = "<group>";
-		};
 		796EAC1014D947FB001E8401 /* Writer */ = {
 			isa = PBXGroup;
 			children = (
@@ -464,7 +467,6 @@
 			children = (
 				796EAC1414D9482E001E8401 /* Attachments */,
 				796EAC1514D94835001E8401 /* Inline Styles */,
-				796EAC1614D9483D001E8401 /* Paragraph Styles */,
 			);
 			name = "Attribute Writer";
 			sourceTree = "<group>";
@@ -476,6 +478,8 @@
 				796EAC4514D9488B001E8401 /* RKBodyWriterTest.m */,
 				796EAC4614D9488B001E8401 /* RKHeaderWriterTest.h */,
 				796EAC4714D9488B001E8401 /* RKHeaderWriterTest.m */,
+				79F0B27F14DA9D65004A3B87 /* RKParagraphStyleWriterTest.h */,
+				79F0B28014DA9D65004A3B87 /* RKParagraphStyleWriterTest.m */,
 				796EAC4814D9488B001E8401 /* RKSectionWriterTest.h */,
 				796EAC4914D9488B001E8401 /* RKSectionWriterTest.m */,
 			);
@@ -491,6 +495,8 @@
 				796EAC5014D94894001E8401 /* RKResourcePoolTest.m */,
 				796EAC5114D94894001E8401 /* RKTaggedStringTest.h */,
 				796EAC5214D94894001E8401 /* RKTaggedStringTest.m */,
+				79F0B28E14DAB0BC004A3B87 /* RKTextListAdditionsTest.h */,
+				79F0B28F14DAB0BC004A3B87 /* RKTextListAdditionsTest.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -533,15 +539,6 @@
 				796EAC3214D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.m */,
 			);
 			name = "Inline Styles";
-			sourceTree = "<group>";
-		};
-		796EAC1614D9483D001E8401 /* Paragraph Styles */ = {
-			isa = PBXGroup;
-			children = (
-				796EAC3E14D94863001E8401 /* RKParagraphStyleWriterTest.h */,
-				796EAC3F14D94863001E8401 /* RKParagraphStyleWriterTest.m */,
-			);
-			name = "Paragraph Styles";
 			sourceTree = "<group>";
 		};
 		79A359A214D1A1D10076A5F7 /* Utils */ = {
@@ -605,7 +602,6 @@
 				796EABDA14D947D5001E8401 /* RKSuperscriptAttributeWriter.h in Headers */,
 				796EABDD14D947D5001E8401 /* RKUnderlineColorAttributeWriter.h in Headers */,
 				796EABE014D947D5001E8401 /* RKUnderlineStyleAttributeWriter.h in Headers */,
-				796EABEA14D947E2001E8401 /* RKParagraphStyleWriter.h in Headers */,
 				796EABF514D947EB001E8401 /* RKAttributedStringWriter.h in Headers */,
 				796EABF814D947EB001E8401 /* RKBodyWriter.h in Headers */,
 				796EABFB14D947EB001E8401 /* RKHeaderWriter.h in Headers */,
@@ -614,6 +610,9 @@
 				796EAC0A14D947F6001E8401 /* RKResourcePool.h in Headers */,
 				796EAC0D14D947F6001E8401 /* RKTaggedString.h in Headers */,
 				796EAC5814D9491B001E8401 /* RKAttributeWriter.h in Headers */,
+				79F0B28114DA9D65004A3B87 /* RKParagraphStyleWriterTest.h in Headers */,
+				79F0B28514DA9D78004A3B87 /* RKParagraphStyleWriter.h in Headers */,
+				79F0B28B14DAA8F6004A3B87 /* RKTextListAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,7 +730,6 @@
 				796EABDB14D947D5001E8401 /* RKSuperscriptAttributeWriter.m in Sources */,
 				796EABDE14D947D5001E8401 /* RKUnderlineColorAttributeWriter.m in Sources */,
 				796EABE114D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */,
-				796EABEB14D947E2001E8401 /* RKParagraphStyleWriter.m in Sources */,
 				796EABF614D947EB001E8401 /* RKAttributedStringWriter.m in Sources */,
 				796EABF914D947EB001E8401 /* RKBodyWriter.m in Sources */,
 				796EABFC14D947EB001E8401 /* RKHeaderWriter.m in Sources */,
@@ -740,6 +738,8 @@
 				796EAC0B14D947F6001E8401 /* RKResourcePool.m in Sources */,
 				796EAC0E14D947F6001E8401 /* RKTaggedString.m in Sources */,
 				796EAC5914D9491B001E8401 /* RKAttributeWriter.m in Sources */,
+				79F0B28614DA9D78004A3B87 /* RKParagraphStyleWriter.m in Sources */,
+				79F0B28C14DAA8F6004A3B87 /* RKTextListAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -766,7 +766,6 @@
 				796EABDC14D947D5001E8401 /* RKSuperscriptAttributeWriter.m in Sources */,
 				796EABDF14D947D5001E8401 /* RKUnderlineColorAttributeWriter.m in Sources */,
 				796EABE214D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */,
-				796EABEC14D947E2001E8401 /* RKParagraphStyleWriter.m in Sources */,
 				796EABF714D947EB001E8401 /* RKAttributedStringWriter.m in Sources */,
 				796EABFA14D947EB001E8401 /* RKBodyWriter.m in Sources */,
 				796EABFD14D947EB001E8401 /* RKHeaderWriter.m in Sources */,
@@ -787,7 +786,6 @@
 				796EAC3B14D9485B001E8401 /* RKSuperscriptAttributeWriterTest.m in Sources */,
 				796EAC3C14D9485B001E8401 /* RKUnderlineColorAttributeWriterTest.m in Sources */,
 				796EAC3D14D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.m in Sources */,
-				796EAC4014D94863001E8401 /* RKParagraphStyleWriterTest.m in Sources */,
 				796EAC4314D9486F001E8401 /* RKWriterTest.m in Sources */,
 				796EAC4A14D9488B001E8401 /* RKBodyWriterTest.m in Sources */,
 				796EAC4B14D9488B001E8401 /* RKHeaderWriterTest.m in Sources */,
@@ -796,6 +794,10 @@
 				796EAC5414D94894001E8401 /* RKResourcePoolTest.m in Sources */,
 				796EAC5514D94894001E8401 /* RKTaggedStringTest.m in Sources */,
 				796EAC5A14D9491B001E8401 /* RKAttributeWriter.m in Sources */,
+				79F0B28714DA9D78004A3B87 /* RKParagraphStyleWriter.m in Sources */,
+				79F0B28814DA9D83004A3B87 /* RKParagraphStyleWriterTest.m in Sources */,
+				79F0B28D14DAA8F6004A3B87 /* RKTextListAdditions.m in Sources */,
+				79F0B29014DAB0BC004A3B87 /* RKTextListAdditionsTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

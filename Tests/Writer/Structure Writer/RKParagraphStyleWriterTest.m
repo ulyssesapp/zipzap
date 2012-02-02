@@ -41,7 +41,7 @@
     NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle],
                          @"\\pard"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -72,7 +72,7 @@
     
     
     // Natural alignment
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle],
                          @"\\pard"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -82,7 +82,7 @@
     // Left alignment
     paragraphStyle.alignment = NSLeftTextAlignment;    
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle],
                          @"\\pard\\ql"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -92,7 +92,7 @@
     // Center alignment
     paragraphStyle.alignment = NSCenterTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle],
                          @"\\pard\\qc"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -102,7 +102,7 @@
     // Right alignment
     paragraphStyle.alignment = NSRightTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle],
                          @"\\pard\\qr"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -112,7 +112,7 @@
     // Right alignment
     paragraphStyle.alignment = NSJustifiedTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle],
                          @"\\pard\\qj"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -149,7 +149,7 @@
                                ];
     
     // Right alligned
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagfromParagraphStyle:paragraphStyle],
+    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle],
                          @"\\pard"
                          "\\rtlpar"
                          "\\qr"
@@ -176,16 +176,21 @@
 
 - (void)testParagraphTagging
 {
+    RKResourcePool *resources = [RKResourcePool new];
+    
     NSMutableParagraphStyle *paragraphStyleA = [self defaultParagraphStyle];
     NSMutableParagraphStyle *paragraphStyleB = [self defaultParagraphStyle];
     
     paragraphStyleA.alignment = NSCenterTextAlignment;
     paragraphStyleB.alignment = NSRightTextAlignment;
+
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaabbb"];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: [attributedString string]];
+
+    [attributedString addAttribute:NSAttachmentAttributeName value:paragraphStyleA range:NSMakeRange(0, 3)];
+    [attributedString addAttribute:NSAttachmentAttributeName value:paragraphStyleB range:NSMakeRange(3, 3)];
     
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"aaabbb"];
-    
-    [RKParagraphStyleWriter addTagsForAttribute:paragraphStyleA toTaggedString:taggedString inRange:NSMakeRange(0, 3) withAttachmentPolicy:0 resources:nil];
-    [RKParagraphStyleWriter addTagsForAttribute:paragraphStyleB toTaggedString:taggedString inRange:NSMakeRange(3, 3) withAttachmentPolicy:0 resources:nil];
+    [RKParagraphStyleWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:0 resources:resources];
     
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"\\pard\\qc "
@@ -198,4 +203,75 @@
                         );
 }
 
+- (void)testTextLists
+{
+    NSTextList *head = [[NSTextList alloc] initWithMarkerFormat:@"({decimal})" options:0 ];
+    NSTextList *levelA = [[NSTextList alloc] initWithMarkerFormat:@"-{lower-roman}-" options:NSTextListPrependEnclosingMarker ];
+    NSTextList *levelAA = [[NSTextList alloc] initWithMarkerFormat:@"{upper-roman}." options:NSTextListPrependEnclosingMarker ];
+    NSTextList *levelAB = [[NSTextList alloc] initWithMarkerFormat:@"::{upper-roman}::" options:NSTextListPrependEnclosingMarker ];
+    
+    RKResourcePool *resources = [RKResourcePool new];
+    NSMutableParagraphStyle *paragraphStyleHead = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleLevelA = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleLevelAA = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleLevelAB = [self defaultParagraphStyle];
+    
+    paragraphStyleHead.textLists = [NSArray arrayWithObjects:head, nil];
+    paragraphStyleLevelA.textLists = [NSArray arrayWithObjects:head, levelA, nil];
+    paragraphStyleLevelAA.textLists = [NSArray arrayWithObjects:head, levelA, levelAA, nil];
+    paragraphStyleLevelAB.textLists = [NSArray arrayWithObjects:head, levelA, levelAB, nil];
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"H\nA\nAA\nAB" ];
+    
+    NSRange headPos = NSMakeRange(0, 1);
+    NSRange levelAPos = NSMakeRange(2, 1);
+    NSRange levelAAPos = NSMakeRange(4, 2);
+    NSRange levelABPos = NSMakeRange(7, 2);    
+    
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleHead range:headPos];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleLevelA range:levelAPos];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleLevelAA range:levelAAPos];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleLevelAB range:levelABPos];
+    
+    // Head tag
+    NSString *tags = [RKParagraphStyleWriter openingTagsForTextLists:paragraphStyleHead.textLists ofAttributedString:attributedString inRange:headPos resources:resources];
+    
+    STAssertEqualObjects(tags,
+                         @"\\ls1\\ilvl0{\\listtext  (1)}",
+                         @"Invalid text list style"
+                         );
+    
+    // Level A tag
+    tags = [RKParagraphStyleWriter openingTagsForTextLists:paragraphStyleLevelA.textLists ofAttributedString:attributedString inRange:levelAPos resources:resources];
+    
+    STAssertEqualObjects(tags,
+                         @"\\ls1\\ilvl1{\\listtext  (1)-i-}",
+                         @"Invalid text list style"
+                         );
+
+    // Level AA tag
+    tags = [RKParagraphStyleWriter openingTagsForTextLists:paragraphStyleLevelAA.textLists ofAttributedString:attributedString inRange:levelAAPos resources:resources];
+    
+    STAssertEqualObjects(tags,
+                         @"\\ls1\\ilvl0{\\listtext  (1)-i-I}",
+                         @"Invalid text list style"
+                         );
+    
+    // Level AB tag
+    tags = [RKParagraphStyleWriter openingTagsForTextLists:paragraphStyleLevelAB.textLists ofAttributedString:attributedString inRange:levelABPos resources:resources];
+    
+    STAssertEqualObjects(tags,
+                         @"\\ls1\\ilvl0{\\listtext  (1)-i::I::}",
+                         @"Invalid text list style"
+                         );
+    
+    // Verify stored list style (AB should be kept, AA should be ignored to simulate the behaviour of the text system)
+    NSArray *listDescriptions = [resources levelDescriptionsOfList:0];
+    
+    STAssertEquals([listDescriptions objectAtIndex:0], head, @"Invalid list description");
+    STAssertEquals([listDescriptions objectAtIndex:1], levelA, @"Invalid list description");
+    STAssertEquals([listDescriptions objectAtIndex:1], levelAB, @"Invalid list description");
+
+}
+                                 
 @end
