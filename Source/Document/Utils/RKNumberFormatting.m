@@ -10,4 +10,69 @@
 
 @implementation NSString (RKNumberFormatting)
 
+NSDictionary *romanNumeralMapping;
+NSArray *romanNumeralOrdering;
+
++ (void)load
+{
+    romanNumeralMapping = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @"i", [NSNumber numberWithUnsignedInteger:1],
+                           @"x", [NSNumber numberWithUnsignedInteger:10],
+                           @"c", [NSNumber numberWithUnsignedInteger:100],
+                           @"m", [NSNumber numberWithUnsignedInteger:1000],
+                           @"iv", [NSNumber numberWithUnsignedInteger:4],
+                           @"xl", [NSNumber numberWithUnsignedInteger:40],
+                           @"cd", [NSNumber numberWithUnsignedInteger:400],
+                           @"v", [NSNumber numberWithUnsignedInteger:5],
+                           @"l", [NSNumber numberWithUnsignedInteger:50],
+                           @"d", [NSNumber numberWithUnsignedInteger:500],
+                           @"ix", [NSNumber numberWithUnsignedInteger:9],
+                           @"xc", [NSNumber numberWithUnsignedInteger:900],
+                           @"cm", [NSNumber numberWithUnsignedInteger:9000],                          
+                           nil
+                          ];
+
+    romanNumeralOrdering = [[romanNumeralMapping allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
+        return [obj2 compare: obj1];
+    }];
+}
+
++ (NSString *)lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
+{
+    if (number == 0)
+        return @"0";
+
+    NSMutableString *romanNumber = [NSMutableString new];
+    NSUInteger remainder = number;
+    
+    for (NSNumber *numeralValueObject in romanNumeralOrdering) {
+        NSUInteger numeralValue = [numeralValueObject unsignedIntegerValue];
+        
+        while (remainder >= numeralValue) {
+            [romanNumber appendString:  [romanNumeralMapping objectForKey: numeralValueObject]];
+            remainder -= numeralValue;
+        }
+    }
+    
+    return romanNumber;
+}
+
++ (NSString *)upperCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
+{
+    return [[self lowerCaseRomanNumeralsFromUnsignedInteger:number] uppercaseString];
+}
+
++ (NSString *)lowerCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number
+{
+    if (number == 0)
+        return @"0";
+    
+    return [NSString stringWithFormat:@"%c", 'a' + ((number - 1) % 26) ];
+}
+
++ (NSString *)upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number
+{
+    return [[self lowerCaseAlphabeticNumeralsFromUnsignedInteger:number] uppercaseString];
+}
+
 @end

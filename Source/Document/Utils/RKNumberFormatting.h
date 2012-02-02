@@ -11,4 +11,24 @@
  */
 @interface NSString (RKNumberFormatting)
 
+/*!
+ @abstract Converts an integer number to lower case roman numerals
+ */
++ (NSString *) lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number;
+
+/*!
+ @abstract Converts an integer number to upper case roman numerals
+ */
++ (NSString *) upperCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number;
+
+/*!
+ @abstract Converts an integer number to lower case alphabetic numerals
+ */
++ (NSString *) lowerCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number;
+
+/*!
+ @abstract Converts an integer number to upper case alphabetic numerals
+ */
++ (NSString *) upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number;
+
 @end
