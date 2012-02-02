@@ -17,7 +17,7 @@
     NSMutableArray *colors;
     NSMutableArray *fileWrappers;
 
-    NSMutableArray *listTable;
+    NSMutableArray *textLists;
 }
 
 @end
@@ -32,7 +32,7 @@
         fonts = [NSMutableArray new];
         colors = [NSMutableArray new];
         fileWrappers = [NSMutableArray new];
-        listTable = [NSMutableArray new];
+        textLists = [NSMutableArray new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
         [self indexOfColor: [NSColor colorWithSRGBRed:0 green:0.0 blue:0.0 alpha:1.0]];
@@ -100,43 +100,21 @@
     return fileWrappers;
 }
 
-- (NSUInteger)indexOfList:(NSTextList *)listHead
+- (NSUInteger)indexOfList:(RKTextList *)textList
 {
-    NSAssert(listHead, @"No list head given");
-    NSUInteger __block listIndex = NSNotFound;
+    NSUInteger listIndex = [textLists indexOfObject: textList];
     
-    [listTable enumerateObjectsUsingBlock:^(NSArray *listLevels, NSUInteger currentIndex, BOOL *stop) {
-        NSTextList *currentHead = [listLevels objectAtIndex:0];
-        
-        if (currentHead == listHead) {
-            listIndex = currentIndex;
-            *stop = true;
-        }
-    }];
-    
-    if (listIndex == NSNotFound) {     
-        [listTable addObject: [NSMutableArray arrayWithObject:listHead]];
-        listIndex = listTable.count - 1;
+    if (listIndex == NSNotFound) {
+        [textLists addObject:textList];
+        return textLists.count - 1;
     }
-
+    
     return listIndex;
 }
 
-- (void)registerLevelSettings:(NSArray *)listNestings forListIndex:(NSUInteger)listIndex
+- (NSArray *)textLists
 {
-    NSAssert(listTable.count > listIndex, @"Invalid list index given");
-    
-    NSMutableArray *knownListLevels = [listTable objectAtIndex:listIndex];
-    
-    // Never overwrite the head element of a list
-    NSAssert([knownListLevels objectAtIndex:0] == [listNestings objectAtIndex:0], @"Head element was overwritten");
-            
-    [knownListLevels replaceObjectsInRange:NSMakeRange(0, listNestings.count - 1) withObjectsFromArray:listNestings];
-}
-
-- (NSArray *)levelDescriptionsOfList:(NSUInteger)listIndex
-{
-    return [listTable objectAtIndex:listIndex];
+    return textLists;
 }
 
 @end

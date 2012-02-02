@@ -6,10 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKDocument.h"
-
-@class RKDocument;
-
 /*!
  @abstract Manages files, font and color definitions from an RKDocument
  */
@@ -34,15 +30,8 @@
 
 /*!
  @abstract Returns the index of a list
- @descriptor The given NSTextList should be the head element of a nested list
  */
-- (NSUInteger)indexOfList:(NSTextList *)listHead;
-
-/*!
- @abstract Sets the first list level descriptions of a certain text list
- @discussion If more nested level descriptions are already known, these existing description will not be overwritten
- */
-- (void)registerLevelSettings:(NSArray *)listNestings forListIndex:(NSUInteger)listIndex;
+- (NSUInteger)indexOfList:(RKTextList *)textList;
 
 /*!
  @abstract Returns the collected font families sorted by their indices
@@ -63,9 +52,8 @@
 - (NSArray *)fileWrappers;
 
 /*!
- @abstract Returns the level descriptions of a list
- @discussion Returns an array of arrays of NSTextList
+ @abstract Returns the available lists
  */
-- (NSArray *)levelDescriptionsOfList:(NSUInteger)listIndex;
+- (NSArray *)textLists;
 
 @end
