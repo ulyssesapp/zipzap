@@ -42,6 +42,8 @@
     return self;
 }
 
+#pragma marg - Fonts
+
 - (NSUInteger)indexOfFont:(NSFont *)font
 {
     NSAssert(font, @"No font given");
@@ -56,6 +58,13 @@
     
     return index;
 }
+
+- (NSArray *)fontFamilyNames
+{
+    return fonts;
+}
+
+#pragma marg - Colors
 
 - (NSUInteger)indexOfColor:(NSColor *)color
 {
@@ -73,6 +82,13 @@
     return index;
 }
 
+- (NSArray *)colors
+{
+    return colors;
+}
+
+#pragma marg - File Wrapper
+
 - (NSString *)registerFileWrapper:(NSFileWrapper *)fileWrapper
 {
     NSAssert(fileWrapper, @"No file given");
@@ -85,20 +101,12 @@
     return referencedFile.filename;
 }
 
-- (NSArray *)fontFamilyNames
-{
-    return fonts;
-}
-
-- (NSArray *)colors
-{
-    return colors;
-}
-
 - (NSArray *)fileWrappers
 {
     return fileWrappers;
 }
+
+#pragma marg - Text Lists
 
 - (NSUInteger)indexOfList:(RKTextList *)textList
 {
