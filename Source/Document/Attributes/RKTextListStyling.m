@@ -1,15 +1,15 @@
 //
-//  RKTextList.m
+//  RKTextListStyling.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextList.h"
+#import "RKTextListStyling.h"
 #import "RKConversion.h"
 
-@interface RKTextList () {
+@interface RKTextListStyling () {
     NSString *generalLevelFormat;
     NSArray *definedLevelFormats;
 }
@@ -21,16 +21,16 @@
 
 @end
 
-@implementation RKTextList
+@implementation RKTextListStyling
 
-+ (RKTextList *)textListWithGeneralLevelFormat:(NSString *)levelFormat;
++ (RKTextListStyling *)textListWithGeneralLevelFormat:(NSString *)levelFormat;
 {
     return [self textListWithLevelFormats: [NSArray arrayWithObjects: levelFormat, nil]];
 }
 
-+ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
++ (RKTextListStyling *)textListWithLevelFormats:(NSArray *)levelFormats;
 {
-    return [[RKTextList alloc] initWithLevelFormats: levelFormats];
+    return [[RKTextListStyling alloc] initWithLevelFormats: levelFormats];
 }
 
 - (id)initWithLevelFormats:(NSArray *)levelFormats

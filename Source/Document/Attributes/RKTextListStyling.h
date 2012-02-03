@@ -1,5 +1,5 @@
 //
-//  RKTextList.h
+//  RKTextListStyling.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
@@ -9,10 +9,10 @@
 extern NSString *RKTextListItemAttributeName;
 
 /*!
- @abstract Representation of a bullet point list / enumeration
+ @abstract Representation of a list styling
  @description A text list consists of the styling description for each nesting level of the list
  */
-@interface RKTextList : NSObject
+@interface RKTextListStyling : NSObject
 
 /*!
  @abstract Creates a text list with a general format for all levels
@@ -28,13 +28,13 @@ extern NSString *RKTextListItemAttributeName;
                 %%      %-Charracter
                 %*      Insert prepending levels here
  */
-+ (RKTextList *)textListWithGeneralLevelFormat:(NSString *)levelFormat;
++ (RKTextListStyling *)textListWithGeneralLevelFormat:(NSString *)levelFormat;
 
 /*!
  @abstract Creates a text list with seperate format for the first given levels.
  @discussion The last level format will be used as generic format for all undefined levels
  */
-+ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
++ (RKTextListStyling *)textListWithLevelFormats:(NSArray *)levelFormats;
 
 /*!
  @astract Returns the format definition for a certain level

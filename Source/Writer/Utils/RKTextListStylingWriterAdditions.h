@@ -25,7 +25,7 @@ typedef enum {
     RKTextListFormatCodeBullet              = 23
 } RKTextListFormatCode;
 
-@interface RKTextList (RKConversionAdditions)
+@interface RKTextListStyling (RKWriterAdditions)
 
 /*!
  @astract Returns the RTF format code for a level
@@ -33,7 +33,9 @@ typedef enum {
 -(RKTextListFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex;
 
 /*!
- @abstract Returns the RTF format string of a level
+ @abstract Returns the RTF format string of a level as required by the \leveltext tag
+ @discussion To generate the \levelnumbers tag, the array "placeholderPositions" will contain 
+             the positions of the format string placeholders in the output string
  */
 -(NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositions;
 

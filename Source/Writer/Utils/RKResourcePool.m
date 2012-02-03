@@ -108,7 +108,7 @@
 
 #pragma marg - Text Lists
 
-- (NSUInteger)indexOfList:(RKTextList *)textList
+- (NSUInteger)indexOfList:(RKTextListStyling *)textList
 {
     NSUInteger listIndex = [textLists indexOfObject: textList];
     

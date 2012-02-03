@@ -1,5 +1,5 @@
 //
-//  RKTextListConversionAdditionsTest.h
+//  RKTextListStylingWriterAdditionsTest.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKTextListConversionAdditionsTest : SenTestCase
+@interface RKTextListStylingWriterAdditionsTest : SenTestCase
 
 @end
