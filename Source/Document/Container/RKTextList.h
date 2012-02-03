@@ -14,7 +14,8 @@
 
 /*!
  @abstract Creates a text list with a format for all levels (at most 9)
- @discussion The format string consists of an arbitrary text and at most one placeholder
+ @discussion An array of NSString with format strings must be given. 
+             The format strings consists of an arbitrary text and at most one placeholder
               The available placeholders are:
                 %dN     Decimal numbers
                 %rN     Lower roman numbers
@@ -28,8 +29,18 @@
 + (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
 
 /*!
- @astract Returns the format definition for a certain level
+ @abstract Creates a text list that overrides the start positions of selected levels
  */
--(NSString *)formatOfLevel:(NSUInteger)levelIndex;
++ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSDictionary *)overridingItemNumbers;
+
+/*!
+ @abstract Returns the format definition for a certain level
+ */
+- (NSString *)formatOfLevel:(NSUInteger)levelIndex;
+
+/*!
+ @abstract Returns the starting item number of alever
+ */
+- (NSUInteger)startItemNumberOfLevel:(NSUInteger)levelIndex;
 
 @end

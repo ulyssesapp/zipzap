@@ -35,7 +35,7 @@
 
 /*!
  @abstract Returns a new item number of a list level
- @discussion All item numbers for more nested list levels will be reseted by this call
+ @discussion All item numbers for more nested list levels will be reset to the starting number of the level
  */
 - (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKTextList *)textList;
 

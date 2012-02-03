@@ -76,7 +76,12 @@
 
 - (void)testRegisteringListItem
 {
-    RKTextList *textList = [RKTextList new];
+    NSDictionary *overrides = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [NSNumber numberWithUnsignedInteger:12], [NSNumber numberWithUnsignedInteger:3],
+                               nil];
+    
+    // Create a list, where level 3 will start the item count with 12
+    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray new] withOveridingStartItemNumbers:overrides];
     RKResourcePool *resources = [RKResourcePool new];
     
     // Initialization
@@ -95,7 +100,7 @@
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:1] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:2] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
-    STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
+    STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)12, @"Invalid item number");
     
     // Increment extension
     itemNumbers = [resources incrementItemNumbersForListLevel:3 ofList:textList];
@@ -103,7 +108,7 @@
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:1] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:2] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
-    STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
+    STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)13, @"Invalid item number");
     
     // Truncate and increment
     itemNumbers = [resources incrementItemNumbersForListLevel:1 ofList:textList];
@@ -117,7 +122,7 @@
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:1] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:2] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
-    STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
+    STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)12, @"Invalid item number");
 }
 
 @end

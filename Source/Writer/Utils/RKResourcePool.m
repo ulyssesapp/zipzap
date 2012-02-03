@@ -143,7 +143,7 @@
     if (level >= itemNumbers.count) {
         // Fill with 1 if requested, nested list is deeper nested than the current list length
         for (NSUInteger position = itemNumbers.count; position < level + 1; position ++) {
-            [itemNumbers addObject: [NSNumber numberWithUnsignedInteger: 1]];
+            [itemNumbers addObject: [NSNumber numberWithUnsignedInteger: [textList startItemNumberOfLevel: position]]];
         }
     }
     else {
