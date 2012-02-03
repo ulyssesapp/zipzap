@@ -18,6 +18,7 @@
     NSMutableArray *fileWrappers;
 
     NSMutableArray *textLists;
+    NSMapTable *listItemIndices;
 }
 
 @end
@@ -33,6 +34,7 @@
         colors = [NSMutableArray new];
         fileWrappers = [NSMutableArray new];
         textLists = [NSMutableArray new];
+        listItemIndices = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality valueOptions:0];
         
         // Adding the two default colors (black is required; white is useful for \cb1
         [self indexOfColor: [NSColor colorWithSRGBRed:0 green:0.0 blue:0.0 alpha:1.0]];
@@ -123,6 +125,34 @@
 - (NSArray *)textLists
 {
     return textLists;
+}
+
+- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKTextList *)textList;
+{
+    if ([listItemIndices objectForKey:textList] == nil) {
+        [listItemIndices setObject:[NSMutableArray new] forKey:textList];
+    }
+
+    NSMutableArray *itemNumbers = [listItemIndices objectForKey:textList];
+    
+    // Truncate nested item numbers, if a higher item number is increased
+    if (level + 1 < itemNumbers.count) {
+        [itemNumbers removeObjectsInRange:NSMakeRange(level + 1, itemNumbers.count - level - 1)];
+    }
+    
+    if (level >= itemNumbers.count) {
+        // Fill with 1 if requested, nested list is deeper nested than the current list length
+        for (NSUInteger position = itemNumbers.count; position < level + 1; position ++) {
+            [itemNumbers addObject: [NSNumber numberWithUnsignedInteger: 1]];
+        }
+    }
+    else {
+        // Increment requested counter
+        NSUInteger currentItemNumber = [[itemNumbers objectAtIndex: level] unsignedIntegerValue] + 1;
+        [itemNumbers replaceObjectAtIndex:level withObject:[NSNumber numberWithUnsignedInteger:currentItemNumber]];
+    }
+
+    return [itemNumbers copy];
 }
 
 @end

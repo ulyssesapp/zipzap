@@ -34,6 +34,12 @@
 - (NSUInteger)indexOfList:(RKTextList *)textList;
 
 /*!
+ @abstract Returns a new item number of a list level
+ @discussion All item numbers for more nested list levels will be reseted by this call
+ */
+- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKTextList *)textList;
+
+/*!
  @abstract Returns the collected font families sorted by their indices
  @discussion Elements are NSString
  */
