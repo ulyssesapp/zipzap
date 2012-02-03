@@ -48,9 +48,6 @@ NSMutableDictionary *attributeHandlers;
 {
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
     
-    // Write paragraph style
-    [RKParagraphStyleWriter addTagsForAttributedString:attributedString toTaggedString:taggedString withAttachmentPolicy:attachmentPolicy resources:resources];
-    
     // Write attribute styles
     for (NSString *attributeName in attributeHandlersOrdering) {
         Class handler = [attributeHandlers objectForKey: attributeName];

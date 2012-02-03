@@ -11,11 +11,6 @@
 /*!
  @abstract Writes out all tags required for a paragraph style
  */
-@interface RKParagraphStyleWriter : NSObject
-
-+ (void)addTagsForAttributedString:(NSAttributedString *)attributedString
-                    toTaggedString:(RKTaggedString *)taggedString 
-              withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                         resources:(RKResourcePool *)resources;
+@interface RKParagraphStyleWriter : RKAttributeWriter
 
 @end
