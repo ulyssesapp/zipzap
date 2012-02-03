@@ -21,7 +21,7 @@ NSArray *priorityOrderings;
 NSMutableDictionary *attributeHandlersOrdering;
 NSMutableDictionary *attributeHandlers;
 
-+ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName  withPriority:(RKAttributedStringWriterPriority)priority
++ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriority:(RKAttributedStringWriterPriority)priority
 {
     if (attributeHandlers == nil) {
         attributeHandlers = [NSMutableDictionary new];
