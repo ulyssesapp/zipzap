@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSSuperscriptAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSSuperscriptAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSNumber *)superScriptModeObject

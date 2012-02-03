@@ -11,6 +11,21 @@
 #import "RKAttributeWriter.h"
 
 /*!
+ @abstract Defines a priority for an attributed string writer
+ @const
+    RKAttributedStringWriterPriorityParagraphLevel              The highest priority used for paragraph tags
+    RKAttributedStringWriterPriorityParagraphStylingLevel       Priority used for additional paragraph stylings
+    RKAttributedStringWriterPriorityInlineStyleLevel            Priority used for inline styles
+    RKAttributedStringWriterPriorityTextAttachmentLevel         Priority used for text attachments
+*/
+typedef enum {
+    RKAttributedStringWriterPriorityParagraphLevel = 0,
+    RKAttributedStringWriterPriorityParagraphStylingLevel = 1,
+    RKAttributedStringWriterPriorityInlineStyleLevel = 2,
+    RKAttributedStringWriterPriorityTextAttachmentLevel = 3
+}RKAttributedStringWriterPriority;
+
+/*!
  @abstract Translates an attributed string to RTF
  @discussion Requires an attachment policy to specify how attached files are exported and a resource pool to collect fonts and colors.
  */
@@ -21,14 +36,7 @@
  @discussion The class has to inherit from RKAttributeWriter. 
              If the handler is added with priority, it will be executed before all non-priorized handlers.
  */
-+ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriorization:(BOOL)hasPriority;
-
-
-/*!
- @abstract Registers a handler class for writing out an attribute to RTF
- @discussion The class has to inherit from RKAttributeWriter. The handler as a low priority.
- */
-+ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName;
++ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriority:(RKAttributedStringWriterPriority)priority;
 
 /*!
  @abstract Converts an attributes string to RTF

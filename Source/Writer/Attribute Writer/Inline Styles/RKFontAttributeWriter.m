@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSFontAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSFontAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSFont *)font

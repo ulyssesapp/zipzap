@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSShadowAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSShadowAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSShadow *)shadow

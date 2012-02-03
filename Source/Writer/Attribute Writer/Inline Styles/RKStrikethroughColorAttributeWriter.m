@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrikethroughColorAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrikethroughColorAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSColor *)color

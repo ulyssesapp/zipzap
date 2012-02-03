@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSBackgroundColorAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSBackgroundColorAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSColor *)color

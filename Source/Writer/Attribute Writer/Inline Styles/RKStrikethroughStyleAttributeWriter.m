@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrikethroughStyleAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSStrikethroughStyleAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSNumber *)strikethroughStyleObject

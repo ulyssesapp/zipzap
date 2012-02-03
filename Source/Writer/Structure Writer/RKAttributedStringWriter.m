@@ -17,31 +17,35 @@
 
 @implementation RKAttributedStringWriter
 
-NSMutableArray *attributeHandlersOrdering;
+NSArray *priorityOrderings;
+NSMutableDictionary *attributeHandlersOrdering;
 NSMutableDictionary *attributeHandlers;
 
-+ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriorization:(BOOL)hasPriority
++ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName  withPriority:(RKAttributedStringWriterPriority)priority
 {
     if (attributeHandlers == nil) {
         attributeHandlers = [NSMutableDictionary new];
-        attributeHandlersOrdering = [NSMutableArray new];
+        attributeHandlersOrdering = [NSMutableDictionary new];
+        priorityOrderings = nil;
     }
-    
+        // Register handler for attribute
     [attributeHandlers setValue:attributeWriter forKey:attributeName];
-    
-    if (hasPriority) {
-        [attributeHandlersOrdering insertObject:attributeName atIndex:0];
-    }
-    else {
-        [attributeHandlersOrdering addObject:attributeName];
-    }
-    
-    //NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
-}
 
-+ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName
-{
-    [self registerHandler:attributeWriter forAttribute:attributeName withPriorization:false];
+    // Set ordering based on priority
+    NSNumber *priorityKey = [NSNumber numberWithInt: priority];
+    
+    if ([attributeHandlersOrdering objectForKey: priorityKey] == nil) {
+        [attributeHandlersOrdering setObject:[NSMutableArray new] forKey:priorityKey];
+    }
+    
+    NSMutableArray *priorityOrdering = [attributeHandlersOrdering objectForKey: priorityKey];
+    
+    [priorityOrdering addObject: attributeName];
+    
+    priorityOrderings = [[attributeHandlersOrdering allKeys] sortedArrayUsingSelector:@selector(compare:) ];
+    
+    // Validate type conformance
+    //NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
 }
 
 + (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
@@ -49,13 +53,16 @@ NSMutableDictionary *attributeHandlers;
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
     
     // Write attribute styles
-    for (NSString *attributeName in attributeHandlersOrdering) {
-        Class handler = [attributeHandlers objectForKey: attributeName];
+    for (NSNumber *priority in priorityOrderings) {
+        NSArray *priorityOrdering = [attributeHandlersOrdering objectForKey:priority];
         
-        [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(Class value, NSRange range, BOOL *stop) {
-            [handler addTagsForAttribute:value toTaggedString:taggedString inRange:range withAttachmentPolicy:attachmentPolicy resources:resources];
-        }];
-        
+        for (NSString *attributeName in priorityOrdering) {
+            Class handler = [attributeHandlers objectForKey: attributeName];
+            
+            [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(Class value, NSRange range, BOOL *stop) {
+                [handler addTagsForAttribute:value toTaggedString:taggedString inRange:range withAttachmentPolicy:attachmentPolicy resources:resources];
+            }];
+        }
     }
     
     return [taggedString flattenedRTFString];

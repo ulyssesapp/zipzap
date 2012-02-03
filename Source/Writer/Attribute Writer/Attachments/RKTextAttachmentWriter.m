@@ -38,7 +38,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSAttachmentAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSAttachmentAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
 + (void)addTagsForAttribute:(NSFileWrapper *)fileWrapper

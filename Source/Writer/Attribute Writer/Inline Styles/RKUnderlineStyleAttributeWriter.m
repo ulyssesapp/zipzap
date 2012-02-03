@@ -18,7 +18,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSUnderlineStyleAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSUnderlineStyleAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSNumber *)underlineStyleObject

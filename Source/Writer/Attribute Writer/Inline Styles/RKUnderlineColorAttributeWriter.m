@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSUnderlineColorAttributeName];
+    [RKAttributedStringWriter registerHandler:self forAttribute:NSUnderlineColorAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (void)addTagsForAttribute:(NSColor *)color
