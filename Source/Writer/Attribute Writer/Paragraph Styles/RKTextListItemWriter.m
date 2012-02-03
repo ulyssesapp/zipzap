@@ -9,6 +9,7 @@
 #import "RKTextListItemWriter.h"
 #import "RKAttributedStringWriter.h"
 #import "RKTextListItem.h"
+#import "RKTextListWriterAdditions.h"
 
 @implementation RKTextListItemWriter
 
@@ -23,7 +24,12 @@
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
+    NSUInteger listIndex = [resources indexOfList:listItem.textList];
+    NSArray *itemNumbers = [resources incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.textList];
     
+    NSString *markerString = [listItem.textList markerForItemNumbers:itemNumbers];
+    
+    [taggedString registerTag:[NSString stringWithFormat:@"\\ls%i\\ilvl%i {\\listtext %@}", listIndex + 1, listItem.indentationLevel, markerString] forPosition:range.location];
 }
 
 @end
