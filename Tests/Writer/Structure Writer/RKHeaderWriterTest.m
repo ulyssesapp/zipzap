@@ -173,5 +173,76 @@
                          );  
 }
 
+- (void)testGenerateListTable
+{
+    NSDictionary *overrides = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:3], [NSNumber numberWithUnsignedInteger:1], nil];
+    RKTextList *firstList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.", @"%a1.", @"%r2.", nil] ];
+    RKTextList *secondList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.%r1.%a2.%R3.%A4.", @"-", nil] withOveridingStartItemNumbers:overrides];
+
+    // Register lists to a resource pool
+    RKResourcePool *resources = [RKResourcePool new];
+                                  
+    [resources indexOfList: firstList];
+    [resources indexOfList: secondList];
+    
+    // Generate header
+    NSString *listTable = [RKHeaderWriter listTableFromResourceManager:resources];
+    
+    NSString *expectedListTable = 
+        @"{\\*\\listtable "
+            "{\\list"
+                "\\listtemplateid1"
+                "\\listhybrid"
+                "{\\listlevel"
+                    // levelcf0 (decimal)
+                    "\\levelstartat1\\levelcf0\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
+                    "{\\leveltext\\leveltemplateid1001 \\'02\\'00.;}"
+                    "{\\levelnumbers \\'01;}"
+                      "\\levelfollow2\\levellegal0\\levelnorestart0"
+                "}"
+                "{\\listlevel"
+                    // levelcf4 (lower case letter)
+                    "\\levelstartat1\\levelcf4\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
+                    "{\\leveltext\\leveltemplateid1002 \\'02\\'01.;}"
+                    "{\\levelnumbers \\'01;}"
+                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                "}"                         
+                "{\\listlevel"
+                    // Different starting number; levelcf2 (lower case roman)
+                    "\\levelstartat1\\levelcf2\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
+                    "{\\leveltext\\leveltemplateid1003 \\'02\\'02.;}"
+                    "{\\levelnumbers \\'01;}"
+                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                "}"                         
+                "\\listid1"
+                "{\\listname list1}"
+            "}"
+            "{\\list"
+                "\\listtemplateid2"
+                "\\listhybrid"
+                "{\\listlevel"
+                    // levelcf0 (decimal)
+                    "\\levelstartat1\\levelcf0\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
+                    "{\\leveltext\\leveltemplateid2001 \\'0a\\'00.\\'01.\\'02.\\'03.\\'04.;}"
+                    "{\\levelnumbers \\'01\\'03\\'05\\'07\\'09;}"
+                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                "}"
+                "{\\listlevel"
+                    // levelcf23 (bullet)
+                    "\\levelstartat3\\levelcf23\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
+                    "{\\leveltext\\leveltemplateid2002 \\'01-;}"
+                    "{\\levelnumbers ;}"
+                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                "}"                         
+                "\\listid2"
+                "{\\listname list2}"
+            "}"
+        "}\n";
+    
+    NSLog(@"\n'%@'\n'%@'\n", listTable, expectedListTable);
+    
+    STAssertEqualObjects(listTable, expectedListTable, @"Invalid list table generated");
+                          
+}
 
 @end

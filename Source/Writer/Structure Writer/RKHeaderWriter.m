@@ -9,6 +9,7 @@
 #import "RKHeaderWriter.h"
 #import "RKResourcePool.h"
 #import "RKConversion.h"
+#import "RKTextListWriterAdditions.h"
 
 // Used to access the RKHeaderWriterMetadataDescriptions 
 enum {
@@ -28,6 +29,16 @@ enum {
  @abstract Generates the color table using a resource manager
  */
 + (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
+
+/*!
+ @abstract Generate a list level using a resource manager
+ */
++ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKTextList*)list withListIndex:(NSUInteger)listIndex;
+
+/*!
+ @abstract Generate the list table using a resource manager
+ */
++ (NSString *)listTableFromResourceManager:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the document informations from a document
@@ -108,6 +119,64 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
     return colorTable;
 }
 
++ (NSString *)listTableFromResourceManager:(RKResourcePool *)resources
+{
+    NSMutableString *listTable = [NSMutableString stringWithString:@"{\\*\\listtable "];
+    NSArray *textLists = [resources textLists];
+    
+    [textLists enumerateObjectsUsingBlock:^(RKTextList *textList, NSUInteger listIndex, BOOL *stop) {
+        NSMutableString *listLevelsString = [NSMutableString new];
+        
+        for (NSUInteger levelIndex = 0; levelIndex < textList.countOfListLevels; levelIndex ++)  {
+            [listLevelsString appendString: [self listLevelEntry:levelIndex fromList:textList withListIndex:listIndex]];
+        }
+                
+        [listTable appendFormat:@"{\\list\\listtemplateid%llu\\listhybrid%@\\listid%llu{\\listname list%llu}}",
+         listIndex + 1,
+         listLevelsString,
+         listIndex + 1,
+         listIndex + 1
+         ];
+    }];
+    
+    [listTable appendString:@"}\n"];
+    
+    return listTable;
+}
+
++ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKTextList*)list withListIndex:(NSUInteger)listIndex
+{
+    NSArray *placeholderPositions;
+    NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%llu %@;}", 
+                                 ((listIndex + 1) * 1000) + (level + 1), 
+                                 [list RTFFormatStringOfLevel:level withPlaceholderPositions:&placeholderPositions]
+                                ];
+    
+    // Generate placeholder formatting
+    NSMutableString *rtfPlaceholderPostions = [NSMutableString stringWithString:@"{\\levelnumbers "];
+    
+    for (NSNumber *placeholderPosition in placeholderPositions) {
+        [rtfPlaceholderPostions appendFormat:@"\\'%.2llx", [placeholderPosition unsignedIntegerValue]];
+    }
+    
+    [rtfPlaceholderPostions appendString:@";}"];
+    
+    // Additional parameters
+    NSUInteger formatCode = [list RTFFormatCodeOfLevel:level];
+    NSUInteger startNumber = [list startItemNumberOfLevel:level];
+    
+    // Generate level description
+    return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%llu\\levelcf%llu"
+                                        "\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
+                                        "%@%@"
+                                        "\\levelfollow2\\levellegal0\\levelnorestart0}",
+            startNumber,
+            formatCode,
+            rtfFormatString,
+            rtfPlaceholderPostions
+            ];
+}
+
 + (NSString *)documentMetaDataFromDocument:(RKDocument *)document
 {
     NSMutableString *infoTable = [NSMutableString stringWithString:@"{\\info"];
@@ -163,13 +232,13 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
         [attributes appendString:@"\\landscape"];
     
     // Paper size
-    [attributes appendFormat:[NSString stringWithFormat:@"\\paperw%u\\paperh%u", 
+    [attributes appendFormat:[NSString stringWithFormat:@"\\paperw%llu\\paperh%llu", 
                                 (NSUInteger)RKPointsToTwips(document.pageSize.width), 
                                 (NSUInteger)RKPointsToTwips(document.pageSize.height)
                               ]];
     
     // Margins
-    [attributes appendFormat:[NSString stringWithFormat:@"\\margt%u\\margl%u\\margr%u\\margb%u", 
+    [attributes appendFormat:[NSString stringWithFormat:@"\\margt%llu\\margl%llu\\margr%llu\\margb%llu", 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.top), 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.left), 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.right), 

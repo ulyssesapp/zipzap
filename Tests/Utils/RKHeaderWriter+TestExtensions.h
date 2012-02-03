@@ -10,6 +10,9 @@
 
 + (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources;
 + (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)listTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources;
+
 + (NSString *)documentMetaDataFromDocument:(RKDocument *)document;
 + (NSString *)documentFormatFromDocument:(RKDocument *)document;
 
