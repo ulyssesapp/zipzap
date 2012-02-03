@@ -10,30 +10,15 @@
 #import "RKTextListStyling.h"
 #import "RKTextListStylingWriterAdditions.h"
 
-@interface RKTextListStyling (RKWriterAdditionsPrivateMethods)
-
-/*!
- @abstract Returns the RTF format string for a single level without prepending
- @discussion "relativePlaceholderPosition" will contain the position of the level place holder
-             "prependRange" will contain the position of a prepend tag, if exists. Otherwise, it is set to NSNotFound
- */
-- (NSString *)singleRTFFormatStringOfLevel:(NSUInteger)levelIndex 
-                            withTokenCount:(NSUInteger *)length  
-                                prependsAt:(NSRange *)prependRange;
-
-/*!
- @abstract Determins all placeholder positions from an RTF format string
- */
-- (NSArray *)placeholderPositionsForString:(NSString *)rtfFormatString;
-
-@end
-
 @implementation RKTextListStyling (RKWriterAdditions)
 
 NSDictionary *placeholderCodes;
+NSRegularExpression *placeholderRegExp;
 
 + (void)initialize
 {
+    placeholderRegExp = [NSRegularExpression regularExpressionWithPattern:@"(\\\\[a-zA-Z0-9]+|\\\\|\\\\'[0-9]{2}|[^\\\\])" options:0 error:nil];
+    
     placeholderCodes = [NSDictionary dictionaryWithObjectsAndKeys:
                         [NSNumber numberWithInteger: RKTextListFormatCodeDecimal],           @"%d",
                         [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseRoman],     @"%r",
@@ -59,117 +44,56 @@ NSDictionary *placeholderCodes;
     return formatCode;
 }
 
-- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositions
+- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositionsOut
 {
-    NSMutableString *rtfFormat = [NSMutableString new];
-    NSUInteger currentLevelIndex = levelIndex;
-    NSUInteger totalTokenCount = 0;
-    NSRange insertionRange = NSMakeRange(0, 0);
-    
-    while(1) {
-        NSUInteger tokenCount;
-        NSRange currentPrependRange;
-        
-        // Get single format token
-        NSString *singleFormat = [self singleRTFFormatStringOfLevel:currentLevelIndex 
-                                                     withTokenCount:&tokenCount 
-                                                         prependsAt:&currentPrependRange
-                                 ];
-        
-        totalTokenCount += tokenCount;
-        
-        // Insert converted token string
-        [rtfFormat replaceCharactersInRange:insertionRange withString:singleFormat];
-        
-        // Prepend to previous level?
-        if ((currentPrependRange.location != NSNotFound) && (currentLevelIndex)) {
-            currentLevelIndex --;
-            
-            // Setup the next replacement position
-            insertionRange.location = insertionRange.location + currentPrependRange.location;
-        }
-        else {
-            // No further levels
-            break;
-        }
-    }    
-    
-    *placeholderPositions = [self placeholderPositionsForString:rtfFormat];
-    
-    return [NSString stringWithFormat:@"\\'%.2i%@", totalTokenCount, rtfFormat];
-}
-
-- (NSString *)singleRTFFormatStringOfLevel:(NSUInteger)levelIndex 
-                            withTokenCount:(NSUInteger *)length 
-                                prependsAt:(NSRange *)prependRange
-{
-    NSString *formatString = [self formatOfLevel: levelIndex];
+    NSString *formatString = [self formatOfLevel:levelIndex];
     NSMutableString *rtfFormat = [NSMutableString new];
     NSUInteger tokenCount = 0;
-    
-    prependRange->location = NSNotFound;
+    NSMutableArray *placeholderPositions = [NSMutableArray new];
     
     for (NSUInteger position = 0; position < formatString.length; position ++) {
-        NSString *currentToken = [formatString substringWithRange: NSMakeRange(position, 1)];
+        NSString *currentToken = nil;
+        unichar currentChar = [formatString characterAtIndex:position];
         
-        if (([currentToken isEqual:@"%"]) && (position < formatString.length - 1)) {
+        if ((currentChar == '%') && (position + 1 < formatString.length)) {
             position ++;
+            currentChar = [formatString characterAtIndex: position];
             
-            switch ([formatString characterAtIndex:position]) {
-                    // Convert %% to %
-                    case '%':
-                        currentToken = [@"%" RTFEscapedString];
-                        break;
+            switch(currentChar) {
+                case '%':
+                    currentToken = @"%";
+                    break;
                     
-                    // Setup \'XX marker for all replacable tokens
-                    case 'd':
-                    case 'r':
-                    case 'R':
-                    case 'a':
-                    case 'A':
-                        currentToken = [NSString stringWithFormat: @"\\'%.2i", levelIndex - 1];
+                case 'd':
+                case 'r':
+                case 'R':
+                case 'a':
+                case 'A':
+                    if (position + 1 < formatString.length) {
+                        position ++;
+
+                        NSInteger level = [[formatString substringWithRange:NSMakeRange(position, 1)] integerValue];
+                        
+                        currentToken = [NSString stringWithFormat:@"\\'0%x", level];
+                        
+                        [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: tokenCount + 1]];
+                        
                         break;
-                    
-                    // Remember prepend marker
-                    case '*':
-                        *prependRange = NSMakeRange(position - 1, 2);
-                        break;
+                    }
             }
         }
         else {
-            currentToken = [currentToken RTFEscapedString];
+            currentToken = [[NSString stringWithFormat:@"%C", currentChar] RTFEscapedString];
         }
-
-        tokenCount ++;
         
         [rtfFormat appendString: currentToken];
-    }
-    
-    *length = tokenCount;
-    
-    return rtfFormat ;
-}
-
-- (NSArray *)placeholderPositionsForString:(NSString *)rtfFormatString
-{
-    NSMutableArray *placeholderPositions = [NSMutableArray new];
-    NSRange searchRange = NSMakeRange(0, rtfFormatString.length);
-    
-    while (searchRange.length < 2) {
-        NSRange occurence = [rtfFormatString rangeOfString:@"\\'" options:0 range:searchRange];
         
-        if (occurence.location == NSNotFound) {
-            break;
-        }
-         else {
-            searchRange.location = occurence.location + 2;
-            searchRange.length = rtfFormatString.length - (occurence.location + 2);
-             
-             [placeholderPositions addObject:[NSNumber numberWithUnsignedInteger:occurence.location + 1]];
-        }
-    }
+        tokenCount ++;
+    }    
     
-    return placeholderPositions;
+    *placeholderPositionsOut = placeholderPositions;
+    
+    return [NSString stringWithFormat:@"\\'%.2x%@", tokenCount, rtfFormat];
 }
 
 - (NSString *)markerForItemNumber:(NSUInteger)itemNumber forLevels:(NSArray *)levelIndices
