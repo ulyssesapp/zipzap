@@ -59,15 +59,15 @@
     STAssertEqualObjects(testString, @"\\'06%\\u8750\\{\\'00\\\\%", @"Invalid format string");
 }
 
-- (void)testBuildRTFFormatStringWithPrepending    
+- (void)testBuildRTFFormatStringWithMultipleMarkers  
 {
     NSString *testString;
     NSArray *placeholderPositions;
     
-    // Generating a simple list with prepending lists
-    RKTextList *prependingList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"", @"", @"%d0.%r1.%A2.", nil ]];
+    // Generating a simple list with multiple markers
+    RKTextList *list = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"", @"", @"%d0.%r1.%A2.", nil ]];
 
-    testString = [prependingList RTFFormatStringOfLevel:2 withPlaceholderPositions:&placeholderPositions];    
+    testString = [list RTFFormatStringOfLevel:2 withPlaceholderPositions:&placeholderPositions];    
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)3, @"Invalid count of placeholders");
     STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)1, @"Invalid tag position");
@@ -75,6 +75,30 @@
     STAssertEquals([[placeholderPositions objectAtIndex: 2] unsignedIntegerValue], (NSUInteger)5, @"Invalid tag position");
     
     STAssertEqualObjects(testString, @"\\'06\\'00.\\'01.\\'02.", @"Invalid format string");
+}
+
+- (void)testBuildMarkerString
+{
+    NSArray *itemNumbers = [NSArray arrayWithObjects:
+                            [NSNumber numberWithUnsignedInteger:3], 
+                            [NSNumber numberWithUnsignedInteger:4], 
+                            [NSNumber numberWithUnsignedInteger:5], 
+                            [NSNumber numberWithUnsignedInteger:6], 
+                            [NSNumber numberWithUnsignedInteger:7],
+                            nil
+                           ];
+    RKTextList *prependingList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"", @"", @"", @"", @"%d0.%r1.%R2.%a3.%A4.-{%%∮\\}", nil ]];
+    
+    NSString *string = [prependingList markerForItemNumbers: itemNumbers];
+    
+    STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750\\\\\\}", @"Invalid marker string generated");
+    
+    // Invalid levels are ignored
+    RKTextList *errorneousList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"", @"", @"", @"", @"%d0.%r1.%R8.%a3.%A4.-", nil ]];
+    NSString *erroneousString = [errorneousList markerForItemNumbers: itemNumbers];
+    
+    STAssertEqualObjects(erroneousString, @"3.iv.??.f.G.-", @"Invalid marker string generated");
+
 }
 
 @end

@@ -42,6 +42,6 @@ typedef enum {
 /*!
  @abstract Returns the concrete bullet point marker for a certain nesting of list item indices
  */
--(NSString *)markerForItemNumber:(NSUInteger)itemNumber forLevels:(NSArray *)levelIndices;
+- (NSString *)markerForItemNumbers:(NSArray *)itemNumbers;
 
 @end

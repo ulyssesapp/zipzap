@@ -9,6 +9,25 @@
 #import "RKConversion.h"
 #import "RKTextList.h"
 #import "RKTextListWriterAdditions.h"
+#import "RKNumberFormatting.h"
+
+@interface RKTextList (RKWriterAdditionsPrivateMethods)
+
+/*!
+ @abstract Returns the level number of a placeholder from a format string
+ @discussion Expects the position of the placeholder as argument
+             Returns 0 on an invalid level
+ */
+- (NSUInteger)levelFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position;
+
+/*!
+ @abstract Returns the current enumeration index for the level of a placeholder from a format string
+ @discussion Expects the position of the placeholder as argument
+ Returns 0 on an invalid level
+ */
+- (NSUInteger)itemNumberFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers;
+
+@end
 
 @implementation RKTextList (RKWriterAdditions)
 
@@ -46,7 +65,7 @@ NSRegularExpression *placeholderRegExp;
 
 - (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositionsOut
 {
-    NSString *formatString = [self formatOfLevel:levelIndex];
+    NSString *formatString = [self formatOfLevel: levelIndex];
     NSMutableString *rtfFormat = [NSMutableString new];
     NSUInteger tokenCount = 0;
     NSMutableArray *placeholderPositions = [NSMutableArray new];
@@ -57,11 +76,11 @@ NSRegularExpression *placeholderRegExp;
         
         if ((currentChar == '%') && (position + 1 < formatString.length)) {
             position ++;
-            currentChar = [formatString characterAtIndex: position];
+            unichar placeholderCommand = [formatString characterAtIndex: position];
             
-            switch(currentChar) {
+            switch(placeholderCommand) {
                 case '%':
-                    currentToken = @"%";
+                    currentToken = [@"%" RTFEscapedString];
                     break;
                     
                 case 'd':
@@ -69,17 +88,12 @@ NSRegularExpression *placeholderRegExp;
                 case 'R':
                 case 'a':
                 case 'A':
-                    if (position + 1 < formatString.length) {
-                        position ++;
-
-                        NSInteger level = [[formatString substringWithRange:NSMakeRange(position, 1)] integerValue];
+                    currentToken = [NSString stringWithFormat:@"\\'%.2x", [self levelFromFormatString:formatString atPlaceholderPosition:position]];
+                    position ++;   
+                    
+                    [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: tokenCount + 1]];
                         
-                        currentToken = [NSString stringWithFormat:@"\\'0%x", level];
-                        
-                        [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: tokenCount + 1]];
-                        
-                        break;
-                    }
+                    break;
             }
         }
         else {
@@ -96,10 +110,89 @@ NSRegularExpression *placeholderRegExp;
     return [NSString stringWithFormat:@"\\'%.2x%@", tokenCount, rtfFormat];
 }
 
-- (NSString *)markerForItemNumber:(NSUInteger)itemNumber forLevels:(NSArray *)levelIndices
+- (NSString *)markerForItemNumbers:(NSArray *)itemNumbers
 {
-    return @"";
+    NSUInteger destinationLevel = itemNumbers.count - 1;
+    NSString *formatString = [self formatOfLevel: destinationLevel];
+
+    NSMutableString *markerString = [NSMutableString new];
+    
+    for (NSUInteger position = 0; position < formatString.length; position ++) {
+        NSString *currentMarker = nil;
+        unichar currentChar = [formatString characterAtIndex:position];
+        
+        if ((currentChar == '%') && (position + 1 < formatString.length)) {
+            position ++;
+            unichar placeholderCommand = [formatString characterAtIndex: position];
+
+            if (placeholderCommand == '%') {
+                currentMarker = @"%";
+            }
+            else {
+                NSUInteger itemNumber = [self itemNumberFromFormatString:formatString atPlaceholderPosition:position fromItemNumbers:itemNumbers];
+                position ++;
+                
+                if (itemNumber == NSNotFound) {
+                    // Invalid level number used
+                    currentMarker = @"??";
+                }
+                 else
+                {
+                    switch(placeholderCommand) {
+                        case '%':
+                            currentMarker = @"%";
+                            break;
+                            
+                        case 'd':
+                            currentMarker = [NSString stringWithFormat:@"%d", itemNumber];
+                            break;
+                            
+                        case 'r':
+                            currentMarker = [NSString lowerCaseRomanNumeralsFromUnsignedInteger: itemNumber];
+                            break;
+                            
+                        case 'R':
+                            currentMarker = [NSString upperCaseRomanNumeralsFromUnsignedInteger: itemNumber];
+                            break;
+
+                        case 'a':
+                            currentMarker = [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: itemNumber];
+                            break;
+
+                        case 'A':
+                            currentMarker = [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: itemNumber];
+                            break;
+                            
+                    }                     
+                }
+            }
+        }
+        else {
+            currentMarker = [NSString stringWithFormat:@"%C", currentChar];
+        }
+        
+        [markerString appendString: [currentMarker RTFEscapedString]];
+    }    
+    
+    return markerString;
 }
 
+- (NSUInteger)levelFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position
+{
+    if (position + 1 >= formatString.length)
+        return 0;
+    
+    return [[formatString substringWithRange:NSMakeRange(position + 1, 1)] integerValue];
+}
+
+- (NSUInteger)itemNumberFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers
+{
+    NSUInteger level = [self levelFromFormatString:formatString atPlaceholderPosition:position];
+    
+    if (itemNumbers.count < level)
+        return NSNotFound;
+    
+    return [[itemNumbers objectAtIndex: level] unsignedIntegerValue];
+}
 
 @end
