@@ -13,6 +13,16 @@ extern NSString *RKTextListItemAttributeName;
 @interface RKTextListItem : NSObject
 
 /*!
+ @abstract Initializes a text list item as member of a text list with a certain indentation level
+ */
+- (id)initWithTextList:(RKTextList *)textList withIndentationLevel:(NSUInteger)indentationLevel;
+
+/*!
+ @abstract Creates a text list item as member of a text list with a certain indentation level
+ */
++ (RKTextListItem *)textListItemWithTextList:(RKTextList *)textList withIndentationLevel:(NSUInteger)indentationLevel;
+
+/*!
  @abstract A reference to the containing list
  */
 @property(strong,nonatomic,readwrite) RKTextList *textList;
@@ -20,6 +30,6 @@ extern NSString *RKTextListItemAttributeName;
 /*!
  @abstract A reference to the indentation level used by the list
  */
-@property(nonatomic) NSUInteger *indentationLevel;
+@property(nonatomic) NSUInteger indentationLevel;
 
 @end
