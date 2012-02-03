@@ -43,4 +43,9 @@
  */
 - (NSUInteger)startItemNumberOfLevel:(NSUInteger)levelIndex;
 
+/*!
+ @abstract Returns the count of list levels
+ */
+- (NSUInteger)countOfListLevels;
+
 @end

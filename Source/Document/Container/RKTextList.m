@@ -82,4 +82,9 @@
     return [startItemNumber unsignedIntegerValue];
 }
 
+- (NSUInteger)countOfListLevels
+{
+    return definedLevelFormats.count;
+}
+
 @end
