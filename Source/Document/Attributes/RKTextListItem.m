@@ -8,6 +8,8 @@
 
 #import "RKTextListItem.h"
 
+NSString *RKTextListItemAttributeName = @"RKTextListItem";
+
 @implementation RKTextListItem
 
 @synthesize textList, indentationLevel;
