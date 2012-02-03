@@ -1,15 +1,15 @@
 //
-//  RKFootNoteWriterTest.m
+//  RKFootnoteWriterTest.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 03.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKFootNoteWriter.h"
-#import "RKFootNoteWriterTest.h"
+#import "RKFootnoteWriter.h"
+#import "RKFootnoteWriterTest.h"
 
-@implementation RKFootNoteWriterTest
+@implementation RKFootnoteWriterTest
 
 - (void)testGenerateFootNote
 {
@@ -18,11 +18,11 @@
     
     [content addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
     
-    RKFootNote *footNote = [RKFootNote footNoteWithAttributedString:content];
+    RKFootnote *footNote = [RKFootnote footnoteWithAttributedString:content];
     NSString *string = [NSString stringWithFormat:@">%c<", NSAttachmentCharacter];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
     
-    [RKFootNoteWriter addTagsForAttribute:footNote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];
+    [RKFootnoteWriter addTagsForAttribute:footNote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],

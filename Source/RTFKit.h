@@ -13,4 +13,4 @@
 #import "RKTextList.h"
 #import "RKTextListItem.h"
 
-#import "RKFootNote.h"
+#import "RKFootnote.h"

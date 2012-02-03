@@ -1,19 +1,19 @@
 //
-//  RKFootNote.h
+//  RKFootnote.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 03.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-extern NSString *RKFootNoteAttributeName;
+extern NSString *RKFootnoteAttributeName;
 
-@interface RKFootNote : NSObject
+@interface RKFootnote : NSObject
 
 /*!
  @abstract Creates a new foot note using an attributed string
  */
-+ (RKFootNote *)footNoteWithAttributedString:(NSAttributedString *)content;
++ (RKFootnote *)footnoteWithAttributedString:(NSAttributedString *)content;
 
 /*!
  @abstract Initializes a foot note using an attributed string

@@ -35,13 +35,13 @@
 		7935617F14DC22C100FC0C1C /* RKTextListItemWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935617D14DC22C100FC0C1C /* RKTextListItemWriter.m */; };
 		7935618014DC22C100FC0C1C /* RKTextListItemWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935617D14DC22C100FC0C1C /* RKTextListItemWriter.m */; };
 		7935618314DC22DC00FC0C1C /* RKTextListItemWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935618214DC22DB00FC0C1C /* RKTextListItemWriterTest.m */; };
-		7935618614DC59A800FC0C1C /* RKFootNote.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935618414DC59A800FC0C1C /* RKFootNote.h */; };
-		7935618714DC59A800FC0C1C /* RKFootNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935618514DC59A800FC0C1C /* RKFootNote.m */; };
-		7935618814DC59A800FC0C1C /* RKFootNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935618514DC59A800FC0C1C /* RKFootNote.m */; };
-		7935618B14DC5AB000FC0C1C /* RKFootNoteWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935618914DC5AB000FC0C1C /* RKFootNoteWriter.h */; };
-		7935618C14DC5AB000FC0C1C /* RKFootNoteWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935618A14DC5AB000FC0C1C /* RKFootNoteWriter.m */; };
-		7935618D14DC5AB000FC0C1C /* RKFootNoteWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935618A14DC5AB000FC0C1C /* RKFootNoteWriter.m */; };
-		7935619014DC5AC700FC0C1C /* RKFootNoteWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935618F14DC5AC700FC0C1C /* RKFootNoteWriterTest.m */; };
+		7935619314DC6D8D00FC0C1C /* RKFootnote.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935619114DC6D8C00FC0C1C /* RKFootnote.h */; };
+		7935619414DC6D8D00FC0C1C /* RKFootnote.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935619214DC6D8C00FC0C1C /* RKFootnote.m */; };
+		7935619514DC6D8D00FC0C1C /* RKFootnote.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935619214DC6D8C00FC0C1C /* RKFootnote.m */; };
+		7935619814DC6DF000FC0C1C /* RKFootnoteWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935619714DC6DF000FC0C1C /* RKFootnoteWriterTest.m */; };
+		7935619B14DC6E1600FC0C1C /* RKFootnoteWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935619914DC6E1500FC0C1C /* RKFootnoteWriter.h */; };
+		7935619C14DC6E1600FC0C1C /* RKFootnoteWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935619A14DC6E1500FC0C1C /* RKFootnoteWriter.m */; };
+		7935619D14DC6E1600FC0C1C /* RKFootnoteWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935619A14DC6E1500FC0C1C /* RKFootnoteWriter.m */; };
 		796EAB9C14D9479B001E8401 /* RKWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAB9A14D9479B001E8401 /* RKWriter.h */; };
 		796EAB9D14D9479B001E8401 /* RKWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB9B14D9479B001E8401 /* RKWriter.m */; };
 		796EAB9E14D9479B001E8401 /* RKWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB9B14D9479B001E8401 /* RKWriter.m */; };
@@ -183,12 +183,12 @@
 		7935617D14DC22C100FC0C1C /* RKTextListItemWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextListItemWriter.m; path = "Writer/Attribute Writer/Paragraph Styles/RKTextListItemWriter.m"; sourceTree = "<group>"; };
 		7935618114DC22DB00FC0C1C /* RKTextListItemWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextListItemWriterTest.h; path = "Writer/Attribute Writer/Paragraph Styles/RKTextListItemWriterTest.h"; sourceTree = "<group>"; };
 		7935618214DC22DB00FC0C1C /* RKTextListItemWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextListItemWriterTest.m; path = "Writer/Attribute Writer/Paragraph Styles/RKTextListItemWriterTest.m"; sourceTree = "<group>"; };
-		7935618414DC59A800FC0C1C /* RKFootNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootNote.h; path = Document/Attributes/RKFootNote.h; sourceTree = "<group>"; };
-		7935618514DC59A800FC0C1C /* RKFootNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootNote.m; path = Document/Attributes/RKFootNote.m; sourceTree = "<group>"; };
-		7935618914DC5AB000FC0C1C /* RKFootNoteWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootNoteWriter.h; path = "Writer/Attribute Writer/Attachments/RKFootNoteWriter.h"; sourceTree = "<group>"; };
-		7935618A14DC5AB000FC0C1C /* RKFootNoteWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootNoteWriter.m; path = "Writer/Attribute Writer/Attachments/RKFootNoteWriter.m"; sourceTree = "<group>"; };
-		7935618E14DC5AC700FC0C1C /* RKFootNoteWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootNoteWriterTest.h; path = "Writer/Attribute Writer/Attachments/RKFootNoteWriterTest.h"; sourceTree = "<group>"; };
-		7935618F14DC5AC700FC0C1C /* RKFootNoteWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootNoteWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKFootNoteWriterTest.m"; sourceTree = "<group>"; };
+		7935619114DC6D8C00FC0C1C /* RKFootnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootnote.h; path = Document/Attributes/RKFootnote.h; sourceTree = "<group>"; };
+		7935619214DC6D8C00FC0C1C /* RKFootnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootnote.m; path = Document/Attributes/RKFootnote.m; sourceTree = "<group>"; };
+		7935619614DC6DF000FC0C1C /* RKFootnoteWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootnoteWriterTest.h; path = "Writer/Attribute Writer/Attachments/RKFootnoteWriterTest.h"; sourceTree = "<group>"; };
+		7935619714DC6DF000FC0C1C /* RKFootnoteWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootnoteWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKFootnoteWriterTest.m"; sourceTree = "<group>"; };
+		7935619914DC6E1500FC0C1C /* RKFootnoteWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootnoteWriter.h; path = "Writer/Attribute Writer/Attachments/RKFootnoteWriter.h"; sourceTree = "<group>"; };
+		7935619A14DC6E1500FC0C1C /* RKFootnoteWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootnoteWriter.m; path = "Writer/Attribute Writer/Attachments/RKFootnoteWriter.m"; sourceTree = "<group>"; };
 		796EAB9A14D9479B001E8401 /* RKWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKWriter.h; path = Writer/RKWriter.h; sourceTree = "<group>"; };
 		796EAB9B14D9479B001E8401 /* RKWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriter.m; path = Writer/RKWriter.m; sourceTree = "<group>"; };
 		796EABA214D947CA001E8401 /* RKLinkWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkWriter.h; path = "Writer/Attribute Writer/Attachments/RKLinkWriter.h"; sourceTree = "<group>"; };
@@ -408,8 +408,8 @@
 			children = (
 				7935616614DC016F00FC0C1C /* RKTextListItem.h */,
 				7935616714DC016F00FC0C1C /* RKTextListItem.m */,
-				7935618414DC59A800FC0C1C /* RKFootNote.h */,
-				7935618514DC59A800FC0C1C /* RKFootNote.m */,
+				7935619114DC6D8C00FC0C1C /* RKFootnote.h */,
+				7935619214DC6D8C00FC0C1C /* RKFootnote.m */,
 			);
 			name = Attributes;
 			sourceTree = "<group>";
@@ -499,8 +499,8 @@
 				796EABA314D947CA001E8401 /* RKLinkWriter.m */,
 				796EABA414D947CA001E8401 /* RKTextAttachmentWriter.h */,
 				796EABA514D947CA001E8401 /* RKTextAttachmentWriter.m */,
-				7935618914DC5AB000FC0C1C /* RKFootNoteWriter.h */,
-				7935618A14DC5AB000FC0C1C /* RKFootNoteWriter.m */,
+				7935619914DC6E1500FC0C1C /* RKFootnoteWriter.h */,
+				7935619A14DC6E1500FC0C1C /* RKFootnoteWriter.m */,
 			);
 			name = Attachments;
 			sourceTree = "<group>";
@@ -593,8 +593,8 @@
 				796EAC1814D94850001E8401 /* RKLinkWriterTest.m */,
 				796EAC1914D94850001E8401 /* RKTextAttachmentWriterTest.h */,
 				796EAC1A14D94850001E8401 /* RKTextAttachmentWriterTest.m */,
-				7935618E14DC5AC700FC0C1C /* RKFootNoteWriterTest.h */,
-				7935618F14DC5AC700FC0C1C /* RKFootNoteWriterTest.m */,
+				7935619614DC6DF000FC0C1C /* RKFootnoteWriterTest.h */,
+				7935619714DC6DF000FC0C1C /* RKFootnoteWriterTest.m */,
 			);
 			name = Attachments;
 			sourceTree = "<group>";
@@ -705,8 +705,8 @@
 				7935616D14DC035100FC0C1C /* RKTextList.h in Headers */,
 				7935617914DC1D3000FC0C1C /* RKParagraphStyleWriter.h in Headers */,
 				7935617E14DC22C100FC0C1C /* RKTextListItemWriter.h in Headers */,
-				7935618614DC59A800FC0C1C /* RKFootNote.h in Headers */,
-				7935618B14DC5AB000FC0C1C /* RKFootNoteWriter.h in Headers */,
+				7935619314DC6D8D00FC0C1C /* RKFootnote.h in Headers */,
+				7935619B14DC6E1600FC0C1C /* RKFootnoteWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -838,8 +838,8 @@
 				7935616E14DC035100FC0C1C /* RKTextList.m in Sources */,
 				7935617A14DC1D3000FC0C1C /* RKParagraphStyleWriter.m in Sources */,
 				7935617F14DC22C100FC0C1C /* RKTextListItemWriter.m in Sources */,
-				7935618714DC59A800FC0C1C /* RKFootNote.m in Sources */,
-				7935618C14DC5AB000FC0C1C /* RKFootNoteWriter.m in Sources */,
+				7935619414DC6D8D00FC0C1C /* RKFootnote.m in Sources */,
+				7935619C14DC6E1600FC0C1C /* RKFootnoteWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -904,9 +904,9 @@
 				7935617B14DC1D3000FC0C1C /* RKParagraphStyleWriter.m in Sources */,
 				7935618014DC22C100FC0C1C /* RKTextListItemWriter.m in Sources */,
 				7935618314DC22DC00FC0C1C /* RKTextListItemWriterTest.m in Sources */,
-				7935618814DC59A800FC0C1C /* RKFootNote.m in Sources */,
-				7935618D14DC5AB000FC0C1C /* RKFootNoteWriter.m in Sources */,
-				7935619014DC5AC700FC0C1C /* RKFootNoteWriterTest.m in Sources */,
+				7935619514DC6D8D00FC0C1C /* RKFootnote.m in Sources */,
+				7935619814DC6DF000FC0C1C /* RKFootnoteWriterTest.m in Sources */,
+				7935619D14DC6E1600FC0C1C /* RKFootnoteWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

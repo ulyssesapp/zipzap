@@ -1,5 +1,5 @@
 //
-//  RKFootNoteWriter.h
+//  RKFootnoteWriter.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 03.02.12.
@@ -8,6 +8,6 @@
 
 #import "RKAttributeWriter.h"
 
-@interface RKFootNoteWriter : RKAttributeWriter
+@interface RKFootnoteWriter : RKAttributeWriter
 
 @end

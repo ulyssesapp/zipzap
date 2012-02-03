@@ -1,22 +1,22 @@
 //
-//  RKFootNoteWriter.m
+//  RKFootnoteWriter.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 03.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKFootNoteWriter.h"
+#import "RKFootnoteWriter.h"
 #import "RKAttributedStringWriter.h"
 
-@implementation RKFootNoteWriter
+@implementation RKFootnoteWriter
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:RKFootNoteAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    [RKAttributedStringWriter registerHandler:self forAttribute:RKFootnoteAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
-+ (void)addTagsForAttribute:(RKFootNote *)footNote
++ (void)addTagsForAttribute:(RKFootnote *)footNote
              toTaggedString:(RKTaggedString *)taggedString 
                     inRange:(NSRange)range
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 

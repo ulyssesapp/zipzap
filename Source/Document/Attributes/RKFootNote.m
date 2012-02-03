@@ -1,22 +1,22 @@
 //
-//  RKFootNote.m
+//  RKFootnote.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 03.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKFootNote.h"
+#import "RKFootnote.h"
 
-NSString *RKFootNoteAttributeName = @"RKFootNote";
+NSString *RKFootnoteAttributeName = @"RKFootnote";
 
-@implementation RKFootNote
+@implementation RKFootnote
 
 @synthesize content;
 
-+ (RKFootNote *)footNoteWithAttributedString:(NSAttributedString *)content
++ (RKFootnote *)footnoteWithAttributedString:(NSAttributedString *)content
 {
-    return [[RKFootNote alloc] initWithAttributedString:content];
+    return [[RKFootnote alloc] initWithAttributedString:content];
 }
 
 - (id)initWithAttributedString:(NSAttributedString *)initialContent
