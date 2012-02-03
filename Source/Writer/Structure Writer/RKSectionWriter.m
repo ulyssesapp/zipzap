@@ -10,6 +10,7 @@
 #import "RKWriter.h"
 #import "RKResourcePool.h"
 #import "RKSectionWriter.h"
+#import "RKAttributedStringWriter.h"
 
 @interface RKSectionWriter ()
 
@@ -17,6 +18,14 @@
  @abstract Translates all section attributes to RTF command
  */
 + (NSString *)sectionAttributesForSection:(RKSection *)section;
+
+/*!
+ @abstract Translates a mapping from tag names to attributed string such that the translated
+           attributed strings are surrounded by the given tag
+ */
++ (NSString *)translateAttributedStringMap:(NSDictionary *)attributedStringMap
+                      withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                                 resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Translates all headers of a section to RTF
@@ -79,20 +88,77 @@
 
     return attributes;
 }
-     
+
++ (NSString *)translateAttributedStringMap:(NSDictionary *)attributedStringMap
+                   withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                              resources:(RKResourcePool *)resources
+{
+    NSMutableString *translation = [NSMutableString new];    
+    
+    [attributedStringMap enumerateKeysAndObjectsUsingBlock:^(NSString *tag, NSAttributedString *attributedString, BOOL *stop) {
+        if (attributedString) {
+            [translation appendString:
+             [RKAttributedStringWriter RTFfromAttributedString:attributedString insideTag:tag withAttachmentPolicy:attachmentPolicy resources:resources]
+            ];
+        }
+    }];     
+    
+    return translation;
+}
+
 + (NSString *)headersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    return @"";
+    NSDictionary *translationTable;
+    
+    if ([section hasSingleHeaderForAllPages]) {
+        translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [section headerForPage: RKPageSelectionLeft], @"header",
+                            nil
+                           ];
+    }
+     else {
+         translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [section headerForPage: RKPageSelectionLeft], @"headerl",
+                             [section headerForPage: RKPageSelectionRight], @"headerr",
+                             [section headerForPage: RKPageSelectionFirst], @"headerf",
+                             nil
+                            ];
+     }
+         
+    return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
+
 }
 
 + (NSString *)footersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    return @"";
+    NSDictionary *translationTable;    
+    
+    if ([section hasSingleHeaderForAllPages]) {
+        translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [section footerForPage: RKPageSelectionLeft], @"footer",
+                            nil
+                            ];
+    }
+    else {
+        translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [section footerForPage: RKPageSelectionLeft], @"footerl",
+                            [section footerForPage: RKPageSelectionRight], @"footerr",
+                            [section footerForPage: RKPageSelectionFirst], @"footerf",
+                            nil
+                           ];
+    }
+    
+    return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
 }
 
 + (NSString *)contentForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    return @"";
+    return [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n\\sect", 
+            [self sectionAttributesForSection:section],
+            [self footersForSection:section withAttachmentPolicy:attachmentPolicy resources:resources],
+            [self headersForSection:section withAttachmentPolicy:attachmentPolicy resources:resources],
+            [RKAttributedStringWriter RTFfromAttributedString:section.content withAttachmentPolicy:attachmentPolicy resources:resources]
+           ];
 }
 
 @end
