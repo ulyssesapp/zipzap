@@ -13,7 +13,16 @@
 
 - (void)testConvertRTFFormatCode
 {
-    RKTextList *listStyle = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"-- %d0 --", @"-- %r1 --", @"-- %R2 --", @"-- %a3 --", @"-- %A4 --", @"-- * --",nil ]];
+    RKTextList *listStyle = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: 
+                                                                  @"-- %d0 --", 
+                                                                  @"-- %r1 --", 
+                                                                  @"-- %R2 --", 
+                                                                  @"-- %a3 --", 
+                                                                  @"-- %A4 --", 
+                                                                  @"-- * --",
+                                                                  @"-- %d0%R6 --",
+                                                                  @"-- %d0%R1 --",
+                                                                  nil ]];
     
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 0], RKTextListFormatCodeDecimal, @"Invalid format code");
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 1], RKTextListFormatCodeLowerCaseRoman, @"Invalid format code");
@@ -21,7 +30,15 @@
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 3], RKTextListFormatCodeLowerCaseLetter, @"Invalid format code");
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 4], RKTextListFormatCodeUpperCaseLetter, @"Invalid format code");
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 5], RKTextListFormatCodeBullet, @"Invalid format code");
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 6], RKTextListFormatCodeBullet, @"Invalid format code");
+
+    // Test that the format string with the right identifier is chosen
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 6], RKTextListFormatCodeUpperCaseRoman, @"Invalid format code");
+
+    // If no format string fits, the right result is bullet
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 7], RKTextListFormatCodeBullet, @"Invalid format code");
+    
+    // Invalid level selected
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 8], RKTextListFormatCodeBullet, @"Invalid format code");
 }
 
 - (void)testBuildRTFFormatStringWithoutPrepending

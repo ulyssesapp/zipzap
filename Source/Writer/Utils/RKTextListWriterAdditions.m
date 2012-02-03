@@ -54,9 +54,16 @@ NSRegularExpression *placeholderRegExp;
     __block RKTextListFormatCode formatCode = RKTextListFormatCodeBullet;
     
     [placeholderCodes enumerateKeysAndObjectsUsingBlock:^(NSString *placeholder, NSNumber *code, BOOL *stop) {
-        if ([levelString rangeOfString: placeholder].location != NSNotFound) {
-            *stop = true;
-            formatCode = [code intValue];
+        NSUInteger placeholderLocation = [levelString rangeOfString: placeholder].location;
+        
+        if (placeholderLocation != NSNotFound) {
+            NSUInteger level = [self levelFromFormatString:levelString atPlaceholderPosition:placeholderLocation + 1];
+            
+            // Take only placeholders that really belong to the selected level
+            if (level == levelIndex) {            
+                *stop = true;
+                formatCode = [code intValue];
+            }
         }
     }];
     
