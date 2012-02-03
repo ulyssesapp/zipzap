@@ -1,18 +1,16 @@
 //
-//  RKTextListStyling.h
+//  RKTextList.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-extern NSString *RKTextListItemAttributeName;
-
 /*!
  @abstract Representation of a list styling
  @description A text list consists of the styling description for each nesting level of the list
  */
-@interface RKTextListStyling : NSObject
+@interface RKTextList : NSObject
 
 /*!
  @abstract Creates a text list with a format for all levels (at most 9)
@@ -27,7 +25,7 @@ extern NSString *RKTextListItemAttributeName;
               Additionally the following placeholders may be used
                 %%      %-Charracter
  */
-+ (RKTextListStyling *)textListWithLevelFormats:(NSArray *)levelFormats;
++ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
 
 /*!
  @astract Returns the format definition for a certain level

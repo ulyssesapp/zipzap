@@ -31,7 +31,7 @@
 /*!
  @abstract Returns the index of a list
  */
-- (NSUInteger)indexOfList:(RKTextListStyling *)textList;
+- (NSUInteger)indexOfList:(RKTextList *)textList;
 
 /*!
  @abstract Returns the collected font families sorted by their indices

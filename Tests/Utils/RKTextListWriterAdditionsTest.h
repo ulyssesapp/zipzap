@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKTextListStylingWriterAdditionsTest : SenTestCase
+@interface RKTextListWriterAdditionsTest : SenTestCase
 
 @end

@@ -1,5 +1,5 @@
 //
-//  RKTextListConversionAdditions.m
+//  RKTextListWriterAdditions.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
@@ -7,10 +7,10 @@
 //
 
 #import "RKConversion.h"
-#import "RKTextListStyling.h"
-#import "RKTextListStylingWriterAdditions.h"
+#import "RKTextList.h"
+#import "RKTextListWriterAdditions.h"
 
-@implementation RKTextListStyling (RKWriterAdditions)
+@implementation RKTextList (RKWriterAdditions)
 
 NSDictionary *placeholderCodes;
 NSRegularExpression *placeholderRegExp;

@@ -8,4 +8,4 @@
 #import "RKTypes.h"
 #import "RKSection.h"
 #import "RKDocument.h"
-#import "RKTextListStyling.h"
+#import "RKTextList.h"

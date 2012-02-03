@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextListStylingWriterAdditions.h"
-#import "RKTextListStylingWriterAdditionsTest.h"
+#import "RKTextListWriterAdditions.h"
+#import "RKTextListWriterAdditionsTest.h"
 
-@implementation RKTextListStylingWriterAdditionsTest
+@implementation RKTextListWriterAdditionsTest
 
 - (void)testConvertRTFFormatCode
 {
-    RKTextListStyling *listStyle = [RKTextListStyling textListWithLevelFormats:[NSArray arrayWithObjects: @"-- %d0 --", @"-- %r1 --", @"-- %R2 --", @"-- %a3 --", @"-- %A4 --", @"-- * --",nil ]];
+    RKTextList *listStyle = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"-- %d0 --", @"-- %r1 --", @"-- %R2 --", @"-- %a3 --", @"-- %A4 --", @"-- * --",nil ]];
     
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 0], RKTextListFormatCodeDecimal, @"Invalid format code");
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 1], RKTextListFormatCodeLowerCaseRoman, @"Invalid format code");
@@ -30,7 +30,7 @@
     NSArray *placeholderPositions;
     
     // Generating a simple list
-    RKTextListStyling *simpleList = [RKTextListStyling textListWithLevelFormats:[NSArray arrayWithObjects: @"-- %d0 --", nil]];
+    RKTextList *simpleList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"-- %d0 --", nil]];
 
     testString = [simpleList RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];
     
@@ -40,7 +40,7 @@
     STAssertEqualObjects(testString, @"\\'07-- \\'00 --", @"Invalid format string");
 
     // Generating a simple list (only bullet point)
-    RKTextListStyling *bulletPoint = [RKTextListStyling textListWithLevelFormats:[NSArray arrayWithObjects: @"-", nil]];
+    RKTextList *bulletPoint = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"-", nil]];
     
     testString = [bulletPoint RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];
     
@@ -49,7 +49,7 @@
     STAssertEqualObjects(testString, @"\\'01-", @"Invalid format string");
     
     // Generating a simple list with keeping the escpae sign and converting RTF-Chars
-    RKTextListStyling *keepingChars = [RKTextListStyling textListWithLevelFormats:[NSArray arrayWithObjects: @"%%∮{%d0\\%", nil]];
+    RKTextList *keepingChars = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"%%∮{%d0\\%", nil]];
 
     testString = [keepingChars RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];    
     
@@ -65,7 +65,7 @@
     NSArray *placeholderPositions;
     
     // Generating a simple list with prepending lists
-    RKTextListStyling *prependingList = [RKTextListStyling textListWithLevelFormats:[NSArray arrayWithObjects: @"", @"", @"%d0.%r1.%A2.", nil ]];
+    RKTextList *prependingList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"", @"", @"%d0.%r1.%A2.", nil ]];
 
     testString = [prependingList RTFFormatStringOfLevel:2 withPlaceholderPositions:&placeholderPositions];    
     

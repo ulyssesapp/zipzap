@@ -1,5 +1,5 @@
 //
-//  RKTextListConversionAdditions.h
+//  RKTextListWriterAdditions.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
@@ -25,7 +25,7 @@ typedef enum {
     RKTextListFormatCodeBullet              = 23
 } RKTextListFormatCode;
 
-@interface RKTextListStyling (RKWriterAdditions)
+@interface RKTextList (RKWriterAdditions)
 
 /*!
  @astract Returns the RTF format code for a level
