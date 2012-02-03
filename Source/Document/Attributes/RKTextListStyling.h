@@ -15,24 +15,17 @@ extern NSString *RKTextListItemAttributeName;
 @interface RKTextListStyling : NSObject
 
 /*!
- @abstract Creates a text list with a general format for all levels
+ @abstract Creates a text list with a format for all levels (at most 9)
  @discussion The format string consists of an arbitrary text and at most one placeholder
               The available placeholders are:
-                %d      Decimal numbers
-                %r      Lower roman numbers
-                %R      Upper roman numbers
-                %a      Lower alphabetic enumeration
-                %A      Upper alphabetic enumeration
+                %dN     Decimal numbers
+                %rN     Lower roman numbers
+                %RN     Upper roman numbers
+                %aN     Lower alphabetic enumeration
+                %AN     Upper alphabetic enumeration
     
               Additionally the following placeholders may be used
                 %%      %-Charracter
-                %*      Insert prepending levels here
- */
-+ (RKTextListStyling *)textListWithGeneralLevelFormat:(NSString *)levelFormat;
-
-/*!
- @abstract Creates a text list with seperate format for the first given levels.
- @discussion The last level format will be used as generic format for all undefined levels
  */
 + (RKTextListStyling *)textListWithLevelFormats:(NSArray *)levelFormats;
 

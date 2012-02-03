@@ -10,7 +10,6 @@
 #import "RKConversion.h"
 
 @interface RKTextListStyling () {
-    NSString *generalLevelFormat;
     NSArray *definedLevelFormats;
 }
 
@@ -23,11 +22,6 @@
 
 @implementation RKTextListStyling
 
-+ (RKTextListStyling *)textListWithGeneralLevelFormat:(NSString *)levelFormat;
-{
-    return [self textListWithLevelFormats: [NSArray arrayWithObjects: levelFormat, nil]];
-}
-
 + (RKTextListStyling *)textListWithLevelFormats:(NSArray *)levelFormats;
 {
     return [[RKTextListStyling alloc] initWithLevelFormats: levelFormats];
@@ -38,8 +32,11 @@
     self = [self init];
     
     if (self) {
+        if (levelFormats.count > 9) {
+            [NSException raise:NSRangeException format:@"Level nesting is limited to 9."];
+        }    
+
         definedLevelFormats = levelFormats;
-        generalLevelFormat = [levelFormats objectAtIndex: levelFormats.count - 1];
     }
     
     return self;
@@ -47,10 +44,10 @@
 
 -(NSString *)formatOfLevel:(NSUInteger)levelIndex
 {
-    if (levelIndex < definedLevelFormats.count)
-        return [definedLevelFormats objectAtIndex: levelIndex];
-    else
-        return generalLevelFormat;
+    if (levelIndex >= definedLevelFormats.count)
+        return @"";
+    
+    return [definedLevelFormats objectAtIndex: levelIndex];
 }
 
 @end
