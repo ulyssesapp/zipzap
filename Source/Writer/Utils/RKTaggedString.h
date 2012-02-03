@@ -29,6 +29,12 @@
 - (void)registerTag:(NSString *)tag forPosition:(NSUInteger)position;
 
 /*!
+ @abstract Associates a closing tag with a certain string position
+ @discussion In contrast to 'registerTag' the tag will be placed before all other tags at this position
+ */
+- (void)registerClosingTag:(NSString *)tag forPosition:(NSUInteger)position;
+
+/*!
  @abstract Specifies a string range as to be removed in the flattened variant of the string
  */
 - (void)removeRange:(NSRange)range;

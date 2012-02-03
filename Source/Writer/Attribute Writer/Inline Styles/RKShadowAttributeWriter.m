@@ -35,7 +35,7 @@
                                ]
                   forPosition:range.location];
     
-    [taggedString registerTag:@"\\shad0 " forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:@"\\shad0 " forPosition:(range.location + range.length)];
 }
 
 @end

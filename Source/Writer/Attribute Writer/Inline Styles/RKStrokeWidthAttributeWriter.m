@@ -28,7 +28,7 @@
         return;
     
     [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%li ", strokeWidth] forPosition:range.location];
-    [taggedString registerTag:@"\\outl0\\strokewidth0 " forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:@"\\outl0\\strokewidth0 " forPosition:(range.location + range.length)];
 }
 
 @end

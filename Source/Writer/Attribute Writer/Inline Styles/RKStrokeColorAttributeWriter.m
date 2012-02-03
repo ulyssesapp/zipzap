@@ -28,7 +28,7 @@
     NSUInteger colorIndex = [resources indexOfColor:color];
     
     [taggedString registerTag:[NSString stringWithFormat:@"\\strokec%U ", colorIndex] forPosition:range.location];
-    [taggedString registerTag:[NSString stringWithFormat:@"\\strokec0 ", colorIndex] forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:[NSString stringWithFormat:@"\\strokec0 ", colorIndex] forPosition:(range.location + range.length)];
 }
 
 @end

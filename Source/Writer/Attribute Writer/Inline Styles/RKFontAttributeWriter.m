@@ -40,12 +40,12 @@
     
     if (fontTraits & NSBoldFontMask) {
         [taggedString registerTag:@"\\b " forPosition:openPosition];
-        [taggedString registerTag:@"\\b0 " forPosition:closePosition];
+        [taggedString registerClosingTag:@"\\b0 " forPosition:closePosition];
     }
     
     if (fontTraits & NSItalicFontMask) {
         [taggedString registerTag:@"\\i " forPosition:openPosition];
-        [taggedString registerTag:@"\\i0 " forPosition:closePosition];
+        [taggedString registerClosingTag:@"\\i0 " forPosition:closePosition];
     }   
 }
 

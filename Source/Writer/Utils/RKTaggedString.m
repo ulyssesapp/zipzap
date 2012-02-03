@@ -89,6 +89,13 @@
     [tags addObject: tag];
 }
 
+- (void)registerClosingTag:(NSString *)tag forPosition:(NSUInteger)position
+{
+    NSMutableArray *tags = [self arrayForPosition:position];
+    
+    [tags insertObject:tag atIndex:0];
+}
+
 - (void)appendOriginalStringRange:(NSRange)range toString:(NSMutableString *)flattenedString
 {
     for (NSUInteger position = range.location; position < (range.location + range.length); position ++) {

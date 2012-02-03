@@ -36,7 +36,7 @@
     NSString *paragraphHeader = [self openingTagFromParagraphStyle:paragraphStyle];
 
     [taggedString registerTag:paragraphHeader forPosition:range.location];
-    [taggedString registerTag:@"\\par\n" forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:@"\\par\n" forPosition:(range.location + range.length)];
 }
 
 + (NSString *)openingTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle

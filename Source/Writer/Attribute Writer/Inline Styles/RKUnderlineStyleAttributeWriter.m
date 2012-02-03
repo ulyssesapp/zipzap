@@ -72,7 +72,7 @@
     }
     
     // Add the deactivating tag
-    [taggedString registerTag:@"\\ulnone " forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:@"\\ulnone " forPosition:(range.location + range.length)];
     
     // We add the Apple proprietary tag, to ensure full support of the text system
     [taggedString registerTag:[NSString stringWithFormat:@"\\ulstyle%U ", underlineStyle] forPosition:range.location];
