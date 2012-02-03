@@ -47,21 +47,23 @@
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    switch (attachmentPolicy) {
-        case RKAttachmentPolicyEmbed:
-            [self addTagsForEmbeddedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
-            break;
-        
-        case RKAttachmentPolicyReference:
-            [self addTagsForReferencedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
-            break;
+    if (fileWrapper) {
+        switch (attachmentPolicy) {
+            case RKAttachmentPolicyEmbed:
+                [self addTagsForEmbeddedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
+                break;
             
-        case RKAttachmentPolicyIgnore:
-            break;            
+            case RKAttachmentPolicyReference:
+                [self addTagsForReferencedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
+                break;
+                
+            case RKAttachmentPolicyIgnore:
+                break;            
+        }
+        
+        // Select attachment charracter for removal in any case
+        [taggedString removeRange:range];
     }
-    
-    // Select attachment charracter for removal in any case
-    [taggedString removeRange:range];
 }
 
 + (void)addTagsForEmbeddedFile:(NSFileWrapper *)fileWrapper
