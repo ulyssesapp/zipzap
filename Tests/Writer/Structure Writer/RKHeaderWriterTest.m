@@ -242,7 +242,30 @@
     NSLog(@"\n'%@'\n'%@'\n", listTable, expectedListTable);
     
     STAssertEqualObjects(listTable, expectedListTable, @"Invalid list table generated");
-                          
+}
+
+- (void)testGenerateListOverrideTable
+{
+    NSDictionary *overrides = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:3], [NSNumber numberWithUnsignedInteger:1], nil];
+    RKTextList *firstList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.", @"%a1.", @"%r2.", nil] ];
+    RKTextList *secondList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.%r1.%a2.%R3.%A4.", @"-", nil] withOveridingStartItemNumbers:overrides];
+    
+    // Register lists to a resource pool
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    [resources indexOfList: firstList];
+    [resources indexOfList: secondList];
+    
+    // Generate header
+    NSString *listTable = [RKHeaderWriter listOverrideTableFromResourceManager:resources];
+
+    NSString *expectedListTable = 
+        @"{\\*\\listoverridetable"
+           "{\\listoverride\\listid1\\listoverridecount0\\ls1}"
+           "{\\listoverride\\listid2\\listoverridecount0\\ls2}"  
+         "}\n";
+    
+    STAssertEqualObjects(listTable, expectedListTable, @"Invalid llist override table generated");
 }
 
 @end

@@ -41,6 +41,11 @@ enum {
 + (NSString *)listTableFromResourceManager:(RKResourcePool *)resources;
 
 /*!
+ @abstract Generate the list override table using a resource manger
+ */
++ (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources;
+
+/*!
  @abstract Generates the document informations from a document
  */
 + (NSString *)documentMetaDataFromDocument:(RKDocument *)document;
@@ -79,9 +84,11 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
 {
-    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n",
+    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n%@\n%@\n",
             [RKHeaderWriter fontTableFromResourceManager:resources],
             [RKHeaderWriter colorTableFromResourceManager:resources],
+            [RKHeaderWriter listTableFromResourceManager:resources],
+            [RKHeaderWriter listOverrideTableFromResourceManager:resources],
             [RKHeaderWriter documentMetaDataFromDocument:document],
             [RKHeaderWriter documentFormatFromDocument:document]
            ];
@@ -175,6 +182,20 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
             rtfFormatString,
             rtfPlaceholderPostions
             ];
+}
+
++ (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources
+{
+    NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
+    NSArray *textLists = [resources textLists];
+    
+    [textLists enumerateObjectsUsingBlock:^(RKTextList *textList, NSUInteger listIndex, BOOL *stop) {
+        [overrideTable appendFormat:@"{\\listoverride\\listid%u\\listoverridecount0\\ls%u}", listIndex + 1, listIndex + 1];
+    }];
+    
+    [overrideTable appendString:@"}\n"];
+    
+    return overrideTable;
 }
 
 + (NSString *)documentMetaDataFromDocument:(RKDocument *)document
