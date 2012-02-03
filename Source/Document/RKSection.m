@@ -27,6 +27,11 @@
  */
 - (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map;
 
+/*!
+ @abstract Returns true, if an object can be used for all page selectors
+ */
+- (BOOL)hasSingleObjectForAllPagesInMap:(NSMapTable *)map;
+
 @end
 
 
@@ -80,6 +85,11 @@
     [self setObject:header forPages:pageMask toMap:headers];
 }
 
+- (BOOL)hasSingleHeaderForAllPages
+{
+    return [self hasSingleObjectForAllPagesInMap: headers];
+}
+
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
 {
     return [self objectForPage:pageMask fromMap:footers];
@@ -88,6 +98,11 @@
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
    [self setObject:footer forPages:pageMask toMap:footers];
+}
+
+- (BOOL)hasSingleFooterForAllPages
+{
+    return [self hasSingleObjectForAllPagesInMap: footers];
 }
 
 #pragma mark -
@@ -110,6 +125,13 @@
     
     if (pageMask & RKPageSelectionRight)
         [map setObject:object forKey: [NSNumber numberWithUnsignedInteger:RKPageSelectionRight]];
+}
+
+- (BOOL)hasSingleObjectForAllPagesInMap:(NSMapTable *)map
+{
+    return (    (([self objectForPage:RKPageSelectionLeft fromMap:map]) == ([self objectForPage:RKPageSelectionRight fromMap:map]))
+             && (([self objectForPage:RKPageSelectionFirst fromMap:map]) == ([self objectForPage:RKPageSelectionRight fromMap:map]))
+           );
 }
 
 @end

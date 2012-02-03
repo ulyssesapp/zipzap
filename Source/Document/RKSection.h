@@ -35,6 +35,11 @@
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask;
 
 /*!
+ @abstract Returns true, if all footers are identic
+ */
+- (BOOL)hasSingleHeaderForAllPages;
+
+/*!
  @abstract Retruns the footer for a single or multiple page types
  */
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask;
@@ -43,6 +48,11 @@
  @abstract Chanes the footer for a single or multiple page types
  */
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask;
+
+/*!
+ @abstract Returns true, if all footers are identic
+ */
+- (BOOL)hasSingleFooterForAllPages;
 
 /*!
  @abstract Content of the section
