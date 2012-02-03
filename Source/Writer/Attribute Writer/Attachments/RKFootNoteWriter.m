@@ -23,8 +23,7 @@
                   resources:(RKResourcePool *)resources
 {
     if (footNote) {
-        NSString *body = [RKAttributedStringWriter RTFfromAttributedString:footNote.content withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources];
-        NSString *tag = [NSString stringWithFormat:@"{\\footnote %@}", body];
+        NSString *tag = [RKAttributedStringWriter RTFfromAttributedString:footNote.content insideTag:@"footnote" withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources];
         
         [taggedString registerTag:tag forPosition:range.location];
         
