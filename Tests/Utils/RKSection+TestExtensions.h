@@ -7,7 +7,7 @@
 //
 
 @interface RKSection (TestExtensions)
-- (NSAttributedString *)objectForPage:(RKPageSelectionMask)pageMask fromMap:(NSMapTable *)map;
-- (void)setObject:(NSAttributedString *)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map;
+- (NSAttributedString *)objectForPage:(RKPageSelectionMask)pageMask fromDictionary:(NSDictionary *)dictionary;
+- (void)setObject:(NSAttributedString *)object forPages:(RKPageSelectionMask)pageMask toDictionary:(NSMutableDictionary *)dictionary;
 @end
 

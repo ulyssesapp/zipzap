@@ -13,24 +13,29 @@
  */
 @interface RKSection ()
 {
-    NSMapTable *headers;
-    NSMapTable *footers;
+    NSMutableDictionary *headers;
+    NSMutableDictionary *footers;
 }
 
 /*!
  @abstract Internally used to retrieve an object from a map related to a certain page selector
  */
-- (id)objectForPage:(RKPageSelectionMask)pageMask fromMap:(NSMapTable *)map;
+- (id)objectForPage:(RKPageSelectionMask)pageMask fromDictionary:(NSDictionary *)dictionary;
 
 /*!
- @abstract Internally used to store an object in a map relate to a certain page selector
+ @abstract Internally used to store an object in a map related to a certain page
  */
-- (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map;
+- (void)setObject:(id)object forSinglePage:(RKPageSelectionMask)page toDictionary:(NSMutableDictionary *)dictionary;
+
+/*!
+ @abstract Internally used to store an object in a map related to a certain page selector
+ */
+- (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toDictionary:(NSMutableDictionary *)dictionary;
 
 /*!
  @abstract Returns true, if an object can be used for all page selectors
  */
-- (BOOL)hasSingleObjectForAllPagesInMap:(NSMapTable *)map;
+- (BOOL)hasSingleObjectForAllPagesInDictionary:(NSDictionary *)map;
 
 @end
 
@@ -53,8 +58,8 @@
         indexOfFirstPage = 1;
         pageNumberingStyle = RKPageNumberingDecimal;
         
-        headers = [NSMapTable mapTableWithStrongToStrongObjects];
-        footers = [NSMapTable mapTableWithStrongToStrongObjects];
+        headers = [NSMutableDictionary new];
+        footers = [NSMutableDictionary new];
     }
     
     return self;
@@ -77,60 +82,75 @@
 
 - (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self objectForPage:pageMask fromMap:headers];
+    return [self objectForPage:pageMask fromDictionary:headers];
 }
 
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
 {
-    [self setObject:header forPages:pageMask toMap:headers];
+    [self setObject:header forPages:pageMask toDictionary:headers];
 }
 
 - (BOOL)hasSingleHeaderForAllPages
 {
-    return [self hasSingleObjectForAllPagesInMap: headers];
+    return [self hasSingleObjectForAllPagesInDictionary: headers];
 }
 
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self objectForPage:pageMask fromMap:footers];
+    return [self objectForPage:pageMask fromDictionary:footers];
 }
 
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
-   [self setObject:footer forPages:pageMask toMap:footers];
+   [self setObject:footer forPages:pageMask toDictionary:footers];
 }
 
 - (BOOL)hasSingleFooterForAllPages
 {
-    return [self hasSingleObjectForAllPagesInMap: footers];
+    return [self hasSingleObjectForAllPagesInDictionary: footers];
 }
 
 #pragma mark -
 
-- (id)objectForPage:(RKPageSelectionMask)pageMask fromMap:(NSMapTable *)map
+- (id)objectForPage:(RKPageSelectionMask)pageMask fromDictionary:(NSDictionary *)dictionary
 {
     NSAssert(!(pageMask & (~RKPageSelectionFirst)) || !(pageMask & (~RKPageSelectionLeft)) || !(pageMask & (~RKPageSelectionRight)), 
              @"Invalid page mask used in query.");
     
-    return [map objectForKey: [NSNumber numberWithUnsignedInteger:pageMask]];
+    return [dictionary objectForKey: [NSNumber numberWithUnsignedInteger:pageMask]];
 }
 
-- (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toMap:(NSMapTable *)map
+- (void)setObject:(id)object forSinglePage:(RKPageSelectionMask)page toDictionary:(NSMutableDictionary *)dictionary
+{
+    NSAssert(!(page & (~RKPageSelectionFirst)) || !(page & (~RKPageSelectionLeft)) || !(page & (~RKPageSelectionRight)), 
+             @"Invalid page mask used in query.");   
+    
+    NSNumber *key = [NSNumber numberWithUnsignedInt:page];
+        
+    if (object) {
+        [dictionary setObject:object forKey:key];
+    }
+    else {
+        [dictionary removeObjectForKey: key];
+    }
+}
+
+- (void)setObject:(id)object forPages:(RKPageSelectionMask)pageMask toDictionary:(NSMutableDictionary *)dictionary
 {
     if (pageMask & RKPageSelectionFirst)
-        [map setObject:object forKey: [NSNumber numberWithUnsignedInteger:RKPageSelectionFirst]];
+        [self setObject:object forSinglePage:RKPageSelectionFirst toDictionary:dictionary];
     
     if (pageMask & RKPageSelectionLeft)
-        [map setObject:object forKey: [NSNumber numberWithUnsignedInteger:RKPageSelectionLeft]];
+        [self setObject:object forSinglePage:RKPageSelectionLeft toDictionary:dictionary];
     
     if (pageMask & RKPageSelectionRight)
-        [map setObject:object forKey: [NSNumber numberWithUnsignedInteger:RKPageSelectionRight]];
+        [self setObject:object forSinglePage:RKPageSelectionRight toDictionary:dictionary];
 }
 
-- (BOOL)hasSingleObjectForAllPagesInMap:(NSMapTable *)map
+- (BOOL)hasSingleObjectForAllPagesInDictionary:(NSDictionary *)dictionary
 {
-    return (    (([self objectForPage:RKPageSelectionLeft fromMap:map]) == ([self objectForPage:RKPageSelectionRight fromMap:map]))
-             && (([self objectForPage:RKPageSelectionFirst fromMap:map]) == ([self objectForPage:RKPageSelectionRight fromMap:map]))
+    return (    (([self objectForPage:RKPageSelectionLeft fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
+             && (([self objectForPage:RKPageSelectionFirst fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
            );
 }
 
