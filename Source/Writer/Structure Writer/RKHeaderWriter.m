@@ -128,8 +128,12 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
 
 + (NSString *)listTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSMutableString *listTable = [NSMutableString stringWithString:@"{\\*\\listtable "];
     NSArray *textLists = [resources textLists];
+    
+    if (textLists.count == 0)
+        return @"";
+    
+    NSMutableString *listTable = [NSMutableString stringWithString:@"{\\*\\listtable "];
     
     [textLists enumerateObjectsUsingBlock:^(RKTextList *textList, NSUInteger listIndex, BOOL *stop) {
         NSMutableString *listLevelsString = [NSMutableString new];
@@ -186,8 +190,12 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
 
 + (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
     NSArray *textLists = [resources textLists];
+    
+    if (textLists.count == 0)
+        return @"";
+
+    NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
     
     [textLists enumerateObjectsUsingBlock:^(RKTextList *textList, NSUInteger listIndex, BOOL *stop) {
         [overrideTable appendFormat:@"{\\listoverride\\listid%u\\listoverridecount0\\ls%u}", listIndex + 1, listIndex + 1];
