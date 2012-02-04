@@ -11,7 +11,7 @@
 
 @implementation RKSectionWriterTest
 
-- (void)testGeneratingSectionHeaders
+- (void)testGeneratingSectionSettings
 {
     RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@""]];
 
@@ -38,6 +38,90 @@
     // Letter lower case
     section.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
     STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\cols2\\pgnstarts3\\pgnlltr", @"Invalid translation");
+}
+
+- (void)testGeneratingHeadersForAllPages
+{
+    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectorAll];
+    
+    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\header \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid header generated"
+                        );
+}
+
+- (void)testGeneratingHeadersForSomePages
+{
+    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
+    
+    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\headerl \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid header generated"
+                         );
+
+    [section setHeader:nil forPages:RKPageSelectionLeft];
+    [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
+    
+    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\headerr \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid header generated"
+                         );
+
+    [section setHeader:nil forPages:RKPageSelectionRight];
+    [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
+    
+    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\headerf \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid header generated"
+                         );    
+}
+
+- (void)testGeneratingFooterForAllPages
+{
+    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectorAll];
+
+    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\footer \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid footer generated"
+                        );
+}
+
+- (void)testGeneratingFootersForSomePages
+{
+    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
+    
+    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\footerl \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid footer generated"
+                         );
+    
+    [section setFooter:nil forPages:RKPageSelectionLeft];
+    [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
+    
+    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\footerr \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid footer generated"
+                         );
+    
+    [section setFooter:nil forPages:RKPageSelectionRight];
+    [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
+    
+    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
+                         @"{\\footerf \\pard\\ql \\cb1 \\f0 \\fs12 \\cf0 Text\\par\n}",
+                         @"Invalid footer generated"
+                         );    
 }
 
 @end

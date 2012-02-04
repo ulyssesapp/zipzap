@@ -108,44 +108,60 @@
 
 + (NSString *)headersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    NSDictionary *translationTable;
+    NSMutableDictionary *translationTable;
     
     if ([section hasSingleHeaderForAllPages]) {
-        translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
+        translationTable = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                             [section headerForPage: RKPageSelectionLeft], @"header",
                             nil
                            ];
     }
      else {
-         translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [section headerForPage: RKPageSelectionLeft], @"headerl",
-                             [section headerForPage: RKPageSelectionRight], @"headerr",
-                             [section headerForPage: RKPageSelectionFirst], @"headerf",
-                             nil
-                            ];
+        translationTable = [NSMutableDictionary new];
+
+        NSAttributedString *headerl = [section headerForPage: RKPageSelectionLeft];
+        NSAttributedString *headerr = [section headerForPage: RKPageSelectionRight];
+        NSAttributedString *headerf = [section headerForPage: RKPageSelectionFirst];         
+        
+        if (headerl)
+            [translationTable setObject:headerl forKey:@"headerl"];
+
+         if (headerr)
+            [translationTable setObject:headerr forKey:@"headerr"];
+
+         if (headerf)
+            [translationTable setObject:headerf forKey:@"headerf"];
      }
-         
+
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
 
 }
 
 + (NSString *)footersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    NSDictionary *translationTable;    
+    NSMutableDictionary *translationTable;    
     
-    if ([section hasSingleHeaderForAllPages]) {
+    if ([section hasSingleFooterForAllPages]) {
         translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
                             [section footerForPage: RKPageSelectionLeft], @"footer",
                             nil
                             ];
     }
     else {
-        translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [section footerForPage: RKPageSelectionLeft], @"footerl",
-                            [section footerForPage: RKPageSelectionRight], @"footerr",
-                            [section footerForPage: RKPageSelectionFirst], @"footerf",
-                            nil
-                           ];
+        translationTable = [NSMutableDictionary new];
+        
+        NSAttributedString *footerl = [section footerForPage: RKPageSelectionLeft];
+        NSAttributedString *footerr = [section footerForPage: RKPageSelectionRight];
+        NSAttributedString *footerf = [section footerForPage: RKPageSelectionFirst];         
+        
+        if (footerl)
+            [translationTable setObject:footerl forKey:@"footerl"];
+        
+        if (footerr)
+            [translationTable setObject:footerr forKey:@"footerr"];
+        
+        if (footerf)
+            [translationTable setObject:footerf forKey:@"footerf"];
     }
     
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
