@@ -45,4 +45,26 @@
     STAssertEqualObjects([colors objectAtIndex:2], [NSColor rtfColorWithRed:1.0 green:0 blue:0], @"Invalid color");
 }
 
+- (void)testShadowStyleCocoaIntegration
+{
+    NSShadow *shadowA = [NSShadow new];
+    
+    [shadowA setShadowColor:[NSColor rtfColorWithRed:1.0 green:0 blue:0]];
+    [shadowA setShadowOffset:NSMakeSize(2.0, 3.0)];
+    [shadowA setShadowBlurRadius:4.0];
+
+    NSShadow *shadowB = [NSShadow new];
+    
+    [shadowB setShadowColor:[NSColor rtfColorWithRed:1.0 green:0 blue:0]];
+    [shadowB setShadowOffset:NSMakeSize(2.0, 3.0)];
+    [shadowB setShadowBlurRadius:4.0];    
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
+    
+    [attributedString addAttribute:NSShadowAttributeName value:shadowA range:NSMakeRange(0, 1)];
+    [attributedString addAttribute:NSShadowAttributeName value:shadowB range:NSMakeRange(1, 2)];
+    
+    [self assertReadingOfAttributedString:attributedString onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,3)];
+}
+
 @end
