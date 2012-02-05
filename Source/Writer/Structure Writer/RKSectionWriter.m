@@ -54,7 +54,7 @@
     NSString *footers = [RKSectionWriter footersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
     NSString *content = [RKSectionWriter contentForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
     
-    return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@", sectionAttributes, headers, footers, content];
+    return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@ \\sect\n", sectionAttributes, headers, footers, content];
 }
 
 + (NSString *)sectionAttributesForSection:(RKSection *)section
@@ -169,12 +169,7 @@
 
 + (NSString *)contentForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    return [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n\\sect", 
-            [self sectionAttributesForSection:section],
-            [self footersForSection:section withAttachmentPolicy:attachmentPolicy resources:resources],
-            [self headersForSection:section withAttachmentPolicy:attachmentPolicy resources:resources],
-            [RKAttributedStringWriter RTFfromAttributedString:section.content withAttachmentPolicy:attachmentPolicy resources:resources]
-           ];
+    return [RKAttributedStringWriter RTFfromAttributedString:section.content withAttachmentPolicy:attachmentPolicy resources:resources];
 }
 
 @end
