@@ -22,16 +22,20 @@
             case '\\':
             case '}':
             case '{':
-                [escapedString appendFormat:@"\\%c", currentChar];
+                [escapedString appendFormat: @"\\%c", currentChar];
+                break;
+                
+            case '\n':
+                [escapedString appendString: @"\\line\n"];
                 break;
                 
             default:
                 if (currentChar > 127) {
                     // All Non-ASCII are converted to \uN commands
-                    [escapedString appendFormat:@"\\u%u", currentChar];
+                    [escapedString appendFormat: @"\\u%u", currentChar];
                 }
                 else {
-                    [escapedString appendFormat:@"%c", currentChar];
+                    [escapedString appendFormat: @"%c", currentChar];
                 }
         }
     }

@@ -16,6 +16,7 @@
     STAssertEqualObjects([@"abc \\ def" RTFEscapedString], @"abc \\\\ def", @"Invalid backslash conversion");
     STAssertEqualObjects([@"abc { def" RTFEscapedString], @"abc \\{ def", @"Invalid conversion of {");
     STAssertEqualObjects([@"abc } def" RTFEscapedString], @"abc \\} def", @"Invalid conversion of }");
+    STAssertEqualObjects([@"abc \n def" RTFEscapedString], @"abc \\line\n def", @"Invalid conversion of }");
 
     // Converting also characters in CP1252 to unicode
     STAssertEqualObjects([@"abc ä def" RTFEscapedString], @"abc \\u228 def", @"Invalid unicode conversion");
