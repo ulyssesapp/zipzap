@@ -40,4 +40,16 @@
     STAssertEqualObjects([colors objectAtIndex:2], [NSColor rtfColorWithRed:1.0 green:0 blue:0], @"Invalid color");
 }
 
+- (void)testStrikethroughColorStyleCocoaIntegration
+{
+    NSColor *colorA = [NSColor rtfColorWithRed:1.0 green:0.0 blue:0.0];
+    NSColor *colorB = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
+    
+    [attributedString addAttribute:NSStrikethroughColorAttributeName value:colorA range:NSMakeRange(0, 1)];
+    [attributedString addAttribute:NSStrikethroughColorAttributeName value:colorB range:NSMakeRange(1, 1)];
+    
+    [self assertReadingOfAttributedString:attributedString onAttribute:NSStrikethroughColorAttributeName];
+}
+
 @end

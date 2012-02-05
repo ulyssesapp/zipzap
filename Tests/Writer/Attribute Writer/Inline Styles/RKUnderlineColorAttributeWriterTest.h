@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKUnderlineColorAttributeWriterTest : SenTestCase
+@interface RKUnderlineColorAttributeWriterTest : RKCocoaIntegrationTestHelper
 
 @end
