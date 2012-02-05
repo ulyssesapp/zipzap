@@ -63,9 +63,14 @@
 - (void)assertGeneratedRTFString:(NSString *)generated withExpectedString:(NSString *)expected
 {
     NSString *normalizedGenerated = [self normalizeRTFString: generated];
-    NSString *normalizdExpected = [self normalizeRTFString: expected];
+    NSString *normalizedExpected = [self normalizeRTFString: expected];
     
-    STAssertEqualObjects(normalizedGenerated, normalizdExpected, @"Unexpected RTF conversion.", normalizedGenerated, normalizdExpected);
+    if (![normalizedGenerated isEqual: normalizedExpected]) {
+        NSLog(@"\n'%@'\n'%@'", normalizedGenerated, normalizedExpected);
+        NSLog(@"\n");
+    }
+    
+    STAssertEqualObjects(normalizedGenerated, normalizedExpected, @"Unexpected RTF conversion.", normalizedGenerated, normalizedExpected);
 }
 
 - (void)assertRTF:(NSData *)rtf withTestDocument:(NSString *)name
