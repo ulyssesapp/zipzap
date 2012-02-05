@@ -27,7 +27,7 @@
                          @"a"
                          // Defined font
                          "\\f0 "
-                         "\\fs16 "
+                         "\\fs32 "
                          "\\b "
                          "\\i "
                          "bc"
@@ -35,7 +35,7 @@
                          "\\b0 "
                          // Default font
                          "\\f1 "
-                         "\\fs12 "
+                         "\\fs24 "
                          "d",
                          @"Invalid font style"
                          );

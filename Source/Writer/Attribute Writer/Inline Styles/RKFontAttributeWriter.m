@@ -33,7 +33,7 @@
     
     // Add font and size tag
     [taggedString registerTag:[NSString stringWithFormat:@"\\f%u ", fontIndex] forPosition:openPosition];
-    [taggedString registerTag:[NSString stringWithFormat:@"\\fs%u ", (NSUInteger)font.pointSize] forPosition:openPosition];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\fs%u ", (NSUInteger)font.pointSize * 2] forPosition:openPosition];
     
     // Add trait tags
     NSUInteger fontTraits = [[NSFontManager sharedFontManager] traitsOfFont:font];
