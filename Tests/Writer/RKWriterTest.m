@@ -23,12 +23,12 @@
 /*!
  @abstract Compares the content of two RTF files. Newlines and tabs are ignored
  */
-- (BOOL)compareRTFString:(NSString *)stringA withString:(NSString *)stringB;
+- (void)assertGeneratedRTFString:(NSString *)stringA withExpectedString:(NSString *)stringB;
 
 /*!
  @abstract Loads a test document from TestData and compares it charwise with the given RTF output. Ignores newlines and tabs.
  */
-- (BOOL)compareRTF:(NSData *)rtf withTestDocument:(NSString *)name;
+- (void)assertRTF:(NSData *)rtf withTestDocument:(NSString *)name;
 
 @end
 
@@ -60,18 +60,20 @@
     return noMultiSpaces;
 }
 
-- (BOOL)compareRTFString:(NSString *)stringA withString:(NSString *)stringB
+- (void)assertGeneratedRTFString:(NSString *)generated withExpectedString:(NSString *)expected
 {
-    return [[self normalizeRTFString: stringA] isEqualToString: [self normalizeRTFString: stringB]];
+    NSString *normalizedGenerated = [self normalizeRTFString: generated];
+    NSString *normalizdExpected = [self normalizeRTFString: expected];
+    
+    STAssertEqualObjects(normalizedGenerated, normalizdExpected, @"Unexpected RTF conversion.", normalizedGenerated, normalizdExpected);
 }
 
-- (BOOL)compareRTF:(NSData *)rtf withTestDocument:(NSString *)name
+- (void)assertRTF:(NSData *)rtf withTestDocument:(NSString *)name
 {
     NSString *rtfContent = [[NSString alloc] initWithData:rtf encoding:NSASCIIStringEncoding];
     NSString *testContent = [self loadTestDocument: name];
 
-    NSLog(@"\n'%@'\n'%@'", [self normalizeRTFString: rtfContent], [self normalizeRTFString: testContent]);
-    return [self compareRTFString:rtfContent withString:testContent];
+    return [self assertGeneratedRTFString:rtfContent withExpectedString:testContent];
 }
 
 #pragma mark -
@@ -80,16 +82,16 @@
 {
     RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@""]];
     NSData *converted = [document RTF];
-                            
-    STAssertTrue([self compareRTF:converted withTestDocument:@"empty"], @"Invalid empty document creation");
+    
+    [self assertRTF: converted withTestDocument: @"empty"];
 }
 
 - (void)testGeneratingSimpleRTFDocument
 {
     RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@"abcdefä \\ { }"]];
     NSData *converted = [document RTF];
-    
-    STAssertTrue([self compareRTF:converted withTestDocument:@"simple"], @"Invalid empty document creation");
+
+    [self assertRTF: converted withTestDocument: @"simple"];
 }
 
 @end
