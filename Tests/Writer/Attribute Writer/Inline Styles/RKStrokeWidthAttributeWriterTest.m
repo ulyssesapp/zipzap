@@ -34,5 +34,10 @@
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\outl\\strokewidth600 b\\outl0\\strokewidth0 c", @"Invalid stroke width");
 }
 
+- (void)testStrikethroughStyleCocoaIntegration
+{
+    [self assertRereadingAttribute:NSStrokeWidthAttributeName withUnsignedIntegerValue:0];
+    [self assertRereadingAttribute:NSStrokeWidthAttributeName withUnsignedIntegerValue:30];
+}
 
 @end
