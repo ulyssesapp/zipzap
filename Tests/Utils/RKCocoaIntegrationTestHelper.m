@@ -52,6 +52,15 @@
             
             STAssertEqualObjects(convertedColor, originalColor, @"Attributes differ");
         }
+        else if ([convertedAttributeValue isKindOfClass:[NSShadow class]] && [originalAttributeValue isKindOfClass:[NSShadow class]]) {
+            NSShadow *convertedShadow = convertedAttributeValue;
+            NSShadow *originalShadow = originalAttributeValue;
+            
+            // The text system adds an alpha value to shadows
+            convertedShadow.shadowColor = [NSColor rtfColorFromColor:convertedShadow.shadowColor];
+            
+            STAssertEqualObjects(originalShadow, convertedShadow, @"Attributes differ");
+        }
          else if (originalAttributeValue != nil) {        
             STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
         }
