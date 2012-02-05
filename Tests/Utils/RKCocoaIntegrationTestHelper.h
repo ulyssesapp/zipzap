@@ -18,6 +18,17 @@
 /*!
  @abstract Tests whether a certain numeric attribute is properly converted and read back by Cocoa
  */
+- (void)assertRereadingAttribute:(NSString *)attributeName withNumericValue:(NSNumber *)value;
+
+/*!
+ @abstract See assertRereadingAttribute:withNumericValue:
+ */
 - (void)assertRereadingAttribute:(NSString *)attributeName withUnsignedIntegerValue:(NSUInteger)value;
+
+/*!
+ @abstract See assertRereadingAttribute:withNumericValue:
+ */
+- (void)assertRereadingAttribute:(NSString *)attributeName withIntegerValue:(NSInteger)value;
+
 
 @end

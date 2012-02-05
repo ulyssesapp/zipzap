@@ -67,13 +67,23 @@
     }];
 }
 
-- (void)assertRereadingAttribute:(NSString *)attributeName withUnsignedIntegerValue:(NSUInteger)value
+- (void)assertRereadingAttribute:(NSString *)attributeName withNumericValue:(NSNumber *)value
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
     
-    [attributedString addAttribute:attributeName value:[NSNumber numberWithUnsignedInteger: value] range:NSMakeRange(0,1)];
+    [attributedString addAttribute:attributeName value:value range:NSMakeRange(0,1)];
     
     [self assertReadingOfAttributedString:attributedString onAttribute:attributeName inRange:NSMakeRange(0,1)];
+}
+
+- (void)assertRereadingAttribute:(NSString *)attributeName withUnsignedIntegerValue:(NSUInteger)value
+{
+    [self assertRereadingAttribute:attributeName withNumericValue:[NSNumber numberWithUnsignedInteger:value]];
+}
+
+- (void)assertRereadingAttribute:(NSString *)attributeName withIntegerValue:(NSInteger)value
+{
+    [self assertRereadingAttribute:attributeName withNumericValue:[NSNumber numberWithInteger:value]];
 }
 
 
