@@ -67,4 +67,14 @@
     }];
 }
 
+- (void)assertRereadingAttribute:(NSString *)attributeName withUnsignedIntegerValue:(NSUInteger)value
+{
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
+    
+    [attributedString addAttribute:attributeName value:[NSNumber numberWithUnsignedInteger: value] range:NSMakeRange(0,1)];
+    
+    [self assertReadingOfAttributedString:attributedString onAttribute:attributeName inRange:NSMakeRange(0,1)];
+}
+
+
 @end
