@@ -13,6 +13,6 @@
 /*!
  @abstract Tests whether the RTF conversion of an attributed string is identically read by Cocoa with respect to a certain attribute.
  */
-- (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName;
+- (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName inRange:(NSRange)range;
 
 @end

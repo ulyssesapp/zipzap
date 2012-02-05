@@ -10,16 +10,13 @@
 
 @implementation RKCocoaIntegrationTestHelper
 
-- (NSDictionary *)collectAttributesFromAttributedString:(NSAttributedString *)attributedString withName:(NSString *)attributeName
+- (NSDictionary *)collectAttribute:(NSString*)attributeName fromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range
 {
-    NSMutableDictionary *attributesMap;
+    NSMutableDictionary *attributesMap = [NSMutableDictionary new];
     
-    [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(id attributeValue, NSRange range, BOOL *stop) {
-        NSDictionary *rangeDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSNumber numberWithUnsignedInteger: range.location], @"location", 
-                                         [NSNumber numberWithUnsignedInteger: range.length], @"length", 
-                                         nil
-                                         ];
+    [attributedString enumerateAttribute:attributeName inRange:range options:0 usingBlock:^(id attributeValue, NSRange range, BOOL *stop) {
+        NSDictionary *rangeDictionary = [NSString stringWithFormat:@"%u-%u", range.location, range.length];
+
         if (attributeValue)        
             [attributesMap setObject:attributeValue forKey:rangeDictionary];
     }];
@@ -35,28 +32,27 @@
    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
 }
 
-- (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName
+- (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName inRange:(NSRange)range
 {
     NSAttributedString *converted = [self convertAndRereadRTF:attributedString documentAttributes:NULL];
     
     // Collect attributes
-    NSDictionary *attributesMap = [self collectAttributesFromAttributedString:attributedString withName:attributeName];
-    NSDictionary *convertedAttributesMap = [self collectAttributesFromAttributedString:converted withName:attributeName];    
+    NSDictionary *attributesMap = [self collectAttribute:attributeName fromAttributedString:attributedString inRange:range];
+    NSDictionary *convertedAttributesMap = [self collectAttribute:attributeName fromAttributedString:converted inRange:range];    
 
-    // Same count?
-    STAssertEquals(attributesMap.count, convertedAttributesMap.count, @"Different count of attributes");
-    
     // Compare attributes
     [convertedAttributesMap enumerateKeysAndObjectsUsingBlock:^(NSDictionary *key, id convertedAttributeValue, BOOL *stop) {
         id originalAttributeValue = [attributesMap objectForKey: key];
       
+        STAssertNotNil(originalAttributeValue, @"Missing attribute");
+        
         if ([convertedAttributeValue isKindOfClass:[NSColor class]] && [originalAttributeValue isKindOfClass:[NSColor class]]) {
             NSColor *convertedColor = [NSColor rtfColorFromColor: convertedAttributeValue];
             NSColor *originalColor = [NSColor rtfColorFromColor: originalAttributeValue];
             
             STAssertEqualObjects(convertedColor, originalColor, @"Attributes differ");
         }
-         else {        
+         else if (originalAttributeValue != nil) {        
             STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
         }
     }];
