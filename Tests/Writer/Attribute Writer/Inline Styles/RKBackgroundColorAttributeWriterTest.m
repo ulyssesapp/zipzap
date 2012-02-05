@@ -47,9 +47,9 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
     
     [attributedString addAttribute:NSBackgroundColorAttributeName value:colorA range:NSMakeRange(0, 1)];
-    [attributedString addAttribute:NSBackgroundColorAttributeName value:colorB range:NSMakeRange(1, 1)];
+    [attributedString addAttribute:NSBackgroundColorAttributeName value:colorB range:NSMakeRange(1, 2)];
     
-    [self assertReadingOfAttributedString:attributedString onAttribute:NSBackgroundColorAttributeName];
+    [self assertReadingOfAttributedString:attributedString onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,3)];
 }
 
 @end

@@ -26,7 +26,7 @@
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\footnote \\pard\\ql \\cb1 \\f0 \\fs16 \\cf0 aaa\\par\n}<",
+                         @">{\\footnote \\pard\\ql \\cb1 \\f0 \\fs32 \\cf0 aaa\\par\n}<",
                          @"Invalid footnote generated"
                          );
     

@@ -47,9 +47,9 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
     
     [attributedString addAttribute:NSUnderlineColorAttributeName value:colorA range:NSMakeRange(0, 1)];
-    [attributedString addAttribute:NSUnderlineColorAttributeName value:colorB range:NSMakeRange(1, 1)];
+    [attributedString addAttribute:NSUnderlineColorAttributeName value:colorB range:NSMakeRange(1, 2)];
     
-    [self assertReadingOfAttributedString:attributedString onAttribute:NSUnderlineColorAttributeName];
+    [self assertReadingOfAttributedString:attributedString onAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(0,3)];
 }
 
 @end

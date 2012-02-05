@@ -47,4 +47,17 @@
     STAssertEqualObjects([fontFamilies objectAtIndex:1], @"Helvetica", @"Invalid font family");  
 }
 
+- (void)testFontStyleCocoaIntegration
+{
+    NSFont *fontA = [NSFont fontWithName:@"Helvetica-BoldOblique" size:18];
+    NSFont *fontB = [NSFont fontWithName:@"Menlo-BoldItalic" size:10];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
+    
+    [attributedString addAttribute:NSFontAttributeName value:fontA range:NSMakeRange(0, 1)];
+    [attributedString addAttribute:NSFontAttributeName value:fontB range:NSMakeRange(1, 2)];
+    
+    [self assertReadingOfAttributedString:attributedString onAttribute:NSFontAttributeName inRange:NSMakeRange(0,3)];
+}
+
+
 @end
