@@ -42,4 +42,12 @@
                                                    resources:nil];
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\striked1\\strikestyle9 b\\striked0 c", @"Invalid strikethrough style");
 }
+
+- (void)testStrikethroughStyleCocoaIntegration
+{
+    [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:0];
+    [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleSingle];
+    [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleDouble];
+}
+
 @end
