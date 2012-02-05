@@ -31,7 +31,7 @@
                                               inRange:NSMakeRange(1,1) 
                                  withAttachmentPolicy:0
                                             resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\outl\\strokewidth30 b\\outl0\\strokewidth0 c", @"Invalid stroke width");
+    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\outl\\strokewidth600 b\\outl0\\strokewidth0 c", @"Invalid stroke width");
 }
 
 

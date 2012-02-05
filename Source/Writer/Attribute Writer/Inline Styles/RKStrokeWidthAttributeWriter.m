@@ -22,12 +22,12 @@
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    NSInteger strokeWidth = [strokeWidthObject integerValue];
+    float strokeWidth = [strokeWidthObject floatValue];
     
     if (strokeWidth == 0)
         return;
     
-    [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%li ", strokeWidth] forPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%u ", (NSUInteger)(strokeWidth * 20)] forPosition:range.location];
     [taggedString registerClosingTag:@"\\outl0\\strokewidth0 " forPosition:(range.location + range.length)];
 }
 
