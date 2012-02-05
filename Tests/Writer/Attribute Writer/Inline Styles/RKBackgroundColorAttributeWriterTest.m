@@ -13,7 +13,7 @@
 
 - (void)testBackgroundColorStyle
 {
-    NSColor *color = [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:0.5];
+    NSColor *color = [NSColor rtfColorWithRed:1 green:0 blue:0];
     RKTaggedString *string = [RKTaggedString taggedStringWithString:@"abcd"];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -37,7 +37,9 @@
     // Test resource manager
     NSArray *colors = [resources colors];
     STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
-    STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
+    STAssertEqualObjects([colors objectAtIndex:2], [NSColor rtfColorWithRed:1.0 green:0 blue:0], @"Invalid color");
+}
+
 }
 
 @end

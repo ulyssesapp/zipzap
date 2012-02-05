@@ -55,9 +55,9 @@
     RKResourcePool *resources = [RKResourcePool new];
     
     // Register some fonts
-    [resources indexOfColor:[NSColor colorWithSRGBRed:0 green:1 blue:0.5 alpha:1]];
-    [resources indexOfColor:[NSColor colorWithSRGBRed:0.1 green:0.2 blue:0.3 alpha:1]];
-    [resources indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.5 blue:0.1 alpha:1]];
+    [resources indexOfColor:[NSColor rtfColorWithRed:0 green:1 blue:0.5]];
+    [resources indexOfColor:[NSColor rtfColorWithRed:0.1 green:0.2 blue:0.3]];
+    [resources indexOfColor:[NSColor rtfColorWithRed:0.3 green:0.5 blue:0.1]];
     
     // Generate the header
     STAssertEqualObjects([RKHeaderWriter colorTableFromResourceManager:resources], 

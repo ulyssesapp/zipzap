@@ -17,7 +17,7 @@
     RKResourcePool *resources = [RKResourcePool new];    
     NSShadow *shadow = [NSShadow new];
     
-    [shadow setShadowColor:[NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:0.5]];
+    [shadow setShadowColor:[NSColor rtfColorWithRed:1.0 green:0 blue:0]];
     [shadow setShadowOffset:NSMakeSize(2.0, 3.0)];
     [shadow setShadowBlurRadius:4.0];
     
@@ -42,7 +42,7 @@
     // Test resource manager
     NSArray *colors = [resources colors];
     STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
-    STAssertEqualObjects([colors objectAtIndex:2], [NSColor colorWithSRGBRed:1.0 green:0 blue:0 alpha:1], @"Invalid color");
+    STAssertEqualObjects([colors objectAtIndex:2], [NSColor rtfColorWithRed:1.0 green:0 blue:0], @"Invalid color");
 }
 
 @end

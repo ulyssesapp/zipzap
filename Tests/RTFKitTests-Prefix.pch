@@ -9,4 +9,7 @@
     #import "RTFKit.h"
     #import "RKResourcePool.h"
     #import "RKTaggedString.h"
+    #import "RKConversion.h"
+
+    #import "RKCocoaIntegrationTestHelper.h"
 #endif

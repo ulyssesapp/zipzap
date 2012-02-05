@@ -47,7 +47,7 @@
     // Different colors should deliver a different index
     STAssertEquals([resourceManager indexOfColor: [NSColor colorWithSRGBRed:0.1 green:0.2 blue:0.3 alpha:0.4]], (NSUInteger)3, @"Color not indexed");
 
-    // Indexing the same fonts again should deliver the same index
+    // Indexing the same color again should deliver the same index
     STAssertEquals([resourceManager indexOfColor: [NSColor colorWithSRGBRed:0.1 green:0.2 blue:0.3 alpha:1]], (NSUInteger)3, @"Index not reused or alpha not ignored");
     STAssertEquals([resourceManager indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.2 blue:0.1 alpha:1]], (NSUInteger)2, @"Index not reused or alpha not ignored");
 }

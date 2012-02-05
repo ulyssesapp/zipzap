@@ -34,3 +34,17 @@
 - (NSString *)stringWithRTFHexEncoding;
 
 @end
+
+@interface NSColor (RKConversion)
+
+/*!
+ @abstract Generates a color object that must not be converted to be valid for RTF
+ */
++ (NSColor *)rtfColorFromColor:(NSColor *)color;
+
+/*!
+ @abstract Generates a color object that must not be converted to be valid for RTF
+ */
++ (NSColor *)rtfColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
+
+@end

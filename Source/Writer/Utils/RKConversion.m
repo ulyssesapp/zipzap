@@ -76,3 +76,17 @@
 }
 
 @end
+
+@implementation NSColor (RKConversion)
+
++ (NSColor *)rtfColorFromColor:(NSColor *)color
+{
+    return [[color colorUsingColorSpaceName: NSCalibratedRGBColorSpace] colorWithAlphaComponent: 1.0]; 
+}
+
++ (NSColor *)rtfColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
+{
+    return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1];
+}
+
+@end    

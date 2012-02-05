@@ -8,6 +8,7 @@
 
 #import "RKResourcePool.h"
 #import "RKSection.h"
+#import "RKConversion.h"
 
 @class RKDocument, RKSection;
 
@@ -37,8 +38,8 @@
         listItemIndices = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality valueOptions:0];
         
         // Adding the two default colors (black is required; white is useful for \cb1
-        [self indexOfColor: [NSColor colorWithSRGBRed:0 green:0.0 blue:0.0 alpha:1.0]];
-        [self indexOfColor: [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
+        [self indexOfColor: [NSColor rtfColorWithRed:0 green:0.0 blue:0.0]];
+        [self indexOfColor: [NSColor rtfColorWithRed:1.0 green:1.0 blue:1.0]];
     }
         
     return self;
@@ -73,7 +74,7 @@
     NSAssert(color, @"No color given");
     
     // Ensure that no alpha is used and that the color is converted to the RGB color space
-    NSColor *opaqueColor = [[color colorUsingColorSpace: [NSColorSpace sRGBColorSpace]] colorWithAlphaComponent: 1.0];
+    NSColor *opaqueColor = [[color colorUsingColorSpaceName: NSCalibratedRGBColorSpace] colorWithAlphaComponent: 1.0];
     NSUInteger index = [colors indexOfObject: opaqueColor];
     
     if (index == NSNotFound) {
