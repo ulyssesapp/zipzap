@@ -54,7 +54,7 @@
     NSString *footers = [RKSectionWriter footersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
     NSString *content = [RKSectionWriter contentForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
     
-    return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@ \\sect\n", sectionAttributes, headers, footers, content];
+    return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@", sectionAttributes, headers, footers, content];
 }
 
 + (NSString *)sectionAttributesForSection:(RKSection *)section
