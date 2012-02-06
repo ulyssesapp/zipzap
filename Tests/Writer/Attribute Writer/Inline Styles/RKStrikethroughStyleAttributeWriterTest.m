@@ -45,7 +45,6 @@
 
 - (void)testStrikethroughStyleCocoaIntegration
 {
-    [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:0];
     [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleSingle];
     [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleDouble];
 }

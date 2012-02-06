@@ -43,9 +43,8 @@
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\sub b\\sub0 c", @"Invalid subscript mode");
 }
 
-- (void)testStrikethroughStyleCocoaIntegration
+- (void)testSuperscriptCocoaIntegrationTest
 {
-    [self assertRereadingAttribute:NSStrokeWidthAttributeName withIntegerValue:0];
     [self assertRereadingAttribute:NSStrokeWidthAttributeName withIntegerValue:1];
     [self assertRereadingAttribute:NSStrokeWidthAttributeName withIntegerValue:-1];
 }
