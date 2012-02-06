@@ -11,23 +11,9 @@
 
 @implementation RKTextAttachmentWriterTest
 
-- (NSFileWrapper *)attachmentWithName:(NSString *)name withExtension:(NSString *)extension
-{
-	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:extension subdirectory:@"Test Data/resources"];
-    NSFileWrapper *wrapper;
-    
-    STAssertNotNil(url, @"Cannot build URL");
-    
-    NSError *error;
-    wrapper = [[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:&error];
-    STAssertNotNil(wrapper, @"Load failed with error: %@", error);
-    
-    return wrapper;
-}
-
 - (void)testPictureAttachmentsIgnored
 {
-    NSFileWrapper *picture = [self attachmentWithName:@"image" withExtension:@"png"];
+    NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -39,7 +25,7 @@
 
 - (void)testPictureAttachmentsEmbedded
 {
-    NSFileWrapper *picture = [self attachmentWithName:@"image" withExtension:@"png"];
+    NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -61,7 +47,7 @@
                  );
 
     // Picture was properly converted
-    NSString *expectedResult = [[NSString alloc] initWithData:[[self attachmentWithName:@"image" withExtension:@"hex"] regularFileContents] encoding:NSASCIIStringEncoding ];
+    NSString *expectedResult = [[NSString alloc] initWithData:[[self textAttachmentWithName:@"image" withExtension:@"hex"].fileWrapper regularFileContents] encoding:NSASCIIStringEncoding ];
     NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
     
     STAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
@@ -69,7 +55,7 @@
 
 - (void)testPictureAttachmentsUnsupportedFileType
 {
-    NSFileWrapper *picture = [self attachmentWithName:@"image" withExtension:@"jpg"];
+    NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"jpg"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -81,7 +67,7 @@
 
 - (void)testPictureAttachmentsReferenced
 {
-    NSFileWrapper *picture = [self attachmentWithName:@"image" withExtension:@"png"];
+    NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -101,14 +87,14 @@
 
     NSFileWrapper *registeredFile = [[resources fileWrappers] objectAtIndex:0];
     
-    STAssertTrue(registeredFile != picture, @"File wrapper was not duplicated");
+    STAssertTrue(registeredFile != picture.fileWrapper, @"File wrapper was not duplicated");
     STAssertEqualObjects([registeredFile filename], @"0.png", @"Invalid file name");
-    STAssertEqualObjects([registeredFile regularFileContents], [picture regularFileContents], @"File contents differ");
+    STAssertEqualObjects([registeredFile regularFileContents], [picture.fileWrapper regularFileContents], @"File contents differ");
 }
 
 - (void)testMovieAttachmentsReferenced
 {
-    NSFileWrapper *picture = [self attachmentWithName:@"movie" withExtension:@"mov"];
+    NSTextAttachment *picture = [self textAttachmentWithName:@"movie" withExtension:@"mov"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -128,9 +114,9 @@
     
     NSFileWrapper *registeredFile = [[resources fileWrappers] objectAtIndex:0];
     
-    STAssertTrue(registeredFile != picture, @"File wrapper was not duplicated");
+    STAssertTrue(registeredFile != picture.fileWrapper, @"File wrapper was not duplicated");
     STAssertEqualObjects([registeredFile filename], @"0.mov", @"Invalid file name");
-    STAssertEqualObjects([registeredFile regularFileContents], [picture regularFileContents], @"File contents differ");
+    STAssertEqualObjects([registeredFile regularFileContents], [picture.fileWrapper regularFileContents], @"File contents differ");
 }
 
 @end

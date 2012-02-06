@@ -8,20 +8,35 @@
 
 #import "RKCocoaIntegrationTest.h"
 
+@interface SenTestCase (RKCocoaIntegrationTestPrivateMethods)
+
+/*!
+ @abstract Collects all attributes of an attributed string with a certain name and passes it to a dictionary
+ @discussion The dictionary maps from a string "LOCATION-LENGTH" to the attribute value
+ */
+- (NSDictionary *)collectAttribute:(NSString*)attributeName fromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range;
+
+@end
+
 @implementation SenTestCase (RKCocoaIntegrationTest)
 
-- (NSDictionary *)collectAttribute:(NSString*)attributeName fromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range
+- (NSFileWrapper *)testFileWithName:(NSString *)name withExtension:(NSString *)extension
 {
-    NSMutableDictionary *attributesMap = [NSMutableDictionary new];
+	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:extension subdirectory:@"Test Data/resources"];
+    NSFileWrapper *wrapper;
     
-    [attributedString enumerateAttribute:attributeName inRange:range options:0 usingBlock:^(id attributeValue, NSRange range, BOOL *stop) {
-        NSDictionary *rangeDictionary = [NSString stringWithFormat:@"%u-%u", range.location, range.length];
+    STAssertNotNil(url, @"Cannot build URL");
+    
+    NSError *error;
+    wrapper = [[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:&error];
+    STAssertNotNil(wrapper, @"Load failed with error: %@", error);
+    
+    return wrapper;
+}
 
-        if (attributeValue)        
-            [attributesMap setObject:attributeValue forKey:rangeDictionary];
-    }];
-    
-    return attributesMap;
+- (NSTextAttachment *)textAttachmentWithName:(NSString *)name withExtension:(NSString *)extension
+{
+	return [[NSTextAttachment alloc] initWithFileWrapper: [self testFileWithName:name withExtension:extension]];
 }
 
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
@@ -32,19 +47,31 @@
    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
 }
 
-- (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName inRange:(NSRange)range
+- (NSAttributedString *)convertAndRereadRTFD:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
-    NSAttributedString *converted = [self convertAndRereadRTF:attributedString documentAttributes:NULL];
+    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    NSFileWrapper *rtf = [document RTFD];
     
-    // Collect attributes
-    NSDictionary *attributesMap = [self collectAttribute:attributeName fromAttributedString:attributedString inRange:range];
-    NSDictionary *convertedAttributesMap = [self collectAttribute:attributeName fromAttributedString:converted inRange:range];    
+    return [[NSAttributedString alloc] initWithRTFDFileWrapper:rtf documentAttributes:documentAttributes];
+}
 
+- (void)assertEqualOnAttribute:(NSString *)attributeName 
+                       inRange:(NSRange)range 
+                      original:(NSAttributedString *)originalAttributedString 
+                     converted:(NSAttributedString *)convertedAttributedString
+{
+    // Collect attributes
+    NSDictionary *originalAttributesMap = [self collectAttribute:attributeName fromAttributedString:originalAttributedString inRange:range];
+    NSDictionary *convertedAttributesMap = [self collectAttribute:attributeName fromAttributedString:convertedAttributedString inRange:range];    
+    
+    // Ranges of attributes must be equal
+    STAssertEqualObjects([originalAttributesMap allKeys], [convertedAttributesMap allKeys], @"Attribute ranges differ");
+    
     // Compare attributes
-    [convertedAttributesMap enumerateKeysAndObjectsUsingBlock:^(NSDictionary *key, id convertedAttributeValue, BOOL *stop) {
-        id originalAttributeValue = [attributesMap objectForKey: key];
-      
-        STAssertNotNil(originalAttributeValue, @"Missing attribute");
+    [originalAttributesMap enumerateKeysAndObjectsUsingBlock:^(NSDictionary *key, id originalAttributeValue, BOOL *stop) {
+        id convertedAttributeValue = [convertedAttributesMap objectForKey: key];
+        
+        STAssertNotNil(convertedAttributeValue, @"Missing attribute");
         
         if ([convertedAttributeValue isKindOfClass:[NSColor class]] && [originalAttributeValue isKindOfClass:[NSColor class]]) {
             NSColor *convertedColor = [NSColor rtfColorFromColor: convertedAttributeValue];
@@ -61,10 +88,17 @@
             
             STAssertEqualObjects(originalShadow, convertedShadow, @"Attributes differ");
         }
-         else if (originalAttributeValue != nil) {        
+        else if (originalAttributeValue != nil) {        
             STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
         }
     }];
+}
+
+- (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName inRange:(NSRange)range
+{
+    NSAttributedString *converted = [self convertAndRereadRTF:attributedString documentAttributes:NULL];
+    
+    [self assertEqualOnAttribute:attributeName inRange:range original:attributedString converted:converted];
 }
 
 - (void)assertRereadingAttribute:(NSString *)attributeName withNumericValue:(NSNumber *)value
@@ -86,5 +120,18 @@
     [self assertRereadingAttribute:attributeName withNumericValue:[NSNumber numberWithInteger:value]];
 }
 
+- (NSDictionary *)collectAttribute:(NSString*)attributeName fromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range
+{
+    NSMutableDictionary *attributesMap = [NSMutableDictionary new];
+    
+    [attributedString enumerateAttribute:attributeName inRange:range options:0 usingBlock:^(id attributeValue, NSRange range, BOOL *stop) {
+        NSDictionary *rangeDictionary = [NSString stringWithFormat:@"%u-%u", range.location, range.length];
+        
+        if (attributeValue)        
+            [attributesMap setObject:attributeValue forKey:rangeDictionary];
+    }];
+    
+    return attributesMap;
+}
 
 @end

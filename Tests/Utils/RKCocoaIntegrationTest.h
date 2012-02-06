@@ -8,7 +8,33 @@
 
 @interface SenTestCase (RKCocoaIntegrationTest)
 
+/*!
+ @abstract Reads a test file
+ */
+- (NSFileWrapper *)testFileWithName:(NSString *)name withExtension:(NSString *)extension;
+
+/*!
+ @abstract Reads a test file
+ */
+- (NSTextAttachment *)textAttachmentWithName:(NSString *)name withExtension:(NSString *)extension;
+
+/*!
+ @abstract Converts the given attributed string to RTF and re-reads it using Cocoa
+ */
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes;
+
+/*!
+ @abstract Converts the given attributed string to RTFD and re-reads it using Cocoa
+ */
+- (NSAttributedString *)convertAndRereadRTFD:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes;
+
+/*!
+ @abstract Tests whether two attributed strings using the same attributes inside a certain range
+ */
+- (void)assertEqualOnAttribute:(NSString *)attributeName 
+                       inRange:(NSRange)range 
+                      original:(NSAttributedString *)originalAttributedString 
+                     converted:(NSAttributedString *)convertedAttributedString;
 
 /*!
  @abstract Tests whether the RTF conversion of an attributed string is identically read by Cocoa with respect to a certain attribute.
