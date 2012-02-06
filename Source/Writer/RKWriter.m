@@ -17,7 +17,7 @@
  @abstract Writes out the contents of an RKDocument as RTF into a string
  @discussion The handling of inline attachments can be switched between the NextStep (RTFD) format and the Microsoft format
  */
-+ (NSString *)RTFStringFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy;
++ (NSString *)RTFStringFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 @end
 
@@ -25,24 +25,35 @@
 
 + (NSData *)RTFfromDocument:(RKDocument *)document
 {
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed] dataUsingEncoding:NSASCIIStringEncoding];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 + (NSData *)plainRTFfromDocument:(RKDocument *)document
 {
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore] dataUsingEncoding:NSASCIIStringEncoding];
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources] dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
 {
-    NSAssert(false, @"Not implemented");
-    return nil;
+    RKResourcePool *resources = [RKResourcePool new];
+    
+    NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:
+        [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:resources] dataUsingEncoding:NSASCIIStringEncoding]
+    ];
+
+    NSMutableDictionary *packageFiles = [resources imageFileDictionary];    
+    
+    [packageFiles setObject:rtfFile forKey:@"TXT.rtf"];
+        
+    return [[NSFileWrapper alloc] initDirectoryWithFileWrappers:packageFiles ];
 }
 
-+ (NSString *)RTFStringFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy
++ (NSString *)RTFStringFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    RKResourcePool *resources = [RKResourcePool new];
-
     NSString *body = [RKBodyWriter RTFBodyFromDocument:document withAttachmentPolicy:attachmentPolicy resources:resources];
     NSString *head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];
 

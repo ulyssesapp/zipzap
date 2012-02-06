@@ -99,4 +99,21 @@
     [self assertRTF: converted withTestDocument: @"simple"];
 }
 
+#pragma mark - Integration tests
+
+- (void)testGeneratingSimpleRTFD
+{
+    NSMutableAttributedString *originalString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", NSAttachmentCharacter]];
+    NSTextAttachment *image = [self textAttachmentWithName:@"image" withExtension:@"png"];
+
+    [originalString addAttribute:NSAttachmentAttributeName value:image range:NSMakeRange(0, 1)];
+    
+    NSAttributedString *convertedString = [self convertAndRereadRTFD:originalString documentAttributes:nil];
+    
+    NSTextAttachment *convertedAttachment = [convertedString attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
+    
+    STAssertEqualObjects(convertedAttachment.fileWrapper.filename, @"0.png", @"Invalid filename");
+    STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, image.fileWrapper.regularFileContents, @"File contents differ");
+}
+
 @end
