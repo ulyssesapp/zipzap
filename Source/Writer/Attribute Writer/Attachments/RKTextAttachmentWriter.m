@@ -41,13 +41,15 @@
     [RKAttributedStringWriter registerHandler:self forAttribute:NSAttachmentAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
-+ (void)addTagsForAttribute:(NSFileWrapper *)fileWrapper
++ (void)addTagsForAttribute:(NSTextAttachment *)textAttachment
              toTaggedString:(RKTaggedString *)taggedString 
                     inRange:(NSRange)range
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    if (fileWrapper) {
+    if (textAttachment) {
+        NSFileWrapper *fileWrapper = textAttachment.fileWrapper;
+        
         switch (attachmentPolicy) {
             case RKAttachmentPolicyEmbed:
                 [self addTagsForEmbeddedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
@@ -96,7 +98,7 @@
     
     // Register the tag
     // Note: the 0xAC byte is required by the RTFD definition
-    [taggedString registerTag:[NSString stringWithFormat:@"{{\\NeXTGraphic %@}\172}", filename, 0xAC] forPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"{{\\NeXTGraphic %@ \\width0 \\height0}\172}", filename, 0xAC] forPosition:range.location];
 }
 
 @end
