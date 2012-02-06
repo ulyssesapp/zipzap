@@ -109,6 +109,17 @@
     return fileWrappers;
 }
 
+- (NSMutableDictionary *)imageFileDictionary
+{
+    NSMutableDictionary *fileDictionary = [NSMutableDictionary new];
+    
+    for (NSFileWrapper *file in fileWrappers) {
+        [fileDictionary setObject:file forKey:file.filename];
+    }
+    
+    return fileDictionary;
+}
+
 #pragma marg - Text Lists
 
 - (NSUInteger)indexOfList:(RKTextList *)textList

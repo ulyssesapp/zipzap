@@ -58,6 +58,11 @@
 - (NSArray *)fileWrappers;
 
 /*!
+ @abstract Generates a dictionary mapping from filenames to the file wrappers of all used images
+ */
+- (NSMutableDictionary *)imageFileDictionary;
+
+/*!
  @abstract Returns the available lists
  */
 - (NSArray *)textLists;
