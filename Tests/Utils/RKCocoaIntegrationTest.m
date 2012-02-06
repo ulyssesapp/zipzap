@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKCocoaIntegrationTestHelper.h"
+#import "RKCocoaIntegrationTest.h"
 
-@implementation RKCocoaIntegrationTestHelper
+@implementation SenTestCase (RKCocoaIntegrationTest)
 
 - (NSDictionary *)collectAttribute:(NSString*)attributeName fromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range
 {

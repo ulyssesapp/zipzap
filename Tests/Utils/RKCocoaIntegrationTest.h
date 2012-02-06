@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface RKCocoaIntegrationTestHelper : SenTestCase
+@interface SenTestCase (RKCocoaIntegrationTest)
 
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes;
 

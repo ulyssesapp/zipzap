@@ -6,6 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface RKForegroundColorAttributeWriterTest : RKCocoaIntegrationTestHelper
+@interface RKForegroundColorAttributeWriterTest : SenTestCase
 
 @end

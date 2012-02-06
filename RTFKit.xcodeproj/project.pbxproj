@@ -13,7 +13,7 @@
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
 		50317D6C14C4951D00F23C04 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
-		792D68F514DEC823009FF3A4 /* RKCocoaIntegrationTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 792D68F414DEC823009FF3A4 /* RKCocoaIntegrationTestHelper.m */; };
+		792D68F514DEC823009FF3A4 /* RKCocoaIntegrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 792D68F414DEC823009FF3A4 /* RKCocoaIntegrationTest.m */; };
 		7935615214DB3B1F00FC0C1C /* RKTextListWriterAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935615014DB3B1F00FC0C1C /* RKTextListWriterAdditions.h */; };
 		7935615314DB3B1F00FC0C1C /* RKTextListWriterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935615114DB3B1F00FC0C1C /* RKTextListWriterAdditions.m */; };
 		7935615414DB3B1F00FC0C1C /* RKTextListWriterAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935615114DB3B1F00FC0C1C /* RKTextListWriterAdditions.m */; };
@@ -164,8 +164,8 @@
 		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
 		50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RTFKitTests-Info.plist"; sourceTree = "<group>"; };
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
-		792D68F314DEC823009FF3A4 /* RKCocoaIntegrationTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKCocoaIntegrationTestHelper.h; path = Utils/RKCocoaIntegrationTestHelper.h; sourceTree = "<group>"; };
-		792D68F414DEC823009FF3A4 /* RKCocoaIntegrationTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKCocoaIntegrationTestHelper.m; path = Utils/RKCocoaIntegrationTestHelper.m; sourceTree = "<group>"; };
+		792D68F314DEC823009FF3A4 /* RKCocoaIntegrationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; name = RKCocoaIntegrationTest.h; path = Utils/RKCocoaIntegrationTest.h; sourceTree = "<group>"; };
+		792D68F414DEC823009FF3A4 /* RKCocoaIntegrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKCocoaIntegrationTest.m; path = Utils/RKCocoaIntegrationTest.m; sourceTree = "<group>"; };
 		7935615014DB3B1F00FC0C1C /* RKTextListWriterAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextListWriterAdditions.h; path = Writer/Utils/RKTextListWriterAdditions.h; sourceTree = "<group>"; };
 		7935615114DB3B1F00FC0C1C /* RKTextListWriterAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextListWriterAdditions.m; path = Writer/Utils/RKTextListWriterAdditions.m; sourceTree = "<group>"; };
 		7935615514DB3C5B00FC0C1C /* RKTextListWriterAdditionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextListWriterAdditionsTest.h; path = Utils/RKTextListWriterAdditionsTest.h; sourceTree = "<group>"; };
@@ -640,8 +640,8 @@
 				7987903D14D2BD220046F8AB /* RKParagraphStyleWriter+TestExtensions.h */,
 				7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */,
 				7987904D14D2DF7E0046F8AB /* RKTaggedString+TestExtensions.h */,
-				792D68F314DEC823009FF3A4 /* RKCocoaIntegrationTestHelper.h */,
-				792D68F414DEC823009FF3A4 /* RKCocoaIntegrationTestHelper.m */,
+				792D68F314DEC823009FF3A4 /* RKCocoaIntegrationTest.h */,
+				792D68F414DEC823009FF3A4 /* RKCocoaIntegrationTest.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -912,7 +912,7 @@
 				7935619514DC6D8D00FC0C1C /* RKFootnote.m in Sources */,
 				7935619814DC6DF000FC0C1C /* RKFootnoteWriterTest.m in Sources */,
 				7935619D14DC6E1600FC0C1C /* RKFootnoteWriter.m in Sources */,
-				792D68F514DEC823009FF3A4 /* RKCocoaIntegrationTestHelper.m in Sources */,
+				792D68F514DEC823009FF3A4 /* RKCocoaIntegrationTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

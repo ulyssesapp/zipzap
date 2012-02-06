@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKStrikethroughStyleAttributeWriterTest : RKCocoaIntegrationTestHelper
+@interface RKStrikethroughStyleAttributeWriterTest : SenTestCase
 
 @end

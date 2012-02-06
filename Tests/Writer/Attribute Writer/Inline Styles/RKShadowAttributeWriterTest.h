@@ -10,6 +10,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface RKShadowAttributeWriterTest : RKCocoaIntegrationTestHelper
+@interface RKShadowAttributeWriterTest : SenTestCase
 
 @end

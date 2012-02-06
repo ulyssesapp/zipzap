@@ -11,5 +11,5 @@
     #import "RKTaggedString.h"
     #import "RKConversion.h"
 
-    #import "RKCocoaIntegrationTestHelper.h"
+    #import "RKCocoaIntegrationTest.h"
 #endif

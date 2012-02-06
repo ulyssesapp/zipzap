@@ -124,5 +124,9 @@
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\ulw\\uldb\\ulstyle32777 b\\ulnone c", @"Invalid underline style");
 }
 
+- (void)testUnderlineStyleCocoaIntegration
+{
+}
+
 
 @end

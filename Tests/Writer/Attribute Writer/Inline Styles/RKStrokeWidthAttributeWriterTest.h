@@ -6,6 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface RKStrokeWidthAttributeWriterTest : RKCocoaIntegrationTestHelper
+@interface RKStrokeWidthAttributeWriterTest : SenTestCase
 
 @end
