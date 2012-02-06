@@ -126,7 +126,37 @@
 
 - (void)testUnderlineStyleCocoaIntegration
 {
-}
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleSingle];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleDouble];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleThick];
 
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDash)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDot)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDotDot)];
+
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDash)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDot)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDotDot)];
+    
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDash)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDot)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDotDot)];
+
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlineByWordMask)];
+
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDash | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDash | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDash | NSUnderlineByWordMask)];
+
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDot | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDot | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDot | NSUnderlineByWordMask)];
+
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDotDot | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDotDot | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDotDot | NSUnderlineByWordMask)];
+}
 
 @end
