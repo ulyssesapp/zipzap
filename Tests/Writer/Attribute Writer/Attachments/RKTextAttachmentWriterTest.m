@@ -171,4 +171,22 @@
     STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, picture.fileWrapper.regularFileContents, @"File contents differ");
 }
 
+- (void)testMovieAttachmentCocoaIntegrationWithRTFD
+{
+    NSTextAttachment *movie = [self textAttachmentWithName:@"movie" withExtension:@"mov"];
+    
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
+    
+    [original addAttribute:NSAttachmentAttributeName value:movie range:NSMakeRange(1, 1)];
+    
+    NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:nil];
+    
+    STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc\n", NSAttachmentCharacter]), @"Invalid string content"); 
+    
+    NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
+    
+    STAssertEqualObjects(convertedAttachment.fileWrapper.filename, @"0.mov", @"Invalid filename");
+    STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, movie.fileWrapper.regularFileContents, @"File contents differ");
+}
+
 @end
