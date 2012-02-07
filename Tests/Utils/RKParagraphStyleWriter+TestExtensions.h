@@ -8,6 +8,6 @@
 
 @interface RKParagraphStyleWriter (TestExtensions)
 
-+ (NSString *)openingTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle;
++ (NSString *)openingTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range;
 
 @end

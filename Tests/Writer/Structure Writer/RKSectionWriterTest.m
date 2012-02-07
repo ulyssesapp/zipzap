@@ -48,7 +48,7 @@
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectorAll];
     
     STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\header \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\header \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid header generated"
                         );
 }
@@ -61,7 +61,7 @@
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
     STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\headerl \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\headerl \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid header generated"
                          );
 
@@ -69,7 +69,7 @@
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
     STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\headerr \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\headerr \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid header generated"
                          );
 
@@ -77,7 +77,7 @@
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
     STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\headerf \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\headerf \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid header generated"
                          );    
 }
@@ -90,7 +90,7 @@
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectorAll];
 
     STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footer \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\footer \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid footer generated"
                         );
 }
@@ -103,7 +103,7 @@
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
     STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footerl \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\footerl \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid footer generated"
                          );
     
@@ -111,7 +111,7 @@
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
     STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footerr \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\footerr \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid footer generated"
                          );
     
@@ -119,7 +119,7 @@
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
     STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footerf \\pard\\ql \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
+                         @"{\\footerf \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid footer generated"
                          );    
 }
