@@ -12,7 +12,7 @@ NSString *RKFootnoteAttributeName = @"RKFootnote";
 
 @implementation RKFootnote
 
-@synthesize content;
+@synthesize content, isEndnote;
 
 + (RKFootnote *)footnoteWithAttributedString:(NSAttributedString *)content
 {

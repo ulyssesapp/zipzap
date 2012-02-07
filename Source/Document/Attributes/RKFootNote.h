@@ -25,4 +25,9 @@ extern NSString *RKFootnoteAttributeName;
  */
 @property (nonatomic,readwrite,strong) NSAttributedString *content;
 
+/*!
+ @abstract Footnote or Endnote ?
+ */
+@property (nonatomic) BOOL isEndnote;
+
 @end

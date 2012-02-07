@@ -11,22 +11,48 @@
 
 @implementation RKFootnoteWriterTest
 
-- (void)testGenerateFootNote
+- (void)testGenerateFootnote
 {
     RKResourcePool *resources = [RKResourcePool new];
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
     [content addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
     
-    RKFootnote *footNote = [RKFootnote footnoteWithAttributedString:content];
+    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:content];
     NSString *string = [NSString stringWithFormat:@">%C<", NSAttachmentCharacter];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
     
-    [RKFootnoteWriter addTagsForAttribute:footNote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];
+    [RKFootnoteWriter addTagsForAttribute:footnote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\footnote \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs32 \\cf0 aaa\\par\n}<",
+                         @">{\\super \\chftn }{\\footnote {\\super \\chftn } \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs32 \\cf0 aaa\\par\n}<",
+                         @"Invalid footnote generated"
+                         );
+    
+    // Font was collected
+    STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)1, @"Invalid count of fonts");
+    STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:0], @"Menlo-Regular", @"Missing font");    
+}
+
+- (void)testGenerateEndnote
+{
+    RKResourcePool *resources = [RKResourcePool new];
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
+    
+    [content addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
+    
+    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:content];
+    NSString *string = [NSString stringWithFormat:@">%C<", NSAttachmentCharacter];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
+    
+    footnote.isEndnote = true;
+    
+    [RKFootnoteWriter addTagsForAttribute:footnote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];
+    
+    // Valid string tagging
+    STAssertEqualObjects([taggedString flattenedRTFString],
+                         @">{\\super \\chftn }{\\footnote\\ftnalt {\\super \\chftn } \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs32 \\cf0 aaa\\par\n}<",
                          @"Invalid footnote generated"
                          );
     
