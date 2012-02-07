@@ -33,7 +33,25 @@
     // Font was collected
     STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)1, @"Invalid count of fonts");
     STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:0], @"Menlo-Regular", @"Missing font");    
+}
 
+- (void)testFootnotesAreIgnoredByCocoa
+{
+    NSMutableAttributedString *footnoteContent = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
+    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:footnoteContent];
+    
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
+    
+    [original addAttribute:RKFootnoteAttributeName value:footnote range:NSMakeRange(1, 1)];
+    
+    NSAttributedString *converted = [self convertAndRereadRTF:original documentAttributes:nil];
+    
+    // Footnotes are just ignored
+    [converted enumerateAttribute:RKFootnoteAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+        STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
+    }];
+    
+    STAssertEqualObjects([converted string], @"abc\n", @"Invalid string content");    
 }
 
 @end
