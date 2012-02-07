@@ -27,4 +27,17 @@
                          @"Invalid links created");
 }
 
+- (void)testLinkAttachmentCocoaIntegration
+{
+    NSString *linkA = [NSURL URLWithString: @"http://google.de"];
+    NSString *linkB = [NSURL URLWithString: @"http://the-soulmen.com"];
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
+    
+    [attributedString addAttribute:NSLinkAttributeName value:linkA range:NSMakeRange(0, 1)];
+    [attributedString addAttribute:NSLinkAttributeName value:linkB range:NSMakeRange(1, 2)];
+    
+    [self assertReadingOfAttributedString:attributedString onAttribute:NSLinkAttributeName inRange:NSMakeRange(0,3)];
+}
+
 @end
