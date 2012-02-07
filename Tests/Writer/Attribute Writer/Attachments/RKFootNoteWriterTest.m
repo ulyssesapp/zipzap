@@ -19,7 +19,7 @@
     [content addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
     
     RKFootnote *footNote = [RKFootnote footnoteWithAttributedString:content];
-    NSString *string = [NSString stringWithFormat:@">%c<", NSAttachmentCharacter];
+    NSString *string = [NSString stringWithFormat:@">%C<", NSAttachmentCharacter];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
     
     [RKFootnoteWriter addTagsForAttribute:footNote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];

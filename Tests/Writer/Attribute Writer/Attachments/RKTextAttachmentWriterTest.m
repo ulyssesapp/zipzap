@@ -14,7 +14,7 @@
 - (void)testPictureAttachmentsIgnored
 {
     NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
     [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources];
@@ -26,14 +26,14 @@
 - (void)testPictureAttachmentsEmbedded
 {
     NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
     [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources];
     NSString *flattened = [taggedString flattenedRTFString];
     
     // Attachment charracter was removed
-    STAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%c", NSAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
+    STAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", NSAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
     
     // Picture tag is properly inserted
     NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\pngblip\n";
@@ -56,7 +56,7 @@
 - (void)testPictureAttachmentsUnsupportedFileType
 {
     NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"jpg"];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
     [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources];
@@ -68,7 +68,7 @@
 - (void)testPictureAttachmentsReferenced
 {
     NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
     [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyReference resources:resources];
@@ -95,7 +95,7 @@
 - (void)testMovieAttachmentsReferenced
 {
     NSTextAttachment *picture = [self textAttachmentWithName:@"movie" withExtension:@"mov"];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%c--", NSAttachmentCharacter]];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
     [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyReference resources:resources];

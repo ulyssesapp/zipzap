@@ -98,7 +98,7 @@
 
 - (void)testGeneratingSimpleRTFD
 {
-    NSMutableAttributedString *originalString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%c", NSAttachmentCharacter]];
+    NSMutableAttributedString *originalString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%C", NSAttachmentCharacter]];
     NSTextAttachment *image = [self textAttachmentWithName:@"image" withExtension:@"png"];
 
     [originalString addAttribute:NSAttachmentAttributeName value:image range:NSMakeRange(0, 1)];
