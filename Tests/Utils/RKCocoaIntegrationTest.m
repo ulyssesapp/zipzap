@@ -73,13 +73,13 @@
         
         STAssertNotNil(convertedAttributeValue, @"Missing attribute");
         
-        if ([convertedAttributeValue isKindOfClass:[NSColor class]] && [originalAttributeValue isKindOfClass:[NSColor class]]) {
+        if ([convertedAttributeValue isKindOfClass: [NSColor class]] && [originalAttributeValue isKindOfClass: [NSColor class]]) {
             NSColor *convertedColor = [NSColor rtfColorFromColor: convertedAttributeValue];
             NSColor *originalColor = [NSColor rtfColorFromColor: originalAttributeValue];
             
             STAssertEqualObjects(convertedColor, originalColor, @"Attributes differ");
         }
-        else if ([convertedAttributeValue isKindOfClass:[NSShadow class]] && [originalAttributeValue isKindOfClass:[NSShadow class]]) {
+        else if ([convertedAttributeValue isKindOfClass: [NSShadow class]] && [originalAttributeValue isKindOfClass: [NSShadow class]]) {
             NSShadow *convertedShadow = convertedAttributeValue;
             NSShadow *originalShadow = originalAttributeValue;
             
@@ -87,6 +87,12 @@
             convertedShadow.shadowColor = [NSColor rtfColorFromColor:convertedShadow.shadowColor];
             
             STAssertEqualObjects(originalShadow, convertedShadow, @"Attributes differ");
+        }
+        else if ([convertedAttributeValue isKindOfClass: [NSParagraphStyle class]] && [originalAttributeValue isKindOfClass: [NSParagraphStyle class]]) {
+            NSParagraphStyle *convertedStyle = convertedAttributeValue;
+            NSParagraphStyle *originalStyle = originalAttributeValue;
+            
+            STAssertEqualObjects([convertedStyle description], [originalStyle description], @"Attributes differ");
         }
         else if (originalAttributeValue != nil) {        
             STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
