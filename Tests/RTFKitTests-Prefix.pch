@@ -12,4 +12,5 @@
     #import "RKConversion.h"
 
     #import "RKCocoaIntegrationTest.h"
+    #import "RKReferenceTest.h"
 #endif
