@@ -44,7 +44,7 @@
     // Sections with placeholder contents
     NSMutableAttributedString *contentA = [[NSMutableAttributedString alloc] 
                                            initWithString:[NSString stringWithFormat:
-                                                           @"Section Number: 1 == %C, Page Number: 2 == %C",
+                                                           @"Section Number: 1 == %C, Page Number: 1 == %C",
                                                            NSAttachmentCharacter, NSAttachmentCharacter
                                                            ]
                                            ];
