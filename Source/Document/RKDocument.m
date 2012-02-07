@@ -12,7 +12,8 @@
 
 @implementation RKDocument
 
-@synthesize sections, metadata, hyphenationEnabled, footnotePlacement, pageSize, pageInsets, pageOrientation;
+@synthesize sections, metadata, hyphenationEnabled, pageSize, pageInsets, pageOrientation,
+            footnotePlacement, endnotePlacement, footnoteEnumerationStyle, endnoteEnumerationStyle, footnoteEnumerationPolicy, restartEndnotesOnEachSection;
 
 + (RKDocument *)documentWithSections:(NSArray *)initialSections
 {

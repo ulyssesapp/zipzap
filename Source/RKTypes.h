@@ -6,13 +6,21 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 /*!
- @abstract Specifies the placement of footnotes inside a document
+ @abstract Specifies the usage of footnotes and endnotes
  */
 typedef enum {
-    RKFootnotePlacementSamePage     = 0,
-    RKFootnotePlacementDocumentEnd  = 1,
-    RKFootnotePlacementSectionEnd   = 2
+    RKFootnotePlacementSamePage                 = 0,
+    RKFootnotePlacementSectionEnd               = 1,
+    RKFootnotePlacementDocumentEnd              = 2
 } RKFootnotePlacement;
+
+/*!
+ @abstract Specifies the placement of endnotes inside a document
+ */
+typedef enum {
+    RKEndnotePlacementDocumentEnd              = 0,
+    RKEndnotePlacementSectionEnd               = 1
+} RKEndnotePlacement;
 
 /*!
  @abstract Specifies the orientation of a page
@@ -45,6 +53,27 @@ typedef enum {
     RKPageNumberingAlphabeticLowerCase  = 3,
     RKPageNumberingAlphabeticUpperCase  = 4
 } RKPageNumberingStyle;
+
+/*!
+ @abstract Specifies the style of footnote numbering inside a section
+ */
+typedef enum {
+    RKFootnoteEnumerationDecimal                    = 0,
+    RKFootnoteEnumerationAlphabeticLowerCase        = 1,
+    RKFootnoteEnumerationAlphabeticUpperCase        = 2,
+    RKFootnoteEnumerationRomanLowerCase             = 3,
+    RKFootnoteEnumerationRomanUpperCase             = 4,
+    RKFootnoteEnumerationChicagoManual              = 5
+}RKFootnoteEnumerationStyle;
+
+/*!
+ @abstract Options for restarting footnote enumeration
+ */
+typedef enum {
+    RKFootnoteRestartEnumerationOnEachPage          = 0,
+    RKFootnoteRestartEnumerationOnEachSection       = 1,
+    RKFootnoteContinuousEnumerationInDocument       = 2
+}RKFootnoteEnumerationPolicy;
 
 /*!
  @abstract Possible selections for page headers and footers

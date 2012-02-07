@@ -116,16 +116,26 @@
     RKDocument *document = [RKDocument new];
     RKPageInsets insets = {.top = 100.0, .left = 200.0, .right = 300.0, .bottom = 400.0};
 
-    // Test setting: Hyphenation, Footnotes, Overriding default size / margins, portrait format
+    // Test setting: Hyphenation, Footnotes on same page, Endnotes on section end, Overriding default size / margins, portrait format
     [document setHyphenationEnabled:YES];
     [document setFootnotePlacement:RKFootnotePlacementSamePage];
+    [document setEndnotePlacement:RKEndnotePlacementSectionEnd];
     [document setPageSize:NSMakeSize(100.0, 200.0)];
     [document setPageInsets:insets];
     [document setPageOrientation:RKPageOrientationPortrait];
-
+    
+    [document setFootnoteEnumerationStyle:RKFootnoteEnumerationRomanLowerCase];
+    [document setEndnoteEnumerationStyle:RKFootnoteEnumerationAlphabeticLowerCase];
+    
+    [document setFootnoteEnumerationPolicy:RKFootnoteRestartEnumerationOnEachSection];
+    [document setRestartEndnotesOnEachSection:NO];
+    
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\hyphauto"
-                          "\\fet0"
+                          "\\fet2\\aendnotes"
+                          "\\ftnbj\\aftnbj"
+                          "\\ftnnrlc\\aftnnalc"
+                          "\\ftnrestart\\aftnrstcont"
                           "\\paperw2000"
                           "\\paperh4000"
                           "\\margt2000"
@@ -139,10 +149,14 @@
     // Test setting: No Hyphenation, Document endnotes, landscape format    
     [document setHyphenationEnabled:NO];
     [document setFootnotePlacement:RKFootnotePlacementDocumentEnd];
+    [document setEndnotePlacement:RKEndnotePlacementDocumentEnd];    
     [document setPageOrientation:RKPageOrientationLandscape];
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet1\\enddoc\\aenddoc"
+                         "\\ftnbj\\aftnbj"
+                         "\\ftnnrlc\\aftnnalc"
+                         "\\ftnrestart\\aftnrstcont"                         
                          "\\landscape"
                          "\\paperw2000"
                          "\\paperh4000"
@@ -160,7 +174,10 @@
     [document setPageOrientation:RKPageOrientationLandscape];
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
-                         @ "\\fet1\\endnotes\\aendnotes"
+                         @ "\\fet1\\endnotes\\aenddoc"
+                         "\\ftnbj\\aftnbj"
+                         "\\ftnnrlc\\aftnnalc"
+                         "\\ftnrestart\\aftnrstcont"                       
                          "\\landscape"
                          "\\paperw2000"
                          "\\paperh4000"

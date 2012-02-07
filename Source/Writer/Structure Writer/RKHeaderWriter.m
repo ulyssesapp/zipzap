@@ -59,7 +59,8 @@ enum {
 
 @implementation RKHeaderWriter
 
-NSDictionary *RKHeaderWriterMetadataDescriptions;
+NSArray *RKHeaderWriterMetadataDescriptions;
+NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (void)initialize
 {
@@ -80,6 +81,17 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
                             [NSArray arrayWithObjects: NSCategoryDocumentAttribute,             @"\\category",      [NSString class], nil],
                             nil
                            ];
+    
+    RKHeaderWriterFootnoteStyleNames = 
+                            [NSDictionary dictionaryWithObjectsAndKeys:
+                             @"ar",  [NSNumber numberWithInt:RKFootnoteEnumerationDecimal],
+                             @"rlc", [NSNumber numberWithInt:RKFootnoteEnumerationRomanLowerCase],
+                             @"ruc", [NSNumber numberWithInt:RKFootnoteEnumerationRomanUpperCase],
+                             @"alc", [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticLowerCase],
+                             @"auc", [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticUpperCase],
+                             @"chi", [NSNumber numberWithInt:RKFootnoteEnumerationChicagoManual],
+                             nil
+                             ];
 }
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
@@ -243,17 +255,64 @@ NSDictionary *RKHeaderWriterMetadataDescriptions;
     if (document.hyphenationEnabled)
         [attributes appendString:@"\\hyphauto"];
     
-    // Footnote settings
+    // Footnote placement
     switch (document.footnotePlacement) {
         case RKFootnotePlacementSamePage:
-            [attributes appendString:@"\\fet0"];
-            break;
-        case RKFootnotePlacementDocumentEnd:
-            [attributes appendString:@"\\fet1\\enddoc\\aenddoc"];
+            [attributes appendString:@"\\fet2"];
             break;
         case RKFootnotePlacementSectionEnd:
-            [attributes appendString:@"\\fet1\\endnotes\\aendnotes"];
+            [attributes appendString:@"\\fet1\\endnotes"];
             break;
+        case RKFootnotePlacementDocumentEnd:
+            [attributes appendString:@"\\fet1\\enddoc"];
+            break;
+    }
+
+    // Endnote placement
+    switch (document.endnotePlacement) {
+        case RKEndnotePlacementSectionEnd:
+            [attributes appendString:@"\\aendnotes"];
+            break;
+        case RKEndnotePlacementDocumentEnd:
+            [attributes appendString:@"\\aenddoc"];
+            break;
+    }
+    
+    // MS Word requires this in order to enumerate footnotes / endnotes correctly
+    [attributes appendString:@"\\ftnbj"];
+    [attributes appendString:@"\\aftnbj"];    
+    
+    // Footnote layouting
+    NSString *footnoteStyle = [RKHeaderWriterFootnoteStyleNames objectForKey:[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
+    
+    if (footnoteStyle != nil)
+        [attributes appendFormat:@"\\ftnn%@", footnoteStyle];
+
+    // Endnote layouting
+    NSString *endnoteStyle = [RKHeaderWriterFootnoteStyleNames objectForKey:[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
+    
+    if (footnoteStyle != nil)
+        [attributes appendFormat:@"\\aftnn%@", endnoteStyle];
+    
+    // Footnote restart policy
+    switch (document.footnoteEnumerationPolicy) {
+        case (RKFootnoteRestartEnumerationOnEachPage):
+            [attributes appendString:@"\\ftnrstpg"];
+            break;
+        case (RKFootnoteRestartEnumerationOnEachSection):
+            [attributes appendString:@"\\ftnrestart"];
+            break;
+        case (RKFootnoteContinuousEnumerationInDocument):
+            [attributes appendString:@"\\ftnrstcont"];
+            break;
+    }
+    
+    // Endnote restart policy
+    if (document.restartEndnotesOnEachSection) {
+        [attributes appendString:@"\\aftnrestart"];
+    }
+    else {
+        [attributes appendString:@"\\aftnrstcont"];        
     }
     
     // Page orientation

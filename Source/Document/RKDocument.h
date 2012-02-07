@@ -86,11 +86,6 @@
 @property(nonatomic) BOOL hyphenationEnabled;
 
 /*!
- @abstract Specifies the placement of footnotes within the document
- */
-@property(nonatomic) RKFootnotePlacement footnotePlacement;
-
-/*!
  @abstract Page size in points
  */
 @property(nonatomic) NSSize pageSize;
@@ -105,6 +100,34 @@
  */
 @property(nonatomic) RKPageOrientation pageOrientation;
 
+/*!
+ @abstract Specifies the placement of footnotes within the document
+ */
+@property(nonatomic) RKFootnotePlacement footnotePlacement;
 
+/*!
+ @abstract Specifies the placement of endnotes within the document
+ */
+@property(nonatomic) RKEndnotePlacement endnotePlacement;
+
+/*!
+ @abstract Specifies the footnote enumeration style
+ */
+@property(nonatomic) RKFootnoteEnumerationStyle footnoteEnumerationStyle;
+
+/*!
+ @abstract Specifies the endnote enumeration style
+ */
+@property(nonatomic) RKFootnoteEnumerationStyle endnoteEnumerationStyle;
+
+/*!
+ @abstract Specifies whether footnote numbering should restart on each page
+ */
+@property(nonatomic) RKFootnoteEnumerationPolicy footnoteEnumerationPolicy;
+
+/*!
+ @abstract Specifies whether endnotes restart on each section
+ */
+@property(nonatomic) BOOL restartEndnotesOnEachSection;
 
 @end
