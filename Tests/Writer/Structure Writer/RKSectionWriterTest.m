@@ -126,4 +126,29 @@
     [self assertRTF: converted withTestDocument: @"multicolumn"];
 }
 
+- (void)testHeadersAndFootersAreCompatibleToManualReferenceTest
+{
+    // Two Sections with different contents
+    RKSection *sectionAll = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
+    RKSection *sectionSwitch = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
+    
+    [sectionAll setHeader:[[NSAttributedString alloc] initWithString:@"Header for all pages"] forPages:RKPageSelectorAll];
+    [sectionAll setFooter:[[NSAttributedString alloc] initWithString:@"Footer for all pages"] forPages:RKPageSelectorAll];
+
+    [sectionSwitch setHeader:[[NSAttributedString alloc] initWithString:@"Header for first pages"] forPages:RKPageSelectionFirst];
+    [sectionSwitch setFooter:[[NSAttributedString alloc] initWithString:@"Footer for first pages"] forPages:RKPageSelectionFirst];
+    
+    [sectionSwitch setHeader:[[NSAttributedString alloc] initWithString:@"Header for left pages"] forPages:RKPageSelectionLeft];
+    [sectionSwitch setFooter:[[NSAttributedString alloc] initWithString:@"Footer for left pages"] forPages:RKPageSelectionLeft];
+
+    [sectionSwitch setHeader:[[NSAttributedString alloc] initWithString:@"Header for right pages"] forPages:RKPageSelectionRight];
+    [sectionSwitch setFooter:[[NSAttributedString alloc] initWithString:@"Footer for right pages"] forPages:RKPageSelectionRight];
+    
+    // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionAll, sectionSwitch, nil]];
+    NSData *converted = [document RTF];
+    
+    [self assertRTF: converted withTestDocument: @"headersAndFooters"];
+}
+
 @end
