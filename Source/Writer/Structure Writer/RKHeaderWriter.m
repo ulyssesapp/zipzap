@@ -249,7 +249,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)documentFormatFromDocument:(RKDocument *)document
 {
-    NSMutableString *attributes = [NSMutableString string];
+    NSMutableString *attributes = [NSMutableString stringWithString:@"\\facingp"];
     
     // Hyphenation settings
     if (document.hyphenationEnabled)

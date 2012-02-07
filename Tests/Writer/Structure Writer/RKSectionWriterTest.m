@@ -21,36 +21,23 @@
     
     // Decimal page numbering
     section.pageNumberingStyle = RKPageNumberingDecimal;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\cols2\\pgnstarts3\\pgndec", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgndec", @"Invalid translation");
 
     // Roman lower case
     section.pageNumberingStyle = RKPageNumberingRomanLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\cols2\\pgnstarts3\\pgnlcrm", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnlcrm", @"Invalid translation");
 
     // Roman upper case
     section.pageNumberingStyle = RKPageNumberingRomanUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\cols2\\pgnstarts3\\pgnucrm", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnucrm", @"Invalid translation");
 
     // Letter upper case
     section.pageNumberingStyle = RKPageNumberingAlphabeticUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\cols2\\pgnstarts3\\pgnultr", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnultr", @"Invalid translation");
 
     // Letter lower case
     section.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\cols2\\pgnstarts3\\pgnlltr", @"Invalid translation");
-}
-
-- (void)testGeneratingHeadersForAllPages
-{
-    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
-    RKResourcePool *resources = [RKResourcePool new];
-    
-    [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectorAll];
-    
-    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\header \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
-                         @"Invalid header generated"
-                        );
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnlltr", @"Invalid translation");
 }
 
 - (void)testGeneratingHeadersForSomePages
@@ -80,19 +67,6 @@
                          @"{\\headerf \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
                          @"Invalid header generated"
                          );    
-}
-
-- (void)testGeneratingFooterForAllPages
-{
-    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
-    RKResourcePool *resources = [RKResourcePool new];
-    
-    [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectorAll];
-
-    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footer \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs24 \\cf0 Text\\par\n}",
-                         @"Invalid footer generated"
-                        );
 }
 
 - (void)testGeneratingFootersForSomePages

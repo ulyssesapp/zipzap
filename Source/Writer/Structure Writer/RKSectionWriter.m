@@ -59,7 +59,7 @@
 
 + (NSString *)sectionAttributesForSection:(RKSection *)section
 {
-    NSMutableString *attributes = [NSMutableString new];
+    NSMutableString *attributes = [NSMutableString stringWithString:@"\\titlepg"];
     
     [attributes appendFormat: @"\\cols%u", section.numberOfColumns];
     [attributes appendFormat: @"\\pgnstarts%u", section.indexOfFirstPage];
@@ -108,30 +108,21 @@
 
 + (NSString *)headersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    NSMutableDictionary *translationTable;
+    NSMutableDictionary *translationTable = [NSMutableDictionary new];
+
+    NSAttributedString *headerl = [section headerForPage: RKPageSelectionLeft];
+    NSAttributedString *headerr = [section headerForPage: RKPageSelectionRight];
+    NSAttributedString *headerf = [section headerForPage: RKPageSelectionFirst];         
     
-    if ([section hasSingleHeaderForAllPages]) {
-        translationTable = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                            [section headerForPage: RKPageSelectionLeft], @"header",
-                            nil
-                           ];
-    }
-     else {
-        translationTable = [NSMutableDictionary new];
+    if (headerl)
+        [translationTable setObject:headerl forKey:@"headerl"];
 
-        NSAttributedString *headerl = [section headerForPage: RKPageSelectionLeft];
-        NSAttributedString *headerr = [section headerForPage: RKPageSelectionRight];
-        NSAttributedString *headerf = [section headerForPage: RKPageSelectionFirst];         
-        
-        if (headerl)
-            [translationTable setObject:headerl forKey:@"headerl"];
+    if (headerr)
+        [translationTable setObject:headerr forKey:@"headerr"];
 
-         if (headerr)
-            [translationTable setObject:headerr forKey:@"headerr"];
+    if (headerf)
+        [translationTable setObject:headerf forKey:@"headerf"];
 
-         if (headerf)
-            [translationTable setObject:headerf forKey:@"headerf"];
-     }
 
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
 
@@ -139,30 +130,20 @@
 
 + (NSString *)footersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    NSMutableDictionary *translationTable;    
+    NSMutableDictionary *translationTable = [NSMutableDictionary new];
     
-    if ([section hasSingleFooterForAllPages]) {
-        translationTable = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [section footerForPage: RKPageSelectionLeft], @"footer",
-                            nil
-                            ];
-    }
-    else {
-        translationTable = [NSMutableDictionary new];
-        
-        NSAttributedString *footerl = [section footerForPage: RKPageSelectionLeft];
-        NSAttributedString *footerr = [section footerForPage: RKPageSelectionRight];
-        NSAttributedString *footerf = [section footerForPage: RKPageSelectionFirst];         
-        
-        if (footerl)
-            [translationTable setObject:footerl forKey:@"footerl"];
-        
-        if (footerr)
-            [translationTable setObject:footerr forKey:@"footerr"];
-        
-        if (footerf)
-            [translationTable setObject:footerf forKey:@"footerf"];
-    }
+    NSAttributedString *footerl = [section footerForPage: RKPageSelectionLeft];
+    NSAttributedString *footerr = [section footerForPage: RKPageSelectionRight];
+    NSAttributedString *footerf = [section footerForPage: RKPageSelectionFirst];         
+    
+    if (footerl)
+        [translationTable setObject:footerl forKey:@"footerl"];
+    
+    if (footerr)
+        [translationTable setObject:footerr forKey:@"footerr"];
+    
+    if (footerf)
+        [translationTable setObject:footerf forKey:@"footerf"];
     
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
 }

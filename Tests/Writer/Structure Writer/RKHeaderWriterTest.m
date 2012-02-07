@@ -131,7 +131,8 @@
     [document setRestartEndnotesOnEachSection:NO];
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
-                         @"\\hyphauto"
+                         @"\\facingp"
+                          "\\hyphauto"
                           "\\fet2\\aendnotes"
                           "\\ftnbj\\aftnbj"
                           "\\ftnnrlc\\aftnnalc\\saftnnalc"
@@ -153,7 +154,8 @@
     [document setPageOrientation:RKPageOrientationLandscape];
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
-                         @"\\fet1\\enddoc\\aenddoc"
+                         @"\\facingp"
+                         "\\fet1\\enddoc\\aenddoc"
                          "\\ftnbj\\aftnbj"
                          "\\ftnnrlc\\aftnnalc\\saftnnalc"
                          "\\ftnrestart\\aftnrstcont"                         
@@ -174,7 +176,8 @@
     [document setPageOrientation:RKPageOrientationLandscape];
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
-                         @ "\\fet1\\endnotes\\aenddoc"
+                         @"\\facingp" 
+                         "\\fet1\\endnotes\\aenddoc"
                          "\\ftnbj\\aftnbj"
                          "\\ftnnrlc\\aftnnalc\\saftnnalc"
                          "\\ftnrestart\\aftnrstcont"                       
