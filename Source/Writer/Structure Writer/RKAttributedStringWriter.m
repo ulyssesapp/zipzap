@@ -60,7 +60,13 @@ NSMutableDictionary *attributeHandlers;
             Class handler = [attributeHandlers objectForKey: attributeName];
             
             [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(Class value, NSRange range, BOOL *stop) {
-                [handler addTagsForAttribute:value toTaggedString:taggedString inRange:range withAttachmentPolicy:attachmentPolicy resources:resources];
+                [handler addTagsForAttribute:value 
+                              toTaggedString:taggedString 
+                                     inRange:range 
+                          ofAttributedString:attributedString
+                        withAttachmentPolicy:attachmentPolicy 
+                                   resources:resources
+                 ];
             }];
         }
     }

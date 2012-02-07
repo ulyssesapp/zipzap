@@ -21,4 +21,15 @@
        withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources;
 
+/*!
+ @abstract Adds a tag for a certain attribute
+ @discussion Advanced variant, automatic fallback to addTagsForAttribute:toTaggedString:inRange:withAttachmentPolicy:resources if not implemented.
+ */
++ (void)addTagsForAttribute:(id)value
+             toTaggedString:(RKTaggedString *)taggedString 
+                    inRange:(NSRange)range
+         ofAttributedString:(NSAttributedString *)attributedString
+       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                  resources:(RKResourcePool *)resources;
+
 @end

@@ -10,9 +10,6 @@
 
 @implementation RKAttributeWriter
 
-/*!
- @abstract Adds a tag for a certain attribute
- */
 + (void)addTagsForAttribute:(id)value
              toTaggedString:(RKTaggedString *)taggedString 
                     inRange:(NSRange)range
@@ -20,6 +17,17 @@
                   resources:(RKResourcePool *)resources
 {
     NSAssert(false, @"Missing method of abstract class");
+}
+
++ (void)addTagsForAttribute:(id)value
+             toTaggedString:(RKTaggedString *)taggedString 
+                    inRange:(NSRange)range
+         ofAttributedString:(NSAttributedString *)attributedString
+       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                  resources:(RKResourcePool *)resources
+{
+    // If this method is not overriden, we just call the basic variant that requires less arguments
+    [self addTagsForAttribute:value toTaggedString:taggedString inRange:range withAttachmentPolicy:attachmentPolicy resources:resources];
 }
 
 @end

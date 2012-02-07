@@ -35,6 +35,7 @@ typedef enum {
  @abstract Registers a handler class for writing out an attribute to RTF
  @discussion The class has to inherit from RKAttributeWriter. 
              If the handler is added with priority, it will be executed before all non-priorized handlers.
+             Calls addTagsForAttribute:toTaggedString:inRange:ofAttributedString:withAttachmentPolicy:resources: on the handler.
  */
 + (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriority:(RKAttributedStringWriterPriority)priority;
 
