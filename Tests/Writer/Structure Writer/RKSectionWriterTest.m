@@ -124,4 +124,32 @@
                          );    
 }
 
+- (void)testSectionsAreCompatibleToManualReferenceTest
+{
+    // Two Sections with different contents
+    RKSection *sectionA = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Section"]];
+    RKSection *sectionB = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"Second Section"]];
+   
+    // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
+    NSData *converted = [document RTF];
+    
+    [self assertRTF: converted withTestDocument: @"section"];
+}
+
+- (void)testMulticolumnSectionsAreCompatibleToManualReferenceTest
+{
+    // Two Sections with different contents
+    RKSection *sectionA = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Section"]];
+    RKSection *sectionB = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"Second Section"]];
+    
+    sectionA.numberOfColumns = 2;
+        
+    // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
+    NSData *converted = [document RTF];
+    
+    [self assertRTF: converted withTestDocument: @"multicolumn"];
+}
+
 @end
