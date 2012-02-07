@@ -24,6 +24,11 @@
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes;
 
 /*!
+ @abstract Converts the given attributed string to an RTF without text attachments and re-reads it using Cocoa
+ */
+- (NSAttributedString *)convertAndRereadPlainRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes;
+
+/*!
  @abstract Converts the given attributed string to RTFD and re-reads it using Cocoa
  */
 - (NSAttributedString *)convertAndRereadRTFD:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes;

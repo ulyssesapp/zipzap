@@ -119,4 +119,56 @@
     STAssertEqualObjects([registeredFile regularFileContents], [picture.fileWrapper regularFileContents], @"File contents differ");
 }
 
+- (void)testPictureAttachmentCocoaIntegrationWithRTF
+{
+    NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
+    
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
+    
+    [original addAttribute:NSAttachmentAttributeName value:picture range:NSMakeRange(1, 1)];
+    
+    NSAttributedString *converted = [self convertAndRereadRTF:original documentAttributes:nil];
+    
+    [converted enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+        STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
+    }];
+    
+    STAssertEqualObjects([converted string], @"abc\n", @"Invalid string content");    
+}
+
+- (void)testPictureAttachmentCocoaIntegrationWithPlainRTF
+{
+    NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
+    
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
+    
+    [original addAttribute:NSAttachmentAttributeName value:picture range:NSMakeRange(1, 1)];
+    
+    NSAttributedString *converted = [self convertAndRereadPlainRTF:original documentAttributes:nil];
+    
+    [converted enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
+        STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
+    }];
+    
+    STAssertEqualObjects([converted string], @"abc\n", @"Invalid string content");    
+}
+
+- (void)testPictureAttachmentCocoaIntegrationWithRTFD
+{
+    NSTextAttachment *picture = [self textAttachmentWithName:@"image" withExtension:@"png"];
+    
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
+    
+    [original addAttribute:NSAttachmentAttributeName value:picture range:NSMakeRange(1, 1)];
+    
+    NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:nil];
+
+    STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc\n", NSAttachmentCharacter]), @"Invalid string content"); 
+    
+    NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
+    
+    STAssertEqualObjects(convertedAttachment.fileWrapper.filename, @"0.png", @"Invalid filename");
+    STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, picture.fileWrapper.regularFileContents, @"File contents differ");
+}
+
 @end

@@ -39,6 +39,14 @@
 	return [[NSTextAttachment alloc] initWithFileWrapper: [self testFileWithName:name withExtension:extension]];
 }
 
+- (NSAttributedString *)convertAndRereadPlainRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
+{
+    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    NSData *rtf = [document plainRTF];
+    
+    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
+}
+
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
     RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
