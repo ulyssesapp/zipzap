@@ -65,11 +65,6 @@
     NSString *normalizedGenerated = [self normalizeRTFString: generated];
     NSString *normalizedExpected = [self normalizeRTFString: expected];
     
-    if (![normalizedGenerated isEqual: normalizedExpected]) {
-        NSLog(@"\n'%@'\n'%@'", normalizedGenerated, normalizedExpected);
-        NSLog(@"\n");
-    }
-    
     STAssertEqualObjects(normalizedGenerated, normalizedExpected, @"Unexpected RTF conversion.", normalizedGenerated, normalizedExpected);
 }
 

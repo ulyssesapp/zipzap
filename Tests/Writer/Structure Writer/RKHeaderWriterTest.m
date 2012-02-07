@@ -239,8 +239,6 @@
             "}"
         "}\n";
     
-    NSLog(@"\n'%@'\n'%@'\n", listTable, expectedListTable);
-    
     STAssertEqualObjects(listTable, expectedListTable, @"Invalid list table generated");
 }
 
