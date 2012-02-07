@@ -8,6 +8,7 @@
 
 #import "RKAttributedStringWriter.h"
 #import "RKFontAttributeWriter.h"
+#import "RKFontAdditions.h"
 
 @implementation RKFontAttributeWriter
 
@@ -27,7 +28,7 @@
     
     // Default font is "Helvetica", 12pt
     if (!font)
-        font = [NSFont fontWithName:@"Helvetica" size:12];
+        font = [NSFont RTFdefaultFont];
     
     NSUInteger fontIndex = [resources indexOfFont:font];
     
