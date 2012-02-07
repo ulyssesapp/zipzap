@@ -24,12 +24,12 @@ NSString *RKTextPlaceholderAttributeName = @"RKTextPlaceholder";
     return [[self alloc] initWithPlaceholderType:placeholderType]; 
 }
 
-- (id)initWithPlaceholderType:(RKTextPlaceholderType)placeholderType
+- (id)initWithPlaceholderType:(RKTextPlaceholderType)initialPlaceholderType
 {
     self = [self init];
     
     if (self) {
-        self.placeholderType = placeholderType;
+        self.placeholderType = initialPlaceholderType;
     }
     
     return self;
