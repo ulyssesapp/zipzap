@@ -22,7 +22,7 @@
             case '\\':
             case '}':
             case '{':
-                [escapedString appendFormat: @"\\%c", currentChar];
+                [escapedString appendFormat: @"\\%C", currentChar];
                 break;
                 
             case '\n':
@@ -35,7 +35,7 @@
                     [escapedString appendFormat: @"\\u%u", currentChar];
                 }
                 else {
-                    [escapedString appendFormat: @"%c", currentChar];
+                    [escapedString appendFormat: @"%C", currentChar];
                 }
         }
     }
