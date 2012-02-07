@@ -24,6 +24,14 @@
             case '{':
                 [escapedString appendFormat: @"\\%C", currentChar];
                 break;
+            
+            case RKSpecialCharacterTab:
+                [escapedString appendString: @"\\tab "];
+                break;
+
+            case RKSpecialCharacterNewPage:
+                [escapedString appendString: @"\\page\n"];
+                break;                
                 
             case '\n':
                 [escapedString appendString: @"\\line\n"];
