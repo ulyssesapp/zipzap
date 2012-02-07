@@ -80,4 +80,44 @@
     STAssertEqualObjects([converted string], @"abc\n", @"Invalid string content");    
 }
 
+- (void)testFootnotesAreCompatibleToManualReferenceTest
+{
+    // Footnote with some inline formatting
+    NSMutableAttributedString *footnoteContent = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
+    [footnoteContent addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:12] range:NSMakeRange(1,1)];
+    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:footnoteContent];
+    
+    // Text with an inline footnote
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
+    
+    [original addAttribute:RKFootnoteAttributeName value:footnote range:NSMakeRange(1, 1)];
+
+    // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
+    RKDocument *document = [RKDocument documentWithAttributedString:original];
+    NSData *converted = [document RTF];
+    
+    [self assertRTF: converted withTestDocument: @"footnote"];
+}
+
+- (void)testEndnotesAreCompatibleToManualReferenceTest
+{
+    // Footnote with some inline formatting
+    NSMutableAttributedString *footnoteContent = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
+    [footnoteContent addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:12] range:NSMakeRange(1,1)];
+    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:footnoteContent];
+    
+    footnote.isEndnote = true;
+    
+    // Text with an inline footnote
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
+    
+    [original addAttribute:RKFootnoteAttributeName value:footnote range:NSMakeRange(1, 1)];
+    
+    // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
+    RKDocument *document = [RKDocument documentWithAttributedString:original];
+    NSData *converted = [document RTF];
+    
+    [self assertRTF: converted withTestDocument: @"endnote"];
+}
+
 @end
