@@ -134,7 +134,7 @@
                          @"\\hyphauto"
                           "\\fet2\\aendnotes"
                           "\\ftnbj\\aftnbj"
-                          "\\ftnnrlc\\aftnnalc"
+                          "\\ftnnrlc\\aftnnalc\\saftnnalc"
                           "\\ftnrestart\\aftnrstcont"
                           "\\paperw2000"
                           "\\paperh4000"
@@ -155,7 +155,7 @@
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet1\\enddoc\\aenddoc"
                          "\\ftnbj\\aftnbj"
-                         "\\ftnnrlc\\aftnnalc"
+                         "\\ftnnrlc\\aftnnalc\\saftnnalc"
                          "\\ftnrestart\\aftnrstcont"                         
                          "\\landscape"
                          "\\paperw2000"
@@ -176,7 +176,7 @@
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @ "\\fet1\\endnotes\\aenddoc"
                          "\\ftnbj\\aftnbj"
-                         "\\ftnnrlc\\aftnnalc"
+                         "\\ftnnrlc\\aftnnalc\\saftnnalc"
                          "\\ftnrestart\\aftnrstcont"                       
                          "\\landscape"
                          "\\paperw2000"

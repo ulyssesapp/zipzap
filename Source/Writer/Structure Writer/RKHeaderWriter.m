@@ -288,11 +288,11 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     if (footnoteStyle != nil)
         [attributes appendFormat:@"\\ftnn%@", footnoteStyle];
 
-    // Endnote layouting
+    // Endnote layouting (using \aftnn and \saftn improves compatibility with Word)
     NSString *endnoteStyle = [RKHeaderWriterFootnoteStyleNames objectForKey:[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
     
     if (footnoteStyle != nil)
-        [attributes appendFormat:@"\\aftnn%@", endnoteStyle];
+        [attributes appendFormat:@"\\aftnn%@\\saftnn%@", endnoteStyle, endnoteStyle];
     
     // Footnote restart policy
     switch (document.footnoteEnumerationPolicy) {
