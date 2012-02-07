@@ -86,7 +86,7 @@
     // FIXME: It is not clear, how Cocoa calculates this
     if (paragraphStyle.tailIndent != 0)
         [rtf appendFormat:@"\\ri%i", (NSInteger)RKPointsToTwips(fabs(paragraphStyle.tailIndent))];
-  
+    
     // Line spacing
     if (paragraphStyle.lineSpacing != 0)
         [rtf appendFormat:@"\\slleading%u", (NSUInteger)RKPointsToTwips(paragraphStyle.lineSpacing), (NSUInteger)RKPointsToTwips(paragraphStyle.lineSpacing)];
