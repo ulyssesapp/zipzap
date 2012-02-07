@@ -77,7 +77,7 @@
     // Correct tag placement
     STAssertEqualObjects(flattened,
                          @"--"
-                         "{{\\NeXTGraphic 0.png \\width0 \\height0}\172}"
+                         "{{\\NeXTGraphic 0.png \\width0 \\height0}¬}"
                          "--",
                          @"Invalid tag generated"
                         );
@@ -104,7 +104,7 @@
     // Correct tag placement
     STAssertEqualObjects(flattened,
                          @"--"
-                         "{{\\NeXTGraphic 0.mov \\width0 \\height0}\172}"
+                         "{{\\NeXTGraphic 0.mov \\width0 \\height0}¬}"
                          "--",
                          @"Invalid tag generated"
                          );

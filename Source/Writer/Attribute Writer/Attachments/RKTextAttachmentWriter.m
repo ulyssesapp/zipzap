@@ -98,7 +98,7 @@
     
     // Register the tag
     // Note: the 0xAC byte is required by the RTFD definition
-    [taggedString registerTag:[NSString stringWithFormat:@"{{\\NeXTGraphic %@ \\width0 \\height0}\172}", filename, 0xAC] forPosition:range.location];
+    [taggedString registerTag:[NSString stringWithFormat:@"{{\\NeXTGraphic %@ \\width0 \\height0}¬}", filename] forPosition:range.location];
 }
 
 @end

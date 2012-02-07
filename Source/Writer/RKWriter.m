@@ -27,14 +27,14 @@
 {
     RKResourcePool *resources = [RKResourcePool new];
     
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources] dataUsingEncoding:NSASCIIStringEncoding];
+    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding];
 }
 
 + (NSData *)plainRTFfromDocument:(RKDocument *)document
 {
     RKResourcePool *resources = [RKResourcePool new];
     
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources] dataUsingEncoding:NSASCIIStringEncoding];
+    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
@@ -42,7 +42,7 @@
     RKResourcePool *resources = [RKResourcePool new];
     
     NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:
-        [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:resources] dataUsingEncoding:NSASCIIStringEncoding]
+        [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding]
     ];
 
     NSMutableDictionary *packageFiles = [resources imageFileDictionary];    
