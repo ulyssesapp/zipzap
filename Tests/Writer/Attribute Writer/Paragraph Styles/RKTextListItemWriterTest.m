@@ -30,6 +30,58 @@
     return textListItem;
 }
 
+- (NSAttributedString *)generateComplexList
+{
+    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil] 
+                                  withOveridingStartItemNumbers:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                 [NSNumber numberWithInteger: 1], [NSNumber numberWithInteger: 0],
+                                                                 [NSNumber numberWithInteger: 3], [NSNumber numberWithInteger: 1], 
+                                                                 [NSNumber numberWithInteger: 1], [NSNumber numberWithInteger: 2], 
+                                                                 nil
+                                                                 ]
+                            ];
+    
+    NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@""];
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A"] usingList:textList withIndentationLevel:0];
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] usingList:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAB"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAC"] usingList:textList withIndentationLevel:2];    
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AB"] usingList:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABA"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABB"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABC"] usingList:textList withIndentationLevel:2];    
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AC"] usingList:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACA"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACB"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACC"] usingList:textList withIndentationLevel:2];    
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"B"] usingList:textList withIndentationLevel:0];
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BA"] usingList:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAA"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAB"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAC"] usingList:textList withIndentationLevel:2];    
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BB"] usingList:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBA"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBB"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBC"] usingList:textList withIndentationLevel:2];    
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BC"] usingList:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCA"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCB"] usingList:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCC"] usingList:textList withIndentationLevel:2];   
+    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"C"] usingList:textList withIndentationLevel:0];
+
+    return testString;
+}
+
 - (void)testRegisterListItemToPool
 {
     RKTextListItem *textListItem = [self generateListItem];
@@ -124,53 +176,7 @@
 
 - (void)testRereadingListsWithCocoa
 {
-    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil] 
-                                  withOveridingStartItemNumbers:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                 [NSNumber numberWithInteger: 1], [NSNumber numberWithInteger: 0],
-                                                                 [NSNumber numberWithInteger: 3], [NSNumber numberWithInteger: 1], 
-                                                                 [NSNumber numberWithInteger: 1], [NSNumber numberWithInteger: 2], 
-                                                                 nil
-                                                                ]
-                           ];
-
-    NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@""];
-    
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A"] usingList:textList withIndentationLevel:0];
-
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAC"] usingList:textList withIndentationLevel:2];    
-
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AB"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABC"] usingList:textList withIndentationLevel:2];    
-
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AC"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACC"] usingList:textList withIndentationLevel:2];    
-
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"B"] usingList:textList withIndentationLevel:0];
-    
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BA"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAC"] usingList:textList withIndentationLevel:2];    
-    
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BB"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBC"] usingList:textList withIndentationLevel:2];    
-    
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BC"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCC"] usingList:textList withIndentationLevel:2];   
-
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"C"] usingList:textList withIndentationLevel:0];
-
+    NSAttributedString *testString = [self generateComplexList];
     NSAttributedString *converted = [self convertAndRereadRTF:testString documentAttributes:NULL];
     
     // Test acceptance of list items
@@ -229,6 +235,17 @@
                          "\t3.\tC\n",
                          @"Invalid conversion"
                          );
+}
+
+- (void)testComplexListsAreCompatibleToManualReferenceTest
+{
+    NSAttributedString *testString = [self generateComplexList];
+   
+    // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
+    RKDocument *document = [RKDocument documentWithAttributedString: testString];
+    NSData *converted = [document RTF];
+    
+    [self assertRTF: converted withTestDocument: @"list"];
 }
 
 @end
