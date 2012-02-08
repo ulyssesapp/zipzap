@@ -13,7 +13,7 @@
 
 - (RKTextListItem *)generateListItem
 {
-    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d", @"%d0.%r1.", @"%d0.%r1.%a2.", nil]];
+    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil]];
     RKTextListItem *textListItem = [RKTextListItem textListItemWithTextList:textList withIndentationLevel:2];
 
     return textListItem;

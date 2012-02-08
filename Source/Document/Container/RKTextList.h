@@ -14,17 +14,18 @@
 
 /*!
  @abstract Creates a text list with a format for all levels (at most 9)
- @discussion An array of NSString with format strings must be given. 
+ @discussion An array of NSString with format strings per level must be given. 
              The format strings consists of an arbitrary text and at most one placeholder
               The available placeholders are:
-                %dN     Decimal numbers
-                %rN     Lower roman numbers
-                %RN     Upper roman numbers
-                %aN     Lower alphabetic enumeration
-                %AN     Upper alphabetic enumeration
+                %d     Decimal numbers
+                %r     Lower roman numbers
+                %R     Upper roman numbers
+                %a     Lower alphabetic enumeration
+                %A     Upper alphabetic enumeration
     
               Additionally the following placeholders may be used
                 %%      %-Charracter
+                %*      Insert level string of a higher level here
  */
 + (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
 

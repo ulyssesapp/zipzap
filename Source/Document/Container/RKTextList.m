@@ -28,6 +28,15 @@
 
 @implementation RKTextList
 
+NSRegularExpression *preprendPlaceholderRegexp;
+NSRegularExpression *enumerationPlaceholderRegexp;
+
++ (void)load
+{
+    enumerationPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
+    preprendPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
+}
+
 + (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
 {
     return [[RKTextList alloc] initWithLevelFormats: levelFormats];
@@ -64,7 +73,7 @@
     return self;
 }
 
--(NSString *)formatOfLevel:(NSUInteger)levelIndex
+- (NSString *)formatOfLevel:(NSUInteger)levelIndex
 {
     if (levelIndex >= definedLevelFormats.count)
         return @"";

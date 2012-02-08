@@ -14,30 +14,59 @@
 @interface RKTextList (RKWriterAdditionsPrivateMethods)
 
 /*!
- @abstract Returns the level number of a placeholder from a format string
+ @abstract Returns the position of the first prepending placeholder inside a format string
+ */
+- (NSRange)rangeOfPrependingPlaceholder:(NSString *)formatString;
+
+/*!
+ @abstract Returns the position of the first prepending placeholder of a certain level
+ */
+- (NSRange)rangeOfPrependingPlaceholderOfLevel:(NSUInteger)levelIndex;
+
+/*!
+ @abstract Returns the position of the first enumeration placeholder inside a format string
+ */
+- (NSRange)rangeOfEnumerationPlaceholder:(NSString *)formatString;
+
+/*!
+ @abstract Returns the position of the first enumeration placeholder of a certain level
+ */
+- (NSRange)rangeOfEnumerationPlaceholderOfLevel:(NSUInteger)levelIndex;
+
+/*!
+ @abstract Returns the format definition for a certain level while all level strings of higher levels are inserted
+ @description All format strings receive a further number enumerating the level the format string belongs to
+ */
+- (NSString *)normalizedFormatOfLevel:(NSUInteger)levelIndex;
+
+/*!
+ @abstract Returns the level number of a placeholder from a normalized format string
  @discussion Expects the position of the placeholder as argument
              Returns 0 on an invalid level
  */
-- (NSUInteger)levelFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position;
+- (NSUInteger)levelFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position;
 
 /*!
  @abstract Returns the current enumeration index for the level of a placeholder from a format string
  @discussion Expects the position of the placeholder as argument
  Returns 0 on an invalid level
  */
-- (NSUInteger)itemNumberFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers;
+- (NSUInteger)itemNumberFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers;
 
 @end
 
 @implementation RKTextList (RKWriterAdditions)
 
 NSDictionary *placeholderCodes;
-NSRegularExpression *placeholderRegExp;
+NSDictionary *cocoaPlaceholderCodes;
+NSRegularExpression *prependPlaceholderRegExp;
+NSRegularExpression *enumerationPlaceholderRegexp;
 
 + (void)initialize
 {
-    placeholderRegExp = [NSRegularExpression regularExpressionWithPattern:@"(\\\\[a-zA-Z0-9]+|\\\\|\\\\'[0-9]{2}|[^\\\\])" options:0 error:nil];
-    
+    prependPlaceholderRegExp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
+    enumerationPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
+   
     placeholderCodes = [NSDictionary dictionaryWithObjectsAndKeys:
                         [NSNumber numberWithInteger: RKTextListFormatCodeDecimal],           @"%d",
                         [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseRoman],     @"%r",
@@ -46,33 +75,123 @@ NSRegularExpression *placeholderRegExp;
                         [NSNumber numberWithInteger: RKTextListFormatCodeUpperCaseLetter],    @"%A",
                         nil
                         ];
+    
+    cocoaPlaceholderCodes = [NSDictionary dictionaryWithObjectsAndKeys:
+                        @"\\{decimal\\}",         @"%d",
+                        @"\\{lower-roman\\}",     @"%r",
+                        @"\\{upper-roman\\}",     @"%R",
+                        @"\\{lower-alpha\\}",     @"%a",
+                        @"\\{upper-alpha\\}",     @"%A",
+                        nil
+                        ];    
+}
+
+- (NSRange)rangeOfPrependingPlaceholder:(NSString *)formatString
+{
+    return [prependPlaceholderRegExp rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
+}
+
+- (NSRange)rangeOfPrependingPlaceholderOfLevel:(NSUInteger)levelIndex
+{
+    NSString *formatString = [self formatOfLevel:levelIndex];
+    
+    return [self rangeOfPrependingPlaceholder: formatString];
+}
+
+- (BOOL)isPrependingLevel:(NSUInteger)levelIndex
+{
+   return [self rangeOfPrependingPlaceholderOfLevel: levelIndex].location != NSNotFound;
+}
+
+- (NSRange)rangeOfEnumerationPlaceholder:(NSString *)formatString
+{
+    return [enumerationPlaceholderRegexp rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
+}
+
+- (NSRange)rangeOfEnumerationPlaceholderOfLevel:(NSUInteger)levelIndex
+{
+    NSString *formatString = [self formatOfLevel: levelIndex];
+
+    return [self rangeOfEnumerationPlaceholder: formatString];
+}
+
+- (NSString *)enumerationPlaceholderOfLevel:(NSUInteger)levelIndex
+{
+    NSRange firstMatch = [self rangeOfEnumerationPlaceholderOfLevel: levelIndex];
+    
+    if (firstMatch.location != NSNotFound) {
+        NSString *formatString = [self formatOfLevel:levelIndex];
+        
+        return [formatString substringWithRange:firstMatch];
+    }
+    else {
+        return nil;
+    }
+}
+
+- (NSString *)normalizedFormatOfLevel:(NSUInteger)levelIndex
+{
+    NSMutableString *normalizedFormat = [NSMutableString stringWithString: @"%*"];
+                                         
+    do {
+        NSMutableString *nextLevelFormat = [NSMutableString stringWithString: [self formatOfLevel: levelIndex]];
+        
+        // Add level index, if it exists
+        NSRange enumerationPlaceholderPosition = [self rangeOfEnumerationPlaceholder: nextLevelFormat];
+        
+        if (enumerationPlaceholderPosition.location != NSNotFound) {
+            [nextLevelFormat insertString:[NSString stringWithFormat:@"%u", levelIndex] atIndex:enumerationPlaceholderPosition.location + enumerationPlaceholderPosition.length];
+        }
+        
+        // Exchange generated level string with placeholder
+        NSRange prependPlaceholderPosition = [self rangeOfPrependingPlaceholder: normalizedFormat];
+        [normalizedFormat replaceCharactersInRange:prependPlaceholderPosition withString:nextLevelFormat];
+    }while ([self isPrependingLevel: levelIndex] && levelIndex --);
+
+    return normalizedFormat;
+}
+
+- (NSString *)cocoaRTFFormatCodeOfLevel:(NSUInteger)levelIndex
+{
+    NSString *formatPlaceholder = [self enumerationPlaceholderOfLevel: levelIndex];
+    
+    if (formatPlaceholder != nil)
+        return [cocoaPlaceholderCodes objectForKey: formatPlaceholder];
+    else
+        return @"";
+}
+
+- (NSString *)cocoaRTFFormatStringOfLevel:(NSUInteger)levelIndex
+{
+    NSMutableString *cocoaFormatString = [NSMutableString stringWithString: [self formatOfLevel: levelIndex]];
+    NSRange enumerationPlaceholderPosition = [self rangeOfEnumerationPlaceholderOfLevel: levelIndex];
+    
+    if (enumerationPlaceholderPosition.location != NSNotFound) {
+        [cocoaFormatString replaceCharactersInRange:enumerationPlaceholderPosition withString:[self cocoaRTFFormatCodeOfLevel: levelIndex]];
+    }
+    
+    NSRange prependingPlaceholderPosition = [self rangeOfPrependingPlaceholderOfLevel: levelIndex];
+    
+    if (prependingPlaceholderPosition.location != NSNotFound) {
+        [cocoaFormatString deleteCharactersInRange: prependingPlaceholderPosition];
+    }
+        
+    return cocoaFormatString;
 }
 
 - (RKTextListFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex
 {
-    NSString *levelString = [self formatOfLevel: levelIndex];
-    __block RKTextListFormatCode formatCode = RKTextListFormatCodeBullet;
+    NSString *formatPlaceholder = [self enumerationPlaceholderOfLevel: levelIndex];
     
-    [placeholderCodes enumerateKeysAndObjectsUsingBlock:^(NSString *placeholder, NSNumber *code, BOOL *stop) {
-        NSUInteger placeholderLocation = [levelString rangeOfString: placeholder].location;
-        
-        if (placeholderLocation != NSNotFound) {
-            NSUInteger level = [self levelFromFormatString:levelString atPlaceholderPosition:placeholderLocation + 1];
-            
-            // Take only placeholders that really belong to the selected level
-            if (level == levelIndex) {            
-                *stop = true;
-                formatCode = [code intValue];
-            }
-        }
-    }];
-    
-    return formatCode;
+    if (formatPlaceholder != nil)
+        return [[placeholderCodes objectForKey: formatPlaceholder] intValue ];
+    else
+        return RKTextListFormatCodeBullet;
 }
 
 - (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositionsOut
 {
-    NSString *formatString = [self formatOfLevel: levelIndex];
+    NSString *formatString = [self normalizedFormatOfLevel: levelIndex];
     NSMutableString *rtfFormat = [NSMutableString new];
     NSUInteger tokenCount = 0;
     NSMutableArray *placeholderPositions = [NSMutableArray new];
@@ -95,7 +214,7 @@ NSRegularExpression *placeholderRegExp;
                 case 'R':
                 case 'a':
                 case 'A':
-                    currentToken = [NSString stringWithFormat:@"\\'%.2x", [self levelFromFormatString:formatString atPlaceholderPosition:position]];
+                    currentToken = [NSString stringWithFormat:@"\\'%.2x", [self levelFromNormalizedFormatString:formatString atPlaceholderPosition:position]];
                     position ++;   
                     
                     [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: tokenCount + 2]];
@@ -120,7 +239,7 @@ NSRegularExpression *placeholderRegExp;
 - (NSString *)markerForItemNumbers:(NSArray *)itemNumbers
 {
     NSUInteger destinationLevel = itemNumbers.count - 1;
-    NSString *formatString = [self formatOfLevel: destinationLevel];
+    NSString *formatString = [self normalizedFormatOfLevel: destinationLevel];
 
     NSMutableString *markerString = [NSMutableString new];
     
@@ -136,7 +255,7 @@ NSRegularExpression *placeholderRegExp;
                 currentMarker = @"%";
             }
             else {
-                NSUInteger itemNumber = [self itemNumberFromFormatString:formatString atPlaceholderPosition:position fromItemNumbers:itemNumbers];
+                NSUInteger itemNumber = [self itemNumberFromNormalizedFormatString:formatString atPlaceholderPosition:position fromItemNumbers:itemNumbers];
                 position ++;
                 
                 if (itemNumber == NSNotFound) {
@@ -184,17 +303,16 @@ NSRegularExpression *placeholderRegExp;
     return [NSString stringWithFormat:@"\t%@\t", markerString];
 }
 
-- (NSUInteger)levelFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position
+- (NSUInteger)levelFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position
 {
-    if (position + 1 >= formatString.length)
-        return 0;
+    NSAssert (position + 1 < formatString.length, @"Format string not correctly normalized");
     
     return [[formatString substringWithRange:NSMakeRange(position + 1, 1)] integerValue];
 }
 
-- (NSUInteger)itemNumberFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers
+- (NSUInteger)itemNumberFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers
 {
-    NSUInteger level = [self levelFromFormatString:formatString atPlaceholderPosition:position];
+    NSUInteger level = [self levelFromNormalizedFormatString:formatString atPlaceholderPosition:position];
     
     if (itemNumbers.count < level)
         return NSNotFound;
