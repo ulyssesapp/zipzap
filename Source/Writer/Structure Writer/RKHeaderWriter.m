@@ -189,7 +189,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSUInteger startNumber = [list startItemNumberOfLevel:level];
     
     // Generate level description
-    return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%llu\\levelcf%llu"
+    return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%llu\\levelnfc%llu"
                                         "\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                                         "%@%@"
                                         "\\levelfollow2\\levellegal0\\levelnorestart0}",
