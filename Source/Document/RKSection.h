@@ -70,6 +70,11 @@
 @property(nonatomic) NSUInteger indexOfFirstPage;
 
 /*!
+ @abstract Restart page numbering for this section
+ */
+@property(nonatomic) BOOL restartPageIndex;
+
+/*!
  @abstract Page number style
  */
 @property(nonatomic) RKPageNumberingStyle pageNumberingStyle;

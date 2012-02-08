@@ -18,26 +18,28 @@
     // Settings used in all tests
     section.numberOfColumns = 2;
     section.indexOfFirstPage = 3;
+    section.restartPageIndex = true;
     
     // Decimal page numbering
     section.pageNumberingStyle = RKPageNumberingDecimal;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgndec", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnrestart\\pgndec", @"Invalid translation");
 
     // Roman lower case
     section.pageNumberingStyle = RKPageNumberingRomanLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnlcrm", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnrestart\\pgnlcrm", @"Invalid translation");
 
     // Roman upper case
     section.pageNumberingStyle = RKPageNumberingRomanUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnucrm", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnrestart\\pgnucrm", @"Invalid translation");
 
     // Letter upper case
     section.pageNumberingStyle = RKPageNumberingAlphabeticUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnultr", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnrestart\\pgnucltr", @"Invalid translation");
 
     // Letter lower case
+    section.restartPageIndex = false;    
     section.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnlltr", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnlcltr", @"Invalid translation");
 }
 
 - (void)testGeneratingHeadersForSomePages
@@ -119,7 +121,6 @@
     
     sectionA.numberOfColumns = 2;
         
-    // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
     NSData *converted = [document RTF];
     
@@ -144,7 +145,6 @@
     [sectionSwitch setHeader:[[NSAttributedString alloc] initWithString:@"Header for right pages"] forPages:RKPageSelectionRight];
     [sectionSwitch setFooter:[[NSAttributedString alloc] initWithString:@"Footer for right pages"] forPages:RKPageSelectionRight];
     
-    // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionAll, sectionSwitch, nil]];
     NSData *converted = [document RTF];
     

@@ -62,7 +62,9 @@
     NSMutableString *attributes = [NSMutableString stringWithString:@"\\titlepg"];
     
     [attributes appendFormat: @"\\cols%u", section.numberOfColumns];
-    [attributes appendFormat: @"\\pgnstarts%u", section.indexOfFirstPage];
+    
+    if (section.restartPageIndex)
+        [attributes appendFormat: @"\\pgnstarts%u\\pgnrestart", section.indexOfFirstPage];
     
     switch (section.pageNumberingStyle) {
         case RKPageNumberingDecimal:
@@ -78,11 +80,11 @@
             break;
 
         case RKPageNumberingAlphabeticUpperCase:
-            [attributes appendFormat: @"\\pgnultr"];
+            [attributes appendFormat: @"\\pgnucltr"];
             break;
 
         case RKPageNumberingAlphabeticLowerCase:
-            [attributes appendFormat: @"\\pgnlltr"];
+            [attributes appendFormat: @"\\pgnlcltr"];
             break;
     }
 
