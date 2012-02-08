@@ -146,6 +146,9 @@
 		79AD205C14E194EE00F5616C /* RKTextPlaceholderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD205A14E194EE00F5616C /* RKTextPlaceholderWriter.m */; };
 		79AD205D14E194EE00F5616C /* RKTextPlaceholderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD205A14E194EE00F5616C /* RKTextPlaceholderWriter.m */; };
 		79AD206014E195D700F5616C /* RKTextPlaceholderWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD205F14E195D700F5616C /* RKTextPlaceholderWriterTest.m */; };
+		79AD206814E294B400F5616C /* RKMutableAttributedStringAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 79AD206614E294B400F5616C /* RKMutableAttributedStringAdditions.h */; };
+		79AD206914E294B400F5616C /* RKMutableAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD206714E294B400F5616C /* RKMutableAttributedStringAdditions.m */; };
+		79AD206A14E294B400F5616C /* RKMutableAttributedStringAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD206714E294B400F5616C /* RKMutableAttributedStringAdditions.m */; };
 		79F673AE14C84A9E005D03FA /* RKDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673AC14C84A9E005D03FA /* RKDocument.h */; };
 		79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
 		79F673B014C84A9E005D03FA /* RKDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673AD14C84A9E005D03FA /* RKDocument.m */; };
@@ -311,6 +314,8 @@
 		79AD205A14E194EE00F5616C /* RKTextPlaceholderWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextPlaceholderWriter.m; path = "Writer/Attribute Writer/Attachments/RKTextPlaceholderWriter.m"; sourceTree = "<group>"; };
 		79AD205E14E195D700F5616C /* RKTextPlaceholderWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextPlaceholderWriterTest.h; path = "Writer/Attribute Writer/Attachments/RKTextPlaceholderWriterTest.h"; sourceTree = "<group>"; };
 		79AD205F14E195D700F5616C /* RKTextPlaceholderWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextPlaceholderWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKTextPlaceholderWriterTest.m"; sourceTree = "<group>"; };
+		79AD206614E294B400F5616C /* RKMutableAttributedStringAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKMutableAttributedStringAdditions.h; path = Document/Utils/RKMutableAttributedStringAdditions.h; sourceTree = "<group>"; };
+		79AD206714E294B400F5616C /* RKMutableAttributedStringAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKMutableAttributedStringAdditions.m; path = Document/Utils/RKMutableAttributedStringAdditions.m; sourceTree = "<group>"; };
 		79F673AC14C84A9E005D03FA /* RKDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocument.h; path = Document/RKDocument.h; sourceTree = "<group>"; };
 		79F673AD14C84A9E005D03FA /* RKDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocument.m; path = Document/RKDocument.m; sourceTree = "<group>"; };
 		79F673B314C84ACC005D03FA /* RKDocumentTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentTest.h; path = Document/RKDocumentTest.h; sourceTree = "<group>"; };
@@ -684,10 +689,20 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		79AD206414E2947F00F5616C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				79AD206614E294B400F5616C /* RKMutableAttributedStringAdditions.h */,
+				79AD206714E294B400F5616C /* RKMutableAttributedStringAdditions.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		79F673AB14C84A65005D03FA /* Document */ = {
 			isa = PBXGroup;
 			children = (
 				7935616014DC00FA00FC0C1C /* Attributes */,
+				79AD206414E2947F00F5616C /* Utils */,
 				7935613614DAF74200FC0C1C /* Container */,
 				79F673AC14C84A9E005D03FA /* RKDocument.h */,
 				79F673AD14C84A9E005D03FA /* RKDocument.m */,
@@ -754,6 +769,7 @@
 				79AD204614E1430100F5616C /* RKFontAdditions.h in Headers */,
 				79AD205514E1939900F5616C /* RKTextPlaceholder.h in Headers */,
 				79AD205B14E194EE00F5616C /* RKTextPlaceholderWriter.h in Headers */,
+				79AD206814E294B400F5616C /* RKMutableAttributedStringAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -891,6 +907,7 @@
 				79AD204714E1430100F5616C /* RKFontAdditions.m in Sources */,
 				79AD205614E1939900F5616C /* RKTextPlaceholder.m in Sources */,
 				79AD205C14E194EE00F5616C /* RKTextPlaceholderWriter.m in Sources */,
+				79AD206914E294B400F5616C /* RKMutableAttributedStringAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -965,6 +982,7 @@
 				79AD205714E1939900F5616C /* RKTextPlaceholder.m in Sources */,
 				79AD205D14E194EE00F5616C /* RKTextPlaceholderWriter.m in Sources */,
 				79AD206014E195D700F5616C /* RKTextPlaceholderWriterTest.m in Sources */,
+				79AD206A14E294B400F5616C /* RKMutableAttributedStringAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
