@@ -151,4 +151,40 @@
     [self assertRTF: converted withTestDocument: @"headersAndFooters"];
 }
 
+- (void)testPageNumberingIsCompatibleToManualReferenceTest
+{
+    // Sections with placeholder contents
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] 
+                                           initWithString:[NSString stringWithFormat:
+                                                           @"%C\f%C\f%C",
+                                                           NSAttachmentCharacter
+                                                           ]
+                                           ];
+
+    // Set placeholders
+    [content addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderPageNumber] range:NSMakeRange(0, 1)];
+    [content addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderPageNumber] range:NSMakeRange(2, 1)];
+    [content addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderPageNumber] range:NSMakeRange(4, 1)];    
+    
+    // Two Sections with different contents
+    RKSection *sectionDecimal = [RKSection sectionWithContent:content];
+    RKSection *sectionRomanLower = [RKSection sectionWithContent:content];
+    RKSection *sectionRomanUpper = [RKSection sectionWithContent:content];
+    RKSection *sectionAlphabeticLower = [RKSection sectionWithContent:content];
+    RKSection *sectionAlphabeticUpper = [RKSection sectionWithContent:content];
+    
+    sectionDecimal.pageNumberingStyle = RKPageNumberingDecimal;
+    sectionDecimal.indexOfFirstPage = 10;
+    sectionDecimal.restartPageIndex = YES;
+    sectionRomanLower.pageNumberingStyle = RKPageNumberingRomanLowerCase;
+    sectionRomanUpper.pageNumberingStyle = RKPageNumberingRomanUpperCase;
+    sectionAlphabeticLower.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
+    sectionAlphabeticUpper.pageNumberingStyle = RKPageNumberingAlphabeticUpperCase;
+    
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionDecimal, sectionRomanLower, sectionRomanUpper, sectionAlphabeticLower, sectionAlphabeticUpper, nil]];
+    NSData *converted = [document RTF];
+    
+    [self assertRTF: converted withTestDocument: @"pagenumbering"];
+}
+
 @end
