@@ -65,7 +65,7 @@
 
     STAssertEqualObjects([taggedString flattenedRTFString],
                          @"\\ls1\\ilvl2 "
-                          "{\\listtext 2.i.d.}aaa",
+                          "{\\listtext\t2.i.d.\t}aaa",
                          @"Invalid list tagging"
                          );
 }

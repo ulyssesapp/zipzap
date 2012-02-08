@@ -98,7 +98,7 @@ NSRegularExpression *placeholderRegExp;
                     currentToken = [NSString stringWithFormat:@"\\'%.2x", [self levelFromFormatString:formatString atPlaceholderPosition:position]];
                     position ++;   
                     
-                    [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: tokenCount + 1]];
+                    [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: tokenCount + 2]];
                         
                     break;
             }
@@ -114,7 +114,7 @@ NSRegularExpression *placeholderRegExp;
     
     *placeholderPositionsOut = placeholderPositions;
     
-    return [NSString stringWithFormat:@"\\'%.2x%@", tokenCount, rtfFormat];
+    return [NSString stringWithFormat:@"\\'%.2x\t%@\t", tokenCount + 2, rtfFormat];
 }
 
 - (NSString *)markerForItemNumbers:(NSArray *)itemNumbers
@@ -181,7 +181,7 @@ NSRegularExpression *placeholderRegExp;
         [markerString appendString: [currentMarker RTFEscapedString]];
     }    
     
-    return markerString;
+    return [NSString stringWithFormat:@"\t%@\t", markerString];
 }
 
 - (NSUInteger)levelFromFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position

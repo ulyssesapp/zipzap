@@ -33,14 +33,16 @@ typedef enum {
 -(RKTextListFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex;
 
 /*!
- @abstract Returns the RTF format string of a level as required by the \leveltext tag
+ @abstract Returns the RTF format string of a level as required by the \leveltext tag.
  @discussion To generate the \levelnumbers tag, the array "placeholderPositions" will contain 
              the positions of the format string placeholders in the output string
+             To ensure compatibility with the Cocoa text system, all placeholders are automatically enclosed by tabs
  */
 -(NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositions;
 
 /*!
  @abstract Returns the concrete bullet point marker for a certain nesting of list item indices
+ @discussion To ensure compatibility with the Cocoa text system, all markers are automatically enclosed by tabs
  */
 - (NSString *)markerForItemNumbers:(NSArray *)itemNumbers;
 

@@ -52,9 +52,9 @@
     testString = [simpleList RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)1, @"Invalid count of placeholders");
-    STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)4, @"Invalid tag position");
+    STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)5, @"Invalid tag position");
     
-    STAssertEqualObjects(testString, @"\\'07-- \\'00 --", @"Invalid format string");
+    STAssertEqualObjects(testString, @"\\'09\t-- \\'00 --\t", @"Invalid format string");
 
     // Generating a simple list (only bullet point)
     RKTextList *bulletPoint = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"-", nil]];
@@ -63,7 +63,7 @@
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)0, @"Invalid count of placeholders");
     
-    STAssertEqualObjects(testString, @"\\'01-", @"Invalid format string");
+    STAssertEqualObjects(testString, @"\\'03\t-\t", @"Invalid format string");
     
     // Generating a simple list with keeping the escpae sign and converting RTF-Chars
     RKTextList *keepingChars = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"%%∮{%d0\\%", nil]];
@@ -71,9 +71,9 @@
     testString = [keepingChars RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];    
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)1, @"Invalid count of placeholders");
-    STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)4, @"Invalid tag position");
+    STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)5, @"Invalid tag position");
     
-    STAssertEqualObjects(testString, @"\\'06%\\u8750\\{\\'00\\\\%", @"Invalid format string");
+    STAssertEqualObjects(testString, @"\\'08\t%\\u8750\\{\\'00\\\\%\t", @"Invalid format string");
 }
 
 - (void)testBuildRTFFormatStringWithMultipleMarkers  
@@ -87,11 +87,11 @@
     testString = [list RTFFormatStringOfLevel:2 withPlaceholderPositions:&placeholderPositions];    
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)3, @"Invalid count of placeholders");
-    STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)1, @"Invalid tag position");
-    STAssertEquals([[placeholderPositions objectAtIndex: 1] unsignedIntegerValue], (NSUInteger)3, @"Invalid tag position");
-    STAssertEquals([[placeholderPositions objectAtIndex: 2] unsignedIntegerValue], (NSUInteger)5, @"Invalid tag position");
+    STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)2, @"Invalid tag position");
+    STAssertEquals([[placeholderPositions objectAtIndex: 1] unsignedIntegerValue], (NSUInteger)4, @"Invalid tag position");
+    STAssertEquals([[placeholderPositions objectAtIndex: 2] unsignedIntegerValue], (NSUInteger)6, @"Invalid tag position");
     
-    STAssertEqualObjects(testString, @"\\'06\\'00.\\'01.\\'02.", @"Invalid format string");
+    STAssertEqualObjects(testString, @"\\'08\t\\'00.\\'01.\\'02.\t", @"Invalid format string");
 }
 
 - (void)testBuildMarkerString
@@ -108,13 +108,13 @@
     
     NSString *string = [prependingList markerForItemNumbers: itemNumbers];
     
-    STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750\\\\\\}", @"Invalid marker string generated");
+    STAssertEqualObjects(string, @"\t3.iv.V.f.G.-\\{%\\u8750\\\\\\}\t", @"Invalid marker string generated");
     
     // Invalid levels are ignored
     RKTextList *errorneousList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"", @"", @"", @"", @"%d0.%r1.%R8.%a3.%A4.-", nil ]];
     NSString *erroneousString = [errorneousList markerForItemNumbers: itemNumbers];
     
-    STAssertEqualObjects(erroneousString, @"3.iv.??.f.G.-", @"Invalid marker string generated");
+    STAssertEqualObjects(erroneousString, @"\t3.iv.??.f.G.-\t", @"Invalid marker string generated");
 
 }
 
