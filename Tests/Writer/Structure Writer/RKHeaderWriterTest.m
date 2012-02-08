@@ -80,7 +80,7 @@
                                  @"Copyright",      NSCopyrightDocumentAttribute,
                                  @"Subject",        NSSubjectDocumentAttribute,
                                  @"Author",         NSAuthorDocumentAttribute,
-                                 @"Keywords",       NSKeywordsDocumentAttribute,
+                                 [NSArray arrayWithObjects: @"Keyword 1", @"Keyword 2", nil],       NSKeywordsDocumentAttribute,
                                  @"Comment",        NSCommentDocumentAttribute,
                                  @"Editor",         NSEditorDocumentAttribute,
                                  [self customDateWithYear:2001 month:2 day:3 hour:4 minute:5 second:6],  NSCreationTimeDocumentAttribute,
@@ -99,9 +99,9 @@
                                 "{\\*\\copyright Copyright}"
                                 "{\\subject Subject}"
                                 "{\\author Author}"
-                                "{\\keywords Keywords}"
+                                "{\\keywords Keyword 1, Keyword 2}"
                                 "{\\doccomm Comment}"
-                                "{\\editor Editor}"
+                                "{\\*\\editor Editor}"
                                 "{\\creatim \\yr2001 \\mo2 \\dy3 \\hr4 \\min5 \\sec6}"
                                 "{\\revtim \\yr2006 \\mo5 \\dy4 \\hr3 \\min2 \\sec1}"
                                 "{\\manager Manager}"
@@ -132,7 +132,6 @@
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\facingp"
-                          "\\hyphauto"
                           "\\fet2\\aendnotes"
                           "\\ftnbj\\aftnbj"
                           "\\ftnnrlc\\aftnnalc\\saftnnalc"
@@ -143,6 +142,7 @@
                           "\\margl4000"
                           "\\margr6000"
                           "\\margb8000"
+                          "\\hyphauto1"
                           "\\uc0 ",
                           @"Document formatting options not correctly translated"
                          );
@@ -290,6 +290,70 @@
          "}\n";
     
     STAssertEqualObjects(listTable, expectedListTable, @"Invalid llist override table generated");
+}
+
+- (void)testRereadingPageSettingsWithCocoa
+{
+    RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@"abc"]];
+    
+    document.pageSize = NSMakeSize(300, 400);
+    document.pageInsets = RKPageInsetsMake(10, 20, 30, 40);
+    document.hyphenationEnabled = YES;
+    
+    NSDictionary *rereadDocumentProperties;
+    
+    NSData *rtf = [document RTF];
+    NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
+    
+    STAssertEqualObjects([rereadString string], @"abc\n", @"Invalid content");
+    
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSPaperSizeDocumentAttribute] sizeValue], document.pageSize, @"Invalid paper size");
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSLeftMarginDocumentAttribute] floatValue], (float)document.pageInsets.left, @"Invalid margin");
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSRightMarginDocumentAttribute] floatValue], (float)document.pageInsets.right, @"Invalid margin");
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSTopMarginDocumentAttribute] floatValue], (float)document.pageInsets.top, @"Invalid margin");
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSBottomMarginDocumentAttribute] floatValue], (float)document.pageInsets.bottom, @"Invalid margin");    
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSHyphenationFactorDocumentAttribute] floatValue], 0.9f, @"Invalid hyphenation setting");    
+}
+
+- (void)testRereadingMetaDataSettingsWithCocoa
+{
+    RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@"abc"]];
+    NSDictionary *metaData = [NSDictionary dictionaryWithObjectsAndKeys:
+                              @"Title",          NSTitleDocumentAttribute,
+                              @"Company",        NSCompanyDocumentAttribute,
+                              @"Copyright",      NSCopyrightDocumentAttribute,
+                              @"Subject",        NSSubjectDocumentAttribute,
+                              @"Author",         NSAuthorDocumentAttribute,
+                              [NSArray arrayWithObjects: @"Keyword 1", @"Keyword 2", nil],       NSKeywordsDocumentAttribute,
+                              @"Comment",        NSCommentDocumentAttribute,
+                              [self customDateWithYear:2001 month:2 day:3 hour:4 minute:5 second:6],  NSCreationTimeDocumentAttribute,
+                              [self customDateWithYear:2006 month:5 day:4 hour:3 minute:2 second:1],  NSModificationTimeDocumentAttribute,
+                              @"Manager",        NSManagerDocumentAttribute,
+                              @"Category",       NSCategoryDocumentAttribute,
+                              nil
+                              ];
+    
+    [document setMetadata: metaData];
+    
+    NSDictionary *rereadDocumentProperties;
+    
+    NSData *rtf = [document RTF];
+    NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
+    
+    STAssertEqualObjects([rereadString string], @"abc\n", @"Invalid content");
+    
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSTitleDocumentAttribute], @"Title", @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCompanyDocumentAttribute], @"Company", @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCopyrightDocumentAttribute], @"Copyright", @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSSubjectDocumentAttribute], @"Subject", @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSAuthorDocumentAttribute], @"Author", @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSKeywordsDocumentAttribute], ([NSArray arrayWithObjects: @"Keyword 1", @"Keyword 2", nil]), @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCommentDocumentAttribute], @"Comment", @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSManagerDocumentAttribute], @"Manager", @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCreationTimeDocumentAttribute], 
+                         [self customDateWithYear:2001 month:2 day:3 hour:4 minute:5 second:6], @"Invalid meta data");
+    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSModificationTimeDocumentAttribute], 
+                         [self customDateWithYear:2006 month:5 day:4 hour:3 minute:2 second:1], @"Invalid meta data");
 }
 
 @end
