@@ -72,9 +72,9 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
                             [NSArray arrayWithObjects: NSCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class], nil],
                             [NSArray arrayWithObjects: NSSubjectDocumentAttribute,              @"\\subject",       [NSString class], nil],
                             [NSArray arrayWithObjects: NSAuthorDocumentAttribute,               @"\\author",        [NSString class], nil],
-                            [NSArray arrayWithObjects: NSKeywordsDocumentAttribute,             @"\\keywords",      [NSString class], nil],
+                            [NSArray arrayWithObjects: NSKeywordsDocumentAttribute,             @"\\keywords",      [NSArray class], nil],
                             [NSArray arrayWithObjects: NSCommentDocumentAttribute,              @"\\doccomm",       [NSString class], nil],
-                            [NSArray arrayWithObjects: NSEditorDocumentAttribute,               @"\\editor",        [NSString class], nil],
+                            [NSArray arrayWithObjects: NSEditorDocumentAttribute,               @"\\*\\editor",     [NSString class], nil],
                             [NSArray arrayWithObjects: NSCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class], nil],
                             [NSArray arrayWithObjects: NSModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class], nil],
                             [NSArray arrayWithObjects: NSManagerDocumentAttribute,              @"\\manager",       [NSString class], nil],
@@ -240,6 +240,10 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
             if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSString class]]) {
                 convertedValue = [itemValue RTFEscapedString];
             }
+             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSArray class]]) {
+                 NSArray *arrayItem = itemValue;
+                 convertedValue = [arrayItem componentsJoinedByString:@", "];
+            }
              else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSDate class]]) {
                 convertedValue = [itemValue RTFDate];
             }
@@ -259,10 +263,6 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 + (NSString *)documentFormatFromDocument:(RKDocument *)document
 {
     NSMutableString *attributes = [NSMutableString stringWithString:@"\\facingp"];
-    
-    // Hyphenation settings
-    if (document.hyphenationEnabled)
-        [attributes appendString:@"\\hyphauto"];
     
     // Footnote placement
     switch (document.footnotePlacement) {
@@ -341,6 +341,10 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
                               (NSUInteger)RKPointsToTwips(document.pageInsets.right), 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
                               ]];   
+
+    // Hyphenation settings
+    if (document.hyphenationEnabled)
+        [attributes appendString:@"\\hyphauto1"];
     
     // We disable ANSI replacements for UNICODE charracters in general
     // To prevent conflicts with text following the formatting tags, add a space
