@@ -51,6 +51,7 @@ NSMutableDictionary *attributeHandlers;
 + (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
+    NSString *baseString = [attributedString string];
     
     // Write attribute styles
     for (NSNumber *priority in priorityOrderings) {
@@ -59,14 +60,18 @@ NSMutableDictionary *attributeHandlers;
         for (NSString *attributeName in priorityOrdering) {
             Class handler = [attributeHandlers objectForKey: attributeName];
             
-            [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, [attributedString length]) options:0 usingBlock:^(Class value, NSRange range, BOOL *stop) {
-                [handler addTagsForAttribute:value 
-                              toTaggedString:taggedString 
-                                     inRange:range 
-                          ofAttributedString:attributedString
-                        withAttachmentPolicy:attachmentPolicy 
-                                   resources:resources
-                 ];
+            // We operate on a per-paragraph level
+            [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
+             ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+                    [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(Class value, NSRange range, BOOL *stop) {
+                        [handler addTagsForAttribute:value 
+                                      toTaggedString:taggedString 
+                                             inRange:range 
+                                  ofAttributedString:attributedString
+                                withAttachmentPolicy:attachmentPolicy 
+                                           resources:resources
+                         ];
+                    }];
             }];
         }
     }
