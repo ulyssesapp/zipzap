@@ -22,10 +22,10 @@
 
 @implementation RKTextListItemWriterTest
 
-- (RKTextListItem *)generateListItem
+- (RKListItem *)generateListItem
 {
     RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil]];
-    RKTextListItem *textListItem = [RKTextListItem textListItemWithTextList:textList withIndentationLevel:2];
+    RKListItem *textListItem = [RKListItem textListItemWithTextList:textList withIndentationLevel:2];
 
     return textListItem;
 }
@@ -84,7 +84,7 @@
 
 - (void)testRegisterListItemToPool
 {
-    RKTextListItem *textListItem = [self generateListItem];
+    RKListItem *textListItem = [self generateListItem];
 
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"aaa"];
     RKResourcePool *resourcePool = [RKResourcePool new];
@@ -110,7 +110,7 @@
 
 - (void)testGenerateListTags
 {
-    RKTextListItem *textListItem = [self generateListItem];
+    RKListItem *textListItem = [self generateListItem];
     
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"aaa"];
     RKResourcePool *resourcePool = [RKResourcePool new];

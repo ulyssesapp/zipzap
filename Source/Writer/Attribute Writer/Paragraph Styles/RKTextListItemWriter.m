@@ -8,7 +8,7 @@
 
 #import "RKTextListItemWriter.h"
 #import "RKAttributedStringWriter.h"
-#import "RKTextListItem.h"
+#import "RKListItem.h"
 #import "RKTextListWriterAdditions.h"
 
 @implementation RKTextListItemWriter
@@ -19,7 +19,7 @@
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 
-                      value:(RKTextListItem *)listItem
+                      value:(RKListItem *)listItem
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 

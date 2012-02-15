@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextListItem.h"
+#import "RKListItem.h"
 
 NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
-@implementation RKTextListItem
+@implementation RKListItem
 
 @synthesize textList, indentationLevel;
 
@@ -26,9 +26,9 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     return self;
 }
 
-+ (RKTextListItem *)textListItemWithTextList:(RKTextList *)textList withIndentationLevel:(NSUInteger)indentationLevel
++ (RKListItem *)textListItemWithTextList:(RKTextList *)textList withIndentationLevel:(NSUInteger)indentationLevel
 {
-    return [[RKTextListItem alloc] initWithTextList:textList withIndentationLevel:indentationLevel];
+    return [[RKListItem alloc] initWithTextList:textList withIndentationLevel:indentationLevel];
 }
 
 @end
@@ -38,7 +38,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 + (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingList:(RKTextList *)textList withIndentationLevel:(NSUInteger)indentationLevel
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString: text];
-    RKTextListItem *listItem = [RKTextListItem textListItemWithTextList:textList withIndentationLevel:indentationLevel];
+    RKListItem *listItem = [RKListItem textListItemWithTextList:textList withIndentationLevel:indentationLevel];
     
     // A trailing \n is required since a list item must be a paragraph
     if (![attributedString.string hasSuffix:@"\n"])
