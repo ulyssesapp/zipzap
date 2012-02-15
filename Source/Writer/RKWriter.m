@@ -45,7 +45,7 @@
         [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding]
     ];
 
-    NSMutableDictionary *packageFiles = [resources imageFileDictionary];    
+    NSMutableDictionary *packageFiles = [NSMutableDictionary dictionaryWithDictionary: resources.attachmentFileWrappers];
     
     [packageFiles setObject:rtfFile forKey:@"TXT.rtf"];
         
