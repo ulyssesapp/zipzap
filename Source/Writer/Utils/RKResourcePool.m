@@ -81,7 +81,7 @@
     
     if (index == NSNotFound) {
         [colors addObject: opaqueColor];
-        index = [colors count] - 1;
+        index = colors.count - 1;
     }
     
     return index;
@@ -92,7 +92,7 @@
     return colors;
 }
 
-#pragma marg - File Wrapper
+#pragma mark - File Wrapper
 
 - (NSString *)registerFileWrapper:(NSFileWrapper *)fileWrapper
 {
