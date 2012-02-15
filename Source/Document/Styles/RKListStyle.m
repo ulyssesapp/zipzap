@@ -10,8 +10,8 @@
 #import "RKConversion.h"
 
 @interface RKListStyle () {
-    NSArray     *definedLevelFormats;
-    NSArray     *startItemNumbers;
+    NSArray     *levelFormats;
+    NSArray     *startNumbers;
 }
 
 /*!
@@ -22,7 +22,7 @@
 /*!
  @abstract See textListWithLevelFormats:withOverdingStartIndices:
  */
-- (id)initWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers;
+- (id)initWithLevelFormats:(NSArray *)initialLevelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers;
 
 @end
 
@@ -37,17 +37,17 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     preprendPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
 }
 
-+ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats;
++ (RKListStyle *)textListWithLevelFormats:(NSArray *)initialLevelFormats;
 {
-    return [[RKListStyle alloc] initWithLevelFormats: levelFormats];
+    return [[RKListStyle alloc] initWithLevelFormats: initialLevelFormats];
 }
 
-+ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers
++ (RKListStyle *)textListWithLevelFormats:(NSArray *)initialLevelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers
 {
-    return [[RKListStyle alloc] initWithLevelFormats:levelFormats withOveridingStartItemNumbers:overridingItemNumbers];
+    return [[RKListStyle alloc] initWithLevelFormats:initialLevelFormats withOveridingStartItemNumbers:overridingItemNumbers];
 }
 
-- (id)initWithLevelFormats:(NSArray *)levelFormats
+- (id)initWithLevelFormats:(NSArray *)initialLevelFormats
 {
     self = [self init];
     
@@ -56,18 +56,18 @@ NSRegularExpression *enumerationPlaceholderRegexp;
             [NSException raise:NSRangeException format:@"Level nesting is limited to 9."];
         }    
 
-        definedLevelFormats = levelFormats;
+        levelFormats = initialLevelFormats;
     }
     
     return self;
 }
 
-- (id)initWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers
+- (id)initWithLevelFormats:(NSArray *)initialLevelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers
 {
-    self = [self initWithLevelFormats:levelFormats];
+    self = [self initWithLevelFormats:initialLevelFormats];
     
     if (self) {
-        startItemNumbers = overridingItemNumbers;
+        startNumbers = overridingItemNumbers;
     }
     
     return self;
@@ -75,17 +75,17 @@ NSRegularExpression *enumerationPlaceholderRegexp;
 
 - (NSString *)formatOfLevel:(NSUInteger)levelIndex
 {
-    if (levelIndex >= definedLevelFormats.count)
+    if (levelIndex >= levelFormats.count)
         return @"";
     
-    return [definedLevelFormats objectAtIndex: levelIndex];
+    return [levelFormats objectAtIndex: levelIndex];
 }
 
 -(NSUInteger)startItemNumberOfLevel:(NSUInteger)levelIndex
 {
     NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
     
-    NSNumber *startItemNumber = [startItemNumbers objectAtIndex: levelIndex];
+    NSNumber *startItemNumber = [startNumbers objectAtIndex: levelIndex];
     
     if (startItemNumber == nil)
         return 1;
@@ -95,7 +95,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
 
 - (NSUInteger)countOfListLevels
 {
-    return definedLevelFormats.count;
+    return levelFormats.count;
 }
 
 @end
