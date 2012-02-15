@@ -55,7 +55,7 @@ NSMutableDictionary *attributeHandlers;
     
     // Write attribute styles
     for (NSNumber *priority in priorityOrderings) {
-        NSArray *priorityOrdering = [attributeHandlersOrdering objectForKey:priority];
+        NSArray *priorityOrdering = [attributeHandlersOrdering objectForKey: priority];
         
         for (NSString *attributeName in priorityOrdering) {
             Class handler = [attributeHandlers objectForKey: attributeName];
@@ -63,14 +63,15 @@ NSMutableDictionary *attributeHandlers;
             // We operate on a per-paragraph level
             [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
              ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-                    [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(Class value, NSRange range, BOOL *stop) {
-                        [handler addTagsForAttribute:value 
-                                      toTaggedString:taggedString 
-                                             inRange:range 
-                                  ofAttributedString:attributedString
-                                withAttachmentPolicy:attachmentPolicy 
+                    [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+                        [handler addTagsForAttribute:attributeName 
+                                               value:attributeValue 
+                                      effectiveRange:attributeRange 
+                                            toString:taggedString 
+                                      originalString:attributedString 
+                                    attachmentPolicy:attachmentPolicy 
                                            resources:resources
-                         ];
+                        ];
                     }];
             }];
         }

@@ -10,24 +10,16 @@
 
 @implementation RKAttributeWriter
 
-+ (void)addTagsForAttribute:(id)value
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources
-{
-    NSAssert(false, @"Missing method of abstract class");
-}
 
-+ (void)addTagsForAttribute:(id)value
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-         ofAttributedString:(NSAttributedString *)attributedString
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(id)value 
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)originalString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                  resources:(RKResourcePool *)resources;
 {
-    // If this method is not overriden, we just call the basic variant that requires less arguments
-    [self addTagsForAttribute:value toTaggedString:taggedString inRange:range withAttachmentPolicy:attachmentPolicy resources:resources];
+    NSAssert(NO, @"Method not implemented");
 }
 
 @end

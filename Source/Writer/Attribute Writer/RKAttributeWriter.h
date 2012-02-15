@@ -10,26 +10,21 @@
 #import "RKResourcePool.h"
 #import "RKTaggedString.h"
 
-@interface RKAttributeWriter : NSObject
-
 /*!
- @abstract Adds a tag for a certain attribute
+ @abstract Abstract class for converting attributes to RTF tags
  */
-+ (void)addTagsForAttribute:(id)value
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources;
+@interface RKAttributeWriter : NSObject
 
 /*!
  @abstract Adds a tag for a certain attribute
  @discussion Advanced variant, automatic fallback to addTagsForAttribute:toTaggedString:inRange:withAttachmentPolicy:resources if not implemented.
  */
-+ (void)addTagsForAttribute:(id)value
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-         ofAttributedString:(NSAttributedString *)attributedString
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(id)value 
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)attributedString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources;
 
 @end
