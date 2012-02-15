@@ -31,7 +31,7 @@
 /*!
  @abstract Returns the index of a list
  */
-- (NSUInteger)indexOfList:(RKListStyle *)textList;
+- (NSUInteger)indexOfListStyle:(RKListStyle *)textList;
 
 /*!
  @abstract Returns a new item number of a list level

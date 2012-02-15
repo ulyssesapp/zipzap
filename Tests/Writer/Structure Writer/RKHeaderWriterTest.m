@@ -213,8 +213,8 @@
     // Register lists to a resource pool
     RKResourcePool *resources = [RKResourcePool new];
                                   
-    [resources indexOfList: firstList];
-    [resources indexOfList: secondList];
+    [resources indexOfListStyle: firstList];
+    [resources indexOfListStyle: secondList];
     
     // Generate header
     NSString *listTable = [RKHeaderWriter listTableFromResourceManager:resources];
@@ -287,8 +287,8 @@
     // Register lists to a resource pool
     RKResourcePool *resources = [RKResourcePool new];
     
-    [resources indexOfList: firstList];
-    [resources indexOfList: secondList];
+    [resources indexOfListStyle: firstList];
+    [resources indexOfListStyle: secondList];
     
     // Generate header
     NSString *listTable = [RKHeaderWriter listOverrideTableFromResourceManager:resources];

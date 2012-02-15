@@ -27,7 +27,7 @@
                   resources:(RKResourcePool *)resources
 {
     if (listItem) {
-        NSUInteger listIndex = [resources indexOfList:listItem.textList];
+        NSUInteger listIndex = [resources indexOfListStyle: listItem.textList];
         NSArray *itemNumbers = [resources incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.textList];
         
         NSString *markerString = [listItem.textList markerForItemNumbers:itemNumbers];
