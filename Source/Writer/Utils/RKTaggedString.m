@@ -13,6 +13,7 @@
 {
     NSMutableDictionary *tagPositions;
     NSMutableIndexSet *removedRanges;
+    NSMutableIndexSet *acceptedRanges;
     NSString *originalString;
 }
 
@@ -55,6 +56,7 @@
     
     if (self) {
         originalString = string;
+        acceptedRanges = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, string.length)];
     }
     
     return self;
@@ -98,16 +100,15 @@
 
 - (void)appendOriginalStringRange:(NSRange)range toString:(NSMutableString *)flattenedString
 {
-    for (NSUInteger position = range.location; position < (NSMaxRange(range)); position ++) {
-        if (![removedRanges containsIndex:position]) {
-            [flattenedString appendString: [[originalString substringWithRange:NSMakeRange(position, 1)] RTFEscapedString]];
-        }
-    }
+    [acceptedRanges enumerateRangesInRange:range options:0 usingBlock:^(NSRange acceptedRange, BOOL *stop) {
+        [flattenedString appendString: [[originalString substringWithRange:acceptedRange] RTFEscapedString]];
+    }];
 }
 
 - (void)removeRange:(NSRange)range
 {
     [removedRanges addIndexesInRange:range];
+    [acceptedRanges removeIndexesInRange:range];
 }
 
 - (NSString *)flattenedRTFString
