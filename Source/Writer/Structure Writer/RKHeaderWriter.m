@@ -33,7 +33,7 @@ enum {
 /*!
  @abstract Generate a list level using a resource manager
  */
-+ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKTextList*)list withListIndex:(NSUInteger)listIndex;
++ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKListStyle*)list withListIndex:(NSUInteger)listIndex;
 
 /*!
  @abstract Generate the list table using a resource manager
@@ -147,7 +147,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     
     NSMutableString *listTable = [NSMutableString stringWithString:@"{\\*\\listtable "];
     
-    [textLists enumerateObjectsUsingBlock:^(RKTextList *textList, NSUInteger listIndex, BOOL *stop) {
+    [textLists enumerateObjectsUsingBlock:^(RKListStyle *textList, NSUInteger listIndex, BOOL *stop) {
         NSMutableString *listLevelsString = [NSMutableString new];
         
         for (NSUInteger levelIndex = 0; levelIndex < textList.countOfListLevels; levelIndex ++)  {
@@ -167,7 +167,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     return listTable;
 }
 
-+ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKTextList*)list withListIndex:(NSUInteger)listIndex
++ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKListStyle*)list withListIndex:(NSUInteger)listIndex
 {
     NSArray *placeholderPositions;
     NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%llu %@;}", 
@@ -218,7 +218,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
     NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
     
-    [textLists enumerateObjectsUsingBlock:^(RKTextList *textList, NSUInteger listIndex, BOOL *stop) {
+    [textLists enumerateObjectsUsingBlock:^(RKListStyle *textList, NSUInteger listIndex, BOOL *stop) {
         [overrideTable appendFormat:@"{\\listoverride\\listid%u\\listoverridecount0\\ls%u}", listIndex + 1, listIndex + 1];
     }];
     

@@ -24,7 +24,7 @@
 
 - (RKListItem *)generateListItem
 {
-    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil]];
+    RKListStyle *textList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil]];
     RKListItem *textListItem = [RKListItem textListItemWithTextList:textList withIndentationLevel:2];
 
     return textListItem;
@@ -32,7 +32,7 @@
 
 - (NSAttributedString *)generateComplexList
 {
-    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil] 
+    RKListStyle *textList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil] 
                                   withOveridingStartItemNumbers:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                  [NSNumber numberWithInteger: 1], [NSNumber numberWithInteger: 0],
                                                                  [NSNumber numberWithInteger: 3], [NSNumber numberWithInteger: 1], 

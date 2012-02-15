@@ -25,7 +25,7 @@ typedef enum {
     RKTextListFormatCodeBullet              = 23
 } RKTextListFormatCode;
 
-@interface RKTextList (RKWriterAdditions)
+@interface RKListStyle (RKWriterAdditions)
 
 /*!
  @abstract Returns the placeholder string used in a certain level

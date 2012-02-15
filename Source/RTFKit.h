@@ -10,7 +10,7 @@
 #import "RKSection.h"
 #import "RKDocument.h"
 
-#import "RKTextList.h"
+#import "RKListStyle.h"
 #import "RKListItem.h"
 
 #import "RKFootnote.h"

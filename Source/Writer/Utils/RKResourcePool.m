@@ -113,7 +113,7 @@
 
 #pragma marg - Text Lists
 
-- (NSUInteger)indexOfList:(RKTextList *)textList
+- (NSUInteger)indexOfList:(RKListStyle *)textList
 {
     NSUInteger listIndex = [textLists indexOfObject: textList];
     
@@ -130,7 +130,7 @@
     return textLists;
 }
 
-- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKTextList *)textList;
+- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
 {
     if ([listItemIndices objectForKey:textList] == nil) {
         [listItemIndices setObject:[NSMutableArray new] forKey:textList];

@@ -14,7 +14,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @synthesize textList, indentationLevel;
 
-- (id)initWithTextList:(RKTextList *)initialTextList withIndentationLevel:(NSUInteger)initialIndentationLevel
+- (id)initWithTextList:(RKListStyle *)initialTextList withIndentationLevel:(NSUInteger)initialIndentationLevel
 {
     self = [self init];
     
@@ -26,7 +26,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     return self;
 }
 
-+ (RKListItem *)textListItemWithTextList:(RKTextList *)textList withIndentationLevel:(NSUInteger)indentationLevel
++ (RKListItem *)textListItemWithTextList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel
 {
     return [[RKListItem alloc] initWithTextList:textList withIndentationLevel:indentationLevel];
 }
@@ -35,7 +35,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @implementation NSAttributedString (RKAttributedStringListItemConvenience)
 
-+ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingList:(RKTextList *)textList withIndentationLevel:(NSUInteger)indentationLevel
++ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString: text];
     RKListItem *listItem = [RKListItem textListItemWithTextList:textList withIndentationLevel:indentationLevel];
@@ -53,14 +53,14 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @implementation NSMutableAttributedString (RKMutableAttributedStringAdditions)
 
-- (void)insertListItem:(NSAttributedString *)text usingList:(RKTextList*)textList withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
+- (void)insertListItem:(NSAttributedString *)text usingList:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
 {
     NSAttributedString *listItemString = [NSAttributedString attributedStringWithListItem:text usingList:textList withIndentationLevel:indentationLevel];
     
     [self insertAttributedString:listItemString atIndex:location];
 }
 
-- (void)appendListItem:(NSAttributedString *)text usingList:(RKTextList*)textList withIndentationLevel:(NSUInteger)indentationLevel
+- (void)appendListItem:(NSAttributedString *)text usingList:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel
 {
     [self insertListItem:text usingList:textList withIndentationLevel:indentationLevel atIndex:self.length];
 }

@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextList.h"
+#import "RKListStyle.h"
 #import "RKConversion.h"
 
-@interface RKTextList () {
+@interface RKListStyle () {
     NSArray *definedLevelFormats;
     NSDictionary *startItemNumbers;
 }
@@ -26,7 +26,7 @@
 
 @end
 
-@implementation RKTextList
+@implementation RKListStyle
 
 NSRegularExpression *preprendPlaceholderRegexp;
 NSRegularExpression *enumerationPlaceholderRegexp;
@@ -37,14 +37,14 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     preprendPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
 }
 
-+ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
++ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats;
 {
-    return [[RKTextList alloc] initWithLevelFormats: levelFormats];
+    return [[RKListStyle alloc] initWithLevelFormats: levelFormats];
 }
 
-+ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSDictionary *)overridingItemNumbers
++ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSDictionary *)overridingItemNumbers
 {
-    return [[RKTextList alloc] initWithLevelFormats:levelFormats withOveridingStartItemNumbers:overridingItemNumbers];
+    return [[RKListStyle alloc] initWithLevelFormats:levelFormats withOveridingStartItemNumbers:overridingItemNumbers];
 }
 
 - (id)initWithLevelFormats:(NSArray *)levelFormats

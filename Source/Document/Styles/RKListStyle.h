@@ -10,7 +10,7 @@
  @abstract Representation of a list styling
  @description A text list consists of the styling description for each nesting level of the list
  */
-@interface RKTextList : NSObject
+@interface RKListStyle : NSObject
 
 /*!
  @abstract Creates a text list with a format for all levels (at most 9)
@@ -27,12 +27,12 @@
                 %%      %-Charracter
                 %*      Insert level string of a higher level here
  */
-+ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats;
++ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats;
 
 /*!
  @abstract Creates a text list that overrides the start positions of selected levels
  */
-+ (RKTextList *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSDictionary *)overridingItemNumbers;
++ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSDictionary *)overridingItemNumbers;
 
 /*!
  @abstract Returns the format definition for a certain level

@@ -31,13 +31,13 @@
 /*!
  @abstract Returns the index of a list
  */
-- (NSUInteger)indexOfList:(RKTextList *)textList;
+- (NSUInteger)indexOfList:(RKListStyle *)textList;
 
 /*!
  @abstract Returns a new item number of a list level
  @discussion All item numbers for more nested list levels will be reset to the starting number of the level
  */
-- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKTextList *)textList;
+- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
 
 /*!
  @abstract Returns the collected font families sorted by their indices

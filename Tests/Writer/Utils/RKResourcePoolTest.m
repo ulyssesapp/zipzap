@@ -80,7 +80,7 @@
                                nil];
     
     // Create a list, where level 3 will start the item count with 12
-    RKTextList *textList = [RKTextList textListWithLevelFormats:[NSArray new] withOveridingStartItemNumbers:overrides];
+    RKListStyle *textList = [RKListStyle textListWithLevelFormats:[NSArray new] withOveridingStartItemNumbers:overrides];
     RKResourcePool *resources = [RKResourcePool new];
     
     // Initialization
