@@ -62,7 +62,7 @@
                  );
 
     // Picture was properly converted
-    NSString *expectedResult = [[NSString alloc] initWithData:[[self textAttachmentWithName:@"image" withExtension:@"hex"].fileWrapper regularFileContents] encoding:NSASCIIStringEncoding ];
+    NSString *expectedResult = [[NSString alloc] initWithData:[[self textAttachmentWithName:@"image-png" withExtension:@"hex"].fileWrapper regularFileContents] encoding:NSASCIIStringEncoding ];
     NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
     
     STAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
@@ -83,8 +83,27 @@
                                       resources:resources
      ];
     
-    // No picture should have been embedded and the attachment charracter should have been removed
-    STAssertEqualObjects([taggedString flattenedRTFString], @"----", @"Picture was not ignored");
+    NSString *flattened = [taggedString flattenedRTFString];
+    
+    // Attachment charracter was removed
+    STAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", NSAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
+    
+    // Picture tag is properly inserted
+    NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\pngblip\n";
+    NSString *expectedSuffix = @"\n}--";
+    
+    STAssertTrue([flattened hasPrefix: expectedPrefix],
+                 @"Invalid picture settings"
+                 );
+    STAssertTrue([flattened hasSuffix: expectedSuffix],
+                 @"Invalid picture settings"
+                 );
+    
+    // Picture was properly converted
+    NSString *expectedResult = [[NSString alloc] initWithData:[[self textAttachmentWithName:@"image-jpg" withExtension:@"hex"].fileWrapper regularFileContents] encoding:NSASCIIStringEncoding ];
+    NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
+    
+    STAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
 - (void)testPictureAttachmentsReferenced

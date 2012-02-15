@@ -75,17 +75,18 @@
                        inRange:(NSRange)range
                      resources:(RKResourcePool *)resources
 {
-    // Only convert PNG files; other files are ignored
-    CFStringRef fileType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)[[fileWrapper filename] pathExtension], NULL);
-    
-    if (!UTTypeConformsTo(fileType, kUTTypePNG))
-        return;
-    
     // Add prefix
     [taggedString registerTag:@"{\\pict\\picscalex100\\picscaley100\\pngblip\n" forPosition:range.location];
 
+    // Convert content only, if it is a regular file
+    if (!fileWrapper.isRegularFile)
+        return;
+    
+    NSData *originalImage = [fileWrapper regularFileContents];
+    NSData *convertedImage = [[NSBitmapImageRep imageRepWithData:originalImage] representationUsingType:NSPNGFileType properties:nil ];
+    
     // Add content
-    [taggedString registerTag:[[fileWrapper regularFileContents] stringWithRTFHexEncoding] forPosition:range.location];
+    [taggedString registerTag:[convertedImage stringWithRTFHexEncoding] forPosition:range.location];
     
     // Add suffix
     [taggedString registerTag:@"\n}" forPosition:range.location];
