@@ -8,6 +8,6 @@
 
 #import "RKAttributeWriter.h"
 
-@interface RKTextPlaceholderWriter : RKAttributeWriter
+@interface RKPlaceholderWriter : RKAttributeWriter
 
 @end

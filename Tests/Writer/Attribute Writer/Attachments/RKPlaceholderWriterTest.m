@@ -1,22 +1,22 @@
 //
-//  RKTextPlaceholderWriterTest.m
+//  RKPlaceholderWriterTest.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 07.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextPlaceholderWriter.h"
-#import "RKTextPlaceholderWriterTest.h"
+#import "RKPlaceholderWriter.h"
+#import "RKPlaceholderWriterTest.h"
 
-@implementation RKTextPlaceholderWriterTest
+@implementation RKPlaceholderWriterTest
 
 - (void)testGeneratePlaceholderWithPageNumber
 {
-    RKTextPlaceholder *placeholder = [RKTextPlaceholder placeholderWithType:RKTextPlaceholderPageNumber];
+    NSNumber *placeholder = [NSNumber numberWithInt:RKPlaceholderPageNumber];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", NSAttachmentCharacter]];
     
-    [RKTextPlaceholderWriter addTagsForAttribute:placeholder toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:nil];
+    [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:nil];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
@@ -27,10 +27,10 @@
 
 - (void)testGeneratePlaceholderWithSectionNumber
 {
-    RKTextPlaceholder *placeholder = [RKTextPlaceholder placeholderWithType:RKTextPlaceholderSectionNumber];
+    NSNumber *placeholder = [NSNumber numberWithInt:RKPlaceholderSectionNumber];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", NSAttachmentCharacter]];
     
-    [RKTextPlaceholderWriter addTagsForAttribute:placeholder toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:nil];
+    [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:nil];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
@@ -58,14 +58,14 @@
                                                            ]
                                            ];
     // Set placeholders
-    [contentA addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderSectionNumber] range:NSMakeRange(21, 1)];
-    [contentA addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderPageNumber] range:NSMakeRange(42, 1)];
+    [contentA addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderSectionNumber] range:NSMakeRange(21, 1)];
+    [contentA addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderPageNumber] range:NSMakeRange(42, 1)];
 
-    [contentB addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderSectionNumber] range:NSMakeRange(21, 1)];
-    [contentB addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderPageNumber] range:NSMakeRange(42, 1)];
+    [contentB addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderSectionNumber] range:NSMakeRange(21, 1)];
+    [contentB addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderPageNumber] range:NSMakeRange(42, 1)];
 
-    [contentB addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderSectionNumber] range:NSMakeRange(44 + 21, 1)];
-    [contentB addAttribute:RKTextPlaceholderAttributeName value:[RKTextPlaceholder placeholderWithType:RKTextPlaceholderPageNumber] range:NSMakeRange(44 + 42, 1)];
+    [contentB addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderSectionNumber] range:NSMakeRange(44 + 21, 1)];
+    [contentB addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderPageNumber] range:NSMakeRange(44 + 42, 1)];
         
     // Two Sections with different contents
     RKSection *sectionA = [RKSection sectionWithContent:contentA];

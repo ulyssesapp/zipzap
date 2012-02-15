@@ -14,7 +14,5 @@
 #import "RKTextListItem.h"
 
 #import "RKFootnote.h"
-
-#import "RKTextPlaceholder.h"
-
+#import "RKPlaceholder.h"
 #import "RKMutableAttributedStringAdditions.h"
