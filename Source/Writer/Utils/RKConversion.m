@@ -71,7 +71,7 @@
 - (NSString *)stringWithRTFHexEncoding
 {
     NSMutableString *encoded = [NSMutableString new];
-    const unsigned char *bytes = [self bytes];
+    const uint8_t *bytes = [self bytes];
     
     for (NSUInteger position = 0; position < [self length]; position ++) {
         if (!(position % 64) && (position > 0))
