@@ -20,8 +20,8 @@
 		7935615A14DB3D0B00FC0C1C /* RKNumberFormattingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935615914DB3D0B00FC0C1C /* RKNumberFormattingTest.m */; };
 		7935615D14DB3D4C00FC0C1C /* RKNumberFormatting.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935615B14DB3D4C00FC0C1C /* RKNumberFormatting.h */; };
 		7935615E14DB3D4C00FC0C1C /* RKNumberFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935615C14DB3D4C00FC0C1C /* RKNumberFormatting.m */; };
-		7935616814DC016F00FC0C1C /* RKTextListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935616614DC016F00FC0C1C /* RKTextListItem.h */; };
-		7935616914DC016F00FC0C1C /* RKTextListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935616714DC016F00FC0C1C /* RKTextListItem.m */; };
+		7935616814DC016F00FC0C1C /* RKListItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935616614DC016F00FC0C1C /* RKListItem.h */; };
+		7935616914DC016F00FC0C1C /* RKListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935616714DC016F00FC0C1C /* RKListItem.m */; };
 		7935616D14DC035100FC0C1C /* RKTextList.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935616B14DC035100FC0C1C /* RKTextList.h */; };
 		7935616E14DC035100FC0C1C /* RKTextList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935616C14DC035100FC0C1C /* RKTextList.m */; };
 		7935617514DC1CF500FC0C1C /* RKParagraphStyleWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935617214DC1CF500FC0C1C /* RKParagraphStyleWriterTest.m */; };
@@ -143,8 +143,8 @@
 		7935615914DB3D0B00FC0C1C /* RKNumberFormattingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKNumberFormattingTest.m; path = Tests/Writer/Utils/RKNumberFormattingTest.m; sourceTree = SOURCE_ROOT; };
 		7935615B14DB3D4C00FC0C1C /* RKNumberFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKNumberFormatting.h; path = Writer/Utils/RKNumberFormatting.h; sourceTree = "<group>"; };
 		7935615C14DB3D4C00FC0C1C /* RKNumberFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKNumberFormatting.m; path = Writer/Utils/RKNumberFormatting.m; sourceTree = "<group>"; };
-		7935616614DC016F00FC0C1C /* RKTextListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextListItem.h; path = Document/Attributes/RKTextListItem.h; sourceTree = "<group>"; };
-		7935616714DC016F00FC0C1C /* RKTextListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextListItem.m; path = Document/Attributes/RKTextListItem.m; sourceTree = "<group>"; };
+		7935616614DC016F00FC0C1C /* RKListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListItem.h; path = Document/Attributes/RKListItem.h; sourceTree = "<group>"; };
+		7935616714DC016F00FC0C1C /* RKListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListItem.m; path = Document/Attributes/RKListItem.m; sourceTree = "<group>"; };
 		7935616B14DC035100FC0C1C /* RKTextList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextList.h; path = Source/Document/Container/RKTextList.h; sourceTree = SOURCE_ROOT; };
 		7935616C14DC035100FC0C1C /* RKTextList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextList.m; path = Source/Document/Container/RKTextList.m; sourceTree = SOURCE_ROOT; };
 		7935617114DC1CF500FC0C1C /* RKParagraphStyleWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWriterTest.h; path = "Writer/Attribute Writer/Paragraph Styles/RKParagraphStyleWriterTest.h"; sourceTree = "<group>"; };
@@ -380,8 +380,8 @@
 		7935616014DC00FA00FC0C1C /* Attributes */ = {
 			isa = PBXGroup;
 			children = (
-				7935616614DC016F00FC0C1C /* RKTextListItem.h */,
-				7935616714DC016F00FC0C1C /* RKTextListItem.m */,
+				7935616614DC016F00FC0C1C /* RKListItem.h */,
+				7935616714DC016F00FC0C1C /* RKListItem.m */,
 				7935619114DC6D8C00FC0C1C /* RKFootnote.h */,
 				7935619214DC6D8C00FC0C1C /* RKFootnote.m */,
 				79AD205314E1939900F5616C /* RKPlaceholder.h */,
@@ -681,7 +681,7 @@
 				796EAC5814D9491B001E8401 /* RKAttributeWriter.h in Headers */,
 				7935615214DB3B1F00FC0C1C /* RKTextListWriterAdditions.h in Headers */,
 				7935615D14DB3D4C00FC0C1C /* RKNumberFormatting.h in Headers */,
-				7935616814DC016F00FC0C1C /* RKTextListItem.h in Headers */,
+				7935616814DC016F00FC0C1C /* RKListItem.h in Headers */,
 				7935616D14DC035100FC0C1C /* RKTextList.h in Headers */,
 				7935617914DC1D3000FC0C1C /* RKParagraphStyleWriter.h in Headers */,
 				7935617E14DC22C100FC0C1C /* RKTextListItemWriter.h in Headers */,
@@ -815,7 +815,7 @@
 				796EAC5914D9491B001E8401 /* RKAttributeWriter.m in Sources */,
 				7935615314DB3B1F00FC0C1C /* RKTextListWriterAdditions.m in Sources */,
 				7935615E14DB3D4C00FC0C1C /* RKNumberFormatting.m in Sources */,
-				7935616914DC016F00FC0C1C /* RKTextListItem.m in Sources */,
+				7935616914DC016F00FC0C1C /* RKListItem.m in Sources */,
 				7935616E14DC035100FC0C1C /* RKTextList.m in Sources */,
 				7935617A14DC1D3000FC0C1C /* RKParagraphStyleWriter.m in Sources */,
 				7935617F14DC22C100FC0C1C /* RKTextListItemWriter.m in Sources */,
