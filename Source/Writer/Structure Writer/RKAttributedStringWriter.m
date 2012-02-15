@@ -21,7 +21,7 @@ NSArray *priorityOrderings;
 NSMutableDictionary *attributeHandlersOrdering;
 NSMutableDictionary *attributeHandlers;
 
-+ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriority:(RKAttributedStringWriterPriority)priority
++ (void)registerWriter:(Class)attributeWriter forAttribute:(NSString*)attributeName priority:(RKAttributedStringWriterPriority)priority
 {
     if (attributeHandlers == nil) {
         attributeHandlers = [NSMutableDictionary new];
@@ -48,7 +48,7 @@ NSMutableDictionary *attributeHandlers;
     //NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
 }
 
-+ (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
     NSString *baseString = [attributedString string];
@@ -80,11 +80,11 @@ NSMutableDictionary *attributeHandlers;
     return [taggedString flattenedRTFString];
 }
 
-+ (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString insideTag:(NSString *)tag withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString insideTag:(NSString *)tag withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
     return [NSString stringWithFormat:@"{\\%@ %@}",
             tag,
-            [self RTFfromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]
+            [self RTFFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]
            ];
 }
 

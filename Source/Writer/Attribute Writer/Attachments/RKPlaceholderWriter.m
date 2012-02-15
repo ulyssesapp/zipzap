@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:RKPlaceholderAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKPlaceholderAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 

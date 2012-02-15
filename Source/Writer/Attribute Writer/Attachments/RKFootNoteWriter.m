@@ -13,8 +13,8 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:RKFootnoteAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
-    [RKAttributedStringWriter registerHandler:self forAttribute:RKEndnoteAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKFootnoteAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKEndnoteAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 
@@ -28,7 +28,7 @@
     if (footnote) {
         NSString *noteTag = ([attributeName isEqual: RKEndnoteAttributeName] ) ? @"footnote\\ftnalt {\\super \\chftn }" : @"footnote {\\super \\chftn }";
                 
-        NSString *noteContent = [RKAttributedStringWriter RTFfromAttributedString:footnote insideTag:noteTag withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources];
+        NSString *noteContent = [RKAttributedStringWriter RTFFromAttributedString:footnote insideTag:noteTag withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources];
         
         // Footnote marker
         [taggedString registerTag:@"{\\super \\chftn }" forPosition:range.location];

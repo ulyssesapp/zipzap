@@ -25,7 +25,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerHandler:self forAttribute:NSParagraphStyleAttributeName withPriority:RKAttributedStringWriterPriorityParagraphLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:NSParagraphStyleAttributeName priority:RKAttributedStringWriterPriorityParagraphLevel];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 

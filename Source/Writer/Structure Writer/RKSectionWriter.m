@@ -100,7 +100,7 @@
     [attributedStringMap enumerateKeysAndObjectsUsingBlock:^(NSString *tag, NSAttributedString *attributedString, BOOL *stop) {
         if (attributedString) {
             [translation appendString:
-             [RKAttributedStringWriter RTFfromAttributedString:attributedString insideTag:tag withAttachmentPolicy:attachmentPolicy resources:resources]
+             [RKAttributedStringWriter RTFFromAttributedString:attributedString insideTag:tag withAttachmentPolicy:attachmentPolicy resources:resources]
             ];
         }
     }];     
@@ -152,7 +152,7 @@
 
 + (NSString *)contentForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    return [RKAttributedStringWriter RTFfromAttributedString:section.content withAttachmentPolicy:attachmentPolicy resources:resources];
+    return [RKAttributedStringWriter RTFFromAttributedString:section.content withAttachmentPolicy:attachmentPolicy resources:resources];
 }
 
 @end

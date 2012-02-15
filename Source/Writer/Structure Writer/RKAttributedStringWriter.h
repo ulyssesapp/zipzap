@@ -23,7 +23,7 @@ typedef enum {
     RKAttributedStringWriterPriorityParagraphStylingLevel = 1,
     RKAttributedStringWriterPriorityInlineStyleLevel = 2,
     RKAttributedStringWriterPriorityTextAttachmentLevel = 3
-}RKAttributedStringWriterPriority;
+} RKAttributedStringWriterPriority;
 
 /*!
  @abstract Translates an attributed string to RTF
@@ -37,17 +37,17 @@ typedef enum {
              If the handler is added with priority, it will be executed before all non-priorized handlers.
              Calls addTagsForAttribute:toTaggedString:inRange:ofAttributedString:withAttachmentPolicy:resources: on the handler.
  */
-+ (void)registerHandler:(Class)attributeWriter forAttribute:(NSString*)attributeName withPriority:(RKAttributedStringWriterPriority)priority;
++ (void)registerWriter:(Class)attributeWriter forAttribute:(NSString*)attributeName priority:(RKAttributedStringWriterPriority)priority;
 
 /*!
  @abstract Converts an attributes string to RTF
  */
-+ (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Converts an attributes string to RTF and surrounds it with an RTF tag
  */
-+ (NSString *)RTFfromAttributedString:(NSAttributedString *)attributedString insideTag:(NSString *)tag withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString insideTag:(NSString *)tag withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
 
 @end
