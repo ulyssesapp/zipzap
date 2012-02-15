@@ -30,7 +30,7 @@ NSMutableArray *RKAttributedStringWriterHandlers;
 
 + (void)registerWriter:(Class)attributeWriter forAttribute:(NSString*)attributeName priority:(RKAttributedStringWriterPriority)priority
 {
-    if (RKAttributedStringWriterHandlers == nil) {
+    if (!RKAttributedStringWriterHandlers) {
         RKAttributedStringWriterHandlers = [NSMutableArray new];
     }
     
@@ -53,8 +53,8 @@ NSMutableArray *RKAttributedStringWriterHandlers;
 
 + (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
-    NSString *baseString = [attributedString string];
+    NSString *baseString = attributedString.string;
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: baseString];
     
     // Write attribute styles
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
