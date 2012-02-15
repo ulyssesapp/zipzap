@@ -88,6 +88,7 @@
                          );     
     
     // Left alignment
+    paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSLeftTextAlignment;    
     
     STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
@@ -98,6 +99,7 @@
                          ); 
     
     // Center alignment
+    paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSCenterTextAlignment;
     
     STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
@@ -108,6 +110,7 @@
                          ); 
     
     // Right alignment
+    paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSRightTextAlignment;
     
     STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
@@ -118,6 +121,7 @@
                          );    
     
     // Right alignment
+    paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSJustifiedTextAlignment;
     
     STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
@@ -161,6 +165,7 @@
                          );     
     
     // Line height multiple of default font
+    paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.lineHeightMultiple = 3.0f;
     
     STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 3)],
@@ -171,6 +176,7 @@
                          ); 
 
     // Line height multiple of largest font
+    paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.lineHeightMultiple = 3.0f;
     
     [attributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica" size:20] range:NSMakeRange(0, 1)];
@@ -241,14 +247,14 @@
                          "\\tqdec\\tx800"
                          // Space required to prevent problems with succeeding commands
                          " ",
+    RKResourcePool *resources = [RKResourcePool new];
+    
                          @"Invalid translation"
                          ); 
 }
 
 - (void)testParagraphTagging
 {
-    RKResourcePool *resources = [RKResourcePool new];
-    
     NSMutableParagraphStyle *paragraphStyleA = [self defaultParagraphStyle];
     NSMutableParagraphStyle *paragraphStyleB = [self defaultParagraphStyle];
     
