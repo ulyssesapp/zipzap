@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextListItemWriter.h"
+#import "RKListItemWriter.h"
 #import "RKAttributedStringWriter.h"
 #import "RKListItem.h"
 #import "RKTextListWriterAdditions.h"
 
-@implementation RKTextListItemWriter
+@implementation RKListItemWriter
 
 + (void)load
 {

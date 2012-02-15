@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextListItemWriter.h"
-#import "RKTextListItemWriterTest.h"
+#import "RKListItemWriter.h"
+#import "RKListItemWriterTest.h"
 
-@interface RKTextListItemWriterTest ()
+@interface RKListItemWriterTest ()
 
 - (void)assertListItemAtParagraphIndex:(NSUInteger)paragraphIndex
                     ofAttributedString:(NSAttributedString *)attributedString 
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation RKTextListItemWriterTest
+@implementation RKListItemWriterTest
 
 - (RKListItem *)generateListItem
 {
@@ -95,9 +95,9 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"aaa"];
     RKResourcePool *resourcePool = [RKResourcePool new];
     
-    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
-    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
-    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
 
     // Text List properly registered
     NSArray *textLists = [resourcePool textLists];
@@ -130,7 +130,7 @@
     [resourcePool incrementItemNumbersForListLevel:2 ofList:textListItem.textList];
         
     // Generate item number (will increment to 2.1.4)
-    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
     
     STAssertEqualObjects([taggedString flattenedRTFString],
                          @"\\ls1\\ilvl2 "
