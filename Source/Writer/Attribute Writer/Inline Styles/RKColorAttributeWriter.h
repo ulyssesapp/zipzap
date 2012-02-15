@@ -1,5 +1,5 @@
 //
-//  RKUnderlineColorAttributeWriter.h
+//  RKColorAttributeWriter.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 31.01.12.
@@ -8,6 +8,6 @@
 
 #import "RKAttributeWriter.h"
 
-@interface RKUnderlineColorAttributeWriter : RKAttributeWriter
+@interface RKColorAttributeWriter : RKAttributeWriter
 
 @end
