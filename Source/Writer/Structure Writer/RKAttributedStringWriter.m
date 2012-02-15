@@ -17,35 +17,38 @@
 
 @implementation RKAttributedStringWriter
 
-NSArray *priorityOrderings;
-NSMutableDictionary *attributeHandlersOrdering;
-NSMutableDictionary *attributeHandlers;
+/*!
+ @abstract An array of dictionaries describing the handlers registered to the attributed string writer.
+ @description The array is sorted by the priority of the handlers.
+ 
+  Each dictionary contains the following fields:
+    'attributeName'     The name of the attribute (e.g. NSParagraphStyleAttributeName)
+    'priority'          The priority of the handler (one of RKAttributedStringWriterPriority)
+    'writerClass'       The handling class
+ */
+NSMutableArray *RKAttributedStringWriterHandlers;
 
 + (void)registerWriter:(Class)attributeWriter forAttribute:(NSString*)attributeName priority:(RKAttributedStringWriterPriority)priority
 {
-    if (attributeHandlers == nil) {
-        attributeHandlers = [NSMutableDictionary new];
-        attributeHandlersOrdering = [NSMutableDictionary new];
-        priorityOrderings = nil;
-    }
-        // Register handler for attribute
-    [attributeHandlers setValue:attributeWriter forKey:attributeName];
-
-    // Set ordering based on priority
-    NSNumber *priorityKey = [NSNumber numberWithInt: priority];
-    
-    if ([attributeHandlersOrdering objectForKey: priorityKey] == nil) {
-        [attributeHandlersOrdering setObject:[NSMutableArray new] forKey:priorityKey];
+    if (RKAttributedStringWriterHandlers == nil) {
+        RKAttributedStringWriterHandlers = [NSMutableArray new];
     }
     
-    NSMutableArray *priorityOrdering = [attributeHandlersOrdering objectForKey: priorityKey];
+    // Register handler
+    [RKAttributedStringWriterHandlers addObject:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+        attributeName,                          @"attributeName",
+        [NSNumber numberWithInt:priority],      @"priority",
+        attributeWriter,                        @"writerClass",
+        nil
+      ]
+    ];
     
-    [priorityOrdering addObject: attributeName];
-    
-    priorityOrderings = [[attributeHandlersOrdering allKeys] sortedArrayUsingSelector:@selector(compare:) ];
+    // Order handlers
+    [RKAttributedStringWriterHandlers sortUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES]]];
     
     // Validate type conformance
-    //NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
+    NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
 }
 
 + (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
@@ -54,27 +57,24 @@ NSMutableDictionary *attributeHandlers;
     NSString *baseString = [attributedString string];
     
     // Write attribute styles
-    for (NSNumber *priority in priorityOrderings) {
-        NSArray *priorityOrdering = [attributeHandlersOrdering objectForKey: priority];
-        
-        for (NSString *attributeName in priorityOrdering) {
-            Class handler = [attributeHandlers objectForKey: attributeName];
+    for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
+        NSString *attributeName = [handlerDescription objectForKey: @"attributeName"];
+        Class handler = [handlerDescription objectForKey: @"writerClass"];
             
-            // We operate on a per-paragraph level
-            [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
-             ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-                    [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
-                        [handler addTagsForAttribute:attributeName 
-                                               value:attributeValue 
-                                      effectiveRange:attributeRange 
-                                            toString:taggedString 
-                                      originalString:attributedString 
-                                    attachmentPolicy:attachmentPolicy 
-                                           resources:resources
-                        ];
-                    }];
-            }];
-        }
+        // We operate on a per-paragraph level
+        [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
+         ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+                [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+                    [handler addTagsForAttribute:attributeName 
+                                           value:attributeValue 
+                                  effectiveRange:attributeRange 
+                                        toString:taggedString 
+                                  originalString:attributedString 
+                                attachmentPolicy:attachmentPolicy 
+                                       resources:resources
+                    ];
+                }];
+        }];
     }
     
     return [taggedString flattenedRTFString];
