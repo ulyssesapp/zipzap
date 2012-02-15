@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#define RKListMaxiumLevelCount             9
+
 /*!
  @abstract Representation of a list styling
  @description A text list consists of the styling description for each nesting level of the list
@@ -32,7 +34,7 @@
 /*!
  @abstract Creates a text list that overrides the start positions of selected levels
  */
-+ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSDictionary *)overridingItemNumbers;
++ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers;
 
 /*!
  @abstract Returns the format definition for a certain level

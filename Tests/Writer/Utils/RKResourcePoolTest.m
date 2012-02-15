@@ -75,11 +75,20 @@
 
 - (void)testRegisteringListItem
 {
-    NSDictionary *overrides = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [NSNumber numberWithUnsignedInteger:12], [NSNumber numberWithUnsignedInteger:3],
-                               nil];
+    NSArray *overrides = [NSArray arrayWithObjects: 
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 1],                         
+                          [NSNumber numberWithUnsignedInteger: 1],                         
+                          [NSNumber numberWithUnsignedInteger: 12],                         
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 1],                         
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          nil
+                          ];
     
-    // Create a list, where level 3 will start the item count with 12
+    // Create a list, where level 4 will start the item count with 12
     RKListStyle *textList = [RKListStyle textListWithLevelFormats:[NSArray new] withOveridingStartItemNumbers:overrides];
     RKResourcePool *resources = [RKResourcePool new];
     

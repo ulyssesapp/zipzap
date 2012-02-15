@@ -33,10 +33,16 @@
 - (NSAttributedString *)generateComplexList
 {
     RKListStyle *textList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil] 
-                                  withOveridingStartItemNumbers:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                 [NSNumber numberWithInteger: 1], [NSNumber numberWithInteger: 0],
-                                                                 [NSNumber numberWithInteger: 3], [NSNumber numberWithInteger: 1], 
-                                                                 [NSNumber numberWithInteger: 1], [NSNumber numberWithInteger: 2], 
+                                  withOveridingStartItemNumbers:[NSArray arrayWithObjects:
+                                                                 [NSNumber numberWithInteger: 1],
+                                                                 [NSNumber numberWithInteger: 3],
+                                                                 [NSNumber numberWithInteger: 1],
+                                                                 [NSNumber numberWithInteger: 1],
+                                                                 [NSNumber numberWithInteger: 1],
+                                                                 [NSNumber numberWithInteger: 1],
+                                                                 [NSNumber numberWithInteger: 1],
+                                                                 [NSNumber numberWithInteger: 1],
+                                                                 [NSNumber numberWithInteger: 1],                                                                 
                                                                  nil
                                                                  ]
                             ];

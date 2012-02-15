@@ -195,7 +195,18 @@
 
 - (void)testGenerateListTable
 {
-    NSDictionary *overrides = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:3], [NSNumber numberWithUnsignedInteger:1], nil];
+    NSArray *overrides = [NSArray arrayWithObjects: 
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 3],                         
+                          [NSNumber numberWithUnsignedInteger: 1],                         
+                          [NSNumber numberWithUnsignedInteger: 1],                         
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          [NSNumber numberWithUnsignedInteger: 1],                         
+                          [NSNumber numberWithUnsignedInteger: 1],
+                          nil
+                         ];
     RKListStyle *firstList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%a.", @"%r.", nil] ];
     RKListStyle *secondList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"---------%d", @"-", nil] withOveridingStartItemNumbers:overrides];
 
@@ -270,9 +281,8 @@
 
 - (void)testGenerateListOverrideTable
 {
-    NSDictionary *overrides = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInteger:3], [NSNumber numberWithUnsignedInteger:1], nil];
     RKListStyle *firstList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.", @"%a1.", @"%r2.", nil] ];
-    RKListStyle *secondList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.%r1.%a2.%R3.%A4.", @"-", nil] withOveridingStartItemNumbers:overrides];
+    RKListStyle *secondList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.%r1.%a2.%R3.%A4.", @"-", nil]];
     
     // Register lists to a resource pool
     RKResourcePool *resources = [RKResourcePool new];
