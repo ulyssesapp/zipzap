@@ -207,8 +207,8 @@
                           [NSNumber numberWithUnsignedInteger: 1],
                           nil
                          ];
-    RKListStyle *firstList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%a.", @"%r.", nil] ];
-    RKListStyle *secondList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"---------%d", @"-", nil] withOveridingStartItemNumbers:overrides];
+    RKListStyle *firstList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%a.", @"%r.", nil] ];
+    RKListStyle *secondList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"---------%d", @"-", nil] startNumbers:overrides];
 
     // Register lists to a resource pool
     RKResourcePool *resources = [RKResourcePool new];
@@ -281,8 +281,8 @@
 
 - (void)testGenerateListOverrideTable
 {
-    RKListStyle *firstList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.", @"%a1.", @"%r2.", nil] ];
-    RKListStyle *secondList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d0.%r1.%a2.%R3.%A4.", @"-", nil]];
+    RKListStyle *firstList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%d0.", @"%a1.", @"%r2.", nil] ];
+    RKListStyle *secondList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%d0.%r1.%a2.%R3.%A4.", @"-", nil]];
     
     // Register lists to a resource pool
     RKResourcePool *resources = [RKResourcePool new];

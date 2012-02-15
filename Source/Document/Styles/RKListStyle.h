@@ -29,12 +29,18 @@
                 %%      %-Charracter
                 %*      Insert level string of a higher level here
  */
-+ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats;
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)levelFormats;
 
 /*!
  @abstract Creates a text list that overrides the start positions of selected levels
  */
-+ (RKListStyle *)textListWithLevelFormats:(NSArray *)levelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers;
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)levelFormats startNumbers:(NSArray *)startNumbers;
+
+/*!
+ @abstract Initializes a text list that overrides the start positions of selected levels
+ @discussion See listStyleWithLevelFormats
+ */
+- (id)initWithLevelFormats:(NSArray *)levelFormats startNumbers:(NSArray *)startNumbers;
 
 /*!
  @abstract Returns the format definition for a certain level

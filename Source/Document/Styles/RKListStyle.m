@@ -19,11 +19,6 @@
  */
 - (id)initWithLevelFormats:(NSArray *)levelFormats;
 
-/*!
- @abstract See textListWithLevelFormats:withOverdingStartIndices:
- */
-- (id)initWithLevelFormats:(NSArray *)initialLevelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers;
-
 @end
 
 @implementation RKListStyle
@@ -37,14 +32,14 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     preprendPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
 }
 
-+ (RKListStyle *)textListWithLevelFormats:(NSArray *)initialLevelFormats;
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats;
 {
     return [[RKListStyle alloc] initWithLevelFormats: initialLevelFormats];
 }
 
-+ (RKListStyle *)textListWithLevelFormats:(NSArray *)initialLevelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats startNumbers:(NSArray *)startNumbers
 {
-    return [[RKListStyle alloc] initWithLevelFormats:initialLevelFormats withOveridingStartItemNumbers:overridingItemNumbers];
+    return [[RKListStyle alloc] initWithLevelFormats:initialLevelFormats startNumbers:startNumbers];
 }
 
 - (id)initWithLevelFormats:(NSArray *)initialLevelFormats
@@ -62,12 +57,12 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     return self;
 }
 
-- (id)initWithLevelFormats:(NSArray *)initialLevelFormats withOveridingStartItemNumbers:(NSArray *)overridingItemNumbers
+- (id)initWithLevelFormats:(NSArray *)initialLevelFormats startNumbers:(NSArray *)initialStartNumbers
 {
     self = [self initWithLevelFormats:initialLevelFormats];
     
     if (self) {
-        startNumbers = overridingItemNumbers;
+        startNumbers = initialStartNumbers;
     }
     
     return self;
