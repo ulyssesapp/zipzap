@@ -23,15 +23,6 @@
 
 @implementation RKListStyle
 
-NSRegularExpression *preprendPlaceholderRegexp;
-NSRegularExpression *enumerationPlaceholderRegexp;
-
-+ (void)load
-{
-    enumerationPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
-    preprendPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
-}
-
 + (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats;
 {
     return [[RKListStyle alloc] initWithLevelFormats: initialLevelFormats];
