@@ -127,7 +127,7 @@
     [document setFootnoteEnumerationStyle:RKFootnoteEnumerationRomanLowerCase];
     [document setEndnoteEnumerationStyle:RKFootnoteEnumerationAlphabeticLowerCase];
     
-    [document setFootnoteEnumerationPolicy:RKFootnoteRestartEnumerationOnEachSection];
+    [document setFootnoteEnumerationPolicy:RKFootnoteEnumerationPerSection];
     [document setRestartEndnotesOnEachSection:NO];
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],

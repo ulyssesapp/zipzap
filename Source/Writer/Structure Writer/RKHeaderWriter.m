@@ -305,13 +305,13 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     
     // Footnote restart policy
     switch (document.footnoteEnumerationPolicy) {
-        case (RKFootnoteRestartEnumerationOnEachPage):
+        case (RKFootnoteEnumerationPerPage):
             [attributes appendString:@"\\ftnrstpg"];
             break;
-        case (RKFootnoteRestartEnumerationOnEachSection):
+        case (RKFootnoteEnumerationPerSection):
             [attributes appendString:@"\\ftnrestart"];
             break;
-        case (RKFootnoteContinuousEnumerationInDocument):
+        case (RKFootnoteContinuousEnumeration):
             [attributes appendString:@"\\ftnrstcont"];
             break;
     }

@@ -70,9 +70,9 @@ typedef enum {
  @abstract Options for restarting footnote enumeration
  */
 typedef enum {
-    RKFootnoteRestartEnumerationOnEachPage          = 0,
-    RKFootnoteRestartEnumerationOnEachSection       = 1,
-    RKFootnoteContinuousEnumerationInDocument       = 2
+    RKFootnoteEnumerationPerPage          = 0,
+    RKFootnoteEnumerationPerSection       = 1,
+    RKFootnoteContinuousEnumeration       = 2
 } RKFootnoteEnumerationPolicy;
 
 /*!
