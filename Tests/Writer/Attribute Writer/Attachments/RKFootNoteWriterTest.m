@@ -14,19 +14,18 @@
 - (void)testGenerateFootnote
 {
     RKResourcePool *resources = [RKResourcePool new];
-    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
+    NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
-    [content addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
+    [footnote addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
     
-    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:content];
     NSString *string = [NSString stringWithFormat:@">%C<", NSAttachmentCharacter];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
     
-    [RKFootnoteWriter addTagsForAttribute:footnote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];
+    [RKFootnoteWriter addTagsForAttribute:RKFootnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\super \\chftn }{\\footnote {\\super \\chftn } \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs32 \\cf0 aaa\\par\n}<",
+                         @">{\\super \\chftn }{\\footnote {\\super \\chftn } \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs32 aaa\\par\n}<",
                          @"Invalid footnote generated"
                          );
     
@@ -38,21 +37,18 @@
 - (void)testGenerateEndnote
 {
     RKResourcePool *resources = [RKResourcePool new];
-    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
+    NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
-    [content addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
+    [footnote addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Menlo" size:16] range:NSMakeRange(0, 3)];
     
-    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:content];
     NSString *string = [NSString stringWithFormat:@">%C<", NSAttachmentCharacter];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
     
-    footnote.isEndnote = true;
-    
-    [RKFootnoteWriter addTagsForAttribute:footnote toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:resources];
+    [RKFootnoteWriter addTagsForAttribute:RKEndnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\super \\chftn }{\\footnote\\ftnalt {\\super \\chftn } \\pard\\ql\\pardeftab0 \\cb1 \\f0 \\fs32 \\cf0 aaa\\par\n}<",
+                         @">{\\super \\chftn }{\\footnote\\ftnalt {\\super \\chftn } \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs32 aaa\\par\n}<",
                          @"Invalid footnote generated"
                          );
     
@@ -63,8 +59,7 @@
 
 - (void)testFootnotesAreIgnoredByCocoa
 {
-    NSMutableAttributedString *footnoteContent = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
-    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:footnoteContent];
+    NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
     
@@ -83,9 +78,8 @@
 - (void)testFootnotesAreCompatibleToManualReferenceTest
 {
     // Footnote with some inline formatting
-    NSMutableAttributedString *footnoteContent = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
-    [footnoteContent addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:12] range:NSMakeRange(1,1)];
-    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:footnoteContent];
+    NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
+    [footnote addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:12] range:NSMakeRange(1,1)];
     
     // Text with an inline footnote
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
@@ -102,16 +96,13 @@
 - (void)testEndnotesAreCompatibleToManualReferenceTest
 {
     // Footnote with some inline formatting
-    NSMutableAttributedString *footnoteContent = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
-    [footnoteContent addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:12] range:NSMakeRange(1,1)];
-    RKFootnote *footnote = [RKFootnote footnoteWithAttributedString:footnoteContent];
-    
-    footnote.isEndnote = true;
+    NSMutableAttributedString *endnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
+    [endnote addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-Bold" size:12] range:NSMakeRange(1,1)];
     
     // Text with an inline footnote
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", NSAttachmentCharacter]];
     
-    [original addAttribute:RKFootnoteAttributeName value:footnote range:NSMakeRange(1, 1)];
+    [original addAttribute:RKEndnoteAttributeName value:endnote range:NSMakeRange(1, 1)];
     
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];

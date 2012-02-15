@@ -7,27 +7,21 @@
 //
 
 #import "RKFootnote.h"
+#import "RKAttributedStringAttachmentConvenience.h"
 
 NSString *RKFootnoteAttributeName = @"RKFootnote";
+NSString *RKEndnoteAttributeName = @"RKEndnote";
 
-@implementation RKFootnote
+@implementation NSAttributedString (RKAttributedStringFootnoteConvenience)
 
-@synthesize content, isEndnote;
-
-+ (RKFootnote *)footnoteWithAttributedString:(NSAttributedString *)content
++ (NSAttributedString *)attributedStringWithFootnote:(NSAttributedString *)footnote
 {
-    return [[RKFootnote alloc] initWithAttributedString:content];
+    return [NSAttributedString attributedStringWithAttachment:footnote attributeName:RKFootnoteAttributeName];
 }
 
-- (id)initWithAttributedString:(NSAttributedString *)initialContent
++ (NSAttributedString *)attributedStringWithEndnote:(NSAttributedString *)endnote
 {
-    self = [self init];
-    
-    if (self) {
-        content = initialContent;
-    }
-    
-    return self;
+    return [NSAttributedString attributedStringWithAttachment:endnote attributeName:RKEndnoteAttributeName];    
 }
 
 @end

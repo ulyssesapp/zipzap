@@ -7,27 +7,21 @@
 //
 
 extern NSString *RKFootnoteAttributeName;
-
-@interface RKFootnote : NSObject
-
-/*!
- @abstract Creates a new foot note using an attributed string
- */
-+ (RKFootnote *)footnoteWithAttributedString:(NSAttributedString *)content;
+extern NSString *RKEndnoteAttributeName;
 
 /*!
- @abstract Initializes a foot note using an attributed string
+ @abstract Provides convenience methods for creating footnotes and endnotes
  */
-- (id)initWithAttributedString:(NSAttributedString *)content;
+@interface NSAttributedString (RKAttributedStringFootnoteConvenience)
 
 /*!
- @abstract The content of the foot note
+ @abstract Creates an attributed string containing a footnote
  */
-@property (nonatomic,readwrite,strong) NSAttributedString *content;
++ (NSAttributedString *)attributedStringWithFootnote:(NSAttributedString *)footnote;
 
 /*!
- @abstract Footnote or Endnote ?
+ @abstract Creates an attributed string containing an endnote
  */
-@property (nonatomic) BOOL isEndnote;
++ (NSAttributedString *)attributedStringWithEndnote:(NSAttributedString *)endnote;
 
 @end
