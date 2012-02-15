@@ -11,7 +11,7 @@
 #import "RKTextListWriterAdditions.h"
 #import "RKNumberFormatting.h"
 
-@interface RKListStyle (RKWriterAdditionsPrivateMethods)
+@interface RKListStyle (RKListWriterAdditionsPrivateMethods)
 
 /*!
  @abstract Returns the position of the first prepending placeholder inside a format string
@@ -55,7 +55,7 @@
 
 @end
 
-@implementation RKListStyle (RKWriterAdditions)
+@implementation RKListStyle (RKListWriterAdditions)
 
 NSDictionary *placeholderCodes;
 NSDictionary *cocoaPlaceholderCodes;
