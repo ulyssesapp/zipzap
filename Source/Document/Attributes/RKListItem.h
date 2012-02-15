@@ -17,13 +17,13 @@ extern NSString *RKTextListItemAttributeName;
  @abstract Initializes a text list item as member of a text list with a certain indentation level
  @discussion Indentation level must be between 0 and 8
  */
-- (id)initWithTextList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel;
+- (id)initWithStyle:(RKListStyle *)textList indentationLevel:(NSUInteger)indentationLevel;
 
 /*!
  @abstract Creates a text list item as member of a text list with a certain indentation level
  @discussion Indentation level must be between 0 and 8
  */
-+ (RKListItem *)textListItemWithTextList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel;
++ (RKListItem *)listItemWithStyle:(RKListStyle *)textList indentationLevel:(NSUInteger)indentationLevel;
 
 /*!
  @abstract A reference to the containing list

@@ -14,7 +14,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @synthesize textList, indentationLevel;
 
-- (id)initWithTextList:(RKListStyle *)initialTextList withIndentationLevel:(NSUInteger)initialIndentationLevel
+- (id)initWithStyle:(RKListStyle *)initialTextList indentationLevel:(NSUInteger)initialIndentationLevel
 {
     self = [self init];
     
@@ -26,9 +26,9 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     return self;
 }
 
-+ (RKListItem *)textListItemWithTextList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel
++ (RKListItem *)listItemWithStyle:(RKListStyle *)textList indentationLevel:(NSUInteger)indentationLevel
 {
-    return [[RKListItem alloc] initWithTextList:textList withIndentationLevel:indentationLevel];
+    return [[RKListItem alloc] initWithStyle:textList indentationLevel:indentationLevel];
 }
 
 @end
@@ -38,7 +38,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 + (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString: text];
-    RKListItem *listItem = [RKListItem textListItemWithTextList:textList withIndentationLevel:indentationLevel];
+    RKListItem *listItem = [RKListItem listItemWithStyle:textList indentationLevel:indentationLevel];
     
     // A trailing \n is required since a list item must be a paragraph
     if (![attributedString.string hasSuffix:@"\n"])

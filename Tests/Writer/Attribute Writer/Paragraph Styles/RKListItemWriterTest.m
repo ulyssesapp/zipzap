@@ -25,7 +25,7 @@
 - (RKListItem *)generateListItem
 {
     RKListStyle *textList = [RKListStyle textListWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil]];
-    RKListItem *textListItem = [RKListItem textListItemWithTextList:textList withIndentationLevel:2];
+    RKListItem *textListItem = [RKListItem listItemWithStyle:textList indentationLevel:2];
 
     return textListItem;
 }
