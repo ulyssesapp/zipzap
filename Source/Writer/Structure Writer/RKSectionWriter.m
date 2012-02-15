@@ -11,6 +11,7 @@
 #import "RKResourcePool.h"
 #import "RKSectionWriter.h"
 #import "RKAttributedStringWriter.h"
+#import "RKStringConvenienceAdditions.h"
 
 @interface RKSectionWriter ()
 
@@ -99,7 +100,7 @@
     
     [attributedStringMap enumerateKeysAndObjectsUsingBlock:^(NSString *tag, NSAttributedString *attributedString, BOOL *stop) {
         [translation appendString:
-            [RKAttributedStringWriter RTFFromAttributedString:attributedString insideTag:tag withAttachmentPolicy:attachmentPolicy resources:resources]
+         [NSString stringWithRTFGroupTag:tag body:[RKAttributedStringWriter RTFFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]]
          ];
     }];     
     

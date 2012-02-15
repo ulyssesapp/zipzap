@@ -80,12 +80,4 @@ NSMutableDictionary *attributeHandlers;
     return [taggedString flattenedRTFString];
 }
 
-+ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString insideTag:(NSString *)tag withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
-{
-    return [NSString stringWithFormat:@"{\\%@ %@}",
-            tag,
-            [self RTFFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]
-           ];
-}
-
 @end

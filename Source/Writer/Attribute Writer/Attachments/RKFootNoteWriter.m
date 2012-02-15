@@ -8,6 +8,7 @@
 
 #import "RKFootnoteWriter.h"
 #import "RKAttributedStringWriter.h"
+#import "RKStringConvenienceAdditions.h"
 
 @implementation RKFootnoteWriter
 
@@ -28,7 +29,7 @@
     if (footnote) {
         NSString *noteTag = ([attributeName isEqual: RKEndnoteAttributeName] ) ? @"footnote\\ftnalt {\\super \\chftn }" : @"footnote {\\super \\chftn }";
                 
-        NSString *noteContent = [RKAttributedStringWriter RTFFromAttributedString:footnote insideTag:noteTag withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources];
+        NSString *noteContent = [NSString stringWithRTFGroupTag:noteTag body:[RKAttributedStringWriter RTFFromAttributedString:footnote withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources]];
         
         // Footnote marker
         [taggedString registerTag:@"{\\super \\chftn }" forPosition:range.location];

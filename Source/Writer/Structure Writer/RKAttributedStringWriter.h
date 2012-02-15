@@ -44,10 +44,4 @@ typedef enum {
  */
 + (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
-/*!
- @abstract Converts an attributes string to RTF and surrounds it with an RTF tag
- */
-+ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString insideTag:(NSString *)tag withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
-
-
 @end
