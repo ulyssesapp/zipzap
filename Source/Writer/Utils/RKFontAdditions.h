@@ -11,6 +11,6 @@
 /*!
  @abstract Returns the default font of RTF
  */
-+ (NSFont *)RTFdefaultFont;
++ (NSFont *)RTFDefaultFont;
 
 @end

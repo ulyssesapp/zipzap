@@ -10,7 +10,7 @@
 
 @implementation NSFont (RKDefaults)
 
-+ (NSFont *)RTFdefaultFont
++ (NSFont *)RTFDefaultFont
 {
     return [NSFont fontWithName:@"Helvetica" size:12];
 }

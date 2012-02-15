@@ -30,7 +30,7 @@
     
     // Default font is "Helvetica", 12pt
     if (!font)
-        font = [NSFont RTFdefaultFont];
+        font = [NSFont RTFDefaultFont];
     
     NSUInteger fontIndex = [resources indexOfFont:font];
     
