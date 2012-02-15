@@ -93,7 +93,7 @@
         [rtf appendFormat:@"\\slleading%u", (NSUInteger)RKPointsToTwips(paragraphStyle.lineSpacing), (NSUInteger)RKPointsToTwips(paragraphStyle.lineSpacing)];
     
     if (paragraphStyle.lineHeightMultiple != 0) {
-        CGFloat calculatedLineHeight = [attributedString lineHeightInRange:range] * paragraphStyle.lineHeightMultiple;
+        CGFloat calculatedLineHeight = [attributedString pointSizeInRange:range] * paragraphStyle.lineHeightMultiple;
         
         [rtf appendFormat:@"\\sl%u\\slmult1", (NSUInteger)RKPointsToTwips(calculatedLineHeight), (NSUInteger)paragraphStyle.lineHeightMultiple];
     }

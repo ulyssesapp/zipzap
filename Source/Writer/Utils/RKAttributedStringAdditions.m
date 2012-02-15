@@ -11,7 +11,7 @@
 
 @implementation NSAttributedString (RKAttributedStringAdditions)
 
-- (CGFloat)lineHeightInRange:(NSRange)range
+- (CGFloat)pointSizeInRange:(NSRange)range
 {
     __block CGFloat lineHeight = 0;
     

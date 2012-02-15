@@ -11,6 +11,6 @@
 /*!
  @abstract Determines the current line height
  */
-- (CGFloat)lineHeightInRange:(NSRange)range;
+- (CGFloat)pointSizeInRange:(NSRange)range;
 
 @end
