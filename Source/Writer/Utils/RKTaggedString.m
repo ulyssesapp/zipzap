@@ -98,7 +98,7 @@
 
 - (void)appendOriginalStringRange:(NSRange)range toString:(NSMutableString *)flattenedString
 {
-    for (NSUInteger position = range.location; position < (range.location + range.length); position ++) {
+    for (NSUInteger position = range.location; position < (NSMaxRange(range)); position ++) {
         if (![removedRanges containsIndex:position]) {
             [flattenedString appendString: [[originalString substringWithRange:NSMakeRange(position, 1)] RTFEscapedString]];
         }

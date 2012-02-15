@@ -39,11 +39,11 @@
     NSString *paragraphHeader = [self openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:range];
 
     [taggedString registerTag:paragraphHeader forPosition:range.location];
-    [taggedString registerClosingTag:@"\\par\n" forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:@"\\par\n" forPosition:NSMaxRange(range)];
     
     // Remove terminating newline, since Cocoa will add automatically a newline on the end of a paragraph
     if ([[[attributedString string] substringWithRange:range] hasSuffix:@"\n"]) {
-        [taggedString removeRange:NSMakeRange(range.location + range.length - 1, 1)];
+        [taggedString removeRange:NSMakeRange(NSMaxRange(range) - 1, 1)];
     }
 }
 

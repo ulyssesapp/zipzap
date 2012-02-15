@@ -26,7 +26,7 @@
                   resources:(RKResourcePool *)resources
 {
     NSUInteger openPosition = range.location;
-    NSUInteger closePosition = range.location + range.length;
+    NSUInteger closePosition = NSMaxRange(range);
     
     // Default font is "Helvetica", 12pt
     if (!font)

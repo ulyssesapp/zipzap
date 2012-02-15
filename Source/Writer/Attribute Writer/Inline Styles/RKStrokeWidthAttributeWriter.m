@@ -30,7 +30,7 @@
         return;
     
     [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%u ", (NSUInteger)(strokeWidth * 20)] forPosition:range.location];
-    [taggedString registerClosingTag:@"\\outl0\\strokewidth0 " forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:@"\\outl0\\strokewidth0 " forPosition:NSMaxRange(range)];
 }
 
 @end

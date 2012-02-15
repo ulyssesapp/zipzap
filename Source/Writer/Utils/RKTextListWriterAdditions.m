@@ -140,7 +140,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
         NSRange enumerationPlaceholderPosition = [self rangeOfEnumerationPlaceholder: nextLevelFormat];
         
         if (enumerationPlaceholderPosition.location != NSNotFound) {
-            [nextLevelFormat insertString:[NSString stringWithFormat:@"%u", levelIndex] atIndex:enumerationPlaceholderPosition.location + enumerationPlaceholderPosition.length];
+            [nextLevelFormat insertString:[NSString stringWithFormat:@"%u", levelIndex] atIndex:NSMaxRange(enumerationPlaceholderPosition)];
         }
         
         // Exchange generated level string with placeholder

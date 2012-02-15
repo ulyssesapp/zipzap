@@ -37,7 +37,7 @@
                                ]
                   forPosition:range.location];
     
-    [taggedString registerClosingTag:@"\\shad0 " forPosition:(range.location + range.length)];
+    [taggedString registerClosingTag:@"\\shad0 " forPosition:(NSMaxRange(range))];
 }
 
 @end

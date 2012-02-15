@@ -31,11 +31,11 @@
     
     if (mode > 0) {
         [taggedString registerTag:[NSString stringWithFormat:@"\\sup "] forPosition:range.location];
-        [taggedString registerClosingTag:[NSString stringWithFormat:@"\\sup0 "] forPosition:(range.location + range.length)];
+        [taggedString registerClosingTag:[NSString stringWithFormat:@"\\sup0 "] forPosition:(NSMaxRange(range))];
     }
     else if (mode < 0) {
         [taggedString registerTag:[NSString stringWithFormat:@"\\sub "] forPosition:range.location];
-        [taggedString registerClosingTag:[NSString stringWithFormat:@"\\sub0 "] forPosition:(range.location + range.length)];
+        [taggedString registerClosingTag:[NSString stringWithFormat:@"\\sub0 "] forPosition:(NSMaxRange(range))];
     }
 }
 
