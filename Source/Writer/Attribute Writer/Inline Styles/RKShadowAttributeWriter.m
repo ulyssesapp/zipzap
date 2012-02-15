@@ -16,10 +16,12 @@
     [RKAttributedStringWriter registerHandler:self forAttribute:NSShadowAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSShadow *)shadow
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(NSShadow *)shadow
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)attributedString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
     if (shadow == nil)

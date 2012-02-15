@@ -21,10 +21,12 @@
     [RKAttributedStringWriter registerHandler:self forAttribute:NSUnderlineStyleAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSNumber *)underlineStyleObject
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(NSNumber *)underlineStyleObject
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)attributedString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
     NSUInteger underlineStyle = [underlineStyleObject unsignedIntegerValue];

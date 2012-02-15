@@ -247,8 +247,6 @@
                          "\\tqdec\\tx800"
                          // Space required to prevent problems with succeeding commands
                          " ",
-    RKResourcePool *resources = [RKResourcePool new];
-    
                          @"Invalid translation"
                          ); 
 }
@@ -261,14 +259,29 @@
     paragraphStyleA.alignment = NSCenterTextAlignment;
     paragraphStyleB.alignment = NSRightTextAlignment;
 
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"ab"];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaabbb"];
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleA range:NSMakeRange(0,1)];
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleB range:NSMakeRange(1,1)];
     
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: @"aaabbb"];
     
-    [RKParagraphStyleWriter addTagsForAttribute:paragraphStyleA toTaggedString:taggedString inRange:NSMakeRange(0,3) ofAttributedString:attributedString withAttachmentPolicy:0 resources:resources];
-    [RKParagraphStyleWriter addTagsForAttribute:paragraphStyleB toTaggedString:taggedString inRange:NSMakeRange(3,3) ofAttributedString:attributedString withAttachmentPolicy:0 resources:resources];
+    [RKParagraphStyleWriter addTagsForAttribute:NSParagraphStyleAttributeName 
+                                          value:paragraphStyleA 
+                                 effectiveRange:NSMakeRange(0,3) 
+                                       toString:taggedString 
+                                 originalString:attributedString 
+                               attachmentPolicy:0 
+                                      resources:nil
+    ];
+
+    [RKParagraphStyleWriter addTagsForAttribute:NSParagraphStyleAttributeName 
+                                          value:paragraphStyleB 
+                                 effectiveRange:NSMakeRange(3,3) 
+                                       toString:taggedString 
+                                 originalString:attributedString 
+                               attachmentPolicy:0 
+                                      resources:nil
+     ];
 
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"\\pard\\qc\\pardeftab0 "

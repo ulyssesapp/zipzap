@@ -28,11 +28,12 @@
     [RKAttributedStringWriter registerHandler:self forAttribute:NSParagraphStyleAttributeName withPriority:RKAttributedStringWriterPriorityParagraphLevel];
 }
 
-+ (void)addTagsForAttribute:(NSParagraphStyle *)paragraphStyle
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-         ofAttributedString:(NSAttributedString *)attributedString
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(NSParagraphStyle *)paragraphStyle
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)attributedString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
     NSString *paragraphHeader = [self openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:range];
@@ -41,7 +42,7 @@
     [taggedString registerClosingTag:@"\\par\n" forPosition:(range.location + range.length)];
     
     // Remove terminating newline, since Cocoa will add automatically a newline on the end of a paragraph
-    if ((range.length > 1) && ([[taggedString untaggedString] rangeOfString:@"\n" options:0 range:NSMakeRange(range.location + range.length - 1, 1)].location != NSNotFound)) {
+    if ([[[attributedString string] substringWithRange:range] hasSuffix:@"\n"]) {
         [taggedString removeRange:NSMakeRange(range.location + range.length - 1, 1)];
     }
 }

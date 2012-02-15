@@ -15,9 +15,24 @@
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abcd"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
-    
-    [RKLinkWriter addTagsForAttribute:[NSURL URLWithString:@"http://the-soulmen.com/"] toTaggedString:taggedString inRange:NSMakeRange(1,1) withAttachmentPolicy:0 resources:nil];
-    [RKLinkWriter addTagsForAttribute:@"http://example.com/" toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:0 resources:nil];
+
+    [RKLinkWriter addTagsForAttribute:NSLinkAttributeName 
+                                value:[NSURL URLWithString:@"http://the-soulmen.com/"] 
+                       effectiveRange:NSMakeRange(1,1) 
+                             toString:taggedString 
+                       originalString:nil 
+                     attachmentPolicy:0
+                            resources:nil
+     ];    
+
+    [RKLinkWriter addTagsForAttribute:NSLinkAttributeName 
+                                value:[NSURL URLWithString:@"http://example.com/"] 
+                       effectiveRange:NSMakeRange(2,1) 
+                             toString:taggedString 
+                       originalString:nil 
+                     attachmentPolicy:0
+                            resources:nil
+     ];      
     
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"

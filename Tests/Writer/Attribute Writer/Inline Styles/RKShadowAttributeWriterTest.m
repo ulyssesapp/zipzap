@@ -23,20 +23,14 @@
     
     // Default shadow
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
-    [RKShadowAttributeWriter addTagsForAttribute:nil 
-                               toTaggedString:taggedString 
-                                      inRange:NSMakeRange(1,1) 
-                         withAttachmentPolicy:0
-                                    resources:resources];
+
+    [RKShadowAttributeWriter addTagsForAttribute:NSShadowAttributeName value:nil effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
     
     // Setting a shadow
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
-    [RKShadowAttributeWriter addTagsForAttribute:shadow 
-                               toTaggedString:taggedString 
-                                      inRange:NSMakeRange(1,1) 
-                         withAttachmentPolicy:0     
-                                    resources:resources];
+
+    [RKShadowAttributeWriter addTagsForAttribute:NSShadowAttributeName value:shadow effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\shad\\shadx40\\shady60\\shadr80\\shadc2 b\\shad0 c", @"Invalid shadow");
     
     // Test resource manager

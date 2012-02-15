@@ -8,39 +8,26 @@
 
 #import "RKSuperscriptAttributeWriter.h"
 #import "RKSuperscriptAttributeWriterTest.h"
+#import "RKAttributeWriterTestHelper.h"
 
 @implementation RKSuperscriptAttributeWriterTest
 
+- (void)assertSuperscriptStyle:(id)style expectedTranslation:(NSString *)expectedTranslation
+{
+    [self assertResourcelessStyle:NSSuperscriptAttributeName withValue:style onWriter:[RKSuperscriptAttributeWriter class] expectedTranslation:expectedTranslation];
+}
+
 - (void)testSuperscriptMode
 {
-    RKTaggedString *taggedString;
-    
     // Default mode
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
-    [RKSuperscriptAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: 0] 
-                                             toTaggedString:taggedString 
-                                                    inRange:NSMakeRange(1,1) 
-                                       withAttachmentPolicy:0
-                                                  resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
+    [self assertSuperscriptStyle:[NSNumber numberWithInt: 0] expectedTranslation:@"abc"];
+    [self assertSuperscriptStyle:nil expectedTranslation:@"abc"];
     
     // Setting superscript
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
-    [RKSuperscriptAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: 1] 
-                                       toTaggedString:taggedString
-                                              inRange:NSMakeRange(1,1) 
-                                 withAttachmentPolicy:0 
-                                                  resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\sup b\\sup0 c", @"Invalid superscript mode");
+    [self assertSuperscriptStyle:[NSNumber numberWithInt: 1] expectedTranslation:@"a\\sup b\\sup0 c"];
     
     // Setting subscript
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
-    [RKSuperscriptAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: -1] 
-                                       toTaggedString:taggedString 
-                                              inRange:NSMakeRange(1,1)  
-                                 withAttachmentPolicy:0  
-                                            resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\sub b\\sub0 c", @"Invalid subscript mode");
+    [self assertSuperscriptStyle:[NSNumber numberWithInt: -1] expectedTranslation:@"a\\sub b\\sub0 c"];
 }
 
 - (void)testSuperscriptCocoaIntegrationTest

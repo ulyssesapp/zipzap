@@ -41,10 +41,12 @@
     [RKAttributedStringWriter registerHandler:self forAttribute:NSAttachmentAttributeName withPriority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
-+ (void)addTagsForAttribute:(NSTextAttachment *)textAttachment
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(NSTextAttachment *)textAttachment
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)attributedString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
     if (textAttachment) {

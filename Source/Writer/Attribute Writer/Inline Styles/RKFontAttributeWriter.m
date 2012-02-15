@@ -17,11 +17,13 @@
     [RKAttributedStringWriter registerHandler:self forAttribute:NSFontAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSFont *)font
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources;
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(NSFont *)font
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)attributedString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                  resources:(RKResourcePool *)resources
 {
     NSUInteger openPosition = range.location;
     NSUInteger closePosition = range.location + range.length;

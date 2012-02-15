@@ -17,7 +17,14 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
-    [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources];
+    [RKTextAttachmentWriter addTagsForAttribute:NSAttachmentAttributeName 
+                                          value:picture 
+                                 effectiveRange:NSMakeRange(2,1) 
+                                       toString:taggedString 
+                                 originalString:nil 
+                               attachmentPolicy:RKAttachmentPolicyIgnore 
+                                      resources:resources
+    ];
     
     // No picture should have been embedded and the attachment charracter should have been removed
     STAssertEqualObjects([taggedString flattenedRTFString], @"----", @"Picture was not ignored");
@@ -29,7 +36,15 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
-    [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources];
+    [RKTextAttachmentWriter addTagsForAttribute:NSAttachmentAttributeName 
+                                          value:picture 
+                                 effectiveRange:NSMakeRange(2,1) 
+                                       toString:taggedString 
+                                 originalString:nil 
+                               attachmentPolicy:RKAttachmentPolicyEmbed
+                                      resources:resources
+    ];
+
     NSString *flattened = [taggedString flattenedRTFString];
     
     // Attachment charracter was removed
@@ -59,7 +74,14 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
-    [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources];
+    [RKTextAttachmentWriter addTagsForAttribute:NSAttachmentAttributeName 
+                                          value:picture 
+                                 effectiveRange:NSMakeRange(2,1) 
+                                       toString:taggedString 
+                                 originalString:nil 
+                               attachmentPolicy:RKAttachmentPolicyEmbed
+                                      resources:resources
+     ];
     
     // No picture should have been embedded and the attachment charracter should have been removed
     STAssertEqualObjects([taggedString flattenedRTFString], @"----", @"Picture was not ignored");
@@ -71,7 +93,14 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
-    [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyReference resources:resources];
+    [RKTextAttachmentWriter addTagsForAttribute:NSAttachmentAttributeName 
+                                          value:picture 
+                                 effectiveRange:NSMakeRange(2,1) 
+                                       toString:taggedString 
+                                 originalString:nil 
+                               attachmentPolicy:RKAttachmentPolicyReference
+                                      resources:resources
+     ];
     NSString *flattened = [taggedString flattenedRTFString];
     
     // Correct tag placement
@@ -94,11 +123,18 @@
 
 - (void)testMovieAttachmentsReferenced
 {
-    NSTextAttachment *picture = [self textAttachmentWithName:@"movie" withExtension:@"mov"];
+    NSTextAttachment *movie = [self textAttachmentWithName:@"movie" withExtension:@"mov"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", NSAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
-    [RKTextAttachmentWriter addTagsForAttribute:picture toTaggedString:taggedString inRange:NSMakeRange(2,1) withAttachmentPolicy:RKAttachmentPolicyReference resources:resources];
+    [RKTextAttachmentWriter addTagsForAttribute:NSAttachmentAttributeName 
+                                          value:movie 
+                                 effectiveRange:NSMakeRange(2,1) 
+                                       toString:taggedString 
+                                 originalString:nil 
+                               attachmentPolicy:RKAttachmentPolicyReference
+                                      resources:resources
+     ];
     NSString *flattened = [taggedString flattenedRTFString];
     
     // Correct tag placement
@@ -114,9 +150,9 @@
     
     NSFileWrapper *registeredFile = [[resources fileWrappers] objectAtIndex:0];
     
-    STAssertTrue(registeredFile != picture.fileWrapper, @"File wrapper was not duplicated");
+    STAssertTrue(registeredFile != movie.fileWrapper, @"File wrapper was not duplicated");
     STAssertEqualObjects([registeredFile filename], @"0.mov", @"Invalid file name");
-    STAssertEqualObjects([registeredFile regularFileContents], [picture.fileWrapper regularFileContents], @"File contents differ");
+    STAssertEqualObjects([registeredFile regularFileContents], [movie.fileWrapper regularFileContents], @"File contents differ");
 }
 
 - (void)testPictureAttachmentCocoaIntegrationWithRTF

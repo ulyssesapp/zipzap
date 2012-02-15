@@ -89,9 +89,9 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"aaa"];
     RKResourcePool *resourcePool = [RKResourcePool new];
     
-    [RKTextListItemWriter addTagsForAttribute:textListItem toTaggedString:taggedString inRange:NSMakeRange(0, 1) withAttachmentPolicy:0 resources:resourcePool];
-    [RKTextListItemWriter addTagsForAttribute:textListItem toTaggedString:taggedString inRange:NSMakeRange(0, 1) withAttachmentPolicy:0 resources:resourcePool];
-    [RKTextListItemWriter addTagsForAttribute:textListItem toTaggedString:taggedString inRange:NSMakeRange(0, 1) withAttachmentPolicy:0 resources:resourcePool];    
+    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
+    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
+    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
 
     // Text List properly registered
     NSArray *textLists = [resourcePool textLists];
@@ -124,8 +124,8 @@
     [resourcePool incrementItemNumbersForListLevel:2 ofList:textListItem.textList];
         
     // Generate item number (will increment to 2.1.4)
-    [RKTextListItemWriter addTagsForAttribute:textListItem toTaggedString:taggedString inRange:NSMakeRange(0, 1) withAttachmentPolicy:0 resources:resourcePool];
-
+    [RKTextListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
+    
     STAssertEqualObjects([taggedString flattenedRTFString],
                          @"\\ls1\\ilvl2 "
                           "{\\listtext\t2.i.d.\t}aaa",

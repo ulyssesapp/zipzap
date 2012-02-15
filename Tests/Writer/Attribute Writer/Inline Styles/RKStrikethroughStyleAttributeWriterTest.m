@@ -8,39 +8,22 @@
 
 #import "RKStrikethroughStyleAttributeWriter.h"
 #import "RKStrikethroughStyleAttributeWriterTest.h"
+#import "RKAttributeWriterTestHelper.h"
 
 @implementation RKStrikethroughStyleAttributeWriterTest
 
+- (void)assertStrikethroughStyle:(id)style expectedTranslation:(NSString *)expectedTranslation
+{
+    [self assertResourcelessStyle:NSStrikethroughStyleAttributeName withValue:style onWriter:[RKStrikethroughStyleAttributeWriter class] expectedTranslation:expectedTranslation];
+}
+
 - (void)testStrikethroughStyle
 {
-    RKTaggedString *taggedString;
-    
-    // Default style
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];
-    [RKStrikethroughStyleAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: 0] 
-                                              toTaggedString:taggedString 
-                                                     inRange:NSMakeRange(1,1) 
-                                        withAttachmentPolicy:0 
-                                                   resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid strikethrough style");
-    
-    // Single style
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];
-    [RKStrikethroughStyleAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: NSUnderlineStyleSingle] 
-                                              toTaggedString:taggedString 
-                                                     inRange:NSMakeRange(1,1) 
-                                        withAttachmentPolicy:0 
-                                                   resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\strike\\strikestyle1 b\\strike0 c", @"Invalid strikethrough style");
-    
-    // Double style
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];
-    [RKStrikethroughStyleAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: NSUnderlineStyleDouble] 
-                                              toTaggedString:taggedString 
-                                                     inRange:NSMakeRange(1,1) 
-                                        withAttachmentPolicy:0 
-                                                   resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\striked1\\strikestyle9 b\\striked0 c", @"Invalid strikethrough style");
+    [self assertStrikethroughStyle:nil expectedTranslation:@"abc"];
+    [self assertStrikethroughStyle:[NSNumber numberWithInt: 0] expectedTranslation:@"abc"];
+
+    [self assertStrikethroughStyle:[NSNumber numberWithInt: NSUnderlineStyleSingle] expectedTranslation:@"a\\strike\\strikestyle1 b\\strike0 c"];
+    [self assertStrikethroughStyle:[NSNumber numberWithInt: NSUnderlineStyleDouble] expectedTranslation:@"a\\striked1\\strikestyle9 b\\striked0 c"];    
 }
 
 - (void)testStrikethroughStyleCocoaIntegration

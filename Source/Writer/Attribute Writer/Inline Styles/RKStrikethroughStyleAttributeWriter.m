@@ -16,10 +16,12 @@
     [RKAttributedStringWriter registerHandler:self forAttribute:NSStrikethroughStyleAttributeName withPriority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSNumber *)strikethroughStyleObject
-             toTaggedString:(RKTaggedString *)taggedString 
-                    inRange:(NSRange)range
-       withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
++ (void)addTagsForAttribute:(NSString *)attributeName 
+                      value:(NSNumber *)strikethroughStyleObject
+             effectiveRange:(NSRange)range 
+                   toString:(RKTaggedString *)taggedString 
+             originalString:(NSAttributedString *)attributedString 
+           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
     NSUInteger strikethroughStyle = [strikethroughStyleObject unsignedIntegerValue];

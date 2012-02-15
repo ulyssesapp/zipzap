@@ -8,30 +8,23 @@
 
 #import "RKStrokeWidthAttributeWriter.h"
 #import "RKStrokeWidthAttributeWriterTest.h"
+#import "RKAttributeWriterTestHelper.h"
 
 @implementation RKStrokeWidthAttributeWriterTest
 
+- (void)assertStrokeWidthStyle:(id)style expectedTranslation:(NSString *)expectedTranslation
+{
+    [self assertResourcelessStyle:NSStrokeWidthAttributeName withValue:style onWriter:[RKStrokeWidthAttributeWriter class] expectedTranslation:expectedTranslation];
+}
+
 - (void)testStrokeWidth
 {
-    RKTaggedString *taggedString;
-    
     // Default width
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
-    [RKStrokeWidthAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: 0] 
-                                       toTaggedString:taggedString 
-                                              inRange:NSMakeRange(1,1) 
-                                 withAttachmentPolicy:0
-                                            resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
-    
+    [self assertStrokeWidthStyle:nil expectedTranslation:@"abc"];
+    [self assertStrokeWidthStyle:[NSNumber numberWithInt:0] expectedTranslation:@"abc"];
+
     // Setting a width
-    taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
-    [RKStrokeWidthAttributeWriter addTagsForAttribute:[NSNumber numberWithInteger: 30] 
-                                       toTaggedString:taggedString 
-                                              inRange:NSMakeRange(1,1) 
-                                 withAttachmentPolicy:0
-                                            resources:nil];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\outl\\strokewidth600 b\\outl0\\strokewidth0 c", @"Invalid stroke width");
+    [self assertStrokeWidthStyle:[NSNumber numberWithInt:30] expectedTranslation:@"a\\outl\\strokewidth600 b\\outl0\\strokewidth0 c"];
 }
 
 - (void)testStokeWidthStyleCocoaIntegration
