@@ -50,7 +50,7 @@
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
     STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\headerl \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24 Text\\par\n}",
+                         @"{\\headerl \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par\n}",
                          @"Invalid header generated"
                          );
 
@@ -58,7 +58,7 @@
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
     STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\headerr \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24 Text\\par\n}",
+                         @"{\\headerr \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par\n}",
                          @"Invalid header generated"
                          );
 
@@ -66,7 +66,7 @@
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
     STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\headerf \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24 Text\\par\n}",
+                         @"{\\headerf \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par\n}",
                          @"Invalid header generated"
                          );    
 }
@@ -79,7 +79,7 @@
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
     STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footerl \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24 Text\\par\n}",
+                         @"{\\footerl \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par\n}",
                          @"Invalid footer generated"
                          );
     
@@ -87,7 +87,7 @@
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
     STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footerr \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24 Text\\par\n}",
+                         @"{\\footerr \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par\n}",
                          @"Invalid footer generated"
                          );
     
@@ -95,7 +95,7 @@
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
     STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
-                         @"{\\footerf \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24 Text\\par\n}",
+                         @"{\\footerf \\pard\\ql\\pardeftab0 \\cb1 \\cf0 \\ulc0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par\n}",
                          @"Invalid footer generated"
                          );    
 }

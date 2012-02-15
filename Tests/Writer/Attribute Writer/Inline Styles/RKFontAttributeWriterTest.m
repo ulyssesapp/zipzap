@@ -27,7 +27,7 @@
                          @"a"
                          // Defined font
                          "\\f0 "
-                         "\\fs32 "
+                         "\\fs32\\fsmilli16000 "
                          "\\b "
                          "\\i "
                          "bc"
@@ -35,7 +35,7 @@
                          "\\b0 "
                          // Default font
                          "\\f1 "
-                         "\\fs24 "
+                         "\\fs24\\fsmilli12000 "
                          "d",
                          @"Invalid font style"
                          );
@@ -50,7 +50,7 @@
 - (void)testFontStyleCocoaIntegration
 {
     NSFont *fontA = [NSFont fontWithName:@"Helvetica-BoldOblique" size:18];
-    NSFont *fontB = [NSFont fontWithName:@"Menlo-BoldItalic" size:10];
+    NSFont *fontB = [NSFont fontWithName:@"Menlo-BoldItalic" size:10.12];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
     
     [attributedString addAttribute:NSFontAttributeName value:fontA range:NSMakeRange(0, 1)];

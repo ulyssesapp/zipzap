@@ -36,7 +36,10 @@
     
     // Add font and size tag
     [taggedString registerTag:[NSString stringWithFormat:@"\\f%u ", fontIndex] forPosition:openPosition];
-    [taggedString registerTag:[NSString stringWithFormat:@"\\fs%u ", (NSUInteger)font.pointSize * 2] forPosition:openPosition];
+    // Note: RTF uses half-points to define the font size
+    // Cocoa has a more precise, proprietary size tag which must directly follow "fsize"
+    [taggedString registerTag:[NSString stringWithFormat:@"\\fs%u", (NSUInteger)(font.pointSize * 2)] forPosition:openPosition];
+    [taggedString registerTag:[NSString stringWithFormat:@"\\fsmilli%u ", (NSUInteger)(font.pointSize * 1000)] forPosition:openPosition];    
     
     // Add trait tags
     NSUInteger fontTraits = [[NSFontManager sharedFontManager] traitsOfFont:font];
