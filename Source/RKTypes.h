@@ -64,7 +64,7 @@ typedef enum {
     RKFootnoteEnumerationRomanLowerCase             = 3,
     RKFootnoteEnumerationRomanUpperCase             = 4,
     RKFootnoteEnumerationChicagoManual              = 5
-}RKFootnoteEnumerationStyle;
+} RKFootnoteEnumerationStyle;
 
 /*!
  @abstract Options for restarting footnote enumeration
@@ -73,7 +73,7 @@ typedef enum {
     RKFootnoteRestartEnumerationOnEachPage          = 0,
     RKFootnoteRestartEnumerationOnEachSection       = 1,
     RKFootnoteContinuousEnumerationInDocument       = 2
-}RKFootnoteEnumerationPolicy;
+} RKFootnoteEnumerationPolicy;
 
 /*!
  @abstract Possible selections for page headers and footers
@@ -84,7 +84,7 @@ typedef enum {
     RKPageSelectionFirst = 1<<2,
     
     RKPageSelectorAll  = 0xFFFF
-}RKPageSelectionMask;
+} RKPageSelectionMask;
 
 /*!
  @abstract Simple conversions from Points to TWIPS
@@ -104,4 +104,4 @@ typedef enum {
 typedef enum {
     RKSpecialCharacterNewPage       = '\f',
     RKSpecialCharacterTab           = '\t',
-}RKSpecialCharacters;
+} RKSpecialCharacters;
