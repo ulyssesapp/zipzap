@@ -14,18 +14,13 @@
     NSArray     *startNumbers;
 }
 
-/*!
- @abstract See textListWithLevelFormats
- */
-- (id)initWithLevelFormats:(NSArray *)levelFormats;
-
 @end
 
 @implementation RKListStyle
 
 + (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats;
 {
-    return [[RKListStyle alloc] initWithLevelFormats: initialLevelFormats];
+    return [[RKListStyle alloc] initWithLevelFormats: initialLevelFormats startNumbers:nil];
 }
 
 + (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats startNumbers:(NSArray *)startNumbers
@@ -33,7 +28,7 @@
     return [[RKListStyle alloc] initWithLevelFormats:initialLevelFormats startNumbers:startNumbers];
 }
 
-- (id)initWithLevelFormats:(NSArray *)initialLevelFormats
+- (id)initWithLevelFormats:(NSArray *)initialLevelFormats startNumbers:(NSArray *)initialStartNumbers
 {
     self = [self init];
     
@@ -42,17 +37,7 @@
             [NSException raise:NSRangeException format:@"Level nesting is limited to %u.", RKListMaxiumLevelCount];
         }    
 
-        levelFormats = initialLevelFormats;
-    }
-    
-    return self;
-}
-
-- (id)initWithLevelFormats:(NSArray *)initialLevelFormats startNumbers:(NSArray *)initialStartNumbers
-{
-    self = [self initWithLevelFormats:initialLevelFormats];
-    
-    if (self) {
+        levelFormats = initialLevelFormats;        
         startNumbers = initialStartNumbers;
     }
     
