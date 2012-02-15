@@ -68,7 +68,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     return self;
 }
 
-- (NSString *)formatOfLevel:(NSUInteger)levelIndex
+- (NSString *)formatForLevel:(NSUInteger)levelIndex
 {
     if (levelIndex >= levelFormats.count)
         return @"";
@@ -76,7 +76,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     return [levelFormats objectAtIndex: levelIndex];
 }
 
--(NSUInteger)startItemNumberOfLevel:(NSUInteger)levelIndex
+-(NSUInteger)startNumberForLevel:(NSUInteger)levelIndex
 {
     NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
     
@@ -88,7 +88,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     return [startItemNumber unsignedIntegerValue];
 }
 
-- (NSUInteger)countOfListLevels
+- (NSUInteger)numberOfLevels
 {
     return levelFormats.count;
 }

@@ -45,16 +45,16 @@
 /*!
  @abstract Returns the format definition for a certain level
  */
-- (NSString *)formatOfLevel:(NSUInteger)levelIndex;
+- (NSString *)formatForLevel:(NSUInteger)levelIndex;
 
 /*!
  @abstract Returns the starting item number of alever
  */
-- (NSUInteger)startItemNumberOfLevel:(NSUInteger)levelIndex;
+- (NSUInteger)startNumberForLevel:(NSUInteger)levelIndex;
 
 /*!
  @abstract Returns the count of list levels
  */
-- (NSUInteger)countOfListLevels;
+- (NSUInteger)numberOfLevels;
 
 @end

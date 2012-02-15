@@ -150,7 +150,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     [textLists enumerateObjectsUsingBlock:^(RKListStyle *textList, NSUInteger listIndex, BOOL *stop) {
         NSMutableString *listLevelsString = [NSMutableString new];
         
-        for (NSUInteger levelIndex = 0; levelIndex < textList.countOfListLevels; levelIndex ++)  {
+        for (NSUInteger levelIndex = 0; levelIndex < textList.numberOfLevels; levelIndex ++)  {
             [listLevelsString appendString: [self listLevelEntry:levelIndex fromList:textList withListIndex:listIndex]];
         }
                 
@@ -193,7 +193,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     
     // Additional parameters
     NSUInteger formatCode = [list RTFFormatCodeOfLevel:level];
-    NSUInteger startNumber = [list startItemNumberOfLevel:level];
+    NSUInteger startNumber = [list startNumberForLevel:level];
     
     // Generate level description
     return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%llu\\levelnfc%llu"

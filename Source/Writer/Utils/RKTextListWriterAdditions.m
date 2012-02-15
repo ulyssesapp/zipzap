@@ -93,7 +93,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
 
 - (NSRange)rangeOfPrependingPlaceholderOfLevel:(NSUInteger)levelIndex
 {
-    NSString *formatString = [self formatOfLevel:levelIndex];
+    NSString *formatString = [self formatForLevel:levelIndex];
     
     return [self rangeOfPrependingPlaceholder: formatString];
 }
@@ -110,7 +110,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
 
 - (NSRange)rangeOfEnumerationPlaceholderOfLevel:(NSUInteger)levelIndex
 {
-    NSString *formatString = [self formatOfLevel: levelIndex];
+    NSString *formatString = [self formatForLevel: levelIndex];
 
     return [self rangeOfEnumerationPlaceholder: formatString];
 }
@@ -120,7 +120,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     NSRange firstMatch = [self rangeOfEnumerationPlaceholderOfLevel: levelIndex];
     
     if (firstMatch.location != NSNotFound) {
-        NSString *formatString = [self formatOfLevel:levelIndex];
+        NSString *formatString = [self formatForLevel:levelIndex];
         
         return [formatString substringWithRange:firstMatch];
     }
@@ -134,7 +134,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
     NSMutableString *normalizedFormat = [NSMutableString stringWithString: @"%*"];
                                          
     do {
-        NSMutableString *nextLevelFormat = [NSMutableString stringWithString: [self formatOfLevel: levelIndex]];
+        NSMutableString *nextLevelFormat = [NSMutableString stringWithString: [self formatForLevel: levelIndex]];
         
         // Add level index, if it exists
         NSRange enumerationPlaceholderPosition = [self rangeOfEnumerationPlaceholder: nextLevelFormat];
@@ -163,7 +163,7 @@ NSRegularExpression *enumerationPlaceholderRegexp;
 
 - (NSString *)cocoaRTFFormatStringOfLevel:(NSUInteger)levelIndex
 {
-    NSMutableString *cocoaFormatString = [NSMutableString stringWithString: [self formatOfLevel: levelIndex]];
+    NSMutableString *cocoaFormatString = [NSMutableString stringWithString: [self formatForLevel: levelIndex]];
     NSRange enumerationPlaceholderPosition = [self rangeOfEnumerationPlaceholderOfLevel: levelIndex];
     
     if (enumerationPlaceholderPosition.location != NSNotFound) {
