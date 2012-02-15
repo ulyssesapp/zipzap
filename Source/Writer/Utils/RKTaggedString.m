@@ -113,25 +113,21 @@
 
 - (NSString *)flattenedRTFString
 {
-    __block NSMutableString *flattened = [NSMutableString new];
-    __block NSUInteger lastSourceOffset = 0;
+    NSMutableString *flattened = [NSMutableString new];
+    NSUInteger lastSourceOffset = 0;
     
     // Iterate over all tag positions
     for (NSNumber *mapIndex in [[tagPositions allKeys] sortedArrayUsingSelector: @selector(compare:)]) {
-        
         NSUInteger currentSourceOffset = [mapIndex unsignedIntegerValue];
 
         // Copy all untagged chars
         [self appendOriginalStringRange:NSMakeRange(lastSourceOffset, currentSourceOffset - lastSourceOffset) toString:flattened];
-     
         lastSourceOffset = currentSourceOffset;
         
         // Insert tags
-        NSArray *tags = [tagPositions objectForKey: mapIndex];
-        
-        for (NSString *tag in tags) {
+        for (NSString *tag in [tagPositions objectForKey: mapIndex]) {
             [flattened appendString: tag];
-        };
+        }
     }
 
     // Append remaining string
