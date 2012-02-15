@@ -112,13 +112,12 @@
                         );
     
     // Image was registered
-    STAssertEquals([resources fileWrappers].count, (NSUInteger)1, @"Invalid count of file wrappers");
+    STAssertEquals(resources.attachmentFileWrappers.count, (NSUInteger)1, @"Invalid count of file wrappers");
 
-    NSFileWrapper *registeredFile = [[resources fileWrappers] objectAtIndex:0];
+    NSFileWrapper *registeredFile = [resources.attachmentFileWrappers.allValues  objectAtIndex:0];
     
-    STAssertTrue(registeredFile != picture.fileWrapper, @"File wrapper was not duplicated");
-    STAssertEqualObjects([registeredFile filename], @"0.png", @"Invalid file name");
-    STAssertEqualObjects([registeredFile regularFileContents], [picture.fileWrapper regularFileContents], @"File contents differ");
+    STAssertEqualObjects(registeredFile.preferredFilename, @"0.png", @"Invalid file name");
+    STAssertEqualObjects(registeredFile.regularFileContents, [picture.fileWrapper regularFileContents], @"File contents differ");
 }
 
 - (void)testMovieAttachmentsReferenced
@@ -146,13 +145,12 @@
                          );
     
     // Image was registered
-    STAssertEquals([resources fileWrappers].count, (NSUInteger)1, @"Invalid count of file wrappers");
+    STAssertEquals(resources.attachmentFileWrappers.count, (NSUInteger)1, @"Invalid count of file wrappers");
     
-    NSFileWrapper *registeredFile = [[resources fileWrappers] objectAtIndex:0];
+    NSFileWrapper *registeredFile = [resources.attachmentFileWrappers.allValues objectAtIndex:0];
     
-    STAssertTrue(registeredFile != movie.fileWrapper, @"File wrapper was not duplicated");
-    STAssertEqualObjects([registeredFile filename], @"0.mov", @"Invalid file name");
-    STAssertEqualObjects([registeredFile regularFileContents], [movie.fileWrapper regularFileContents], @"File contents differ");
+    STAssertEqualObjects(registeredFile.preferredFilename, @"0.mov", @"Invalid file name");
+    STAssertEqualObjects(registeredFile.regularFileContents, [movie.fileWrapper regularFileContents], @"File contents differ");
 }
 
 - (void)testPictureAttachmentCocoaIntegrationWithRTF
@@ -203,7 +201,7 @@
     
     NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
     
-    STAssertEqualObjects(convertedAttachment.fileWrapper.filename, @"0.png", @"Invalid filename");
+    STAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0.png", @"Invalid filename");
     STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, picture.fileWrapper.regularFileContents, @"File contents differ");
 }
 
@@ -221,7 +219,7 @@
     
     NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
     
-    STAssertEqualObjects(convertedAttachment.fileWrapper.filename, @"0.mov", @"Invalid filename");
+    STAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0.mov", @"Invalid filename");
     STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, movie.fileWrapper.regularFileContents, @"File contents differ");
 }
 

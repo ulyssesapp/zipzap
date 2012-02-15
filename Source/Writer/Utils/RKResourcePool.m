@@ -16,7 +16,7 @@
 {
     NSMutableArray *fonts;
     NSMutableArray *colors;
-    NSMutableArray *fileWrappers;
+    NSDictionary *attachmentFileWrappers;
 
     NSMutableArray *textLists;
     NSMapTable *listItemIndices;
@@ -26,6 +26,8 @@
 
 @implementation RKResourcePool
 
+@synthesize attachmentFileWrappers;
+
 - (id)init
 {
     self = [super init];
@@ -33,7 +35,7 @@
     if (self) {
         fonts = [NSMutableArray new];
         colors = [NSMutableArray new];
-        fileWrappers = [NSMutableArray new];
+        attachmentFileWrappers = [NSMutableDictionary new];
         textLists = [NSMutableArray new];
         listItemIndices = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality valueOptions:0];
         
@@ -96,28 +98,17 @@
 {
     NSAssert(fileWrapper, @"No file given");
     
-    NSFileWrapper *referencedFile = [[NSFileWrapper alloc] initRegularFileWithContents:[fileWrapper regularFileContents]];
-    [referencedFile setFilename:[NSString stringWithFormat:@"%u.%@", fileWrappers.count, [[fileWrapper filename] pathExtension]]];
-    
-    [fileWrappers addObject:referencedFile];
-    
-    return referencedFile.filename;
-}
+    NSString *fileExtension = fileWrapper.preferredFilename == nil ? fileWrapper.filename.pathExtension : fileWrapper.preferredFilename.pathExtension;
 
-- (NSArray *)fileWrappers
-{
-    return fileWrappers;
-}
+    NSAssert(fileExtension, @"No file extension given");
+    
+    NSString *filename = [NSString stringWithFormat: @"%u.%@", attachmentFileWrappers.count, fileExtension];
 
-- (NSMutableDictionary *)imageFileDictionary
-{
-    NSMutableDictionary *fileDictionary = [NSMutableDictionary new];
+    [attachmentFileWrappers setValue:fileWrapper forKey:filename];
     
-    for (NSFileWrapper *file in fileWrappers) {
-        [fileDictionary setObject:file forKey:file.filename];
-    }
+    fileWrapper.preferredFilename = filename;
     
-    return fileDictionary;
+    return filename;
 }
 
 #pragma marg - Text Lists

@@ -52,15 +52,9 @@
 - (NSArray *)colors;
 
 /*!
- @abstract Returns the collected file wrappers
- @discussion Elements are NSFileWrapper
+ @abstract A dictionary mapping from filenames to the file wrappers of all attached files
  */
-- (NSArray *)fileWrappers;
-
-/*!
- @abstract Generates a dictionary mapping from filenames to the file wrappers of all used images
- */
-- (NSMutableDictionary *)imageFileDictionary;
+@property (nonatomic,strong,readonly) NSDictionary* attachmentFileWrappers;
 
 /*!
  @abstract Returns the available lists
