@@ -15,7 +15,7 @@
 @interface RKListStyle : NSObject
 
 /*!
- @abstract Creates a text list with a format for all levels (at most 9)
+ @abstract Creates a text list with a format for all levels (at most RKListMaxiumLevelCount)
  @discussion An array of NSString with format strings per level must be given. 
              The format strings consists of an arbitrary text and at most one placeholder
               The available placeholders are:

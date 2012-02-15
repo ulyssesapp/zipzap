@@ -38,8 +38,8 @@
     self = [self init];
     
     if (self) {
-        if (levelFormats.count > 9) {
-            [NSException raise:NSRangeException format:@"Level nesting is limited to 9."];
+        if (levelFormats.count >= RKListMaxiumLevelCount) {
+            [NSException raise:NSRangeException format:@"Level nesting is limited to %u.", RKListMaxiumLevelCount];
         }    
 
         levelFormats = initialLevelFormats;
@@ -61,6 +61,8 @@
 
 - (NSString *)formatForLevel:(NSUInteger)levelIndex
 {
+    NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
+    
     if (levelIndex >= levelFormats.count)
         return @"";
     
