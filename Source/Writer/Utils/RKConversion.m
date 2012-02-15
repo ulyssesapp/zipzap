@@ -25,15 +25,16 @@
                 [escapedString appendFormat: @"\\%C", currentChar];
                 break;
             
-            case RKSpecialCharacterTab:
+            case NSTabCharacter:
                 [escapedString appendString: @"\\tab "];
                 break;
 
-            case RKSpecialCharacterNewPage:
+            case NSFormFeedCharacter:
                 [escapedString appendString: @"\\page\n"];
                 break;                
-                
-            case '\n':
+            
+            case NSLineSeparatorCharacter:
+            case NSNewlineCharacter:
                 [escapedString appendString: @"\\line\n"];
                 break;
                 

@@ -97,11 +97,3 @@ typedef enum {
  @see RKTwipsToPoints
  */
 #define RKTwipsToPoints(__twips)        ((__twips) / (typeof(__twips))20)
-
-/*!
- @abstract Special RTF characters
- */
-typedef enum {
-    RKSpecialCharacterNewPage       = '\f',
-    RKSpecialCharacterTab           = '\t',
-} RKSpecialCharacters;
