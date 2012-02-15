@@ -48,11 +48,11 @@
 
 + (NSString *)RTFFromSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
 {
-    NSString *sectionAttributes = [RKSectionWriter sectionAttributesForSection:section];
+    NSString *sectionAttributes = [self sectionAttributesForSection:section];
 
-    NSString *headers = [RKSectionWriter headersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
-    NSString *footers = [RKSectionWriter footersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
-    NSString *content = [RKSectionWriter contentForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
+    NSString *headers = [self headersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
+    NSString *footers = [self footersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
+    NSString *content = [self contentForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
     
     return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@", sectionAttributes, headers, footers, content];
 }
@@ -98,11 +98,9 @@
     NSMutableString *translation = [NSMutableString new];    
     
     [attributedStringMap enumerateKeysAndObjectsUsingBlock:^(NSString *tag, NSAttributedString *attributedString, BOOL *stop) {
-        if (attributedString) {
-            [translation appendString:
-             [RKAttributedStringWriter RTFFromAttributedString:attributedString insideTag:tag withAttachmentPolicy:attachmentPolicy resources:resources]
-            ];
-        }
+        [translation appendString:
+            [RKAttributedStringWriter RTFFromAttributedString:attributedString insideTag:tag withAttachmentPolicy:attachmentPolicy resources:resources]
+         ];
     }];     
     
     return translation;
@@ -112,18 +110,18 @@
 {
     NSMutableDictionary *translationTable = [NSMutableDictionary new];
 
-    NSAttributedString *headerl = [section headerForPage: RKPageSelectionLeft];
-    NSAttributedString *headerr = [section headerForPage: RKPageSelectionRight];
-    NSAttributedString *headerf = [section headerForPage: RKPageSelectionFirst];         
+    NSAttributedString *leftHeader = [section headerForPage: RKPageSelectionLeft];
+    NSAttributedString *rightHeader = [section headerForPage: RKPageSelectionRight];
+    NSAttributedString *firstHeader = [section headerForPage: RKPageSelectionFirst];         
     
-    if (headerl)
-        [translationTable setObject:headerl forKey:@"headerl"];
+    if (leftHeader)
+        [translationTable setObject:leftHeader forKey:@"headerl"];
 
-    if (headerr)
-        [translationTable setObject:headerr forKey:@"headerr"];
+    if (rightHeader)
+        [translationTable setObject:rightHeader forKey:@"headerr"];
 
-    if (headerf)
-        [translationTable setObject:headerf forKey:@"headerf"];
+    if (firstHeader)
+        [translationTable setObject:firstHeader forKey:@"headerf"];
 
 
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
@@ -134,18 +132,18 @@
 {
     NSMutableDictionary *translationTable = [NSMutableDictionary new];
     
-    NSAttributedString *footerl = [section footerForPage: RKPageSelectionLeft];
-    NSAttributedString *footerr = [section footerForPage: RKPageSelectionRight];
-    NSAttributedString *footerf = [section footerForPage: RKPageSelectionFirst];         
+    NSAttributedString *leftFooter = [section footerForPage: RKPageSelectionLeft];
+    NSAttributedString *rightFooter = [section footerForPage: RKPageSelectionRight];
+    NSAttributedString *firstFooter = [section footerForPage: RKPageSelectionFirst];         
     
-    if (footerl)
-        [translationTable setObject:footerl forKey:@"footerl"];
+    if (leftFooter)
+        [translationTable setObject:leftFooter forKey:@"footerl"];
     
-    if (footerr)
-        [translationTable setObject:footerr forKey:@"footerr"];
+    if (rightFooter)
+        [translationTable setObject:rightFooter forKey:@"footerr"];
     
-    if (footerf)
-        [translationTable setObject:footerf forKey:@"footerf"];
+    if (firstFooter)
+        [translationTable setObject:firstFooter forKey:@"footerf"];
     
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
 }
