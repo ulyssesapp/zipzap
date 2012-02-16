@@ -16,6 +16,7 @@
 {
     NSMutableArray *fonts;
     NSMutableArray *colors;
+    NSMutableArray *predefinedStyles;
     NSDictionary *attachmentFileWrappers;
 
     NSMutableArray *textLists;
@@ -26,7 +27,7 @@
 
 @implementation RKResourcePool
 
-@synthesize attachmentFileWrappers;
+@synthesize attachmentFileWrappers, document;
 
 - (id)init
 {
@@ -35,6 +36,7 @@
     if (self) {
         fonts = [NSMutableArray new];
         colors = [NSMutableArray new];
+        predefinedStyles = [NSMutableArray new];
         attachmentFileWrappers = [NSMutableDictionary new];
         textLists = [NSMutableArray new];
         listItemIndices = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality valueOptions:0];
@@ -44,6 +46,17 @@
         [self indexOfColor: [NSColor rtfColorWithRed:1.0 green:1.0 blue:1.0]];
     }
         
+    return self;
+}
+
+- (id)initWithDocument:(RKDocument *)initialDocument
+{
+    self = [self init];
+    
+    if (self) {
+        document = initialDocument;
+    }
+    
     return self;
 }
 
@@ -90,6 +103,22 @@
 - (NSArray *)colors
 {
     return colors;
+}
+
+#pragma mark - Style
+
+- (NSUInteger) indexOfPredefinedStyle:(NSString *)predefinedStyle
+{
+    NSAssert(predefinedStyle, @"No style given");
+    
+    NSUInteger index = [predefinedStyles indexOfObject:predefinedStyle];
+    
+    if (index == NSNotFound) {
+        [predefinedStyles addObject:predefinedStyle];
+        index = predefinedStyles.count - 1;
+    }
+    
+    return index;
 }
 
 #pragma mark - File Wrapper

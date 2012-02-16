@@ -1,5 +1,5 @@
 //
-//  RKTextStyle.h
+//  RKPredefinedStyle.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 16.02.12.
@@ -14,7 +14,7 @@ extern NSString *RKPredefinedParagraphStyleAttributeName;
 /*!
  @abstract Provides convenience methods for setting paragraph and character styles
  */
-@interface NSMutableAttributedString (RKAttributedStringTextStyleConvenience)
+@interface NSMutableAttributedString (RKAttributedStringPredefinedStyleConvenience)
 
 /*!
  @abstract Adds a predefined character style to a range

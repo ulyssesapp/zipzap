@@ -12,6 +12,16 @@
 @interface RKResourcePool : NSObject
 
 /*!
+ @abstract Initializes the resource pool with a certain document
+ */
+- (id)initWithDocument:(RKDocument *)document;
+
+/*!
+ @abstract The document a resource pool belongs to
+ */
+@property (nonatomic,strong,readonly) RKDocument *document;
+
+/*!
  @abstract Returns the index of a font. 
  @discussion If the font is not indexed, it will be registered. The font name is stored with all non-standard traits (e.g. Roman, Condensed). Standard traits (Bold, Italic) are removed.
  */
@@ -32,6 +42,11 @@
  @abstract Returns the index of a list
  */
 - (NSUInteger)indexOfListStyle:(RKListStyle *)textList;
+
+/*!
+ @abstract Returns the index of a predefined style
+ */
+- (NSUInteger)indexOfPredefinedStyle:(NSString *)predefinedStyle;
 
 /*!
  @abstract Returns a new item number of a list level

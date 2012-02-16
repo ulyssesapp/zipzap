@@ -134,6 +134,6 @@
  @abstract Specifies document-wide styles
  @discussion A mapping from style names to a NSDictionary containing style information of an attributed string
  */
-@property(nonatomic,strong,readwrite) NSDictionary *textStyles;
+@property(nonatomic,strong,readwrite) NSDictionary *predefinedStyles;
 
 @end

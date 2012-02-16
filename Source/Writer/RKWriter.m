@@ -39,7 +39,7 @@
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
 {
-    RKResourcePool *resources = [RKResourcePool new];
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
     NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:
         [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding]
