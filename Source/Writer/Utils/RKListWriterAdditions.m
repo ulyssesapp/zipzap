@@ -130,11 +130,11 @@
 {
     static NSDictionary *placeholderCodes = nil;
     placeholderCodes = (placeholderCodes) ?: [NSDictionary dictionaryWithObjectsAndKeys:
-                                              [NSNumber numberWithInteger: RKTextListFormatCodeDecimal],            @"%d",
-                                              [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseRoman],     @"%r",
-                                              [NSNumber numberWithInteger: RKTextListFormatCodeUpperCaseRoman],     @"%R",
-                                              [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseLetter],    @"%a",
-                                              [NSNumber numberWithInteger: RKTextListFormatCodeUpperCaseLetter],    @"%A",
+                                              [NSNumber numberWithInteger: RKListFormatCodeDecimal],            @"%d",
+                                              [NSNumber numberWithInteger: RKListFormatCodeLowerCaseRoman],     @"%r",
+                                              [NSNumber numberWithInteger: RKListFormatCodeUpperCaseRoman],     @"%R",
+                                              [NSNumber numberWithInteger: RKListFormatCodeLowerCaseLetter],    @"%a",
+                                              [NSNumber numberWithInteger: RKListFormatCodeUpperCaseLetter],    @"%A",
                                               nil
                                               ];
 
@@ -145,7 +145,7 @@
 {
     NSString *formatString = [self formatForLevel: levelIndex];
     NSRange enumerationPlaceholderRange = [self.class rangeOfFormatPlaceholder: formatString];
-    RKListStyleFormatCode formatCode = RKTextListFormatCodeBullet;
+    RKListStyleFormatCode formatCode = RKListFormatCodeBullet;
     
     if (enumerationPlaceholderRange.length) {
         formatCode = [[self.class RTFFormatCodeFromPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] intValue];
@@ -257,23 +257,23 @@
             NSUInteger currentItemNumber = [[itemNumbers objectAtIndex:currentLevel] unsignedIntegerValue];
             
             switch ([token intValue]) {
-                case RKTextListFormatCodeDecimal:
+                case RKListFormatCodeDecimal:
                     token = [NSString stringWithFormat:@"%u", currentItemNumber];
                     break;
                 
-                case RKTextListFormatCodeLowerCaseLetter:
+                case RKListFormatCodeLowerCaseLetter:
                     token = [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
 
-                case RKTextListFormatCodeUpperCaseLetter:
+                case RKListFormatCodeUpperCaseLetter:
                     token = [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
 
-                case RKTextListFormatCodeLowerCaseRoman:
+                case RKListFormatCodeLowerCaseRoman:
                     token = [NSString lowerCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
                     
-                case RKTextListFormatCodeUpperCaseRoman:
+                case RKListFormatCodeUpperCaseRoman:
                     token = [NSString upperCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
             }

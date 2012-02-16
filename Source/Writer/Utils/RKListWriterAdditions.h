@@ -9,20 +9,20 @@
 /*!
  @abstract RTF format codes for text lists
  @const
- RKTextListFormatCodeDecimal             Decimal numbers (e.g. 1, 2, 3, 4, ...)
- RKTextListFormatCodeUpperCaseRoman      Upper case roman numbers (I, II, III, IV, ..)
- RKTextListFormatCodeLowerCaseRoman      Lower case roman numbers (i, ii, iii, iv, ...)
- RKTextListFormatCodeUpperCaseLetter     Upper case letter (A, B, C, D, ...)
- RKTextListFormatCodeLowerCaseLetter     Lower case letter (a, b, c, d, ...)
- RKTextListFormatCodeBullet              Arbitary bullet point, no automatic enumeration
+    RKListFormatCodeDecimal             Decimal numbers (e.g. 1, 2, 3, 4, ...)
+    RKListFormatCodeUpperCaseRoman      Upper case roman numbers (I, II, III, IV, ..)
+    RKListFormatCodeLowerCaseRoman      Lower case roman numbers (i, ii, iii, iv, ...)
+    RKListFormatCodeUpperCaseLetter     Upper case letter (A, B, C, D, ...)
+    RKListFormatCodeLowerCaseLetter     Lower case letter (a, b, c, d, ...)
+    RKListFormatCodeBullet              Arbitary bullet point, no automatic enumeration
  */
 typedef enum {
-    RKTextListFormatCodeDecimal             = 0,
-    RKTextListFormatCodeUpperCaseRoman      = 1,
-    RKTextListFormatCodeLowerCaseRoman      = 2,
-    RKTextListFormatCodeUpperCaseLetter     = 3,
-    RKTextListFormatCodeLowerCaseLetter     = 4,
-    RKTextListFormatCodeBullet              = 23
+    RKListFormatCodeDecimal             = 0,
+    RKListFormatCodeUpperCaseRoman      = 1,
+    RKListFormatCodeLowerCaseRoman      = 2,
+    RKListFormatCodeUpperCaseLetter     = 3,
+    RKListFormatCodeLowerCaseLetter     = 4,
+    RKListFormatCodeBullet              = 23
 } RKListStyleFormatCode;
 
 @interface RKListStyle (RKListWriterAdditions)

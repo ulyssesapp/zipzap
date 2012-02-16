@@ -22,15 +22,15 @@
                                                                   @"-- * --",
                                                                   nil ]];
     
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 0], RKTextListFormatCodeDecimal, @"Invalid format code");
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 1], RKTextListFormatCodeLowerCaseRoman, @"Invalid format code");
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 2], RKTextListFormatCodeUpperCaseRoman, @"Invalid format code");
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 3], RKTextListFormatCodeLowerCaseLetter, @"Invalid format code");
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 4], RKTextListFormatCodeUpperCaseLetter, @"Invalid format code");
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 5], RKTextListFormatCodeBullet, @"Invalid format code");
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 0], RKListFormatCodeDecimal, @"Invalid format code");
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 1], RKListFormatCodeLowerCaseRoman, @"Invalid format code");
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 2], RKListFormatCodeUpperCaseRoman, @"Invalid format code");
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 3], RKListFormatCodeLowerCaseLetter, @"Invalid format code");
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 4], RKListFormatCodeUpperCaseLetter, @"Invalid format code");
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 5], RKListFormatCodeBullet, @"Invalid format code");
     
     // Invalid level selected
-    STAssertEquals([listStyle RTFFormatCodeOfLevel: 8], RKTextListFormatCodeBullet, @"Invalid format code");
+    STAssertEquals([listStyle RTFFormatCodeOfLevel: 8], RKListFormatCodeBullet, @"Invalid format code");
 }
 
 - (void)testBuildRTFFormatStringWithoutPrepending
