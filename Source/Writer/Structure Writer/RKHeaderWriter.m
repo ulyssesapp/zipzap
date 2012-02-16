@@ -172,7 +172,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSArray *placeholderPositions;
     NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%llu %@;}", 
                                  ((listIndex + 1) * 1000) + (level + 1), 
-                                 [list RTFFormatStringOfLevel:level placeholderPositions:&placeholderPositions]
+                                 [list formatStringOfLevel:level placeholderPositions:&placeholderPositions]
                                 ];
     
     // Generate placeholder formatting
@@ -185,10 +185,10 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     [rtfPlaceholderPostions appendString:@";}"];
     
     // Cocoa format string
-    NSString *textSystemFormatString = [list textSystemFormatOfLevel: level];
+    NSString *textSystemFormatString = [list systemFormatOfLevel: level];
     
     // Additional parameters
-    NSUInteger formatCode = [list RTFFormatCodeOfLevel:level];
+    NSUInteger formatCode = [list formatCodeOfLevel:level];
     NSUInteger startNumber = [list startNumberForLevel:level];
     
     // Generate level description

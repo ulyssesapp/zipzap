@@ -18,7 +18,7 @@
  @abstract The text system requires every marker to be enclosed by tabs
  @discussion These tabs must not be escabed to a \tab tag afterwards since this breaks compatibility
  */
-+ (NSString *)textSystemCompatibleMarker:(NSString *)marker;
++ (NSString *)systemCompatibleMarker:(NSString *)marker;
 
 @end
 
@@ -26,14 +26,14 @@
 
 #pragma mark - Internal helper
 
-+ (NSString *)textSystemCompatibleMarker:(NSString *)marker
++ (NSString *)systemCompatibleMarker:(NSString *)marker
 {
     return [NSString stringWithFormat:@"\t%@\t", marker];
 }
 
 #pragma mark - Text system header generation
 
-- (NSString *)textSystemFormatOfLevel:(NSUInteger)levelIndex
+- (NSString *)systemFormatOfLevel:(NSUInteger)levelIndex
 {
     NSString *formatString = [self formatForLevel: levelIndex];
     
@@ -41,7 +41,7 @@
     NSRange enumerationPlaceholderRange = [self.class rangeOfEnumerationPlaceholder: formatString];
     
     if (enumerationPlaceholderRange.length) {
-        NSString *textSystemCode = [self.class textSystemFormatCodeFromEnumerationPlaceholder:[formatString substringWithRange:enumerationPlaceholderRange]];
+        NSString *textSystemCode = [self.class systemFormatCodeFromEnumerationPlaceholder:[formatString substringWithRange:enumerationPlaceholderRange]];
         
         formatString = [formatString stringByReplacingCharactersInRange:enumerationPlaceholderRange withString:textSystemCode];
     }
@@ -63,20 +63,20 @@
 
 #pragma mark - RTF header writing
 
-- (RKListStyleFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex
+- (RKListStyleFormatCode)formatCodeOfLevel:(NSUInteger)levelIndex
 {
     NSString *formatString = [self formatForLevel: levelIndex];
     NSRange enumerationPlaceholderRange = [self.class rangeOfEnumerationPlaceholder: formatString];
     RKListStyleFormatCode formatCode = RKListFormatCodeBullet;
     
     if (enumerationPlaceholderRange.length) {
-        formatCode = [[self.class RTFFormatCodeFromEnumerationPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] intValue];
+        formatCode = [[self.class formatCodeFromEnumerationPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] intValue];
     }
     
     return formatCode;
 }
 
-- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex placeholderPositions:(NSArray **)placeholderPositionsOut
+- (NSString *)formatStringOfLevel:(NSUInteger)levelIndex placeholderPositions:(NSArray **)placeholderPositionsOut
 {
     __block NSMutableString *formatString = [NSMutableString new];
     __block NSMutableArray *placeholderPositions = [NSMutableArray new];
@@ -104,7 +104,7 @@
     
     *placeholderPositionsOut = placeholderPositions;
     
-    return [NSString stringWithFormat:@"\\'%.2x%@", RTFTokenCount, [self.class textSystemCompatibleMarker: formatString]];
+    return [NSString stringWithFormat:@"\\'%.2x%@", RTFTokenCount, [self.class systemCompatibleMarker: formatString]];
 }
 
 #pragma mark - List item marker writing
@@ -149,7 +149,7 @@
         [markerString appendString: token];
     }];
     
-    return [self.class textSystemCompatibleMarker: markerString];
+    return [self.class systemCompatibleMarker: markerString];
 }
 
 @end

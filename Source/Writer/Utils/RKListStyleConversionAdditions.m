@@ -10,7 +10,7 @@
 
 @implementation RKListStyle (RKListStyleConversionAdditions)
 
-+ (NSNumber *)RTFFormatCodeFromEnumerationPlaceholder:(NSString *)placeholder
++ (NSNumber *)formatCodeFromEnumerationPlaceholder:(NSString *)placeholder
 {
     static NSDictionary *placeholderCodes = nil;
     placeholderCodes = (placeholderCodes) ?: [NSDictionary dictionaryWithObjectsAndKeys:
@@ -25,7 +25,7 @@
     return [placeholderCodes objectForKey: placeholder];
 }
 
-+ (NSString *)textSystemFormatCodeFromEnumerationPlaceholder:(NSString *)placeholder
++ (NSString *)systemFormatCodeFromEnumerationPlaceholder:(NSString *)placeholder
 {
     static NSDictionary *textSystemPlaceholder = nil;
     textSystemPlaceholder = (textSystemPlaceholder) ?: [NSDictionary dictionaryWithObjectsAndKeys:

@@ -62,7 +62,7 @@
                     insertToken = @"%";
                 }
                  else if ([token hasPrefix: @"%"]) {
-                    insertToken = [self.class RTFFormatCodeFromEnumerationPlaceholder: token];
+                    insertToken = [self.class formatCodeFromEnumerationPlaceholder: token];
                 }
                  else {
                      insertToken = token;

@@ -31,11 +31,11 @@ typedef enum {
 /*!
  @abstract Returns the format code that belongs to a placeholder as an object containing an RKListStyleFormatCode constant
  */
-+ (NSNumber *)RTFFormatCodeFromEnumerationPlaceholder:(NSString *)placeholder;
++ (NSNumber *)formatCodeFromEnumerationPlaceholder:(NSString *)placeholder;
 
 /*!
  @abstract Returns the placeholder name required by the text system
  */
-+ (NSString *)textSystemFormatCodeFromEnumerationPlaceholder:(NSString *)placeholder;
++ (NSString *)systemFormatCodeFromEnumerationPlaceholder:(NSString *)placeholder;
 
 @end

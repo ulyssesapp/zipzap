@@ -14,13 +14,13 @@
  @abstract Returns the RTF list level format as required by the Cocoa text system
  @discussion If no format code exists in the level an empty string is returned
  */
-- (NSString *)textSystemFormatOfLevel:(NSUInteger)levelIndex;
+- (NSString *)systemFormatOfLevel:(NSUInteger)levelIndex;
 
 /*!
  @astract Returns the RTF format code for a level
  @discussion If no format code is given at a certain level an RKTextListFormatCodeBullet is returned.
  */
-- (RKListStyleFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex;
+- (RKListStyleFormatCode)formatCodeOfLevel:(NSUInteger)levelIndex;
 
 /*!
  @abstract Returns the RTF format string of a level as required by the \leveltext tag.
@@ -28,7 +28,7 @@
  the positions of the format string placeholders in the output string
  To ensure compatibility with the Cocoa text system, all placeholders are automatically enclosed by tabs
  */
-- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex placeholderPositions:(NSArray **)placeholderPositionsOut;
+- (NSString *)formatStringOfLevel:(NSUInteger)levelIndex placeholderPositions:(NSArray **)placeholderPositionsOut;
 
 /*!
  @abstract Returns the concrete bullet point marker for a certain nesting of list item indices
