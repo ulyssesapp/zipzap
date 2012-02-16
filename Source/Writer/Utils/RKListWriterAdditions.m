@@ -159,7 +159,7 @@
 - (void)scanFullFormatStringFromLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger currentLevel))block
 {
     static NSRegularExpression *tokenRegEx;
-    tokenRegEx = (tokenRegEx) ?: [NSRegularExpression regularExpressionWithPattern:@"%([%*daArR])" options:0 error:nil];
+    tokenRegEx = (tokenRegEx) ?: [NSRegularExpression regularExpressionWithPattern:@"%[%*daArR]" options:0 error:nil];
 
     NSMutableArray *tokens = [NSMutableArray new];
     NSMutableArray *levels = [NSMutableArray new];
@@ -174,26 +174,24 @@
         // Scan tokens of current level
         for (NSString *token in [formatString componentsSeparatedByRegularExpression: tokenRegEx]) {
             if ([token isEqualTo: @"%*"]) {
-                // Continue to next level
+                // Remember the level link placeholder
                 nextInsert = insertAt;
             }
             else {
+                // Translate or keep token
                 id insertToken;
-                
+
                 if ([token isEqualTo: @"%%"]) {
-                    // Convert %% to %
                     insertToken = @"%";
                 }
                  else if ([token hasPrefix: @"%"]) {
-                    // Parse format placeholder
                     insertToken = [self.class RTFFormatCodeFromPlaceholder: token];
                 }
                  else {
-                     // Ordinary string token
                      insertToken = token;
                 }
                 
-                // Store token and the level to which a token belongs
+                // Store token and the level to which it belongs
                 [tokens insertObject:insertToken atIndex:insertAt];
                 [levels insertObject:[NSNumber numberWithUnsignedInteger:currentLevelIndex] atIndex:insertAt];
                 
@@ -225,19 +223,17 @@
         if ([token isKindOfClass:NSNumber.class]) {
             // Format placeholder token
             token = [NSString stringWithFormat:@"\\'%.2x", currentLevel];
+            RTFTokenCount ++;
 
             // Store placeholder position
             [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: RTFTokenCount]];
-            
-            // Add format placeholder to current token position
-            RTFTokenCount ++;
         }
         else {
+            // Other string token
             RTFTokenCount += token.length;
             token = [token RTFEscapedString];
         }
 
-        // Append converted format string
         [formatString appendString: token];
     }];
     
@@ -279,6 +275,7 @@
             }
         }
         else {
+            // Other string token
             token = [token RTFEscapedString];
         }
         
