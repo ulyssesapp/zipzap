@@ -14,4 +14,9 @@
  */
 + (NSString *)stringWithRTFGroupTag:(NSString *)tag body:(NSString *)body;
 
+/*!
+ @abstract Splits the string by matches and non-matches of a regular expression.
+ */
+- (NSArray *)componentsSeparatedByRegularExpression:(NSRegularExpression *)regularExpression;
+
 @end
