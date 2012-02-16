@@ -9,7 +9,7 @@
 #import "RKListItemWriter.h"
 #import "RKAttributedStringWriter.h"
 #import "RKListItem.h"
-#import "RKListWriterAdditions.h"
+#import "RKListStyleWriterAdditions.h"
 
 @implementation RKListItemWriter
 

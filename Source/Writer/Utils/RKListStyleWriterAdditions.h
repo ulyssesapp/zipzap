@@ -1,31 +1,14 @@
 //
-//  RKTextListWriterAdditions.h
+//  RKListStyleWriterAdditions.h
 //  RTFKit
 //
-//  Created by Friedrich Gräter on 02.02.12.
+//  Created by Friedrich Gräter on 16.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-/*!
- @abstract RTF format codes for text lists
- @const
-    RKListFormatCodeDecimal             Decimal numbers (e.g. 1, 2, 3, 4, ...)
-    RKListFormatCodeUpperCaseRoman      Upper case roman numbers (I, II, III, IV, ..)
-    RKListFormatCodeLowerCaseRoman      Lower case roman numbers (i, ii, iii, iv, ...)
-    RKListFormatCodeUpperCaseLetter     Upper case letter (A, B, C, D, ...)
-    RKListFormatCodeLowerCaseLetter     Lower case letter (a, b, c, d, ...)
-    RKListFormatCodeBullet              Arbitary bullet point, no automatic enumeration
- */
-typedef enum {
-    RKListFormatCodeDecimal             = 0,
-    RKListFormatCodeUpperCaseRoman      = 1,
-    RKListFormatCodeLowerCaseRoman      = 2,
-    RKListFormatCodeUpperCaseLetter     = 3,
-    RKListFormatCodeLowerCaseLetter     = 4,
-    RKListFormatCodeBullet              = 23
-} RKListStyleFormatCode;
+#import "RKListStyleConversionAdditions.h"
 
-@interface RKListStyle (RKListWriterAdditions)
+@interface RKListStyle (RKListStyleWriterAdditions)
 
 /*!
  @abstract Returns the RTF list level format as required by the Cocoa text system

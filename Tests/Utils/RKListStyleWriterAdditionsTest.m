@@ -1,15 +1,15 @@
 //
-//  RKListWriterAdditionsTest.m
+//  RKListStyleWriterAdditionsTest.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKListWriterAdditions.h"
-#import "RKListWriterAdditionsTest.h"
+#import "RKListStyleWriterAdditionsTest.h"
+#import "RKListStyleWriterAdditions.h"
 
-@implementation RKListWriterAdditionsTest
+@implementation RKListStyleWriterAdditionsTest
 
 - (void)testConvertRTFFormatCode
 {

@@ -9,7 +9,7 @@
 #import "RKHeaderWriter.h"
 #import "RKResourcePool.h"
 #import "RKConversion.h"
-#import "RKListWriterAdditions.h"
+#import "RKListStyleWriterAdditions.h"
 
 // Used to access the RKHeaderWriterMetadataDescriptions 
 enum {
