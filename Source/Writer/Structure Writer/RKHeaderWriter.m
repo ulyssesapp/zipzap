@@ -9,7 +9,7 @@
 #import "RKHeaderWriter.h"
 #import "RKResourcePool.h"
 #import "RKConversion.h"
-#import "RKTextListWriterAdditions.h"
+#import "RKListWriterAdditions.h"
 
 // Used to access the RKHeaderWriterMetadataDescriptions 
 enum {
@@ -172,7 +172,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSArray *placeholderPositions;
     NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%llu %@;}", 
                                  ((listIndex + 1) * 1000) + (level + 1), 
-                                 [list RTFFormatStringOfLevel:level withPlaceholderPositions:&placeholderPositions]
+                                 [list RTFFormatStringOfLevel:level placeholderPositions:&placeholderPositions]
                                 ];
     
     // Generate placeholder formatting
@@ -185,11 +185,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     [rtfPlaceholderPostions appendString:@";}"];
     
     // Cocoa format string
-    NSString *cocoaFormatString = [NSString stringWithFormat:@"{\\*\\levelmarker %@}",
-                                   [list cocoaRTFFormatStringOfLevel: level]
-                                  ];
-
-    NSString *cocoaPrependRequirement = [list isPrependingLevel: level] ? @"\\levelprepend" : @"";
+    NSString *textSystemFormatString = [list textSystemFormatOfLevel: level];
     
     // Additional parameters
     NSUInteger formatCode = [list RTFFormatCodeOfLevel:level];
@@ -198,12 +194,11 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     // Generate level description
     return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%llu\\levelnfc%llu"
                                         "\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
-                                        "%@%@%@%@"
+                                        "%@%@%@"
                                         "\\levelfollow2\\levellegal0\\levelnorestart0}",
             startNumber,
             formatCode,
-            cocoaFormatString,
-            cocoaPrependRequirement,
+            textSystemFormatString,
             rtfFormatString,
             rtfPlaceholderPostions
             ];

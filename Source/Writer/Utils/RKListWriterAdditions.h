@@ -23,45 +23,29 @@ typedef enum {
     RKTextListFormatCodeUpperCaseLetter     = 3,
     RKTextListFormatCodeLowerCaseLetter     = 4,
     RKTextListFormatCodeBullet              = 23
-} RKTextListFormatCode;
+} RKListStyleFormatCode;
 
 @interface RKListStyle (RKListWriterAdditions)
 
 /*!
- @abstract Returns the placeholder string used in a certain level
- @discussion If no placeholder is used, nil is returned
+ @abstract Returns the RTF list level format as required by the Cocoa text system
+ @discussion If no format code exists in the level an empty string is returned
  */
-- (NSString *)enumerationPlaceholderOfLevel:(NSUInteger)levelIndex;
-
-/*!
- @abstract Returns whether the format string of a level requires to insert the format string of another level
- */
-- (BOOL)isPrependingLevel:(NSUInteger)levelIndex;
-
-/*!
- @astract Returns the RTF format code for a level as used by cocoa
- */
-- (NSString *)cocoaRTFFormatCodeOfLevel:(NSUInteger)levelIndex;
+- (NSString *)textSystemFormatOfLevel:(NSUInteger)levelIndex;
 
 /*!
  @astract Returns the RTF format code for a level
  @discussion If no format code is given at a certain level an RKTextListFormatCodeBullet is returned.
  */
-- (RKTextListFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex;
+- (RKListStyleFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex;
 
 /*!
  @abstract Returns the RTF format string of a level as required by the \leveltext tag.
  @discussion To generate the \levelnumbers tag, the array "placeholderPositions" will contain 
-             the positions of the format string placeholders in the output string
-             To ensure compatibility with the Cocoa text system, all placeholders are automatically enclosed by tabs
+ the positions of the format string placeholders in the output string
+ To ensure compatibility with the Cocoa text system, all placeholders are automatically enclosed by tabs
  */
-- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositions;
-
-/*!
- @abstract Returns the RTF format string of a level as required by the \levelmarker tag of the RTF extension of Cocoa.
- @discussion If no format code exists in the level an empty string is returned
- */
-- (NSString *)cocoaRTFFormatStringOfLevel:(NSUInteger)levelIndex;
+- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex placeholderPositions:(NSArray **)placeholderPositionsOut;
 
 /*!
  @abstract Returns the concrete bullet point marker for a certain nesting of list item indices

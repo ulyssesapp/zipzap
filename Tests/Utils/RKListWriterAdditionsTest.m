@@ -1,40 +1,15 @@
 //
-//  RKTextListStylingWriterAdditionsTest.m
+//  RKListWriterAdditionsTest.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKTextListWriterAdditions.h"
-#import "RKTextListWriterAdditionsTest.h"
-#import "RKTextListWriterAdditions+TextExtensions.h"
+#import "RKListWriterAdditions.h"
+#import "RKListWriterAdditionsTest.h"
 
-@implementation RKTextListWriterAdditionsTest
-
-- (void)testDetectPrependingFormat
-{
-    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%*---%d---", @"---%d%--%*", @"%d", @"* %d *", @"%%*%d", nil]];
-    
-    STAssertTrue([textList isPrependingLevel: 0], @"Prepending was not detected");
-    STAssertTrue([textList isPrependingLevel: 1], @"Prepending was not detected");
-    STAssertFalse([textList isPrependingLevel: 2], @"Prepending was detected wrongly");
-    STAssertFalse([textList isPrependingLevel: 3], @"Prepending was detected wrongly");
-    STAssertFalse([textList isPrependingLevel: 4], @"Prepending was detected wrongly");    
-}
-
-- (void)testDetectPlaceholderOfLevel
-{
-    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%*---%d%r---", @"---%r%--%*", @"%R", @"* %a *", @"%%*%A", @"-", @"%%", nil]];
-    
-    STAssertEqualObjects([textList enumerationPlaceholderOfLevel: 0], @"%d", @"Placeholder not found");
-    STAssertEqualObjects([textList enumerationPlaceholderOfLevel: 1], @"%r", @"Placeholder not found");
-    STAssertEqualObjects([textList enumerationPlaceholderOfLevel: 2], @"%R", @"Placeholder not found");
-    STAssertEqualObjects([textList enumerationPlaceholderOfLevel: 3], @"%a", @"Placeholder not found");
-    STAssertEqualObjects([textList enumerationPlaceholderOfLevel: 4], @"%A", @"Placeholder not found");
-    STAssertNil([textList enumerationPlaceholderOfLevel: 5], @"Invalid placeholder found");
-    STAssertNil([textList enumerationPlaceholderOfLevel: 6], @"Invalid placeholder found");
-}
+@implementation RKListWriterAdditionsTest
 
 - (void)testConvertRTFFormatCode
 {
@@ -58,24 +33,6 @@
     STAssertEquals([listStyle RTFFormatCodeOfLevel: 8], RKTextListFormatCodeBullet, @"Invalid format code");
 }
 
-- (void)testBuildNormalizedFormatString
-{
-    RKListStyle *listStyle = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:
-                                                                  @"%d.",
-                                                                  @"%*%r.",
-                                                                  @"%*%r.",
-                                                                  @"-%a-",
-                                                                  @"%d:%*",
-                                                                  nil
-                                                                  ]];
-    
-    STAssertEqualObjects([listStyle normalizedFormatOfLevel: 0], @"%d0.", @"Invalid normalization");
-    STAssertEqualObjects([listStyle normalizedFormatOfLevel: 1], @"%d0.%r1.", @"Invalid normalization");
-    STAssertEqualObjects([listStyle normalizedFormatOfLevel: 2], @"%d0.%r1.%r2.", @"Invalid normalization");
-    STAssertEqualObjects([listStyle normalizedFormatOfLevel: 3], @"-%a3-", @"Invalid normalization");
-    STAssertEqualObjects([listStyle normalizedFormatOfLevel: 4], @"%d4:-%a3-", @"Invalid normalization");
-}
-
 - (void)testBuildRTFFormatStringWithoutPrepending
 {
     NSString *testString;
@@ -84,7 +41,7 @@
     // Generating a simple list
     RKListStyle *simpleList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"-- %d --", nil]];
 
-    testString = [simpleList RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];
+    testString = [simpleList RTFFormatStringOfLevel:0 placeholderPositions:&placeholderPositions];
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)1, @"Invalid count of placeholders");
     STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)5, @"Invalid tag position");
@@ -94,7 +51,7 @@
     // Generating a simple list (only bullet point)
     RKListStyle *bulletPoint = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"-", nil]];
     
-    testString = [bulletPoint RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];
+    testString = [bulletPoint RTFFormatStringOfLevel:0 placeholderPositions:&placeholderPositions];
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)0, @"Invalid count of placeholders");
     
@@ -103,7 +60,7 @@
     // Generating a simple list with keeping the escpae sign and converting RTF-Chars
     RKListStyle *keepingChars = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%%∮{%d\\%", nil]];
 
-    testString = [keepingChars RTFFormatStringOfLevel:0 withPlaceholderPositions:&placeholderPositions];    
+    testString = [keepingChars RTFFormatStringOfLevel:0 placeholderPositions:&placeholderPositions];    
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)1, @"Invalid count of placeholders");
     STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)5, @"Invalid tag position");
@@ -119,7 +76,7 @@
     // Generating a simple list with multiple markers
     RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%A.", nil ]];
 
-    testString = [list RTFFormatStringOfLevel:2 withPlaceholderPositions:&placeholderPositions];    
+    testString = [list RTFFormatStringOfLevel:2 placeholderPositions:&placeholderPositions];    
     
     STAssertEquals(placeholderPositions.count, (NSUInteger)3, @"Invalid count of placeholders");
     STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)2, @"Invalid tag position");
@@ -129,16 +86,16 @@
     STAssertEqualObjects(testString, @"\\'08\t\\'00.\\'01.\\'02.\t", @"Invalid format string");
 }
 
-- (void)testBuilCocoaFormatString  
+- (void)testBuildTextSystemFormatString  
 {
-    RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.", @"--", nil ]];
+    RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.ä%%{", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.", @"--", nil ]];
     
-    STAssertEqualObjects([list cocoaRTFFormatStringOfLevel: 0], @"\\{decimal\\}.", @"Invalid placeholder");
-    STAssertEqualObjects([list cocoaRTFFormatStringOfLevel: 1], @"\\{lower-roman\\}.", @"Invalid placeholder");
-    STAssertEqualObjects([list cocoaRTFFormatStringOfLevel: 2], @"\\{upper-roman\\}.", @"Invalid placeholder");
-    STAssertEqualObjects([list cocoaRTFFormatStringOfLevel: 3], @"\\{lower-alpha\\}.", @"Invalid placeholder");
-    STAssertEqualObjects([list cocoaRTFFormatStringOfLevel: 4], @"\\{upper-alpha\\}.", @"Invalid placeholder");
-    STAssertEqualObjects([list cocoaRTFFormatStringOfLevel: 5], @"--", @"Invalid placeholder");
+    STAssertEqualObjects([list textSystemFormatOfLevel: 0], @"{\\*\\levelmarker \\{decimal\\}.\\u228%\\{}", @"Invalid placeholder");
+    STAssertEqualObjects([list textSystemFormatOfLevel: 1], @"{\\*\\levelmarker \\{lower-roman\\}.}\\levelprepend", @"Invalid placeholder");
+    STAssertEqualObjects([list textSystemFormatOfLevel: 2], @"{\\*\\levelmarker \\{upper-roman\\}.}\\levelprepend", @"Invalid placeholder");
+    STAssertEqualObjects([list textSystemFormatOfLevel: 3], @"{\\*\\levelmarker \\{lower-alpha\\}.}\\levelprepend", @"Invalid placeholder");
+    STAssertEqualObjects([list textSystemFormatOfLevel: 4], @"{\\*\\levelmarker \\{upper-alpha\\}.}\\levelprepend", @"Invalid placeholder");
+    STAssertEqualObjects([list textSystemFormatOfLevel: 5], @"{\\*\\levelmarker --}", @"Invalid placeholder");
 }
 
 - (void)testBuildMarkerString

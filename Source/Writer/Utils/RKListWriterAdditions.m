@@ -8,316 +8,284 @@
 
 #import "RKConversion.h"
 #import "RKListStyle.h"
-#import "RKTextListWriterAdditions.h"
+#import "RKListWriterAdditions.h"
 #import "RKNumberFormatting.h"
+#import "RKStringConvenienceAdditions.h"
 
 @interface RKListStyle (RKListWriterAdditionsPrivateMethods)
 
 /*!
- @abstract Returns the position of the first prepending placeholder inside a format string
+ @abstract Executes the given block for each token of a full format string
+ @discussion A full format string contains all format strings of all levels that have been append by %*
+             A token is either:
+                NSString        Ordinary string
+                NSNumber        A RKListStyleFormatCode representing the format code
+             Besides the token, the block receives also the level index of the format string to which the token belongs
  */
-- (NSRange)rangeOfPrependingPlaceholder:(NSString *)formatString;
+- (void)scanFullFormatStringFromLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger tokenLevel))block;
 
 /*!
- @abstract Returns the position of the first prepending placeholder of a certain level
+ @abstract Returns the range of the first enumeration placeholder inside a format string
  */
-- (NSRange)rangeOfPrependingPlaceholderOfLevel:(NSUInteger)levelIndex;
++ (NSRange)rangeOfFormatPlaceholder:(NSString *)formatString;
 
 /*!
- @abstract Returns the position of the first enumeration placeholder inside a format string
+ @abstract Returns the range of the first level link placeholder inside a format string
  */
-- (NSRange)rangeOfEnumerationPlaceholder:(NSString *)formatString;
++ (NSRange)rangeOfLinkedLevelPlaceholder:(NSString *)formatString;
 
 /*!
- @abstract Returns the position of the first enumeration placeholder of a certain level
+ @abstract Returns the placeholder used by the text system in the \levelmarker header.
+ @discussion Requires a format string and the position of the enumeration placeholder within the format string
  */
-- (NSRange)rangeOfEnumerationPlaceholderOfLevel:(NSUInteger)levelIndex;
++ (NSString *)textSystemPlaceholderFromFormatString:(NSString *)formatString range:(NSRange)range;
 
 /*!
- @abstract Returns the format definition for a certain level while all level strings of higher levels are inserted
- @description All format strings receive a further number enumerating the level the format string belongs to
+ @abstract The Cocoa text system requires all marker strings to be enclosed in tabs
+ @discussion These tabs must be real "\t" charracters. Using \tab will break compatability
  */
-- (NSString *)normalizedFormatOfLevel:(NSUInteger)levelIndex;
++ (NSString *)textSystemCompatibleMarker:(NSString *)marker;
 
 /*!
- @abstract Returns the level number of a placeholder from a normalized format string
- @discussion Expects the position of the placeholder as argument
-             Returns 0 on an invalid level
+ @abstract Returns the format code that belongs to a placeholder as an object containing an RKListStyleFormatCode constant
  */
-- (NSUInteger)levelFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position;
-
-/*!
- @abstract Returns the current enumeration index for the level of a placeholder from a format string
- @discussion Expects the position of the placeholder as argument
- Returns 0 on an invalid level
- */
-- (NSUInteger)itemNumberFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers;
++ (NSNumber *)RTFFormatCodeFromPlaceholder:(NSString *)placeholder;
 
 @end
 
 @implementation RKListStyle (RKListWriterAdditions)
 
-NSDictionary *placeholderCodes;
-NSDictionary *cocoaPlaceholderCodes;
-NSRegularExpression *prependPlaceholderRegExp;
-NSRegularExpression *enumerationPlaceholderRegexp;
+#pragma mark - Internal helper
 
-+ (void)initialize
++ (NSRange)rangeOfFormatPlaceholder:(NSString *)formatString
 {
-    prependPlaceholderRegExp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
-    enumerationPlaceholderRegexp = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
-   
-    placeholderCodes = [NSDictionary dictionaryWithObjectsAndKeys:
-                        [NSNumber numberWithInteger: RKTextListFormatCodeDecimal],           @"%d",
-                        [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseRoman],     @"%r",
-                        [NSNumber numberWithInteger: RKTextListFormatCodeUpperCaseRoman],     @"%R",
-                        [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseLetter],    @"%a",
-                        [NSNumber numberWithInteger: RKTextListFormatCodeUpperCaseLetter],    @"%A",
-                        nil
-                        ];
+    static NSRegularExpression *placeholderExpression;
+    placeholderExpression = (placeholderExpression) ?: [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
     
-    cocoaPlaceholderCodes = [NSDictionary dictionaryWithObjectsAndKeys:
-                        @"\\{decimal\\}",         @"%d",
-                        @"\\{lower-roman\\}",     @"%r",
-                        @"\\{upper-roman\\}",     @"%R",
-                        @"\\{lower-alpha\\}",     @"%a",
-                        @"\\{upper-alpha\\}",     @"%A",
-                        nil
-                        ];    
+    return [placeholderExpression rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
 }
 
-- (NSRange)rangeOfPrependingPlaceholder:(NSString *)formatString
++ (NSRange)rangeOfLinkedLevelPlaceholder:(NSString *)formatString
 {
-    return [prependPlaceholderRegExp rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
-}
-
-- (NSRange)rangeOfPrependingPlaceholderOfLevel:(NSUInteger)levelIndex
-{
-    NSString *formatString = [self formatForLevel:levelIndex];
+    static NSRegularExpression *placeholderExpression;
+    placeholderExpression = (placeholderExpression) ?: [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
     
-    return [self rangeOfPrependingPlaceholder: formatString];
+    return [placeholderExpression rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
 }
 
-- (BOOL)isPrependingLevel:(NSUInteger)levelIndex
++ (NSString *)textSystemCompatibleMarker:(NSString *)marker
 {
-   return [self rangeOfPrependingPlaceholderOfLevel: levelIndex].location != NSNotFound;
+    return [NSString stringWithFormat:@"\t%@\t", marker];
 }
 
-- (NSRange)rangeOfEnumerationPlaceholder:(NSString *)formatString
+#pragma mark - Text system header generation
+
+- (NSString *)textSystemPlaceholderFromFormatString:(NSString *)formatString range:(NSRange)range
 {
-    return [enumerationPlaceholderRegexp rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
+    static NSDictionary *textSystemPlaceholder = nil;
+    textSystemPlaceholder = (textSystemPlaceholder) ?: [NSDictionary dictionaryWithObjectsAndKeys:
+                              @"{decimal}",         @"%d",
+                              @"{lower-roman}",     @"%r",
+                              @"{upper-roman}",     @"%R",
+                              @"{lower-alpha}",     @"%a",
+                              @"{upper-alpha}",     @"%A",
+                              nil
+                            ];   
+    
+    NSString *placeholder = [formatString substringWithRange: range];
+    
+    return [textSystemPlaceholder objectForKey: placeholder];
 }
 
-- (NSRange)rangeOfEnumerationPlaceholderOfLevel:(NSUInteger)levelIndex
+- (NSString *)textSystemFormatOfLevel:(NSUInteger)levelIndex
 {
     NSString *formatString = [self formatForLevel: levelIndex];
 
-    return [self rangeOfEnumerationPlaceholder: formatString];
-}
+    // Replace enumeration placeholder
+    NSRange enumerationPlaceholderRange = [self.class rangeOfFormatPlaceholder: formatString];
 
-- (NSString *)enumerationPlaceholderOfLevel:(NSUInteger)levelIndex
-{
-    NSRange firstMatch = [self rangeOfEnumerationPlaceholderOfLevel: levelIndex];
-    
-    if (firstMatch.location != NSNotFound) {
-        NSString *formatString = [self formatForLevel:levelIndex];
-        
-        return [formatString substringWithRange:firstMatch];
-    }
-    else {
-        return nil;
-    }
-}
+    if (enumerationPlaceholderRange.length) {
+        NSString *textSystemCode = [self textSystemPlaceholderFromFormatString:formatString range:enumerationPlaceholderRange];
 
-- (NSString *)normalizedFormatOfLevel:(NSUInteger)levelIndex
-{
-    NSMutableString *normalizedFormat = [NSMutableString stringWithString: @"%*"];
-                                         
-    do {
-        NSMutableString *nextLevelFormat = [NSMutableString stringWithString: [self formatForLevel: levelIndex]];
-        
-        // Add level index, if it exists
-        NSRange enumerationPlaceholderPosition = [self rangeOfEnumerationPlaceholder: nextLevelFormat];
-        
-        if (enumerationPlaceholderPosition.location != NSNotFound) {
-            [nextLevelFormat insertString:[NSString stringWithFormat:@"%u", levelIndex] atIndex:NSMaxRange(enumerationPlaceholderPosition)];
-        }
-        
-        // Exchange generated level string with placeholder
-        NSRange prependPlaceholderPosition = [self rangeOfPrependingPlaceholder: normalizedFormat];
-        [normalizedFormat replaceCharactersInRange:prependPlaceholderPosition withString:nextLevelFormat];
-    }while ([self isPrependingLevel: levelIndex] && levelIndex --);
-
-    return normalizedFormat;
-}
-
-- (NSString *)cocoaRTFFormatCodeOfLevel:(NSUInteger)levelIndex
-{
-    NSString *formatPlaceholder = [self enumerationPlaceholderOfLevel: levelIndex];
-    
-    if (formatPlaceholder != nil)
-        return [cocoaPlaceholderCodes objectForKey: formatPlaceholder];
-    else
-        return @"";
-}
-
-- (NSString *)cocoaRTFFormatStringOfLevel:(NSUInteger)levelIndex
-{
-    NSMutableString *cocoaFormatString = [NSMutableString stringWithString: [self formatForLevel: levelIndex]];
-    NSRange enumerationPlaceholderPosition = [self rangeOfEnumerationPlaceholderOfLevel: levelIndex];
-    
-    if (enumerationPlaceholderPosition.location != NSNotFound) {
-        [cocoaFormatString replaceCharactersInRange:enumerationPlaceholderPosition withString:[self cocoaRTFFormatCodeOfLevel: levelIndex]];
+        formatString = [formatString stringByReplacingCharactersInRange:enumerationPlaceholderRange withString:textSystemCode];
     }
     
-    NSRange prependingPlaceholderPosition = [self rangeOfPrependingPlaceholderOfLevel: levelIndex];
+    // Remove link level placeholder if it exists
+    NSRange linkedLevelPlaceholderRange = [self.class rangeOfLinkedLevelPlaceholder: formatString];
+    BOOL hasLevelLink = linkedLevelPlaceholderRange.length != 0;
     
-    if (prependingPlaceholderPosition.location != NSNotFound) {
-        [cocoaFormatString deleteCharactersInRange: prependingPlaceholderPosition];
+    if (hasLevelLink) {
+        formatString = [formatString stringByReplacingCharactersInRange:linkedLevelPlaceholderRange withString:@""];
     }
-        
-    return cocoaFormatString;
+    
+    return [NSString stringWithFormat:@"{\\*\\levelmarker %@}%@",
+            [[formatString stringByReplacingOccurrencesOfString:@"%%" withString:@"%"] RTFEscapedString],
+            hasLevelLink ? @"\\levelprepend" : @ ""
+            ];
 }
 
-- (RKTextListFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex
+#pragma mark - RTF format code generation
+
++ (NSNumber *)RTFFormatCodeFromPlaceholder:(NSString *)placeholder
 {
-    NSString *formatPlaceholder = [self enumerationPlaceholderOfLevel: levelIndex];
-    
-    if (formatPlaceholder != nil)
-        return [[placeholderCodes objectForKey: formatPlaceholder] intValue ];
-    else
-        return RKTextListFormatCodeBullet;
+    static NSDictionary *placeholderCodes = nil;
+    placeholderCodes = (placeholderCodes) ?: [NSDictionary dictionaryWithObjectsAndKeys:
+                                              [NSNumber numberWithInteger: RKTextListFormatCodeDecimal],            @"%d",
+                                              [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseRoman],     @"%r",
+                                              [NSNumber numberWithInteger: RKTextListFormatCodeUpperCaseRoman],     @"%R",
+                                              [NSNumber numberWithInteger: RKTextListFormatCodeLowerCaseLetter],    @"%a",
+                                              [NSNumber numberWithInteger: RKTextListFormatCodeUpperCaseLetter],    @"%A",
+                                              nil
+                                              ];
+
+    return [placeholderCodes objectForKey: placeholder];
 }
 
-- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex withPlaceholderPositions:(NSArray **)placeholderPositionsOut
+- (RKListStyleFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex
 {
-    NSString *formatString = [self normalizedFormatOfLevel: levelIndex];
-    NSMutableString *rtfFormat = [NSMutableString new];
-    NSUInteger tokenCount = 0;
-    NSMutableArray *placeholderPositions = [NSMutableArray new];
+    NSString *formatString = [self formatForLevel: levelIndex];
+    NSRange enumerationPlaceholderRange = [self.class rangeOfFormatPlaceholder: formatString];
+    RKListStyleFormatCode formatCode = RKTextListFormatCodeBullet;
     
-    for (NSUInteger position = 0; position < formatString.length; position ++) {
-        NSString *currentToken = nil;
-        unichar currentChar = [formatString characterAtIndex:position];
-        
-        if ((currentChar == '%') && (position + 1 < formatString.length)) {
-            position ++;
-            unichar placeholderCommand = [formatString characterAtIndex: position];
-            
-            switch(placeholderCommand) {
-                case '%':
-                    currentToken = [@"%" RTFEscapedString];
-                    break;
-                    
-                case 'd':
-                case 'r':
-                case 'R':
-                case 'a':
-                case 'A':
-                    currentToken = [NSString stringWithFormat:@"\\'%.2x", [self levelFromNormalizedFormatString:formatString atPlaceholderPosition:position]];
-                    position ++;   
-                    
-                    [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: tokenCount + 2]];
-                        
-                    break;
+    if (enumerationPlaceholderRange.length) {
+        formatCode = [[self.class RTFFormatCodeFromPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] intValue];
+    }
+    
+    return formatCode;
+}
+
+#pragma mark - Full format string operations
+
+- (void)scanFullFormatStringFromLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger currentLevel))block
+{
+    static NSRegularExpression *tokenRegEx;
+    tokenRegEx = (tokenRegEx) ?: [NSRegularExpression regularExpressionWithPattern:@"%([%*daArR])" options:0 error:nil];
+
+    NSMutableArray *tokens = [NSMutableArray new];
+    NSMutableArray *levels = [NSMutableArray new];
+
+    // Collect all tokens    
+    __block NSUInteger insertAt = 0;
+    
+    for (NSInteger currentLevelIndex = levelIndex; currentLevelIndex >= 0; currentLevelIndex --) {
+        NSString *formatString = [self formatForLevel: currentLevelIndex];
+        NSUInteger nextInsert = NSNotFound;
+
+        // Scan tokens of current level
+        for (NSString *token in [formatString componentsSeparatedByRegularExpression: tokenRegEx]) {
+            if ([token isEqualTo: @"%*"]) {
+                // Continue to next level
+                nextInsert = insertAt;
+            }
+            else {
+                id insertToken;
+                
+                if ([token isEqualTo: @"%%"]) {
+                    // Convert %% to %
+                    insertToken = @"%";
+                }
+                 else if ([token hasPrefix: @"%"]) {
+                    // Parse format placeholder
+                    insertToken = [self.class RTFFormatCodeFromPlaceholder: token];
+                }
+                 else {
+                     // Ordinary string token
+                     insertToken = token;
+                }
+                
+                // Store token and the level to which a token belongs
+                [tokens insertObject:insertToken atIndex:insertAt];
+                [levels insertObject:[NSNumber numberWithUnsignedInteger:currentLevelIndex] atIndex:insertAt];
+                
+                insertAt ++;
             }
         }
-        else {
-            currentToken = [[NSString stringWithFormat:@"%C", currentChar] RTFEscapedString];
+        
+        if (nextInsert == NSNotFound)
+            break;
+        else
+            insertAt = nextInsert;
+    }
+
+    // Iterate over all tokens
+    [tokens enumerateObjectsUsingBlock:^(NSString *token, NSUInteger tokenIndex, BOOL *stop) {
+        block(token, [[levels objectAtIndex: tokenIndex] unsignedIntegerValue]);
+    }];
+}
+
+- (NSString *)RTFFormatStringOfLevel:(NSUInteger)levelIndex placeholderPositions:(NSArray **)placeholderPositionsOut
+{
+    __block NSMutableString *formatString = [NSMutableString new];
+    __block NSMutableArray *placeholderPositions = [NSMutableArray new];
+    
+    // The token counting starts at 2, since the prefixing \t and the length modifier is counted
+    __block NSUInteger RTFTokenCount = 2;
+        
+    [self scanFullFormatStringFromLevel:levelIndex usingBlock:^(NSString *token, NSUInteger currentLevel) {
+        if ([token isKindOfClass:NSNumber.class]) {
+            // Format placeholder token
+            token = [NSString stringWithFormat:@"\\'%.2x", currentLevel];
+
+            // Store placeholder position
+            [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: RTFTokenCount]];
+            
+            // Add format placeholder to current token position
+            RTFTokenCount ++;
         }
-        
-        [rtfFormat appendString: currentToken];
-        
-        tokenCount ++;
-    }    
+        else {
+            RTFTokenCount += token.length;
+            token = [token RTFEscapedString];
+        }
+
+        // Append converted format string
+        [formatString appendString: token];
+    }];
     
     *placeholderPositionsOut = placeholderPositions;
     
-    return [NSString stringWithFormat:@"\\'%.2x\t%@\t", tokenCount + 2, rtfFormat];
+    return [NSString stringWithFormat:@"\\'%.2x%@", RTFTokenCount, [self.class textSystemCompatibleMarker: formatString]];
 }
 
 - (NSString *)markerForItemNumbers:(NSArray *)itemNumbers
 {
-    NSUInteger destinationLevel = itemNumbers.count - 1;
-    NSString *formatString = [self normalizedFormatOfLevel: destinationLevel];
-
+    NSUInteger levelIndex = itemNumbers.count;
     NSMutableString *markerString = [NSMutableString new];
     
-    for (NSUInteger position = 0; position < formatString.length; position ++) {
-        NSString *currentMarker = nil;
-        unichar currentChar = [formatString characterAtIndex:position];
-        
-        if ((currentChar == '%') && (position + 1 < formatString.length)) {
-            position ++;
-            unichar placeholderCommand = [formatString characterAtIndex: position];
-
-            if (placeholderCommand == '%') {
-                currentMarker = @"%";
-            }
-            else {
-                NSUInteger itemNumber = [self itemNumberFromNormalizedFormatString:formatString atPlaceholderPosition:position fromItemNumbers:itemNumbers];
-                position ++;
+    [self scanFullFormatStringFromLevel:levelIndex-1 usingBlock:^(NSString *token, NSUInteger currentLevel) {
+        if ([token isKindOfClass:NSNumber.class]) {
+            // Format placeholder token
+            NSUInteger currentItemNumber = [[itemNumbers objectAtIndex:currentLevel] unsignedIntegerValue];
+            
+            switch ([token intValue]) {
+                case RKTextListFormatCodeDecimal:
+                    token = [NSString stringWithFormat:@"%u", currentItemNumber];
+                    break;
                 
-                if (itemNumber == NSNotFound) {
-                    // Invalid level number used
-                    currentMarker = @"??";
-                }
-                 else
-                {
-                    switch(placeholderCommand) {
-                        case '%':
-                            currentMarker = @"%";
-                            break;
-                            
-                        case 'd':
-                            currentMarker = [NSString stringWithFormat:@"%d", itemNumber];
-                            break;
-                            
-                        case 'r':
-                            currentMarker = [NSString lowerCaseRomanNumeralsFromUnsignedInteger: itemNumber];
-                            break;
-                            
-                        case 'R':
-                            currentMarker = [NSString upperCaseRomanNumeralsFromUnsignedInteger: itemNumber];
-                            break;
+                case RKTextListFormatCodeLowerCaseLetter:
+                    token = [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
+                    break;
 
-                        case 'a':
-                            currentMarker = [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: itemNumber];
-                            break;
+                case RKTextListFormatCodeUpperCaseLetter:
+                    token = [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
+                    break;
 
-                        case 'A':
-                            currentMarker = [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: itemNumber];
-                            break;
-                            
-                    }                     
-                }
+                case RKTextListFormatCodeLowerCaseRoman:
+                    token = [NSString lowerCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
+                    break;
+                    
+                case RKTextListFormatCodeUpperCaseRoman:
+                    token = [NSString upperCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
+                    break;
             }
         }
         else {
-            currentMarker = [NSString stringWithFormat:@"%C", currentChar];
+            token = [token RTFEscapedString];
         }
         
-        [markerString appendString: [currentMarker RTFEscapedString]];
-    }    
+        [markerString appendString: token];
+    }];
     
-    return [NSString stringWithFormat:@"\t%@\t", markerString];
-}
-
-- (NSUInteger)levelFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position
-{
-    NSAssert (position + 1 < formatString.length, @"Format string not correctly normalized");
-    
-    return [[formatString substringWithRange:NSMakeRange(position + 1, 1)] integerValue];
-}
-
-- (NSUInteger)itemNumberFromNormalizedFormatString:(NSString *)formatString atPlaceholderPosition:(NSUInteger)position fromItemNumbers:(NSArray *)itemNumbers
-{
-    NSUInteger level = [self levelFromNormalizedFormatString:formatString atPlaceholderPosition:position];
-    
-    if (itemNumbers.count < level)
-        return NSNotFound;
-    
-    return [[itemNumbers objectAtIndex: level] unsignedIntegerValue];
+    return [self.class textSystemCompatibleMarker: markerString];
 }
 
 @end
