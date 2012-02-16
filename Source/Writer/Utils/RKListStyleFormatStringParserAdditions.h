@@ -23,7 +23,7 @@
 /*!
  @abstract Returns the range of the first enumeration placeholder inside a format string
  */
-+ (NSRange)rangeOfFormatPlaceholder:(NSString *)formatString;
++ (NSRange)rangeOfEnumerationPlaceholder:(NSString *)formatString;
 
 /*!
  @abstract Returns the range of the first level link placeholder inside a format string

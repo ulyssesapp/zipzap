@@ -38,10 +38,10 @@
     NSString *formatString = [self formatForLevel: levelIndex];
     
     // Replace enumeration placeholder
-    NSRange enumerationPlaceholderRange = [self.class rangeOfFormatPlaceholder: formatString];
+    NSRange enumerationPlaceholderRange = [self.class rangeOfEnumerationPlaceholder: formatString];
     
     if (enumerationPlaceholderRange.length) {
-        NSString *textSystemCode = [self.class textSystemPlaceholderFromPlaceholder:[formatString substringWithRange:enumerationPlaceholderRange]];
+        NSString *textSystemCode = [self.class textSystemFormatCodeFromEnumerationPlaceholder:[formatString substringWithRange:enumerationPlaceholderRange]];
         
         formatString = [formatString stringByReplacingCharactersInRange:enumerationPlaceholderRange withString:textSystemCode];
     }
@@ -54,6 +54,7 @@
         formatString = [formatString stringByReplacingCharactersInRange:linkedLevelPlaceholderRange withString:@""];
     }
     
+    // Generate placeholder
     return [NSString stringWithFormat:@"{\\*\\levelmarker %@}%@",
             [[formatString stringByReplacingOccurrencesOfString:@"%%" withString:@"%"] RTFEscapedString],
             hasLevelLink ? @"\\levelprepend" : @ ""
@@ -65,11 +66,11 @@
 - (RKListStyleFormatCode)RTFFormatCodeOfLevel:(NSUInteger)levelIndex
 {
     NSString *formatString = [self formatForLevel: levelIndex];
-    NSRange enumerationPlaceholderRange = [self.class rangeOfFormatPlaceholder: formatString];
+    NSRange enumerationPlaceholderRange = [self.class rangeOfEnumerationPlaceholder: formatString];
     RKListStyleFormatCode formatCode = RKListFormatCodeBullet;
     
     if (enumerationPlaceholderRange.length) {
-        formatCode = [[self.class RTFFormatCodeFromPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] intValue];
+        formatCode = [[self.class RTFFormatCodeFromEnumerationPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] intValue];
     }
     
     return formatCode;

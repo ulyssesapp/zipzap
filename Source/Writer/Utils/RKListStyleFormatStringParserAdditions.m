@@ -15,7 +15,7 @@
 
 #pragma mark - Extraction of placeholders
 
-+ (NSRange)rangeOfFormatPlaceholder:(NSString *)formatString
++ (NSRange)rangeOfEnumerationPlaceholder:(NSString *)formatString
 {
     static NSRegularExpression *placeholderExpression;
     placeholderExpression = (placeholderExpression) ?: [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
@@ -62,7 +62,7 @@
                     insertToken = @"%";
                 }
                  else if ([token hasPrefix: @"%"]) {
-                    insertToken = [self.class RTFFormatCodeFromPlaceholder: token];
+                    insertToken = [self.class RTFFormatCodeFromEnumerationPlaceholder: token];
                 }
                  else {
                      insertToken = token;
