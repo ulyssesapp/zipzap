@@ -29,6 +29,7 @@
     if (strokeWidth == 0)
         return;
     
+    // We use the additional \strokewidth tag of Cocoa
     [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%u ", (NSUInteger)(strokeWidth * 20)] forPosition:range.location];
     [taggedString registerClosingTag:@"\\outl0\\strokewidth0 " forPosition:NSMaxRange(range)];
 }

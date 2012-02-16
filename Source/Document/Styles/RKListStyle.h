@@ -6,11 +6,15 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+/*!
+ @abstract Defines the maximum count of nested levels inside a text list
+ @discussion RTF limits this to 9
+ */
 #define RKListMaxiumLevelCount             9
 
 /*!
  @abstract Representation of a list styling
- @description A text list consists of the styling description for each nesting level of the list
+ @discussion A text list consists of the styling description for each nesting level of the list
  */
 @interface RKListStyle : NSObject
 
