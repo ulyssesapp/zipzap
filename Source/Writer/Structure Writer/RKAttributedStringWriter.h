@@ -40,7 +40,7 @@ typedef enum {
 + (void)registerWriter:(Class)attributeWriter forAttribute:(NSString*)attributeName priority:(RKAttributedStringWriterPriority)priority;
 
 /*!
- @abstract Converts an attributes string to RTF
+ @abstract Converts an attributed string to RTF
  */
 + (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
 
