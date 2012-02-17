@@ -15,7 +15,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKTextListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphStylingLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKTextListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 

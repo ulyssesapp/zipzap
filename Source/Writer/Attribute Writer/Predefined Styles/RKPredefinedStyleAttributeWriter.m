@@ -12,7 +12,7 @@
 @implementation RKPredefinedStyleAttributeWriter
 
 + (void)load {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKPredefinedParagraphStyleAttributeName priority:RKAttributedStringWriterPriorityParagraphStylingLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKPredefinedParagraphStyleAttributeName priority:RKAttributedStringWriterPriorityParagraphStyleSheetLevel];
     [RKAttributedStringWriter registerWriter:self forAttribute:RKPredefinedCharacterStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStylesheetLevel];
 }
 

@@ -13,18 +13,20 @@
 /*!
  @abstract Defines a priority for an attributed string writer
  @const
-    RKAttributedStringWriterPriorityParagraphLevel              The highest priority used for paragraph tags
-    RKAttributedStringWriterPriorityParagraphStylingLevel       Priority used for additional paragraph stylings
-    RKAttributedStringWriterPriorityInlineStylesheetLevel       Priority used for inline stylesheets
-    RKAttributedStringWriterPriorityInlineStyleLevel            Priority used for inline styles
-    RKAttributedStringWriterPriorityTextAttachmentLevel         Priority used for text attachments
+    RKAttributedStringWriterPriorityParagraphStyleSheetLevel            Priority used for paragraph style sheets
+    RKAttributedStringWriterPriorityParagraphLevel                      Priority used for paragraph tags
+    RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel     Priority used for additional paragraph stylings
+    RKAttributedStringWriterPriorityInlineStylesheetLevel               Priority used for inline stylesheets
+    RKAttributedStringWriterPriorityInlineStyleLevel                    Priority used for inline styles
+    RKAttributedStringWriterPriorityTextAttachmentLevel                 Priority used for text attachments
 */
 typedef enum {
-    RKAttributedStringWriterPriorityParagraphLevel = 0,
-    RKAttributedStringWriterPriorityParagraphStylingLevel = 1,
-    RKAttributedStringWriterPriorityInlineStylesheetLevel = 2,
-    RKAttributedStringWriterPriorityInlineStyleLevel = 3,
-    RKAttributedStringWriterPriorityTextAttachmentLevel = 4
+    RKAttributedStringWriterPriorityParagraphStyleSheetLevel = 0,
+    RKAttributedStringWriterPriorityParagraphLevel = 1,
+    RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel = 2,
+    RKAttributedStringWriterPriorityInlineStylesheetLevel = 3,
+    RKAttributedStringWriterPriorityInlineStyleLevel = 4,
+    RKAttributedStringWriterPriorityTextAttachmentLevel = 5
 } RKAttributedStringWriterPriority;
 
 /*!
