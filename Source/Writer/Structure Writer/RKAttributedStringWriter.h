@@ -13,16 +13,16 @@
 /*!
  @abstract Defines a priority for an attributed string writer
  @const
-    RKAttributedStringWriterPriorityParagraphStyleSheetLevel            Priority used for paragraph style sheets
     RKAttributedStringWriterPriorityParagraphLevel                      Priority used for paragraph tags
+    RKAttributedStringWriterPriorityParagraphStyleSheetLevel            Priority used for paragraph style sheets
     RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel     Priority used for additional paragraph stylings
     RKAttributedStringWriterPriorityInlineStylesheetLevel               Priority used for inline stylesheets
     RKAttributedStringWriterPriorityInlineStyleLevel                    Priority used for inline styles
     RKAttributedStringWriterPriorityTextAttachmentLevel                 Priority used for text attachments
 */
 typedef enum {
-    RKAttributedStringWriterPriorityParagraphStyleSheetLevel = 0,
-    RKAttributedStringWriterPriorityParagraphLevel = 1,
+    RKAttributedStringWriterPriorityParagraphLevel = 0,
+    RKAttributedStringWriterPriorityParagraphStyleSheetLevel = 1,
     RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel = 2,
     RKAttributedStringWriterPriorityInlineStylesheetLevel = 3,
     RKAttributedStringWriterPriorityInlineStyleLevel = 4,

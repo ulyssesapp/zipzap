@@ -158,9 +158,11 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
         NSString *styleTag = (isParagraphStyle) ? @"\\s" : @"\\*\\cs";
         NSUInteger styleIndex = (isParagraphStyle) ? [resources indexOfParagraphStyle: styleName] : [resources indexOfCharacterStyle: styleName];
         
-        [collectedStyleSheets appendFormat:@"{%@%u %@%@;}",
+        // We need sqformat to make the style visible in the UI of Microsoft Word
+        [collectedStyleSheets appendFormat:@"{%@%u%@ %@\\sqformat\\sbasedon0 %@;}",
          styleTag,
          styleIndex,
+         (isParagraphStyle) ? @"" : @"\\additive",
          [RKAttributedStringWriter stylesheetTagsFromAttributes:styleDefinition resources:resources],
          styleName
          ];

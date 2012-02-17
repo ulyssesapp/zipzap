@@ -29,15 +29,18 @@
 
     // Attribute specific settings
     NSUInteger styleIndex;
-    NSString *styleTypeTag;
+    NSString *styleTypeOpeningTag;
+    NSString *styleTypeClosingTag;
     
     if ([attributeName isEqualTo: RKPredefinedParagraphStyleAttributeName]) {
         styleIndex = [resources indexOfParagraphStyle: styleName];
-        styleTypeTag = @"\\s";
+        styleTypeOpeningTag = @"\\s";
+        styleTypeClosingTag = @"";
     }
     else if ([attributeName isEqualTo: RKPredefinedCharacterStyleAttributeName]) {
         styleIndex = [resources indexOfCharacterStyle: styleName];        
-        styleTypeTag = @"\\*\\cs";
+        styleTypeOpeningTag = @"{\\*\\cs";
+        styleTypeClosingTag = @"}";
     }
 
     // We just ignore the default style or unknown styles, because stylesheets must be inside {blocks} and automatically default
@@ -45,10 +48,10 @@
         return;
     
     // Register style
-    NSString *openingTag = [NSString stringWithFormat:@"{%@%u ", styleTypeTag, styleIndex];
+    NSString *openingTag = [NSString stringWithFormat:@"%@%u ", styleTypeOpeningTag, styleIndex];
 
     [taggedString registerTag:openingTag forPosition:range.location];
-    [taggedString registerTag:@"}" forPosition:range.location + range.length];
+    [taggedString registerTag:styleTypeClosingTag forPosition:range.location + range.length];
 }
 
 @end

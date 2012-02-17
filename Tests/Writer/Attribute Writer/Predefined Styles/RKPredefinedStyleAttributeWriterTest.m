@@ -149,9 +149,8 @@
     ];
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
-                         "{\\s2 "
+                         "\\s2 "
                          "b"
-                         "}"
                          "c",
                          @"Invalid paragraph stylesheet used"
                         );
@@ -173,9 +172,8 @@
 
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
-                         "{\\s1 "
+                         "\\s1 "
                          "b"
-                         "}"
                          "c", 
                          @"Invalid paragraph stylesheet used"
                          );    
@@ -249,7 +247,6 @@
                                 nil
                                 ];
 
-    // Set two different styles on different paragraphs
     [content applyPredefinedParagraphStyleAttribute:@"CStyle" document:document range:NSMakeRange(0,2)];
     [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(2,2)];
 
@@ -277,8 +274,7 @@
                                 [self generateCharacterStyle], @"CStyle",
                                 nil
                                 ];
-    
-    // Set two different styles on different paragraphs
+
     [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(0,2)];
     
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,2)];
@@ -293,6 +289,28 @@
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(0,2)];
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(0,2)];
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,2)];
+}
+
+- (void)testStylesheetsAreCompatibleWithReferenceTest
+{
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"pstyle\ncstyle\n" ];
+    
+    RKDocument *document = [RKDocument documentWithAttributedString: content];
+    
+    document.characterStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                [self generateCharacterStyle], @"CStyle",
+                                nil
+                                ];
+    
+    document.paragraphStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                [self generateParagraphStyle], @"PStyle",
+                                nil
+                                ];    
+    
+    [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(0,7)];
+    [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(7,7)];
+
+    [self assertRTF:[document RTF] withTestDocument:@"stylesheet"];
 }
 
 @end
