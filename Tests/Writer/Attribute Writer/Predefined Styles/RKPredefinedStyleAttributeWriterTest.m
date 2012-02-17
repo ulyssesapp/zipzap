@@ -23,10 +23,11 @@
     NSColor *foregroundColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];    
     NSColor *underlineColor = [NSColor rtfColorWithRed:1.0 green:0.0 blue:1.0];
     NSColor *strikethroughColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:1.0];    
-    NSColor *strokeColor = [NSColor rtfColorWithRed:0.1 green:0.2 blue:1.0];
+    NSColor *strokeColor = [NSColor rtfColorWithRed:10.0 green:1.0 blue:1.0];
     
     shadow.shadowBlurRadius = 2.0f;
-    shadow.shadowColor = [NSColor rtfColorWithRed:0.0 green:0.1 blue:0.0];
+    shadow.shadowOffset = NSMakeSize(0.0f, 0.0f);
+    shadow.shadowColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];
         
     return [NSDictionary dictionaryWithObjectsAndKeys: 
              font,                  NSFontAttributeName,
@@ -62,6 +63,7 @@
     paragraphStyle.paragraphSpacing = .0f;
     
     paragraphStyle.tabStops = [NSArray new];
+    paragraphStyle.baseWritingDirection = NSWritingDirectionLeftToRight;
     
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [self generateCharacterStyle]];
     
@@ -251,7 +253,46 @@
     [content applyPredefinedParagraphStyleAttribute:@"CStyle" document:document range:NSMakeRange(0,2)];
     [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(2,2)];
 
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(2,2)];    
+
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSFontAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughColorAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(0,4)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,4)];
+}
+
+- (void)testCocoaIntegrationForCharacterStyles
+{
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"ab" ];
+    
+    RKDocument *document = [RKDocument documentWithAttributedString: content];
+    
+    document.characterStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                [self generateCharacterStyle], @"CStyle",
+                                nil
+                                ];
+    
+    // Set two different styles on different paragraphs
+    [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(0,2)];
+    
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,2)];
+
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSFontAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughColorAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,2)];
 }
 
 @end
