@@ -16,7 +16,6 @@
 {
     NSMutableArray *fonts;
     NSMutableArray *colors;
-    NSMutableArray *predefinedStyles;
     NSDictionary *attachmentFileWrappers;
 
     NSMutableArray *textLists;
@@ -36,7 +35,6 @@
     if (self) {
         fonts = [NSMutableArray new];
         colors = [NSMutableArray new];
-        predefinedStyles = [NSMutableArray new];
         attachmentFileWrappers = [NSMutableDictionary new];
         textLists = [NSMutableArray new];
         listItemIndices = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality valueOptions:0];
@@ -107,18 +105,26 @@
 
 #pragma mark - Style
 
-- (NSUInteger) indexOfPredefinedStyle:(NSString *)predefinedStyle
+- (NSUInteger) indexOfParagraphStyle:(NSString *)paragraphStyleName
 {
-    NSAssert(predefinedStyle, @"No style given");
+    NSAssert(paragraphStyleName, @"No style name given");
     
-    NSUInteger index = [predefinedStyles indexOfObject:predefinedStyle];
+    // We only support style names that have been previously registered to the document
+    if ([document.paragraphStyles objectForKey: paragraphStyleName] == nil)
+        return 0;
     
-    if (index == NSNotFound) {
-        [predefinedStyles addObject:predefinedStyle];
-        index = predefinedStyles.count - 1;
-    }
+    return [[document.paragraphStyles allKeys] indexOfObject: paragraphStyleName] + 1;
+}
+
+- (NSUInteger) indexOfCharacterStyle:(NSString *)characterStyleName
+{
+    NSAssert(characterStyleName, @"No style name given");
     
-    return index;
+    // We only support style names that have been previously registered to the document
+    if ([document.characterStyles objectForKey: characterStyleName] == nil)
+        return 0;
+    
+    return [[document.characterStyles allKeys] indexOfObject: characterStyleName] + document.paragraphStyles.count + 1;
 }
 
 #pragma mark - File Wrapper

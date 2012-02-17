@@ -131,9 +131,15 @@
 @property(nonatomic) BOOL restartEndnotesOnEachSection;
 
 /*!
- @abstract Specifies document-wide styles
- @discussion A mapping from style names to a NSDictionary containing style information of an attributed string
+ @abstract Specifies document-wide paragraph styles
+ @discussion A mapping from style names to a NSDictionary containing style information of an attributed string. In order to use a paragraph style in any document section it must be registered here.
  */
-@property(nonatomic,strong,readwrite) NSDictionary *predefinedStyles;
+@property(nonatomic,strong,readwrite) NSDictionary *paragraphStyles;
+
+/*!
+ @abstract Specifies document-wide character styles
+ @discussion A mapping from style names to a NSDictionary containing style information of an attributed string. In order to use a character style in any document section it must be registered here.
+ */
+@property(nonatomic,strong,readwrite) NSDictionary *characterStyles;
 
 @end

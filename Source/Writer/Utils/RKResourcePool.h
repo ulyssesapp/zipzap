@@ -44,9 +44,16 @@
 - (NSUInteger)indexOfListStyle:(RKListStyle *)textList;
 
 /*!
- @abstract Returns the index of a predefined style
+ @abstract Returns the index of a paragraph style
+ @discussion The paragraph style must be registered to the document in advance
  */
-- (NSUInteger)indexOfPredefinedStyle:(NSString *)predefinedStyle;
+- (NSUInteger)indexOfParagraphStyle:(NSString *)paragraphStyleName;
+
+/*!
+ @abstract Returns the index of a character style
+ @discussion The paragraph style must be registered to the document in advance
+ */
+- (NSUInteger)indexOfCharacterStyle:(NSString *)characterStyleName;
 
 /*!
  @abstract Returns a new item number of a list level
