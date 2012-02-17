@@ -10,6 +10,13 @@
 
 @implementation RKAttributeWriter
 
++ (NSString *)stylesheetTagForAttribute:(NSString *)attributeName 
+                                  value:(id)value 
+                           styleSetting:(NSDictionary *)styleSetting 
+                              resources:(RKResourcePool *)resources
+{
+    return @"";
+}
 
 + (void)addTagsForAttribute:(NSString *)attributeName 
                       value:(id)value 

@@ -16,8 +16,16 @@
 @interface RKAttributeWriter : NSObject
 
 /*!
+ @abstract Returns the tags required to create a stylesheet for a certain attribute
+ @discussion Returns an empty string if the attribute cannot be used inside a style sheet
+ */
++ (NSString *)stylesheetTagForAttribute:(NSString *)attributeName 
+                                  value:(id)value 
+                           styleSetting:(NSDictionary *)styleSetting 
+                              resources:(RKResourcePool *)resources;
+
+/*!
  @abstract Adds a tag for a certain attribute
- @discussion Advanced variant, automatic fallback to addTagsForAttribute:toTaggedString:inRange:withAttachmentPolicy:resources if not implemented.
  */
 + (void)addTagsForAttribute:(NSString *)attributeName 
                       value:(id)value 
