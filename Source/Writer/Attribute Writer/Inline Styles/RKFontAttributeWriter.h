@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKAttributeWriter.h"
+#import "RKInlineStyleWriter.h"
 
-@interface RKFontAttributeWriter : RKAttributeWriter
+@interface RKFontAttributeWriter : RKInlineStyleWriter
 
 @end

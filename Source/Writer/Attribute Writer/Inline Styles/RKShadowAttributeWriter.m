@@ -16,28 +16,27 @@
     [RKAttributedStringWriter registerWriter:self forAttribute:NSShadowAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
-                      value:(NSShadow *)shadow
-             effectiveRange:(NSRange)range 
-                   toString:(RKTaggedString *)taggedString 
-             originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources
++ (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSShadow *)shadow resources:(RKResourcePool *)resources
 {
-    if (shadow == nil)
-        return;
+    if (!shadow)
+        return @"";
     
     NSUInteger colorIndex = [resources indexOfColor:[shadow shadowColor]];
     
-    [taggedString registerTag:[NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
-                               (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
-                               (NSUInteger)RKPointsToTwips([shadow shadowOffset].height),
-                               (NSUInteger)RKPointsToTwips([shadow shadowBlurRadius]),
-                               colorIndex
-                               ]
-                  forPosition:range.location];
+    return [NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
+                   (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
+                   (NSUInteger)RKPointsToTwips([shadow shadowOffset].height),
+                   (NSUInteger)RKPointsToTwips([shadow shadowBlurRadius]),
+                   colorIndex
+            ];   
+}
+
++ (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(NSShadow *)shadow resources:(RKResourcePool *)resources
+{
+    if (!shadow)
+        return @"";
     
-    [taggedString registerClosingTag:@"\\shad0 " forPosition:(NSMaxRange(range))];
+    return @"\\shad0 ";
 }
 
 @end

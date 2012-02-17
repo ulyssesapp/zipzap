@@ -16,22 +16,24 @@
     [RKAttributedStringWriter registerWriter:self forAttribute:NSStrokeWidthAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
-                      value:(NSNumber *)strokeWidthObject
-             effectiveRange:(NSRange)range 
-                   toString:(RKTaggedString *)taggedString 
-             originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources
++ (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)strokeWidthObject resources:(RKResourcePool *)resources
 {
     float strokeWidth = [strokeWidthObject floatValue];
     
     if (strokeWidth == 0)
-        return;
+        return @"";
     
-    // We use the additional \strokewidth tag of Cocoa
-    [taggedString registerTag:[NSString stringWithFormat:@"\\outl\\strokewidth%u ", (NSUInteger)(strokeWidth * 20)] forPosition:range.location];
-    [taggedString registerClosingTag:@"\\outl0\\strokewidth0 " forPosition:NSMaxRange(range)];
+    return [NSString stringWithFormat:@"\\outl\\strokewidth%u ", (NSUInteger)(strokeWidth * 20)];
+}
+
++ (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)strokeWidthObject resources:(RKResourcePool *)resources
+{
+    float strokeWidth = [strokeWidthObject floatValue];
+    
+    if (strokeWidth == 0)
+        return @"";
+
+    return @"\\outl0\\strokewidth0 ";
 }
 
 @end

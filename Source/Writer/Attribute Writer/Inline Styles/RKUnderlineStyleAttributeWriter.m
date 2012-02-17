@@ -21,23 +21,19 @@
     [RKAttributedStringWriter registerWriter:self forAttribute:NSUnderlineStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
-                      value:(NSNumber *)underlineStyleObject
-             effectiveRange:(NSRange)range 
-                   toString:(RKTaggedString *)taggedString 
-             originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources
++ (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)underlineStyleObject resources:(RKResourcePool *)resources
 {
     NSUInteger underlineStyle = [underlineStyleObject unsignedIntegerValue];
     
     // No underlining
-    if (underlineStyle == NSUnderlineStyleNone)
-        return;
+    if (!underlineStyleObject || (underlineStyle == NSUnderlineStyleNone))
+        return @"";
+    
+    NSMutableString *openingTag = [NSMutableString new];
     
     // Word-wise underlining (must precede other tags)
     if (underlineStyle & NSUnderlineByWordMask) {
-        [taggedString registerTag:@"\\ulw" forPosition:range.location];
+        [openingTag appendString:@"\\ulw"];
     }
     
     // Never write \\ulw \\ul, since this is misinterpreted by several RTF interpreters
@@ -70,14 +66,24 @@
         }
         
         // Generate \\ul<STYLE><PATTERN> flag
-        [taggedString registerTag:[NSString stringWithFormat:@"\\ul%@%@", styleString, patternString] forPosition:range.location];
+        [openingTag appendFormat:@"\\ul%@%@", styleString, patternString];
     }
     
-    // Add the deactivating tag
-    [taggedString registerClosingTag:@"\\ulnone " forPosition:NSMaxRange(range)];
-    
     // We add the Apple proprietary tag, to ensure full support of the text system
-    [taggedString registerTag:[NSString stringWithFormat:@"\\ulstyle%U ", underlineStyle] forPosition:range.location];
+    [openingTag appendFormat:@"\\ulstyle%U ", underlineStyle];
+
+    return openingTag;
+}
+
++ (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)underlineStyleObject resources:(RKResourcePool *)resources
+{
+    NSUInteger underlineStyle = [underlineStyleObject unsignedIntegerValue];
+    
+    // No underlining
+    if (!underlineStyleObject || (underlineStyle == NSUnderlineStyleNone))
+        return @"";
+    
+    return @"\\ulnone ";
 }
 
 @end

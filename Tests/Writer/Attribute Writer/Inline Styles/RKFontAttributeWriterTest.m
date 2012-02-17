@@ -31,8 +31,8 @@
                          "\\b "
                          "\\i "
                          "bc"
-                         "\\i0 "
                          "\\b0 "
+                         "\\i0 "
                          // Default font
                          "\\f1 "
                          "\\fs24\\fsmilli12000 "

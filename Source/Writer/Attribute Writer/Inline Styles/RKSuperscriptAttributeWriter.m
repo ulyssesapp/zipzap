@@ -16,27 +16,32 @@
     [RKAttributedStringWriter registerWriter:self forAttribute:NSSuperscriptAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
-                      value:(NSNumber *)superScriptModeObject
-             effectiveRange:(NSRange)range 
-                   toString:(RKTaggedString *)taggedString 
-             originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
-                  resources:(RKResourcePool *)resources
++ (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)superScriptModeObject resources:(RKResourcePool *)resources
 {
     NSInteger mode = [superScriptModeObject integerValue];
     
-    if (mode == 0) 
-        return;
-    
     if (mode > 0) {
-        [taggedString registerTag:[NSString stringWithFormat:@"\\sup "] forPosition:range.location];
-        [taggedString registerClosingTag:[NSString stringWithFormat:@"\\sup0 "] forPosition:(NSMaxRange(range))];
+        return [NSString stringWithFormat:@"\\sup "];
     }
     else if (mode < 0) {
-        [taggedString registerTag:[NSString stringWithFormat:@"\\sub "] forPosition:range.location];
-        [taggedString registerClosingTag:[NSString stringWithFormat:@"\\sub0 "] forPosition:(NSMaxRange(range))];
+        return [NSString stringWithFormat:@"\\sub "];
     }
+
+    return @"";
+}
+
++ (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)superScriptModeObject resources:(RKResourcePool *)resources
+{
+    NSInteger mode = [superScriptModeObject integerValue];
+    
+    if (mode > 0) {
+        return [NSString stringWithFormat:@"\\sup0 "];
+    }
+    else if (mode < 0) {
+        return [NSString stringWithFormat:@"\\sub0 "];
+    }
+
+    return @"";
 }
 
 @end
