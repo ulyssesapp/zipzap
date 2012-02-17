@@ -39,6 +39,13 @@
 	return [[NSTextAttachment alloc] initWithFileWrapper: [self testFileWithName:name withExtension:extension]];
 }
 
+- (NSAttributedString *)convertAndRereadSingleSectionDocument:(RKDocument *)document
+{
+    NSData *rtf = [document RTF];
+    
+    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:nil];
+}
+
 - (NSAttributedString *)convertAndRereadPlainRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
     RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
@@ -106,6 +113,13 @@
             STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
         }
     }];
+}
+
+- (void)assertReadingOfSingleSectionDocument:(RKDocument *)document onAttribute:(NSString *)attributeName inRange:(NSRange)range
+{
+    NSAttributedString *converted = [self convertAndRereadSingleSectionDocument:document];
+    
+    [self assertEqualOnAttribute:attributeName inRange:range original:[[document.sections objectAtIndex:0] content] converted:converted];
 }
 
 - (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName inRange:(NSRange)range

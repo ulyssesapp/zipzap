@@ -19,6 +19,11 @@
 - (NSTextAttachment *)textAttachmentWithName:(NSString *)name withExtension:(NSString *)extension;
 
 /*!
+ @abstract Converts the given document to RTF and re-reads it using Cocoa
+ */
+- (NSAttributedString *)convertAndRereadSingleSectionDocument:(RKDocument *)document;
+
+/*!
  @abstract Converts the given attributed string to RTF and re-reads it using Cocoa
  */
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes;
@@ -42,7 +47,12 @@
                      converted:(NSAttributedString *)convertedAttributedString;
 
 /*!
- @abstract Tests whether the RTF conversion of an attributed string is identically read by Cocoa with respect to a certain attribute.
+ @abstract Tests whether the RTF conversion of a document with a single section is identically read by Cocoa regarding a certain attributed
+ */
+- (void)assertReadingOfSingleSectionDocument:(RKDocument *)document onAttribute:(NSString *)attributeName inRange:(NSRange)range;
+
+/*!
+ @abstract Tests whether the RTF conversion of an attributed string is identically read by Cocoa with regarding a certain attributed
  */
 - (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName inRange:(NSRange)range;
 
