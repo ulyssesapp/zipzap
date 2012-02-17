@@ -14,6 +14,65 @@
 
 @implementation RKHeaderWriterTest
 
+- (NSDictionary *)generateCharacterStyle
+{
+    NSFont *font = [NSFont fontWithName:@"Helvetica-BoldOblique" size:16];
+    NSShadow *shadow = [NSShadow new];
+    NSNumber *strikethroughStyle = [NSNumber numberWithUnsignedInteger:NSUnderlineStyleSingle];
+    NSNumber *strokeWidth = [NSNumber numberWithUnsignedInteger:12];
+    NSNumber *superscriptMode = [NSNumber numberWithUnsignedInteger:1];
+    NSNumber *underlineStyle = [NSNumber numberWithUnsignedInt:NSUnderlineStyleDouble];
+    NSColor *backgroundColor = [NSColor rtfColorWithRed:1.0 green:0.0 blue:0.0];
+    NSColor *foregroundColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];    
+    NSColor *underlineColor = [NSColor rtfColorWithRed:1.0 green:0.0 blue:1.0];
+    NSColor *strikethroughColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:1.0];    
+    NSColor *strokeColor = [NSColor rtfColorWithRed:0.1 green:0.2 blue:1.0];
+    
+    shadow.shadowBlurRadius = 2.0f;
+    shadow.shadowColor = [NSColor rtfColorWithRed:0.0 green:0.1 blue:0.0];
+    
+    return [NSDictionary dictionaryWithObjectsAndKeys: 
+            font,                  NSFontAttributeName,
+            shadow,                NSShadowAttributeName,
+            strikethroughStyle,    NSStrikethroughStyleAttributeName,
+            strokeWidth,           NSStrokeWidthAttributeName,
+            superscriptMode,       NSSuperscriptAttributeName,
+            underlineStyle,        NSUnderlineStyleAttributeName,
+            backgroundColor,       NSBackgroundColorAttributeName,
+            foregroundColor,       NSForegroundColorAttributeName,
+            underlineColor,        NSUnderlineColorAttributeName,
+            strikethroughColor,    NSStrikethroughColorAttributeName,
+            strokeColor,           NSStrokeColorAttributeName,
+            nil 
+            ];
+}
+
+- (NSDictionary *)generateParagraphStyle
+{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];    
+    
+    paragraphStyle.alignment = NSCenterTextAlignment;
+    paragraphStyle.firstLineHeadIndent = .0f;
+    paragraphStyle.headIndent = .0f;
+    paragraphStyle.tailIndent = .0f;
+    
+    paragraphStyle.lineHeightMultiple = .0f;
+    paragraphStyle.lineSpacing = .0f;
+    paragraphStyle.maximumLineHeight = .0f;
+    paragraphStyle.minimumLineHeight = .0f;
+    
+    paragraphStyle.paragraphSpacingBefore = .0f;
+    paragraphStyle.paragraphSpacing = .0f;
+    
+    paragraphStyle.tabStops = [NSArray new];
+    
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [self generateCharacterStyle]];
+    
+    [dictionary setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+    
+    return dictionary;
+}
+
 - (NSDate *)customDateWithYear:(NSUInteger)year month:(NSUInteger)month day:(NSUInteger)day hour:(NSUInteger)hour minute:(NSUInteger)minute second:(NSUInteger)second
 {
     NSDateComponents *customComponents = [NSDateComponents new];
@@ -300,6 +359,61 @@
          "}\n";
     
     STAssertEqualObjects(listTable, expectedListTable, @"Invalid llist override table generated");
+}
+
+- (void)testGeneratingStylesheetTable
+{
+    RKDocument *document = [RKDocument new];
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument:document];    
+    
+    document.paragraphStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                [self generateParagraphStyle], @"PStyle",
+                                nil
+                                ];
+
+    document.characterStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                [self generateCharacterStyle], @"CStyle",
+                                nil
+                                ];
+    
+    NSString *expectedStyleSheet = 
+        @"{\\stylesheet "
+            "{\\s1 "
+            "\\pard\\qc\\pardeftab0 "
+            "\\cb2 "
+            "\\cf3 "
+            "\\f0 \\fs32\\fsmilli16000 \\b \\i "
+            "\\shad\\shadx0\\shady0\\shadr40\\shadc4 "
+            "\\strike\\strikestyle1 "
+            "\\strikec5 "
+            "\\strokec6 "
+            "\\outl\\strokewidth240 "
+            "\\sup "
+            "\\uldb\\ulstyle9 "
+            "\\ulc7 "
+            "PStyle;"
+            "}"
+          "{\\*\\cs2 "
+            "\\cb2 "
+            "\\cf3 "
+            "\\f0 \\fs32\\fsmilli16000 \\b \\i "
+            "\\shad\\shadx0\\shady0\\shadr40\\shadc4 "
+            "\\strike\\strikestyle1 "
+            "\\strikec5 "
+            "\\strokec6 "
+            "\\outl\\strokewidth240 "
+            "\\sup "
+            "\\uldb\\ulstyle9 "
+            "\\ulc7 "
+            "CStyle;"
+            "}"    
+        "}";
+    
+    NSString *stylesheets = [RKHeaderWriter styleSheetsFromResourceManager: resources];
+    
+    STAssertEqualObjects(stylesheets, expectedStyleSheet, @"Invalid style sheet table generated");
+    
+    return;   
 }
 
 - (void)testRereadingPageSettingsWithCocoa

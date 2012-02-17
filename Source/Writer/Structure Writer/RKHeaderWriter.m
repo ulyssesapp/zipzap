@@ -10,6 +10,7 @@
 #import "RKResourcePool.h"
 #import "RKConversion.h"
 #import "RKListStyleWriterAdditions.h"
+#import "RKAttributedStringWriter.h"
 
 // Used to access the RKHeaderWriterMetadataDescriptions 
 enum {
@@ -29,6 +30,16 @@ enum {
  @abstract Generates the color table using a resource manager
  */
 + (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
+
+/*!
+ @abstract Generates a style sheet setting from a dictionary containing style definitions
+ */
++ (NSString *)styleSheetsFromStyleDefinitions:(NSDictionary *)styleDefinitions paragraphStyle:(BOOL)isParagraphStyle resources:(RKResourcePool *)resources;
+
+/*!
+ @abstract Generates the style sheet settings using a resource manager
+ */
++ (NSString *)styleSheetsFromResourceManager:(RKResourcePool *)resources;
 
 /*!
  @abstract Generate a list level using a resource manager
@@ -96,9 +107,10 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
 {
-    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n%@\n%@\n",
+    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n%@\n%@\n%@\n",
             [RKHeaderWriter fontTableFromResourceManager:resources],
             [RKHeaderWriter colorTableFromResourceManager:resources],
+            [RKHeaderWriter styleSheetsFromResourceManager:resources],
             [RKHeaderWriter listTableFromResourceManager:resources],
             [RKHeaderWriter listOverrideTableFromResourceManager:resources],
             [RKHeaderWriter documentMetaDataFromDocument:document],
@@ -136,6 +148,33 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     [colorTable appendString: @"}"];
     
     return colorTable;
+}
+
++ (NSString *)styleSheetsFromStyleDefinitions:(NSDictionary *)styleDefinitions paragraphStyle:(BOOL)isParagraphStyle resources:(RKResourcePool *)resources
+{
+    __block NSMutableString *collectedStyleSheets = [NSMutableString new];
+    
+    [styleDefinitions enumerateKeysAndObjectsUsingBlock:^(NSString *styleName, NSDictionary *styleDefinition, BOOL *stop) {
+        NSString *styleTag = (isParagraphStyle) ? @"\\s" : @"\\*\\cs";
+        NSUInteger styleIndex = (isParagraphStyle) ? [resources indexOfParagraphStyle: styleName] : [resources indexOfCharacterStyle: styleName];
+        
+        [collectedStyleSheets appendFormat:@"{%@%u %@%@;}",
+         styleTag,
+         styleIndex,
+         [RKAttributedStringWriter stylesheetTagsFromAttributes:styleDefinition resources:resources],
+         styleName
+         ];
+    }];    
+    
+    return collectedStyleSheets;
+}
+
++ (NSString *)styleSheetsFromResourceManager:(RKResourcePool *)resources
+{
+    return [NSString stringWithFormat:@"{\\stylesheet %@%@}",
+            [self styleSheetsFromStyleDefinitions:resources.document.paragraphStyles paragraphStyle:YES resources:resources],
+            [self styleSheetsFromStyleDefinitions:resources.document.characterStyles paragraphStyle:NO resources:resources]
+           ];
 }
 
 + (NSString *)listTableFromResourceManager:(RKResourcePool *)resources

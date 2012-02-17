@@ -10,6 +10,7 @@
 
 + (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources;
 + (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)styleSheetsFromResourceManager:(RKResourcePool *)resources;
 + (NSString *)listTableFromResourceManager:(RKResourcePool *)resources;
 + (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources;
 
