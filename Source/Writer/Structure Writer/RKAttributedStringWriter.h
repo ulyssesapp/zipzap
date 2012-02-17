@@ -15,14 +15,16 @@
  @const
     RKAttributedStringWriterPriorityParagraphLevel              The highest priority used for paragraph tags
     RKAttributedStringWriterPriorityParagraphStylingLevel       Priority used for additional paragraph stylings
+    RKAttributedStringWriterPriorityInlineStylesheetLevel       Priority used for inline stylesheets
     RKAttributedStringWriterPriorityInlineStyleLevel            Priority used for inline styles
     RKAttributedStringWriterPriorityTextAttachmentLevel         Priority used for text attachments
 */
 typedef enum {
     RKAttributedStringWriterPriorityParagraphLevel = 0,
     RKAttributedStringWriterPriorityParagraphStylingLevel = 1,
-    RKAttributedStringWriterPriorityInlineStyleLevel = 2,
-    RKAttributedStringWriterPriorityTextAttachmentLevel = 3
+    RKAttributedStringWriterPriorityInlineStylesheetLevel = 2,
+    RKAttributedStringWriterPriorityInlineStyleLevel = 3,
+    RKAttributedStringWriterPriorityTextAttachmentLevel = 4
 } RKAttributedStringWriterPriority;
 
 /*!
@@ -38,6 +40,11 @@ typedef enum {
              Calls addTagsForAttribute:toTaggedString:inRange:ofAttributedString:withAttachmentPolicy:resources: on the handler.
  */
 + (void)registerWriter:(Class)attributeWriter forAttribute:(NSString*)attributeName priority:(RKAttributedStringWriterPriority)priority;
+
+/*!
+ @abstract Returns all style sheet tags required for a certain attribute dictionary
+ */
++ (NSString *)stylesheetTagsFromAttributes:(NSDictionary *)attributes resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Converts an attributed string to RTF

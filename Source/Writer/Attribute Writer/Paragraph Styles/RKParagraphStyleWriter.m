@@ -140,4 +140,19 @@
     return rtf;
 }
 
++ (NSString *)stylesheetTagForAttribute:(NSString *)attributeName 
+                                  value:(NSParagraphStyle *)paragraphStyle
+                           styleSetting:(NSDictionary *)styleSetting 
+                              resources:(RKResourcePool *)resources
+{
+    // If no paragraph style is given, no defaults should appear in a style sheet
+    if (!paragraphStyle)    
+        return @"";
+
+    // To calculate the line height attribute in a style sheet, all RTF writers seem to use the line height of the style setting rather than the line height of the actual paragraph
+    NSAttributedString *simulatedParagraph = [[NSAttributedString alloc] initWithString:@"A\n" attributes:styleSetting ];
+    
+    return [self openingTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph inRange:NSMakeRange(0, 2)];
+}
+
 @end

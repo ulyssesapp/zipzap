@@ -80,4 +80,23 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     return [taggedString flattenedRTFString];
 }
 
++ (NSString *)stylesheetTagsFromAttributes:(NSDictionary *)attributes resources:(RKResourcePool *)resources
+{
+    NSMutableString *stylesheetTags = [NSMutableString new];
+    
+    // Write attribute styles
+    for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
+        NSString *attributeName = [handlerDescription objectForKey: @"attributeName"];
+        Class handler = [handlerDescription objectForKey: @"writerClass"];
+
+        id attributeValue = [attributes valueForKey:attributeName];
+        
+        [stylesheetTags appendString:
+         [handler stylesheetTagForAttribute:attributeName value:attributeValue styleSetting:attributes resources:resources]
+         ];
+    }
+
+    return stylesheetTags;
+}
+
 @end
