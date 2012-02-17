@@ -19,11 +19,21 @@ extern NSString *RKPredefinedParagraphStyleAttributeName;
 /*!
  @abstract Adds a predefined character style to a range
  */
-- (void)addCharacterStyleAttribute:(NSString *)styleSheetName range:(NSRange)range;
+- (void)addPredefinedCharacterStyleAttribute:(NSString *)styleSheetName range:(NSRange)range;
 
 /*!
  @abstract Adds a predefined paragraph style to a range
  */
-- (void)addParagraphStyleAttribute:(NSString *)styleSheetName range:(NSRange)range;
+- (void)addPredefinedParagraphStyleAttribute:(NSString *)styleSheetName range:(NSRange)range;
+
+/*!
+ @abstract Adds a predefined character style to a range and applies its formating rules
+ */
+- (void)applyPredefinedCharacterStyleAttribute:(NSString *)styleSheetName document:(RKDocument *)document range:(NSRange)range;
+
+/*!
+ @abstract Adds a predefined paragraph style to a range and applies its formating rules
+ */
+- (void)applyPredefinedParagraphStyleAttribute:(NSString *)styleSheetName document:(RKDocument *)document range:(NSRange)range;
 
 @end
