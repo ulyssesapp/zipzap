@@ -25,14 +25,14 @@
 
 + (NSData *)RTFfromDocument:(RKDocument *)document
 {
-    RKResourcePool *resources = [RKResourcePool new];
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
     return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding];
 }
 
 + (NSData *)plainRTFfromDocument:(RKDocument *)document
 {
-    RKResourcePool *resources = [RKResourcePool new];
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
     return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding];
 }
