@@ -148,18 +148,6 @@
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
                          "{\\s2 "
-                         "\\pard\\qc\\pardeftab0 "
-                         "\\cb2 "
-                         "\\cf3 "
-                         "\\f0 \\fs32\\fsmilli16000 \\b \\i "
-                         "\\shad\\shadx0\\shady0\\shadr40\\shadc4 "
-                         "\\strike\\strikestyle1 "
-                         "\\strikec5 "
-                         "\\strokec6 "
-                         "\\outl\\strokewidth240 "
-                         "\\sup "
-                         "\\uldb\\ulstyle9 "
-                         "\\ulc7 "
                          "b"
                          "}"
                          "c",
@@ -184,17 +172,6 @@
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
                          "{\\s1 "
-                         "\\cb2 "
-                         "\\cf3 "
-                         "\\f0 \\fs32\\fsmilli16000 \\b \\i "
-                         "\\shad\\shadx0\\shady0\\shadr40\\shadc4 "
-                         "\\strike\\strikestyle1 "
-                         "\\strikec5 "
-                         "\\strokec6 "
-                         "\\outl\\strokewidth240 "
-                         "\\sup "
-                         "\\uldb\\ulstyle9 "
-                         "\\ulc7 "
                          "b"
                          "}"
                          "c", 
@@ -251,22 +228,30 @@
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
                          "{\\*\\cs1 "
-                         "\\cb2 "
-                         "\\cf3 "
-                         "\\f0 \\fs32\\fsmilli16000 \\b \\i "
-                         "\\shad\\shadx0\\shady0\\shadr40\\shadc4 "
-                         "\\strike\\strikestyle1 "
-                         "\\strikec5 "
-                         "\\strokec6 "
-                         "\\outl\\strokewidth240 "
-                         "\\sup "
-                         "\\uldb\\ulstyle9 "
-                         "\\ulc7 "
                          "b"
                          "}"
                          "c", 
                          @"Invalid character stylesheet used"
                          );    
+}
+
+- (void)testCocoaIntegrationForParagraphStyles
+{
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"a\nb\n" ];
+    
+    RKDocument *document = [RKDocument documentWithAttributedString: content];
+    
+    document.paragraphStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                [self generateCharacterStyle], @"CStyle",
+                                [self generateParagraphStyle], @"PStyle",
+                                nil
+                                ];
+
+    // Set two different styles on different paragraphs
+    [content applyPredefinedParagraphStyleAttribute:@"CStyle" document:document range:NSMakeRange(0,2)];
+    [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(2,2)];
+
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,2)];
 }
 
 @end

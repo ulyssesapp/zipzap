@@ -29,17 +29,14 @@
 
     // Attribute specific settings
     NSUInteger styleIndex;
-    NSDictionary *styleSetting;
     NSString *styleTypeTag;
     
     if ([attributeName isEqualTo: RKPredefinedParagraphStyleAttributeName]) {
         styleIndex = [resources indexOfParagraphStyle: styleName];
-        styleSetting = [resources.document.paragraphStyles objectForKey: styleName];
         styleTypeTag = @"\\s";
     }
     else if ([attributeName isEqualTo: RKPredefinedCharacterStyleAttributeName]) {
         styleIndex = [resources indexOfCharacterStyle: styleName];        
-        styleSetting = [resources.document.characterStyles objectForKey: styleName];
         styleTypeTag = @"\\*\\cs";
     }
 
@@ -47,11 +44,8 @@
     if (styleIndex == 0)
         return;
     
-    // Retrieve style tags
-    NSString *styleTags = [RKAttributedStringWriter stylesheetTagsFromAttributes:styleSetting resources:resources];
-
     // Register style
-    NSString *openingTag = [NSString stringWithFormat:@"{%@%u %@", styleTypeTag, styleIndex, styleTags];
+    NSString *openingTag = [NSString stringWithFormat:@"{%@%u ", styleTypeTag, styleIndex];
 
     [taggedString registerTag:openingTag forPosition:range.location];
     [taggedString registerTag:@"}" forPosition:range.location + range.length];
