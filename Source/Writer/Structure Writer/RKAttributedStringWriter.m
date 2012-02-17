@@ -11,10 +11,6 @@
 
 #import "RKParagraphStyleWriter.h"
 
-@interface RKAttributedStringWriter ()
-
-@end
-
 @implementation RKAttributedStringWriter
 
 /*!
@@ -44,8 +40,12 @@ NSMutableArray *RKAttributedStringWriterHandlers;
       ]
     ];
     
-    // Order handlers
-    [RKAttributedStringWriterHandlers sortUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES]]];
+    // Order handlers by priority
+    // Additionally order them by attribute name to improve testability
+    [RKAttributedStringWriterHandlers sortUsingDescriptors:[NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], 
+                                                                                      [NSSortDescriptor sortDescriptorWithKey:@"attributeName" ascending:YES],
+                                                                                      nil
+                                                           ]];
     
     // Validate type conformance
     NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
