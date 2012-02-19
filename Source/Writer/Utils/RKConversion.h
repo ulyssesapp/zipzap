@@ -28,7 +28,7 @@
 @interface NSData (RKConversion)
 
 /*!
- @abstract Converts an NData object to a RTF hex encoding
+ @abstract Converts an NData object to a RTF hex encoding like it is required for embedded file encoding
  @description Every line contains at most 128 characters
  */
 - (NSString *)stringWithRTFHexEncoding;
