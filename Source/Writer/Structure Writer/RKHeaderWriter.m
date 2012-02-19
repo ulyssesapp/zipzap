@@ -44,7 +44,7 @@ enum {
 /*!
  @abstract Generate a list level using a resource manager
  */
-+ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKListStyle*)list withListIndex:(NSUInteger)listIndex;
++ (NSString *)entryForLevel:(NSUInteger)level inList:(RKListStyle*)list listIndex:(NSUInteger)listIndex;
 
 /*!
  @abstract Generate the list table using a resource manager
@@ -192,7 +192,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
         NSMutableString *listLevelsString = [NSMutableString new];
         
         for (NSUInteger levelIndex = 0; levelIndex < textList.numberOfLevels; levelIndex ++)  {
-            [listLevelsString appendString: [self listLevelEntry:levelIndex fromList:textList withListIndex:listIndex]];
+            [listLevelsString appendString: [self entryForLevel:levelIndex inList:textList listIndex:listIndex]];
         }
                 
         [listTable appendFormat:@"{\\list\\listtemplateid%llu\\listhybrid%@\\listid%llu{\\listname list%llu}}",
@@ -208,7 +208,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     return listTable;
 }
 
-+ (NSString *)listLevelEntry:(NSUInteger)level fromList:(RKListStyle*)list withListIndex:(NSUInteger)listIndex
++ (NSString *)entryForLevel:(NSUInteger)level inList:(RKListStyle*)list listIndex:(NSUInteger)listIndex
 {
     NSArray *placeholderPositions;
     NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%llu %@;}", 
