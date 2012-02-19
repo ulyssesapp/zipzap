@@ -14,10 +14,10 @@
 @interface RKWriter ()
 
 /*!
- @abstract Writes out the contents of an RKDocument as RTF into a string
- @discussion The handling of inline attachments can be switched between the NextStep (RTFD) format and the Microsoft format
+ @abstract Writes out the contents of an RKDocument as RTF as an NSData object
+ @discussion The handling of inline attachments can be switched between the NextStep (RTFD) format and the Microsoft format. It also returns a resource pool that describes all resources that have been collected through the document processing. The document will be encoded to ISO-Latin-1 as required by the RTF standard.
  */
-+ (NSString *)RTFStringFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSData *)RTFDataFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool **)resourcesOut;
 
 @end
 
@@ -25,39 +25,44 @@
 
 + (NSData *)RTFfromDocument:(RKDocument *)document
 {
-    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
-    
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding];
+    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:nil];
 }
 
 + (NSData *)plainRTFfromDocument:(RKDocument *)document
 {
-    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
-    
-    return [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding];
+    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:nil];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
 {
-    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
+    RKResourcePool *resources;
     
-    NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:
-        [[self RTFStringFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:resources] dataUsingEncoding:NSISOLatin1StringEncoding]
-    ];
+    // Generate RTF document
+    NSData *rtfContent = [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:&resources];
+    NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:rtfContent];
 
+    // Pacakge image files
     NSMutableDictionary *packageFiles = [NSMutableDictionary dictionaryWithDictionary: resources.attachmentFileWrappers];
     
     [packageFiles setObject:rtfFile forKey:@"TXT.rtf"];
         
+    // Generate RTFD file wrapper
     return [[NSFileWrapper alloc] initDirectoryWithFileWrappers:packageFiles ];
 }
 
-+ (NSString *)RTFStringFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSData *)RTFDataFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool **)resourcesOut
 {
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
+
+    if (resourcesOut)
+        *resourcesOut = resources;
+    
+    // Tranlsate body and header
     NSString *body = [RKBodyWriter RTFBodyFromDocument:document withAttachmentPolicy:attachmentPolicy resources:resources];
     NSString *head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];
     
-    return [NSString stringWithFormat:@"{%@\n%@\n}\n", head, body];
+    // Generate document and encode it to ISO-Latin-1
+    return [[NSString stringWithFormat:@"{%@\n%@\n}\n", head, body] dataUsingEncoding:NSISOLatin1StringEncoding];
 }
 
 @end
