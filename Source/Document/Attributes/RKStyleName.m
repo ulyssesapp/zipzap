@@ -1,26 +1,26 @@
 //
-//  RKPredefinedStyle.m
+//  RKStyleName.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 16.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKPredefinedStyle.h"
+#import "RKStyleName.h"
 
-NSString *RKPredefinedCharacterStyleAttributeName = @"RKCharacterStyle";
-NSString *RKPredefinedParagraphStyleAttributeName = @"RKParagraphStyle";
+NSString *RKCharacterStyleNameAttributeName = @"RKCharacterStyle";
+NSString *RKParagraphStyleNameAttributeName = @"RKParagraphStyle";
 
 @implementation NSMutableAttributedString (RKAttributedStringPredefinedStyleConvenience)
 
 - (void)addPredefinedCharacterStyleAttribute:(NSString *)styleSheetName range:(NSRange)range
 {
-    [self addAttribute:RKPredefinedCharacterStyleAttributeName value:styleSheetName range:range];
+    [self addAttribute:RKCharacterStyleNameAttributeName value:styleSheetName range:range];
 }
 
 - (void)addPredefinedParagraphStyleAttribute:(NSString *)styleSheetName range:(NSRange)range
 {
-    [self addAttribute:RKPredefinedParagraphStyleAttributeName value:styleSheetName range:range];    
+    [self addAttribute:RKParagraphStyleNameAttributeName value:styleSheetName range:range];    
 }
 
 - (void)applyPredefinedCharacterStyleAttribute:(NSString *)styleSheetName document:(RKDocument *)document range:(NSRange)range

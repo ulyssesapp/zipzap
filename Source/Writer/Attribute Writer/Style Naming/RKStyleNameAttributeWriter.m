@@ -1,20 +1,20 @@
 //
-//  RKPredefinedStyleAttributeWriter.m
+//  RKStyleNameAttributeWriter.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 16.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKPredefinedStyleAttributeWriter.h"
+#import "RKStyleNameAttributeWriter.h"
 #import "RKAttributedStringWriter.h"
 
-@implementation RKPredefinedStyleAttributeWriter
+@implementation RKStyleNameAttributeWriter
 
 + (void)load {
     // Paragraph styles and inline styles must have a higher priority in order to work with OpenOffice
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKPredefinedParagraphStyleAttributeName priority:RKAttributedStringWriterPriorityParagraphStyleSheetLevel];
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKPredefinedCharacterStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStylesheetLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKParagraphStyleNameAttributeName priority:RKAttributedStringWriterPriorityParagraphStyleSheetLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKCharacterStyleNameAttributeName priority:RKAttributedStringWriterPriorityInlineStylesheetLevel];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 
@@ -33,19 +33,21 @@
     NSString *styleTypeOpeningTag;
     NSString *styleTypeClosingTag;
     
-    if ([attributeName isEqualTo: RKPredefinedParagraphStyleAttributeName]) {
+    if ([attributeName isEqualTo: RKParagraphStyleNameAttributeName]) {
         styleIndex = [resources indexOfParagraphStyle: styleName];
         styleTypeOpeningTag = @"\\s";
         styleTypeClosingTag = @"";
     }
-    else if ([attributeName isEqualTo: RKPredefinedCharacterStyleAttributeName]) {
+    else if ([attributeName isEqualTo: RKCharacterStyleNameAttributeName]) {
         styleIndex = [resources indexOfCharacterStyle: styleName];        
         // Enclosing character styles into a control group is required by OpenOffice
         styleTypeOpeningTag = @"{\\cs";
         styleTypeClosingTag = @"}";
     }
 
-    // We just ignore the default style or unknown styles, because stylesheets must be inside {blocks} and automatically default
+    // We just ignore the default style or unknown styles, because:
+    // - Character styles are inside {groups} and thus reset after the end of the group
+    // - New paragraphs are introduced with the \pard command and thus use the default paragraph style automatically
     if (styleIndex == 0)
         return;
     

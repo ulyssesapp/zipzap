@@ -6,10 +6,20 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKPredefinedStyleAttributeWriter.h"
-#import "RKPredefinedStyleAttributeWriterTest.h"
+#import "RKStyleNameAttributeWriter.h"
+#import "RKStyleNameAttributeWriterTest.h"
 
-@implementation RKPredefinedStyleAttributeWriterTest
+@interface RKStyleNameAttributeWriterTest (PrivateMethods)
+
+- (NSMutableDictionary *)generateCharacterStyle;
+- (NSMutableDictionary *)generateParagraphStyle;
+
+- (RKResourcePool *)generateResourcePoolWithParagraphStyles;
+- (RKResourcePool *)generateResourcePoolWithCharacterStyles;
+
+@end
+
+@implementation RKStyleNameAttributeWriterTest
 
 - (NSMutableDictionary *)generateCharacterStyle
 {
@@ -104,13 +114,13 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     RKResourcePool *resources = [self generateResourcePoolWithParagraphStyles];
     
-    [RKPredefinedStyleAttributeWriter addTagsForAttribute:RKPredefinedParagraphStyleAttributeName 
-                                                    value:nil 
-                                           effectiveRange:NSMakeRange(1,1) 
-                                                 toString:taggedString 
-                                           originalString:nil 
-                                         attachmentPolicy:0 
-                                                resources:resources
+    [RKStyleNameAttributeWriter addTagsForAttribute:RKParagraphStyleNameAttributeName 
+                                              value:nil 
+                                     effectiveRange:NSMakeRange(1,1) 
+                                           toString:taggedString 
+                                     originalString:nil 
+                                   attachmentPolicy:0 
+                                          resources:resources
      ];
     
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid paragraph stylesheet used");
@@ -122,13 +132,13 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     RKResourcePool *resources = [self generateResourcePoolWithParagraphStyles];
 
-    [RKPredefinedStyleAttributeWriter addTagsForAttribute:RKPredefinedParagraphStyleAttributeName 
-                                                    value:@"Undefined Style" 
-                                           effectiveRange:NSMakeRange(1,1) 
-                                                 toString:taggedString 
-                                           originalString:nil 
-                                         attachmentPolicy:0 
-                                                resources:resources
+    [RKStyleNameAttributeWriter addTagsForAttribute:RKParagraphStyleNameAttributeName 
+                                              value:@"Undefined Style" 
+                                     effectiveRange:NSMakeRange(1,1) 
+                                           toString:taggedString 
+                                     originalString:nil 
+                                   attachmentPolicy:0 
+                                          resources:resources
      ];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid paragraph stylesheet used");
 }
@@ -138,13 +148,13 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     RKResourcePool *resources = [self generateResourcePoolWithParagraphStyles];
 
-    [RKPredefinedStyleAttributeWriter addTagsForAttribute:RKPredefinedParagraphStyleAttributeName 
-                                                    value:@"PStyle" 
-                                           effectiveRange:NSMakeRange(1,1) 
-                                                 toString:taggedString 
-                                           originalString:nil 
-                                         attachmentPolicy:0 
-                                                resources:resources
+    [RKStyleNameAttributeWriter addTagsForAttribute:RKParagraphStyleNameAttributeName 
+                                              value:@"PStyle" 
+                                     effectiveRange:NSMakeRange(1,1) 
+                                           toString:taggedString 
+                                     originalString:nil 
+                                   attachmentPolicy:0 
+                                          resources:resources
     ];
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
@@ -160,13 +170,13 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     RKResourcePool *resources = [self generateResourcePoolWithParagraphStyles];
     
-    [RKPredefinedStyleAttributeWriter addTagsForAttribute:RKPredefinedParagraphStyleAttributeName 
-                                                    value:@"CStyle" 
-                                           effectiveRange:NSMakeRange(1,1) 
-                                                 toString:taggedString 
-                                           originalString:nil 
-                                         attachmentPolicy:0 
-                                                resources:resources
+    [RKStyleNameAttributeWriter addTagsForAttribute:RKParagraphStyleNameAttributeName 
+                                              value:@"CStyle" 
+                                     effectiveRange:NSMakeRange(1,1) 
+                                           toString:taggedString 
+                                     originalString:nil 
+                                   attachmentPolicy:0 
+                                          resources:resources
     ];
 
     STAssertEqualObjects([taggedString flattenedRTFString], 
@@ -183,13 +193,13 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     RKResourcePool *resources = [self generateResourcePoolWithCharacterStyles];
     
-    [RKPredefinedStyleAttributeWriter addTagsForAttribute:RKPredefinedCharacterStyleAttributeName 
-                                                    value:nil 
-                                           effectiveRange:NSMakeRange(1,1) 
-                                                 toString:taggedString 
-                                           originalString:nil 
-                                         attachmentPolicy:0 
-                                                resources:resources
+    [RKStyleNameAttributeWriter addTagsForAttribute:RKCharacterStyleNameAttributeName 
+                                              value:nil 
+                                     effectiveRange:NSMakeRange(1,1) 
+                                           toString:taggedString 
+                                     originalString:nil 
+                                   attachmentPolicy:0 
+                                          resources:resources
      ];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
 }
@@ -199,13 +209,13 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     RKResourcePool *resources = [self generateResourcePoolWithCharacterStyles];
     
-    [RKPredefinedStyleAttributeWriter addTagsForAttribute:RKPredefinedCharacterStyleAttributeName 
-                                                    value:@"Undefined style" 
-                                           effectiveRange:NSMakeRange(1,1) 
-                                                 toString:taggedString 
-                                           originalString:nil 
-                                         attachmentPolicy:0 
-                                                resources:resources
+    [RKStyleNameAttributeWriter addTagsForAttribute:RKCharacterStyleNameAttributeName 
+                                              value:@"Undefined style" 
+                                     effectiveRange:NSMakeRange(1,1) 
+                                           toString:taggedString 
+                                     originalString:nil 
+                                   attachmentPolicy:0 
+                                          resources:resources
      ];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
 }    
@@ -215,13 +225,13 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     RKResourcePool *resources = [self generateResourcePoolWithCharacterStyles];
     
-    [RKPredefinedStyleAttributeWriter addTagsForAttribute:RKPredefinedCharacterStyleAttributeName 
-                                                    value:@"CStyle" 
-                                           effectiveRange:NSMakeRange(1,1) 
-                                                 toString:taggedString 
-                                           originalString:nil 
-                                         attachmentPolicy:0 
-                                                resources:resources
+    [RKStyleNameAttributeWriter addTagsForAttribute:RKCharacterStyleNameAttributeName 
+                                              value:@"CStyle" 
+                                     effectiveRange:NSMakeRange(1,1) 
+                                           toString:taggedString 
+                                     originalString:nil 
+                                   attachmentPolicy:0 
+                                          resources:resources
      ];
     
     STAssertEqualObjects([taggedString flattenedRTFString], 

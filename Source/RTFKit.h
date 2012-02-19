@@ -15,4 +15,4 @@
 
 #import "RKFootnote.h"
 #import "RKPlaceholder.h"
-#import "RKPredefinedStyle.h"
+#import "RKStyleName.h"

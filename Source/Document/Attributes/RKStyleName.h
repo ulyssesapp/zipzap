@@ -1,13 +1,13 @@
 //
-//  RKPredefinedStyle.h
+//  RKStyleName.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 16.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-extern NSString *RKPredefinedCharacterStyleAttributeName;
-extern NSString *RKPredefinedParagraphStyleAttributeName;
+extern NSString *RKCharacterStyleNameAttributeName;
+extern NSString *RKParagraphStyleNameAttributeName;
 
 /*!
  @abstract Provides convenience methods for setting paragraph and character styles

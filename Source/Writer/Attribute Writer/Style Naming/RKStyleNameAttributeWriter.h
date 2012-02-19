@@ -8,6 +8,6 @@
 
 #import "RKAttributeWriter.h"
 
-@interface RKPredefinedStyleAttributeWriter : RKAttributeWriter
+@interface RKStyleNameAttributeWriter : RKAttributeWriter
 
 @end
