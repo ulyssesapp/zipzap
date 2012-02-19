@@ -49,6 +49,9 @@
 - (NSAttributedString *)convertAndRereadPlainRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
     RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    document.pageSize = NSMakeSize(1100, 1100);
+    document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);   
+    
     NSData *rtf = [document plainRTF];
     
     return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
@@ -57,6 +60,9 @@
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
     RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    document.pageSize = NSMakeSize(1100, 1100);
+    document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
+    
     NSData *rtf = [document RTF];
     
    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
@@ -65,6 +71,9 @@
 - (NSAttributedString *)convertAndRereadRTFD:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
     RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    document.pageSize = NSMakeSize(1100, 1100);
+    document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
+    
     NSFileWrapper *rtf = [document RTFD];
     
     return [[NSAttributedString alloc] initWithRTFDFileWrapper:rtf documentAttributes:documentAttributes];
@@ -124,7 +133,7 @@
 
 - (void)assertReadingOfAttributedString:(NSAttributedString *)attributedString onAttribute:(NSString *)attributeName inRange:(NSRange)range
 {
-    NSAttributedString *converted = [self convertAndRereadRTF:attributedString documentAttributes:NULL];
+    NSAttributedString *converted = [self convertAndRereadRTF:attributedString documentAttributes:NULL ];
     
     [self assertEqualOnAttribute:attributeName inRange:range original:attributedString converted:converted];
 }

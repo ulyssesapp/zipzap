@@ -191,6 +191,94 @@
                          ); 
 }
 
+- (void)testCalculatingTailIndent
+{
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
+    
+    // Paragraph Style with defaults
+    paragraphStyle.alignment = NSNaturalTextAlignment;
+    
+    paragraphStyle.firstLineHeadIndent = .0f;
+    paragraphStyle.headIndent = .0f;
+    paragraphStyle.tailIndent = .0f;
+    
+    paragraphStyle.lineHeightMultiple = .0f;
+    paragraphStyle.lineSpacing = .0f;
+    paragraphStyle.maximumLineHeight = .0f;
+    paragraphStyle.minimumLineHeight = .0f;
+    
+    paragraphStyle.paragraphSpacingBefore = .0f;
+    paragraphStyle.paragraphSpacing = .0f;
+    
+    paragraphStyle.tabStops = [NSArray new];
+    
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,3)];
+    
+    // This test requires a resource manager with a paper format, we use 1100 as page width and 50 as legt/right margins here
+    RKDocument *document = [RKDocument new];
+    document.pageSize = NSMakeSize(1100, 1100);
+    document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
+
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
+    
+    // Test with default settings
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+                         @"\\pardeftab0"
+                         // Space required to prevent problems with succeeding commands
+                         " ",
+                         @"Invalid translation"
+                         );     
+    
+    // Positive tail indent in left direction: must be inverted
+    paragraphStyle = [paragraphStyle mutableCopy];
+    paragraphStyle.baseWritingDirection = NSWritingDirectionLeftToRight;
+    paragraphStyle.tailIndent = 3.0f;
+    
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+                         @"\\ri19940\\curi19940\\pardeftab0"
+                         // Space required to prevent problems with succeeding commands
+                         " ",
+                         @"Invalid translation"
+                         ); 
+
+    // Negative tail indent in right direction: absolute value
+    paragraphStyle = [paragraphStyle mutableCopy];
+    paragraphStyle.tailIndent = -3.0f;
+    paragraphStyle.baseWritingDirection = NSWritingDirectionLeftToRight;
+    
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+                         @"\\ri60\\curi60\\pardeftab0"
+                         // Space required to prevent problems with succeeding commands
+                         " ",
+                         @"Invalid translation"
+                         );     
+    
+    // Positive tail indent in left direction: must be inverted
+    paragraphStyle = [paragraphStyle mutableCopy];
+    paragraphStyle.baseWritingDirection = NSWritingDirectionRightToLeft;
+    paragraphStyle.tailIndent = 3.0f;
+    
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+                         @"\\rtlpar\\ri19940\\curi19940\\pardeftab0"
+                         // Space required to prevent problems with succeeding commands
+                         " ",
+                         @"Invalid translation"
+                         ); 
+    
+    // Negative tail indent in right direction: absolute value
+    paragraphStyle = [paragraphStyle mutableCopy];
+    paragraphStyle.tailIndent = -3.0f;
+    paragraphStyle.baseWritingDirection = NSWritingDirectionRightToLeft;
+    
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+                         @"\\rtlpar\\ri60\\curi60\\pardeftab0"
+                         // Space required to prevent problems with succeeding commands
+                         " ",
+                         @"Invalid translation"
+                         );   
+}
+
 - (void)testTranslateNonDefaultParagraphStyle
 {
     NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
@@ -200,7 +288,7 @@
     
     paragraphStyle.firstLineHeadIndent = 1.0f;
     paragraphStyle.headIndent = 2.0f;
-    paragraphStyle.tailIndent = 3.0f;
+    paragraphStyle.tailIndent = -3.0f;
     
     paragraphStyle.lineSpacing = 4.0f;
     paragraphStyle.lineHeightMultiple = 5.0f;
@@ -224,9 +312,12 @@
 
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];  
     
+    // This test requires a resource manager with a paper format, we use 1100 as page width and 50 as legt/right margins here
     RKDocument *document = [RKDocument new];
-    document.pageSize = NSMakeSize(100, 200);
-    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument:document];
+    document.pageSize = NSMakeSize(1100, 1100);
+    document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
+    
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
     // Right alligned
     STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:resources],
@@ -234,7 +325,7 @@
                          "\\qr"
                          "\\fi-20\\cufi-20"
                          "\\li40\\culi40"
-                         "\\ri60"
+                         "\\ri60\\curi60"
                          // RTF requires the ordering \\slN\\slmultN
                          "\\slleading80"
                          "\\sl1200\\slmult1"
@@ -297,7 +388,7 @@
                         );
 }
 
-- (void)testCocoaIntegration
+- (void)testCocoaIntegrationRTLParagraph
 {
     NSMutableParagraphStyle *paragraphStyleDefault = [self defaultParagraphStyle];
     NSMutableParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
@@ -307,11 +398,10 @@
     
     paragraphStyleNonDefault.alignment = NSRightTextAlignment;
 
-    paragraphStyleNonDefault.firstLineHeadIndent = 1.0f;
-    paragraphStyleNonDefault.headIndent = 2.0f;    
-    
-    // This is inconsistently interpreted by Cocoa
-    //paragraphStyleNonDefault.tailIndent = -1.0f;
+    paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
+    paragraphStyleNonDefault.headIndent = 3.0f;    
+
+    paragraphStyleNonDefault.tailIndent = 4.0f;
    
     paragraphStyleNonDefault.lineSpacing = 4.0f;
     paragraphStyleNonDefault.lineHeightMultiple = 2.0f;
@@ -340,5 +430,49 @@
     
     [self assertReadingOfAttributedString:testString onAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, 3)];
 }
+
+- (void)testCocoaIntegrationLTRParagraph
+{
+    NSMutableParagraphStyle *paragraphStyleDefault = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
+    
+    // The only default-value we have to override is "alignment", since the natural alignment will be processed by Cocoa
+    paragraphStyleDefault.alignment = NSLeftTextAlignment;
+    
+    paragraphStyleNonDefault.alignment = NSRightTextAlignment;
+    
+    paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
+    paragraphStyleNonDefault.headIndent = 3.0f;    
+    
+    paragraphStyleNonDefault.tailIndent = 4.0f;
+    
+    paragraphStyleNonDefault.lineSpacing = 4.0f;
+    paragraphStyleNonDefault.lineHeightMultiple = 2.0f;
+    paragraphStyleNonDefault.maximumLineHeight = 6.0f;
+    paragraphStyleNonDefault.minimumLineHeight = 7.0f;
+    
+    paragraphStyleNonDefault.paragraphSpacingBefore = 8.0f;
+    paragraphStyleNonDefault.paragraphSpacing = 9.0f;
+    
+    paragraphStyleNonDefault.baseWritingDirection = NSWritingDirectionLeftToRight;
+    
+    paragraphStyleNonDefault.defaultTabInterval = 11.0f;
+    
+    paragraphStyleNonDefault.tabStops = [NSArray arrayWithObjects: 
+                                         [[NSTextTab alloc] initWithType:NSLeftTabStopType location:10.0f],
+                                         [[NSTextTab alloc] initWithType:NSCenterTabStopType location:20.0f],
+                                         [[NSTextTab alloc] initWithType:NSRightTabStopType location:30.0f],
+                                         [[NSTextTab alloc] initWithType:NSDecimalTabStopType location:40.0f],
+                                         nil
+                                         ];
+    
+    NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@"A\nB\n"];
+    
+    [testString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleNonDefault range:NSMakeRange(0, 2)];
+    [testString addAttribute:NSParagraphStyleAttributeName value:paragraphStyleDefault range:NSMakeRange(2, 2)];
+    
+    [self assertReadingOfAttributedString:testString onAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, 3)];
+}
+
 
 @end

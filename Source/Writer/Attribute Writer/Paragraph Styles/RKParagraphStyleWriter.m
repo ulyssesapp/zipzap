@@ -85,12 +85,26 @@
          (NSUInteger)RKPointsToTwips(paragraphStyle.firstLineHeadIndent - paragraphStyle.headIndent)
         ];
     
+    // For compatibility reasons we have to set \li and \culi    
     if (paragraphStyle.headIndent != 0)
         [rtf appendFormat:@"\\li%u\\culi%u", (NSUInteger)RKPointsToTwips(paragraphStyle.headIndent), (NSUInteger)RKPointsToTwips(paragraphStyle.headIndent)];
     
-    // This is calculated differently to Cocoa, since it is handled differ
-    if (paragraphStyle.tailIndent != 0)
-        [rtf appendFormat:@"\\ri%i", (NSInteger)RKPointsToTwips(fabs(paragraphStyle.tailIndent))];
+    if (paragraphStyle.tailIndent != 0) {
+        NSInteger indent;
+        
+        if (paragraphStyle.tailIndent > 0) {
+            // Position is calculated from the leading margin
+            CGFloat pageInnerWidth = resources.document.pageSize.width - resources.document.pageInsets.left - resources.document.pageInsets.right;
+            indent = (NSInteger)RKPointsToTwips(pageInnerWidth - fabs(paragraphStyle.tailIndent));
+        }
+        else {
+            // Position is calculated from the trailing margin
+            indent = (NSInteger)RKPointsToTwips(fabs(paragraphStyle.tailIndent));
+        }
+
+        // For compatibility reasons we have to set \ri and \curi
+        [rtf appendFormat:@"\\ri%i\\curi%i", indent, indent];
+    }
     
     // Line spacing
     if (paragraphStyle.lineSpacing != 0)
