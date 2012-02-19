@@ -47,8 +47,8 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];    
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
-                         @"\\pard\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+                         @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -80,8 +80,8 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
-                         @"\\pard\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+                         @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -91,8 +91,8 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSLeftTextAlignment;    
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
-                         @"\\pard\\ql\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+                         @"\\ql\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -102,8 +102,8 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSCenterTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
-                         @"\\pard\\qc\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+                         @"\\qc\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -113,8 +113,8 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSRightTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
-                         @"\\pard\\qr\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+                         @"\\qr\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -124,8 +124,8 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSJustifiedTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
-                         @"\\pard\\qj\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+                         @"\\qj\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -157,8 +157,8 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,3)];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 3)],
-                         @"\\pard\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3)],
+                         @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -168,8 +168,8 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.lineHeightMultiple = 3.0f;
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 3)],
-                         @"\\pard\\sl720\\slmult1\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3)],
+                         @"\\sl720\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -183,8 +183,8 @@
     [attributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica" size:30] range:NSMakeRange(1, 1)];
     [attributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica" size:40] range:NSMakeRange(2, 1)];
     
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 3)],
-                         @"\\pard\\sl2400\\slmult1\\pardeftab0"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3)],
+                         @"\\sl2400\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -225,9 +225,8 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];  
     
     // Right alligned
-    STAssertEqualObjects([RKParagraphStyleWriter openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:NSMakeRange(0, 1)],
-                         @"\\pard"
-                         "\\rtlpar"
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+                         @"\\rtlpar"
                          "\\qr"
                          "\\fi-20\\cufi-20"
                          "\\li40\\culi40"

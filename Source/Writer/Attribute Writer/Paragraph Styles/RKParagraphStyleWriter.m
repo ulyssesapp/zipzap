@@ -17,12 +17,7 @@
 /*!
  @abstract Generates the required tags for styling a paragraph
  */
-+ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range;
-
-/*!
- @abstract Generates the required opening tags for setting a new paragraph style
- */
-+ (NSString *)openingTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range;
++ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range;
 
 @end
 
@@ -41,9 +36,13 @@
            attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    NSString *paragraphHeader = [self openingTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:range];
+    NSString *paragraphHeader = [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:range];
+
+    // We add \pard before each paragraph to reset the current paragraph styling
+    [taggedString registerTag:@"\\pard" forPosition:range.location];
 
     [taggedString registerTag:paragraphHeader forPosition:range.location];
+    
     [taggedString registerClosingTag:@"\\par\n" forPosition:NSMaxRange(range)];
     
     // Remove terminating newline, since Cocoa will add automatically a newline on the end of a paragraph
@@ -51,13 +50,8 @@
         [taggedString removeRange:NSMakeRange(NSMaxRange(range) - 1, 1)];
     }
 }
-
-+ (NSString *)openingTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range
-{
-    return [NSString stringWithFormat:@"\\pard%@", [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString inRange:range]];
-}
     
-+ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range
++ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range
 {
     NSMutableString *rtf = [NSMutableString new];
     
@@ -162,7 +156,7 @@
     // To calculate the line height attribute in a style sheet, all RTF writers seem to use the line height of the style setting rather than the line height of the actual paragraph
     NSAttributedString *simulatedParagraph = [[NSAttributedString alloc] initWithString:@"A\n" attributes:styleSetting ];
     
-    return [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph inRange:NSMakeRange(0, 2)];
+    return [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph range:NSMakeRange(0, 2)];
 }
 
 @end
