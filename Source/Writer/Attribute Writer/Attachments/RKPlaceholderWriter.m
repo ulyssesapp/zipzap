@@ -27,7 +27,7 @@
      if (placeholder) {
         NSString *tag;
         
-        switch ([placeholder intValue]) {
+        switch ([placeholder unsignedIntegerValue]) {
             case RKPlaceholderPageNumber:
                 tag = @"\\chpgn";
                 break;

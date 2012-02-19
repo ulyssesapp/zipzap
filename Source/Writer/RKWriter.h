@@ -14,7 +14,7 @@
         RKAttachmentPolicyEmbed         Embed all attachments as \pict commands as in RTF
         RKAttachmentPolicyReference     Create references to all attachments for RTFD generation
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKAttachmentPolicyIgnore = 0,
     RKAttachmentPolicyEmbed = 1,
     RKAttachmentPolicyReference = 2

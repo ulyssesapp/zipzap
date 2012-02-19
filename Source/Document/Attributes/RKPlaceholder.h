@@ -12,7 +12,7 @@
     RKPlaceholderPageNumber        The placeholder should be substituted by the current page number (\chpgn)
     RKPlaceholderSectionNumber     The placeholder should be substituted by the current section number (\sectnum)
 */
-typedef enum {
+typedef enum : NSUInteger {
     RKPlaceholderPageNumber         = 0,
     RKPlaceholderSectionNumber      = 1
 } RKPlaceholderType;

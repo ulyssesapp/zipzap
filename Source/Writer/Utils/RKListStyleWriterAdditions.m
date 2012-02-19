@@ -70,7 +70,7 @@
     RKListStyleFormatCode formatCode = RKListFormatCodeBullet;
     
     if (enumerationPlaceholderRange.length) {
-        formatCode = [[self.class formatCodeFromEnumerationPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] intValue];
+        formatCode = [[self.class formatCodeFromEnumerationPlaceholder: [formatString substringWithRange: enumerationPlaceholderRange]] unsignedIntegerValue];
     }
     
     return formatCode;
@@ -114,12 +114,12 @@
     NSUInteger levelIndex = itemNumbers.count;
     NSMutableString *markerString = [NSMutableString new];
     
-    [self scanFullFormatStringOfLevel:levelIndex-1 usingBlock:^(NSString *token, NSUInteger currentLevel) {
+    [self scanFullFormatStringOfLevel:levelIndex-1 usingBlock:^(id token, NSUInteger currentLevel) {
         if ([token isKindOfClass:NSNumber.class]) {
             // Format placeholder token
             NSUInteger currentItemNumber = [[itemNumbers objectAtIndex:currentLevel] unsignedIntegerValue];
             
-            switch ([token intValue]) {
+            switch ([token unsignedIntegerValue]) {
                 case RKListFormatCodeDecimal:
                     token = [NSString stringWithFormat:@"%u", currentItemNumber];
                     break;

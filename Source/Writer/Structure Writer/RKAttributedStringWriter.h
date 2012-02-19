@@ -20,7 +20,7 @@
     RKAttributedStringWriterPriorityInlineStyleLevel                    Priority used for inline styles
     RKAttributedStringWriterPriorityTextAttachmentLevel                 Priority used for text attachments
 */
-typedef enum {
+typedef enum : NSUInteger {
     RKAttributedStringWriterPriorityParagraphLevel = 0,
     RKAttributedStringWriterPriorityParagraphStyleSheetLevel = 1,
     RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel = 2,

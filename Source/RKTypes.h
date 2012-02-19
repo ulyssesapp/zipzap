@@ -8,7 +8,7 @@
 /*!
  @abstract Specifies the usage of footnotes and endnotes
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKFootnotePlacementSamePage                 = 0,
     RKFootnotePlacementSectionEnd               = 1,
     RKFootnotePlacementDocumentEnd              = 2
@@ -17,7 +17,7 @@ typedef enum {
 /*!
  @abstract Specifies the placement of endnotes inside a document
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKEndnotePlacementDocumentEnd              = 0,
     RKEndnotePlacementSectionEnd               = 1
 } RKEndnotePlacement;
@@ -25,7 +25,7 @@ typedef enum {
 /*!
  @abstract Specifies the orientation of a page
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKPageOrientationPortrait   = 0,
     RKPageOrientationLandscape  = 1
 } RKPageOrientation;
@@ -46,7 +46,7 @@ typedef struct {
 /*!
  @abstract Specifies the style of page numbering inside a section
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKPageNumberingDecimal              = 0,
     RKPageNumberingRomanLowerCase       = 1,
     RKPageNumberingRomanUpperCase       = 2,
@@ -57,7 +57,7 @@ typedef enum {
 /*!
  @abstract Specifies the style of footnote numbering inside a section
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKFootnoteEnumerationDecimal                    = 0,
     RKFootnoteEnumerationAlphabeticLowerCase        = 1,
     RKFootnoteEnumerationAlphabeticUpperCase        = 2,
@@ -69,7 +69,7 @@ typedef enum {
 /*!
  @abstract Options for restarting footnote enumeration
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKFootnoteEnumerationPerPage          = 0,
     RKFootnoteEnumerationPerSection       = 1,
     RKFootnoteContinuousEnumeration       = 2
@@ -78,7 +78,7 @@ typedef enum {
 /*!
  @abstract Possible selections for page headers and footers
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKPageSelectionLeft  = 1<<0,
     RKPageSelectionRight = 1<<1,
     RKPageSelectionFirst = 1<<2,

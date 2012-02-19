@@ -17,7 +17,7 @@
  RKListFormatCodeLowerCaseLetter     Lower case letter (a, b, c, d, ...)
  RKListFormatCodeBullet              Arbitary bullet point, no automatic enumeration
  */
-typedef enum {
+typedef enum : NSUInteger {
     RKListFormatCodeDecimal             = 0,
     RKListFormatCodeUpperCaseRoman      = 1,
     RKListFormatCodeLowerCaseRoman      = 2,

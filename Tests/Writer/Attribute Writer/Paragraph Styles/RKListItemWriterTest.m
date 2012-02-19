@@ -170,7 +170,7 @@
         STAssertEqualObjects(textList.markerFormat, [markers objectAtIndex:index], @"Invalid marker format");
 
         STAssertEquals((textList.listOptions & NSTextListPrependEnclosingMarker) == NSTextListPrependEnclosingMarker, 
-                       [[prependSettings objectAtIndex:index] intValue], 
+                       (int)[[prependSettings objectAtIndex:index] unsignedIntegerValue], 
                        @"Invalid prepend setting");
 
         STAssertEquals(textList.startingItemNumber, 
