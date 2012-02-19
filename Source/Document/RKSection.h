@@ -11,6 +11,7 @@
 /*!
  @abstract Representation of an RTF section
  @discussion An RTF section is an area of the document that has own headlines, footers and custom layouting options.
+ @note Section style sheets are currently unsupported, since RTF readers do not provide any support for it
  */
 @interface RKSection : NSObject
 
