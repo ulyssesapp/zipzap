@@ -803,7 +803,7 @@
 		50317D2E14C494C800F23C04 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "The Soulmen";
 			};
 			buildConfigurationList = 50317D3114C494C800F23C04 /* Build configuration list for PBXProject "RTFKit" */;

@@ -81,10 +81,10 @@
     __block NSMutableString *formatString = [NSMutableString new];
     __block NSMutableArray *placeholderPositions = [NSMutableArray new];
     
-    // The token counting starts at 2, since the prefixing \t and the length modifier is counted
+    // The token count starts at 2, since the prefixing \t and the length modifier must be counted
     __block NSUInteger RTFTokenCount = 2;
     
-    [self scanFullFormatStringFromLevel:levelIndex usingBlock:^(NSString *token, NSUInteger currentLevel) {
+    [self scanFullFormatStringOfLevel:levelIndex usingBlock:^(NSString *token, NSUInteger currentLevel) {
         if ([token isKindOfClass:NSNumber.class]) {
             // Store placeholder position
             [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: RTFTokenCount]];
@@ -114,7 +114,7 @@
     NSUInteger levelIndex = itemNumbers.count;
     NSMutableString *markerString = [NSMutableString new];
     
-    [self scanFullFormatStringFromLevel:levelIndex-1 usingBlock:^(NSString *token, NSUInteger currentLevel) {
+    [self scanFullFormatStringOfLevel:levelIndex-1 usingBlock:^(NSString *token, NSUInteger currentLevel) {
         if ([token isKindOfClass:NSNumber.class]) {
             // Format placeholder token
             NSUInteger currentItemNumber = [[itemNumbers objectAtIndex:currentLevel] unsignedIntegerValue];

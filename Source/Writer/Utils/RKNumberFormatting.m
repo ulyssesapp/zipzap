@@ -10,35 +10,32 @@
 
 @implementation NSString (RKNumberFormatting)
 
-NSDictionary *RKNumberFormattingRomanNumeralMapping;
-NSArray *RKNumberFormattingRomanNumeralOrdering;
-
-+ (void)load
-{
-    RKNumberFormattingRomanNumeralMapping = [NSDictionary dictionaryWithObjectsAndKeys:
-                           @"i", [NSNumber numberWithUnsignedInteger:1],
-                           @"x", [NSNumber numberWithUnsignedInteger:10],
-                           @"c", [NSNumber numberWithUnsignedInteger:100],
-                           @"m", [NSNumber numberWithUnsignedInteger:1000],
-                           @"iv", [NSNumber numberWithUnsignedInteger:4],
-                           @"xl", [NSNumber numberWithUnsignedInteger:40],
-                           @"cd", [NSNumber numberWithUnsignedInteger:400],
-                           @"v", [NSNumber numberWithUnsignedInteger:5],
-                           @"l", [NSNumber numberWithUnsignedInteger:50],
-                           @"d", [NSNumber numberWithUnsignedInteger:500],
-                           @"ix", [NSNumber numberWithUnsignedInteger:9],
-                           @"xc", [NSNumber numberWithUnsignedInteger:900],
-                           @"cm", [NSNumber numberWithUnsignedInteger:9000],                          
-                           nil
-                          ];
-
-    RKNumberFormattingRomanNumeralOrdering = [[RKNumberFormattingRomanNumeralMapping allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
-        return [obj2 compare: obj1];
-    }];
-}
-
 + (NSString *)lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
 {
+    static NSDictionary *RKNumberFormattingRomanNumeralMapping = nil;
+    static NSArray *RKNumberFormattingRomanNumeralOrdering = nil;
+    
+    RKNumberFormattingRomanNumeralMapping = (RKNumberFormattingRomanNumeralMapping) ?: 
+        [NSDictionary dictionaryWithObjectsAndKeys:
+         @"i", [NSNumber numberWithUnsignedInteger:1],
+         @"x", [NSNumber numberWithUnsignedInteger:10],
+         @"c", [NSNumber numberWithUnsignedInteger:100],
+         @"m", [NSNumber numberWithUnsignedInteger:1000],
+         @"iv", [NSNumber numberWithUnsignedInteger:4],
+         @"xl", [NSNumber numberWithUnsignedInteger:40],
+         @"cd", [NSNumber numberWithUnsignedInteger:400],
+         @"v", [NSNumber numberWithUnsignedInteger:5],
+         @"l", [NSNumber numberWithUnsignedInteger:50],
+         @"d", [NSNumber numberWithUnsignedInteger:500],
+         @"ix", [NSNumber numberWithUnsignedInteger:9],
+         @"xc", [NSNumber numberWithUnsignedInteger:900],
+         @"cm", [NSNumber numberWithUnsignedInteger:9000],                          
+         nil
+        ];
+
+    RKNumberFormattingRomanNumeralOrdering = (RKNumberFormattingRomanNumeralOrdering) ?:
+        [[RKNumberFormattingRomanNumeralMapping allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];    
+    
     if (number == 0)
         return @"0";
 

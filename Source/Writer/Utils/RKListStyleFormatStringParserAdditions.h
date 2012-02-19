@@ -18,7 +18,7 @@
  NSNumber        A RKListStyleFormatCode representing the format code
  Besides the token, the block receives also the level index of the format string to which the token belongs
  */
-- (void)scanFullFormatStringFromLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger tokenLevel))block;
+- (void)scanFullFormatStringOfLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger tokenLevel))block;
 
 /*!
  @abstract Returns the range of the first enumeration placeholder inside a format string

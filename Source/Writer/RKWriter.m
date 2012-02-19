@@ -56,7 +56,7 @@
 {
     NSString *body = [RKBodyWriter RTFBodyFromDocument:document withAttachmentPolicy:attachmentPolicy resources:resources];
     NSString *head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];
-
+    
     return [NSString stringWithFormat:@"{%@\n%@\n}\n", head, body];
 }
 

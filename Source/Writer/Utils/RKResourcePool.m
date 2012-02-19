@@ -58,7 +58,7 @@
     return self;
 }
 
-#pragma marg - Fonts
+#pragma mark - Fonts
 
 - (NSUInteger)indexOfFont:(NSFont *)font
 {
@@ -80,7 +80,7 @@
     return fonts;
 }
 
-#pragma marg - Colors
+#pragma mark - Colors
 
 - (NSUInteger)indexOfColor:(NSColor *)color
 {

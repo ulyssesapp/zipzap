@@ -33,7 +33,7 @@
 
 #pragma mark - Full format string operations
 
-- (void)scanFullFormatStringFromLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger currentLevel))block
+- (void)scanFullFormatStringOfLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger currentLevel))block
 {
     static NSRegularExpression *tokenRegEx;
     tokenRegEx = (tokenRegEx) ?: [NSRegularExpression regularExpressionWithPattern:@"%[%*daArR]" options:0 error:nil];
@@ -87,9 +87,5 @@
         block(token, [[levels objectAtIndex: tokenIndex] unsignedIntegerValue]);
     }];
 }
-
-
-
-
 
 @end
