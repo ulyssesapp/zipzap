@@ -12,6 +12,7 @@
 @implementation RKPredefinedStyleAttributeWriter
 
 + (void)load {
+    // Paragraph styles and inline styles must have a higher priority in order to work with OpenOffice
     [RKAttributedStringWriter registerWriter:self forAttribute:RKPredefinedParagraphStyleAttributeName priority:RKAttributedStringWriterPriorityParagraphStyleSheetLevel];
     [RKAttributedStringWriter registerWriter:self forAttribute:RKPredefinedCharacterStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStylesheetLevel];
 }

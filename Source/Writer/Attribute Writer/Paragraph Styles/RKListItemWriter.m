@@ -32,7 +32,6 @@
         
         NSString *markerString = [listItem.textList markerForItemNumbers:itemNumbers];
         
-        // Note: the tabulators enclosing the listtext content are required for compatability to the text system
         [taggedString registerTag:[NSString stringWithFormat:@"\\ls%i\\ilvl%i {\\listtext%@}", listIndex + 1, listItem.indentationLevel, markerString] forPosition:range.location];
     }
 }

@@ -9,8 +9,6 @@
 extern NSString *RKPredefinedCharacterStyleAttributeName;
 extern NSString *RKPredefinedParagraphStyleAttributeName;
 
-@class RKTextStyleSheet;
-
 /*!
  @abstract Provides convenience methods for setting paragraph and character styles
  */
