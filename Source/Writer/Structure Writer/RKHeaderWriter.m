@@ -216,7 +216,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
                                  [list formatStringOfLevel:level placeholderPositions:&placeholderPositions]
                                 ];
     
-    // Generate placeholder formatting
+    // Generate placeholder formatting (Word requires a positioning string for all placeholders)
     NSMutableString *rtfPlaceholderPostions = [NSMutableString stringWithString:@"{\\levelnumbers "];
     
     for (NSNumber *placeholderPosition in placeholderPositions) {
@@ -225,7 +225,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     
     [rtfPlaceholderPostions appendString:@";}"];
     
-    // Cocoa format string
+    // Cocoa-specific format string
     NSString *textSystemFormatString = [list systemFormatOfLevel: level];
     
     // Additional parameters

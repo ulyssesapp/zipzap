@@ -20,8 +20,8 @@
 
 /*!
  @abstract Creates a text list with a format for all levels (at most RKListMaxiumLevelCount)
- @discussion An array of NSString with format strings per level must be given. 
-             The format strings consists of an arbitrary text and at most one placeholder
+ @discussion An array of NSString with format strings per level must be given. The format strings consists of an arbitrary text and at most one placeholder
+ 
               The available placeholders are:
                 %d     Decimal numbers
                 %r     Lower roman numbers
@@ -32,6 +32,8 @@
               Additionally the following placeholders may be used
                 %%      %-Charracter
                 %*      Insert level string of a higher level here
+ 
+ @note This is in contrast to NSTextList where prepending is done using a prepend flag. Since Word does not provide a prepend flag and some locales require to sort enumerations in another direction, we have to encode the placeholder ordering manually.
  */
 + (RKListStyle *)listStyleWithLevelFormats:(NSArray *)levelFormats;
 
