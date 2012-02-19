@@ -12,10 +12,10 @@
 
 + (NSString *)lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
 {
-    static NSDictionary *RKNumberFormattingRomanNumeralMapping = nil;
-    static NSArray *RKNumberFormattingRomanNumeralOrdering = nil;
+    static NSDictionary *romanNumeralsMap = nil;
+    static NSArray *romanNumeralsOrdering = nil;
     
-    RKNumberFormattingRomanNumeralMapping = (RKNumberFormattingRomanNumeralMapping) ?: 
+    romanNumeralsMap = (romanNumeralsMap) ?: 
         [NSDictionary dictionaryWithObjectsAndKeys:
          @"i", [NSNumber numberWithUnsignedInteger:1],
          @"x", [NSNumber numberWithUnsignedInteger:10],
@@ -33,8 +33,8 @@
          nil
         ];
 
-    RKNumberFormattingRomanNumeralOrdering = (RKNumberFormattingRomanNumeralOrdering) ?:
-        [[RKNumberFormattingRomanNumeralMapping allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];    
+    romanNumeralsOrdering = (romanNumeralsOrdering) ?:
+        [[romanNumeralsMap allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];    
     
     if (number == 0)
         return @"0";
@@ -42,11 +42,11 @@
     NSMutableString *romanNumber = [NSMutableString new];
     NSUInteger remainder = number;
     
-    for (NSNumber *numeralValueObject in RKNumberFormattingRomanNumeralOrdering) {
+    for (NSNumber *numeralValueObject in romanNumeralsOrdering) {
         NSUInteger numeralValue = [numeralValueObject unsignedIntegerValue];
         
         while (remainder >= numeralValue) {
-            [romanNumber appendString:  [RKNumberFormattingRomanNumeralMapping objectForKey: numeralValueObject]];
+            [romanNumber appendString:  [romanNumeralsMap objectForKey: numeralValueObject]];
             remainder -= numeralValue;
         }
     }
