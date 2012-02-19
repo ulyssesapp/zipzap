@@ -17,7 +17,7 @@
 /*!
  @abstract Generates the required tags for styling a paragraph
  */
-+ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range;
++ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range resources:(RKResourcePool *)resources;
 
 @end
 
@@ -36,7 +36,7 @@
            attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    NSString *paragraphHeader = [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:range];
+    NSString *paragraphHeader = [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:range resources:resources];
 
     // We add \pard before each paragraph to reset the current paragraph styling
     [taggedString registerTag:@"\\pard" forPosition:range.location];
@@ -51,7 +51,7 @@
     }
 }
     
-+ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range
++ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range resources:(RKResourcePool *)resources
 {
     NSMutableString *rtf = [NSMutableString new];
     
@@ -88,7 +88,7 @@
     if (paragraphStyle.headIndent != 0)
         [rtf appendFormat:@"\\li%u\\culi%u", (NSUInteger)RKPointsToTwips(paragraphStyle.headIndent), (NSUInteger)RKPointsToTwips(paragraphStyle.headIndent)];
     
-    // FIXME: It is not clear, how Cocoa calculates this
+    // This is calculated differently to Cocoa, since it is handled differ
     if (paragraphStyle.tailIndent != 0)
         [rtf appendFormat:@"\\ri%i", (NSInteger)RKPointsToTwips(fabs(paragraphStyle.tailIndent))];
     
@@ -156,7 +156,7 @@
     // To calculate the line height attribute in a style sheet, all RTF writers seem to use the line height of the style setting rather than the line height of the actual paragraph
     NSAttributedString *simulatedParagraph = [[NSAttributedString alloc] initWithString:@"A\n" attributes:styleSetting ];
     
-    return [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph range:NSMakeRange(0, 2)];
+    return [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph range:NSMakeRange(0, 2) resources:resources];
 }
 
 @end

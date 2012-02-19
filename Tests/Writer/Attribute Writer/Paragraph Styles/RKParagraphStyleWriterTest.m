@@ -47,7 +47,7 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];    
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -80,7 +80,7 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -91,7 +91,7 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSLeftTextAlignment;    
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\ql\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -102,7 +102,7 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSCenterTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qc\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -113,7 +113,7 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSRightTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qr\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -124,7 +124,7 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.alignment = NSJustifiedTextAlignment;
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qj\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -157,7 +157,7 @@
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,3)];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -168,7 +168,7 @@
     paragraphStyle = [paragraphStyle mutableCopy];
     paragraphStyle.lineHeightMultiple = 3.0f;
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\sl720\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -183,7 +183,7 @@
     [attributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica" size:30] range:NSMakeRange(1, 1)];
     [attributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica" size:40] range:NSMakeRange(2, 1)];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\sl2400\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -195,7 +195,7 @@
 {
     NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"a"];
-    
+        
     paragraphStyle.alignment = NSRightTextAlignment;
     
     paragraphStyle.firstLineHeadIndent = 1.0f;
@@ -224,8 +224,12 @@
 
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];  
     
+    RKDocument *document = [RKDocument new];
+    document.pageSize = NSMakeSize(100, 200);
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument:document];
+    
     // Right alligned
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1)],
+    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:resources],
                          @"\\rtlpar"
                          "\\qr"
                          "\\fi-20\\cufi-20"
