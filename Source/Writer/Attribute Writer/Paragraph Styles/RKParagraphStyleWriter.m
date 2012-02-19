@@ -78,14 +78,13 @@
             break;            
     }
     
-    // Indentation
+    // Indentation (for compatibiliy reasons we have to set \\fi and \\cufi, \\li and \\culi etc.
     if (paragraphStyle.firstLineHeadIndent != 0)
         [rtf appendFormat:@"\\fi%i\\cufi%i", 
          (NSUInteger)RKPointsToTwips(paragraphStyle.firstLineHeadIndent - paragraphStyle.headIndent), 
          (NSUInteger)RKPointsToTwips(paragraphStyle.firstLineHeadIndent - paragraphStyle.headIndent)
         ];
-    
-    // For compatibility reasons we have to set \li and \culi    
+       
     if (paragraphStyle.headIndent != 0)
         [rtf appendFormat:@"\\li%u\\culi%u", (NSUInteger)RKPointsToTwips(paragraphStyle.headIndent), (NSUInteger)RKPointsToTwips(paragraphStyle.headIndent)];
     
@@ -102,7 +101,6 @@
             indent = (NSInteger)RKPointsToTwips(fabs(paragraphStyle.tailIndent));
         }
 
-        // For compatibility reasons we have to set \ri and \curi
         [rtf appendFormat:@"\\ri%i\\curi%i", indent, indent];
     }
     
