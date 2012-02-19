@@ -11,7 +11,7 @@
 
 @implementation RKPredefinedStyleAttributeWriterTest
 
-- (NSDictionary *)generateCharacterStyle
+- (NSMutableDictionary *)generateCharacterStyle
 {
     NSFont *font = [NSFont fontWithName:@"Helvetica-BoldOblique" size:16];
     NSShadow *shadow = [NSShadow new];
@@ -29,7 +29,7 @@
     shadow.shadowOffset = NSMakeSize(0.0f, 0.0f);
     shadow.shadowColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];
         
-    return [NSDictionary dictionaryWithObjectsAndKeys: 
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys: 
              font,                  NSFontAttributeName,
              shadow,                NSShadowAttributeName,
              strikethroughStyle,    NSStrikethroughStyleAttributeName,
@@ -45,7 +45,7 @@
             ];
 }
 
-- (NSDictionary *)generateParagraphStyle
+- (NSMutableDictionary *)generateParagraphStyle
 {
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];    
 
@@ -65,8 +65,7 @@
     paragraphStyle.tabStops = [NSArray new];
     paragraphStyle.baseWritingDirection = NSWritingDirectionLeftToRight;
     
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [self generateCharacterStyle]];
-    
+    NSMutableDictionary *dictionary = [self generateCharacterStyle];
     [dictionary setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
 
     return dictionary;
@@ -227,7 +226,7 @@
     
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
-                         "{\\*\\cs1 "
+                         "{\\cs1 "
                          "b"
                          "}"
                          "c", 
@@ -293,23 +292,28 @@
 
 - (void)testStylesheetsAreCompatibleWithReferenceTest
 {
-    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"pstyle\ncstyle\n" ];
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"cstyle default-cstyle\npstyle\npstyle cstyle pstyle\n" ];
     
     RKDocument *document = [RKDocument documentWithAttributedString: content];
     
-    document.characterStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+    document.characterStyles = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
                                 [self generateCharacterStyle], @"CStyle",
                                 nil
                                 ];
     
-    document.paragraphStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
+    document.paragraphStyles = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
                                 [self generateParagraphStyle], @"PStyle",
                                 nil
                                 ];    
     
-    [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(0,7)];
-    [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(7,7)];
-
+    [[document.characterStyles objectForKey:@"CStyle"] setObject:[NSFont fontWithName:@"Helvetica-BoldOblique" size:100] forKey:NSFontAttributeName];
+    
+    [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(0, 7)];
+    [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(22, 7)];
+    
+    [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(29, 21)];    
+    [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(36, 6)];
+    
     [self assertRTF:[document RTF] withTestDocument:@"stylesheet"];
 }
 

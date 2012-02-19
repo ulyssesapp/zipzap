@@ -155,7 +155,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     __block NSMutableString *collectedStyleSheets = [NSMutableString new];
     
     [styleDefinitions enumerateKeysAndObjectsUsingBlock:^(NSString *styleName, NSDictionary *styleDefinition, BOOL *stop) {
-        NSString *styleTag = (isParagraphStyle) ? @"\\s" : @"\\*\\cs";
+        NSString *styleTag = (isParagraphStyle) ? @"\\s" : @"\\cs";
         NSUInteger styleIndex = (isParagraphStyle) ? [resources indexOfParagraphStyle: styleName] : [resources indexOfCharacterStyle: styleName];
         
         // We need sqformat to make the style visible in the UI of Microsoft Word

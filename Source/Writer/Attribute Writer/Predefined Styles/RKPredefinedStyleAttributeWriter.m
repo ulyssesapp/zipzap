@@ -39,7 +39,8 @@
     }
     else if ([attributeName isEqualTo: RKPredefinedCharacterStyleAttributeName]) {
         styleIndex = [resources indexOfCharacterStyle: styleName];        
-        styleTypeOpeningTag = @"{\\*\\cs";
+        // Enclosing character styles into a control group is required by OpenOffice
+        styleTypeOpeningTag = @"{\\cs";
         styleTypeClosingTag = @"}";
     }
 

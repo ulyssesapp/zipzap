@@ -394,7 +394,7 @@
             "\\sqformat\\sbasedon0 "
             "PStyle;"
             "}"
-          "{\\*\\cs2"
+          "{\\cs2"
             "\\additive "
             "\\cb2 "
             "\\cf3 "
