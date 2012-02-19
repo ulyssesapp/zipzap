@@ -254,9 +254,9 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
     NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
     
-    [textLists enumerateObjectsUsingBlock:^(RKListStyle *textList, NSUInteger listIndex, BOOL *stop) {
-        [overrideTable appendFormat:@"{\\listoverride\\listid%u\\listoverridecount0\\ls%u}", listIndex + 1, listIndex + 1];
-    }];
+    for (NSUInteger listIndex = 1; listIndex < textLists.count + 1; listIndex ++) {
+        [overrideTable appendFormat:@"{\\listoverride\\listid%u\\listoverridecount0\\ls%u}", listIndex, listIndex];
+    }
     
     [overrideTable appendString:@"}\n"];
     
