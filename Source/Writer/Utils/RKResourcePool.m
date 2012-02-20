@@ -116,7 +116,7 @@
     return [[document.paragraphStyles allKeys] indexOfObject: paragraphStyleName] + 1;
 }
 
-- (NSUInteger) indexOfCharacterStyle:(NSString *)characterStyleName
+- (NSUInteger)indexOfCharacterStyle:(NSString *)characterStyleName
 {
     NSAssert(characterStyleName, @"No style name given");
     
