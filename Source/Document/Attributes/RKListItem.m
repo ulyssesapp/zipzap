@@ -42,7 +42,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     
     // A trailing \n is required since a list item must be a paragraph
     if (![attributedString.string hasSuffix:@"\n"])
-        [attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\n"]];
+        [attributedString replaceCharactersInRange:NSMakeRange(attributedString.length, 0) withString:@"\n" ];
     
     [attributedString addAttribute:RKTextListItemAttributeName value:listItem range:NSMakeRange(0, attributedString.length)];
         
