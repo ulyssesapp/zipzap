@@ -49,41 +49,41 @@
     
     NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@""];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A"] usingList:textList withIndentationLevel:0];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A"] withStyle:textList withIndentationLevel:0];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAC"] usingList:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] withStyle:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAB"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAC"] withStyle:textList withIndentationLevel:2];    
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AB"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABC"] usingList:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AB"] withStyle:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABA"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABB"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABC"] withStyle:textList withIndentationLevel:2];    
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AC"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACC"] usingList:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AC"] withStyle:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACA"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACB"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACC"] withStyle:textList withIndentationLevel:2];    
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"B"] usingList:textList withIndentationLevel:0];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"B"] withStyle:textList withIndentationLevel:0];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BA"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAC"] usingList:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BA"] withStyle:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAA"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAB"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAC"] withStyle:textList withIndentationLevel:2];    
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BB"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBC"] usingList:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BB"] withStyle:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBA"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBB"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBC"] withStyle:textList withIndentationLevel:2];    
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BC"] usingList:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCA"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCB"] usingList:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCC"] usingList:textList withIndentationLevel:2];   
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BC"] withStyle:textList withIndentationLevel:1];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCA"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCB"] withStyle:textList withIndentationLevel:2];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCC"] withStyle:textList withIndentationLevel:2];   
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"C"] usingList:textList withIndentationLevel:0];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"C"] withStyle:textList withIndentationLevel:0];
 
     return testString;
 }

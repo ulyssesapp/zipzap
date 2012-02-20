@@ -53,16 +53,16 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @implementation NSMutableAttributedString (RKMutableAttributedStringAdditions)
 
-- (void)insertListItem:(NSAttributedString *)text usingList:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
+- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
 {
     NSAttributedString *listItemString = [NSAttributedString attributedStringWithListItem:text usingList:textList withIndentationLevel:indentationLevel];
     
     [self insertAttributedString:listItemString atIndex:location];
 }
 
-- (void)appendListItem:(NSAttributedString *)text usingList:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel
+- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel
 {
-    [self insertListItem:text usingList:textList withIndentationLevel:indentationLevel atIndex:self.length];
+    [self insertListItem:text withStyle:textList withIndentationLevel:indentationLevel atIndex:self.length];
 }
 
 @end
