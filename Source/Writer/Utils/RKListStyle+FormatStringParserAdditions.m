@@ -9,7 +9,7 @@
 #import "RKConversion.h"
 #import "RKListStyle.h"
 #import "RKListStyle+FormatStringParserAdditions.h"
-#import "RKStringConvenienceAdditions.h"
+#import "NSString+RKConvenienceAdditions.h"
 
 @implementation RKListStyle (FormatStringParserAdditions)
 

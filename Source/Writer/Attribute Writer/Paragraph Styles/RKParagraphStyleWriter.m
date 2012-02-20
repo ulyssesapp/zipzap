@@ -10,7 +10,7 @@
 #import "RKParagraphStyleWriter.h"
 #import "RKTaggedString.h"
 #import "RKResourcePool.h"
-#import "RKAttributedStringAdditions.h"
+#import "NSAttributedString+RKCalculationAdditions.h"
 
 @interface RKParagraphStyleWriter ()
 

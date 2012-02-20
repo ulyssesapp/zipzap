@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKReferenceTest.h"
-
 @implementation SenTestCase (RKReferenceTest)
 
 -(NSString *)loadTestDocument:(NSString *)name

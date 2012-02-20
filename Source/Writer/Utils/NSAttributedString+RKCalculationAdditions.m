@@ -1,15 +1,15 @@
 //
-//  RKAttributedStringAdditions.m
+//  NSAttributedString+RKCalculationAdditions.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 07.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKAttributedStringAdditions.h"
+#import "NSAttributedString+RKCalculationAdditions.h"
 #import "RKFontAdditions.h"
 
-@implementation NSAttributedString (RKAttributedStringAdditions)
+@implementation NSAttributedString (RKCalculationAdditions)
 
 - (CGFloat)pointSizeInRange:(NSRange)range
 {

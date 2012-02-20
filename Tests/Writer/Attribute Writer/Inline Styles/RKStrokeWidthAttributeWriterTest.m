@@ -8,7 +8,7 @@
 
 #import "RKStrokeWidthAttributeWriter.h"
 #import "RKStrokeWidthAttributeWriterTest.h"
-#import "RKAttributeWriterTestHelper.h"
+#import "SenTestCase+RKAttributeWriterTestHelper.h"
 
 @implementation RKStrokeWidthAttributeWriterTest
 

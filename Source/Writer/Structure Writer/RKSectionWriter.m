@@ -11,7 +11,7 @@
 #import "RKResourcePool.h"
 #import "RKSectionWriter.h"
 #import "RKAttributedStringWriter.h"
-#import "RKStringConvenienceAdditions.h"
+#import "NSString+RKConvenienceAdditions.h"
 
 @interface RKSectionWriter ()
 

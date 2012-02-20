@@ -1,14 +1,14 @@
 //
-//  RKAttributedStringAttachmentConvenience.m
+//  NSAttributedString+RKAttachmentConvenience.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 10.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKAttributedStringAttachmentConvenience.h"
+#import "NSAttributedString+RKAttachmentConvenience.h"
 
-@implementation NSAttributedString (RKAttributedStringAttachmentConvenience)
+@implementation NSAttributedString (RKAttachmentConvenience)
 
 + (NSAttributedString *)attributedStringWithAttachment:(id)attachment attributeName:(NSString *)attributeName
 {

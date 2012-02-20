@@ -8,7 +8,7 @@
 
 #import "RKSuperscriptAttributeWriter.h"
 #import "RKSuperscriptAttributeWriterTest.h"
-#import "RKAttributeWriterTestHelper.h"
+#import "SenTestCase+RKAttributeWriterTestHelper.h"
 
 @implementation RKSuperscriptAttributeWriterTest
 

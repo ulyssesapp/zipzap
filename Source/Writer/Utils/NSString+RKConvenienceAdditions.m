@@ -1,14 +1,14 @@
 //
-//  RKStringConvenienceAdditions.m
+//  NSString+RKConvenienceAdditions.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 15.02.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKStringConvenienceAdditions.h"
+#import "NSString+RKConvenienceAdditions.h"
 
-@implementation NSString (RKStringConvenienceAdditions)
+@implementation NSString (RKConvenienceAdditions)
 
 + (NSString *)stringWithRTFGroupTag:(NSString *)tag body:(NSString *)body
 {

@@ -1,5 +1,5 @@
 //
-//  RKAttributedStringAttachmentConvenience.h
+//  NSAttributedString+RKAttachmentConvenience.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 10.02.12.

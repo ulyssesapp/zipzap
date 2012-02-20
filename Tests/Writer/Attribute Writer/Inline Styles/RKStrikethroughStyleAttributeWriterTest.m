@@ -8,7 +8,7 @@
 
 #import "RKStrikethroughStyleAttributeWriter.h"
 #import "RKStrikethroughStyleAttributeWriterTest.h"
-#import "RKAttributeWriterTestHelper.h"
+#import "SenTestCase+RKAttributeWriterTestHelper.h"
 
 @implementation RKStrikethroughStyleAttributeWriterTest
 

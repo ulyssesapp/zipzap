@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKNumberFormatting.h"
-#import "RKNumberFormattingTest.h"
+#import "NSString+RKNumberFormatting.h"
+#import "NSString+RKNumberFormattingTest.h"
 
 @implementation RKNumberFormattingTest
 

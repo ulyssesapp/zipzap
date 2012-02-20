@@ -7,7 +7,7 @@
 //
 
 #import "RKFootnote.h"
-#import "RKAttributedStringAttachmentConvenience.h"
+#import "NSAttributedString+RKAttachmentConvenience.h"
 
 NSString *RKFootnoteAttributeName = @"RKFootnote";
 NSString *RKEndnoteAttributeName = @"RKEndnote";

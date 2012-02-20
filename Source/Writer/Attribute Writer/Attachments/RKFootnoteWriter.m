@@ -8,7 +8,7 @@
 
 #import "RKFootnoteWriter.h"
 #import "RKAttributedStringWriter.h"
-#import "RKStringConvenienceAdditions.h"
+#import "NSString+RKConvenienceAdditions.h"
 
 @implementation RKFootnoteWriter
 

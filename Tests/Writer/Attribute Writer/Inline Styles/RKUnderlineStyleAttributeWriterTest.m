@@ -8,7 +8,7 @@
 
 #import "RKUnderlineStyleAttributeWriter.h"
 #import "RKUnderlineStyleAttributeWriterTest.h"
-#import "RKAttributeWriterTestHelper.h"
+#import "SenTestCase+RKAttributeWriterTestHelper.h"
 
 @implementation RKUnderlineStyleAttributeWriterTest
 

@@ -1,5 +1,5 @@
 //
-//  RKNumberFormatting.h
+//  NSString+RKNumberFormatting.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.

@@ -7,7 +7,7 @@
 //
 
 #import "RKPlaceholder.h"
-#import "RKAttributedStringAttachmentConvenience.h"
+#import "NSAttributedString+RKAttachmentConvenience.h"
 
 NSString *RKPlaceholderAttributeName = @"RKPlaceholder";
 

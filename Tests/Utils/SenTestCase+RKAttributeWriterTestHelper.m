@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKAttributeWriterTestHelper.h"
+#import "SenTestCase+RKAttributeWriterTestHelper.h"
 #import "RKAttributeWriter.h"
 
 @implementation SenTestCase (RKAttributeWriterTestHelper)

@@ -9,7 +9,7 @@
 #import "RKListStyle+FormatStringParserAdditions.h"
 #import "RKListStyle+WriterAdditions.h"
 #import "RKConversion.h"
-#import "RKNumberFormatting.h"
+#import "NSString+RKNumberFormatting.h"
 
 @interface RKListStyle (WriterAdditionsPrivateMethods)
 
