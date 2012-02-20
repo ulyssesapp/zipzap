@@ -52,6 +52,25 @@
     return escapedString;
 }
 
+- (NSString *)sanitizedFilenameForRTFD
+{
+    static NSRegularExpression *unsafeFilenameCharsRegExp = nil;
+    unsafeFilenameCharsRegExp = (unsafeFilenameCharsRegExp) ?: [NSRegularExpression regularExpressionWithPattern:@"[\\{\\}\\*\\?/\\\\]" options:0 error:NULL];
+    
+    // Removing diacritic characters
+    NSString *sanitizedFilename = [self stringByFoldingWithOptions:NSDiacriticInsensitiveSearch|NSWidthInsensitiveSearch locale:[NSLocale systemLocale]];
+    
+    // Removing unicode characters
+    sanitizedFilename = [[NSString alloc] initWithData:[self dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] encoding:NSASCIIStringEncoding];
+    
+    // Replace all characters that are used by RTF
+    NSMutableString *rtfSafeFilename = [NSMutableString stringWithString: sanitizedFilename];
+    
+    [unsafeFilenameCharsRegExp replaceMatchesInString:rtfSafeFilename options:0 range:NSMakeRange(0, sanitizedFilename.length) withTemplate:@"_"];
+        
+    return rtfSafeFilename;
+}
+
 @end
 
 @implementation NSDate (RKConversion)

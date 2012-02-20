@@ -133,20 +133,17 @@
 {
     NSAssert(fileWrapper, @"No file given");
     
-    NSString *fileExtension = fileWrapper.preferredFilename == nil ? fileWrapper.filename.pathExtension : fileWrapper.preferredFilename.pathExtension;
-
-    NSAssert(fileExtension, @"No file extension given");
-    
-    NSString *filename = [NSString stringWithFormat: @"%u.%@", attachmentFileWrappers.count, fileExtension];
-
-    [attachmentFileWrappers setValue:fileWrapper forKey:filename];
+    NSString *originalFilename = (fileWrapper.preferredFilename) ?: (fileWrapper.filename) ?: @"";
+    NSString *filename = [NSString stringWithFormat: @"%u.%@", attachmentFileWrappers.count, [originalFilename sanitizedFilenameForRTFD]];
     
     fileWrapper.preferredFilename = filename;
+
+    [attachmentFileWrappers setValue:fileWrapper forKey:filename];
     
     return filename;
 }
 
-#pragma marg - Text Lists
+#pragma mark - Text Lists
 
 - (NSUInteger)indexOfListStyle:(RKListStyle *)textList
 {

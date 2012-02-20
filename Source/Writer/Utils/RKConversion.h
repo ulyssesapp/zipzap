@@ -14,6 +14,12 @@
  */
 - (NSString *)RTFEscapedString;
 
+/*!
+ @abstract Sanitizes a filename for usage within an RTFD file
+ @discussion Replaces all diacritic characters by their base characters and removes all non-iso characters
+ */
+- (NSString *)sanitizedFilenameForRTFD;
+
 @end
 
 @interface NSDate (RKConversion)

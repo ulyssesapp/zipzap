@@ -88,4 +88,12 @@
     
 }
 
+- (void)testSanitizeFilenameForRTFD
+{
+    STAssertEqualObjects(@"foauoaus", [@"föäüóàûß" sanitizedFilenameForRTFD], @"Invalid sanitization of diacritic characters");
+    STAssertEqualObjects(@"x___x", [@"x\\{}x" sanitizedFilenameForRTFD], @"Invalid sanitization of RTF characters");
+    STAssertEqualObjects(@"x___x", [@"x?*/x" sanitizedFilenameForRTFD], @"Invalid sanitization of non-filename characters");
+    STAssertEqualObjects(@"_-", [@"∮-" sanitizedFilenameForRTFD], @"Invalid sanitization of UTF-8 characters");
+}
+
 @end
