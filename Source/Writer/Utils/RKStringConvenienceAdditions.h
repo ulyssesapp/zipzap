@@ -16,6 +16,7 @@
 
 /*!
  @abstract Splits the string by matches and non-matches of a regular expression.
+ @discussion This is in contrast to componentsSeparatedByString of AppKit which removes the separator.
  */
 - (NSArray *)componentsSeparatedByRegularExpression:(NSRegularExpression *)regularExpression;
 
