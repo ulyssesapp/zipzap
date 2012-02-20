@@ -18,7 +18,6 @@
     // Settings used in all tests
     section.numberOfColumns = 2;
     section.indexOfFirstPage = 3;
-    section.restartPageIndex = true;
     
     // Decimal page numbering
     section.pageNumberingStyle = RKPageNumberingDecimal;
@@ -37,7 +36,7 @@
     STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnstarts3\\pgnrestart\\pgnucltr", @"Invalid translation");
 
     // Letter lower case
-    section.restartPageIndex = false;    
+    section.indexOfFirstPage = RKContinuousPageNumbering;    
     section.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
     STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\pgnlcltr", @"Invalid translation");
 }
@@ -175,7 +174,6 @@
     
     sectionDecimal.pageNumberingStyle = RKPageNumberingDecimal;
     sectionDecimal.indexOfFirstPage = 10;
-    sectionDecimal.restartPageIndex = YES;
     sectionRomanLower.pageNumberingStyle = RKPageNumberingRomanLowerCase;
     sectionRomanUpper.pageNumberingStyle = RKPageNumberingRomanUpperCase;
     sectionAlphabeticLower.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;

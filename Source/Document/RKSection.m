@@ -42,7 +42,7 @@
 
 @implementation RKSection
 
-@synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle, restartPageIndex;
+@synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle;
 
 + (id)sectionWithContent:(NSAttributedString *)content
 {
@@ -55,9 +55,8 @@
     
     if (self) {
         numberOfColumns = 1;
-        indexOfFirstPage = 1;
+        indexOfFirstPage = RKContinuousPageNumbering;
         pageNumberingStyle = RKPageNumberingDecimal;
-        restartPageIndex = false;
         
         headers = [NSMutableDictionary new];
         footers = [NSMutableDictionary new];

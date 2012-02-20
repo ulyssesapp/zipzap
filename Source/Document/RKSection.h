@@ -8,6 +8,8 @@
 
 #import "RKTypes.h"
 
+#define RKContinuousPageNumbering           NSNotFound
+
 /*!
  @abstract Representation of an RTF section
  @discussion An RTF section is an area of the document that has own headlines, footers and custom layouting options.
@@ -67,13 +69,9 @@
 
 /*!
  @abstract Starting page number
+ @discussion Continuos page numbering if NSNotFound is set
  */
 @property(nonatomic) NSUInteger indexOfFirstPage;
-
-/*!
- @abstract Restart page numbering for this section
- */
-@property(nonatomic) BOOL restartPageIndex;
 
 /*!
  @abstract Page number style

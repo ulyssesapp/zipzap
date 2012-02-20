@@ -64,7 +64,7 @@
     
     [attributes appendFormat: @"\\cols%u", section.numberOfColumns];
     
-    if (section.restartPageIndex)
+    if (section.indexOfFirstPage != RKContinuousPageNumbering)
         [attributes appendFormat: @"\\pgnstarts%u\\pgnrestart", section.indexOfFirstPage];
     
     switch (section.pageNumberingStyle) {
