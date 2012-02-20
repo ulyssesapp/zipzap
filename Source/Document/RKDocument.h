@@ -50,6 +50,7 @@
 /*!
  @abstract Exports the document as RTFD 
  @discussion Creates a file wrapper containing the RTF and all referenced pictures
+             This method will modify the preferredFilename of any NSFileWrapper used as text attachment.
  */
 - (NSFileWrapper *)RTFD;
 
