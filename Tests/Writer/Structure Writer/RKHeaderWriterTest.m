@@ -187,7 +187,7 @@
     [document setEndnoteEnumerationStyle:RKFootnoteEnumerationAlphabeticLowerCase];
     
     [document setFootnoteEnumerationPolicy:RKFootnoteEnumerationPerSection];
-    [document setRestartEndnotesOnEachSection:NO];
+    [document setEndnoteEnumerationPolicy: RKFootnoteContinuousEnumeration];
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\facingp"

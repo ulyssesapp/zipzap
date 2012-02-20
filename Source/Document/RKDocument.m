@@ -13,7 +13,7 @@
 @implementation RKDocument
 
 @synthesize sections, metadata, hyphenationEnabled, pageSize, pageInsets, pageOrientation,
-            footnotePlacement, endnotePlacement, footnoteEnumerationStyle, endnoteEnumerationStyle, footnoteEnumerationPolicy, restartEndnotesOnEachSection,
+            footnotePlacement, endnotePlacement, footnoteEnumerationStyle, endnoteEnumerationStyle, footnoteEnumerationPolicy, endnoteEnumerationPolicy,
             paragraphStyles, characterStyles;
 
 + (RKDocument *)documentWithSections:(NSArray *)initialSections
@@ -38,6 +38,9 @@
 
         self.pageOrientation = RKPageOrientationPortrait;
         self.hyphenationEnabled = NO;
+        
+        self.footnoteEnumerationPolicy = RKFootnoteEnumerationPerPage;
+        self.endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
     }
     
     return self;

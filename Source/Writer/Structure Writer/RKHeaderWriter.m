@@ -353,11 +353,18 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     }
     
     // Endnote restart policy
-    if (document.restartEndnotesOnEachSection) {
-        [attributes appendString:@"\\aftnrestart"];
-    }
-    else {
-        [attributes appendString:@"\\aftnrstcont"];        
+    switch (document.endnoteEnumerationPolicy) {
+        case (RKFootnoteEnumerationPerSection):
+            [attributes appendString:@"\\aftnrestart"];
+            break;
+            
+        case (RKFootnoteContinuousEnumeration):
+            [attributes appendString:@"\\aftnrstcont"];        
+            break;
+            
+        case (RKFootnoteEnumerationPerPage):
+            NSAssert(false, @"Invalid policy for endnote enumeration");
+            break;
     }
     
     // Page orientation

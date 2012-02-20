@@ -121,14 +121,15 @@
 @property(nonatomic) RKFootnoteEnumerationStyle endnoteEnumerationStyle;
 
 /*!
- @abstract Specifies whether footnote numbering should restart on each page
+ @abstract Specifies a policy for enumeration of footnotes
  */
 @property(nonatomic) RKFootnoteEnumerationPolicy footnoteEnumerationPolicy;
 
 /*!
- @abstract Specifies whether endnotes restart on each section
+ @abstract Specifies a policy for enumeration of endnotes
+ @discussion Valid values are RKFootnoteEnumerationPerSection and RKFootnoteContinuousEnumeration
  */
-@property(nonatomic) BOOL restartEndnotesOnEachSection;
+@property(nonatomic) RKFootnoteEnumerationPolicy endnoteEnumerationPolicy;
 
 /*!
  @abstract Specifies document-wide paragraph styles
