@@ -180,7 +180,7 @@
     
     [original addAttribute:NSAttachmentAttributeName value:picture range:NSMakeRange(1, 1)];
     
-    NSAttributedString *converted = [self convertAndRereadRTF:original documentAttributes:nil];
+    NSAttributedString *converted = [self convertAndRereadRTF:original documentAttributes:NULL];
     
     [converted enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
         STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
@@ -197,7 +197,7 @@
     
     [original addAttribute:NSAttachmentAttributeName value:picture range:NSMakeRange(1, 1)];
     
-    NSAttributedString *converted = [self convertAndRereadPlainRTF:original documentAttributes:nil];
+    NSAttributedString *converted = [self convertAndRereadPlainRTF:original documentAttributes:NULL];
     
     [converted enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
         STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
@@ -214,7 +214,7 @@
     
     [original addAttribute:NSAttachmentAttributeName value:picture range:NSMakeRange(1, 1)];
     
-    NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:nil];
+    NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:NULL];
 
     STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc\n", NSAttachmentCharacter]), @"Invalid string content"); 
     
@@ -232,7 +232,7 @@
     
     [original addAttribute:NSAttachmentAttributeName value:movie range:NSMakeRange(1, 1)];
     
-    NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:nil];
+    NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:NULL];
     
     STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc\n", NSAttachmentCharacter]), @"Invalid string content"); 
     

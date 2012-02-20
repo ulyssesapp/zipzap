@@ -25,12 +25,12 @@
 
 + (NSData *)RTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:nil];
+    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:NULL];
 }
 
 + (NSData *)plainRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:nil];
+    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:NULL];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
