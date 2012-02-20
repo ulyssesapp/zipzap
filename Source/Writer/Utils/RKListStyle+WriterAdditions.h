@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKListStyleConversionAdditions.h"
+#import "RKListStyle+ConversionAdditions.h"
 
-@interface RKListStyle (RKListStyleWriterAdditions)
+@interface RKListStyle (WriterAdditions)
 
 /*!
  @abstract Returns the RTF list level format as required by the Cocoa text system

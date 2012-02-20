@@ -6,12 +6,12 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKListStyleFormatStringParserAdditions.h"
-#import "RKListStyleWriterAdditions.h"
+#import "RKListStyle+FormatStringParserAdditions.h"
+#import "RKListStyle+WriterAdditions.h"
 #import "RKConversion.h"
 #import "RKNumberFormatting.h"
 
-@interface RKListStyle (RKListStyleWriterAdditionsPrivateMethods)
+@interface RKListStyle (WriterAdditionsPrivateMethods)
 
 
 /*!
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation RKListStyle (RKListStyleWriterAdditions)
+@implementation RKListStyle (WriterAdditions)
 
 #pragma mark - Internal helper
 

@@ -26,7 +26,7 @@ typedef enum : NSUInteger {
     RKListFormatCodeBullet              = 23
 } RKListStyleFormatCode;
 
-@interface RKListStyle (RKListStyleConversionAdditions)
+@interface RKListStyle (ConversionAdditions)
 
 /*!
  @abstract Returns the format code that belongs to a placeholder as an object containing an RKListStyleFormatCode constant

@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKListStyleConversionAdditions.h"
+#import "RKListStyle+ConversionAdditions.h"
 
-@interface RKListStyle (RKListStyleFormatStringParserAdditions)
+@interface RKListStyle (FormatStringParserAdditions)
 
 /*!
  @abstract Executes the given block for each token of a full format string

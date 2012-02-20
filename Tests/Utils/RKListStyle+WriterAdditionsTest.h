@@ -1,5 +1,5 @@
 //
-//  RKListStyleWriterAdditionsTest.h
+//  RKListStyle+WriterAdditionsTest.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.

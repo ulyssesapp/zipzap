@@ -8,10 +8,10 @@
 
 #import "RKConversion.h"
 #import "RKListStyle.h"
-#import "RKListStyleFormatStringParserAdditions.h"
+#import "RKListStyle+FormatStringParserAdditions.h"
 #import "RKStringConvenienceAdditions.h"
 
-@implementation RKListStyle (RKListStyleFormatStringParserAdditions)
+@implementation RKListStyle (FormatStringParserAdditions)
 
 #pragma mark - Extraction of placeholders
 

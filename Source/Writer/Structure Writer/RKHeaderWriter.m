@@ -9,7 +9,7 @@
 #import "RKHeaderWriter.h"
 #import "RKResourcePool.h"
 #import "RKConversion.h"
-#import "RKListStyleWriterAdditions.h"
+#import "RKListStyle+WriterAdditions.h"
 #import "RKAttributedStringWriter.h"
 
 // Used to access the RKHeaderWriterMetadataDescriptions 
