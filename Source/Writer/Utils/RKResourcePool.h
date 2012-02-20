@@ -76,7 +76,7 @@
 /*!
  @abstract A dictionary mapping from filenames to the file wrappers of all attached files
  */
-@property (nonatomic,strong,readonly) NSDictionary* attachmentFileWrappers;
+@property (nonatomic,strong,readonly) NSDictionary *attachmentFileWrappers;
 
 /*!
  @abstract Returns the available lists

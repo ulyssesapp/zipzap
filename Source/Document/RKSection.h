@@ -38,7 +38,7 @@
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask;
 
 /*!
- @abstract Returns true, if all footers are identic
+ @abstract Returns true, if all headers are identic
  */
 - (BOOL)hasSingleHeaderForAllPages;
 

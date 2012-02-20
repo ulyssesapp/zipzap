@@ -12,7 +12,6 @@
 @interface RKTaggedString ()
 {
     NSMutableDictionary *tagPositions;
-    NSMutableIndexSet *removedRanges;
     NSMutableIndexSet *acceptedRanges;
     NSString *originalString;
 }
@@ -44,7 +43,6 @@
 
     if (self) {
         tagPositions = [NSMutableDictionary new];
-        removedRanges = [NSMutableIndexSet new];
     }
     
     return self;
@@ -107,7 +105,6 @@
 
 - (void)removeRange:(NSRange)range
 {
-    [removedRanges addIndexesInRange:range];
     [acceptedRanges removeIndexesInRange:range];
 }
 
