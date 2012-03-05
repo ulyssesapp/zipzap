@@ -65,6 +65,35 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    RKSection *copy = [[RKSection allocWithZone: zone] initWithContent: self.content.copy];
+    
+    if (self.hasSingleHeaderForAllPages) {
+        [copy setHeader:[[self headerForPage:RKPageSelectionFirst] copy] forPages:RKPageSelectorAll];
+    }
+    else {
+        [copy setHeader:[[self headerForPage:RKPageSelectionFirst] copy] forPages:RKPageSelectionFirst];
+        [copy setHeader:[[self headerForPage:RKPageSelectionLeft] copy] forPages:RKPageSelectionLeft];
+        [copy setHeader:[[self headerForPage:RKPageSelectionRight] copy] forPages:RKPageSelectionRight];        
+    }
+
+    if (self.hasSingleFooterForAllPages) {
+        [copy setFooter:[[self footerForPage:RKPageSelectionFirst] copy] forPages:RKPageSelectorAll];
+    }
+    else {
+        [copy setFooter:[[self footerForPage:RKPageSelectionFirst] copy] forPages:RKPageSelectionFirst];
+        [copy setFooter:[[self footerForPage:RKPageSelectionLeft] copy] forPages:RKPageSelectionLeft];
+        [copy setFooter:[[self footerForPage:RKPageSelectionRight] copy] forPages:RKPageSelectionRight];        
+    }
+    
+    copy.numberOfColumns = self.numberOfColumns;
+    copy.indexOfFirstPage = self.indexOfFirstPage;
+    copy.pageNumberingStyle = self.pageNumberingStyle;
+    
+    return copy;
+}
+
 - (id)initWithContent:(NSAttributedString *)initialContent
 {
      NSAssert(initialContent != nil, @"Initial content string must not be nil");    
