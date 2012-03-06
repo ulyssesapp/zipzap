@@ -14,7 +14,7 @@
  @abstract Representation of an RTF document
  @discussion An RTF document is composed of multiple sections and provides settings for document formatting and meta data.
  */
-@interface RKDocument : NSObject
+@interface RKDocument : NSObject <NSCopying>
 
 /*!
  @abstract Creates a document based on an array of sections
