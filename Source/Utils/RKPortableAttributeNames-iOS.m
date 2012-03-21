@@ -1,5 +1,5 @@
 //
-//  RKPortableAttributeNames.m
+//  RKPortableAttributeNames-iOS.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 19.03.12.

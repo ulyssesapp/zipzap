@@ -99,7 +99,7 @@
 		79717A32151A03960016FB3E /* RKShadowAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABB314D947D5001E8401 /* RKShadowAttributeWriter.m */; };
 		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
 		7987904F14D2E0320046F8AB /* RKTaggedString+TestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */; };
-		799511EB15189F1500D82511 /* RKPortableAttributeNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E76C5915176BFC0073153D /* RKPortableAttributeNames.m */; };
+		799511EB15189F1500D82511 /* RKPortableAttributeNames-iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E76C5915176BFC0073153D /* RKPortableAttributeNames-iOS.m */; };
 		799511EF1518A22600D82511 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799511ED1518A21D00D82511 /* CoreText.framework */; };
 		799511F11518A24100D82511 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799511F01518A24100D82511 /* CoreGraphics.framework */; };
 		799511F21518A24D00D82511 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799511F01518A24100D82511 /* CoreGraphics.framework */; };
@@ -132,6 +132,7 @@
 		79B148AE151A15ED00F14200 /* RKShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 79717A2D1519F88C0016FB3E /* RKShadow.h */; };
 		79B148B0151A166F00F14200 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B148AF151A166F00F14200 /* UIKit.framework */; };
 		79B148B1151A167600F14200 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B148AF151A166F00F14200 /* UIKit.framework */; };
+		79B148B3151A281400F14200 /* RKPortableAttributeNames-iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 79E76C5815176BFC0073153D /* RKPortableAttributeNames-iOS.h */; };
 		79C486B314F1463400B29A1E /* RKStyleNameAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C486B114F1463400B29A1E /* RKStyleNameAttributeWriter.h */; };
 		79C486B414F1463400B29A1E /* RKStyleNameAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C486B214F1463400B29A1E /* RKStyleNameAttributeWriter.m */; };
 		79C4BED714E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C4BED514E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.h */; };
@@ -206,8 +207,6 @@
 		79E76C4E151758770073153D /* RKTaggedString+TestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */; };
 		79E76C4F151758770073153D /* SenTestCase+RKAttributeWriterTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C4BEDB14E5448100FD91B2 /* SenTestCase+RKAttributeWriterTestHelper.m */; };
 		79E76C51151758770073153D /* SenTestCase+RKReferenceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD204E14E16AD400F5616C /* SenTestCase+RKReferenceTest.m */; };
-		79E76C5A15176BFC0073153D /* RKPortableAttributeNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 79E76C5815176BFC0073153D /* RKPortableAttributeNames.h */; };
-		79E76C5B15176BFC0073153D /* RKPortableAttributeNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E76C5915176BFC0073153D /* RKPortableAttributeNames.m */; };
 		79E76C611517E4AA0073153D /* RKParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E76C5D1517E4830073153D /* RKParagraphStyle.m */; };
 		79E76C661517E6350073153D /* RKTextTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E76C631517E6280073153D /* RKTextTab.m */; };
 		79E76C671517E6360073153D /* RKTextTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E76C631517E6280073153D /* RKTextTab.m */; };
@@ -383,6 +382,8 @@
 		79B148A4151A14D400F14200 /* SenTestCase+RKTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SenTestCase+RKTestHelper.h"; path = "Utils/SenTestCase+RKTestHelper.h"; sourceTree = "<group>"; };
 		79B148A5151A14D400F14200 /* SenTestCase+RKTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SenTestCase+RKTestHelper.m"; path = "Utils/SenTestCase+RKTestHelper.m"; sourceTree = "<group>"; };
 		79B148AF151A166F00F14200 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		79B148B2151A27F400F14200 /* RKPortableAttributeNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RKPortableAttributeNames.h; path = Utils/RKPortableAttributeNames.h; sourceTree = "<group>"; };
+		79B148B4151A283400F14200 /* RKPortableAttributeNames-MacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RKPortableAttributeNames-MacOS.h"; path = "Utils/RKPortableAttributeNames-MacOS.h"; sourceTree = "<group>"; };
 		79C486B114F1463400B29A1E /* RKStyleNameAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStyleNameAttributeWriter.h; path = "Writer/Attribute Writer/Style Naming/RKStyleNameAttributeWriter.h"; sourceTree = "<group>"; };
 		79C486B214F1463400B29A1E /* RKStyleNameAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStyleNameAttributeWriter.m; path = "Writer/Attribute Writer/Style Naming/RKStyleNameAttributeWriter.m"; sourceTree = "<group>"; };
 		79C486B514F1465100B29A1E /* RKStyleNameAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStyleNameAttributeWriterTest.h; path = "Writer/Attribute Writer/Style Naming/RKStyleNameAttributeWriterTest.h"; sourceTree = "<group>"; };
@@ -401,8 +402,8 @@
 		79E76BFC151752340073153D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		79E76C52151759340073153D /* RTFKit-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKit-iOS-Prefix.pch"; sourceTree = "<group>"; };
 		79E76C53151759A90073153D /* RTFKit-iOS-Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKit-iOS-Tests-Prefix.pch"; sourceTree = "<group>"; };
-		79E76C5815176BFC0073153D /* RKPortableAttributeNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPortableAttributeNames.h; path = Utils/RKPortableAttributeNames.h; sourceTree = "<group>"; };
-		79E76C5915176BFC0073153D /* RKPortableAttributeNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPortableAttributeNames.m; path = Utils/RKPortableAttributeNames.m; sourceTree = "<group>"; };
+		79E76C5815176BFC0073153D /* RKPortableAttributeNames-iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKPortableAttributeNames-iOS.h"; path = "Utils/RKPortableAttributeNames-iOS.h"; sourceTree = "<group>"; };
+		79E76C5915176BFC0073153D /* RKPortableAttributeNames-iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKPortableAttributeNames-iOS.m"; path = "Utils/RKPortableAttributeNames-iOS.m"; sourceTree = "<group>"; };
 		79E76C5C1517E4830073153D /* RKParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyle.h; path = Utils/RKParagraphStyle.h; sourceTree = "<group>"; };
 		79E76C5D1517E4830073153D /* RKParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyle.m; path = Utils/RKParagraphStyle.m; sourceTree = "<group>"; };
 		79E76C621517E6280073153D /* RKTextTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextTab.h; path = Utils/RKTextTab.h; sourceTree = "<group>"; };
@@ -837,12 +838,22 @@
 		79AD206414E2947F00F5616C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				79B148B5151A284800F14200 /* Portable Attributes */,
 				79C4BED514E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.h */,
 				79C4BED614E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.m */,
-				79E76C5815176BFC0073153D /* RKPortableAttributeNames.h */,
-				79E76C5915176BFC0073153D /* RKPortableAttributeNames.m */,
+				79B148B2151A27F400F14200 /* RKPortableAttributeNames.h */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		79B148B5151A284800F14200 /* Portable Attributes */ = {
+			isa = PBXGroup;
+			children = (
+				79E76C5815176BFC0073153D /* RKPortableAttributeNames-iOS.h */,
+				79E76C5915176BFC0073153D /* RKPortableAttributeNames-iOS.m */,
+				79B148B4151A283400F14200 /* RKPortableAttributeNames-MacOS.h */,
+			);
+			name = "Portable Attributes";
 			sourceTree = "<group>";
 		};
 		79D33FAF14EE84DF00553901 /* Style Naming */ = {
@@ -926,7 +937,6 @@
 				795C1BDB14ED70590041EB69 /* RKStyleName.h in Headers */,
 				79D33FAD14EE7E0100553901 /* RKInlineStyleWriter.h in Headers */,
 				79C486B314F1463400B29A1E /* RKStyleNameAttributeWriter.h in Headers */,
-				79E76C5A15176BFC0073153D /* RKPortableAttributeNames.h in Headers */,
 				79B148A6151A14D400F14200 /* SenTestCase+RKTestHelper.h in Headers */,
 				79B148AB151A15E200F14200 /* RTFKit.h in Headers */,
 			);
@@ -940,6 +950,7 @@
 				79B148AA151A15D800F14200 /* RTFKit.h in Headers */,
 				79B148AD151A15EA00F14200 /* RKTextAttachment.h in Headers */,
 				79B148AE151A15ED00F14200 /* RKShadow.h in Headers */,
+				79B148B3151A281400F14200 /* RKPortableAttributeNames-iOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,7 +1151,6 @@
 				795C1BDC14ED70590041EB69 /* RKStyleName.m in Sources */,
 				79D33FAE14EE7E0100553901 /* RKInlineStyleWriter.m in Sources */,
 				79C486B414F1463400B29A1E /* RKStyleNameAttributeWriter.m in Sources */,
-				79E76C5B15176BFC0073153D /* RKPortableAttributeNames.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,7 +1234,7 @@
 				79E76C32151758250073153D /* NSString+RKNumberFormatting.m in Sources */,
 				79E76C33151758250073153D /* RKWriter.m in Sources */,
 				79E76C34151758250073153D /* NSAttributedString+RKAttachmentConvenience.m in Sources */,
-				799511EB15189F1500D82511 /* RKPortableAttributeNames.m in Sources */,
+				799511EB15189F1500D82511 /* RKPortableAttributeNames-iOS.m in Sources */,
 				79717A31151A036C0016FB3E /* RKShadow.m in Sources */,
 				79717A32151A03960016FB3E /* RKShadowAttributeWriter.m in Sources */,
 				79B1489F151A118100F14200 /* RKTextAttachmentWriter.m in Sources */,
