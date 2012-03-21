@@ -25,16 +25,16 @@
                 [escapedString appendFormat: @"\\%C", currentChar];
                 break;
             
-            case NSTabCharacter:
+            case '\t':
                 [escapedString appendString: @"\\tab "];
                 break;
 
-            case NSFormFeedCharacter:
+            case '\f':
                 [escapedString appendString: @"\\page\n"];
                 break;                
             
-            case NSLineSeparatorCharacter:
-            case NSNewlineCharacter:
+            case '\n':
+            case '\r':
                 [escapedString appendString: @"\\line\n"];
                 break;
                 
@@ -105,6 +105,8 @@
 
 @end
 
+#if !TARGET_OS_IPHONE
+
 @implementation NSColor (RKConversion)
 
 + (NSColor *)rtfColorFromColor:(NSColor *)color
@@ -117,4 +119,13 @@
     return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1];
 }
 
-@end    
+- (CGColorRef)CGColorWithGenericRGBColorSpace
+{
+    NSColor *rgbColor = [self colorUsingColorSpaceName: NSCalibratedRGBColorSpace];
+    
+    return CGColorCreateGenericRGB(rgbColor.redComponent, rgbColor.greenComponent, rgbColor.blueComponent, 1.0);    
+}
+
+@end 
+
+#endif

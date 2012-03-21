@@ -8,11 +8,10 @@
 
 #import "RKFontAdditions.h"
 
-@implementation NSFont (RKDefaults)
-
-+ (NSFont *)RTFDefaultFont
+CTFontRef RKGetDefaultFont(void)
 {
-    return [NSFont fontWithName:@"Helvetica" size:12];
+    static CTFontRef defaultFont;
+    defaultFont = (defaultFont) ?: CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL);
+    
+    return defaultFont;
 }
-
-@end

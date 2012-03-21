@@ -15,25 +15,30 @@
     RKResourcePool *resourceManager = [RKResourcePool new];
   
     // Find font regardless of its traits and size
-    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Helvetica" size:8]], (NSUInteger)0, @"Font not indexed");
-    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Helvetica-Oblique" size:128]], (NSUInteger)0, @"Traits or size not ignored");
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Helvetica" size:8]], (NSUInteger)0, @"Font not indexed");
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Helvetica-Oblique" size:128]], (NSUInteger)0, @"Traits or size not ignored");
 
     // Different font names should deliver a different index
-    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Times-Roman" size:18]], (NSUInteger)1, @"Missing font or size not ignored");
-    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Menlo" size:28]], (NSUInteger)2, @"Missing font");
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"GillSans-Light" size:18]], (NSUInteger)1, @"Missing font or size not ignored");
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Courier" size:28]], (NSUInteger)2, @"Missing font");
 
-    // Indexing the same fonts again should deliver the same index
-    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Times-Italic" size:99]], (NSUInteger)1, @"Index not reused or traits/size not ignored");
-    STAssertEquals([resourceManager indexOfFont: [NSFont fontWithName:@"Helvetica-Bold" size:99]], (NSUInteger)0, @"Index not reused or traits/size not ignored");
+    // Fonts that have different non-bold/italic traits should be added twice
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"GillSans-Bold" size:99]], (NSUInteger)3, @"Index not reused or traits/size not ignored");
+
+    // Fonts that only differ by ther bold/italic traits should be not added twice
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"GillSans-Italic" size:99]], (NSUInteger)3, @"Index not reused or traits/size not ignored");
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"GillSans" size:99]], (NSUInteger)3, @"Index not reused or traits/size not ignored");
+    STAssertEquals([resourceManager indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Helvetica-Bold" size:99]], (NSUInteger)0, @"Index not reused or traits/size not ignored");
 
     NSArray *collectedFonts = [resourceManager fontFamilyNames];
 
-    STAssertEquals([collectedFonts count], (NSUInteger)3, @"Unexpected font count");
+    STAssertEquals([collectedFonts count], (NSUInteger)4, @"Unexpected font count");
 
     // Non-standard traits are kept
     STAssertEqualObjects([collectedFonts objectAtIndex:0], @"Helvetica", @"Unexpected font");
-    STAssertEqualObjects([collectedFonts objectAtIndex:1], @"Times-Roman", @"Unexpected font");
-    STAssertEqualObjects([collectedFonts objectAtIndex:2], @"Menlo-Regular", @"Unexpected font");
+    STAssertEqualObjects([collectedFonts objectAtIndex:1], @"GillSans-Light", @"Unexpected font");
+    STAssertEqualObjects([collectedFonts objectAtIndex:2], @"Courier", @"Unexpected font");
+    STAssertEqualObjects([collectedFonts objectAtIndex:3], @"GillSans", @"Unexpected font");
 }
 
 - (void)testIndexingColors
@@ -41,15 +46,15 @@
     RKResourcePool *resourceManager = [RKResourcePool new];
     
     // Find color regardless of its alpha channel
-    STAssertEquals([resourceManager indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.2 blue:0.1 alpha:0.1]], (NSUInteger)2, @"Color not indexed");
-    STAssertEquals([resourceManager indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.2 blue:0.1 alpha:0.9]], (NSUInteger)2, @"Alpha channel not ignored");
+    STAssertEquals([resourceManager indexOfColor: [self.class cgRGBColorWithRed:0.3 green:0.2 blue:0.1 alpha:0.1]], (NSUInteger)2, @"Color not indexed");
+    STAssertEquals([resourceManager indexOfColor: [self.class cgRGBColorWithRed:0.3 green:0.2 blue:0.1 alpha:0.9]], (NSUInteger)2, @"Alpha channel not ignored");
                     
     // Different colors should deliver a different index
-    STAssertEquals([resourceManager indexOfColor: [NSColor colorWithSRGBRed:0.1 green:0.2 blue:0.3 alpha:0.4]], (NSUInteger)3, @"Color not indexed");
+    STAssertEquals([resourceManager indexOfColor: [self.class cgRGBColorWithRed:0.1 green:0.2 blue:0.3 alpha:0.4]], (NSUInteger)3, @"Color not indexed");
 
     // Indexing the same color again should deliver the same index
-    STAssertEquals([resourceManager indexOfColor: [NSColor colorWithSRGBRed:0.1 green:0.2 blue:0.3 alpha:1]], (NSUInteger)3, @"Index not reused or alpha not ignored");
-    STAssertEquals([resourceManager indexOfColor:[NSColor colorWithSRGBRed:0.3 green:0.2 blue:0.1 alpha:1]], (NSUInteger)2, @"Index not reused or alpha not ignored");
+    STAssertEquals([resourceManager indexOfColor: [self.class cgRGBColorWithRed:0.1 green:0.2 blue:0.3 alpha:1]], (NSUInteger)3, @"Index not reused or alpha not ignored");
+    STAssertEquals([resourceManager indexOfColor: [self.class cgRGBColorWithRed:0.3 green:0.2 blue:0.1 alpha:1]], (NSUInteger)2, @"Index not reused or alpha not ignored");
 }
 
 - (void)testRegisteringFileWrappers

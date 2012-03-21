@@ -41,7 +41,14 @@
 
 @end
 
+#if !TARGET_OS_IPHONE
+
 @interface NSColor (RKConversion)
+
+/*!
+ @abstract Converts a color to the generic RGB color space and creates a CGColor from it
+ */
+- (CGColorRef)CGColorWithGenericRGBColorSpace;
 
 /*!
  @abstract Generates a color object that must not be converted to be valid for RTF
@@ -54,3 +61,5 @@
 + (NSColor *)rtfColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
 
 @end
+
+#endif

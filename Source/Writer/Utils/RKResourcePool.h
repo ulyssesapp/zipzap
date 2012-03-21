@@ -25,13 +25,13 @@
  @abstract Returns the index of a font. 
  @discussion If the font is not indexed, it will be registered. The font name is stored with all non-standard traits (e.g. Roman, Condensed). Standard traits (Bold, Italic) are removed.
  */
-- (NSUInteger)indexOfFont:(NSFont *)font;
+- (NSUInteger)indexOfFont:(CTFontRef)font;
 
 /*!
  @abstract Returns the index of a color. 
- @discussion If the color is not indexed, it will be registered. Colors will be registered without the alpha channel.
+ @discussion If the color is not indexed, it will be registered. Colors will be registered without the alpha channel. The color must be in the kCGColorSpaceGenericRGB color space, otherwise an exception will be thrown.
  */
-- (NSUInteger)indexOfColor:(NSColor *)color;
+- (NSUInteger)indexOfColor:(CGColorRef)color;
 
 /*!
  @abstract Registers a referenced file and returns a referencable filename
@@ -69,7 +69,7 @@
 
 /*!
  @abstract Returns the collected colors sorted by their indices
- @discussion Elements are NSColor
+ @discussion The elements are NSString containing an RTF color definition
  */
 - (NSArray *)colors;
 

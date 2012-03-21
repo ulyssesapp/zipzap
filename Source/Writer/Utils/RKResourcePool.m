@@ -19,7 +19,7 @@
     NSDictionary *attachmentFileWrappers;
 
     NSMutableArray *textLists;
-    NSMapTable *listItemIndices;
+    NSMutableArray *listItemIndices;
 }
 
 @end
@@ -37,11 +37,17 @@
         colors = [NSMutableArray new];
         attachmentFileWrappers = [NSMutableDictionary new];
         textLists = [NSMutableArray new];
-        listItemIndices = [NSMapTable mapTableWithKeyOptions:NSMapTableObjectPointerPersonality valueOptions:0];
+        listItemIndices = [NSMutableArray new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
-        [self indexOfColor: [NSColor rtfColorWithRed:0 green:0.0 blue:0.0]];
-        [self indexOfColor: [NSColor rtfColorWithRed:1.0 green:1.0 blue:1.0]];
+        CGColorRef blackRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){0, 0, 1, 1});
+        CGColorRef whiteRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){1, 1, 1, 1});
+
+        [self indexOfColor: blackRGB];        
+        [self indexOfColor: whiteRGB];
+        
+        CGColorRelease(blackRGB);
+        CGColorRelease(whiteRGB);
     }
         
     return self;
@@ -60,15 +66,46 @@
 
 #pragma mark - Fonts
 
-- (NSUInteger)indexOfFont:(NSFont *)font
+- (NSString *)postscriptNameWithoutBoldAndItalicTraits:(CTFontRef)font
+{
+    // Generate a font name without Italic and Bold traits
+    NSString *postscriptName;
+    CTFontSymbolicTraits traitMask = 0;
+
+    // Is it a font with bold traits? If yes, remove them
+    if (CTFontGetSymbolicTraits(font) & kCTFontBoldTrait) {
+        traitMask |= kCTFontBoldTrait;
+    }
+
+    if (CTFontGetSymbolicTraits(font) & kCTFontItalicTrait) {
+        traitMask |= kCTFontItalicTrait;
+    }
+
+    if (traitMask) {
+        // We have to remove traits
+        CTFontRef traitlessFont = CTFontCreateCopyWithSymbolicTraits(font, 0, NULL, 0, traitMask);
+
+        postscriptName = (__bridge NSString *)CTFontCopyPostScriptName(traitlessFont);
+        CFRelease(traitlessFont);
+    }
+    else {
+        // Not traits to remove, just use the plain postscript name
+        postscriptName = (__bridge NSString *)CTFontCopyPostScriptName(font);
+    }
+    
+    return postscriptName;
+}
+
+- (NSUInteger)indexOfFont:(CTFontRef)font
 {
     NSAssert(font, @"No font given");
-    
-    NSString *familyName = [[[NSFontManager sharedFontManager] convertFont:font toNotHaveTrait:NSBoldFontMask|NSItalicFontMask] fontName];
-    NSUInteger index = [fonts indexOfObject: familyName];
+    NSString *postscriptName = [self postscriptNameWithoutBoldAndItalicTraits: font];
+        
+    // Search for an index or create a font entry
+    NSUInteger index = [fonts indexOfObject: postscriptName];
     
     if (index == NSNotFound) {
-        [fonts addObject: familyName];
+        [fonts addObject: postscriptName];
         index = [fonts count] - 1;
     }
     
@@ -82,16 +119,21 @@
 
 #pragma mark - Colors
 
-- (NSUInteger)indexOfColor:(NSColor *)color
+- (NSUInteger)indexOfColor:(CGColorRef)color
 {
     NSAssert(color, @"No color given");
+    CGColorGetColorSpace(color);
+    NSAssert(CGColorSpaceGetModel(CGColorGetColorSpace(color)) == kCGColorSpaceModelRGB, @"Invalid color space");
     
-    // Ensure that no alpha is used and that the color is converted to the RGB color space
-    NSColor *opaqueColor = [[color colorUsingColorSpaceName: NSCalibratedRGBColorSpace] colorWithAlphaComponent: 1.0];
-    NSUInteger index = [colors indexOfObject: opaqueColor];
+    // Represent color as dictionary
+    const CGFloat *components = CGColorGetComponents(color);
+    NSString *colorDefinition = [NSString stringWithFormat:@"\\red%u\\green%u\\blue%u", (unsigned)(components[0] * 255), (unsigned)(components[1] * 255), (unsigned)(components[2] * 255)];
+    
+    // Search for an index or create a color entry
+    NSUInteger index = [colors indexOfObject: colorDefinition];
     
     if (index == NSNotFound) {
-        [colors addObject: opaqueColor];
+        [colors addObject: colorDefinition];
         index = colors.count - 1;
     }
     
@@ -150,7 +192,8 @@
     NSUInteger listIndex = [textLists indexOfObject: textList];
     
     if (listIndex == NSNotFound) {
-        [textLists addObject:textList];
+        [textLists addObject: textList];
+        [listItemIndices addObject: [NSMutableArray new]];
         return textLists.count - 1;
     }
     
@@ -164,15 +207,12 @@
 
 - (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
 {
-    if ([listItemIndices objectForKey:textList] == nil) {
-        [listItemIndices setObject:[NSMutableArray new] forKey:textList];
-    }
-
-    NSMutableArray *itemNumbers = [listItemIndices objectForKey:textList];
+    NSUInteger listIndex = [self indexOfListStyle: textList];    
+    NSMutableArray *itemNumbers = [listItemIndices objectAtIndex: listIndex];
     
     // Truncate nested item numbers, if a higher item number is increased
     if (level + 1 < itemNumbers.count) {
-        [itemNumbers removeObjectsInRange:NSMakeRange(level + 1, itemNumbers.count - level - 1)];
+        [itemNumbers removeObjectsInRange: NSMakeRange(level + 1, itemNumbers.count - level - 1)];
     }
     
     if (level >= itemNumbers.count) {

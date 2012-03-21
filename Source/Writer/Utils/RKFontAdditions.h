@@ -6,11 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface NSFont (RKDefaults)
-
 /*!
- @abstract Returns the default font of RTF
+ @abstract Returns the default font for RTF documents
  */
-+ (NSFont *)RTFDefaultFont;
-
-@end
+CTFontRef RKGetDefaultFont(void);
