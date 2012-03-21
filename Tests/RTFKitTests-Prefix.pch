@@ -11,6 +11,8 @@
     #import "RKTaggedString.h"
     #import "RKConversion.h"
 
+    #import "SenTestCase+RKTestHelper.h"
     #import "SenTestCase+RKCocoaIntegrationTest.h"
     #import "SenTestCase+RKReferenceTest.h"
+    #import "SenTestCase+RKAttributeWriterTestHelper.h"
 #endif
