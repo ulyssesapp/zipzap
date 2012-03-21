@@ -21,7 +21,7 @@
 - (NSAttributedString *)convertAndRereadSingleSectionDocument:(RKDocument *)document
 {
     NSData *rtf = [document RTF];
-    NSLog(@"--\n%@\n", [[NSString alloc] initWithData:rtf encoding:NSUTF8StringEncoding ]);
+
     return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:nil];
 }
 
@@ -99,9 +99,6 @@
         }
         else if (originalAttributeValue != nil) {        
             STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
-            
-            if (![originalAttributeValue isEqualTo: convertedAttributeValue])
-                NSLog(@"a");
         }
     }];
 }

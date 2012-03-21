@@ -122,7 +122,6 @@
 - (NSUInteger)indexOfColor:(CGColorRef)color
 {
     NSAssert(color, @"No color given");
-    CGColorGetColorSpace(color);
     NSAssert(CGColorSpaceGetModel(CGColorGetColorSpace(color)) == kCGColorSpaceModelRGB, @"Invalid color space");
     
     // Represent color as dictionary
