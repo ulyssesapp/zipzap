@@ -51,6 +51,30 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    RKDocument *copy = [RKDocument allocWithZone: zone];
+    
+    copy.sections = [self.sections copy];
+    copy.metadata = [self.metadata copy];
+
+    copy.hyphenationEnabled = hyphenationEnabled;
+    copy.pageSize = pageSize;
+    copy.pageInsets = pageInsets;
+    copy.pageOrientation = pageOrientation;
+    copy.footnotePlacement = footnotePlacement;
+    copy.endnotePlacement = endnotePlacement;
+    copy.footnoteEnumerationStyle = footnoteEnumerationStyle;
+    copy.endnoteEnumerationStyle = endnoteEnumerationStyle;
+    copy.footnoteEnumerationPolicy = footnoteEnumerationPolicy;
+    copy.endnoteEnumerationPolicy = endnoteEnumerationPolicy;
+
+    copy.paragraphStyles = [paragraphStyles copy];
+    copy.characterStyles = [characterStyles copy];
+    
+    return copy;
+}
+
 - (id)initWithSections:(NSArray *)initialSections
 {
     self = [self init];
