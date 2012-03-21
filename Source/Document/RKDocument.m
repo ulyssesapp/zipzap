@@ -31,10 +31,15 @@
     self = [super init];
     
     if (self) {
-        NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
-        
-        self.pageSize = [printInfo paperSize];
-        self.pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
+        #if !TARGET_OS_IPHONE
+            NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
+
+            self.pageSize = printInfo.paperSize;
+            self.pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
+        #elif TARGET_OS_IPHONE
+            self.pageSize = CGSizeMake(595, 842);
+            self.pageInsets = RKPageInsetsMake(90, 72, 72, 90);
+        #endif
 
         self.pageOrientation = RKPageOrientationPortrait;
         self.hyphenationEnabled = NO;

@@ -89,7 +89,7 @@
 /*!
  @abstract Page size in points
  */
-@property(nonatomic) NSSize pageSize;
+@property(nonatomic) CGSize pageSize;
 
 /*!
  @abstract Page insets in points

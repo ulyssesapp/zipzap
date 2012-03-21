@@ -16,3 +16,10 @@
 #import "RKFootnote.h"
 #import "RKPlaceholder.h"
 #import "RKStyleName.h"
+
+#if TARGET_OS_IPHONE
+    #import "RKShadow.h"
+    #import "RKTextAttachment.h"
+#endif
+
+#import "RKPortableAttributeNames.h"
