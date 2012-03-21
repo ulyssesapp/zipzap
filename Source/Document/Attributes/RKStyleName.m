@@ -8,8 +8,8 @@
 
 #import "RKStyleName.h"
 
-NSString *RKCharacterStyleNameAttributeName = @"RKCharacterStyle";
-NSString *RKParagraphStyleNameAttributeName = @"RKParagraphStyle";
+NSString *RKCharacterStyleNameAttributeName = @"RKCharacterStyleName";
+NSString *RKParagraphStyleNameAttributeName = @"RKParagraphStyleName";
 
 @implementation NSMutableAttributedString (RKAttributedStringPredefinedStyleConvenience)
 
