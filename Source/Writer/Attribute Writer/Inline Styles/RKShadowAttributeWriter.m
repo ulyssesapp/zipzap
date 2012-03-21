@@ -8,20 +8,34 @@
 
 #import "RKAttributedStringWriter.h"
 #import "RKShadowAttributeWriter.h"
+#import "RKConversion.h"
 
 @implementation RKShadowAttributeWriter
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:NSShadowAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKShadowAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
-+ (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSShadow *)shadow resources:(RKResourcePool *)resources
+
++ (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(id)shadowObject resources:(RKResourcePool *)resources
 {
-    if (!shadow)
+    if (!shadowObject)
         return @"";
+
+    #if !TARGET_OS_IPHONE
+        NSAssert([shadowObject isKindOfClass: NSShadow.class], @"Expecting shadow attribute");
+
+        NSShadow *shadow = shadowObject;
+        CGColorRef color = [[shadow shadowColor] CGColorWithGenericRGBColorSpace];
+    #else    
+        NSAssert([shadowObject isKindOfClass: RKShadow.class], @"Expecting shadow attribute");
     
-    NSUInteger colorIndex = [resources indexOfColor:[shadow shadowColor]];
+        RKShadow *shadow = shadowObject;
+        CGColorRef color = [shadow shadowColor];
+    #endif
+    
+    NSUInteger colorIndex = [resources indexOfColor: color];
     
     return [NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
                    (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
@@ -31,7 +45,7 @@
             ];   
 }
 
-+ (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(NSShadow *)shadow resources:(RKResourcePool *)resources
++ (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(id)shadow resources:(RKResourcePool *)resources
 {
     if (!shadow)
         return @"";

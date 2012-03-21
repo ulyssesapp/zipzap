@@ -15,30 +15,37 @@
 {
     RKTaggedString *taggedString;
     RKResourcePool *resources = [RKResourcePool new];    
-    NSShadow *shadow = [NSShadow new];
     
-    [shadow setShadowColor:[NSColor rtfColorWithRed:1.0 green:0 blue:0]];
-    [shadow setShadowOffset:NSMakeSize(2.0, 3.0)];
+#if !TARGET_OS_IPHONE
+    NSShadow *shadow = [NSShadow new];
+    [shadow setShadowColor: [NSColor rtfColorWithRed:1.0 green:0 blue:0]];
+    [shadow setShadowOffset: NSMakeSize(2.0, 3.0)];
+#else
+    RKShadow *shadow = [RKShadow new];
+    [shadow setShadowColor: [self.class cgRGBColorWithRed:1.0 green:0 blue:0]];
+    [shadow setShadowOffset: CGSizeMake(2.0, 3.0)];
+#endif    
+
     [shadow setShadowBlurRadius:4.0];
     
     // Default shadow
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
 
-    [RKShadowAttributeWriter addTagsForAttribute:NSShadowAttributeName value:nil effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
+    [RKShadowAttributeWriter addTagsForAttribute:RKShadowAttributeName value:nil effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
     
     // Setting a shadow
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
 
-    [RKShadowAttributeWriter addTagsForAttribute:NSShadowAttributeName value:shadow effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
+    [RKShadowAttributeWriter addTagsForAttribute:RKShadowAttributeName value:shadow effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
     STAssertEqualObjects([taggedString flattenedRTFString], @"a\\shad\\shadx40\\shady60\\shadr80\\shadc2 b\\shad0 c", @"Invalid shadow");
     
     // Test resource manager
     NSArray *colors = [resources colors];
     STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
-    STAssertEqualObjects([colors objectAtIndex:2], [NSColor rtfColorWithRed:1.0 green:0 blue:0], @"Invalid color");
 }
 
+#if !TARGET_OS_IPHONE
 - (void)testShadowStyleCocoaIntegration
 {
     NSShadow *shadowA = [NSShadow new];
@@ -60,5 +67,6 @@
     
     [self assertReadingOfAttributedString:attributedString onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,3)];
 }
+#endif
 
 @end

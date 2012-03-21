@@ -8,6 +8,7 @@
 
 #import "RKStyleNameAttributeWriter.h"
 #import "RKStyleNameAttributeWriterTest.h"
+#import "RKParagraphStyle.h"
 
 @interface RKStyleNameAttributeWriterTest (PrivateMethods)
 
@@ -23,43 +24,47 @@
 
 - (NSMutableDictionary *)generateCharacterStyle
 {
-    NSFont *font = [NSFont fontWithName:@"Helvetica-BoldOblique" size:16];
-    NSShadow *shadow = [NSShadow new];
-    NSNumber *strikethroughStyle = [NSNumber numberWithUnsignedInteger:NSUnderlineStyleSingle];
+    id font = [self.class targetSpecificFontWithName:@"Helvetica-BoldOblique" size:16];
+    NSNumber *strikethroughStyle = [NSNumber numberWithUnsignedInteger:RKUnderlineStyleSingle];
     NSNumber *strokeWidth = [NSNumber numberWithUnsignedInteger:12];
     NSNumber *superscriptMode = [NSNumber numberWithUnsignedInteger:1];
-    NSNumber *underlineStyle = [NSNumber numberWithUnsignedInt:NSUnderlineStyleDouble];
-    NSColor *backgroundColor = [NSColor rtfColorWithRed:1.0 green:0.0 blue:0.0];
-    NSColor *foregroundColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];    
-    NSColor *underlineColor = [NSColor rtfColorWithRed:1.0 green:0.0 blue:1.0];
-    NSColor *strikethroughColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:1.0];    
-    NSColor *strokeColor = [NSColor rtfColorWithRed:10.0 green:1.0 blue:1.0];
-    
+    NSNumber *underlineStyle = [NSNumber numberWithUnsignedInt:RKUnderlineStyleDouble];
+    id backgroundColor = [self.class targetSpecificColorWithRed:1.0 green:0.0 blue:0.0];
+    id foregroundColor = [self.class targetSpecificColorWithRed:0.0 green:1.0 blue:0.0];    
+    id underlineColor = [self.class targetSpecificColorWithRed:1.0 green:0.0 blue:1.0];
+    id strikethroughColor = [self.class targetSpecificColorWithRed:0.0 green:1.0 blue:1.0];    
+    id strokeColor = [self.class targetSpecificColorWithRed:10.0 green:1.0 blue:1.0];
+
+    #if !TARGET_OS_IPHONE
+        NSShadow *shadow = [NSShadow new];
+        shadow.shadowColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];
+    #else
+        RKShadow *shadow = [RKShadow new];
+        shadow.shadowColor = [self.class cgRGBColorWithRed:0.0 green:1.0 blue:0.0];
+    #endif
     shadow.shadowBlurRadius = 2.0f;
-    shadow.shadowOffset = NSMakeSize(0.0f, 0.0f);
-    shadow.shadowColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];
-        
+    
     return [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-             font,                  NSFontAttributeName,
-             shadow,                NSShadowAttributeName,
-             strikethroughStyle,    NSStrikethroughStyleAttributeName,
-             strokeWidth,           NSStrokeWidthAttributeName,
-             superscriptMode,       NSSuperscriptAttributeName,
-             underlineStyle,        NSUnderlineStyleAttributeName,
-             backgroundColor,       NSBackgroundColorAttributeName,
-             foregroundColor,       NSForegroundColorAttributeName,
-             underlineColor,        NSUnderlineColorAttributeName,
-             strikethroughColor,    NSStrikethroughColorAttributeName,
-             strokeColor,           NSStrokeColorAttributeName,
+             font,                  RKFontAttributeName,
+             strikethroughStyle,    RKStrikethroughStyleAttributeName,
+             strokeWidth,           RKStrokeWidthAttributeName,
+             superscriptMode,       RKSuperscriptAttributeName,
+             underlineStyle,        RKUnderlineStyleAttributeName,
+             backgroundColor,       RKBackgroundColorAttributeName,
+             foregroundColor,       RKForegroundColorAttributeName,
+             underlineColor,        RKUnderlineColorAttributeName,
+             strikethroughColor,    RKStrikethroughColorAttributeName,
+             strokeColor,           RKStrokeColorAttributeName,
+             shadow,                RKShadowAttributeName,
              nil 
             ];
 }
 
 - (NSMutableDictionary *)generateParagraphStyle
 {
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];    
+    RKParagraphStyle *paragraphStyle = [RKParagraphStyle new];    
 
-    paragraphStyle.alignment = NSCenterTextAlignment;
+    paragraphStyle.alignment = RKCenterTextAlignment;
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
     paragraphStyle.tailIndent = .0f;
@@ -73,10 +78,10 @@
     paragraphStyle.paragraphSpacing = .0f;
     
     paragraphStyle.tabStops = [NSArray new];
-    paragraphStyle.baseWritingDirection = NSWritingDirectionLeftToRight;
+    paragraphStyle.baseWritingDirection = RKWritingDirectionLeftToRight;
     
     NSMutableDictionary *dictionary = [self generateCharacterStyle];
-    [dictionary setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [dictionary setObject:[paragraphStyle targetSpecificRepresentation] forKey:RKParagraphStyleAttributeName];
 
     return dictionary;
 }
@@ -157,10 +162,13 @@
                                           resources:resources
     ];
     STAssertEqualObjects([taggedString flattenedRTFString], 
+                         ([NSString stringWithFormat:
                          @"a"
-                         "\\s2 "
+                         "\\s%u "
                          "b"
                          "c",
+                          [resources indexOfParagraphStyle:@"PStyle"]
+                         ]),
                          @"Invalid paragraph stylesheet used"
                         );
 }
@@ -180,10 +188,12 @@
     ];
 
     STAssertEqualObjects([taggedString flattenedRTFString], 
-                         @"a"
-                         "\\s1 "
+                         ([NSString stringWithFormat: @"a"
+                         "\\s%u "
                          "b"
-                         "c", 
+                         "c",
+                          [resources indexOfParagraphStyle: @"CStyle"]
+                         ]), 
                          @"Invalid paragraph stylesheet used"
                          );    
 }
@@ -235,18 +245,23 @@
      ];
     
     STAssertEqualObjects([taggedString flattenedRTFString], 
+                         ([NSString stringWithFormat:
                          @"a"
-                         "{\\cs1 "
+                         "{\\cs%u "
                          "b"
                          "}"
                          "c", 
+                          [resources indexOfCharacterStyle: @"CStyle"]
+                         ]),
                          @"Invalid character stylesheet used"
                          );    
 }
 
+#if !TARGET_OS_IPHONE
+
 - (void)testCocoaIntegrationForParagraphStyles
 {
-    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"a\nb\n" ];
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"aa\nbb\n" ];
     
     RKDocument *document = [RKDocument documentWithAttributedString: content];
     
@@ -256,21 +271,27 @@
                                 nil
                                 ];
 
-    [content applyPredefinedParagraphStyleAttribute:@"CStyle" document:document range:NSMakeRange(0,2)];
-    [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(2,2)];
+    [content applyPredefinedParagraphStyleAttribute:@"CStyle" document:document range:NSMakeRange(0,3)];
+    [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(3,3)];
 
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(2,2)];    
+    [self assertReadingOfSingleSectionDocument:document onAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(3,3)];    
 
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSFontAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughColorAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(0,4)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,4)];
+    for (NSUInteger position = 0; position < 6; position ++) {
+        // Re-read only the styles at the positions containing characters. The newline characters might have different style settings
+        if ((position == 2) || (position == 5))
+            continue;
+        
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSFontAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughColorAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(position, 1)];
+        [self assertReadingOfSingleSectionDocument:document onAttribute:NSShadowAttributeName inRange:NSMakeRange(position, 1)];
+    }
 }
 
 - (void)testCocoaIntegrationForCharacterStyles
@@ -290,15 +311,17 @@
 
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSBackgroundColorAttributeName inRange:NSMakeRange(0,2)];
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSForegroundColorAttributeName inRange:NSMakeRange(0,2)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSFontAttributeName inRange:NSMakeRange(0,2)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineStyleAttributeName inRange:NSMakeRange(0,2)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSUnderlineColorAttributeName inRange:NSMakeRange(0,2)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(0,2)];
-    [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrikethroughColorAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:RKFontAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:RKUnderlineStyleAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:RKUnderlineColorAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:RKStrikethroughStyleAttributeName inRange:NSMakeRange(0,2)];
+    [self assertReadingOfSingleSectionDocument:document onAttribute:RKStrikethroughColorAttributeName inRange:NSMakeRange(0,2)];
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeWidthAttributeName inRange:NSMakeRange(0,2)];
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSStrokeColorAttributeName inRange:NSMakeRange(0,2)];
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,2)];
 }
+
+#endif
 
 - (void)testStylesheetsAreCompatibleWithReferenceTest
 {
@@ -316,7 +339,7 @@
                                 nil
                                 ];    
     
-    [[document.characterStyles objectForKey:@"CStyle"] setObject:[NSFont fontWithName:@"Helvetica-BoldOblique" size:100] forKey:NSFontAttributeName];
+    [[document.characterStyles objectForKey:@"CStyle"] setObject:[self.class targetSpecificFontWithName:@"Helvetica-BoldOblique" size:100] forKey:RKFontAttributeName];
     
     [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(0, 7)];
     [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(22, 7)];
@@ -324,7 +347,11 @@
     [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(29, 21)];    
     [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(36, 6)];
     
-    [self assertRTF:[document RTF] withTestDocument:@"stylesheet"];
+    #if !TARGET_OS_IPHONE
+        [self assertRTF:[document RTF] withTestDocument:@"stylesheet"];
+    #else
+        [self assertRTF:[document RTF] withTestDocument:@"stylesheet-ios"];
+    #endif
 }
 
 @end
