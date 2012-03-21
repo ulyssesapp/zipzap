@@ -50,7 +50,7 @@
 
         // Scan tokens of current level
         for (NSString *token in [formatString componentsSeparatedByRegularExpression: tokenRegEx]) {
-            if ([token isEqualTo: @"%*"]) {
+            if ([token isEqual: @"%*"]) {
                 // Remember the level link placeholder
                 nextInsert = insertAt;
             }
@@ -58,7 +58,7 @@
                 // Translate or keep token
                 id insertToken;
 
-                if ([token isEqualTo: @"%%"]) {
+                if ([token isEqual: @"%%"]) {
                     insertToken = @"%";
                 }
                  else if ([token hasPrefix: @"%"]) {
