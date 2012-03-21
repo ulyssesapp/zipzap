@@ -45,7 +45,7 @@
                   resources:(RKResourcePool *)resources;
 {
     [taggedString registerTag:[self openingTagsForAttribute:attributeName value:value resources:resources] forPosition:range.location];
-    [taggedString registerTag:[self closingTagsForAttribute:attributeName value:value resources:resources] forPosition:NSMaxRange(range)];
+    [taggedString registerClosingTag:[self closingTagsForAttribute:attributeName value:value resources:resources] forPosition:NSMaxRange(range)];
 }
 
 @end
