@@ -41,7 +41,7 @@
     STAssertEqualObjects([collectedFonts objectAtIndex:3], @"GillSans", @"Unexpected font");
 }
 
-- (void)testIndexingColors
+- (void)testIndexingRGBColors
 {
     RKResourcePool *resourceManager = [RKResourcePool new];
     
@@ -55,6 +55,29 @@
     // Indexing the same color again should deliver the same index
     STAssertEquals([resourceManager indexOfColor: [self.class cgRGBColorWithRed:0.1 green:0.2 blue:0.3 alpha:1]], (NSUInteger)3, @"Index not reused or alpha not ignored");
     STAssertEquals([resourceManager indexOfColor: [self.class cgRGBColorWithRed:0.3 green:0.2 blue:0.1 alpha:1]], (NSUInteger)2, @"Index not reused or alpha not ignored");
+}
+
+- (void)testIndexingMonchromeColors
+{
+    RKResourcePool *resourceManager = [RKResourcePool new];
+    
+    // Find color regardless of its alpha channel
+    STAssertEquals([resourceManager indexOfColor: CGColorCreate(CGColorSpaceCreateDeviceGray(), (CGFloat[]){0.1f, 1.0f})], (NSUInteger)2, @"Color not indexed");
+    STAssertEquals([resourceManager indexOfColor: CGColorCreate(CGColorSpaceCreateDeviceGray(), (CGFloat[]){0.1f, 0.2f})], (NSUInteger)2, @"Color not indexed");
+    
+    // Different colors should deliver a different index
+    STAssertEquals([resourceManager indexOfColor: CGColorCreate(CGColorSpaceCreateDeviceGray(), (CGFloat[]){0.2f, 1.0f})], (NSUInteger)3, @"Color not indexed");
+    
+    // Indexing the same color again should deliver the same index
+    STAssertEquals([resourceManager indexOfColor: CGColorCreate(CGColorSpaceCreateDeviceGray(), (CGFloat[]){0.0f, 1.0f})], (NSUInteger)0, @"Color not indexed");
+    STAssertEquals([resourceManager indexOfColor: CGColorCreate(CGColorSpaceCreateDeviceGray(), (CGFloat[]){1.0f, 1.0f})], (NSUInteger)1, @"Color not indexed");
+}
+
+- (void)testIndexingInvalidColorSpace
+{
+    RKResourcePool *resourceManager = [RKResourcePool new];
+    
+    STAssertThrows([resourceManager indexOfColor: CGColorCreate(CGColorSpaceCreateDeviceCMYK(), (CGFloat[]){0.1f, 0.1f, 0.1f, 0.1f, 1.0f})], @"CMYK color accepted");
 }
 
 - (void)testRegisteringFileWrappers

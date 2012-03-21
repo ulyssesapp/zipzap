@@ -40,7 +40,7 @@
         listItemIndices = [NSMutableArray new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
-        CGColorRef blackRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){0, 0, 1, 1});
+        CGColorRef blackRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){0, 0, 0, 1});
         CGColorRef whiteRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){1, 1, 1, 1});
 
         [self indexOfColor: blackRGB];        
@@ -122,12 +122,30 @@
 - (NSUInteger)indexOfColor:(CGColorRef)color
 {
     NSAssert(color, @"No color given");
-    NSAssert(CGColorSpaceGetModel(CGColorGetColorSpace(color)) == kCGColorSpaceModelRGB, @"Invalid color space");
+   
+    NSString *colorDefinition = nil;
     
-    // Represent color as dictionary
-    const CGFloat *components = CGColorGetComponents(color);
-    NSString *colorDefinition = [NSString stringWithFormat:@"\\red%u\\green%u\\blue%u", (unsigned)(components[0] * 255), (unsigned)(components[1] * 255), (unsigned)(components[2] * 255)];
-    
+    // Translate color depending on color space
+    // Currently only RGB and B/W are supported (this is no problem on MacOS, since we convert all NSColors to RGB before; on iOS, we don't expect something else than RGB to be used in practice)
+    switch (CGColorSpaceGetModel(CGColorGetColorSpace(color))) {
+        case kCGColorSpaceModelRGB: {
+            const CGFloat *components = CGColorGetComponents(color);
+
+            colorDefinition = [NSString stringWithFormat:@"\\red%u\\green%u\\blue%u", (unsigned)(components[0] * 255), (unsigned)(components[1] * 255), (unsigned)(components[2] * 255)];
+            break;
+        }
+        
+        case kCGColorSpaceModelMonochrome: {
+            const CGFloat *components = CGColorGetComponents(color);
+            
+            colorDefinition = [NSString stringWithFormat:@"\\red%u\\green%u\\blue%u", (unsigned)(components[0] * 255), (unsigned)(components[0] * 255), (unsigned)(components[0] * 255)];
+            break;
+        }
+            
+        default:
+            NSAssert(false, @"Invalid color space model");
+    }
+
     // Search for an index or create a color entry
     NSUInteger index = [colors indexOfObject: colorDefinition];
     
