@@ -15,8 +15,10 @@
 {
     __block CGFloat pointSize = 0;
     
-    [self enumerateAttribute:NSFontAttributeName inRange:range options:0 usingBlock:^(NSFont *font, NSRange range, BOOL *stop) {
-        pointSize = fmax(pointSize, (font ?: [NSFont RTFDefaultFont]).pointSize);
+    [self enumerateAttribute:RKFontAttributeName inRange:range options:0 usingBlock:^(id fontRef, NSRange range, BOOL *stop) {
+        CTFontRef font = (__bridge CTFontRef)fontRef;
+        
+        pointSize = fmax(pointSize, CTFontGetSize(font ?: RKGetDefaultFont()));
     }];
     
     return pointSize;
