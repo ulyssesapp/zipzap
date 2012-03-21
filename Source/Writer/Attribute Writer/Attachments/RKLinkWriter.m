@@ -14,7 +14,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:NSLinkAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKLinkAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 

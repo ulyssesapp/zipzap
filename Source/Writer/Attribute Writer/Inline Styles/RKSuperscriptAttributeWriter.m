@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:NSSuperscriptAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKSuperscriptAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)superScriptModeObject resources:(RKResourcePool *)resources
@@ -21,7 +21,7 @@
     NSInteger mode = [superScriptModeObject integerValue];
     
     if (mode > 0) {
-        return [NSString stringWithFormat:@"\\sup "];
+        return [NSString stringWithFormat:@"\\super "];
     }
     else if (mode < 0) {
         return [NSString stringWithFormat:@"\\sub "];
@@ -35,7 +35,7 @@
     NSInteger mode = [superScriptModeObject integerValue];
     
     if (mode > 0) {
-        return [NSString stringWithFormat:@"\\sup0 "];
+        return [NSString stringWithFormat:@"\\super0 "];
     }
     else if (mode < 0) {
         return [NSString stringWithFormat:@"\\sub0 "];

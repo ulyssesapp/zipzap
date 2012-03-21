@@ -78,18 +78,18 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     // An ordered lookup table mapping from the field keys to the field titles and types representing RTF document meta data
     RKHeaderWriterMetadataDescriptions = 
                            [NSArray arrayWithObjects:
-                            [NSArray arrayWithObjects: NSTitleDocumentAttribute,                @"\\title",         [NSString class], nil],
-                            [NSArray arrayWithObjects: NSCompanyDocumentAttribute,              @"\\*\\company",    [NSString class], nil],
-                            [NSArray arrayWithObjects: NSCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class], nil],
-                            [NSArray arrayWithObjects: NSSubjectDocumentAttribute,              @"\\subject",       [NSString class], nil],
-                            [NSArray arrayWithObjects: NSAuthorDocumentAttribute,               @"\\author",        [NSString class], nil],
-                            [NSArray arrayWithObjects: NSKeywordsDocumentAttribute,             @"\\keywords",      [NSArray class], nil],
-                            [NSArray arrayWithObjects: NSCommentDocumentAttribute,              @"\\doccomm",       [NSString class], nil],
-                            [NSArray arrayWithObjects: NSEditorDocumentAttribute,               @"\\*\\editor",     [NSString class], nil],
-                            [NSArray arrayWithObjects: NSCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class], nil],
-                            [NSArray arrayWithObjects: NSModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class], nil],
-                            [NSArray arrayWithObjects: NSManagerDocumentAttribute,              @"\\manager",       [NSString class], nil],
-                            [NSArray arrayWithObjects: NSCategoryDocumentAttribute,             @"\\category",      [NSString class], nil],
+                            [NSArray arrayWithObjects: RKTitleDocumentAttribute,                @"\\title",         [NSString class], nil],
+                            [NSArray arrayWithObjects: RKCompanyDocumentAttribute,              @"\\*\\company",    [NSString class], nil],
+                            [NSArray arrayWithObjects: RKCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class], nil],
+                            [NSArray arrayWithObjects: RKSubjectDocumentAttribute,              @"\\subject",       [NSString class], nil],
+                            [NSArray arrayWithObjects: RKAuthorDocumentAttribute,               @"\\author",        [NSString class], nil],
+                            [NSArray arrayWithObjects: RKKeywordsDocumentAttribute,             @"\\keywords",      [NSArray class], nil],
+                            [NSArray arrayWithObjects: RKCommentDocumentAttribute,              @"\\doccomm",       [NSString class], nil],
+                            [NSArray arrayWithObjects: RKEditorDocumentAttribute,               @"\\*\\editor",     [NSString class], nil],
+                            [NSArray arrayWithObjects: RKCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class], nil],
+                            [NSArray arrayWithObjects: RKModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class], nil],
+                            [NSArray arrayWithObjects: RKManagerDocumentAttribute,              @"\\manager",       [NSString class], nil],
+                            [NSArray arrayWithObjects: RKCategoryDocumentAttribute,             @"\\category",      [NSString class], nil],
                             nil
                            ];
     

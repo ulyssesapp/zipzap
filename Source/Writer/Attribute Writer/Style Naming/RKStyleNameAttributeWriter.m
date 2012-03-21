@@ -33,12 +33,12 @@
     NSString *styleTypeOpeningTag;
     NSString *styleTypeClosingTag;
     
-    if ([attributeName isEqualTo: RKParagraphStyleNameAttributeName]) {
+    if ([attributeName isEqual: RKParagraphStyleNameAttributeName]) {
         styleIndex = [resources indexOfParagraphStyle: styleName];
         styleTypeOpeningTag = @"\\s";
         styleTypeClosingTag = @"";
     }
-    else if ([attributeName isEqualTo: RKCharacterStyleNameAttributeName]) {
+    else if ([attributeName isEqual: RKCharacterStyleNameAttributeName]) {
         styleIndex = [resources indexOfCharacterStyle: styleName];        
         // Enclosing character styles into a control group is required by OpenOffice
         styleTypeOpeningTag = @"{\\cs";

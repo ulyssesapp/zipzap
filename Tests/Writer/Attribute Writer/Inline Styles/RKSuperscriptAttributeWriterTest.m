@@ -14,7 +14,7 @@
 
 - (void)assertSuperscriptStyle:(id)style expectedTranslation:(NSString *)expectedTranslation
 {
-    [self assertResourcelessStyle:NSSuperscriptAttributeName withValue:style onWriter:[RKSuperscriptAttributeWriter class] expectedTranslation:expectedTranslation];
+    [self assertResourcelessStyle:RKSuperscriptAttributeName withValue:style onWriter:[RKSuperscriptAttributeWriter class] expectedTranslation:expectedTranslation];
 }
 
 - (void)testSuperscriptMode
@@ -24,16 +24,18 @@
     [self assertSuperscriptStyle:nil expectedTranslation:@"abc"];
     
     // Setting superscript
-    [self assertSuperscriptStyle:[NSNumber numberWithInt: 1] expectedTranslation:@"a\\sup b\\sup0 c"];
+    [self assertSuperscriptStyle:[NSNumber numberWithInt: 1] expectedTranslation:@"a\\super b\\super0 c"];
     
     // Setting subscript
     [self assertSuperscriptStyle:[NSNumber numberWithInt: -1] expectedTranslation:@"a\\sub b\\sub0 c"];
 }
 
+#if !TARGET_OS_IPHONE
 - (void)testSuperscriptCocoaIntegrationTest
 {
-    [self assertRereadingAttribute:NSStrokeWidthAttributeName withIntegerValue:1];
-    [self assertRereadingAttribute:NSStrokeWidthAttributeName withIntegerValue:-1];
+    [self assertRereadingAttribute:RKSuperscriptAttributeName withIntegerValue:1];
+    [self assertRereadingAttribute:RKSuperscriptAttributeName withIntegerValue:-1];
 }
+#endif
 
 @end

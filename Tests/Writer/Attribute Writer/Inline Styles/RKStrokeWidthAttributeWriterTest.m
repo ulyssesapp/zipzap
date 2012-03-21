@@ -14,7 +14,7 @@
 
 - (void)assertStrokeWidthStyle:(id)style expectedTranslation:(NSString *)expectedTranslation
 {
-    [self assertResourcelessStyle:NSStrokeWidthAttributeName withValue:style onWriter:[RKStrokeWidthAttributeWriter class] expectedTranslation:expectedTranslation];
+    [self assertResourcelessStyle:RKStrokeWidthAttributeName withValue:style onWriter:[RKStrokeWidthAttributeWriter class] expectedTranslation:expectedTranslation];
 }
 
 - (void)testStrokeWidth
@@ -27,9 +27,11 @@
     [self assertStrokeWidthStyle:[NSNumber numberWithInt:30] expectedTranslation:@"a\\outl\\strokewidth600 b\\outl0\\strokewidth0 c"];
 }
 
+#if !TARGET_OS_IPHONE
 - (void)testStokeWidthStyleCocoaIntegration
 {
-    [self assertRereadingAttribute:NSStrokeWidthAttributeName withUnsignedIntegerValue:30];
+    [self assertRereadingAttribute:RKStrokeWidthAttributeName withUnsignedIntegerValue:30];
 }
+#endif
 
 @end

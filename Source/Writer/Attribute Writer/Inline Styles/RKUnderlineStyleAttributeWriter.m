@@ -18,7 +18,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:NSUnderlineStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKUnderlineStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)underlineStyleObject resources:(RKResourcePool *)resources
@@ -26,29 +26,29 @@
     NSUInteger underlineStyle = [underlineStyleObject unsignedIntegerValue];
     
     // No underlining
-    if (!underlineStyleObject || (underlineStyle == NSUnderlineStyleNone))
+    if (!underlineStyleObject || (underlineStyle == RKUnderlineStyleNone))
         return @"";
     
     NSMutableString *openingTag = [NSMutableString new];
     
     // Word-wise underlining (must precede other tags)
-    if (underlineStyle & NSUnderlineByWordMask) {
+    if (underlineStyle & RKUnderlineByWordMask) {
         [openingTag appendString:@"\\ulw"];
     }
     
     // Never write \\ulw \\ul, since this is misinterpreted by several RTF interpreters
-    if (underlineStyle != (NSUnderlineByWordMask | NSUnderlineStyleSingle)) {
+    if (underlineStyle != (RKUnderlineByWordMask | RKUnderlineStyleSingle)) {
         // Determine pattern flag
         NSString *patternString = @"";
         
         switch (underlineStyle & RKUnderlinePatternMask) {
-            case NSUnderlinePatternDash:
+            case RKUnderlinePatternDash:
                 patternString = @"dash";
                 break;
-            case NSUnderlinePatternDashDot:
+            case RKUnderlinePatternDashDot:
                 patternString = @"dashd";
                 break;
-            case NSUnderlinePatternDashDotDot:
+            case RKUnderlinePatternDashDotDot:
                 patternString = @"dashdd";
                 break;
         }
@@ -56,12 +56,12 @@
         // Determine style flag
         NSString *styleString = @"";
         
-        if ((underlineStyle & NSUnderlineStyleDouble) == NSUnderlineStyleDouble) {
+        if ((underlineStyle & RKUnderlineStyleDouble) == RKUnderlineStyleDouble) {
             // Underlining mode double (cannot be combined with dash-styles
             styleString = @"db";
             patternString = @"";
         }
-        else if ((underlineStyle & NSUnderlineStyleThick) == NSUnderlineStyleThick) {
+        else if ((underlineStyle & RKUnderlineStyleThick) == RKUnderlineStyleThick) {
             styleString = @"th";
         }
         
@@ -80,7 +80,7 @@
     NSUInteger underlineStyle = [underlineStyleObject unsignedIntegerValue];
     
     // No underlining
-    if (!underlineStyleObject || (underlineStyle == NSUnderlineStyleNone))
+    if (!underlineStyleObject || (underlineStyle == RKUnderlineStyleNone))
         return @"";
     
     return @"\\ulnone ";

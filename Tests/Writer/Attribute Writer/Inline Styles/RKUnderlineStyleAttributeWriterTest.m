@@ -14,7 +14,7 @@
 
 - (void)assertUnderlineStyle:(id)style expectedTranslation:(NSString *)expectedTranslation
 {
-    [self assertResourcelessStyle:NSUnderlineStyleAttributeName withValue:style onWriter:[RKUnderlineStyleAttributeWriter class] expectedTranslation:expectedTranslation];
+    [self assertResourcelessStyle:RKUnderlineStyleAttributeName withValue:style onWriter:[RKUnderlineStyleAttributeWriter class] expectedTranslation:expectedTranslation];
 }
 
 - (void)testUnderlineStyle
@@ -24,60 +24,64 @@
     [self assertUnderlineStyle:nil expectedTranslation:@"abc"];
     
     // Line styles
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: NSUnderlineStyleSingle] expectedTranslation:@"a\\ul\\ulstyle1 b\\ulnone c"];
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: NSUnderlineStyleDouble] expectedTranslation:@"a\\uldb\\ulstyle9 b\\ulnone c"];
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: NSUnderlineStyleThick] expectedTranslation:@"a\\ulth\\ulstyle2 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: RKUnderlineStyleSingle] expectedTranslation:@"a\\ul\\ulstyle1 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: RKUnderlineStyleDouble] expectedTranslation:@"a\\uldb\\ulstyle9 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: RKUnderlineStyleThick] expectedTranslation:@"a\\ulth\\ulstyle2 b\\ulnone c"];
     
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleSingle | NSUnderlinePatternDash)] expectedTranslation:@"a\\uldash\\ulstyle513 b\\ulnone c"];
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleSingle | NSUnderlinePatternDashDot)] expectedTranslation:@"a\\uldashd\\ulstyle769 b\\ulnone c"];
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleSingle | NSUnderlinePatternDashDotDot)] expectedTranslation:@"a\\uldashdd\\ulstyle1025 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleSingle | RKUnderlinePatternDash)] expectedTranslation:@"a\\uldash\\ulstyle513 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleSingle | RKUnderlinePatternDashDot)] expectedTranslation:@"a\\uldashd\\ulstyle769 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleSingle | RKUnderlinePatternDashDotDot)] expectedTranslation:@"a\\uldashdd\\ulstyle1025 b\\ulnone c"];
 
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleThick | NSUnderlinePatternDash)] expectedTranslation:@"a\\ulthdash\\ulstyle514 b\\ulnone c"];
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleThick | NSUnderlinePatternDashDot)] expectedTranslation:@"a\\ulthdashd\\ulstyle770 b\\ulnone c"];
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleThick | NSUnderlinePatternDashDotDot)] expectedTranslation:@"a\\ulthdashdd\\ulstyle1026 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleThick | RKUnderlinePatternDash)] expectedTranslation:@"a\\ulthdash\\ulstyle514 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleThick | RKUnderlinePatternDashDot)] expectedTranslation:@"a\\ulthdashd\\ulstyle770 b\\ulnone c"];
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleThick | RKUnderlinePatternDashDotDot)] expectedTranslation:@"a\\ulthdashdd\\ulstyle1026 b\\ulnone c"];
     
+    #if !TARGET_OS_IPHONE
     // Wordwise (additional styles are placed after \ulw)
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleSingle | NSUnderlineStyleSingle | NSUnderlineByWordMask)] 
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleSingle | RKUnderlineStyleSingle | RKUnderlineByWordMask)] 
            expectedTranslation:@"a\\ulw\\ulstyle32769 b\\ulnone c"
     ];
-    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (NSUnderlineStyleSingle | NSUnderlineStyleDouble | NSUnderlineByWordMask)] 
+    [self assertUnderlineStyle:[NSNumber numberWithUnsignedInteger: (RKUnderlineStyleSingle | RKUnderlineStyleDouble | RKUnderlineByWordMask)] 
            expectedTranslation:@"a\\ulw\\uldb\\ulstyle32777 b\\ulnone c"
     ];
+    #endif
 }
 
+#if !TARGET_OS_IPHONE
 - (void)testUnderlineStyleCocoaIntegration
 {
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleSingle];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleDouble];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleThick];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:RKUnderlineStyleSingle];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:RKUnderlineStyleDouble];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:RKUnderlineStyleThick];
 
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDash)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDot)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDotDot)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleSingle | RKUnderlinePatternDash)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleSingle | RKUnderlinePatternDashDot)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleSingle | RKUnderlinePatternDashDotDot)];
 
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDash)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDot)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDotDot)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlinePatternDash)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlinePatternDashDot)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlinePatternDashDotDot)];
     
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDash)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDot)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDotDot)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlinePatternDash)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlinePatternDashDot)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlinePatternDashDotDot)];
 
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleSingle | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlineByWordMask)];
 
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDash | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDash | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDash | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleSingle | RKUnderlinePatternDash | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlinePatternDash | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlinePatternDash | RKUnderlineByWordMask)];
 
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDot | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDot | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDot | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleSingle | RKUnderlinePatternDashDot | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlinePatternDashDot | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlinePatternDashDot | RKUnderlineByWordMask)];
 
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleSingle | NSUnderlinePatternDashDotDot | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleDouble | NSUnderlinePatternDashDotDot | NSUnderlineByWordMask)];
-    [self assertRereadingAttribute:NSUnderlineStyleAttributeName withUnsignedIntegerValue:(NSUnderlineStyleThick | NSUnderlinePatternDashDotDot | NSUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleSingle | RKUnderlinePatternDashDotDot | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlinePatternDashDotDot | RKUnderlineByWordMask)];
+    [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlinePatternDashDotDot | RKUnderlineByWordMask)];
 }
+#endif
 
 @end

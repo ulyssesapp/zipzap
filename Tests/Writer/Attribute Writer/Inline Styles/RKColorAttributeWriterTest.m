@@ -16,10 +16,12 @@
  */
 - (void)assertTranslationOfColorStyle:(NSString *)colorStyleName withColorTag:(NSString *)definedColorTag withDefaultColorTag:(NSString *)defaultColorTag;
 
+#if !TARGET_OS_IPHONE
 /*!
  @abstract Asserts whether a color style can be translated and re-read by the Cocoa text system
  */
 - (void)assertColorStyleCocoaIntegration:(NSString *)styleName;
+#endif
 
 @end
 
@@ -27,7 +29,7 @@
 
 - (void)assertTranslationOfColorStyle:(NSString *)colorStyleName withColorTag:(NSString *)definedColorTag withDefaultColorTag:(NSString *)defaultColorTag
 {
-    NSColor *color = [NSColor rtfColorWithRed:1 green:0 blue:0];
+    id color = [self.class targetSpecificColorWithRed:1.0f green:.0f blue:.0f];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abcd"];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -44,7 +46,7 @@
                             "%@ "
                             "bc"
                             // Default color
-                            "%@ "
+                            "%@"
                             "d",
                           definedColorTag,
                           defaultColorTag
@@ -55,13 +57,22 @@
     // Test resource manager
     NSArray *colors = [resources colors];
     STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
-    STAssertEqualObjects([colors objectAtIndex:2], [NSColor rtfColorWithRed:1.0 green:0 blue:0], @"Invalid color");
 }
 
+- (void)testColorStyles
+{
+    [self assertTranslationOfColorStyle:RKBackgroundColorAttributeName withColorTag:@"\\cb2" withDefaultColorTag:@"\\cb1 "];
+    [self assertTranslationOfColorStyle:RKForegroundColorAttributeName withColorTag:@"\\cf2" withDefaultColorTag:@"\\cf0 "];
+    [self assertTranslationOfColorStyle:RKUnderlineColorAttributeName withColorTag:@"\\ulc2" withDefaultColorTag:@"\\ulc0 "];
+    [self assertTranslationOfColorStyle:RKStrikethroughColorAttributeName withColorTag:@"\\strikec2" withDefaultColorTag:@"\\strikec0 "];
+    [self assertTranslationOfColorStyle:RKStrokeColorAttributeName withColorTag:@"\\strokec2" withDefaultColorTag:@"\\strokec0 "];
+}
+
+#if !TARGET_OS_IPHONE
 - (void)assertColorStyleCocoaIntegration:(NSString *)styleName
 {
-    NSColor *colorA = [NSColor rtfColorWithRed:1.0 green:0.0 blue:0.0];
-    NSColor *colorB = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];
+    id colorA = [self.class targetSpecificColorWithRed:1.0 green:0.0 blue:0.0];
+    id colorB = [self.class targetSpecificColorWithRed:0.0 green:1.0 blue:0.0];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@" abc "];
     
     [attributedString addAttribute:styleName value:colorA range:NSMakeRange(1, 1)];
@@ -70,22 +81,15 @@
     [self assertReadingOfAttributedString:attributedString onAttribute:styleName inRange:NSMakeRange(1,3)];
 }
 
-- (void)testColorStyles
+- (void)testColorStylesCocoaIntegration
 {
-    [self assertTranslationOfColorStyle:NSBackgroundColorAttributeName withColorTag:@"\\cb2" withDefaultColorTag:@"\\cb1"];
     [self assertColorStyleCocoaIntegration:NSBackgroundColorAttributeName];
-
-    [self assertTranslationOfColorStyle:NSForegroundColorAttributeName withColorTag:@"\\cf2" withDefaultColorTag:@"\\cf0"];
     [self assertColorStyleCocoaIntegration:NSForegroundColorAttributeName];
-
-    [self assertTranslationOfColorStyle:NSUnderlineColorAttributeName withColorTag:@"\\ulc2" withDefaultColorTag:@"\\ulc0"];
-    [self assertColorStyleCocoaIntegration:NSUnderlineColorAttributeName];
-
-    [self assertTranslationOfColorStyle:NSStrikethroughColorAttributeName withColorTag:@"\\strikec2" withDefaultColorTag:@"\\strikec0"];
-    [self assertColorStyleCocoaIntegration:NSStrikethroughColorAttributeName];
-
-    [self assertTranslationOfColorStyle:NSStrokeColorAttributeName withColorTag:@"\\strokec2" withDefaultColorTag:@"\\strokec0"];
+    [self assertColorStyleCocoaIntegration:RKUnderlineColorAttributeName];
+    [self assertColorStyleCocoaIntegration:RKStrikethroughColorAttributeName];
     [self assertColorStyleCocoaIntegration:NSStrokeColorAttributeName];
+  
 }
+#endif
 
 @end

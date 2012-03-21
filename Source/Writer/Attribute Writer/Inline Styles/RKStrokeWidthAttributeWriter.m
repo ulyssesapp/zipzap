@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:NSStrokeWidthAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKStrokeWidthAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)strokeWidthObject resources:(RKResourcePool *)resources

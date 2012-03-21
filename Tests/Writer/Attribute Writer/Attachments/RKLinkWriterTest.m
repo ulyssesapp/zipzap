@@ -16,7 +16,7 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abcd"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[attributedString string]];
 
-    [RKLinkWriter addTagsForAttribute:NSLinkAttributeName 
+    [RKLinkWriter addTagsForAttribute:RKLinkAttributeName 
                                 value:[NSURL URLWithString:@"http://the-soulmen.com/"] 
                        effectiveRange:NSMakeRange(1,1) 
                              toString:taggedString 
@@ -25,7 +25,7 @@
                             resources:nil
      ];    
 
-    [RKLinkWriter addTagsForAttribute:NSLinkAttributeName 
+    [RKLinkWriter addTagsForAttribute:RKLinkAttributeName 
                                 value:[NSURL URLWithString:@"http://example.com/"] 
                        effectiveRange:NSMakeRange(2,1) 
                              toString:taggedString 
@@ -42,6 +42,7 @@
                          @"Invalid links created");
 }
 
+#if !TARGET_OS_IPHONE
 - (void)testLinkAttachmentCocoaIntegration
 {
     NSString *linkA = [NSURL URLWithString: @"http://google.de"];
@@ -49,10 +50,11 @@
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
     
-    [attributedString addAttribute:NSLinkAttributeName value:linkA range:NSMakeRange(0, 1)];
-    [attributedString addAttribute:NSLinkAttributeName value:linkB range:NSMakeRange(1, 2)];
+    [attributedString addAttribute:RKLinkAttributeName value:linkA range:NSMakeRange(0, 1)];
+    [attributedString addAttribute:RKLinkAttributeName value:linkB range:NSMakeRange(1, 2)];
     
-    [self assertReadingOfAttributedString:attributedString onAttribute:NSLinkAttributeName inRange:NSMakeRange(0,3)];
+    [self assertReadingOfAttributedString:attributedString onAttribute:RKLinkAttributeName inRange:NSMakeRange(0,3)];
 }
+#endif
 
 @end

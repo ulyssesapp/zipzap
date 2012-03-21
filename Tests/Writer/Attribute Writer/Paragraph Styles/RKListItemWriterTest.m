@@ -11,12 +11,14 @@
 
 @interface RKListItemWriterTest ()
 
+#if !TARGET_OS_IPHONE
 - (void)assertListItemAtParagraphIndex:(NSUInteger)paragraphIndex
                     ofAttributedString:(NSAttributedString *)attributedString 
                        withIndentation:(NSUInteger)indentation 
                            withMarkers:(NSArray *)markers 
                    withPrependSettings:(NSArray *)prependSettings
                withStartingItemNumbers:(NSArray *)startingItemNumber;
+#endif
 
 @end
 
@@ -139,6 +141,7 @@
                          );
 }
 
+#if !TARGET_OS_IPHONE
 - (void)assertListItemAtParagraphIndex:(NSUInteger)paragraphIndex
                     ofAttributedString:(NSAttributedString *)attributedString 
                        withIndentation:(NSUInteger)indentation 
@@ -242,6 +245,7 @@
                          @"Invalid conversion"
                          );
 }
+#endif
 
 - (void)testComplexListsAreCompatibleToManualReferenceTest
 {

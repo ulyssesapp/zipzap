@@ -14,7 +14,7 @@
 - (void)testGeneratePlaceholderWithPageNumber
 {
     NSNumber *placeholder = [NSNumber numberWithInt:RKPlaceholderPageNumber];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", NSAttachmentCharacter]];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", RKAttachmentCharacter]];
     
     [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:nil];
     
@@ -28,7 +28,7 @@
 - (void)testGeneratePlaceholderWithSectionNumber
 {
     NSNumber *placeholder = [NSNumber numberWithInt:RKPlaceholderSectionNumber];
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", NSAttachmentCharacter]];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", RKAttachmentCharacter]];
     
     [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:nil];
     
@@ -45,7 +45,7 @@
     NSMutableAttributedString *contentA = [[NSMutableAttributedString alloc] 
                                            initWithString:[NSString stringWithFormat:
                                                            @"Section Number: 1 == %C, Page Number: 1 == %C",
-                                                           NSAttachmentCharacter, NSAttachmentCharacter
+                                                           RKAttachmentCharacter, RKAttachmentCharacter
                                                            ]
                                            ];
     
@@ -53,8 +53,8 @@
                                            initWithString:[NSString stringWithFormat:
                                                            @"Section Number: 2 == %C, Page Number: 2 == %C\f"
                                                             "Section Number: 2 == %C, Page Number: 3 == %C",
-                                                           NSAttachmentCharacter, NSAttachmentCharacter,
-                                                           NSAttachmentCharacter, NSAttachmentCharacter
+                                                           RKAttachmentCharacter, RKAttachmentCharacter,
+                                                           RKAttachmentCharacter, RKAttachmentCharacter
                                                            ]
                                            ];
     // Set placeholders

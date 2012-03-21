@@ -14,7 +14,7 @@
 
 - (void)assertStrikethroughStyle:(id)style expectedTranslation:(NSString *)expectedTranslation
 {
-    [self assertResourcelessStyle:NSStrikethroughStyleAttributeName withValue:style onWriter:[RKStrikethroughStyleAttributeWriter class] expectedTranslation:expectedTranslation];
+    [self assertResourcelessStyle:RKStrikethroughStyleAttributeName withValue:style onWriter:[RKStrikethroughStyleAttributeWriter class] expectedTranslation:expectedTranslation];
 }
 
 - (void)testStrikethroughStyle
@@ -22,14 +22,16 @@
     [self assertStrikethroughStyle:nil expectedTranslation:@"abc"];
     [self assertStrikethroughStyle:[NSNumber numberWithInt: 0] expectedTranslation:@"abc"];
 
-    [self assertStrikethroughStyle:[NSNumber numberWithInt: NSUnderlineStyleSingle] expectedTranslation:@"a\\strike\\strikestyle1 b\\strike0 c"];
-    [self assertStrikethroughStyle:[NSNumber numberWithInt: NSUnderlineStyleDouble] expectedTranslation:@"a\\striked1\\strikestyle9 b\\striked0 c"];    
+    [self assertStrikethroughStyle:[NSNumber numberWithInt: RKUnderlineStyleSingle] expectedTranslation:@"a\\strike\\strikestyle1 b\\strike0 c"];
+    [self assertStrikethroughStyle:[NSNumber numberWithInt: RKUnderlineStyleDouble] expectedTranslation:@"a\\striked1\\strikestyle9 b\\striked0 c"];    
 }
 
+#if !TARGET_OS_IPHONE
 - (void)testStrikethroughStyleCocoaIntegration
 {
-    [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleSingle];
-    [self assertRereadingAttribute:NSStrikethroughStyleAttributeName withUnsignedIntegerValue:NSUnderlineStyleDouble];
+    [self assertRereadingAttribute:RKStrikethroughStyleAttributeName withUnsignedIntegerValue:RKUnderlineStyleSingle];
+    [self assertRereadingAttribute:RKStrikethroughStyleAttributeName withUnsignedIntegerValue:RKUnderlineStyleDouble];
 }
+#endif
 
 @end

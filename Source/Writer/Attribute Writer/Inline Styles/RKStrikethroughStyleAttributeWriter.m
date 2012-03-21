@@ -13,7 +13,7 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:NSStrikethroughStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKStrikethroughStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)strikethroughStyleObject resources:(RKResourcePool *)resources
@@ -21,13 +21,13 @@
     NSUInteger strikethroughStyle = [strikethroughStyleObject unsignedIntegerValue];
     
     // No strike through
-    if (strikethroughStyle == NSUnderlineStyleNone)
+    if (strikethroughStyle == RKUnderlineStyleNone)
         return @"";
     
     // Convert unsupported strikethrough styles to \strike
     NSMutableString *openingTags;
  
-    if ((strikethroughStyle & NSUnderlineStyleDouble) != NSUnderlineStyleDouble) {
+    if ((strikethroughStyle & RKUnderlineStyleDouble) != RKUnderlineStyleDouble) {
         // Convert all unsupported strikethrough styles to \strike
         openingTags = [NSMutableString stringWithString: @"\\strike"];
     }
@@ -47,10 +47,10 @@
     NSUInteger strikethroughStyle = [strikethroughStyleObject unsignedIntegerValue];
     
     // No strike through
-    if (strikethroughStyle == NSUnderlineStyleNone)
+    if (strikethroughStyle == RKUnderlineStyleNone)
         return @"";
     
-    if ((strikethroughStyle & NSUnderlineStyleDouble) != NSUnderlineStyleDouble) {
+    if ((strikethroughStyle & RKUnderlineStyleDouble) != RKUnderlineStyleDouble) {
         // Convert all unsupported strikethrough styles to \strike
         return @"\\strike0 ";
     }
