@@ -14,4 +14,29 @@
  */
 - (void)assertResourcelessStyle:(NSString *)styleName withValue:(NSNumber *)style onWriter:(Class)writer expectedTranslation:(NSString *)expectedTranslation;
 
+/*!
+ @abstract Returns a font object that is instance of a type fitting to the current target
+ */
++ (id)targetSpecificFontWithName:(NSString *)name size:(CGFloat)pointSize;
+
+/*!
+ @abstract Returns an RGB color that is instance of a type fitting to the current target
+ */
++ (id)targetSpecificColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
+
+/*!
+ @abstract Returns an RGB color that is instance of a type fitting to the current target
+ */
++ (id)targetSpecificColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
+
+/*!
+ @abstract Returns an RGB color as CGColor
+ */
++ (CGColorRef)cgRGBColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
+
+/*!
+ @abstract Returns an RGBA color as CGColor
+ */
++ (CGColorRef)cgRGBColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
+
 @end

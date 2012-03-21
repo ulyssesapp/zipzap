@@ -8,6 +8,6 @@
 
 @interface RKParagraphStyleWriter (TestExtensions)
 
-+ (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range resources:(RKResourcePool *)resources;
++ (NSString *)styleTagFromParagraphStyle:(id)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range resources:(RKResourcePool *)resources;
 
 @end

@@ -18,29 +18,10 @@
 
 @implementation SenTestCase (RKCocoaIntegrationTest)
 
-- (NSFileWrapper *)testFileWithName:(NSString *)name withExtension:(NSString *)extension
-{
-	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:extension subdirectory:@"Test Data/resources"];
-    NSFileWrapper *wrapper;
-    
-    STAssertNotNil(url, @"Cannot build URL");
-    
-    NSError *error;
-    wrapper = [[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:&error];
-    STAssertNotNil(wrapper, @"Load failed with error: %@", error);
-    
-    return wrapper;
-}
-
-- (NSTextAttachment *)textAttachmentWithName:(NSString *)name withExtension:(NSString *)extension
-{
-	return [[NSTextAttachment alloc] initWithFileWrapper: [self testFileWithName:name withExtension:extension]];
-}
-
 - (NSAttributedString *)convertAndRereadSingleSectionDocument:(RKDocument *)document
 {
     NSData *rtf = [document RTF];
-    
+    NSLog(@"--\n%@\n", [[NSString alloc] initWithData:rtf encoding:NSUTF8StringEncoding ]);
     return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:nil];
 }
 
@@ -62,8 +43,8 @@
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
     
     NSData *rtf = [document RTF];
-    
-   return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
+
+    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
 }
 
 - (NSAttributedString *)convertAndRereadRTFD:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
@@ -118,6 +99,9 @@
         }
         else if (originalAttributeValue != nil) {        
             STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
+            
+            if (![originalAttributeValue isEqualTo: convertedAttributeValue])
+                NSLog(@"a");
         }
     }];
 }

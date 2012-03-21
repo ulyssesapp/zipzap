@@ -9,16 +9,6 @@
 @interface SenTestCase (RKCocoaIntegrationTest)
 
 /*!
- @abstract Reads a test file
- */
-- (NSFileWrapper *)testFileWithName:(NSString *)name withExtension:(NSString *)extension;
-
-/*!
- @abstract Reads a test file
- */
-- (NSTextAttachment *)textAttachmentWithName:(NSString *)name withExtension:(NSString *)extension;
-
-/*!
  @abstract Converts the given document to RTF and re-reads it using Cocoa
  */
 - (NSAttributedString *)convertAndRereadSingleSectionDocument:(RKDocument *)document;
@@ -70,6 +60,5 @@
  @abstract See assertRereadingAttribute:withNumericValue:
  */
 - (void)assertRereadingAttribute:(NSString *)attributeName withIntegerValue:(NSInteger)value;
-
 
 @end
