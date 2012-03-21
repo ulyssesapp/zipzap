@@ -31,6 +31,10 @@
     [RKAttributedStringWriter registerWriter:self forAttribute:RKFontAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
 }
 
+
+
+#pragma mark - Plattform-dependent tag generation
+
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(id)fontObject resources:(RKResourcePool *)resources
 {
     CTFontRef font = (__bridge CTFontRef)fontObject;
@@ -52,6 +56,10 @@
 
     return [self closingTagWithIsBoldFont:(fontTraits & kCTFontBoldTrait) isItalicFont:(fontTraits & kCTFontItalicTrait)];
 }
+
+
+
+#pragma mark - Plattform-independent tag generation
 
 + (NSString *)openingTagsWithFontIndex:(NSUInteger)fontIndex pointSize:(CGFloat)pointSize isBoldFont:(BOOL)isBoldFont isItalicFont:(BOOL)isItalicFont
 {

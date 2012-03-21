@@ -124,6 +124,22 @@
     }
 }
 
++ (NSString *)stylesheetTagForAttribute:(NSString *)attributeName 
+                                  value:(id)paragraphStyle
+                           styleSetting:(NSDictionary *)styleSetting 
+                              resources:(RKResourcePool *)resources
+{
+    // If no paragraph style is given, no defaults should appear in a style sheet
+    if (!paragraphStyle)    
+        return @"";
+    
+    // To calculate the line height attribute in a style sheet, all RTF writers seem to use the line height of the style setting rather than the line height of the actual paragraph
+    NSAttributedString *simulatedParagraph = [[NSAttributedString alloc] initWithString:@"A\n" attributes:styleSetting ];
+    
+    return [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph range:NSMakeRange(0, 2) resources:resources];
+}
+
+
 
 
 #pragma mark - Plattform-dependend styling
@@ -136,6 +152,7 @@
     
     NSMutableString *rtf = [NSMutableString new];
 
+    // Generate basic paragraph style settings
     [rtf appendString:  
      [self styleTagWithWritingDirection:paragraphStyle.baseWritingDirection 
                           textAlignment:paragraphStyle.alignment 
@@ -173,6 +190,7 @@
     if (!paragraphStyleObject)
         return @"";
     
+    // Load values from paragraph style
     BOOL success;
     CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)paragraphStyleObject;
     
@@ -228,6 +246,7 @@
     success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &tabStops);
     NSAssert(success, @"Can't load style value");
     
+    // Generate basic paragraph style
     NSMutableString *rtf = [NSMutableString new];
     
     [rtf appendString:
@@ -248,6 +267,7 @@
                              resources:resources
       ]];
      
+    // Generate tab stops
     for (id tabStopObject in (__bridge NSArray *)tabStops) {
         CTTextTabRef tabStop = (__bridge CTTextTabRef)tabStopObject;
         
@@ -426,7 +446,7 @@
 + (NSString *)styleTagsForTabStopType:(NSTextTabType)tabType location:(CGFloat)location
 {
     NSMutableString *rtf = [NSMutableString new];    
-    
+
     switch (tabType) {
         case NSCenterTabStopType:
             [rtf appendString:@"\\tqc"];
@@ -451,7 +471,8 @@
 + (NSString *)styleTagsForTabAlignment:(CTTextAlignment)tabType location:(CGFloat)location
 {
     NSMutableString *rtf = [NSMutableString new];    
-    
+
+    // On CoreText decimal-point tabs are not available
     switch (tabType) {
         case kCTCenterTextAlignment:
             [rtf appendString:@"\\tqc"];
@@ -468,20 +489,5 @@
 }
 
 #endif
-
-+ (NSString *)stylesheetTagForAttribute:(NSString *)attributeName 
-                                  value:(id)paragraphStyle
-                           styleSetting:(NSDictionary *)styleSetting 
-                              resources:(RKResourcePool *)resources
-{
-    // If no paragraph style is given, no defaults should appear in a style sheet
-    if (!paragraphStyle)    
-        return @"";
-    
-    // To calculate the line height attribute in a style sheet, all RTF writers seem to use the line height of the style setting rather than the line height of the actual paragraph
-    NSAttributedString *simulatedParagraph = [[NSAttributedString alloc] initWithString:@"A\n" attributes:styleSetting ];
-    
-    return [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph range:NSMakeRange(0, 2) resources:resources];
-}
 
 @end
