@@ -38,11 +38,11 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:NSAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    [RKAttributedStringWriter registerWriter:self forAttribute:RKAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName 
-                      value:(NSTextAttachment *)textAttachment
+                      value:(id)textAttachment
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 
@@ -50,7 +50,13 @@
                   resources:(RKResourcePool *)resources
 {
     if (textAttachment) {
-        NSFileWrapper *fileWrapper = textAttachment.fileWrapper;
+        #if !TARGET_OS_IPHONE
+            NSAssert([textAttachment isKindOfClass: NSTextAttachment.class], @"Expecting NSTextAttachment");
+        #else
+            NSAssert([textAttachment isKindOfClass: RKTextAttachment.class], @"Expecting NSTextAttachment");
+        #endif        
+        
+        NSFileWrapper *fileWrapper = [textAttachment fileWrapper];
         
         switch (attachmentPolicy) {
             case RKAttachmentPolicyEmbed:
@@ -83,8 +89,14 @@
         return;
     
     NSData *originalImage = [fileWrapper regularFileContents];
-    NSData *convertedImage = [[NSBitmapImageRep imageRepWithData:originalImage] representationUsingType:NSPNGFileType properties:nil ];
     
+    #if !TARGET_OS_IPHONE
+        NSData *convertedImage = [[NSBitmapImageRep imageRepWithData: originalImage] representationUsingType:NSPNGFileType properties:nil ];
+    #else
+        UIImage *image = [UIImage imageWithData: originalImage];
+        NSData *convertedImage = UIImagePNGRepresentation(image);
+    #endif
+
     // Add content
     [taggedString registerTag:[convertedImage stringWithRTFHexEncoding] forPosition:range.location];
     
