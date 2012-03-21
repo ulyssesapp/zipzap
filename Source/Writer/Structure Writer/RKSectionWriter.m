@@ -98,11 +98,13 @@
 {
     NSMutableString *translation = [NSMutableString new];    
     
-    [attributedStringMap enumerateKeysAndObjectsUsingBlock:^(NSString *tag, NSAttributedString *attributedString, BOOL *stop) {
+    for (NSString *tag in [attributedStringMap.allKeys sortedArrayUsingSelector:@selector(compare:)]) {
+        NSAttributedString *attributedString = [attributedStringMap objectForKey: tag];
+
         [translation appendString:
          [NSString stringWithRTFGroupTag:tag body:[RKAttributedStringWriter RTFFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]]
-         ];
-    }];     
+        ];
+    }     
     
     return translation;
 }

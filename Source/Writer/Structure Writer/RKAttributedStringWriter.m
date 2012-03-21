@@ -43,8 +43,9 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     // Order handlers by priority
     // Additionally order them by attribute name to improve testability
     [RKAttributedStringWriterHandlers sortUsingDescriptors:[NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], 
+                                                                                      [NSSortDescriptor sortDescriptorWithKey:@"writerClass.description" ascending:YES],
                                                                                       [NSSortDescriptor sortDescriptorWithKey:@"attributeName" ascending:YES],
-                                                                                      nil
+                                                            nil
                                                            ]];
     
     // Validate type conformance
