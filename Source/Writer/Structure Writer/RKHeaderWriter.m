@@ -133,21 +133,10 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSMutableString *colorTable = [NSMutableString stringWithString:@"{\\colortbl;"];
+    NSArray *colors = resources.colors;
+    colors = [colors subarrayWithRange:NSMakeRange(1, colors.count - 1)];
     
-    [resources.colors enumerateObjectsUsingBlock:^(NSColor *color, NSUInteger index, BOOL *stop) {
-        if (index > 0) {
-            [colorTable appendFormat:@"\\red%i\\green%i\\blue%i;", 
-             (NSUInteger)([color redComponent] * 255.0f), 
-             (NSUInteger)([color greenComponent] * 255.0f),
-             (NSUInteger)([color blueComponent] * 255.0f)
-             ];
-        }
-    }];
-    
-    [colorTable appendString: @"}"];
-    
-    return colorTable;
+    return [NSMutableString stringWithFormat:@"{\\colortbl;%@;}", [colors componentsJoinedByString: @";"]];
 }
 
 + (NSString *)styleSheetsFromStyleDefinitions:(NSDictionary *)styleDefinitions paragraphStyle:(BOOL)isParagraphStyle resources:(RKResourcePool *)resources
@@ -195,7 +184,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
             [listLevelsString appendString: [self entryForLevel:levelIndex inList:textList listIndex:listIndex]];
         }
                 
-        [listTable appendFormat:@"{\\list\\listtemplateid%llu\\listhybrid%@\\listid%llu{\\listname list%llu}}",
+        [listTable appendFormat:@"{\\list\\listtemplateid%lu\\listhybrid%@\\listid%lu{\\listname list%lu}}",
          listIndex + 1,
          listLevelsString,
          listIndex + 1,
@@ -211,7 +200,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 + (NSString *)entryForLevel:(NSUInteger)level inList:(RKListStyle*)list listIndex:(NSUInteger)listIndex
 {
     NSArray *placeholderPositions;
-    NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%llu %@;}", 
+    NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%lu %@;}", 
                                  ((listIndex + 1) * 1000) + (level + 1), 
                                  [list formatStringOfLevel:level placeholderPositions:&placeholderPositions]
                                 ];
@@ -220,7 +209,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSMutableString *rtfPlaceholderPostions = [NSMutableString stringWithString:@"{\\levelnumbers "];
     
     for (NSNumber *placeholderPosition in placeholderPositions) {
-        [rtfPlaceholderPostions appendFormat:@"\\'%.2llx", [placeholderPosition unsignedIntegerValue]];
+        [rtfPlaceholderPostions appendFormat:@"\\'%.2x", [placeholderPosition unsignedIntegerValue]];
     }
     
     [rtfPlaceholderPostions appendString:@";}"];
@@ -233,7 +222,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSUInteger startNumber = [list startNumberForLevel:level];
     
     // Generate level description
-    return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%llu\\levelnfc%llu"
+    return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%lu\\levelnfc%lu"
                                         "\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                                         "%@%@%@"
                                         "\\levelfollow2\\levellegal0\\levelnorestart0}",
@@ -372,13 +361,13 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
         [attributes appendString:@"\\landscape"];
     
     // Paper size
-    [attributes appendFormat:[NSString stringWithFormat:@"\\paperw%llu\\paperh%llu", 
+    [attributes appendFormat:[NSString stringWithFormat:@"\\paperw%lu\\paperh%lu", 
                                 (NSUInteger)RKPointsToTwips(document.pageSize.width), 
                                 (NSUInteger)RKPointsToTwips(document.pageSize.height)
                               ]];
     
     // Margins
-    [attributes appendFormat:[NSString stringWithFormat:@"\\margt%llu\\margl%llu\\margr%llu\\margb%llu", 
+    [attributes appendFormat:[NSString stringWithFormat:@"\\margt%lu\\margl%lu\\margr%lu\\margb%lu", 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.top), 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.left), 
                               (NSUInteger)RKPointsToTwips(document.pageInsets.right), 

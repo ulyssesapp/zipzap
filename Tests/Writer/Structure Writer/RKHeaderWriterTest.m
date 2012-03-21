@@ -10,48 +10,54 @@
 #import "RKBodyWriter.h"
 #import "RKHeaderWriter.h"
 #import "RKHeaderWriter+TestExtensions.h"
-
+#import "RKConversion.h"
+#import "RKParagraphStyle.h"
 
 @implementation RKHeaderWriterTest
 
 - (NSDictionary *)generateCharacterStyle
 {
-    NSFont *font = [NSFont fontWithName:@"Helvetica-BoldOblique" size:16];
-    NSShadow *shadow = [NSShadow new];
-    NSNumber *strikethroughStyle = [NSNumber numberWithUnsignedInteger:NSUnderlineStyleSingle];
+    id font = [self.class targetSpecificFontWithName:@"Helvetica-BoldOblique" size:16];
+    NSNumber *strikethroughStyle = [NSNumber numberWithUnsignedInteger:RKUnderlineStyleSingle];
     NSNumber *strokeWidth = [NSNumber numberWithUnsignedInteger:12];
     NSNumber *superscriptMode = [NSNumber numberWithUnsignedInteger:1];
-    NSNumber *underlineStyle = [NSNumber numberWithUnsignedInt:NSUnderlineStyleDouble];
-    NSColor *backgroundColor = [NSColor rtfColorWithRed:1.0 green:0.0 blue:0.0];
-    NSColor *foregroundColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:0.0];    
-    NSColor *underlineColor = [NSColor rtfColorWithRed:1.0 green:0.0 blue:1.0];
-    NSColor *strikethroughColor = [NSColor rtfColorWithRed:0.0 green:1.0 blue:1.0];    
-    NSColor *strokeColor = [NSColor rtfColorWithRed:0.1 green:0.2 blue:1.0];
-    
+    NSNumber *underlineStyle = [NSNumber numberWithUnsignedInt:RKUnderlineStyleDouble];
+    id backgroundColor = [self.class targetSpecificColorWithRed:1.0 green:0.0 blue:0.0];
+    id foregroundColor = [self.class targetSpecificColorWithRed:0.0 green:1.0 blue:0.0];    
+    id underlineColor = [self.class targetSpecificColorWithRed:1.0 green:0.0 blue:1.0];
+    id strikethroughColor = [self.class targetSpecificColorWithRed:0.0 green:1.0 blue:1.0];    
+    id strokeColor = [self.class targetSpecificColorWithRed:0.1 green:0.2 blue:1.0];
+
+#if !TARGET_OS_IPHONE
+    NSShadow *shadow = [NSShadow new];
+    shadow.shadowColor = [NSColor rtfColorWithRed:1.0 green:1.0 blue:0.0];
+#else
+    RKShadow *shadow = [RKShadow new];
+    shadow.shadowColor = [self.class cgRGBColorWithRed:1.0 green:1.0 blue:0.0];
+#endif    
     shadow.shadowBlurRadius = 2.0f;
-    shadow.shadowColor = [NSColor rtfColorWithRed:0.0 green:0.1 blue:0.0];
-    
+
     return [NSDictionary dictionaryWithObjectsAndKeys: 
-            font,                  NSFontAttributeName,
-            shadow,                NSShadowAttributeName,
-            strikethroughStyle,    NSStrikethroughStyleAttributeName,
-            strokeWidth,           NSStrokeWidthAttributeName,
-            superscriptMode,       NSSuperscriptAttributeName,
-            underlineStyle,        NSUnderlineStyleAttributeName,
-            backgroundColor,       NSBackgroundColorAttributeName,
-            foregroundColor,       NSForegroundColorAttributeName,
-            underlineColor,        NSUnderlineColorAttributeName,
-            strikethroughColor,    NSStrikethroughColorAttributeName,
-            strokeColor,           NSStrokeColorAttributeName,
+            font,                  RKFontAttributeName,
+            strikethroughStyle,    RKStrikethroughStyleAttributeName,
+            strokeWidth,           RKStrokeWidthAttributeName,
+            superscriptMode,       RKSuperscriptAttributeName,
+            underlineStyle,        RKUnderlineStyleAttributeName,
+            backgroundColor,       RKBackgroundColorAttributeName,
+            foregroundColor,       RKForegroundColorAttributeName,
+            underlineColor,        RKUnderlineColorAttributeName,
+            strikethroughColor,    RKStrikethroughColorAttributeName,
+            strokeColor,           RKStrokeColorAttributeName,
+            shadow,                RKShadowAttributeName,
             nil 
             ];
 }
 
 - (NSDictionary *)generateParagraphStyle
 {
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];    
+    RKParagraphStyle *paragraphStyle = [RKParagraphStyle new];    
     
-    paragraphStyle.alignment = NSCenterTextAlignment;
+    paragraphStyle.alignment = RKCenterTextAlignment;
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
     paragraphStyle.tailIndent = .0f;
@@ -68,7 +74,7 @@
     
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [self generateCharacterStyle]];
     
-    [dictionary setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [dictionary setObject:[paragraphStyle targetSpecificRepresentation] forKey:RKParagraphStyleAttributeName];
     
     return dictionary;
 }
@@ -92,18 +98,18 @@
     RKResourcePool *resources = [RKResourcePool new];
     
     // Register some fonts
-    [resources indexOfFont:[NSFont fontWithName:@"Times-Roman" size:8]];
-    [resources indexOfFont:[NSFont fontWithName:@"Helvetica-Oblique" size:8]];
-    [resources indexOfFont:[NSFont fontWithName:@"Menlo-Bold" size:8]];
-    [resources indexOfFont:[NSFont fontWithName:@"Monaco" size:8]];    
+    [resources indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"GillSans" size:8]];
+    [resources indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Helvetica-Oblique" size:8]];
+    [resources indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"GillSans-Light" size:8]];
+    [resources indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Courier" size:8]];    
     
     // Generate the header
     STAssertEqualObjects([RKHeaderWriter fontTableFromResourceManager:resources], 
                          @"{\\fonttbl"
-                          "\\f0\\fnil\\fcharset0 Times-Roman;"
+                          "\\f0\\fnil\\fcharset0 GillSans;"
                           "\\f1\\fnil\\fcharset0 Helvetica;"
-                          "\\f2\\fnil\\fcharset0 Menlo-Regular;"
-                          "\\f3\\fnil\\fcharset0 Monaco;"
+                          "\\f2\\fnil\\fcharset0 GillSans-Light;"
+                          "\\f3\\fnil\\fcharset0 Courier;"
                           "}",
                          @"Invalid font table generated"
                          );
@@ -114,9 +120,9 @@
     RKResourcePool *resources = [RKResourcePool new];
     
     // Register some fonts
-    [resources indexOfColor:[NSColor rtfColorWithRed:0 green:1 blue:0.5]];
-    [resources indexOfColor:[NSColor rtfColorWithRed:0.1 green:0.2 blue:0.3]];
-    [resources indexOfColor:[NSColor rtfColorWithRed:0.3 green:0.5 blue:0.1]];
+    [resources indexOfColor: [self.class cgRGBColorWithRed:0 green:1 blue:0.5]];
+    [resources indexOfColor: [self.class cgRGBColorWithRed:0.1 green:0.2 blue:0.3]];
+    [resources indexOfColor: [self.class cgRGBColorWithRed:0.3 green:0.5 blue:0.1]];
     
     // Generate the header
     STAssertEqualObjects([RKHeaderWriter colorTableFromResourceManager:resources], 
@@ -134,18 +140,18 @@
 {
     RKDocument *document = [RKDocument new];
     NSDictionary *metaData = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 @"Title {} \\ ",    NSTitleDocumentAttribute,
-                                 @"Company",        NSCompanyDocumentAttribute,
-                                 @"Copyright",      NSCopyrightDocumentAttribute,
-                                 @"Subject",        NSSubjectDocumentAttribute,
-                                 @"Author",         NSAuthorDocumentAttribute,
-                                 [NSArray arrayWithObjects: @"Keyword 1", @"Keyword 2", nil],       NSKeywordsDocumentAttribute,
-                                 @"Comment",        NSCommentDocumentAttribute,
-                                 @"Editor",         NSEditorDocumentAttribute,
-                                 [self customDateWithYear:2001 month:2 day:3 hour:4 minute:5 second:6],  NSCreationTimeDocumentAttribute,
-                                 [self customDateWithYear:2006 month:5 day:4 hour:3 minute:2 second:1],  NSModificationTimeDocumentAttribute,
-                                 @"Manager",        NSManagerDocumentAttribute,
-                                 @"Category",       NSCategoryDocumentAttribute,
+                                 @"Title {} \\ ",    RKTitleDocumentAttribute,
+                                 @"Company",         RKCompanyDocumentAttribute,
+                                 @"Copyright",       RKCopyrightDocumentAttribute,
+                                 @"Subject",         RKSubjectDocumentAttribute,
+                                 @"Author",          RKAuthorDocumentAttribute,
+                                 [NSArray arrayWithObjects: @"Keyword 1", @"Keyword 2", nil],       RKKeywordsDocumentAttribute,
+                                 @"Comment",         RKCommentDocumentAttribute,
+                                 @"Editor",          RKEditorDocumentAttribute,
+                                 [self customDateWithYear:2001 month:2 day:3 hour:4 minute:5 second:6],  RKCreationTimeDocumentAttribute,
+                                 [self customDateWithYear:2006 month:5 day:4 hour:3 minute:2 second:1],  RKModificationTimeDocumentAttribute,
+                                 @"Manager",         RKManagerDocumentAttribute,
+                                 @"Category",        RKCategoryDocumentAttribute,
                                  nil
                                 ];
 
@@ -179,7 +185,7 @@
     [document setHyphenationEnabled:YES];
     [document setFootnotePlacement:RKFootnotePlacementSamePage];
     [document setEndnotePlacement:RKEndnotePlacementSectionEnd];
-    [document setPageSize:NSMakeSize(100.0, 200.0)];
+    [document setPageSize:CGSizeMake(100.0, 200.0)];
     [document setPageInsets:insets];
     [document setPageOrientation:RKPageOrientationPortrait];
     
@@ -382,15 +388,15 @@
             "\\qc\\pardeftab0 "
             "\\cb2 "
             "\\cf3 "
+            "\\strikec4 "
+            "\\strokec5 "
+            "\\ulc6 "
             "\\f0 \\fs32\\fsmilli16000 \\b \\i "
-            "\\shad\\shadx0\\shady0\\shadr40\\shadc4 "
+            "\\shad\\shadx0\\shady0\\shadr40\\shadc7 "
             "\\strike\\strikestyle1 "
-            "\\strikec5 "
-            "\\strokec6 "
             "\\outl\\strokewidth240 "
-            "\\sup "
+            "\\super "
             "\\uldb\\ulstyle9 "
-            "\\ulc7 "
             "\\sqformat\\sbasedon0 "
             "PStyle;"
             "}"
@@ -398,15 +404,15 @@
             "\\additive "
             "\\cb2 "
             "\\cf3 "
+            "\\strikec4 "
+            "\\strokec5 "
+            "\\ulc6 "
             "\\f0 \\fs32\\fsmilli16000 \\b \\i "
-            "\\shad\\shadx0\\shady0\\shadr40\\shadc4 "
+            "\\shad\\shadx0\\shady0\\shadr40\\shadc7 "
             "\\strike\\strikestyle1 "
-            "\\strikec5 "
-            "\\strokec6 "
             "\\outl\\strokewidth240 "
-            "\\sup "
+            "\\super "
             "\\uldb\\ulstyle9 "
-            "\\ulc7 "
             "\\sqformat\\sbasedon0 "
             "CStyle;"
             "}"    
@@ -418,6 +424,8 @@
     
     return;   
 }
+
+#if !TARGET_OS_IPHONE
 
 - (void)testRereadingPageSettingsWithCocoa
 {
@@ -482,5 +490,7 @@
     STAssertEqualObjects([rereadDocumentProperties objectForKey:NSModificationTimeDocumentAttribute], 
                          [self customDateWithYear:2006 month:5 day:4 hour:3 minute:2 second:1], @"Invalid meta data");
 }
+
+#endif
 
 @end
