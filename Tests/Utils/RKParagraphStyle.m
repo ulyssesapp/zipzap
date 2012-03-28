@@ -38,7 +38,7 @@
     paragraphStyleObject.tailIndent = tailIndent;
     
     CGFloat lineSpacing;
-    CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &lineSpacing);
+    CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &lineSpacing);
     paragraphStyleObject.lineSpacing = lineSpacing;
     
     CGFloat lineHeightMultiple;
@@ -98,7 +98,7 @@
         {kCTParagraphStyleSpecifierHeadIndent, sizeof(CGFloat), (CGFloat[]){self.headIndent}},
         {kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(CGFloat), (CGFloat[]){self.firstLineHeadIndent}},
         {kCTParagraphStyleSpecifierTailIndent, sizeof(CGFloat), (CGFloat[]){self.tailIndent}},
-        {kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), (CGFloat[]){self.lineSpacing}},
+        {kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), (CGFloat[]){self.lineSpacing}},
         {kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(CGFloat), (CGFloat[]){self.lineHeightMultiple}},
         {kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(CGFloat), (CGFloat[]){self.maximumLineHeight}},
         {kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), (CGFloat[]){self.minimumLineHeight}},
