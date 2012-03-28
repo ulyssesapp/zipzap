@@ -215,7 +215,7 @@
     NSAssert(success, @"Can't load style value");
     
     CGFloat lineSpacing;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &lineSpacing);
+    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &lineSpacing);
     NSAssert(success, @"Can't load style value");
     
     CGFloat lineHeightMultiple;
@@ -381,7 +381,7 @@
     NSUInteger roundedLineSpacing = RKPointsToTwips(lineSpacing);
     
     if (roundedLineSpacing != 0)
-        return [NSString stringWithFormat:@"\\slleading%u", roundedLineSpacing, roundedLineSpacing];
+        return [NSString stringWithFormat:@"\\slleading%u", roundedLineSpacing];
     
     return @"";
 }
