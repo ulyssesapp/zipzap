@@ -9,6 +9,7 @@
 #import "RKResourcePool.h"
 #import "RKSection.h"
 #import "RKConversion.h"
+#import "RKListEnumerator.h"
 
 @class RKDocument, RKSection;
 
@@ -220,6 +221,18 @@
 - (NSArray *)listStyles
 {
     return listStyles;
+}
+
+- (void)resetCounterOfList:(RKListStyle *)listStyle
+{
+    NSUInteger styleIndex = [listStyles indexOfObject: listStyle];
+    
+    // Style unknown
+    if (styleIndex == NSNotFound)
+        return;
+    
+    // Reset style
+    [listItemIndices replaceObjectAtIndex:styleIndex withObject:[NSMutableArray new]];
 }
 
 - (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;

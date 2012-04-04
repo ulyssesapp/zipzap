@@ -112,7 +112,7 @@
     
     NSString *string = [prependingList markerForItemNumbers: itemNumbers];
     
-    STAssertEqualObjects(string, @"\t3.iv.V.f.G.-\\{%\\u8750\\\\\\}\t", @"Invalid marker string generated");
+    STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750\\\\\\}", @"Invalid marker string generated");
 }
 
 @end

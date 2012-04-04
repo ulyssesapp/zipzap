@@ -32,8 +32,14 @@
 
 /*!
  @abstract Returns the concrete bullet point marker for a certain nesting of list item indices
- @discussion To ensure compatibility with the Cocoa text system, all markers are automatically enclosed by tabs
+ @discussion To ensure compatibility with the Cocoa text system, the string should be postprocessed with "systemCompatibleMarker"
  */
 - (NSString *)markerForItemNumbers:(NSArray *)itemNumbers;
+
+/*!
+ @abstract The text system requires every marker to be enclosed by tabs
+ @discussion These tabs must not be escabed to a \tab tag afterwards since this breaks compatibility
+ */
++ (NSString *)systemCompatibleMarker:(NSString *)marker;
 
 @end

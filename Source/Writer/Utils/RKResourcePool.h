@@ -56,6 +56,11 @@
 - (NSUInteger)indexOfCharacterStyle:(NSString *)characterStyleName;
 
 /*!
+ @abstract Resets the item number of a list
+ */
+- (void)resetCounterOfList:(RKListStyle *)listStyle;
+
+/*!
  @abstract Returns a new item number of a list level
  @discussion All item numbers for more nested list levels will be reset to the starting number of the level
  */

@@ -11,17 +11,6 @@
 #import "RKConversion.h"
 #import "NSString+RKNumberFormatting.h"
 
-@interface RKListStyle (WriterAdditionsPrivateMethods)
-
-
-/*!
- @abstract The text system requires every marker to be enclosed by tabs
- @discussion These tabs must not be escabed to a \tab tag afterwards since this breaks compatibility
- */
-+ (NSString *)systemCompatibleMarker:(NSString *)marker;
-
-@end
-
 @implementation RKListStyle (WriterAdditions)
 
 #pragma mark - Internal helper
@@ -149,7 +138,7 @@
         [markerString appendString: token];
     }];
     
-    return [self.class systemCompatibleMarker: markerString];
+    return markerString;
 }
 
 @end
