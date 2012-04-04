@@ -1,5 +1,5 @@
 //
-//  RKTextList.h
+//  RKListStyle.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 02.02.12.
@@ -14,7 +14,7 @@
 
 /*!
  @abstract Representation of a list styling
- @discussion A text list consists of the styling description for each nesting level of the list
+ @discussion Each distinct text list requires a distinct list style. A text list consists of the styling description for each nesting level of the list.
  */
 @interface RKListStyle : NSObject
 

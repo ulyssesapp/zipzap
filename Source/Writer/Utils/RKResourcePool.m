@@ -18,7 +18,7 @@
     NSMutableArray *colors;
     NSDictionary *attachmentFileWrappers;
 
-    NSMutableArray *textLists;
+    NSMutableArray *listStyles;
     NSMutableArray *listItemIndices;
 }
 
@@ -36,7 +36,7 @@
         fonts = [NSMutableArray new];
         colors = [NSMutableArray new];
         attachmentFileWrappers = [NSMutableDictionary new];
-        textLists = [NSMutableArray new];
+        listStyles = [NSMutableArray new];
         listItemIndices = [NSMutableArray new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
@@ -204,22 +204,22 @@
 
 #pragma mark - Text Lists
 
-- (NSUInteger)indexOfListStyle:(RKListStyle *)textList
+- (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
 {
-    NSUInteger listIndex = [textLists indexOfObject: textList];
+    NSUInteger listIndex = [listStyles indexOfObject: listStyle];
     
     if (listIndex == NSNotFound) {
-        [textLists addObject: textList];
+        [listStyles addObject: listStyle];
         [listItemIndices addObject: [NSMutableArray new]];
-        return textLists.count - 1;
+        return listStyles.count - 1;
     }
     
     return listIndex;
 }
 
-- (NSArray *)textLists
+- (NSArray *)listStyles
 {
-    return textLists;
+    return listStyles;
 }
 
 - (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;

@@ -170,18 +170,18 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)listTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSArray *textLists = [resources textLists];
+    NSArray *listStyles = [resources listStyles];
     
-    if (textLists.count == 0)
+    if (listStyles.count == 0)
         return @"";
     
     NSMutableString *listTable = [NSMutableString stringWithString:@"{\\*\\listtable "];
     
-    [textLists enumerateObjectsUsingBlock:^(RKListStyle *textList, NSUInteger listIndex, BOOL *stop) {
+    [listStyles enumerateObjectsUsingBlock:^(RKListStyle *listStyle, NSUInteger listIndex, BOOL *stop) {
         NSMutableString *listLevelsString = [NSMutableString new];
         
-        for (NSUInteger levelIndex = 0; levelIndex < textList.numberOfLevels; levelIndex ++)  {
-            [listLevelsString appendString: [self entryForLevel:levelIndex inList:textList listIndex:listIndex]];
+        for (NSUInteger levelIndex = 0; levelIndex < listStyle.numberOfLevels; levelIndex ++)  {
+            [listLevelsString appendString: [self entryForLevel:levelIndex inList:listStyle listIndex:listIndex]];
         }
                 
         [listTable appendFormat:@"{\\list\\listtemplateid%lu\\listhybrid%@\\listid%lu{\\listname list%lu}}",
@@ -236,14 +236,14 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSArray *textLists = [resources textLists];
+    NSArray *listStyles = [resources listStyles];
     
-    if (textLists.count == 0)
+    if (listStyles.count == 0)
         return @"";
 
     NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
     
-    for (NSUInteger listIndex = 1; listIndex < textLists.count + 1; listIndex ++) {
+    for (NSUInteger listIndex = 1; listIndex < listStyles.count + 1; listIndex ++) {
         [overrideTable appendFormat:@"{\\listoverride\\listid%u\\listoverridecount0\\ls%u}", listIndex, listIndex];
     }
     

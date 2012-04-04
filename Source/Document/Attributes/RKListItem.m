@@ -1,5 +1,5 @@
 //
-//  RKTextList.m
+//  RKListItem.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 03.02.12.
@@ -12,33 +12,33 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @implementation RKListItem
 
-@synthesize textList, indentationLevel;
+@synthesize listStyle, indentationLevel;
 
-- (id)initWithStyle:(RKListStyle *)initialTextList indentationLevel:(NSUInteger)initialIndentationLevel
+- (id)initWithStyle:(RKListStyle *)initialListStyle indentationLevel:(NSUInteger)initialIndentationLevel
 {
     self = [self init];
     
     if (self) {
-        textList = initialTextList;
+        listStyle = initialListStyle;
         indentationLevel = initialIndentationLevel;
     }
 
     return self;
 }
 
-+ (RKListItem *)listItemWithStyle:(RKListStyle *)textList indentationLevel:(NSUInteger)indentationLevel
++ (RKListItem *)listItemWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel
 {
-    return [[RKListItem alloc] initWithStyle:textList indentationLevel:indentationLevel];
+    return [[RKListItem alloc] initWithStyle:listStyle indentationLevel:indentationLevel];
 }
 
 @end
 
 @implementation NSAttributedString (RKAttributedStringListItemConvenience)
 
-+ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel
++ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString: text];
-    RKListItem *listItem = [RKListItem listItemWithStyle:textList indentationLevel:indentationLevel];
+    RKListItem *listItem = [RKListItem listItemWithStyle:listStyle indentationLevel:indentationLevel];
     
     // A trailing \n is required since a list item must be a paragraph
     if (![attributedString.string hasSuffix:@"\n"])
@@ -53,16 +53,16 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @implementation NSMutableAttributedString (RKMutableAttributedStringAdditions)
 
-- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
+- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle*)listStyle withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
 {
-    NSAttributedString *listItemString = [NSAttributedString attributedStringWithListItem:text usingList:textList withIndentationLevel:indentationLevel];
+    NSAttributedString *listItemString = [NSAttributedString attributedStringWithListItem:text usingStyle:listStyle withIndentationLevel:indentationLevel];
     
     [self insertAttributedString:listItemString atIndex:location];
 }
 
-- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle*)textList withIndentationLevel:(NSUInteger)indentationLevel
+- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle*)listStyle withIndentationLevel:(NSUInteger)indentationLevel
 {
-    [self insertListItem:text withStyle:textList withIndentationLevel:indentationLevel atIndex:self.length];
+    [self insertListItem:text withStyle:listStyle withIndentationLevel:indentationLevel atIndex:self.length];
 }
 
 @end

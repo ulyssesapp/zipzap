@@ -27,11 +27,11 @@
                   resources:(RKResourcePool *)resources
 {
     if (listItem) {
-        NSUInteger listIndex = [resources indexOfListStyle: listItem.textList];
-        NSArray *itemNumbers = [resources incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.textList];
+        NSUInteger listIndex = [resources indexOfListStyle: listItem.listStyle];
+        NSArray *itemNumbers = [resources incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle];
         
-        NSString *markerString = [listItem.textList markerForItemNumbers:itemNumbers];
-        
+        NSString *markerString = [listItem.listStyle markerForItemNumbers:itemNumbers];
+
         [taggedString registerTag:[NSString stringWithFormat:@"\\ls%i\\ilvl%i {\\listtext%@}", listIndex + 1, listItem.indentationLevel, markerString] forPosition:range.location];
     }
 }

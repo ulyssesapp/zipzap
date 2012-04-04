@@ -79,8 +79,8 @@
 @property (nonatomic,strong,readonly) NSDictionary *attachmentFileWrappers;
 
 /*!
- @abstract Returns the available lists
+ @abstract Returns the collected list styles
  */
-- (NSArray *)textLists;
+- (NSArray *)listStyles;
 
 @end

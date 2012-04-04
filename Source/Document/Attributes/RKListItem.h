@@ -1,5 +1,5 @@
 //
-//  RKTextListItem.h
+//  RKListItem.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 03.02.12.
@@ -14,24 +14,24 @@ extern NSString *RKTextListItemAttributeName;
 @interface RKListItem : NSObject
 
 /*!
- @abstract Initializes a text list item as member of a text list with a certain indentation level
+ @abstract Initializes a text list item as member of a text list identified by a list style
  @discussion Indentation level must be between 0 and 8
  */
-- (id)initWithStyle:(RKListStyle *)textList indentationLevel:(NSUInteger)indentationLevel;
+- (id)initWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel;
 
 /*!
- @abstract Creates a text list item as member of a text list with a certain indentation level
+ @abstract Creates a text list item as member of a text list identified by a list style
  @discussion Indentation level must be between 0 and 8
  */
-+ (RKListItem *)listItemWithStyle:(RKListStyle *)textList indentationLevel:(NSUInteger)indentationLevel;
++ (RKListItem *)listItemWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel;
 
 /*!
- @abstract A reference to the containing list
+ @abstract A reference to the list style identifying the text list
  */
-@property(nonatomic,strong,readonly) RKListStyle *textList;
+@property(nonatomic,strong,readonly) RKListStyle *listStyle;
 
 /*!
- @abstract A reference to the indentation level used by the list
+ @abstract The indentation level used by the list
  */
 @property(nonatomic,readonly) NSUInteger indentationLevel;
 
@@ -45,7 +45,7 @@ extern NSString *RKTextListItemAttributeName;
 /*!
  @abstract Creates an attributed string containing a list item
  */
-+ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingList:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel;
++ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel;
 
 @end
 
@@ -57,11 +57,11 @@ extern NSString *RKTextListItemAttributeName;
 /*!
  @abstract Inserts a list item paragraph into an attributed string at a certain position
  */
-- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
+- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
 
 /*!
  @abstract Appends a list item paragraph to an attributed string
  */
-- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle *)textList withIndentationLevel:(NSUInteger)indentationLevel; 
+- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel; 
 
 @end
