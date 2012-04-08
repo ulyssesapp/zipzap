@@ -130,10 +130,6 @@
                     break;
             }
         }
-        else {
-            // Other string token
-            token = [token RTFEscapedString];
-        }
         
         [markerString appendString: token];
     }];

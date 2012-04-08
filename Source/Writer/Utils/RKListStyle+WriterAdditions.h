@@ -32,7 +32,7 @@
 
 /*!
  @abstract Returns the concrete bullet point marker for a certain nesting of list item indices
- @discussion To ensure compatibility with the Cocoa text system, the string should be postprocessed with "systemCompatibleMarker"
+ @discussion To ensure compatibility with the Cocoa text system, the string should be postprocessed with "systemCompatibleMarker". The generated string is not converted to the RTF text format. So -RTFEscapedString should be applied before writing it to the RTF document.
  */
 - (NSString *)markerForItemNumbers:(NSArray *)itemNumbers;
 

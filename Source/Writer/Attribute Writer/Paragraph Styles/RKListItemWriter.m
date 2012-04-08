@@ -10,6 +10,7 @@
 #import "RKAttributedStringWriter.h"
 #import "RKListItem.h"
 #import "RKListStyle+WriterAdditions.h"
+#import "RKConversion.h"
 
 @implementation RKListItemWriter
 
@@ -30,7 +31,7 @@
         NSUInteger listIndex = [resources indexOfListStyle: listItem.listStyle];
         NSArray *itemNumbers = [resources incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle];
         
-        NSString *markerString = [RKListStyle systemCompatibleMarker: [listItem.listStyle markerForItemNumbers:itemNumbers]];
+        NSString *markerString = [RKListStyle systemCompatibleMarker: [[listItem.listStyle markerForItemNumbers:itemNumbers] RTFEscapedString]];
 
         [taggedString registerTag:[NSString stringWithFormat:@"\\ls%i\\ilvl%i {\\listtext%@}", listIndex + 1, listItem.indentationLevel, markerString] forPosition:range.location];
     }

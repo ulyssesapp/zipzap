@@ -110,7 +110,7 @@
                            ];
     RKListStyle *prependingList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.-{%%∮\\}", nil ]];
     
-    NSString *string = [prependingList markerForItemNumbers: itemNumbers];
+    NSString *string = [[prependingList markerForItemNumbers: itemNumbers] RTFEscapedString];
     
     STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750\\\\\\}", @"Invalid marker string generated");
 }
