@@ -82,6 +82,18 @@
     [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleDouble | RKUnderlinePatternDashDotDot | RKUnderlineByWordMask)];
     [self assertRereadingAttribute:RKUnderlineStyleAttributeName withUnsignedIntegerValue:(RKUnderlineStyleThick | RKUnderlinePatternDashDotDot | RKUnderlineByWordMask)];
 }
+
+- (void)testRereadUnderlineStyleWithLinks
+{
+    NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString: @"Foo"];
+    
+    [testString addAttribute:RKUnderlineStyleAttributeName value:[NSNumber numberWithInteger: RKUnderlineStyleSingle] range:NSMakeRange(0, 1)];
+    [testString addAttribute:RKLinkAttributeName value:[NSURL URLWithString:@"http://the-soulmen.com"] range:NSMakeRange(0, 1)];
+
+    [self assertReadingOfAttributedString:testString onAttribute:RKUnderlineStyleAttributeName inRange:NSMakeRange(0, 3)];
+    [self assertReadingOfAttributedString:testString onAttribute:RKLinkAttributeName inRange:NSMakeRange(0, 3)];
+}
+
 #endif
 
 @end

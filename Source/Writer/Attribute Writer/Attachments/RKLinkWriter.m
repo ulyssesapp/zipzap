@@ -32,7 +32,7 @@
         [taggedString registerTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", absoluteUrl]
                       forPosition:range.location];
         
-        [taggedString registerTag:@"}}" forPosition:(NSMaxRange(range))];
+        [taggedString registerClosingTag:@"}}" forPosition:(NSMaxRange(range))];
     }
 }
                                                                                  
