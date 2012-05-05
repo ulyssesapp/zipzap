@@ -406,7 +406,6 @@
 		79E76BE2151752330073153D /* libRTFKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRTFKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79E76BE3151752330073153D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		79E76BF0151752330073153D /* RTFKit-iOSTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RTFKit-iOSTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		79E76BF2151752330073153D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		79E76BFA151752340073153D /* RTFKit-iOSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RTFKit-iOSTests-Info.plist"; path = "../RTFKit-iOSTests/RTFKit-iOSTests-Info.plist"; sourceTree = "<group>"; };
 		79E76BFC151752340073153D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		79E76C52151759340073153D /* RTFKit-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKit-iOS-Prefix.pch"; sourceTree = "<group>"; };
@@ -475,7 +474,6 @@
 		50317D2C14C494C800F23C04 = {
 			isa = PBXGroup;
 			children = (
-				79B148AF151A166F00F14200 /* UIKit.framework */,
 				50317D6714C4951C00F23C04 /* Source */,
 				50317D6F14C4953800F23C04 /* Tests */,
 				50317D3914C494C800F23C04 /* Frameworks */,
@@ -502,7 +500,6 @@
 				50317D3A14C494C800F23C04 /* Cocoa.framework */,
 				50317D4C14C494C800F23C04 /* SenTestingKit.framework */,
 				79E76BE3151752330073153D /* Foundation.framework */,
-				79E76BF2151752330073153D /* UIKit.framework */,
 				50317D3C14C494C800F23C04 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -511,6 +508,7 @@
 		50317D3C14C494C800F23C04 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79B148AF151A166F00F14200 /* UIKit.framework */,
 				50317D3D14C494C800F23C04 /* AppKit.framework */,
 				50317D3E14C494C800F23C04 /* CoreData.framework */,
 				50317D3F14C494C800F23C04 /* Foundation.framework */,
