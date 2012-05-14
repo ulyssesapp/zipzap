@@ -39,7 +39,7 @@
     }
     
     // We add the Apple proprietary tag, to ensure full support of the text system
-    [openingTags appendFormat:@"\\strikestyle%u ", strikethroughStyle];
+    [openingTags appendFormat:@"\\strikestyle%lu ", strikethroughStyle];
     
     return openingTags;
 }

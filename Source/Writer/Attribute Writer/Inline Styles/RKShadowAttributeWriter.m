@@ -39,7 +39,7 @@
     
     NSUInteger colorIndex = [resources indexOfColor: color];
     
-    return [NSString stringWithFormat:@"\\shad\\shadx%u\\shady%u\\shadr%u\\shadc%u ",
+    return [NSString stringWithFormat:@"\\shad\\shadx%lu\\shady%lu\\shadr%lu\\shadc%lu ",
                    (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
                    (NSUInteger)RKPointsToTwips([shadow shadowOffset].height),
                    (NSUInteger)RKPointsToTwips([shadow shadowBlurRadius]),

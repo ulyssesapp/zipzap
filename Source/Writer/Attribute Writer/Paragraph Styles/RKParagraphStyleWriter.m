@@ -334,9 +334,10 @@
             
         case kCTJustifiedTextAlignment:
             return @"\\qj";
+			
+		default:
+			return @"";
     }
-    
-    return @"";
 }
 
 + (NSString *)styleTagsForHeadIndent:(CGFloat)headIndent firstLineHeadIndent:(CGFloat)firstLineHeadIndent tailIndent:(CGFloat)tailIndent resources:(RKResourcePool *)resources
@@ -347,8 +348,8 @@
     NSUInteger roundedFirstLineHeadIndent = RKPointsToTwips(firstLineHeadIndent - headIndent);
     
     if (roundedFirstLineHeadIndent != 0)
-        [rtf appendFormat:@"\\fi%i\\cufi%i", 
-         roundedFirstLineHeadIndent, 
+        [rtf appendFormat:@"\\fi%lu\\cufi%lu",
+         roundedFirstLineHeadIndent,
          roundedFirstLineHeadIndent
          ];
 
@@ -356,7 +357,7 @@
     NSUInteger roundedHeadIndent = RKPointsToTwips(headIndent);    
     
     if (roundedHeadIndent != 0)
-        [rtf appendFormat:@"\\li%u\\culi%u", roundedHeadIndent, roundedHeadIndent];
+        [rtf appendFormat:@"\\li%lu\\culi%lu", roundedHeadIndent, roundedHeadIndent];
     
     // Tail indenting
     if ((NSInteger)RKPointsToTwips(tailIndent) != 0) {
@@ -372,7 +373,7 @@
             indent = (NSInteger)RKPointsToTwips(fabs(tailIndent));
         }
         
-        [rtf appendFormat:@"\\ri%i\\curi%i", indent, indent];
+        [rtf appendFormat:@"\\ri%li\\curi%li", indent, indent];
     }
     
     return rtf;
@@ -383,19 +384,16 @@
     NSUInteger roundedLineSpacing = RKPointsToTwips(lineSpacing);
     
     if (roundedLineSpacing != 0)
-        return [NSString stringWithFormat:@"\\slleading%u", roundedLineSpacing];
+        return [NSString stringWithFormat:@"\\slleading%lu", roundedLineSpacing];
     
     return @"";
 }
 
 + (NSString *)styleTagsForLineHeightMultiple:(CGFloat)lineHeightMultiple attributedString:(NSAttributedString *)attributedString paragraphRange:(NSRange)range
 {
-    NSUInteger roundedLineHeightMultiple = lineHeightMultiple;
-    
-    if (roundedLineHeightMultiple != 0) {
+    if (lineHeightMultiple != 0) {
         CGFloat calculatedLineHeight = [attributedString pointSizeInRange:range] * lineHeightMultiple;
-        
-        return [NSString stringWithFormat:@"\\sl%u\\slmult1", (NSUInteger)RKPointsToTwips(calculatedLineHeight), roundedLineHeightMultiple];
+        return [NSString stringWithFormat:@"\\sl%lu\\slmult1", (NSUInteger)RKPointsToTwips(calculatedLineHeight)];
     }
     
     return @"";
@@ -409,10 +407,10 @@
     NSUInteger roundedMinimumLineHeight = RKPointsToTwips(minimumLineHeight); 
     
     if (roundedMaximumLineHeight != 0)
-        [rtf appendFormat:@"\\slmaximum%u", roundedMaximumLineHeight];
+        [rtf appendFormat:@"\\slmaximum%lu", roundedMaximumLineHeight];
     
     if (roundedMinimumLineHeight != 0)
-        [rtf appendFormat:@"\\slminimum%u", roundedMinimumLineHeight];
+        [rtf appendFormat:@"\\slminimum%lu", roundedMinimumLineHeight];
     
     return rtf;
 }
@@ -425,17 +423,17 @@
     NSUInteger roundedAfterSpacing = (NSUInteger)RKPointsToTwips(afterSpacing);
     
     if (roundedBeforeSpacing != 0)
-        [rtf appendFormat:@"\\sb%u", roundedBeforeSpacing];
+        [rtf appendFormat:@"\\sb%lu", roundedBeforeSpacing];
     
     if (roundedAfterSpacing != 0)
-        [rtf appendFormat:@"\\sa%u", roundedAfterSpacing];
+        [rtf appendFormat:@"\\sa%lu", roundedAfterSpacing];
     
     return rtf;
 }
 
 + (NSString *)styleTagsForDefaultTabInterval:(CGFloat)defaultTabInterval
 {
-    return [NSString stringWithFormat:@"\\pardeftab%u", (NSUInteger)RKPointsToTwips(defaultTabInterval)];    
+    return [NSString stringWithFormat:@"\\pardeftab%lu", (NSUInteger)RKPointsToTwips(defaultTabInterval)];    
 }
 
 
@@ -463,7 +461,7 @@
             break;
     }
     
-    [rtf appendFormat:@"\\tx%u", (NSUInteger)RKPointsToTwips(location)];
+    [rtf appendFormat:@"\\tx%lu", (NSUInteger)RKPointsToTwips(location)];
     
     return rtf;
 }

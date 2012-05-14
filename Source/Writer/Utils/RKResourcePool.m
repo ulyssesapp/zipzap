@@ -194,7 +194,7 @@
     NSAssert(fileWrapper, @"No file given");
     
     NSString *originalFilename = (fileWrapper.preferredFilename) ?: (fileWrapper.filename) ?: @"";
-    NSString *filename = [NSString stringWithFormat: @"%u.%@", attachmentFileWrappers.count, [originalFilename sanitizedFilenameForRTFD]];
+    NSString *filename = [NSString stringWithFormat: @"%lu.%@", attachmentFileWrappers.count, [originalFilename sanitizedFilenameForRTFD]];
     
     fileWrapper.preferredFilename = filename;
 

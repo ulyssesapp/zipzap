@@ -123,7 +123,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSMutableString *fontTable = [NSMutableString stringWithString:@"{\\fonttbl"];
     
     [resources.fontFamilyNames enumerateObjectsUsingBlock:^(NSString *fontFamilyName, NSUInteger index, BOOL *stop) {
-        [fontTable appendFormat:@"\\f%i\\fnil\\fcharset0 %@;", index, fontFamilyName];
+        [fontTable appendFormat:@"\\f%li\\fnil\\fcharset0 %@;", index, fontFamilyName];
     }];
     
     [fontTable appendString: @"}"];
@@ -148,7 +148,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
         NSUInteger styleIndex = (isParagraphStyle) ? [resources indexOfParagraphStyle: styleName] : [resources indexOfCharacterStyle: styleName];
         
         // We need sqformat to make the style visible in the UI of Microsoft Word
-        [collectedStyleSheets appendFormat:@"{%@%u%@ %@\\sqformat\\sbasedon0 %@;}",
+        [collectedStyleSheets appendFormat:@"{%@%lu%@ %@\\sqformat\\sbasedon0 %@;}",
          styleTag,
          styleIndex,
          (isParagraphStyle) ? @"" : @"\\additive",
@@ -209,7 +209,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSMutableString *rtfPlaceholderPostions = [NSMutableString stringWithString:@"{\\levelnumbers "];
     
     for (NSNumber *placeholderPosition in placeholderPositions) {
-        [rtfPlaceholderPostions appendFormat:@"\\'%.2x", [placeholderPosition unsignedIntegerValue]];
+        [rtfPlaceholderPostions appendFormat:@"\\'%.2lx", [placeholderPosition unsignedIntegerValue]];
     }
     
     [rtfPlaceholderPostions appendString:@";}"];
@@ -244,7 +244,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
     
     for (NSUInteger listIndex = 1; listIndex < listStyles.count + 1; listIndex ++) {
-        [overrideTable appendFormat:@"{\\listoverride\\listid%u\\listoverridecount0\\ls%u}", listIndex, listIndex];
+        [overrideTable appendFormat:@"{\\listoverride\\listid%lu\\listoverridecount0\\ls%lu}", listIndex, listIndex];
     }
     
     [overrideTable appendString:@"}\n"];
@@ -361,18 +361,18 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
         [attributes appendString:@"\\landscape"];
     
     // Paper size
-    [attributes appendFormat:[NSString stringWithFormat:@"\\paperw%lu\\paperh%lu", 
-                                (NSUInteger)RKPointsToTwips(document.pageSize.width), 
-                                (NSUInteger)RKPointsToTwips(document.pageSize.height)
-                              ]];
+    [attributes appendString: [NSString stringWithFormat:@"\\paperw%lu\\paperh%lu",
+							   (NSUInteger)RKPointsToTwips(document.pageSize.width), 
+							   (NSUInteger)RKPointsToTwips(document.pageSize.height)
+							   ]];
     
     // Margins
-    [attributes appendFormat:[NSString stringWithFormat:@"\\margt%lu\\margl%lu\\margr%lu\\margb%lu", 
-                              (NSUInteger)RKPointsToTwips(document.pageInsets.top), 
-                              (NSUInteger)RKPointsToTwips(document.pageInsets.left), 
-                              (NSUInteger)RKPointsToTwips(document.pageInsets.right), 
-                              (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
-                              ]];   
+    [attributes appendString: [NSString stringWithFormat:@"\\margt%lu\\margl%lu\\margr%lu\\margb%lu",
+							   (NSUInteger)RKPointsToTwips(document.pageInsets.top), 
+							   (NSUInteger)RKPointsToTwips(document.pageInsets.left), 
+							   (NSUInteger)RKPointsToTwips(document.pageInsets.right), 
+							   (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
+							   ]];
 
     // Hyphenation settings
     if (document.hyphenationEnabled)

@@ -55,7 +55,7 @@
         return;
     
     // Register style
-    NSString *openingTag = [NSString stringWithFormat:@"%@%u ", styleTypeOpeningTag, styleIndex];
+    NSString *openingTag = [NSString stringWithFormat:@"%@%lu ", styleTypeOpeningTag, styleIndex];
 
     [taggedString registerTag:openingTag forPosition:range.location];
     [taggedString registerClosingTag:styleTypeClosingTag forPosition:range.location + range.length];

@@ -59,7 +59,7 @@
                                               ];
     
     if (colorIndex != NSNotFound) {
-        return [NSString stringWithFormat:@"%@%u ", [colorTags objectForKey: attributeName], colorIndex];        
+        return [NSString stringWithFormat:@"%@%lu ", [colorTags objectForKey: attributeName], colorIndex];        
     }
     else {
         return [defaultColorTags objectForKey: attributeName];
