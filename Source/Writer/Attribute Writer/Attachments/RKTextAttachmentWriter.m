@@ -38,10 +38,12 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    }
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
++ (void)addTagsForAttribute:(NSString *)attributeName
                       value:(id)textAttachment
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 

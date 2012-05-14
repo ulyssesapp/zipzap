@@ -28,7 +28,9 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKFontAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKFontAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    }
 }
 
 

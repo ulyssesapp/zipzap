@@ -18,7 +18,9 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKUnderlineStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKUnderlineStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    }
 }
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)underlineStyleObject resources:(RKResourcePool *)resources

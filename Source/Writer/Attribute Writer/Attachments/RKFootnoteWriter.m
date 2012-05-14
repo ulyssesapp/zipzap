@@ -14,10 +14,12 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKFootnoteAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKEndnoteAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKFootnoteAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKEndnoteAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    }
 }
-
+    
 + (void)addTagsForAttribute:(NSString *)attributeName 
                       value:(NSAttributedString *)footnote
              effectiveRange:(NSRange)range 

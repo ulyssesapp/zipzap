@@ -13,7 +13,9 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKStrikethroughStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKStrikethroughStyleAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    }
 }
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)strikethroughStyleObject resources:(RKResourcePool *)resources

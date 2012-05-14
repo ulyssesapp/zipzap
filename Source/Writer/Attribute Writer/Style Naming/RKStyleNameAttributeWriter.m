@@ -11,13 +11,16 @@
 
 @implementation RKStyleNameAttributeWriter
 
-+ (void)load {
-    // Paragraph styles and inline styles must have a higher priority in order to work with OpenOffice
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKParagraphStyleNameAttributeName priority:RKAttributedStringWriterPriorityParagraphStyleSheetLevel];
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKCharacterStyleNameAttributeName priority:RKAttributedStringWriterPriorityInlineStylesheetLevel];
++ (void)load
+{
+    @autoreleasepool {
+        // Paragraph styles and inline styles must have a higher priority in order to work with OpenOffice
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKParagraphStyleNameAttributeName priority:RKAttributedStringWriterPriorityParagraphStyleSheetLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKCharacterStyleNameAttributeName priority:RKAttributedStringWriterPriorityInlineStylesheetLevel];
+    }
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
++ (void)addTagsForAttribute:(NSString *)attributeName
                       value:(NSString *)styleName
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 

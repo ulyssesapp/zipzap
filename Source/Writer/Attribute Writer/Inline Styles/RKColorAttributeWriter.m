@@ -24,13 +24,15 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKBackgroundColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKForegroundColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKUnderlineColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKStrikethroughColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKStrokeColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];    
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKBackgroundColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKForegroundColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKUnderlineColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKStrikethroughColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKStrokeColorAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    }
 }
-
+    
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName colorIndex:(NSUInteger)colorIndex
 {
     static NSDictionary *colorTags = nil;

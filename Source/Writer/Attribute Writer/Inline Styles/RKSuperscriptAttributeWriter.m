@@ -13,7 +13,9 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKSuperscriptAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKSuperscriptAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    }
 }
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)superScriptModeObject resources:(RKResourcePool *)resources

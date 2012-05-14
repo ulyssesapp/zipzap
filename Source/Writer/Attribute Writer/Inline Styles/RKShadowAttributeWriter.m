@@ -14,7 +14,9 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKShadowAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKShadowAttributeName priority:RKAttributedStringWriterPriorityInlineStyleLevel];
+    }
 }
 
 

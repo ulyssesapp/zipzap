@@ -16,10 +16,12 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKTextListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKTextListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel];
+    }
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
++ (void)addTagsForAttribute:(NSString *)attributeName
                       value:(RKListItem *)listItem
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 

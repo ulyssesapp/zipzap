@@ -98,10 +98,12 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKParagraphStyleAttributeName priority:RKAttributedStringWriterPriorityParagraphLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKParagraphStyleAttributeName priority:RKAttributedStringWriterPriorityParagraphLevel];
+    }
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
++ (void)addTagsForAttribute:(NSString *)attributeName
                       value:(id)paragraphStyle
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 

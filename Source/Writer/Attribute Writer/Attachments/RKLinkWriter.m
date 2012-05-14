@@ -14,10 +14,12 @@
 
 + (void)load
 {
-    [RKAttributedStringWriter registerWriter:self forAttribute:RKLinkAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    @autoreleasepool {
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKLinkAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+    }
 }
 
-+ (void)addTagsForAttribute:(NSString *)attributeName 
++ (void)addTagsForAttribute:(NSString *)attributeName
                       value:(id)value
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
