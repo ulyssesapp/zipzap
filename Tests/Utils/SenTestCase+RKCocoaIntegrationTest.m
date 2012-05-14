@@ -141,7 +141,7 @@
     NSMutableDictionary *attributesMap = [NSMutableDictionary new];
     
     [attributedString enumerateAttribute:attributeName inRange:range options:0 usingBlock:^(id attributeValue, NSRange range, BOOL *stop) {
-        NSDictionary *rangeDictionary = [NSString stringWithFormat:@"%u-%u", range.location, range.length];
+        NSDictionary *rangeDictionary = [NSString stringWithFormat:@"%lu-%lu", range.location, range.length];
         
         if (attributeValue)        
             [attributesMap setObject:attributeValue forKey:rangeDictionary];

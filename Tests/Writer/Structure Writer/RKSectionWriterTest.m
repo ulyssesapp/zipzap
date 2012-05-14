@@ -156,6 +156,8 @@
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] 
                                            initWithString:[NSString stringWithFormat:
                                                            @"%C\f%C\f%C",
+                                                           RKAttachmentCharacter,
+                                                           RKAttachmentCharacter,
                                                            RKAttachmentCharacter
                                                            ]
                                            ];

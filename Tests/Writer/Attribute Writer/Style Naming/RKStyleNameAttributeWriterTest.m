@@ -164,7 +164,7 @@
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          ([NSString stringWithFormat:
                          @"a"
-                         "\\s%u "
+                         "\\s%lu "
                          "b"
                          "c",
                           [resources indexOfParagraphStyle:@"PStyle"]
@@ -189,7 +189,7 @@
 
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          ([NSString stringWithFormat: @"a"
-                         "\\s%u "
+                         "\\s%lu "
                          "b"
                          "c",
                           [resources indexOfParagraphStyle: @"CStyle"]
@@ -247,7 +247,7 @@
     STAssertEqualObjects([taggedString flattenedRTFString], 
                          ([NSString stringWithFormat:
                          @"a"
-                         "{\\cs%u "
+                         "{\\cs%lu "
                          "b"
                          "}"
                          "c", 
