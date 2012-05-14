@@ -79,7 +79,7 @@
             [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: RTFTokenCount]];
 
             // Format placeholder token
-            token = [NSString stringWithFormat:@"\\'%.2x", currentLevel];
+            token = [NSString stringWithFormat:@"\\'%.2lx", currentLevel];
             RTFTokenCount ++;
         }
         else {
@@ -93,7 +93,7 @@
     
     *placeholderPositionsOut = placeholderPositions;
     
-    return [NSString stringWithFormat:@"\\'%.2x%@", RTFTokenCount, [self.class systemCompatibleMarker: formatString]];
+    return [NSString stringWithFormat:@"\\'%.2lx%@", RTFTokenCount, [self.class systemCompatibleMarker: formatString]];
 }
 
 #pragma mark - List item marker writing
@@ -110,7 +110,7 @@
             
             switch ([token unsignedIntegerValue]) {
                 case RKListFormatCodeDecimal:
-                    token = [NSString stringWithFormat:@"%u", currentItemNumber];
+                    token = [NSString stringWithFormat:@"%lu", currentItemNumber];
                     break;
                     
                 case RKListFormatCodeLowerCaseLetter:

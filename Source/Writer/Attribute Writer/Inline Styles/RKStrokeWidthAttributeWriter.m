@@ -23,7 +23,7 @@
     if (strokeWidth == 0)
         return @"";
     
-    return [NSString stringWithFormat:@"\\outl\\strokewidth%u ", (NSUInteger)(strokeWidth * 20)];
+    return [NSString stringWithFormat:@"\\outl\\strokewidth%lu ", (NSUInteger)(strokeWidth * 20)];
 }
 
 + (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)strokeWidthObject resources:(RKResourcePool *)resources

@@ -64,7 +64,7 @@
     if (number == 0)
         return @"0";
     
-    return [NSString stringWithFormat:@"%c", 'a' + ((number - 1) % 26) ];
+    return [NSString stringWithFormat:@"%c", 'a' + (((int)number - 1) % 26) ];
 }
 
 + (NSString *)upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number

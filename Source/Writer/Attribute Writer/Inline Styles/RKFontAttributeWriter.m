@@ -66,11 +66,11 @@
     NSMutableString *openingTag = [NSMutableString new];
     
     // Add font and size tag
-    [openingTag appendFormat:@"\\f%u ", fontIndex];
+    [openingTag appendFormat:@"\\f%lu ", fontIndex];
     // Note: RTF uses half-points to define the font size
     // Cocoa has a more precise, proprietary size tag which must directly follow "fsize"
-    [openingTag appendFormat:@"\\fs%u", (NSUInteger)(pointSize * 2)];
-    [openingTag appendFormat:@"\\fsmilli%u ", (NSUInteger)(pointSize * 1000)];    
+    [openingTag appendFormat:@"\\fs%lu", (NSUInteger)(pointSize * 2)];
+    [openingTag appendFormat:@"\\fsmilli%lu ", (NSUInteger)(pointSize * 1000)];
     
     // Add trait tags
     if (isBoldFont)

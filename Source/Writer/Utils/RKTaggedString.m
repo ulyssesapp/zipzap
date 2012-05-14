@@ -68,7 +68,7 @@
 - (NSMutableArray *)arrayForPosition:(NSUInteger)position
 {
     if (position > [originalString length]) {
-        [NSException raise:NSRangeException format:@"Position %u beyond string bounded by %u.", position, [originalString length]];
+        [NSException raise:NSRangeException format:@"Position %lu beyond string bounded by %lu.", position, [originalString length]];
     }
     
     NSNumber *mapIndex = [NSNumber numberWithUnsignedInteger:position];

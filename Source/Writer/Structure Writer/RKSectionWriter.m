@@ -62,10 +62,10 @@
 {
     NSMutableString *attributes = [NSMutableString stringWithString:@"\\titlepg"];
     
-    [attributes appendFormat: @"\\cols%u", section.numberOfColumns];
+    [attributes appendFormat: @"\\cols%lu", section.numberOfColumns];
     
     if (section.indexOfFirstPage != RKContinuousPageNumbering)
-        [attributes appendFormat: @"\\pgnstarts%u\\pgnrestart", section.indexOfFirstPage];
+        [attributes appendFormat: @"\\pgnstarts%lu\\pgnrestart", section.indexOfFirstPage];
     
     switch (section.pageNumberingStyle) {
         case RKPageNumberingDecimal:

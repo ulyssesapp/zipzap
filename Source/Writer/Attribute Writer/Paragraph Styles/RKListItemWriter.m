@@ -33,7 +33,7 @@
         
         NSString *markerString = [RKListStyle systemCompatibleMarker: [[listItem.listStyle markerForItemNumbers:itemNumbers] RTFEscapedString]];
 
-        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%i\\ilvl%i {\\listtext%@}", listIndex + 1, listItem.indentationLevel, markerString] forPosition:range.location];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%li\\ilvl%li {\\listtext%@}", listIndex + 1, listItem.indentationLevel, markerString] forPosition:range.location];
     }
 }
 

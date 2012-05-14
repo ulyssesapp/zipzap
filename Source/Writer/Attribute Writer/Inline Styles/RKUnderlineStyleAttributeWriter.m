@@ -70,7 +70,7 @@
     }
     
     // We add the Apple proprietary tag, to ensure full support of the text system
-    [openingTag appendFormat:@"\\ulstyle%U ", underlineStyle];
+    [openingTag appendFormat:@"\\ulstyle%lu ", underlineStyle];
 
     return openingTag;
 }
