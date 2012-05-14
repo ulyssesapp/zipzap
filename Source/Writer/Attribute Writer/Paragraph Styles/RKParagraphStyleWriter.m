@@ -348,7 +348,7 @@
     NSUInteger roundedFirstLineHeadIndent = RKPointsToTwips(firstLineHeadIndent - headIndent);
     
     if (roundedFirstLineHeadIndent != 0)
-        [rtf appendFormat:@"\\fi%lu\\cufi%lu",
+        [rtf appendFormat:@"\\fi%li\\cufi%li",
          roundedFirstLineHeadIndent,
          roundedFirstLineHeadIndent
          ];
