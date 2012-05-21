@@ -7,6 +7,8 @@
 //
 
 #ifdef __OBJC__
+#define NS_BUILD_32_LIKE_64 TRUE
+
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>

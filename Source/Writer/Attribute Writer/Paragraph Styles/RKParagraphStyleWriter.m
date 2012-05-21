@@ -483,7 +483,7 @@
             break;
     }
     
-    [rtf appendFormat:@"\\tx%u", (NSUInteger)RKPointsToTwips(location)];
+    [rtf appendFormat:@"\\tx%lu", (NSUInteger)RKPointsToTwips(location)];
     
     return rtf;
 }
