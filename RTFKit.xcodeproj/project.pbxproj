@@ -1381,6 +1381,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/RTFKit-Prefix.pch";
+				INSTALL_PATH = "@executable_path/../Frameworks/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1392,6 +1393,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/RTFKit-Prefix.pch";
+				INSTALL_PATH = "@executable_path/../Frameworks/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
