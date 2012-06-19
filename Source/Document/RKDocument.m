@@ -12,10 +12,6 @@
 
 @implementation RKDocument
 
-@synthesize sections, metadata, hyphenationEnabled, pageSize, pageInsets, pageOrientation,
-            footnotePlacement, endnotePlacement, footnoteEnumerationStyle, endnoteEnumerationStyle, footnoteEnumerationPolicy, endnoteEnumerationPolicy,
-            paragraphStyles, characterStyles;
-
 + (RKDocument *)documentWithSections:(NSArray *)initialSections
 {
     return [[RKDocument alloc] initWithSections: initialSections];
@@ -58,19 +54,19 @@
     copy.sections = [self.sections copy];
     copy.metadata = [self.metadata copy];
 
-    copy.hyphenationEnabled = hyphenationEnabled;
-    copy.pageSize = pageSize;
-    copy.pageInsets = pageInsets;
-    copy.pageOrientation = pageOrientation;
-    copy.footnotePlacement = footnotePlacement;
-    copy.endnotePlacement = endnotePlacement;
-    copy.footnoteEnumerationStyle = footnoteEnumerationStyle;
-    copy.endnoteEnumerationStyle = endnoteEnumerationStyle;
-    copy.footnoteEnumerationPolicy = footnoteEnumerationPolicy;
-    copy.endnoteEnumerationPolicy = endnoteEnumerationPolicy;
+    copy.hyphenationEnabled = _hyphenationEnabled;
+    copy.pageSize = _pageSize;
+    copy.pageInsets = _pageInsets;
+    copy.pageOrientation = _pageOrientation;
+    copy.footnotePlacement = _footnotePlacement;
+    copy.endnotePlacement = _endnotePlacement;
+    copy.footnoteEnumerationStyle = _footnoteEnumerationStyle;
+    copy.endnoteEnumerationStyle = _endnoteEnumerationStyle;
+    copy.footnoteEnumerationPolicy = _footnoteEnumerationPolicy;
+    copy.endnoteEnumerationPolicy = _endnoteEnumerationPolicy;
 
-    copy.paragraphStyles = [paragraphStyles copy];
-    copy.characterStyles = [characterStyles copy];
+    copy.paragraphStyles = [_paragraphStyles copy];
+    copy.characterStyles = [_characterStyles copy];
     
     return copy;
 }

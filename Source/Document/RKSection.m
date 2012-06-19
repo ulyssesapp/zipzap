@@ -13,8 +13,8 @@
  */
 @interface RKSection ()
 {
-    NSMutableDictionary *headers;
-    NSMutableDictionary *footers;
+    NSMutableDictionary *_headers;
+    NSMutableDictionary *_footers;
 }
 
 /*!
@@ -42,8 +42,6 @@
 
 @implementation RKSection
 
-@synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle;
-
 + (id)sectionWithContent:(NSAttributedString *)content
 {
     return [[RKSection alloc] initWithContent:content];
@@ -54,12 +52,12 @@
     self = [super init];
     
     if (self) {
-        numberOfColumns = 1;
-        indexOfFirstPage = RKContinuousPageNumbering;
-        pageNumberingStyle = RKPageNumberingDecimal;
+        _numberOfColumns = 1;
+        _indexOfFirstPage = RKContinuousPageNumbering;
+        _pageNumberingStyle = RKPageNumberingDecimal;
         
-        headers = [NSMutableDictionary new];
-        footers = [NSMutableDictionary new];
+        _headers = [NSMutableDictionary new];
+        _footers = [NSMutableDictionary new];
     }
     
     return self;
@@ -101,7 +99,7 @@
     self = [self init];
     
     if (self) {
-        content = initialContent;
+        _content = initialContent;
     }
     
     return self;
@@ -111,32 +109,32 @@
 
 - (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self objectForPage:pageMask fromDictionary:headers];
+    return [self objectForPage:pageMask fromDictionary:_headers];
 }
 
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
 {
-    [self setObject:header forPages:pageMask toDictionary:headers];
+    [self setObject:header forPages:pageMask toDictionary:_headers];
 }
 
 - (BOOL)hasSingleHeaderForAllPages
 {
-    return [self hasSingleObjectForAllPagesInDictionary: headers];
+    return [self hasSingleObjectForAllPagesInDictionary: _headers];
 }
 
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self objectForPage:pageMask fromDictionary:footers];
+    return [self objectForPage:pageMask fromDictionary:_footers];
 }
 
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
-   [self setObject:footer forPages:pageMask toDictionary:footers];
+   [self setObject:footer forPages:pageMask toDictionary:_footers];
 }
 
 - (BOOL)hasSingleFooterForAllPages
 {
-    return [self hasSingleObjectForAllPagesInDictionary: footers];
+    return [self hasSingleObjectForAllPagesInDictionary: _footers];
 }
 
 #pragma mark -
