@@ -13,7 +13,7 @@
 + (NSAttributedString *)attributedStringWithAttachment:(id)attachment attributeName:(NSString *)attributeName
 {
     NSString *attachmentString = [NSString stringWithCharacters:(unichar[]){RKAttachmentCharacter} length:1];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys: attachment, attributeName, nil];
+    NSDictionary *attributes = @{attributeName: attachment};
     
     return [[NSAttributedString alloc] initWithString: attachmentString attributes: attributes];
 }

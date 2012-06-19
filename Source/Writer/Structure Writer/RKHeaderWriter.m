@@ -77,32 +77,26 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 {
     // An ordered lookup table mapping from the field keys to the field titles and types representing RTF document meta data
     RKHeaderWriterMetadataDescriptions = 
-                           [NSArray arrayWithObjects:
-                            [NSArray arrayWithObjects: RKTitleDocumentAttribute,                @"\\title",         [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCompanyDocumentAttribute,              @"\\*\\company",    [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class], nil],
-                            [NSArray arrayWithObjects: RKSubjectDocumentAttribute,              @"\\subject",       [NSString class], nil],
-                            [NSArray arrayWithObjects: RKAuthorDocumentAttribute,               @"\\author",        [NSString class], nil],
-                            [NSArray arrayWithObjects: RKKeywordsDocumentAttribute,             @"\\keywords",      [NSArray class], nil],
-                            [NSArray arrayWithObjects: RKCommentDocumentAttribute,              @"\\doccomm",       [NSString class], nil],
-                            [NSArray arrayWithObjects: RKEditorDocumentAttribute,               @"\\*\\editor",     [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class], nil],
-                            [NSArray arrayWithObjects: RKModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class], nil],
-                            [NSArray arrayWithObjects: RKManagerDocumentAttribute,              @"\\manager",       [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCategoryDocumentAttribute,             @"\\category",      [NSString class], nil],
-                            nil
-                           ];
+                           @[@[RKTitleDocumentAttribute,                @"\\title",         [NSString class]],
+                            @[RKCompanyDocumentAttribute,              @"\\*\\company",    [NSString class]],
+                            @[RKCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class]],
+                            @[RKSubjectDocumentAttribute,              @"\\subject",       [NSString class]],
+                            @[RKAuthorDocumentAttribute,               @"\\author",        [NSString class]],
+                            @[RKKeywordsDocumentAttribute,             @"\\keywords",      [NSArray class]],
+                            @[RKCommentDocumentAttribute,              @"\\doccomm",       [NSString class]],
+                            @[RKEditorDocumentAttribute,               @"\\*\\editor",     [NSString class]],
+                            @[RKCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class]],
+                            @[RKModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class]],
+                            @[RKManagerDocumentAttribute,              @"\\manager",       [NSString class]],
+                            @[RKCategoryDocumentAttribute,             @"\\category",      [NSString class]]];
     
     RKHeaderWriterFootnoteStyleNames = 
-                            [NSDictionary dictionaryWithObjectsAndKeys:
-                             @"ar",  [NSNumber numberWithInt:RKFootnoteEnumerationDecimal],
-                             @"rlc", [NSNumber numberWithInt:RKFootnoteEnumerationRomanLowerCase],
-                             @"ruc", [NSNumber numberWithInt:RKFootnoteEnumerationRomanUpperCase],
-                             @"alc", [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticLowerCase],
-                             @"auc", [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticUpperCase],
-                             @"chi", [NSNumber numberWithInt:RKFootnoteEnumerationChicagoManual],
-                             nil
-                             ];
+                            @{[NSNumber numberWithInt:RKFootnoteEnumerationDecimal]: @"ar",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationRomanLowerCase]: @"rlc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationRomanUpperCase]: @"ruc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticLowerCase]: @"alc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticUpperCase]: @"auc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationChicagoManual]: @"chi"};
 }
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
@@ -257,26 +251,26 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSMutableString *infoTable = [NSMutableString stringWithString:@"{\\info"];
     
     for (NSArray *description in RKHeaderWriterMetadataDescriptions) {
-        id itemValue = [document.metadata objectForKey:[description objectAtIndex:RKMetaDescriptionAccessorKey]];
+        id itemValue = (document.metadata)[description[RKMetaDescriptionAccessorKey]];
         
         if (itemValue) {
             NSString *convertedValue;
             
-            if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSString class]]) {
+            if ([description[RKMetaDescriptionExpectedType] isEqual: [NSString class]]) {
                 convertedValue = [itemValue RTFEscapedString];
             }
-             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSArray class]]) {
+             else if ([description[RKMetaDescriptionExpectedType] isEqual: [NSArray class]]) {
                  NSArray *arrayItem = itemValue;
                  convertedValue = [arrayItem componentsJoinedByString:@", "];
             }
-             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSDate class]]) {
+             else if ([description[RKMetaDescriptionExpectedType] isEqual: [NSDate class]]) {
                 convertedValue = [itemValue RTFDate];
             }
             else {
                 NSAssert(false, @"Invalid meta data definitions");
             }
             
-            [infoTable appendFormat:@"{%@ %@}", [description objectAtIndex:RKMetaDescriptionExportedTag], convertedValue];
+            [infoTable appendFormat:@"{%@ %@}", description[RKMetaDescriptionExportedTag], convertedValue];
         }
     }
     
@@ -317,13 +311,13 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     [attributes appendString:@"\\aftnbj"];    
     
     // Footnote layouting
-    NSString *footnoteStyle = [RKHeaderWriterFootnoteStyleNames objectForKey:[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
+    NSString *footnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
     
     if (footnoteStyle != nil)
         [attributes appendFormat:@"\\ftnn%@", footnoteStyle];
 
     // Endnote layouting (using \aftnn and \saftn improves compatibility with Word)
-    NSString *endnoteStyle = [RKHeaderWriterFootnoteStyleNames objectForKey:[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
+    NSString *endnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
     
     if (footnoteStyle != nil)
         [attributes appendFormat:@"\\aftnn%@\\saftnn%@", endnoteStyle, endnoteStyle];

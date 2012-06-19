@@ -76,7 +76,7 @@
     [self scanFullFormatStringOfLevel:levelIndex usingBlock:^(NSString *token, NSUInteger currentLevel) {
         if ([token isKindOfClass:NSNumber.class]) {
             // Store placeholder position
-            [placeholderPositions addObject: [NSNumber numberWithUnsignedInteger: RTFTokenCount]];
+            [placeholderPositions addObject: @(RTFTokenCount)];
 
             // Format placeholder token
             token = [NSString stringWithFormat:@"\\'%.2lx", currentLevel];
@@ -106,7 +106,7 @@
     [self scanFullFormatStringOfLevel:levelIndex-1 usingBlock:^(id token, NSUInteger currentLevel) {
         if ([token isKindOfClass:NSNumber.class]) {
             // Format placeholder token
-            NSUInteger currentItemNumber = [[itemNumbers objectAtIndex:currentLevel] unsignedIntegerValue];
+            NSUInteger currentItemNumber = [itemNumbers[currentLevel] unsignedIntegerValue];
             
             switch ([token unsignedIntegerValue]) {
                 case RKListFormatCodeDecimal:

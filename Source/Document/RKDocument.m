@@ -90,7 +90,7 @@
 {
     NSAssert(string != nil, @"Initialization string must not be nil");
     
-    return [self initWithSections: [NSArray arrayWithObject: [RKSection sectionWithContent: string]]];
+    return [self initWithSections: @[[RKSection sectionWithContent: string]]];
 }
 
 - (NSData *)RTF

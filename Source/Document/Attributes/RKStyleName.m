@@ -26,13 +26,13 @@ NSString *RKParagraphStyleNameAttributeName = @"RKParagraphStyleName";
 - (void)applyPredefinedCharacterStyleAttribute:(NSString *)styleSheetName document:(RKDocument *)document range:(NSRange)range
 {
     [self addPredefinedCharacterStyleAttribute:styleSheetName range:range];
-    [self addAttributes:[document.characterStyles objectForKey:styleSheetName] range:range];
+    [self addAttributes:(document.characterStyles)[styleSheetName] range:range];
 }
 
 - (void)applyPredefinedParagraphStyleAttribute:(NSString *)styleSheetName document:(RKDocument *)document range:(NSRange)range
 {
     [self addPredefinedParagraphStyleAttribute:styleSheetName range:range];
-    [self addAttributes:[document.paragraphStyles objectForKey:styleSheetName] range:range];
+    [self addAttributes:(document.paragraphStyles)[styleSheetName] range:range];
 }
 
 @end

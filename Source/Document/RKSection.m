@@ -146,7 +146,7 @@
     NSAssert(!(pageMask & (~RKPageSelectionFirst)) || !(pageMask & (~RKPageSelectionLeft)) || !(pageMask & (~RKPageSelectionRight)), 
              @"Invalid page mask used in query.");
     
-    return [dictionary objectForKey: [NSNumber numberWithUnsignedInteger:pageMask]];
+    return dictionary[@(pageMask)];
 }
 
 - (void)setObject:(id)object forSinglePage:(RKPageSelectionMask)page toDictionary:(NSMutableDictionary *)dictionary
@@ -157,7 +157,7 @@
     NSNumber *key = [NSNumber numberWithUnsignedInt:page];
         
     if (object) {
-        [dictionary setObject:object forKey:key];
+        dictionary[key] = object;
     }
     else {
         [dictionary removeObjectForKey: key];

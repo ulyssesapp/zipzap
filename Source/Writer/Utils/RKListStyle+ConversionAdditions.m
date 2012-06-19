@@ -13,31 +13,25 @@
 + (NSNumber *)formatCodeFromEnumerationPlaceholder:(NSString *)placeholder
 {
     static NSDictionary *placeholderCodes = nil;
-    placeholderCodes = (placeholderCodes) ?: [NSDictionary dictionaryWithObjectsAndKeys:
-                                              [NSNumber numberWithInteger: RKListFormatCodeDecimal],            @"%d",
-                                              [NSNumber numberWithInteger: RKListFormatCodeLowerCaseRoman],     @"%r",
-                                              [NSNumber numberWithInteger: RKListFormatCodeUpperCaseRoman],     @"%R",
-                                              [NSNumber numberWithInteger: RKListFormatCodeLowerCaseLetter],    @"%a",
-                                              [NSNumber numberWithInteger: RKListFormatCodeUpperCaseLetter],    @"%A",
-                                              nil
-                                              ];
+    placeholderCodes = (placeholderCodes) ?: @{@"%d": @(RKListFormatCodeDecimal),
+                                              @"%r": @(RKListFormatCodeLowerCaseRoman),
+                                              @"%R": @(RKListFormatCodeUpperCaseRoman),
+                                              @"%a": @(RKListFormatCodeLowerCaseLetter),
+                                              @"%A": @(RKListFormatCodeUpperCaseLetter)};
     
-    return [placeholderCodes objectForKey: placeholder];
+    return placeholderCodes[placeholder];
 }
 
 + (NSString *)systemFormatCodeFromEnumerationPlaceholder:(NSString *)placeholder
 {
     static NSDictionary *textSystemPlaceholder = nil;
-    textSystemPlaceholder = (textSystemPlaceholder) ?: [NSDictionary dictionaryWithObjectsAndKeys:
-                                                        @"{decimal}",         @"%d",
-                                                        @"{lower-roman}",     @"%r",
-                                                        @"{upper-roman}",     @"%R",
-                                                        @"{lower-alpha}",     @"%a",
-                                                        @"{upper-alpha}",     @"%A",
-                                                        nil
-                                                        ];   
+    textSystemPlaceholder = (textSystemPlaceholder) ?: @{@"%d": @"{decimal}",
+                                                        @"%r": @"{lower-roman}",
+                                                        @"%R": @"{upper-roman}",
+                                                        @"%a": @"{lower-alpha}",
+                                                        @"%A": @"{upper-alpha}"};   
     
-    return [textSystemPlaceholder objectForKey: placeholder];
+    return textSystemPlaceholder[placeholder];
 }
 
 @end

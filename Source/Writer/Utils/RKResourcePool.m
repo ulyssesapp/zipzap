@@ -170,7 +170,7 @@
     NSAssert(paragraphStyleName, @"No style name given");
     
     // We only support style names that have been previously registered to the document
-    if ([document.paragraphStyles objectForKey: paragraphStyleName] == nil)
+    if ((document.paragraphStyles)[paragraphStyleName] == nil)
         return 0;
     
     return [[document.paragraphStyles allKeys] indexOfObject: paragraphStyleName] + 1;
@@ -181,7 +181,7 @@
     NSAssert(characterStyleName, @"No style name given");
     
     // We only support style names that have been previously registered to the document
-    if ([document.characterStyles objectForKey: characterStyleName] == nil)
+    if ((document.characterStyles)[characterStyleName] == nil)
         return 0;
     
     return [[document.characterStyles allKeys] indexOfObject: characterStyleName] + document.paragraphStyles.count + 1;
@@ -232,13 +232,13 @@
         return;
     
     // Reset style
-    [listItemIndices replaceObjectAtIndex:styleIndex withObject:[NSMutableArray new]];
+    listItemIndices[styleIndex] = [NSMutableArray new];
 }
 
 - (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
 {
     NSUInteger listIndex = [self indexOfListStyle: textList];    
-    NSMutableArray *itemNumbers = [listItemIndices objectAtIndex: listIndex];
+    NSMutableArray *itemNumbers = listItemIndices[listIndex];
     
     // Truncate nested item numbers, if a higher item number is increased
     if (level + 1 < itemNumbers.count) {
@@ -248,13 +248,13 @@
     if (level >= itemNumbers.count) {
         // Fill with 1 if requested, nested list is deeper nested than the current list length
         for (NSUInteger position = itemNumbers.count; position < level + 1; position ++) {
-            [itemNumbers addObject: [NSNumber numberWithUnsignedInteger: [textList startNumberForLevel: position]]];
+            [itemNumbers addObject: @([textList startNumberForLevel: position])];
         }
     }
     else {
         // Increment requested counter
-        NSUInteger currentItemNumber = [[itemNumbers objectAtIndex: level] unsignedIntegerValue] + 1;
-        [itemNumbers replaceObjectAtIndex:level withObject:[NSNumber numberWithUnsignedInteger:currentItemNumber]];
+        NSUInteger currentItemNumber = [itemNumbers[level] unsignedIntegerValue] + 1;
+        itemNumbers[level] = @(currentItemNumber);
     }
 
     return [itemNumbers copy];

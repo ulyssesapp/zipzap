@@ -32,21 +32,16 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     
     // Register handler
     [RKAttributedStringWriterHandlers addObject:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-        attributeName,                          @"attributeName",
-        [NSNumber numberWithInt:priority],      @"priority",
-        attributeWriter,                        @"writerClass",
-        nil
-      ]
+     @{@"attributeName": attributeName,
+        @"priority": [NSNumber numberWithInt:priority],
+        @"writerClass": attributeWriter}
     ];
     
     // Order handlers by priority
     // Additionally order them by attribute name to improve testability
-    [RKAttributedStringWriterHandlers sortUsingDescriptors:[NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], 
+    [RKAttributedStringWriterHandlers sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], 
                                                                                       [NSSortDescriptor sortDescriptorWithKey:@"writerClass.description" ascending:YES],
-                                                                                      [NSSortDescriptor sortDescriptorWithKey:@"attributeName" ascending:YES],
-                                                            nil
-                                                           ]];
+                                                                                      [NSSortDescriptor sortDescriptorWithKey:@"attributeName" ascending:YES]]];
     
     // Validate type conformance
     NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
@@ -59,8 +54,8 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     
     // Write attribute styles
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
-        NSString *attributeName = [handlerDescription objectForKey: @"attributeName"];
-        Class handler = [handlerDescription objectForKey: @"writerClass"];
+        NSString *attributeName = handlerDescription[@"attributeName"];
+        Class handler = handlerDescription[@"writerClass"];
             
         // We operate on a per-paragraph level
         [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
@@ -87,8 +82,8 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     
     // Write attribute styles
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
-        NSString *attributeName = [handlerDescription objectForKey: @"attributeName"];
-        Class handler = [handlerDescription objectForKey: @"writerClass"];
+        NSString *attributeName = handlerDescription[@"attributeName"];
+        Class handler = handlerDescription[@"writerClass"];
 
         id attributeValue = [attributes valueForKey:attributeName];
         

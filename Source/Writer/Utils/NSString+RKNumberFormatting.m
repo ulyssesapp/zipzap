@@ -16,25 +16,22 @@
     static NSArray *romanNumeralsOrdering = nil;
     
     romanNumeralsMap = (romanNumeralsMap) ?: 
-        [NSDictionary dictionaryWithObjectsAndKeys:
-         @"i", [NSNumber numberWithUnsignedInteger:1],
-         @"x", [NSNumber numberWithUnsignedInteger:10],
-         @"c", [NSNumber numberWithUnsignedInteger:100],
-         @"m", [NSNumber numberWithUnsignedInteger:1000],
-         @"iv", [NSNumber numberWithUnsignedInteger:4],
-         @"xl", [NSNumber numberWithUnsignedInteger:40],
-         @"cd", [NSNumber numberWithUnsignedInteger:400],
-         @"v", [NSNumber numberWithUnsignedInteger:5],
-         @"l", [NSNumber numberWithUnsignedInteger:50],
-         @"d", [NSNumber numberWithUnsignedInteger:500],
-         @"ix", [NSNumber numberWithUnsignedInteger:9],
-         @"xc", [NSNumber numberWithUnsignedInteger:900],
-         @"cm", [NSNumber numberWithUnsignedInteger:9000],                          
-         nil
-        ];
+        @{@1U: @"i",
+         @10U: @"x",
+         @100U: @"c",
+         @1000U: @"m",
+         @4U: @"iv",
+         @40U: @"xl",
+         @400U: @"cd",
+         @5U: @"v",
+         @50U: @"l",
+         @500U: @"d",
+         @9U: @"ix",
+         @900U: @"xc",
+         @9000U: @"cm"};
 
     romanNumeralsOrdering = (romanNumeralsOrdering) ?:
-        [[romanNumeralsMap allKeys] sortedArrayUsingDescriptors:[NSArray arrayWithObject: [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];    
+        [[romanNumeralsMap allKeys] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];    
     
     if (number == 0)
         return @"0";
@@ -46,7 +43,7 @@
         NSUInteger numeralValue = [numeralValueObject unsignedIntegerValue];
         
         while (remainder >= numeralValue) {
-            [romanNumber appendString:  [romanNumeralsMap objectForKey: numeralValueObject]];
+            [romanNumber appendString:  romanNumeralsMap[numeralValueObject]];
             remainder -= numeralValue;
         }
     }
