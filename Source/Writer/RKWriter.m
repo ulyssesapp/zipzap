@@ -44,7 +44,7 @@
     // Pacakge image files
     NSMutableDictionary *packageFiles = [NSMutableDictionary dictionaryWithDictionary: resources.attachmentFileWrappers];
     
-    [packageFiles setObject:rtfFile forKey:@"TXT.rtf"];
+    packageFiles[@"TXT.rtf"] = rtfFile;
         
     // Generate RTFD file wrapper
     return [[NSFileWrapper alloc] initDirectoryWithFileWrappers:packageFiles ];

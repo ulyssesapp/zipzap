@@ -10,8 +10,6 @@
 
 @implementation RKTextTab
 
-@synthesize tabStopType, location;
-
 - (id)initWithTabStopType:(NSUInteger)initialTabStopType location:(CGFloat)initialLocation
 {
     self = [self init];
@@ -36,7 +34,7 @@
 
 - (CTTextTabRef)coreTextRepresentation
 {
-    return CTTextTabCreate(tabStopType, location, 0);
+    return CTTextTabCreate(_tabStopType, _location, 0);
 }
 
 #if !TARGET_OS_IPHONE

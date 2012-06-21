@@ -38,31 +38,25 @@
     static NSDictionary *colorTags = nil;
     static NSDictionary *defaultColorTags = nil;
     
-    colorTags = (colorTags) ?: [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"\\cb",        RKBackgroundColorAttributeName,
-                                @"\\cf",        RKForegroundColorAttributeName,
-                                @"\\ulc",       RKUnderlineColorAttributeName,
-                                @"\\strikec",   RKStrikethroughColorAttributeName,
-                                @"\\strokec",   RKStrokeColorAttributeName,
-                                nil
-                                ];
+    colorTags = (colorTags) ?: @{RKBackgroundColorAttributeName: @"\\cb",
+                                RKForegroundColorAttributeName: @"\\cf",
+                                RKUnderlineColorAttributeName: @"\\ulc",
+                                RKStrikethroughColorAttributeName: @"\\strikec",
+                                RKStrokeColorAttributeName: @"\\strokec"};
     
     // There are different default colors for background (= 1) and stroke styles (= 0)
     // We may not use \\ulc0 since it will activate underlining in OpenOffice
-    defaultColorTags = (defaultColorTags) ?: [NSDictionary dictionaryWithObjectsAndKeys:
-                                              @"\\cb1 ",        RKBackgroundColorAttributeName,
-                                              @"\\cf0 ",        RKForegroundColorAttributeName,
-                                              @"",              RKUnderlineColorAttributeName,
-                                              @"\\strikec0 ",   RKStrikethroughColorAttributeName,
-                                              @"\\strokec0 ",   RKStrokeColorAttributeName,
-                                              nil
-                                              ];
+    defaultColorTags = (defaultColorTags) ?: @{RKBackgroundColorAttributeName: @"\\cb1 ",
+                                              RKForegroundColorAttributeName: @"\\cf0 ",
+                                              RKUnderlineColorAttributeName: @"",
+                                              RKStrikethroughColorAttributeName: @"\\strikec0 ",
+                                              RKStrokeColorAttributeName: @"\\strokec0 "};
     
     if (colorIndex != NSNotFound) {
-        return [NSString stringWithFormat:@"%@%lu ", [colorTags objectForKey: attributeName], colorIndex];        
+        return [NSString stringWithFormat:@"%@%lu ", colorTags[attributeName], colorIndex];        
     }
     else {
-        return [defaultColorTags objectForKey: attributeName];
+        return defaultColorTags[attributeName];
     }    
 }
 

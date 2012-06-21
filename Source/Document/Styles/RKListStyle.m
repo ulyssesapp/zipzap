@@ -51,14 +51,14 @@
     if (levelIndex >= levelFormats.count)
         return @"";
     
-    return [levelFormats objectAtIndex: levelIndex];
+    return levelFormats[levelIndex];
 }
 
 -(NSUInteger)startNumberForLevel:(NSUInteger)levelIndex
 {
     NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
     
-    NSNumber *startItemNumber = [startNumbers objectAtIndex: levelIndex];
+    NSNumber *startItemNumber = startNumbers[levelIndex];
     
     if (startItemNumber == nil)
         return 1;

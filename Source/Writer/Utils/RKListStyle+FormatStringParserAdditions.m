@@ -84,7 +84,7 @@
 
     // Iterate over all tokens
     [tokens enumerateObjectsUsingBlock:^(NSString *token, NSUInteger tokenIndex, BOOL *stop) {
-        block(token, [[levels objectAtIndex: tokenIndex] unsignedIntegerValue]);
+        block(token, [levels[tokenIndex] unsignedIntegerValue]);
     }];
 }
 

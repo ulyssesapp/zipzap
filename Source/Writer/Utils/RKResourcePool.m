@@ -15,30 +15,28 @@
 
 @interface RKResourcePool()
 {
-    NSMutableArray *fonts;
-    NSMutableArray *colors;
-    NSDictionary *attachmentFileWrappers;
+    NSMutableDictionary	*_attachmentFileWrappers;
+    NSMutableArray		*_colors;
+    NSMutableArray		*_fonts;
 
-    NSMutableArray *listStyles;
-    NSMutableArray *listItemIndices;
+    NSMutableArray		*_listStyles;
+    NSMutableArray		*_listItemIndices;
 }
 
 @end
 
 @implementation RKResourcePool
 
-@synthesize attachmentFileWrappers, document;
-
 - (id)init
 {
     self = [super init];
     
     if (self) {
-        fonts = [NSMutableArray new];
-        colors = [NSMutableArray new];
-        attachmentFileWrappers = [NSMutableDictionary new];
-        listStyles = [NSMutableArray new];
-        listItemIndices = [NSMutableArray new];
+        _fonts = [NSMutableArray new];
+        _colors = [NSMutableArray new];
+        _attachmentFileWrappers = [NSMutableDictionary new];
+        _listStyles = [NSMutableArray new];
+        _listItemIndices = [NSMutableArray new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
         CGColorRef blackRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){0, 0, 0, 1});
@@ -59,7 +57,7 @@
     self = [self init];
     
     if (self) {
-        document = initialDocument;
+        _document = initialDocument;
     }
     
     return self;
@@ -103,11 +101,11 @@
     NSString *postscriptName = [self postscriptNameWithoutBoldAndItalicTraits: font];
         
     // Search for an index or create a font entry
-    NSUInteger index = [fonts indexOfObject: postscriptName];
+    NSUInteger index = [_fonts indexOfObject: postscriptName];
     
     if (index == NSNotFound) {
-        [fonts addObject: postscriptName];
-        index = [fonts count] - 1;
+        [_fonts addObject: postscriptName];
+        index = [_fonts count] - 1;
     }
     
     return index;
@@ -115,7 +113,7 @@
 
 - (NSArray *)fontFamilyNames
 {
-    return fonts;
+    return _fonts;
 }
 
 #pragma mark - Colors
@@ -148,11 +146,11 @@
     }
 
     // Search for an index or create a color entry
-    NSUInteger index = [colors indexOfObject: colorDefinition];
+    NSUInteger index = [_colors indexOfObject: colorDefinition];
     
     if (index == NSNotFound) {
-        [colors addObject: colorDefinition];
-        index = colors.count - 1;
+        [_colors addObject: colorDefinition];
+        index = _colors.count - 1;
     }
     
     return index;
@@ -160,7 +158,7 @@
 
 - (NSArray *)colors
 {
-    return colors;
+    return _colors;
 }
 
 #pragma mark - Style
@@ -170,10 +168,10 @@
     NSAssert(paragraphStyleName, @"No style name given");
     
     // We only support style names that have been previously registered to the document
-    if ([document.paragraphStyles objectForKey: paragraphStyleName] == nil)
+    if ((_document.paragraphStyles)[paragraphStyleName] == nil)
         return 0;
     
-    return [[document.paragraphStyles allKeys] indexOfObject: paragraphStyleName] + 1;
+    return [[_document.paragraphStyles allKeys] indexOfObject: paragraphStyleName] + 1;
 }
 
 - (NSUInteger)indexOfCharacterStyle:(NSString *)characterStyleName
@@ -181,10 +179,10 @@
     NSAssert(characterStyleName, @"No style name given");
     
     // We only support style names that have been previously registered to the document
-    if ([document.characterStyles objectForKey: characterStyleName] == nil)
+    if ((_document.characterStyles)[characterStyleName] == nil)
         return 0;
     
-    return [[document.characterStyles allKeys] indexOfObject: characterStyleName] + document.paragraphStyles.count + 1;
+    return [[_document.characterStyles allKeys] indexOfObject: characterStyleName] + _document.paragraphStyles.count + 1;
 }
 
 #pragma mark - File Wrapper
@@ -194,11 +192,11 @@
     NSAssert(fileWrapper, @"No file given");
     
     NSString *originalFilename = (fileWrapper.preferredFilename) ?: (fileWrapper.filename) ?: @"";
-    NSString *filename = [NSString stringWithFormat: @"%lu.%@", attachmentFileWrappers.count, [originalFilename sanitizedFilenameForRTFD]];
+    NSString *filename = [NSString stringWithFormat: @"%lu.%@", _attachmentFileWrappers.count, [originalFilename sanitizedFilenameForRTFD]];
     
     fileWrapper.preferredFilename = filename;
 
-    [attachmentFileWrappers setValue:fileWrapper forKey:filename];
+    [_attachmentFileWrappers setValue:fileWrapper forKey:filename];
     
     return filename;
 }
@@ -207,12 +205,12 @@
 
 - (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
 {
-    NSUInteger listIndex = [listStyles indexOfObject: listStyle];
+    NSUInteger listIndex = [_listStyles indexOfObject: listStyle];
     
     if (listIndex == NSNotFound) {
-        [listStyles addObject: listStyle];
-        [listItemIndices addObject: [NSMutableArray new]];
-        return listStyles.count - 1;
+        [_listStyles addObject: listStyle];
+        [_listItemIndices addObject: [NSMutableArray new]];
+        return _listStyles.count - 1;
     }
     
     return listIndex;
@@ -220,25 +218,25 @@
 
 - (NSArray *)listStyles
 {
-    return listStyles;
+    return _listStyles;
 }
 
 - (void)resetCounterOfList:(RKListStyle *)listStyle
 {
-    NSUInteger styleIndex = [listStyles indexOfObject: listStyle];
+    NSUInteger styleIndex = [_listStyles indexOfObject: listStyle];
     
     // Style unknown
     if (styleIndex == NSNotFound)
         return;
     
     // Reset style
-    [listItemIndices replaceObjectAtIndex:styleIndex withObject:[NSMutableArray new]];
+    _listItemIndices[styleIndex] = [NSMutableArray new];
 }
 
 - (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
 {
     NSUInteger listIndex = [self indexOfListStyle: textList];    
-    NSMutableArray *itemNumbers = [listItemIndices objectAtIndex: listIndex];
+    NSMutableArray *itemNumbers = _listItemIndices[listIndex];
     
     // Truncate nested item numbers, if a higher item number is increased
     if (level + 1 < itemNumbers.count) {
@@ -248,13 +246,13 @@
     if (level >= itemNumbers.count) {
         // Fill with 1 if requested, nested list is deeper nested than the current list length
         for (NSUInteger position = itemNumbers.count; position < level + 1; position ++) {
-            [itemNumbers addObject: [NSNumber numberWithUnsignedInteger: [textList startNumberForLevel: position]]];
+            [itemNumbers addObject: @([textList startNumberForLevel: position])];
         }
     }
     else {
         // Increment requested counter
-        NSUInteger currentItemNumber = [[itemNumbers objectAtIndex: level] unsignedIntegerValue] + 1;
-        [itemNumbers replaceObjectAtIndex:level withObject:[NSNumber numberWithUnsignedInteger:currentItemNumber]];
+        NSUInteger currentItemNumber = [itemNumbers[level] unsignedIntegerValue] + 1;
+        itemNumbers[level] = @(currentItemNumber);
     }
 
     return [itemNumbers copy];

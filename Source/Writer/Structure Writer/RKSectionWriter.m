@@ -99,7 +99,7 @@
     NSMutableString *translation = [NSMutableString new];    
     
     for (NSString *tag in [attributedStringMap.allKeys sortedArrayUsingSelector:@selector(compare:)]) {
-        NSAttributedString *attributedString = [attributedStringMap objectForKey: tag];
+        NSAttributedString *attributedString = attributedStringMap[tag];
 
         [translation appendString:
          [NSString stringWithRTFGroupTag:tag body:[RKAttributedStringWriter RTFFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]]
@@ -118,13 +118,13 @@
     NSAttributedString *firstHeader = [section headerForPage: RKPageSelectionFirst];         
     
     if (leftHeader)
-        [translationTable setObject:leftHeader forKey:@"headerl"];
+        translationTable[@"headerl"] = leftHeader;
 
     if (rightHeader)
-        [translationTable setObject:rightHeader forKey:@"headerr"];
+        translationTable[@"headerr"] = rightHeader;
 
     if (firstHeader)
-        [translationTable setObject:firstHeader forKey:@"headerf"];
+        translationTable[@"headerf"] = firstHeader;
 
 
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
@@ -140,13 +140,13 @@
     NSAttributedString *firstFooter = [section footerForPage: RKPageSelectionFirst];         
     
     if (leftFooter)
-        [translationTable setObject:leftFooter forKey:@"footerl"];
+        translationTable[@"footerl"] = leftFooter;
     
     if (rightFooter)
-        [translationTable setObject:rightFooter forKey:@"footerr"];
+        translationTable[@"footerr"] = rightFooter;
     
     if (firstFooter)
-        [translationTable setObject:firstFooter forKey:@"footerf"];
+        translationTable[@"footerf"] = firstFooter;
     
     return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
 }

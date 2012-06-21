@@ -11,8 +11,6 @@
 
 @implementation RKParagraphStyle
 
-@synthesize alignment, firstLineHeadIndent, headIndent, tailIndent, tabStops, defaultTabInterval, lineHeightMultiple, maximumLineHeight, minimumLineHeight, lineSpacing, paragraphSpacing, paragraphSpacingBefore, baseWritingDirection;
-
 + (RKParagraphStyle *)paragraphStyleFromCoreTextRepresentation:(CTParagraphStyleRef)paragraphStyle
 {
     RKParagraphStyle *paragraphStyleObject = [[RKParagraphStyle alloc] init];
