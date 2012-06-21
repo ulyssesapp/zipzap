@@ -41,7 +41,7 @@
             default:
                 if (currentChar > 127) {
                     // All Non-ASCII are converted to \uN commands
-                    [escapedString appendFormat: @"\\u%u", currentChar];
+                    [escapedString appendFormat: @"\\u%u ", currentChar];
                 }
                 else {
                     [escapedString appendFormat: @"%C", currentChar];

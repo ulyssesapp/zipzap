@@ -87,7 +87,7 @@
     
     NSString *flattened = [taggedString flattenedRTFString];
     
-    STAssertEqualObjects(flattened, @"\\u228"
+    STAssertEqualObjects(flattened, @"\\u228 "
                                      "1-11-21-3[tag with different length]b"
                                      "c"
                                      "3-1d"
@@ -108,7 +108,7 @@
     NSString *flattened = [taggedString flattenedRTFString];
     
     STAssertEqualObjects(flattened, 
-                         @"\\u228"
+                         @"\\u228 "
                           "1-11-21-3[tag with different length]b"
                           "c"
                           "3-1d"
@@ -130,7 +130,7 @@
     NSString *flattened = [taggedString flattenedRTFString];
     
     STAssertEqualObjects(flattened, 
-                         @"0-1\\u228"
+                         @"0-1\\u228 "
                           "1-11-21-3[tag with different length]b"
                           "c"
                           "3-1d"
@@ -152,7 +152,7 @@
     NSString *flattened = [taggedString flattenedRTFString];
     
     STAssertEqualObjects(flattened, 
-                         @"0-1\\u228"
+                         @"0-1\\u228 "
                          "1-11-21-3[tag with different length]b"
                          "c"
                          "3-1d"
