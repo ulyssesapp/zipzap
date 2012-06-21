@@ -65,7 +65,7 @@
     STAssertEquals(placeholderPositions.count, (NSUInteger)1, @"Invalid count of placeholders");
     STAssertEquals([[placeholderPositions objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)5, @"Invalid tag position");
     
-    STAssertEqualObjects(testString, @"\\'08\t%\\u8750\\{\\'00\\\\%\t", @"Invalid format string");
+    STAssertEqualObjects(testString, @"\\'08\t%\\u8750 \\{\\'00\\\\%\t", @"Invalid format string");
 }
 
 - (void)testBuildRTFFormatStringWithMultipleMarkers  
@@ -90,7 +90,7 @@
 {
     RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.ä%%{", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.", @"--", nil ]];
     
-    STAssertEqualObjects([list systemFormatOfLevel: 0], @"{\\*\\levelmarker \\{decimal\\}.\\u228%\\{}", @"Invalid placeholder");
+    STAssertEqualObjects([list systemFormatOfLevel: 0], @"{\\*\\levelmarker \\{decimal\\}.\\u228 %\\{}", @"Invalid placeholder");
     STAssertEqualObjects([list systemFormatOfLevel: 1], @"{\\*\\levelmarker \\{lower-roman\\}.}\\levelprepend", @"Invalid placeholder");
     STAssertEqualObjects([list systemFormatOfLevel: 2], @"{\\*\\levelmarker \\{upper-roman\\}.}\\levelprepend", @"Invalid placeholder");
     STAssertEqualObjects([list systemFormatOfLevel: 3], @"{\\*\\levelmarker \\{lower-alpha\\}.}\\levelprepend", @"Invalid placeholder");
@@ -112,7 +112,7 @@
     
     NSString *string = [[prependingList markerForItemNumbers: itemNumbers] RTFEscapedString];
     
-    STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750\\\\\\}", @"Invalid marker string generated");
+    STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750 \\\\\\}", @"Invalid marker string generated");
 }
 
 @end
