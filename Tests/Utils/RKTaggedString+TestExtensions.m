@@ -14,7 +14,7 @@
 
 - (NSDictionary *)_getTagPositions
 {
-    return object_getIvar(self, class_getInstanceVariable([self class], "_tagPositions"));
+    return object_getIvar(self, class_getInstanceVariable([self class], "tagPositions"));
 }
 
 @end

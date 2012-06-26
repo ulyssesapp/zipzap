@@ -63,4 +63,16 @@
  */
 - (NSUInteger)numberOfLevels;
 
+/*!
+ @abstract Accessor for the level formats
+ @discussion Array of NSString
+ */
+@property (strong, readonly) NSArray *levelFormats;
+
+/*!
+ @abstract Accessor for the level starting numbers
+ @discussion Array of NSNumber
+ */
+@property (strong, readonly) NSArray *startNumbers;
+
 @end

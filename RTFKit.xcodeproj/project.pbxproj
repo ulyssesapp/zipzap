@@ -143,6 +143,35 @@
 		79C4BED714E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C4BED514E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.h */; };
 		79C4BED814E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C4BED614E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.m */; };
 		79C4BEDC14E5448100FD91B2 /* SenTestCase+RKAttributeWriterTestHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C4BEDB14E5448100FD91B2 /* SenTestCase+RKAttributeWriterTestHelper.m */; };
+		79CE4AE51599FFBA00C83EF6 /* NSAttributedStringPersistencyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AE41599FFBA00C83EF6 /* NSAttributedStringPersistencyTest.m */; };
+		79CE4AE91599FFE300C83EF6 /* NSAttributedString+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AE61599FFDF00C83EF6 /* NSAttributedString+RKPersistency.h */; };
+		79CE4AEA1599FFE300C83EF6 /* NSAttributedString+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AE71599FFE000C83EF6 /* NSAttributedString+RKPersistency.m */; };
+		79CE4AEB1599FFE300C83EF6 /* RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AE81599FFE200C83EF6 /* RKPersistency.h */; };
+		79CE4B00159A000C00C83EF6 /* NSColor+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AEC159A000900C83EF6 /* NSColor+RKPersistency.h */; };
+		79CE4B01159A000C00C83EF6 /* NSColor+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AED159A000900C83EF6 /* NSColor+RKPersistency.m */; };
+		79CE4B02159A000C00C83EF6 /* NSFont+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AEE159A000900C83EF6 /* NSFont+RKPersistency.h */; };
+		79CE4B03159A000C00C83EF6 /* NSFont+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AEF159A000900C83EF6 /* NSFont+RKPersistency.m */; };
+		79CE4B04159A000C00C83EF6 /* NSNumber+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AF0159A000A00C83EF6 /* NSNumber+RKPersistency.h */; };
+		79CE4B05159A000C00C83EF6 /* NSNumber+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AF1159A000A00C83EF6 /* NSNumber+RKPersistency.m */; };
+		79CE4B06159A000C00C83EF6 /* NSParagraphStyle+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AF2159A000A00C83EF6 /* NSParagraphStyle+RKPersistency.h */; };
+		79CE4B07159A000C00C83EF6 /* NSParagraphStyle+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AF3159A000B00C83EF6 /* NSParagraphStyle+RKPersistency.m */; };
+		79CE4B08159A000C00C83EF6 /* NSShadow+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AF4159A000B00C83EF6 /* NSShadow+RKPersistency.h */; };
+		79CE4B09159A000C00C83EF6 /* NSShadow+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AF5159A000B00C83EF6 /* NSShadow+RKPersistency.m */; };
+		79CE4B0A159A000C00C83EF6 /* NSString+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AF6159A000B00C83EF6 /* NSString+RKPersistency.h */; };
+		79CE4B0B159A000C00C83EF6 /* NSString+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AF7159A000B00C83EF6 /* NSString+RKPersistency.m */; };
+		79CE4B0C159A000C00C83EF6 /* NSTextAttachment+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AF8159A000B00C83EF6 /* NSTextAttachment+RKPersistency.h */; };
+		79CE4B0D159A000C00C83EF6 /* NSTextAttachment+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AF9159A000C00C83EF6 /* NSTextAttachment+RKPersistency.m */; };
+		79CE4B0E159A000C00C83EF6 /* NSTextTab+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AFA159A000C00C83EF6 /* NSTextTab+RKPersistency.h */; };
+		79CE4B0F159A000C00C83EF6 /* NSTextTab+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AFB159A000C00C83EF6 /* NSTextTab+RKPersistency.m */; };
+		79CE4B10159A000C00C83EF6 /* NSURL+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AFC159A000C00C83EF6 /* NSURL+RKPersistency.h */; };
+		79CE4B11159A000C00C83EF6 /* NSURL+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AFD159A000C00C83EF6 /* NSURL+RKPersistency.m */; };
+		79CE4B12159A000C00C83EF6 /* RKListItem+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4AFE159A000C00C83EF6 /* RKListItem+RKPersistency.h */; };
+		79CE4B13159A000C00C83EF6 /* RKListItem+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4AFF159A000C00C83EF6 /* RKListItem+RKPersistency.m */; };
+		79CE4B18159A001B00C83EF6 /* RKListStyle+RKPersistency.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4B14159A001B00C83EF6 /* RKListStyle+RKPersistency.h */; };
+		79CE4B19159A001B00C83EF6 /* RKListStyle+RKPersistency.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4B15159A001B00C83EF6 /* RKListStyle+RKPersistency.m */; };
+		79CE4B1A159A001B00C83EF6 /* RKPersistencyContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4B16159A001B00C83EF6 /* RKPersistencyContext.h */; };
+		79CE4B1B159A001B00C83EF6 /* RKPersistencyContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4B17159A001B00C83EF6 /* RKPersistencyContext.m */; };
+		79CE4B36159A020000C83EF6 /* NSAttributedString+RKPersistencyBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 79CE4B34159A020000C83EF6 /* NSAttributedString+RKPersistencyBackend.h */; };
 		79D33FAD14EE7E0100553901 /* RKInlineStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79D33FAB14EE7E0100553901 /* RKInlineStyleWriter.h */; };
 		79D33FAE14EE7E0100553901 /* RKInlineStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D33FAC14EE7E0100553901 /* RKInlineStyleWriter.m */; };
 		79E76BE4151752330073153D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E76BE3151752330073153D /* Foundation.framework */; };
@@ -401,6 +430,36 @@
 		79C4BED614E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+RKAttachmentConvenience.m"; path = "Utils/NSAttributedString+RKAttachmentConvenience.m"; sourceTree = "<group>"; };
 		79C4BEDA14E5448100FD91B2 /* SenTestCase+RKAttributeWriterTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SenTestCase+RKAttributeWriterTestHelper.h"; path = "Utils/SenTestCase+RKAttributeWriterTestHelper.h"; sourceTree = "<group>"; };
 		79C4BEDB14E5448100FD91B2 /* SenTestCase+RKAttributeWriterTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SenTestCase+RKAttributeWriterTestHelper.m"; path = "Utils/SenTestCase+RKAttributeWriterTestHelper.m"; sourceTree = "<group>"; };
+		79CE4AE31599FFBA00C83EF6 /* NSAttributedStringPersistencyTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSAttributedStringPersistencyTest.h; path = Persistency/NSAttributedStringPersistencyTest.h; sourceTree = "<group>"; };
+		79CE4AE41599FFBA00C83EF6 /* NSAttributedStringPersistencyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSAttributedStringPersistencyTest.m; path = Persistency/NSAttributedStringPersistencyTest.m; sourceTree = "<group>"; };
+		79CE4AE61599FFDF00C83EF6 /* NSAttributedString+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+RKPersistency.h"; path = "Persistency/NSAttributedString+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AE71599FFE000C83EF6 /* NSAttributedString+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+RKPersistency.m"; path = "Persistency/NSAttributedString+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AE81599FFE200C83EF6 /* RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPersistency.h; path = Persistency/RKPersistency.h; sourceTree = "<group>"; };
+		79CE4AEC159A000900C83EF6 /* NSColor+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+RKPersistency.h"; path = "Persistency/Attribute Values/NSColor+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AED159A000900C83EF6 /* NSColor+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor+RKPersistency.m"; path = "Persistency/Attribute Values/NSColor+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AEE159A000900C83EF6 /* NSFont+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFont+RKPersistency.h"; path = "Persistency/Attribute Values/NSFont+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AEF159A000900C83EF6 /* NSFont+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFont+RKPersistency.m"; path = "Persistency/Attribute Values/NSFont+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AF0159A000A00C83EF6 /* NSNumber+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+RKPersistency.h"; path = "Persistency/Attribute Values/NSNumber+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AF1159A000A00C83EF6 /* NSNumber+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+RKPersistency.m"; path = "Persistency/Attribute Values/NSNumber+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AF2159A000A00C83EF6 /* NSParagraphStyle+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSParagraphStyle+RKPersistency.h"; path = "Persistency/Attribute Values/NSParagraphStyle+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AF3159A000B00C83EF6 /* NSParagraphStyle+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSParagraphStyle+RKPersistency.m"; path = "Persistency/Attribute Values/NSParagraphStyle+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AF4159A000B00C83EF6 /* NSShadow+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSShadow+RKPersistency.h"; path = "Persistency/Attribute Values/NSShadow+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AF5159A000B00C83EF6 /* NSShadow+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSShadow+RKPersistency.m"; path = "Persistency/Attribute Values/NSShadow+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AF6159A000B00C83EF6 /* NSString+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+RKPersistency.h"; path = "Persistency/Attribute Values/NSString+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AF7159A000B00C83EF6 /* NSString+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+RKPersistency.m"; path = "Persistency/Attribute Values/NSString+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AF8159A000B00C83EF6 /* NSTextAttachment+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTextAttachment+RKPersistency.h"; path = "Persistency/Attribute Values/NSTextAttachment+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AF9159A000C00C83EF6 /* NSTextAttachment+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTextAttachment+RKPersistency.m"; path = "Persistency/Attribute Values/NSTextAttachment+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AFA159A000C00C83EF6 /* NSTextTab+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTextTab+RKPersistency.h"; path = "Persistency/Attribute Values/NSTextTab+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AFB159A000C00C83EF6 /* NSTextTab+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTextTab+RKPersistency.m"; path = "Persistency/Attribute Values/NSTextTab+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AFC159A000C00C83EF6 /* NSURL+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+RKPersistency.h"; path = "Persistency/Attribute Values/NSURL+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AFD159A000C00C83EF6 /* NSURL+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+RKPersistency.m"; path = "Persistency/Attribute Values/NSURL+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4AFE159A000C00C83EF6 /* RKListItem+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKListItem+RKPersistency.h"; path = "Persistency/Attribute Values/RKListItem+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4AFF159A000C00C83EF6 /* RKListItem+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKListItem+RKPersistency.m"; path = "Persistency/Attribute Values/RKListItem+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4B14159A001B00C83EF6 /* RKListStyle+RKPersistency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKListStyle+RKPersistency.h"; path = "Persistency/Context/RKListStyle+RKPersistency.h"; sourceTree = "<group>"; };
+		79CE4B15159A001B00C83EF6 /* RKListStyle+RKPersistency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKListStyle+RKPersistency.m"; path = "Persistency/Context/RKListStyle+RKPersistency.m"; sourceTree = "<group>"; };
+		79CE4B16159A001B00C83EF6 /* RKPersistencyContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPersistencyContext.h; path = Persistency/Context/RKPersistencyContext.h; sourceTree = "<group>"; };
+		79CE4B17159A001B00C83EF6 /* RKPersistencyContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPersistencyContext.m; path = Persistency/Context/RKPersistencyContext.m; sourceTree = "<group>"; };
+		79CE4B34159A020000C83EF6 /* NSAttributedString+RKPersistencyBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+RKPersistencyBackend.h"; path = "Persistency/Attribute Values/NSAttributedString+RKPersistencyBackend.h"; sourceTree = "<group>"; };
 		79D33FAB14EE7E0100553901 /* RKInlineStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKInlineStyleWriter.h; path = "Writer/Attribute Writer/Inline Styles/RKInlineStyleWriter.h"; sourceTree = "<group>"; };
 		79D33FAC14EE7E0100553901 /* RKInlineStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKInlineStyleWriter.m; path = "Writer/Attribute Writer/Inline Styles/RKInlineStyleWriter.m"; sourceTree = "<group>"; };
 		79E76BE2151752330073153D /* libRTFKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRTFKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -521,6 +580,7 @@
 			children = (
 				79F673AB14C84A65005D03FA /* Document */,
 				796EAB9614D94761001E8401 /* Writer */,
+				79CE4A4E1599D8A700C83EF6 /* Persistency */,
 				79AD206414E2947F00F5616C /* Utils */,
 				50317D6E14C4952300F23C04 /* Other */,
 				79F673CB14C875BA005D03FA /* RKTypes.h */,
@@ -541,6 +601,7 @@
 		50317D6F14C4953800F23C04 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				79CE4AA41599E79F00C83EF6 /* Persistency */,
 				79F673B114C84AA3005D03FA /* Document */,
 				796EAC1014D947FB001E8401 /* Writer */,
 				79A359A214D1A1D10076A5F7 /* Utils */,
@@ -867,6 +928,66 @@
 			name = "Portable Attributes";
 			sourceTree = "<group>";
 		};
+		79CE4A4E1599D8A700C83EF6 /* Persistency */ = {
+			isa = PBXGroup;
+			children = (
+				79CE4AE61599FFDF00C83EF6 /* NSAttributedString+RKPersistency.h */,
+				79CE4AE71599FFE000C83EF6 /* NSAttributedString+RKPersistency.m */,
+				79CE4AE81599FFE200C83EF6 /* RKPersistency.h */,
+				79CE4A791599E3D300C83EF6 /* Attribute Values */,
+				79CE4A9E1599E41600C83EF6 /* Context */,
+			);
+			name = Persistency;
+			sourceTree = "<group>";
+		};
+		79CE4A791599E3D300C83EF6 /* Attribute Values */ = {
+			isa = PBXGroup;
+			children = (
+				79CE4B34159A020000C83EF6 /* NSAttributedString+RKPersistencyBackend.h */,
+				79CE4AEC159A000900C83EF6 /* NSColor+RKPersistency.h */,
+				79CE4AED159A000900C83EF6 /* NSColor+RKPersistency.m */,
+				79CE4AEE159A000900C83EF6 /* NSFont+RKPersistency.h */,
+				79CE4AEF159A000900C83EF6 /* NSFont+RKPersistency.m */,
+				79CE4AF0159A000A00C83EF6 /* NSNumber+RKPersistency.h */,
+				79CE4AF1159A000A00C83EF6 /* NSNumber+RKPersistency.m */,
+				79CE4AF2159A000A00C83EF6 /* NSParagraphStyle+RKPersistency.h */,
+				79CE4AF3159A000B00C83EF6 /* NSParagraphStyle+RKPersistency.m */,
+				79CE4AF4159A000B00C83EF6 /* NSShadow+RKPersistency.h */,
+				79CE4AF5159A000B00C83EF6 /* NSShadow+RKPersistency.m */,
+				79CE4AF6159A000B00C83EF6 /* NSString+RKPersistency.h */,
+				79CE4AF7159A000B00C83EF6 /* NSString+RKPersistency.m */,
+				79CE4AF8159A000B00C83EF6 /* NSTextAttachment+RKPersistency.h */,
+				79CE4AF9159A000C00C83EF6 /* NSTextAttachment+RKPersistency.m */,
+				79CE4AFA159A000C00C83EF6 /* NSTextTab+RKPersistency.h */,
+				79CE4AFB159A000C00C83EF6 /* NSTextTab+RKPersistency.m */,
+				79CE4AFC159A000C00C83EF6 /* NSURL+RKPersistency.h */,
+				79CE4AFD159A000C00C83EF6 /* NSURL+RKPersistency.m */,
+				79CE4AFE159A000C00C83EF6 /* RKListItem+RKPersistency.h */,
+				79CE4AFF159A000C00C83EF6 /* RKListItem+RKPersistency.m */,
+			);
+			name = "Attribute Values";
+			sourceTree = "<group>";
+		};
+		79CE4A9E1599E41600C83EF6 /* Context */ = {
+			isa = PBXGroup;
+			children = (
+				79CE4B16159A001B00C83EF6 /* RKPersistencyContext.h */,
+				79CE4B17159A001B00C83EF6 /* RKPersistencyContext.m */,
+				79CE4B14159A001B00C83EF6 /* RKListStyle+RKPersistency.h */,
+				79CE4B15159A001B00C83EF6 /* RKListStyle+RKPersistency.m */,
+			);
+			name = Context;
+			sourceTree = "<group>";
+		};
+		79CE4AA41599E79F00C83EF6 /* Persistency */ = {
+			isa = PBXGroup;
+			children = (
+				79CE4AE31599FFBA00C83EF6 /* NSAttributedStringPersistencyTest.h */,
+				79CE4AE41599FFBA00C83EF6 /* NSAttributedStringPersistencyTest.m */,
+			);
+			name = Persistency;
+			sourceTree = "<group>";
+		};
 		79D33FAF14EE84DF00553901 /* Style Naming */ = {
 			isa = PBXGroup;
 			children = (
@@ -951,6 +1072,21 @@
 				79B148A6151A14D400F14200 /* SenTestCase+RKTestHelper.h in Headers */,
 				79B148AB151A15E200F14200 /* RTFKit.h in Headers */,
 				79470FE7152C5AB900254072 /* RKListEnumerator.h in Headers */,
+				79CE4AE91599FFE300C83EF6 /* NSAttributedString+RKPersistency.h in Headers */,
+				79CE4AEB1599FFE300C83EF6 /* RKPersistency.h in Headers */,
+				79CE4B00159A000C00C83EF6 /* NSColor+RKPersistency.h in Headers */,
+				79CE4B02159A000C00C83EF6 /* NSFont+RKPersistency.h in Headers */,
+				79CE4B04159A000C00C83EF6 /* NSNumber+RKPersistency.h in Headers */,
+				79CE4B06159A000C00C83EF6 /* NSParagraphStyle+RKPersistency.h in Headers */,
+				79CE4B08159A000C00C83EF6 /* NSShadow+RKPersistency.h in Headers */,
+				79CE4B0A159A000C00C83EF6 /* NSString+RKPersistency.h in Headers */,
+				79CE4B0C159A000C00C83EF6 /* NSTextAttachment+RKPersistency.h in Headers */,
+				79CE4B0E159A000C00C83EF6 /* NSTextTab+RKPersistency.h in Headers */,
+				79CE4B10159A000C00C83EF6 /* NSURL+RKPersistency.h in Headers */,
+				79CE4B12159A000C00C83EF6 /* RKListItem+RKPersistency.h in Headers */,
+				79CE4B18159A001B00C83EF6 /* RKListStyle+RKPersistency.h in Headers */,
+				79CE4B1A159A001B00C83EF6 /* RKPersistencyContext.h in Headers */,
+				79CE4B36159A020000C83EF6 /* NSAttributedString+RKPersistencyBackend.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1164,6 +1300,19 @@
 				79D33FAE14EE7E0100553901 /* RKInlineStyleWriter.m in Sources */,
 				79C486B414F1463400B29A1E /* RKStyleNameAttributeWriter.m in Sources */,
 				79470FE8152C5AB900254072 /* RKListEnumerator.m in Sources */,
+				79CE4AEA1599FFE300C83EF6 /* NSAttributedString+RKPersistency.m in Sources */,
+				79CE4B01159A000C00C83EF6 /* NSColor+RKPersistency.m in Sources */,
+				79CE4B03159A000C00C83EF6 /* NSFont+RKPersistency.m in Sources */,
+				79CE4B05159A000C00C83EF6 /* NSNumber+RKPersistency.m in Sources */,
+				79CE4B07159A000C00C83EF6 /* NSParagraphStyle+RKPersistency.m in Sources */,
+				79CE4B09159A000C00C83EF6 /* NSShadow+RKPersistency.m in Sources */,
+				79CE4B0B159A000C00C83EF6 /* NSString+RKPersistency.m in Sources */,
+				79CE4B0D159A000C00C83EF6 /* NSTextAttachment+RKPersistency.m in Sources */,
+				79CE4B0F159A000C00C83EF6 /* NSTextTab+RKPersistency.m in Sources */,
+				79CE4B11159A000C00C83EF6 /* NSURL+RKPersistency.m in Sources */,
+				79CE4B13159A000C00C83EF6 /* RKListItem+RKPersistency.m in Sources */,
+				79CE4B19159A001B00C83EF6 /* RKListStyle+RKPersistency.m in Sources */,
+				79CE4B1B159A001B00C83EF6 /* RKPersistencyContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,6 +1353,7 @@
 				7995121F1518B47A00D82511 /* RKParagraphStyle.m in Sources */,
 				79B148A8151A14D700F14200 /* SenTestCase+RKTestHelper.m in Sources */,
 				79A55278152C607B008EADAB /* RKListEnumeratorTest.m in Sources */,
+				79CE4AE51599FFBA00C83EF6 /* NSAttributedStringPersistencyTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
