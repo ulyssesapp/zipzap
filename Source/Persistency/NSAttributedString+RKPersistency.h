@@ -12,6 +12,16 @@
 @interface NSAttributedString (RKPersistency)
 
 /*!
+ @abstract Registers a numeric attribute for serialization.
+ */
++ (void)registerNumericAttributeForPersistency:(NSString *)attributeName;
+
+/*!
+ @abstract Registers a string attribute for serialization.
+ */
++ (void)registerStringAttributeForPersistency:(NSString *)attributeName;
+
+/*!
  @abstract Specifies a mapping from names to classes of all attributes that can be persisted.
  */
 + (NSDictionary *)persistableAttributeTypes;
@@ -23,6 +33,7 @@
 
 /*!
  @abstract Serializes an attributed string to a property list representation
+ @discussion Serializes all attributes as specified by 'persistableAttributeTypes'.
  */
 - (id)RTFKitPropertyListRepresentation;
 

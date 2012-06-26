@@ -34,11 +34,14 @@ NSString *RKPersistencyRangeLengthKey = @"length";
 
 @implementation NSAttributedString (RKPersistency)
 
-+ (NSDictionary *)persistableAttributeTypes
+NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
+
++ (void)load
 {
-    static NSDictionary *persistableAttributeTypes;
-    persistableAttributeTypes = persistableAttributeTypes ?:
-        @{
+    @autoreleasepool {
+        NSAttributedStringPersistableAttributeTypes = [NSMutableDictionary new];
+        [NSAttributedStringPersistableAttributeTypes addEntriesFromDictionary:
+         @{
             NSFontAttributeName:                NSFont.class,
             NSParagraphStyleAttributeName:      NSParagraphStyle.class,
             NSForegroundColorAttributeName:     NSColor.class,
@@ -66,11 +69,29 @@ NSString *RKPersistencyRangeLengthKey = @"length";
             RKPlaceholderAttributeName:         NSNumber.class,
             RKCharacterStyleNameAttributeName:  NSString.class,
             RKParagraphStyleNameAttributeName:  NSString.class
-        };
-
-    return persistableAttributeTypes;
+         }
+        ];
+    }
 }
 
++ (NSDictionary *)persistableAttributeTypes
+{
+    return NSAttributedStringPersistableAttributeTypes;
+}
+
++ (void)registerNumericAttributeForPersistency:(NSString *)attributeName
+{
+    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
+    
+    [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
+}
+
++ (void)registerStringAttributeForPersistency:(NSString *)attributeName
+{
+    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
+    
+    [NSAttributedStringPersistableAttributeTypes setObject:NSString.class forKey:attributeName];
+}
 
 
 

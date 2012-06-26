@@ -235,4 +235,36 @@ extern NSString *RKPersistencyContextListStylesPersistencyKey;
     STAssertEqualObjects(originalItem, reparsedItem, @"Items must be equal");
 }
 
+- (void)testUserDefinedNumericAttribute
+{
+    [NSAttributedString registerNumericAttributeForPersistency:@"myNumericAttribute"];
+    
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
+    
+    // First range: NSURL
+    [original addAttribute:@"myNumericAttribute" value:@(123) range:NSMakeRange(1,2)];
+    
+    // Test re-reading
+    NSDictionary *plist = [original RTFKitPropertyListRepresentation];
+    NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
+    
+    STAssertEqualObjects(original, reparsed, @"Not correctly persisted.");
+}
+
+- (void)testUserDefinedStringAttribute
+{
+    [NSAttributedString registerStringAttributeForPersistency:@"myStringAttribute"];
+    
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
+    
+    // First range: NSURL
+    [original addAttribute:@"myStringAttribute" value:@"xyz" range:NSMakeRange(1,2)];
+    
+    // Test re-reading
+    NSDictionary *plist = [original RTFKitPropertyListRepresentation];
+    NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
+    
+    STAssertEqualObjects(original, reparsed, @"Not correctly persisted.");
+}
+
 @end
