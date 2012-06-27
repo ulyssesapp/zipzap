@@ -37,7 +37,8 @@
 #define RKUnderlinePatternDashDot               NSUnderlinePatternDashDot
 #define RKUnderlinePatternDashDotDot            NSUnderlinePatternDashDotDot
 
-#define RKAttachmentCharacter                   (unichar)NSAttachmentCharacter
+#define RKAttachmentCharacter                   ((unichar)NSAttachmentCharacter)
+#define RKLineSeparatorCharacter                ((unichar)NSLineSeparatorCharacter)
 
 #define RKTitleDocumentAttribute                NSTitleDocumentAttribute
 #define RKCompanyDocumentAttribute              NSCompanyDocumentAttribute
@@ -53,3 +54,5 @@
 #define RKCategoryDocumentAttribute             NSCategoryDocumentAttribute
 
 #endif
+
+

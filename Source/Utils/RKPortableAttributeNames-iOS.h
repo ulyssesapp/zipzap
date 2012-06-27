@@ -147,4 +147,9 @@ extern NSString *RKCategoryDocumentAttribute;
  */
 #define RKAttachmentCharacter                   ((unichar)0xfffc)
 
+/*!
+ @abstract Character used to denote newlines (not paragraph breaks)
+ */
+#define RKLineSeparatorCharacter                ((unichar)0x2028)
+
 #endif

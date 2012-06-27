@@ -32,10 +32,10 @@
             case '\f':
                 [escapedString appendString: @"\\page\n"];
                 break;                
-            
+
             case '\n':
             case '\r':
-            case NSLineSeparatorCharacter:
+            case RKLineSeparatorCharacter:
                 [escapedString appendString: @"\\line\n"];
                 break;
                 
