@@ -219,7 +219,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%lu\\levelnfc%lu"
                                         "\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                                         "%@%@%@"
-                                        "\\levelfollow2\\levellegal0\\levelnorestart0}",
+                                        "\\levelfollow0\\levellegal0\\levelnorestart0}",
             startNumber,
             formatCode,
             textSystemFormatString,
