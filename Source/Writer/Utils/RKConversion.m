@@ -35,6 +35,7 @@
             
             case '\n':
             case '\r':
+            case NSLineSeparatorCharacter:
                 [escapedString appendString: @"\\line\n"];
                 break;
                 
