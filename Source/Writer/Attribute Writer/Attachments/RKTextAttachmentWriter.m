@@ -116,7 +116,11 @@
                          inRange:(NSRange)range
                        resources:(RKResourcePool *)resources
 {
-    NSString *filename = [resources registerFileWrapper:fileWrapper];
+    // Ignore empty files or files without a file name
+    if (!fileWrapper || !fileWrapper.filename || !fileWrapper.preferredFilename)
+        return;
+    
+    NSString *filename = [resources registerFileWrapper: fileWrapper];
     
     // Register the tag
     // Note: the 0xAC byte is required by the RTFD definition
