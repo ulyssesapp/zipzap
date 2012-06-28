@@ -1,5 +1,5 @@
 //
-//  NSAttributedStringPersistencyTest.h
+//  NSAttributedStringPersistenceTest.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 26.06.12.
@@ -8,6 +8,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-@interface NSAttributedStringPersistencyTest : SenTestCase
+@interface NSAttributedStringPersistenceTest : SenTestCase
 
 @end

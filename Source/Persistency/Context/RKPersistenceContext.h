@@ -1,5 +1,5 @@
 //
-//  RKPersistencyContext.h
+//  RKPersistenceContext.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 26.06.12.
@@ -9,7 +9,7 @@
 /*!
  @abstract Manages additional information during persistency
  */
-@interface RKPersistencyContext : NSObject
+@interface RKPersistenceContext : NSObject
 
 /*!
  @abstract Creates an unique index for the given regular file wrapper and registers it to the persistency context

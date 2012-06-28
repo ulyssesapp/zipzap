@@ -1,38 +1,38 @@
 //
-//  NSAttributedString+RKPersistency.m
+//  NSAttributedString+RKPersistence.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 26.06.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "NSAttributedString+RKPersistency.h"
-#import "NSAttributedString+RKPersistencyBackend.h"
-#import "RKPersistencyContext.h"
+#import "NSAttributedString+RKPersistence.h"
+#import "NSAttributedString+RKPersistenceBackend.h"
+#import "RKPersistenceContext.h"
 
 /*!
  @abstract Keys used for persistency
  */
-NSString *RKPersistencyStringContentKey = @"string";
-NSString *RKPersistencyAttributeRangesKey = @"attributeRanges";
-NSString *RKPersistencyContextKey = @"context";
+NSString *RKPersistenceStringContentKey = @"string";
+NSString *RKPersistenceAttributeRangesKey = @"attributeRanges";
+NSString *RKPersistenceContextKey = @"context";
 
-NSString *RKPersistencyAttributeRangeKey = @"attributeRange";
-NSString *RKPersistencyAttributeValuesKey = @"attributeValues";
+NSString *RKPersistenceAttributeRangeKey = @"attributeRange";
+NSString *RKPersistenceAttributeValuesKey = @"attributeValues";
 
-NSString *RKPersistencyRangeLocationKey = @"location";
-NSString *RKPersistencyRangeLengthKey = @"length";
+NSString *RKPersistenceRangeLocationKey = @"location";
+NSString *RKPersistenceRangeLengthKey = @"length";
 
-@interface NSAttributedString (RKPersistencyPrivateMethods)
+@interface NSAttributedString (RKPersistencePrivateMethods)
 
 /*!
  @abstract Creates a new attributed string usign a property and a context.
  */
-+ (NSAttributedString *)attributedStringWithPropertyList:(NSDictionary *)propertyList usingContext:(RKPersistencyContext *)context error:(NSError **)error;
++ (NSAttributedString *)attributedStringWithPropertyList:(NSDictionary *)propertyList usingContext:(RKPersistenceContext *)context error:(NSError **)error;
 
 @end
 
-@implementation NSAttributedString (RKPersistency)
+@implementation NSAttributedString (RKPersistence)
 
 NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
 
@@ -79,14 +79,14 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
     return NSAttributedStringPersistableAttributeTypes;
 }
 
-+ (void)registerNumericAttributeForPersistency:(NSString *)attributeName
++ (void)registerNumericAttributeForPersistence:(NSString *)attributeName
 {
     NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
     
     [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
 }
 
-+ (void)registerStringAttributeForPersistency:(NSString *)attributeName
++ (void)registerStringAttributeForPersistence:(NSString *)attributeName
 {
     NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
     
@@ -102,7 +102,7 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
     
     // De-serialize context from property list
-    RKPersistencyContext *context = [[RKPersistencyContext alloc] initWithPropertyListRepresentation:propertyList[RKPersistencyContextKey] error:error];
+    RKPersistenceContext *context = [[RKPersistenceContext alloc] initWithPropertyListRepresentation:propertyList[RKPersistenceContextKey] error:error];
     if (!context)
         return nil;
     
@@ -122,11 +122,11 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
 - (id)RTFKitPropertyListRepresentation
 {
     // Serialize attributed string
-    RKPersistencyContext *context = [RKPersistencyContext new];
+    RKPersistenceContext *context = [RKPersistenceContext new];
     NSMutableDictionary *propertyListRepresentation = [[self RTFKitPropertyListRepresentationUsingContext: context] mutableCopy];
     
     // Add context
-    [propertyListRepresentation setObject:[context propertyListRepresentation] forKey:RKPersistencyContextKey];
+    [propertyListRepresentation setObject:[context propertyListRepresentation] forKey:RKPersistenceContextKey];
 
     return propertyListRepresentation;
 }
@@ -137,19 +137,19 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
 /*!
  @abstract Backend methods for serialization
  */
-@implementation NSAttributedString (RKPersistencyBackend)
+@implementation NSAttributedString (RKPersistenceBackend)
 
 #pragma mark - Deserialization methods
 
-+ (NSAttributedString *)instanceWithRTFKitPropertyListRepresentation:(id)propertyList usingContext:(RKPersistencyContext *)context error:(NSError **)error
++ (NSAttributedString *)instanceWithRTFKitPropertyListRepresentation:(id)propertyList usingContext:(RKPersistenceContext *)context error:(NSError **)error
 {
     NSDictionary *persistableAttributeTypes = self.persistableAttributeTypes;
     
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
     
     // Get data from property list
-    NSString *deserializedString = propertyList[RKPersistencyStringContentKey];
-    NSArray *attributesForRanges = propertyList[RKPersistencyAttributeRangesKey];
+    NSString *deserializedString = propertyList[RKPersistenceStringContentKey];
+    NSArray *attributesForRanges = propertyList[RKPersistenceAttributeRangesKey];
     
     // Create attributed string
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: deserializedString];
@@ -157,15 +157,15 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
     // Setup attributes
     for (NSDictionary *attributesForRange in attributesForRanges)
     {
-        NSDictionary *rangeDescriptor = attributesForRange[RKPersistencyAttributeRangeKey];
-        NSDictionary *attributes = attributesForRange[RKPersistencyAttributeValuesKey];
+        NSDictionary *rangeDescriptor = attributesForRange[RKPersistenceAttributeRangeKey];
+        NSDictionary *attributes = attributesForRange[RKPersistenceAttributeValuesKey];
         
-        NSRange attributeRange = NSMakeRange([rangeDescriptor[RKPersistencyRangeLocationKey] unsignedIntegerValue], [rangeDescriptor[RKPersistencyRangeLengthKey] unsignedIntegerValue]);
+        NSRange attributeRange = NSMakeRange([rangeDescriptor[RKPersistenceRangeLocationKey] unsignedIntegerValue], [rangeDescriptor[RKPersistenceRangeLengthKey] unsignedIntegerValue]);
         
-        [attributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id<RKPersistency> serializedAttributeValue, BOOL *stop) {
+        [attributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id<RKPersistence> serializedAttributeValue, BOOL *stop) {
             // Get handler class for attribute
             Class handlerClass = [persistableAttributeTypes objectForKey: attributeName];
-            NSParameterAssert([handlerClass conformsToProtocol: @protocol(RKPersistency)]);
+            NSParameterAssert([handlerClass conformsToProtocol: @protocol(RKPersistence)]);
             
             // Translate attribute value
             id attributeValue = [handlerClass instanceWithRTFKitPropertyListRepresentation:serializedAttributeValue usingContext:context error:error];
@@ -186,7 +186,7 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
 
 #pragma mark - Serialization methods
 
-- (NSDictionary *)RTFKitPropertyListRepresentationUsingContext:(RKPersistencyContext *)context
+- (NSDictionary *)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
     NSDictionary *persistableAttributeTypes = self.class.persistableAttributeTypes;
     NSMutableArray *attributesForRanges = [NSMutableArray new];
@@ -209,26 +209,26 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
             NSParameterAssert([attributeValue isKindOfClass: [persistableAttributeTypes objectForKey: attributeKey]] || ([attributeKey isEqual: NSLinkAttributeName] && [attributeValue isKindOfClass: NSString.class]));
             
             // Translate the attribute value
-            NSParameterAssert ([attributeValue conformsToProtocol: @protocol(RKPersistency)]);
+            NSParameterAssert ([attributeValue conformsToProtocol: @protocol(RKPersistence)]);
             
             id serializedAttributeValue = [attributeValue RTFKitPropertyListRepresentationUsingContext: context];
             [translatedAttributes setObject:serializedAttributeValue forKey:attributeKey];
         }];
         
         // Create descriptor for attributes in range
-        NSDictionary *attributeRange = @{ RKPersistencyRangeLocationKey: @(range.location), RKPersistencyRangeLengthKey: @(range.length) };
+        NSDictionary *attributeRange = @{ RKPersistenceRangeLocationKey: @(range.location), RKPersistenceRangeLengthKey: @(range.length) };
         
         // Persist only ranges that actually contain attributes
         if (translatedAttributes.count) {
-            NSDictionary *attributesForRange = @{ RKPersistencyAttributeRangeKey: attributeRange, RKPersistencyAttributeValuesKey: translatedAttributes };
+            NSDictionary *attributesForRange = @{ RKPersistenceAttributeRangeKey: attributeRange, RKPersistenceAttributeValuesKey: translatedAttributes };
             [attributesForRanges addObject: attributesForRange];
         }
     }];
     
     // Create property list
     return @{
-        RKPersistencyStringContentKey:      self.string,
-        RKPersistencyAttributeRangesKey:    attributesForRanges
+        RKPersistenceStringContentKey:      self.string,
+        RKPersistenceAttributeRangesKey:    attributesForRanges
     };
 }
 

@@ -23,7 +23,7 @@
 #endif
 
 #if !TARGET_OS_IPHONE
-    #import "NSAttributedString+RKPersistency.h"
+    #import "NSAttributedString+RKPersistence.h"
 #endif
 
 #import "RKPortableAttributeNames.h"

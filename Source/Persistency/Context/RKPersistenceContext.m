@@ -1,21 +1,21 @@
 //
-//  RKPersistencyContext.m
+//  RKPersistenceContext.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 26.06.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKPersistencyContext.h"
-#import "RKListStyle+RKPersistency.h"
+#import "RKPersistenceContext.h"
+#import "RKListStyle+RKPersistence.h"
 
-NSString *RKPersistencyContextFileWrappersPersistencyKey        = @"fileWrappers";
-NSString *RKPersistencyContextListStylesPersistencyKey          = @"listStyles";
+NSString *RKPersistenceContextFileWrappersPersistenceKey        = @"fileWrappers";
+NSString *RKPersistenceContextListStylesPersistenceKey          = @"listStyles";
 
-NSString *NSFileWrapperDataPersistencyKey                       = @"data";
-NSString *NSFileWrapperFileNamePersistencyKey                   = @"filename";
+NSString *NSFileWrapperDataPersistenceKey                       = @"data";
+NSString *NSFileWrapperFileNamePersistenceKey                   = @"filename";
 
-@interface RKPersistencyContext ()
+@interface RKPersistenceContext ()
 {
     NSMutableArray *_fileWrappers;
     NSMutableArray *_listStyles;
@@ -23,7 +23,7 @@ NSString *NSFileWrapperFileNamePersistencyKey                   = @"filename";
 
 @end
 
-@implementation RKPersistencyContext
+@implementation RKPersistenceContext
 
 - (id)init
 {
@@ -81,7 +81,7 @@ NSString *NSFileWrapperFileNamePersistencyKey                   = @"filename";
 
 
 
-#pragma mark - Persistency
+#pragma mark - Persistence
 
 - (id)propertyListRepresentation
 {
@@ -90,8 +90,8 @@ NSString *NSFileWrapperFileNamePersistencyKey                   = @"filename";
     
     for (NSFileWrapper *fileWrapper in _fileWrappers)
         [serializedFileWrapper addObject: @{
-            NSFileWrapperDataPersistencyKey:        fileWrapper.regularFileContents,
-            NSFileWrapperFileNamePersistencyKey:   fileWrapper.filename ?: (fileWrapper.preferredFilename ?: @"")
+            NSFileWrapperDataPersistenceKey:        fileWrapper.regularFileContents,
+            NSFileWrapperFileNamePersistenceKey:   fileWrapper.filename ?: (fileWrapper.preferredFilename ?: @"")
          }];
 
     // Serialize list styles
@@ -101,8 +101,8 @@ NSString *NSFileWrapperFileNamePersistencyKey                   = @"filename";
         [serializedListStyles addObject: [listStyle propertyListRepresentation]];
     
     return @{
-        RKPersistencyContextFileWrappersPersistencyKey: serializedFileWrapper,
-        RKPersistencyContextListStylesPersistencyKey:   serializedListStyles
+        RKPersistenceContextFileWrappersPersistenceKey: serializedFileWrapper,
+        RKPersistenceContextListStylesPersistenceKey:   serializedListStyles
     };
 }
 
@@ -112,15 +112,15 @@ NSString *NSFileWrapperFileNamePersistencyKey                   = @"filename";
     
     if (self) {
         // De-serialize file wrapper
-        for (NSDictionary *serializedFileWrapper in propertyList[RKPersistencyContextFileWrappersPersistencyKey]) {
-            NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents: serializedFileWrapper[NSFileWrapperDataPersistencyKey]];
-            fileWrapper.filename = serializedFileWrapper[NSFileWrapperFileNamePersistencyKey];
+        for (NSDictionary *serializedFileWrapper in propertyList[RKPersistenceContextFileWrappersPersistenceKey]) {
+            NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initRegularFileWithContents: serializedFileWrapper[NSFileWrapperDataPersistenceKey]];
+            fileWrapper.filename = serializedFileWrapper[NSFileWrapperFileNamePersistenceKey];
             
             [_fileWrappers addObject: fileWrapper];
         }
         
         // De-serialize list styles
-        for (id serializedListStyle in propertyList[RKPersistencyContextListStylesPersistencyKey])
+        for (id serializedListStyle in propertyList[RKPersistenceContextListStylesPersistenceKey])
             [_listStyles addObject: [[RKListStyle alloc] initWithPropertyList: serializedListStyle]];
     }
         

@@ -1,5 +1,5 @@
 //
-//  NSAttributedString+RKPersistency.h
+//  NSAttributedString+RKPersistence.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 26.06.12.
@@ -9,17 +9,17 @@
 /*!
  @abstract Allows to serialize an attributed string that uses RTFKit features to a property list
  */
-@interface NSAttributedString (RKPersistency)
+@interface NSAttributedString (RKPersistence)
 
 /*!
  @abstract Registers a numeric attribute for serialization.
  */
-+ (void)registerNumericAttributeForPersistency:(NSString *)attributeName;
++ (void)registerNumericAttributeForPersistence:(NSString *)attributeName;
 
 /*!
  @abstract Registers a string attribute for serialization.
  */
-+ (void)registerStringAttributeForPersistency:(NSString *)attributeName;
++ (void)registerStringAttributeForPersistence:(NSString *)attributeName;
 
 /*!
  @abstract Specifies a mapping from names to classes of all attributes that can be persisted.

@@ -1,29 +1,29 @@
 //
-//  NSAttributedStringPersistencyTest.m
+//  NSAttributedStringPersistenceTest.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 26.06.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "NSAttributedStringPersistencyTest.h"
+#import "NSAttributedStringPersistenceTest.h"
 
-#import "NSAttributedString+RKPersistency.h"
+#import "NSAttributedString+RKPersistence.h"
 
-extern NSString *RKPersistencyStringContentKey;
-extern NSString *RKPersistencyAttributeRangesKey;
-extern NSString *RKPersistencyContextKey;
+extern NSString *RKPersistenceStringContentKey;
+extern NSString *RKPersistenceAttributeRangesKey;
+extern NSString *RKPersistenceContextKey;
 
-extern NSString *RKPersistencyAttributeRangeKey;
-extern NSString *RKPersistencyAttributeValuesKey;
+extern NSString *RKPersistenceAttributeRangeKey;
+extern NSString *RKPersistenceAttributeValuesKey;
 
-extern NSString *RKPersistencyRangeLocationKey;
-extern NSString *RKPersistencyRangeLengthKey;
+extern NSString *RKPersistenceRangeLocationKey;
+extern NSString *RKPersistenceRangeLengthKey;
 
-extern NSString *RKPersistencyContextFileWrappersPersistencyKey;
-extern NSString *RKPersistencyContextListStylesPersistencyKey;
+extern NSString *RKPersistenceContextFileWrappersPersistenceKey;
+extern NSString *RKPersistenceContextListStylesPersistenceKey;
 
-@implementation NSAttributedStringPersistencyTest
+@implementation NSAttributedStringPersistenceTest
 
 - (void)testPersistingUnstyledString
 {
@@ -31,11 +31,11 @@ extern NSString *RKPersistencyContextListStylesPersistencyKey;
 
     NSDictionary *plist = [unstyled RTFKitPropertyListRepresentation];
     
-    STAssertEqualObjects(plist[RKPersistencyStringContentKey], @"This is a String!", @"String not properly serialized");
-    STAssertEquals([plist[RKPersistencyAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
+    STAssertEqualObjects(plist[RKPersistenceStringContentKey], @"This is a String!", @"String not properly serialized");
+    STAssertEquals([plist[RKPersistenceAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
 
-    STAssertEquals([plist[RKPersistencyContextKey][RKPersistencyContextFileWrappersPersistencyKey] count], 0UL, @"No context data expected");
-    STAssertEquals([plist[RKPersistencyContextKey][RKPersistencyContextListStylesPersistencyKey] count], 0UL, @"No context data expected");
+    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextFileWrappersPersistenceKey] count], 0UL, @"No context data expected");
+    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextListStylesPersistenceKey] count], 0UL, @"No context data expected");
 
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     
@@ -81,11 +81,11 @@ extern NSString *RKPersistencyContextListStylesPersistencyKey;
     
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     
-    STAssertEqualObjects(plist[RKPersistencyStringContentKey], @"Paragraph A\nParagraph B\nParagraph C\n", @"String not properly serialized");
-    STAssertEquals([plist[RKPersistencyAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
+    STAssertEqualObjects(plist[RKPersistenceStringContentKey], @"Paragraph A\nParagraph B\nParagraph C\n", @"String not properly serialized");
+    STAssertEquals([plist[RKPersistenceAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
     
-    STAssertEquals([plist[RKPersistencyContextKey][RKPersistencyContextFileWrappersPersistencyKey] count], 0UL, @"No context data expected");
-    STAssertEquals([plist[RKPersistencyContextKey][RKPersistencyContextListStylesPersistencyKey] count], 0UL, @"No context data expected");
+    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextFileWrappersPersistenceKey] count], 0UL, @"No context data expected");
+    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextListStylesPersistenceKey] count], 0UL, @"No context data expected");
     
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     
@@ -237,7 +237,7 @@ extern NSString *RKPersistencyContextListStylesPersistencyKey;
 
 - (void)testUserDefinedNumericAttribute
 {
-    [NSAttributedString registerNumericAttributeForPersistency:@"myNumericAttribute"];
+    [NSAttributedString registerNumericAttributeForPersistence:@"myNumericAttribute"];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
     
@@ -253,7 +253,7 @@ extern NSString *RKPersistencyContextListStylesPersistencyKey;
 
 - (void)testUserDefinedStringAttribute
 {
-    [NSAttributedString registerStringAttributeForPersistency:@"myStringAttribute"];
+    [NSAttributedString registerStringAttributeForPersistence:@"myStringAttribute"];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
     
