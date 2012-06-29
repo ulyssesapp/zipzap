@@ -60,7 +60,7 @@ NSMutableArray *RKAttributedStringWriterHandlers;
         // We operate on a per-paragraph level
         [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
          ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-                [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+             [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
                     [handler addTagsForAttribute:attributeName 
                                            value:attributeValue 
                                   effectiveRange:attributeRange 

@@ -16,7 +16,7 @@
     STAssertEqualObjects([@"abc \\ def" RTFEscapedString], @"abc \\\\ def", @"Invalid backslash conversion");
     STAssertEqualObjects([@"abc { def" RTFEscapedString], @"abc \\{ def", @"Invalid conversion of {");
     STAssertEqualObjects([@"abc } def" RTFEscapedString], @"abc \\} def", @"Invalid conversion of }");
-    STAssertEqualObjects([@"abc \n def" RTFEscapedString], @"abc \\line\n def", @"Invalid conversion of }");
+    STAssertEqualObjects([@"abc \n def" RTFEscapedString], @"abc \\par\n def", @"Invalid conversion of }");
     STAssertEqualObjects([@"abc \t def" RTFEscapedString], @"abc \\tab  def", @"Invalid conversion of }");
     STAssertEqualObjects([@"abc \f def" RTFEscapedString], @"abc \\page\n def", @"Invalid conversion of }");    
 

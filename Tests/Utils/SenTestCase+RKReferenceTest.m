@@ -38,12 +38,16 @@
     NSString *normalizedExpected = [self normalizeRTFString: expected];
     
     STAssertEqualObjects(normalizedGenerated, normalizedExpected, @"Unexpected RTF conversion.", normalizedGenerated, normalizedExpected);
+    if (![normalizedGenerated isEqual: normalizedExpected])
+        return;
 }
 
 - (void)assertRTF:(NSData *)rtf withTestDocument:(NSString *)name
 {
     NSString *rtfContent = [[NSString alloc] initWithData:rtf encoding:NSASCIIStringEncoding];
     NSString *testContent = [self loadTestDocument: name];
+    
+    NSLog(@"Testing with File %@", name);
     
     return [self assertGeneratedRTFString:rtfContent withExpectedString:testContent];
 }

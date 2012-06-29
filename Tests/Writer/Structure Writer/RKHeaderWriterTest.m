@@ -440,7 +440,7 @@
     NSData *rtf = [document RTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
-    STAssertEqualObjects([rereadString string], @"abc\n", @"Invalid content");
+    STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
     
     STAssertEquals([[rereadDocumentProperties objectForKey:NSPaperSizeDocumentAttribute] sizeValue], document.pageSize, @"Invalid paper size");
     STAssertEquals([[rereadDocumentProperties objectForKey:NSLeftMarginDocumentAttribute] floatValue], (float)document.pageInsets.left, @"Invalid margin");
@@ -475,7 +475,7 @@
     NSData *rtf = [document RTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
-    STAssertEqualObjects([rereadString string], @"abc\n", @"Invalid content");
+    STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
     
     STAssertEqualObjects([rereadDocumentProperties objectForKey:NSTitleDocumentAttribute], @"Title", @"Invalid meta data");
     STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCompanyDocumentAttribute], @"Company", @"Invalid meta data");

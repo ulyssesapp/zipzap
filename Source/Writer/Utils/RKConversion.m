@@ -35,6 +35,9 @@
 
             case '\n':
             case '\r':
+                [escapedString appendString: @"\\par\n"];
+                break;
+                
             case RKLineSeparatorCharacter:
                 [escapedString appendString: @"\\line\n"];
                 break;

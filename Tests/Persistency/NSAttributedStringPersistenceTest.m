@@ -221,7 +221,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
                                                                     ]
                              ];
     
-    NSAttributedString *originalString = [NSAttributedString attributedStringWithListItem:[[NSAttributedString alloc] initWithString:@"A\n"] usingStyle:textList withIndentationLevel:2];
+    NSAttributedString *originalString = [NSAttributedString attributedStringWithListItem:[[NSAttributedString alloc] initWithString:@"A"] usingStyle:textList withIndentationLevel:2];
 
     // Test re-reading (an immediate comparison is not possible, so we compare the items)
     NSDictionary *plist = [originalString RTFKitPropertyListRepresentation];

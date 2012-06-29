@@ -104,8 +104,9 @@
         [translation appendString:
          [NSString stringWithRTFGroupTag:tag body:[RKAttributedStringWriter RTFFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]]
         ];
-    }     
-    
+        [translation appendString: @"\n"];
+    }
+
     return translation;
 }
 
