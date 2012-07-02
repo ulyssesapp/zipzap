@@ -19,8 +19,8 @@
     NSMutableArray		*_colors;
     NSMutableArray		*_fonts;
 
-    NSMutableArray		*_listStyles;
-    NSMutableArray		*_listItemIndices;
+    NSMutableDictionary	*_listStyles;
+    NSMutableDictionary	*_listItemIndices;
 }
 
 @end
@@ -35,8 +35,8 @@
         _fonts = [NSMutableArray new];
         _colors = [NSMutableArray new];
         _attachmentFileWrappers = [NSMutableDictionary new];
-        _listStyles = [NSMutableArray new];
-        _listItemIndices = [NSMutableArray new];
+        _listStyles = [NSMutableDictionary new];
+        _listItemIndices = [NSMutableDictionary new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
         CGColorRef blackRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){0, 0, 0, 1});
@@ -203,40 +203,52 @@
 
 #pragma mark - Text Lists
 
-- (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
++ (NSUInteger)maximumListStyleIndex
 {
-    NSUInteger listIndex = [_listStyles indexOfObject: listStyle];
-    
-    if (listIndex == NSNotFound) {
-        [_listStyles addObject: listStyle];
-        [_listItemIndices addObject: [NSMutableArray new]];
-        return _listStyles.count - 1;
-    }
-    
-    return listIndex;
+    return 1000000;
 }
 
-- (NSArray *)listStyles
+- (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
+{
+    NSArray *keys = [_listStyles allKeysForObject: listStyle];
+    
+    if (!keys.count) {
+        NSNumber *listIndex;
+        
+        do {
+            listIndex = @((random() % (RKResourcePool.maximumListStyleIndex - 1)) + 1);
+        }while ([_listStyles objectForKey: listIndex]);
+
+        [_listStyles setObject:listStyle forKey:listIndex];
+        [_listItemIndices setObject:[NSMutableArray new] forKey:listIndex];
+
+        return listIndex.unsignedIntegerValue;
+    }
+    
+    return [keys[0] unsignedIntegerValue];
+}
+
+- (NSDictionary *)listStyles
 {
     return _listStyles;
 }
 
 - (void)resetCounterOfList:(RKListStyle *)listStyle
 {
-    NSUInteger styleIndex = [_listStyles indexOfObject: listStyle];
+    NSArray *keys = [_listStyles allKeysForObject: listStyle];
     
     // Style unknown
-    if (styleIndex == NSNotFound)
+    if (!keys.count)
         return;
     
     // Reset style
-    _listItemIndices[styleIndex] = [NSMutableArray new];
+    _listItemIndices[keys[0]] = [NSMutableArray new];
 }
 
 - (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
 {
     NSUInteger listIndex = [self indexOfListStyle: textList];    
-    NSMutableArray *itemNumbers = _listItemIndices[listIndex];
+    NSMutableArray *itemNumbers = _listItemIndices[@(listIndex)];
     
     // Truncate nested item numbers, if a higher item number is increased
     if (level + 1 < itemNumbers.count) {

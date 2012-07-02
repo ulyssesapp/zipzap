@@ -12,6 +12,11 @@
 @interface RKResourcePool : NSObject
 
 /*!
+ @abstract Provides the maximum index that is used for list styles
+ */
++ (NSUInteger)maximumListStyleIndex;
+
+/*!
  @abstract Initializes the resource pool with a certain document
  */
 - (id)initWithDocument:(RKDocument *)document;
@@ -85,7 +90,8 @@
 
 /*!
  @abstract Returns the collected list styles
+ @discussion A mapping from random list style numbers to RKListStyle
  */
-- (NSArray *)listStyles;
+- (NSDictionary *)listStyles;
 
 @end
