@@ -18,7 +18,7 @@
 
 @implementation RKListStyle
 
-@synthesize levelFormats=_levelFormats, startNumbers=_startNumbers;
+@synthesize levelFormats=_levelFormats, startNumbers=_startNumbers, firstLineHeadIndentOffsets, headIndentOffsets, tabStopLocations, tabStopAlignments;
 
 + (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats;
 {

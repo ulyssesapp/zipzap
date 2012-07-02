@@ -8,8 +8,12 @@
 
 #import "RKListStyle+RKPersistence.h"
 
-NSString *RKListStyleLevelFormatsPersistenceKey         = @"levelFormats";
-NSString *RKListStyleStartNumbersPersistenceKey         = @"startNumbers";
+NSString *RKListStyleLevelFormatsPersistenceKey                  = @"levelFormats";
+NSString *RKListStyleStartNumbersPersistenceKey                  = @"startNumbers";
+NSString *RKListStyleHeadIndentOffsetsPersistenceKey             = @"headIndentOffsets";
+NSString *RKListStyleFirstLineHeadIndentOffsetsPersistenceKey    = @"firstLineheadIndentOffsets";
+NSString *RKListStyleTabStopLocationsPersistenceKey              = @"tabStopLocations";
+NSString *RKListStyleTabStopAlignmentsPersistenceKey             = @"tabStopAlignments";
 
 @implementation RKListStyle (RKPersistence)
 
@@ -17,7 +21,16 @@ NSString *RKListStyleStartNumbersPersistenceKey         = @"startNumbers";
 {
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
     
-    return [self initWithLevelFormats:propertyList[RKListStyleLevelFormatsPersistenceKey] startNumbers:propertyList[RKListStyleStartNumbersPersistenceKey]];
+    self = [self initWithLevelFormats:propertyList[RKListStyleLevelFormatsPersistenceKey] startNumbers:propertyList[RKListStyleStartNumbersPersistenceKey]];
+    
+    if (self) {
+        self.headIndentOffsets = propertyList[RKListStyleHeadIndentOffsetsPersistenceKey];
+        self.firstLineHeadIndentOffsets = propertyList[RKListStyleFirstLineHeadIndentOffsetsPersistenceKey];
+        self.tabStopLocations = propertyList[RKListStyleTabStopLocationsPersistenceKey];
+        self.tabStopAlignments = propertyList[RKListStyleTabStopAlignmentsPersistenceKey];
+    }
+
+    return self;
 }
 
 - (id)propertyListRepresentation
@@ -29,6 +42,18 @@ NSString *RKListStyleStartNumbersPersistenceKey         = @"startNumbers";
     
     if (self.startNumbers)
         propertyList[RKListStyleStartNumbersPersistenceKey] = self.startNumbers;
+
+    if (self.firstLineHeadIndentOffsets)
+        propertyList[RKListStyleFirstLineHeadIndentOffsetsPersistenceKey] = self.firstLineHeadIndentOffsets;
+    
+    if (self.headIndentOffsets)
+        propertyList[RKListStyleHeadIndentOffsetsPersistenceKey] = self.headIndentOffsets;
+
+    if (self.tabStopLocations)
+        propertyList[RKListStyleTabStopLocationsPersistenceKey] = self.tabStopLocations;
+
+    if (self.tabStopAlignments)
+        propertyList[RKListStyleTabStopAlignmentsPersistenceKey] = self.tabStopAlignments;
     
     return propertyList;
 }

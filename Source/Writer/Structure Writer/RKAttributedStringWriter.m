@@ -52,6 +52,23 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     NSString *baseString = attributedString.string;
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: baseString];
     
+    // Pre-process any styles
+    NSMutableAttributedString *preprocessedString = [attributedString mutableCopy];
+
+    for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
+        NSString *attributeName = handlerDescription[@"attributeName"];
+        Class handler = handlerDescription[@"writerClass"];
+        
+        // We operate on a per-paragraph level
+         [preprocessedString enumerateAttribute:attributeName inRange:NSMakeRange(0, baseString.length) options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+                 [handler preprocessAttribute:attributeName
+                                        value:attributeValue
+                               effectiveRange:attributeRange
+                           ofAttributedString:preprocessedString
+                ];
+         }];
+    }
+    
     // Write attribute styles
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
         NSString *attributeName = handlerDescription[@"attributeName"];
@@ -60,12 +77,12 @@ NSMutableArray *RKAttributedStringWriterHandlers;
         // We operate on a per-paragraph level
         [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
          ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-             [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+             [preprocessedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
                     [handler addTagsForAttribute:attributeName 
                                            value:attributeValue 
                                   effectiveRange:attributeRange 
                                         toString:taggedString 
-                                  originalString:attributedString 
+                                  originalString:preprocessedString 
                                 attachmentPolicy:attachmentPolicy 
                                        resources:resources
                     ];
