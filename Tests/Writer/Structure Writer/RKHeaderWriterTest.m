@@ -260,7 +260,7 @@
 
 - (void)testGenerateListTable
 {
-    NSArray *overrides = [NSArray arrayWithObjects: 
+    NSArray *overrides = [NSArray arrayWithObjects:
                           [NSNumber numberWithUnsignedInteger: 1],
                           [NSNumber numberWithUnsignedInteger: 3],                         
                           [NSNumber numberWithUnsignedInteger: 1],                         
@@ -293,7 +293,7 @@
                     // levelcf0 (decimal)
                     "\\levelstartat1\\levelnfc0\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker \\{decimal\\}.}"
-                    "{\\leveltext\\leveltemplateid1001 \\'04\t\\'00.\t;}"
+                    "{\\leveltext\\leveltemplateid10 \\'04\t\\'00.\t;}"
                     "{\\levelnumbers \\'02;}"
                     "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"
@@ -302,7 +302,7 @@
                     "\\levelstartat1\\levelnfc4\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker \\{lower-alpha\\}.}"
                     "\\levelprepend"
-                    "{\\leveltext\\leveltemplateid1002 \\'06\t\\'00.\\'01.\t;}"
+                    "{\\leveltext\\leveltemplateid11 \\'06\t\\'00.\\'01.\t;}"
                     "{\\levelnumbers \\'02\\'04;}"
                     "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"                         
@@ -310,7 +310,7 @@
                     // Different starting number; levelcf2 (lower case roman)
                     "\\levelstartat1\\levelnfc2\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker \\{lower-roman\\}.}" 
-                    "{\\leveltext\\leveltemplateid1003 \\'04\t\\'02.\t;}"
+                    "{\\leveltext\\leveltemplateid12 \\'04\t\\'02.\t;}"
                     "{\\levelnumbers \\'02;}"
                     "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"                         
@@ -324,7 +324,7 @@
                     // levelcf0 (decimal)
                     "\\levelstartat1\\levelnfc0\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker ---------\\{decimal\\}}"
-                    "{\\leveltext\\leveltemplateid2001 \\'0c\t---------\\'00\t;}"
+                    "{\\leveltext\\leveltemplateid20 \\'0c\t---------\\'00\t;}"
                     "{\\levelnumbers \\'0b;}"
                     "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"
@@ -332,7 +332,7 @@
                     // levelcf23 (bullet)
                     "\\levelstartat3\\levelnfc23\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker -}"
-                    "{\\leveltext\\leveltemplateid2002 \\'03\t-\t;}"
+                    "{\\leveltext\\leveltemplateid21 \\'03\t-\t;}"
                     "{\\levelnumbers ;}"
                     "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"                         

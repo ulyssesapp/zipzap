@@ -9,8 +9,15 @@
 #import "SenTestCase+RKAttributeWriterTestHelper.h"
 #import "RKAttributeWriter.h"
 #import "RKConversion.h"
+#import "RKDocument.h"
 
 @implementation SenTestCase (RKAttributeWriterTestHelper)
+
++ (void)load
+{
+    // We switch off random list identifiers to allow proper testing
+    [RKDocument useRandomListIdentifiers: NO];
+}
 
 - (void)assertResourcelessStyle:(NSString *)styleName withValue:(NSNumber *)style onWriter:(Class)writer expectedTranslation:(NSString *)expectedTranslation
 {

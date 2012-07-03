@@ -102,10 +102,10 @@
     [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resourcePool];
 
     // Text List properly registered
-    NSArray *textLists = [resourcePool listStyles];
+    NSDictionary *textLists = [resourcePool listStyles];
 
     STAssertEquals(textLists.count, (NSUInteger)1, @"Invalid text list count");
-    STAssertEquals([textLists objectAtIndex: 0], textListItem.listStyle, @"Invalid text list registered");    
+    STAssertEquals([textLists.allValues objectAtIndex: 0], textListItem.listStyle, @"Invalid text list registered");
 
     // Item counts properly incremented
     NSArray *itemNumbers = [resourcePool incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle];    

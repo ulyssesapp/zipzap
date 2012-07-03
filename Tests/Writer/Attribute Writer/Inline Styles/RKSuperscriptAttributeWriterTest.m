@@ -24,10 +24,10 @@
     [self assertSuperscriptStyle:nil expectedTranslation:@"abc"];
     
     // Setting superscript
-    [self assertSuperscriptStyle:[NSNumber numberWithInt: 1] expectedTranslation:@"a\\super b\\super0 c"];
+    [self assertSuperscriptStyle:[NSNumber numberWithInt: 1] expectedTranslation:@"a\\super b\\nosupersub c"];
     
     // Setting subscript
-    [self assertSuperscriptStyle:[NSNumber numberWithInt: -1] expectedTranslation:@"a\\sub b\\sub0 c"];
+    [self assertSuperscriptStyle:[NSNumber numberWithInt: -1] expectedTranslation:@"a\\sub b\\nosupersub c"];
 }
 
 #if !TARGET_OS_IPHONE
