@@ -26,41 +26,47 @@
              effectiveRange:(NSRange)range
          ofAttributedString:(NSMutableAttributedString *)preprocessedString
 {
-    if (listItem) {
-        RKListStyle *listStyle = listItem.listStyle;
-        NSMutableParagraphStyle *paragraphStyle = [[preprocessedString attribute:NSParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL] mutableCopy];
-        
-        CGFloat firstLineHeadIndentOffset = [listStyle.firstLineHeadIndentOffsets[listItem.indentationLevel] floatValue];
-        CGFloat headIndentOffset = [listStyle.headIndentOffsets[listItem.indentationLevel] floatValue];
-        
-        // Add indentation according to indentation level of a list item
-        if (listStyle.firstLineHeadIndentOffsets.count > listItem.indentationLevel)
-            paragraphStyle.firstLineHeadIndent += firstLineHeadIndentOffset;
-        
-        if (listStyle.headIndentOffsets.count > listItem.indentationLevel)
-            paragraphStyle.headIndent += headIndentOffset;
+    if (!listItem)
+        return;
+    
+    // Get paragraph style of list item
+    RKListStyle *listStyle = listItem.listStyle;
+    NSMutableParagraphStyle *paragraphStyle = [[preprocessedString attribute:NSParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL] mutableCopy];
+    
+    if (!paragraphStyle)
+        paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
 
-        // Adjust tab stops
-        if ((listStyle.tabStopLocations.count > listItem.indentationLevel) && (listStyle.tabStopAlignments.count > listItem.indentationLevel)) {
-            NSArray *tabStopLocations = listStyle.tabStopLocations[listItem.indentationLevel];
-            NSArray *tabStopAlignments = listStyle.tabStopAlignments[listItem.indentationLevel];
+    // Get indentation
+    CGFloat firstLineHeadIndentOffset = [listStyle.firstLineHeadIndentOffsets[listItem.indentationLevel] floatValue];
+    CGFloat headIndentOffset = [listStyle.headIndentOffsets[listItem.indentationLevel] floatValue];
+    
+    // Add indentation according to indentation level of a list item
+    if (listStyle.firstLineHeadIndentOffsets.count > listItem.indentationLevel)
+        paragraphStyle.firstLineHeadIndent += firstLineHeadIndentOffset;
+    
+    if (listStyle.headIndentOffsets.count > listItem.indentationLevel)
+        paragraphStyle.headIndent += headIndentOffset;
 
-            // Setup new NSTextTabs instances for the given tabs stops
-            NSMutableArray *newTabStops = [NSMutableArray new];
+    // Adjust tab stops
+    if ((listStyle.tabStopLocations.count > listItem.indentationLevel) && (listStyle.tabStopAlignments.count > listItem.indentationLevel)) {
+        NSArray *tabStopLocations = listStyle.tabStopLocations[listItem.indentationLevel];
+        NSArray *tabStopAlignments = listStyle.tabStopAlignments[listItem.indentationLevel];
+
+        // Setup new NSTextTabs instances for the given tabs stops
+        NSMutableArray *newTabStops = [NSMutableArray new];
+        
+        for (NSUInteger tabIndex = 0; tabIndex < tabStopLocations.count; tabIndex ++) {
+            CGFloat location = [tabStopLocations[tabIndex] floatValue] + firstLineHeadIndentOffset;
             
-            for (NSUInteger tabIndex = 0; tabIndex < tabStopLocations.count; tabIndex ++) {
-                CGFloat location = [tabStopLocations[tabIndex] floatValue] + firstLineHeadIndentOffset;
-                
-                NSTextTab *newTab = [[NSTextTab alloc] initWithTextAlignment:[tabStopAlignments[tabIndex] unsignedIntegerValue] location:location options:nil];
-                [newTabStops addObject: newTab];
-            }
-            
-            paragraphStyle.tabStops = newTabStops;
+            NSTextTab *newTab = [[NSTextTab alloc] initWithTextAlignment:[tabStopAlignments[tabIndex] unsignedIntegerValue] location:location options:nil];
+            [newTabStops addObject: newTab];
         }
-            
-        // Update paragraph style
-        [preprocessedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
+        
+        paragraphStyle.tabStops = newTabStops;
     }
+        
+    // Update paragraph style
+    [preprocessedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName
@@ -77,15 +83,8 @@
         
         NSString *markerString = [RKListStyle systemCompatibleMarker: [[listItem.listStyle markerForItemNumbers:itemNumbers] RTFEscapedString]];
 
-        // Register the item marker after all preceding whitespaces (there should be no tab between the marker and the actual text)
-        static NSCharacterSet *nonWhitespaces;
-        nonWhitespaces = nonWhitespaces ?: [[NSCharacterSet whitespaceCharacterSet] invertedSet];
-        
-        NSRange markerStart = [taggedString.untaggedString rangeOfCharacterFromSet:nonWhitespaces options:0 range:range];
-        if (!markerStart.length)
-            markerStart = range;
-        
-        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%li\\ilvl%li {\\listtext%@}", listIndex, listItem.indentationLevel, markerString] forPosition:markerStart.location];
+        // Register the list marker
+        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%li\\ilvl%li {\\listtext%@}", listIndex, listItem.indentationLevel, markerString] forPosition:range.location];
     }
 }
 
