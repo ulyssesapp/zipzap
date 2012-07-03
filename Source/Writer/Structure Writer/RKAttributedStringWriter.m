@@ -73,11 +73,22 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
         NSString *attributeName = handlerDescription[@"attributeName"];
         Class handler = handlerDescription[@"writerClass"];
+        NSUInteger priority = [handlerDescription[@"priority"] unsignedIntegerValue];
             
         // We operate on a per-paragraph level
         [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
          ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+             __block NSUInteger attributeCountPerParagraph = 0;
+             
              [preprocessedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+                    if (attributeValue)
+                        attributeCountPerParagraph ++;
+                 
+                    // Ensure that we only apply one paragraph style of a certain type per paragraph
+                    if ((attributeCountPerParagraph > 1) && ((priority == RKAttributedStringWriterPriorityParagraphLevel) || (priority == RKAttributedStringWriterPriorityParagraphStyleSheetLevel)))
+                        return;
+
+                    // Translate style
                     [handler addTagsForAttribute:attributeName 
                                            value:attributeValue 
                                   effectiveRange:attributeRange 
