@@ -145,3 +145,23 @@
 @property(nonatomic,strong,readwrite) NSDictionary *characterStyles;
 
 @end
+
+
+/*!
+ @abstract Methods required to test RTF generation
+ */
+@interface RKDocument (TestingSupport)
+
+/*!
+ @abstract Changes the usage of random list identifiers in RKDocument exports
+ @discussion Normally, RTFKit has to create random list identifiers for compatibility with Microsoft Word. To improve testing, this can be switched off here.
+ */
++ (void)useRandomListIdentifiers:(BOOL)useRandomListIdentifier;
+
+/*!
+ @abstract Specifies whether RTFKit is using random list identifier or not
+ @discussion This is usually set to YES (it might be only switched off for testing)
+ */
++ (BOOL)isUsingRandomListIdentifier;
+
+@end

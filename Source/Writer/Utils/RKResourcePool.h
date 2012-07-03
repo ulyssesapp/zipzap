@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+@class RKDocument, RKListStyle;
+
 /*!
  @abstract Manages files, font and color definitions from an RKDocument
  */

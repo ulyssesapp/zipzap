@@ -10,8 +10,9 @@
 #import "RKSection.h"
 #import "RKConversion.h"
 #import "RKListEnumerator.h"
-
-@class RKDocument, RKSection;
+#import "RKDocument.h"
+#import "RKListStyle.h"
+#import "RKListItem.h"
 
 @interface RKResourcePool()
 {
@@ -102,7 +103,7 @@
         
     // Search for an index or create a font entry
     NSUInteger index = [_fonts indexOfObject: postscriptName];
-    
+
     if (index == NSNotFound) {
         [_fonts addObject: postscriptName];
         index = [_fonts count] - 1;
@@ -209,17 +210,37 @@
     return 31000;
 }
 
+- (NSNumber *)unusedListIndex
+{
+    if (!RKDocument.isUsingRandomListIdentifier) {
+        // In testing mode we have to use stable IDs
+        return @(_listStyles.count + 1);
+    }
+        
+    NSNumber *listIndex;
+    NSUInteger maximumIndex = RKResourcePool.maximumListStyleIndex;
+    
+    if (_listStyles.count < (maximumIndex / 50)) {
+        // Create a random index unless we have only 1/50 of random numbers used
+        do {
+            listIndex = @((random() % (maximumIndex - 1)) + 1);
+        }while ([_listStyles objectForKey: listIndex]);
+    }
+    else {
+        // Otherwise we break the Cut&Paste bug-to-bug compatibility with Word to prevent bad perfomance and crashes and create linear numbers on top of the maximum...
+        NSArray *sortedIndices = [_listStyles.allKeys sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"unsignedIntegerValue" ascending:NO]]];
+        listIndex = @([sortedIndices.lastObject unsignedIntegerValue] + 1);
+    }
+        
+    return listIndex;
+}
+
 - (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
 {
     NSArray *keys = [_listStyles allKeysForObject: listStyle];
     
     if (!keys.count) {
-        NSNumber *listIndex;
-        
-        do {
-            listIndex = @((random() % (RKResourcePool.maximumListStyleIndex - 1)) + 1);
-        }while ([_listStyles objectForKey: listIndex]);
-
+        NSNumber *listIndex = [self unusedListIndex];
         [_listStyles setObject:listStyle forKey:listIndex];
         [_listItemIndices setObject:[NSMutableArray new] forKey:listIndex];
 

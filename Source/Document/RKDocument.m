@@ -105,3 +105,20 @@
 }
 
 @end
+
+
+@implementation RKDocument (TestingSupport)
+
+BOOL RKDocumentIsUsingRandomListIdentifier = YES;
+
++ (void)useRandomListIdentifiers:(BOOL)useRandomListIdentifier
+{
+    RKDocumentIsUsingRandomListIdentifier = useRandomListIdentifier;
+}
+
++ (BOOL)isUsingRandomListIdentifier
+{
+    return RKDocumentIsUsingRandomListIdentifier;
+}
+
+@end
