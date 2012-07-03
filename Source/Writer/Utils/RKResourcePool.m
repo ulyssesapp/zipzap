@@ -205,7 +205,8 @@
 
 + (NSUInteger)maximumListStyleIndex
 {
-    return 1000000;
+    // According to the RTF specification Word seems to allow only numbers between 1 and 31680
+    return 31000;
 }
 
 - (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
