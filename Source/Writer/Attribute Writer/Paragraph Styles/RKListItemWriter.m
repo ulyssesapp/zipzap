@@ -31,6 +31,12 @@
     
     // Get paragraph style of list item
     RKListStyle *listStyle = listItem.listStyle;
+    
+    // No changes in the paragraph styling requested
+    if (!listStyle.firstLineHeadIndentOffsets && !listStyle.headIndentOffsets && !listStyle.tabStopLocations)
+        return;
+
+    // Get paragraph style
     NSMutableParagraphStyle *paragraphStyle = [[preprocessedString attribute:NSParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL] mutableCopy];
     
     if (!paragraphStyle)
