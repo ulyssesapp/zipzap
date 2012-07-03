@@ -111,8 +111,11 @@
            attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    NSString *paragraphHeader = [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:range resources:resources];
+    if (!paragraphStyle)
+        return;
 
+    NSString *paragraphHeader = [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:range resources:resources];
+    
     // We add \pard before each paragraph to reset the current paragraph styling
     [taggedString registerTag:@"\\pard " forPosition:range.location];
     [taggedString registerTag:paragraphHeader forPosition:range.location];
