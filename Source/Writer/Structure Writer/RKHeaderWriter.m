@@ -195,7 +195,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 {
     NSArray *placeholderPositions;
     NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%lu %@;}", 
-                                 listIndex + (level * RKResourcePool.maximumListStyleIndex),
+                                 (listIndex * 10) + level,
                                  [list formatStringOfLevel:level placeholderPositions:&placeholderPositions]
                                 ];
     
