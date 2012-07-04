@@ -47,27 +47,36 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
 }
 
-+ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSAttributedString *)attributedStringByAdjustingStyles:(NSAttributedString *)attributedString
 {
     NSString *baseString = attributedString.string;
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: baseString];
     
     // Pre-process any styles
     NSMutableAttributedString *preprocessedString = [attributedString mutableCopy];
-
+    
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
         NSString *attributeName = handlerDescription[@"attributeName"];
         Class handler = handlerDescription[@"writerClass"];
         
         // We operate on a per-paragraph level
-         [preprocessedString enumerateAttribute:attributeName inRange:NSMakeRange(0, baseString.length) options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
-                 [handler preprocessAttribute:attributeName
-                                        value:attributeValue
-                               effectiveRange:attributeRange
-                           ofAttributedString:preprocessedString
-                ];
-         }];
+        [preprocessedString enumerateAttribute:attributeName inRange:NSMakeRange(0, baseString.length) options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+            [handler preprocessAttribute:attributeName
+                                   value:attributeValue
+                          effectiveRange:attributeRange
+                      ofAttributedString:preprocessedString
+             ];
+        }];
     }
+    
+    return preprocessedString;
+}
+
++ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
+{
+    NSAttributedString *preprocessedString = [self attributedStringByAdjustingStyles: attributedString];
+    
+    NSString *baseString = preprocessedString.string;
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: baseString];
     
     // Write attribute styles
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
