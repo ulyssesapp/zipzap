@@ -9,6 +9,7 @@
 #import "RKDocument.h"
 #import "RKSection.h"
 #import "RKWriter.h"
+#import "RKPDFWriter.h"
 
 @implementation RKDocument
 
@@ -89,6 +90,10 @@
     return [self initWithSections: @[[RKSection sectionWithContent: string]]];
 }
 
+@end
+
+@implementation RKDocument (Exporting)
+
 - (NSData *)RTF
 {
     return [RKWriter RTFfromDocument: self];
@@ -104,8 +109,12 @@
     return [RKWriter RTFDfromDocument: self];    
 }
 
-@end
+- (NSData *)PDF
+{
+    return [RKPDFWriter PDFFromDocument: self];
+}
 
+@end
 
 @implementation RKDocument (TestingSupport)
 

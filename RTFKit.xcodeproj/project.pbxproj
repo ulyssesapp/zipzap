@@ -250,6 +250,50 @@
 		79F673B814C84AE0005D03FA /* RKSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673B614C84AE0005D03FA /* RKSection.h */; };
 		79F673B914C84AE0005D03FA /* RKSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673B714C84AE0005D03FA /* RKSection.m */; };
 		79F673CC14C875BB005D03FA /* RKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673CB14C875BA005D03FA /* RKTypes.h */; };
+		79FCF84615A5A72C00D98438 /* RKPDFWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF84415A5A72C00D98438 /* RKPDFWriter.h */; };
+		79FCF84715A5A72C00D98438 /* RKPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF84515A5A72C00D98438 /* RKPDFWriter.m */; };
+		79FCF86D15A5B05A00D98438 /* RKPDFRenderingContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF86B15A5B05A00D98438 /* RKPDFRenderingContext.h */; };
+		79FCF86E15A5B05A00D98438 /* RKPDFRenderingContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF86C15A5B05A00D98438 /* RKPDFRenderingContext.m */; };
+		79FCF87115A5B4E400D98438 /* RKPDFTextObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF86F15A5B4E400D98438 /* RKPDFTextObject.h */; };
+		79FCF87215A5B4E400D98438 /* RKPDFTextObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF87015A5B4E400D98438 /* RKPDFTextObject.m */; };
+		79FCF87D15A5B96200D98438 /* RKPDFImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF87B15A5B96200D98438 /* RKPDFImage.h */; };
+		79FCF87E15A5B96200D98438 /* RKPDFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF87C15A5B96200D98438 /* RKPDFImage.m */; };
+		79FCF88515A5B9D700D98438 /* RKPDFFootnote.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF88315A5B9D700D98438 /* RKPDFFootnote.h */; };
+		79FCF88615A5B9D700D98438 /* RKPDFFootnote.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF88415A5B9D700D98438 /* RKPDFFootnote.m */; };
+		79FCF88915A5BA5400D98438 /* RKPDFPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF88715A5BA5300D98438 /* RKPDFPlaceholder.h */; };
+		79FCF88A15A5BA5400D98438 /* RKPDFPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF88815A5BA5400D98438 /* RKPDFPlaceholder.m */; };
+		79FCF88D15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF88B15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.h */; };
+		79FCF88E15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF88C15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.m */; };
+		79FCF89215A5C00400D98438 /* RKPDFTextRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF89015A5C00400D98438 /* RKPDFTextRenderer.h */; };
+		79FCF89315A5C00400D98438 /* RKPDFTextRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF89115A5C00400D98438 /* RKPDFTextRenderer.m */; };
+		79FCF89E15A5C13F00D98438 /* RKPDFLinkRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF89C15A5C13F00D98438 /* RKPDFLinkRenderer.h */; };
+		79FCF89F15A5C13F00D98438 /* RKPDFLinkRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF89D15A5C13F00D98438 /* RKPDFLinkRenderer.m */; };
+		79FCF8A215A5C20B00D98438 /* RKPDFBackgroundColorRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8A015A5C20B00D98438 /* RKPDFBackgroundColorRenderer.h */; };
+		79FCF8A315A5C20B00D98438 /* RKPDFBackgroundColorRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8A115A5C20B00D98438 /* RKPDFBackgroundColorRenderer.m */; };
+		79FCF8A715A5C4BA00D98438 /* RKPDFRepresentationConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8A515A5C4BA00D98438 /* RKPDFRepresentationConverter.h */; };
+		79FCF8A815A5C4BA00D98438 /* RKPDFRepresentationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8A615A5C4BA00D98438 /* RKPDFRepresentationConverter.m */; };
+		79FCF8AB15A5C4FA00D98438 /* RKParagraphStylePDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8A915A5C4FA00D98438 /* RKParagraphStylePDFConverter.h */; };
+		79FCF8AC15A5C4FA00D98438 /* RKParagraphStylePDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8AA15A5C4FA00D98438 /* RKParagraphStylePDFConverter.m */; };
+		79FCF8AF15A5C51900D98438 /* RKTextStylePDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8AD15A5C51900D98438 /* RKTextStylePDFConverter.h */; };
+		79FCF8B015A5C51900D98438 /* RKTextStylePDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8AE15A5C51900D98438 /* RKTextStylePDFConverter.m */; };
+		79FCF8B315A5C52C00D98438 /* RKColorPDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8B115A5C52B00D98438 /* RKColorPDFConverter.h */; };
+		79FCF8B415A5C52C00D98438 /* RKColorPDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8B215A5C52B00D98438 /* RKColorPDFConverter.m */; };
+		79FCF8B715A5C54300D98438 /* RKLinkPDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8B515A5C54300D98438 /* RKLinkPDFConverter.h */; };
+		79FCF8B815A5C54300D98438 /* RKLinkPDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8B615A5C54300D98438 /* RKLinkPDFConverter.m */; };
+		79FCF8BB15A5C55C00D98438 /* RKTextAttachmentPDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8B915A5C55B00D98438 /* RKTextAttachmentPDFConverter.h */; };
+		79FCF8BC15A5C55C00D98438 /* RKTextAttachmentPDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8BA15A5C55B00D98438 /* RKTextAttachmentPDFConverter.m */; };
+		79FCF8BF15A5C5A100D98438 /* RKFootnotePDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8BD15A5C5A100D98438 /* RKFootnotePDFConverter.h */; };
+		79FCF8C015A5C5A100D98438 /* RKFootnotePDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8BE15A5C5A100D98438 /* RKFootnotePDFConverter.m */; };
+		79FCF8C315A5C5B500D98438 /* RKListItemPDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C115A5C5B400D98438 /* RKListItemPDFConverter.h */; };
+		79FCF8C415A5C5B500D98438 /* RKListItemPDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8C215A5C5B400D98438 /* RKListItemPDFConverter.m */; };
+		79FCF8C715A5C5CD00D98438 /* RKPlaceholderPDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C515A5C5CC00D98438 /* RKPlaceholderPDFConverter.h */; };
+		79FCF8C815A5C5CD00D98438 /* RKPlaceholderPDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8C615A5C5CD00D98438 /* RKPlaceholderPDFConverter.m */; };
+		79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilitites.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilitites.h */; };
+		79FCF8CC15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m */; };
+		79FCF8CF15A5CCB700D98438 /* RKSection+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8CD15A5CCB700D98438 /* RKSection+PDFUtilities.h */; };
+		79FCF8D015A5CCB700D98438 /* RKSection+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */; };
+		79FCF8D315A5CEE100D98438 /* NSAttributedString+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */; };
+		79FCF8D415A5CEE100D98438 /* NSAttributedString+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -482,6 +526,50 @@
 		79F673B614C84AE0005D03FA /* RKSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSection.h; path = Document/RKSection.h; sourceTree = "<group>"; };
 		79F673B714C84AE0005D03FA /* RKSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSection.m; path = Document/RKSection.m; sourceTree = "<group>"; };
 		79F673CB14C875BA005D03FA /* RKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKTypes.h; sourceTree = "<group>"; };
+		79FCF84415A5A72C00D98438 /* RKPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFWriter.h; path = PDF/RKPDFWriter.h; sourceTree = "<group>"; };
+		79FCF84515A5A72C00D98438 /* RKPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFWriter.m; path = PDF/RKPDFWriter.m; sourceTree = "<group>"; };
+		79FCF86B15A5B05A00D98438 /* RKPDFRenderingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFRenderingContext.h; path = PDF/Context/RKPDFRenderingContext.h; sourceTree = "<group>"; };
+		79FCF86C15A5B05A00D98438 /* RKPDFRenderingContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFRenderingContext.m; path = PDF/Context/RKPDFRenderingContext.m; sourceTree = "<group>"; };
+		79FCF86F15A5B4E400D98438 /* RKPDFTextObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFTextObject.h; path = "PDF/Text Objects/RKPDFTextObject.h"; sourceTree = "<group>"; };
+		79FCF87015A5B4E400D98438 /* RKPDFTextObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFTextObject.m; path = "PDF/Text Objects/RKPDFTextObject.m"; sourceTree = "<group>"; };
+		79FCF87B15A5B96200D98438 /* RKPDFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFImage.h; path = "PDF/Text Objects/RKPDFImage.h"; sourceTree = "<group>"; };
+		79FCF87C15A5B96200D98438 /* RKPDFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFImage.m; path = "PDF/Text Objects/RKPDFImage.m"; sourceTree = "<group>"; };
+		79FCF88315A5B9D700D98438 /* RKPDFFootnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFFootnote.h; path = "PDF/Text Objects/RKPDFFootnote.h"; sourceTree = "<group>"; };
+		79FCF88415A5B9D700D98438 /* RKPDFFootnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFFootnote.m; path = "PDF/Text Objects/RKPDFFootnote.m"; sourceTree = "<group>"; };
+		79FCF88715A5BA5300D98438 /* RKPDFPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFPlaceholder.h; path = "PDF/Text Objects/RKPDFPlaceholder.h"; sourceTree = "<group>"; };
+		79FCF88815A5BA5400D98438 /* RKPDFPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFPlaceholder.m; path = "PDF/Text Objects/RKPDFPlaceholder.m"; sourceTree = "<group>"; };
+		79FCF88B15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+PDFCoreTextConversion.h"; path = "PDF/CoreText Conversion/NSAttributedString+PDFCoreTextConversion.h"; sourceTree = "<group>"; };
+		79FCF88C15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+PDFCoreTextConversion.m"; path = "PDF/CoreText Conversion/NSAttributedString+PDFCoreTextConversion.m"; sourceTree = "<group>"; };
+		79FCF89015A5C00400D98438 /* RKPDFTextRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFTextRenderer.h; path = "PDF/Text Renderer/RKPDFTextRenderer.h"; sourceTree = "<group>"; };
+		79FCF89115A5C00400D98438 /* RKPDFTextRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFTextRenderer.m; path = "PDF/Text Renderer/RKPDFTextRenderer.m"; sourceTree = "<group>"; };
+		79FCF89C15A5C13F00D98438 /* RKPDFLinkRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFLinkRenderer.h; path = "PDF/Text Renderer/RKPDFLinkRenderer.h"; sourceTree = "<group>"; };
+		79FCF89D15A5C13F00D98438 /* RKPDFLinkRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFLinkRenderer.m; path = "PDF/Text Renderer/RKPDFLinkRenderer.m"; sourceTree = "<group>"; };
+		79FCF8A015A5C20B00D98438 /* RKPDFBackgroundColorRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFBackgroundColorRenderer.h; path = "PDF/Text Renderer/RKPDFBackgroundColorRenderer.h"; sourceTree = "<group>"; };
+		79FCF8A115A5C20B00D98438 /* RKPDFBackgroundColorRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFBackgroundColorRenderer.m; path = "PDF/Text Renderer/RKPDFBackgroundColorRenderer.m"; sourceTree = "<group>"; };
+		79FCF8A515A5C4BA00D98438 /* RKPDFRepresentationConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFRepresentationConverter.h; path = "PDF/CoreText Conversion/Converter/RKPDFRepresentationConverter.h"; sourceTree = "<group>"; };
+		79FCF8A615A5C4BA00D98438 /* RKPDFRepresentationConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFRepresentationConverter.m; path = "PDF/CoreText Conversion/Converter/RKPDFRepresentationConverter.m"; sourceTree = "<group>"; };
+		79FCF8A915A5C4FA00D98438 /* RKParagraphStylePDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStylePDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKParagraphStylePDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8AA15A5C4FA00D98438 /* RKParagraphStylePDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStylePDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKParagraphStylePDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8AD15A5C51900D98438 /* RKTextStylePDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextStylePDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKTextStylePDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8AE15A5C51900D98438 /* RKTextStylePDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextStylePDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKTextStylePDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8B115A5C52B00D98438 /* RKColorPDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKColorPDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKColorPDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8B215A5C52B00D98438 /* RKColorPDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKColorPDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKColorPDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8B515A5C54300D98438 /* RKLinkPDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkPDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKLinkPDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8B615A5C54300D98438 /* RKLinkPDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkPDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKLinkPDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8B915A5C55B00D98438 /* RKTextAttachmentPDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextAttachmentPDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKTextAttachmentPDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8BA15A5C55B00D98438 /* RKTextAttachmentPDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentPDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKTextAttachmentPDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8BD15A5C5A100D98438 /* RKFootnotePDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootnotePDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKFootnotePDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8BE15A5C5A100D98438 /* RKFootnotePDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootnotePDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKFootnotePDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8C115A5C5B400D98438 /* RKListItemPDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListItemPDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKListItemPDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8C215A5C5B400D98438 /* RKListItemPDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListItemPDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKListItemPDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8C515A5C5CC00D98438 /* RKPlaceholderPDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPlaceholderPDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKPlaceholderPDFConverter.h"; sourceTree = "<group>"; };
+		79FCF8C615A5C5CD00D98438 /* RKPlaceholderPDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPlaceholderPDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKPlaceholderPDFConverter.m"; sourceTree = "<group>"; };
+		79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilitites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKDocument+PDFUtilitites.h"; path = "PDF/Utils/RKDocument+PDFUtilitites.h"; sourceTree = "<group>"; };
+		79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKDocument+PDFUtilitites.m"; path = "PDF/Utils/RKDocument+PDFUtilitites.m"; sourceTree = "<group>"; };
+		79FCF8CD15A5CCB700D98438 /* RKSection+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSection+PDFUtilities.h"; path = "PDF/Utils/RKSection+PDFUtilities.h"; sourceTree = "<group>"; };
+		79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKSection+PDFUtilities.m"; path = "PDF/Utils/RKSection+PDFUtilities.m"; sourceTree = "<group>"; };
+		79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+PDFUtilities.h"; path = "PDF/Utils/NSAttributedString+PDFUtilities.h"; sourceTree = "<group>"; };
+		79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+PDFUtilities.m"; path = "PDF/Utils/NSAttributedString+PDFUtilities.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -580,6 +668,7 @@
 			children = (
 				79F673AB14C84A65005D03FA /* Document */,
 				796EAB9614D94761001E8401 /* Writer */,
+				79FCF84215A5A70900D98438 /* PDF */,
 				79CE4A4E1599D8A700C83EF6 /* Persistence */,
 				79AD206414E2947F00F5616C /* Utils */,
 				50317D6E14C4952300F23C04 /* Other */,
@@ -686,11 +775,11 @@
 		796EAB9614D94761001E8401 /* Writer */ = {
 			isa = PBXGroup;
 			children = (
+				796EAB9A14D9479B001E8401 /* RKWriter.h */,
+				796EAB9B14D9479B001E8401 /* RKWriter.m */,
 				796EAB9714D9476F001E8401 /* Attribute Writer */,
 				796EAB9814D9477D001E8401 /* Structure Writer */,
 				796EAB9914D94785001E8401 /* Utils */,
-				796EAB9A14D9479B001E8401 /* RKWriter.h */,
-				796EAB9B14D9479B001E8401 /* RKWriter.m */,
 			);
 			name = Writer;
 			sourceTree = "<group>";
@@ -1021,6 +1110,105 @@
 			name = Document;
 			sourceTree = "<group>";
 		};
+		79FCF84215A5A70900D98438 /* PDF */ = {
+			isa = PBXGroup;
+			children = (
+				79FCF86515A5AD5500D98438 /* Context */,
+				79FCF86315A5AD3700D98438 /* Core Text Conversion */,
+				79FCF88F15A5BFD700D98438 /* Text Renderer */,
+				79FCF86415A5AD4D00D98438 /* Text Objects */,
+				79FCF86615A5AD6000D98438 /* Utils */,
+				79FCF84415A5A72C00D98438 /* RKPDFWriter.h */,
+				79FCF84515A5A72C00D98438 /* RKPDFWriter.m */,
+			);
+			name = PDF;
+			sourceTree = "<group>";
+		};
+		79FCF86315A5AD3700D98438 /* Core Text Conversion */ = {
+			isa = PBXGroup;
+			children = (
+				79FCF8A415A5C48900D98438 /* Converter */,
+				79FCF88B15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.h */,
+				79FCF88C15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.m */,
+			);
+			name = "Core Text Conversion";
+			sourceTree = "<group>";
+		};
+		79FCF86415A5AD4D00D98438 /* Text Objects */ = {
+			isa = PBXGroup;
+			children = (
+				79FCF86F15A5B4E400D98438 /* RKPDFTextObject.h */,
+				79FCF87015A5B4E400D98438 /* RKPDFTextObject.m */,
+				79FCF87B15A5B96200D98438 /* RKPDFImage.h */,
+				79FCF87C15A5B96200D98438 /* RKPDFImage.m */,
+				79FCF88315A5B9D700D98438 /* RKPDFFootnote.h */,
+				79FCF88415A5B9D700D98438 /* RKPDFFootnote.m */,
+				79FCF88715A5BA5300D98438 /* RKPDFPlaceholder.h */,
+				79FCF88815A5BA5400D98438 /* RKPDFPlaceholder.m */,
+			);
+			name = "Text Objects";
+			sourceTree = "<group>";
+		};
+		79FCF86515A5AD5500D98438 /* Context */ = {
+			isa = PBXGroup;
+			children = (
+				79FCF86B15A5B05A00D98438 /* RKPDFRenderingContext.h */,
+				79FCF86C15A5B05A00D98438 /* RKPDFRenderingContext.m */,
+			);
+			name = Context;
+			sourceTree = "<group>";
+		};
+		79FCF86615A5AD6000D98438 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilitites.h */,
+				79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m */,
+				79FCF8CD15A5CCB700D98438 /* RKSection+PDFUtilities.h */,
+				79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */,
+				79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */,
+				79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		79FCF88F15A5BFD700D98438 /* Text Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				79FCF89015A5C00400D98438 /* RKPDFTextRenderer.h */,
+				79FCF89115A5C00400D98438 /* RKPDFTextRenderer.m */,
+				79FCF89C15A5C13F00D98438 /* RKPDFLinkRenderer.h */,
+				79FCF89D15A5C13F00D98438 /* RKPDFLinkRenderer.m */,
+				79FCF8A015A5C20B00D98438 /* RKPDFBackgroundColorRenderer.h */,
+				79FCF8A115A5C20B00D98438 /* RKPDFBackgroundColorRenderer.m */,
+			);
+			name = "Text Renderer";
+			sourceTree = "<group>";
+		};
+		79FCF8A415A5C48900D98438 /* Converter */ = {
+			isa = PBXGroup;
+			children = (
+				79FCF8A515A5C4BA00D98438 /* RKPDFRepresentationConverter.h */,
+				79FCF8A615A5C4BA00D98438 /* RKPDFRepresentationConverter.m */,
+				79FCF8A915A5C4FA00D98438 /* RKParagraphStylePDFConverter.h */,
+				79FCF8AA15A5C4FA00D98438 /* RKParagraphStylePDFConverter.m */,
+				79FCF8AD15A5C51900D98438 /* RKTextStylePDFConverter.h */,
+				79FCF8AE15A5C51900D98438 /* RKTextStylePDFConverter.m */,
+				79FCF8B115A5C52B00D98438 /* RKColorPDFConverter.h */,
+				79FCF8B215A5C52B00D98438 /* RKColorPDFConverter.m */,
+				79FCF8B515A5C54300D98438 /* RKLinkPDFConverter.h */,
+				79FCF8B615A5C54300D98438 /* RKLinkPDFConverter.m */,
+				79FCF8B915A5C55B00D98438 /* RKTextAttachmentPDFConverter.h */,
+				79FCF8BA15A5C55B00D98438 /* RKTextAttachmentPDFConverter.m */,
+				79FCF8BD15A5C5A100D98438 /* RKFootnotePDFConverter.h */,
+				79FCF8BE15A5C5A100D98438 /* RKFootnotePDFConverter.m */,
+				79FCF8C115A5C5B400D98438 /* RKListItemPDFConverter.h */,
+				79FCF8C215A5C5B400D98438 /* RKListItemPDFConverter.m */,
+				79FCF8C515A5C5CC00D98438 /* RKPlaceholderPDFConverter.h */,
+				79FCF8C615A5C5CD00D98438 /* RKPlaceholderPDFConverter.m */,
+			);
+			name = Converter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1087,6 +1275,28 @@
 				79CE4B18159A001B00C83EF6 /* RKListStyle+RKPersistence.h in Headers */,
 				79CE4B1A159A001B00C83EF6 /* RKPersistenceContext.h in Headers */,
 				79CE4B36159A020000C83EF6 /* NSAttributedString+RKPersistenceBackend.h in Headers */,
+				79FCF84615A5A72C00D98438 /* RKPDFWriter.h in Headers */,
+				79FCF86D15A5B05A00D98438 /* RKPDFRenderingContext.h in Headers */,
+				79FCF87115A5B4E400D98438 /* RKPDFTextObject.h in Headers */,
+				79FCF87D15A5B96200D98438 /* RKPDFImage.h in Headers */,
+				79FCF88515A5B9D700D98438 /* RKPDFFootnote.h in Headers */,
+				79FCF88915A5BA5400D98438 /* RKPDFPlaceholder.h in Headers */,
+				79FCF88D15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.h in Headers */,
+				79FCF89215A5C00400D98438 /* RKPDFTextRenderer.h in Headers */,
+				79FCF89E15A5C13F00D98438 /* RKPDFLinkRenderer.h in Headers */,
+				79FCF8A215A5C20B00D98438 /* RKPDFBackgroundColorRenderer.h in Headers */,
+				79FCF8A715A5C4BA00D98438 /* RKPDFRepresentationConverter.h in Headers */,
+				79FCF8AB15A5C4FA00D98438 /* RKParagraphStylePDFConverter.h in Headers */,
+				79FCF8AF15A5C51900D98438 /* RKTextStylePDFConverter.h in Headers */,
+				79FCF8B315A5C52C00D98438 /* RKColorPDFConverter.h in Headers */,
+				79FCF8B715A5C54300D98438 /* RKLinkPDFConverter.h in Headers */,
+				79FCF8BB15A5C55C00D98438 /* RKTextAttachmentPDFConverter.h in Headers */,
+				79FCF8BF15A5C5A100D98438 /* RKFootnotePDFConverter.h in Headers */,
+				79FCF8C315A5C5B500D98438 /* RKListItemPDFConverter.h in Headers */,
+				79FCF8C715A5C5CD00D98438 /* RKPlaceholderPDFConverter.h in Headers */,
+				79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilitites.h in Headers */,
+				79FCF8CF15A5CCB700D98438 /* RKSection+PDFUtilities.h in Headers */,
+				79FCF8D315A5CEE100D98438 /* NSAttributedString+PDFUtilities.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1313,6 +1523,28 @@
 				79CE4B13159A000C00C83EF6 /* RKListItem+RKPersistence.m in Sources */,
 				79CE4B19159A001B00C83EF6 /* RKListStyle+RKPersistence.m in Sources */,
 				79CE4B1B159A001B00C83EF6 /* RKPersistenceContext.m in Sources */,
+				79FCF84715A5A72C00D98438 /* RKPDFWriter.m in Sources */,
+				79FCF86E15A5B05A00D98438 /* RKPDFRenderingContext.m in Sources */,
+				79FCF87215A5B4E400D98438 /* RKPDFTextObject.m in Sources */,
+				79FCF87E15A5B96200D98438 /* RKPDFImage.m in Sources */,
+				79FCF88615A5B9D700D98438 /* RKPDFFootnote.m in Sources */,
+				79FCF88A15A5BA5400D98438 /* RKPDFPlaceholder.m in Sources */,
+				79FCF88E15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.m in Sources */,
+				79FCF89315A5C00400D98438 /* RKPDFTextRenderer.m in Sources */,
+				79FCF89F15A5C13F00D98438 /* RKPDFLinkRenderer.m in Sources */,
+				79FCF8A315A5C20B00D98438 /* RKPDFBackgroundColorRenderer.m in Sources */,
+				79FCF8A815A5C4BA00D98438 /* RKPDFRepresentationConverter.m in Sources */,
+				79FCF8AC15A5C4FA00D98438 /* RKParagraphStylePDFConverter.m in Sources */,
+				79FCF8B015A5C51900D98438 /* RKTextStylePDFConverter.m in Sources */,
+				79FCF8B415A5C52C00D98438 /* RKColorPDFConverter.m in Sources */,
+				79FCF8B815A5C54300D98438 /* RKLinkPDFConverter.m in Sources */,
+				79FCF8BC15A5C55C00D98438 /* RKTextAttachmentPDFConverter.m in Sources */,
+				79FCF8C015A5C5A100D98438 /* RKFootnotePDFConverter.m in Sources */,
+				79FCF8C415A5C5B500D98438 /* RKListItemPDFConverter.m in Sources */,
+				79FCF8C815A5C5CD00D98438 /* RKPlaceholderPDFConverter.m in Sources */,
+				79FCF8CC15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m in Sources */,
+				79FCF8D015A5CCB700D98438 /* RKSection+PDFUtilities.m in Sources */,
+				79FCF8D415A5CEE100D98438 /* NSAttributedString+PDFUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
