@@ -69,4 +69,24 @@
     return [[self lowerCaseAlphabeticNumeralsFromUnsignedInteger:number] uppercaseString];
 }
 
++ (NSString *)chicagoManualOfStyleNumeralsFromUnsignedInteger:(NSUInteger)number
+{
+    static NSArray *markers;
+    markers = @[@"*", @"†", @"‡", @"§"];
+    
+    if (number == 0)
+        return @"0";
+    
+    number -= 1;
+    
+    NSString *marker = markers[number % 4];
+    NSMutableString *numerals = [NSMutableString new];
+    
+    // The Chicago Manual of Style enumerates: *, †, ‡, §, **, ††, ...
+    while (number /= 4)
+        [numerals appendString: marker];
+    
+    return numerals;
+}
+
 @end

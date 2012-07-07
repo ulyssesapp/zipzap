@@ -11,7 +11,7 @@
 /*!
  @abstract Utility methods for PDF generation
  */
-@interface RKDocument (PDFUtilitites)
+@interface RKDocument (PDFUtilities)
 
 /*!
  @abstract Provides the media box for the PDF document according to the size constraints of the RKDocument.
@@ -37,5 +37,10 @@
  @abstract Provides a preliminiary bounding box for the footer of a section page
  */
 - (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section withHeight:(CGFloat)height;
+
+/*!
+ @abstract Generates a footnote marker for the given index according to the style setting
+ */
++ (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle;
 
 @end

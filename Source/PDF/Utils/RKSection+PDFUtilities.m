@@ -7,12 +7,30 @@
 //
 
 #import "RKSection+PDFUtilities.h"
+#import "NSString+RKNumberFormatting.h"
 
 @implementation RKSection (PDFUtilities)
 
-+ (RKSection *)sectionWithEndnotes:(NSArray *)endnotes
+- (NSString *)stringForPageNumber:(NSUInteger)pageNumber
 {
-    NSAssert(false, @"Not implemented yet");
+    switch (self.pageNumberingStyle) {
+        case RKPageNumberingAlphabeticLowerCase:
+            return [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: pageNumber];
+            
+        case RKPageNumberingAlphabeticUpperCase:
+            return [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: pageNumber];
+
+        case RKPageNumberingRomanLowerCase:
+            return [NSString lowerCaseRomanNumeralsFromUnsignedInteger: pageNumber];
+
+        case RKPageNumberingRomanUpperCase:
+            return [NSString upperCaseRomanNumeralsFromUnsignedInteger: pageNumber];
+            
+        case RKPageNumberingDecimal:
+            return [NSString stringWithFormat: @"%lu", pageNumber];
+    }
+    
+    NSAssert(false, @"Invalid page numbering style");
     return nil;
 }
 

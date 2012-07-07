@@ -98,15 +98,15 @@
 		796EAC5514D94894001E8401 /* RKTaggedStringTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC5214D94894001E8401 /* RKTaggedStringTest.m */; };
 		796EAC5814D9491B001E8401 /* RKAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAC5614D9491B001E8401 /* RKAttributeWriter.h */; };
 		796EAC5914D9491B001E8401 /* RKAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC5714D9491B001E8401 /* RKAttributeWriter.m */; };
+		7970958A15A71E7F00CE9DFA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7970958915A71E7F00CE9DFA /* CoreGraphics.framework */; };
+		7970958C15A71E8400CE9DFA /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7970958B15A71E8400CE9DFA /* CoreText.framework */; };
 		79717A31151A036C0016FB3E /* RKShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 79717A2E1519F88C0016FB3E /* RKShadow.m */; };
 		79717A32151A03960016FB3E /* RKShadowAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABB314D947D5001E8401 /* RKShadowAttributeWriter.m */; };
+		7972CD3E15A60A0100A87348 /* RKSection+PDFCoreTextConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 7972CD3C15A60A0100A87348 /* RKSection+PDFCoreTextConversion.h */; };
+		7972CD3F15A60A0100A87348 /* RKSection+PDFCoreTextConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7972CD3D15A60A0100A87348 /* RKSection+PDFCoreTextConversion.m */; };
 		797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 797DA1C914C97E05000DDAF3 /* RKSectionTest.m */; };
 		7987904F14D2E0320046F8AB /* RKTaggedString+TestExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */; };
 		799511EB15189F1500D82511 /* RKPortableAttributeNames-iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E76C5915176BFC0073153D /* RKPortableAttributeNames-iOS.m */; };
-		799511EF1518A22600D82511 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799511ED1518A21D00D82511 /* CoreText.framework */; };
-		799511F11518A24100D82511 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799511F01518A24100D82511 /* CoreGraphics.framework */; };
-		799511F21518A24D00D82511 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799511F01518A24100D82511 /* CoreGraphics.framework */; };
-		799511F31518A24D00D82511 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799511ED1518A21D00D82511 /* CoreText.framework */; };
 		799511F41518A3E600D82511 /* RKConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAC0114D947F6001E8401 /* RKConversion.h */; };
 		799511FB1518A74D00D82511 /* Test Data in Resources */ = {isa = PBXBuildFile; fileRef = 79A3597E14D024A80076A5F7 /* Test Data */; };
 		799512181518AFD500D82511 /* libRTFKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E76BE2151752330073153D /* libRTFKit.a */; };
@@ -135,8 +135,6 @@
 		79B148AC151A15E700F14200 /* RKTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B148A1151A11E500F14200 /* RKTextAttachment.m */; };
 		79B148AD151A15EA00F14200 /* RKTextAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 79B148A0151A11E500F14200 /* RKTextAttachment.h */; };
 		79B148AE151A15ED00F14200 /* RKShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 79717A2D1519F88C0016FB3E /* RKShadow.h */; };
-		79B148B0151A166F00F14200 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B148AF151A166F00F14200 /* UIKit.framework */; };
-		79B148B1151A167600F14200 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B148AF151A166F00F14200 /* UIKit.framework */; };
 		79B148B3151A281400F14200 /* RKPortableAttributeNames-iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 79E76C5815176BFC0073153D /* RKPortableAttributeNames-iOS.h */; };
 		79C486B314F1463400B29A1E /* RKStyleNameAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C486B114F1463400B29A1E /* RKStyleNameAttributeWriter.h */; };
 		79C486B414F1463400B29A1E /* RKStyleNameAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C486B214F1463400B29A1E /* RKStyleNameAttributeWriter.m */; };
@@ -288,8 +286,8 @@
 		79FCF8C415A5C5B500D98438 /* RKListItemPDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8C215A5C5B400D98438 /* RKListItemPDFConverter.m */; };
 		79FCF8C715A5C5CD00D98438 /* RKPlaceholderPDFConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C515A5C5CC00D98438 /* RKPlaceholderPDFConverter.h */; };
 		79FCF8C815A5C5CD00D98438 /* RKPlaceholderPDFConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8C615A5C5CD00D98438 /* RKPlaceholderPDFConverter.m */; };
-		79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilitites.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilitites.h */; };
-		79FCF8CC15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m */; };
+		79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilities.h */; };
+		79FCF8CC15A5CC4D00D98438 /* RKDocument+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilities.m */; };
 		79FCF8CF15A5CCB700D98438 /* RKSection+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8CD15A5CCB700D98438 /* RKSection+PDFUtilities.h */; };
 		79FCF8D015A5CCB700D98438 /* RKSection+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */; };
 		79FCF8D315A5CEE100D98438 /* NSAttributedString+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */; };
@@ -432,16 +430,18 @@
 		796EAC5214D94894001E8401 /* RKTaggedStringTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTaggedStringTest.m; path = Writer/Utils/RKTaggedStringTest.m; sourceTree = "<group>"; };
 		796EAC5614D9491B001E8401 /* RKAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAttributeWriter.h; path = "Writer/Attribute Writer/RKAttributeWriter.h"; sourceTree = "<group>"; };
 		796EAC5714D9491B001E8401 /* RKAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAttributeWriter.m; path = "Writer/Attribute Writer/RKAttributeWriter.m"; sourceTree = "<group>"; };
+		7970958915A71E7F00CE9DFA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7970958B15A71E8400CE9DFA /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		79717A2D1519F88C0016FB3E /* RKShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKShadow.h; path = Source/Document/Styles/RKShadow.h; sourceTree = SOURCE_ROOT; };
 		79717A2E1519F88C0016FB3E /* RKShadow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKShadow.m; path = Source/Document/Styles/RKShadow.m; sourceTree = SOURCE_ROOT; };
+		7972CD3C15A60A0100A87348 /* RKSection+PDFCoreTextConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSection+PDFCoreTextConversion.h"; path = "PDF/CoreText Conversion/RKSection+PDFCoreTextConversion.h"; sourceTree = "<group>"; };
+		7972CD3D15A60A0100A87348 /* RKSection+PDFCoreTextConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKSection+PDFCoreTextConversion.m"; path = "PDF/CoreText Conversion/RKSection+PDFCoreTextConversion.m"; sourceTree = "<group>"; };
 		797DA1C814C97E05000DDAF3 /* RKSectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSectionTest.h; path = Document/RKSectionTest.h; sourceTree = "<group>"; };
 		797DA1C914C97E05000DDAF3 /* RKSectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSectionTest.m; path = Document/RKSectionTest.m; sourceTree = "<group>"; };
 		7987903B14D1C1920046F8AB /* RKSectionWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSectionWriter+TestExtensions.h"; path = "Utils/RKSectionWriter+TestExtensions.h"; sourceTree = "<group>"; };
 		7987903D14D2BD220046F8AB /* RKParagraphStyleWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKParagraphStyleWriter+TestExtensions.h"; path = "Utils/RKParagraphStyleWriter+TestExtensions.h"; sourceTree = "<group>"; };
 		7987904D14D2DF7E0046F8AB /* RKTaggedString+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKTaggedString+TestExtensions.h"; path = "Utils/RKTaggedString+TestExtensions.h"; sourceTree = "<group>"; };
 		7987904E14D2E0310046F8AB /* RKTaggedString+TestExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKTaggedString+TestExtensions.m"; path = "Utils/RKTaggedString+TestExtensions.m"; sourceTree = "<group>"; };
-		799511ED1518A21D00D82511 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
-		799511F01518A24100D82511 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		79A3597E14D024A80076A5F7 /* Test Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Test Data"; sourceTree = "<group>"; };
 		79A359A314D1A3650076A5F7 /* RKSection+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSection+TestExtensions.h"; path = "Utils/RKSection+TestExtensions.h"; sourceTree = "<group>"; };
 		79A359A414D1A38C0076A5F7 /* RKHeaderWriter+TestExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKHeaderWriter+TestExtensions.h"; path = "Utils/RKHeaderWriter+TestExtensions.h"; sourceTree = "<group>"; };
@@ -463,7 +463,6 @@
 		79B148A1151A11E500F14200 /* RKTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachment.m; path = Source/Document/Styles/RKTextAttachment.m; sourceTree = SOURCE_ROOT; };
 		79B148A4151A14D400F14200 /* SenTestCase+RKTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SenTestCase+RKTestHelper.h"; path = "Utils/SenTestCase+RKTestHelper.h"; sourceTree = "<group>"; };
 		79B148A5151A14D400F14200 /* SenTestCase+RKTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SenTestCase+RKTestHelper.m"; path = "Utils/SenTestCase+RKTestHelper.m"; sourceTree = "<group>"; };
-		79B148AF151A166F00F14200 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		79B148B2151A27F400F14200 /* RKPortableAttributeNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RKPortableAttributeNames.h; path = Utils/RKPortableAttributeNames.h; sourceTree = "<group>"; };
 		79B148B4151A283400F14200 /* RKPortableAttributeNames-MacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RKPortableAttributeNames-MacOS.h"; path = "Utils/RKPortableAttributeNames-MacOS.h"; sourceTree = "<group>"; };
 		79C486B114F1463400B29A1E /* RKStyleNameAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStyleNameAttributeWriter.h; path = "Writer/Attribute Writer/Style Naming/RKStyleNameAttributeWriter.h"; sourceTree = "<group>"; };
@@ -564,8 +563,8 @@
 		79FCF8C215A5C5B400D98438 /* RKListItemPDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListItemPDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKListItemPDFConverter.m"; sourceTree = "<group>"; };
 		79FCF8C515A5C5CC00D98438 /* RKPlaceholderPDFConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPlaceholderPDFConverter.h; path = "PDF/CoreText Conversion/Converter/RKPlaceholderPDFConverter.h"; sourceTree = "<group>"; };
 		79FCF8C615A5C5CD00D98438 /* RKPlaceholderPDFConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPlaceholderPDFConverter.m; path = "PDF/CoreText Conversion/Converter/RKPlaceholderPDFConverter.m"; sourceTree = "<group>"; };
-		79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilitites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKDocument+PDFUtilitites.h"; path = "PDF/Utils/RKDocument+PDFUtilitites.h"; sourceTree = "<group>"; };
-		79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKDocument+PDFUtilitites.m"; path = "PDF/Utils/RKDocument+PDFUtilitites.m"; sourceTree = "<group>"; };
+		79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKDocument+PDFUtilities.h"; path = "PDF/Utils/RKDocument+PDFUtilities.h"; sourceTree = "<group>"; };
+		79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKDocument+PDFUtilities.m"; path = "PDF/Utils/RKDocument+PDFUtilities.m"; sourceTree = "<group>"; };
 		79FCF8CD15A5CCB700D98438 /* RKSection+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSection+PDFUtilities.h"; path = "PDF/Utils/RKSection+PDFUtilities.h"; sourceTree = "<group>"; };
 		79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKSection+PDFUtilities.m"; path = "PDF/Utils/RKSection+PDFUtilities.m"; sourceTree = "<group>"; };
 		79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+PDFUtilities.h"; path = "PDF/Utils/NSAttributedString+PDFUtilities.h"; sourceTree = "<group>"; };
@@ -577,6 +576,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7970958C15A71E8400CE9DFA /* CoreText.framework in Frameworks */,
+				7970958A15A71E7F00CE9DFA /* CoreGraphics.framework in Frameworks */,
 				50317D3B14C494C800F23C04 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -595,9 +596,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79B148B0151A166F00F14200 /* UIKit.framework in Frameworks */,
-				799511F11518A24100D82511 /* CoreGraphics.framework in Frameworks */,
-				799511EF1518A22600D82511 /* CoreText.framework in Frameworks */,
 				79E76BE4151752330073153D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,10 +604,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79B148B1151A167600F14200 /* UIKit.framework in Frameworks */,
 				799512181518AFD500D82511 /* libRTFKit.a in Frameworks */,
-				799511F21518A24D00D82511 /* CoreGraphics.framework in Frameworks */,
-				799511F31518A24D00D82511 /* CoreText.framework in Frameworks */,
 				79E76BF1151752330073153D /* SenTestingKit.framework in Frameworks */,
 				79E76BF4151752330073153D /* Foundation.framework in Frameworks */,
 			);
@@ -642,8 +637,8 @@
 		50317D3914C494C800F23C04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				799511F01518A24100D82511 /* CoreGraphics.framework */,
-				799511ED1518A21D00D82511 /* CoreText.framework */,
+				7970958815A71E6000CE9DFA /* iOS */,
+				7970958715A71E5A00CE9DFA /* MacOS */,
 				50317D3A14C494C800F23C04 /* Cocoa.framework */,
 				50317D4C14C494C800F23C04 /* SenTestingKit.framework */,
 				79E76BE3151752330073153D /* Foundation.framework */,
@@ -655,7 +650,6 @@
 		50317D3C14C494C800F23C04 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				79B148AF151A166F00F14200 /* UIKit.framework */,
 				50317D3D14C494C800F23C04 /* AppKit.framework */,
 				50317D3E14C494C800F23C04 /* CoreData.framework */,
 				50317D3F14C494C800F23C04 /* Foundation.framework */,
@@ -966,6 +960,22 @@
 			name = "Inline Styles";
 			sourceTree = "<group>";
 		};
+		7970958715A71E5A00CE9DFA /* MacOS */ = {
+			isa = PBXGroup;
+			children = (
+				7970958B15A71E8400CE9DFA /* CoreText.framework */,
+				7970958915A71E7F00CE9DFA /* CoreGraphics.framework */,
+			);
+			name = MacOS;
+			sourceTree = "<group>";
+		};
+		7970958815A71E6000CE9DFA /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		79A359A214D1A1D10076A5F7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -1130,6 +1140,8 @@
 				79FCF8A415A5C48900D98438 /* Converter */,
 				79FCF88B15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.h */,
 				79FCF88C15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.m */,
+				7972CD3C15A60A0100A87348 /* RKSection+PDFCoreTextConversion.h */,
+				7972CD3D15A60A0100A87348 /* RKSection+PDFCoreTextConversion.m */,
 			);
 			name = "Core Text Conversion";
 			sourceTree = "<group>";
@@ -1161,8 +1173,8 @@
 		79FCF86615A5AD6000D98438 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilitites.h */,
-				79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m */,
+				79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilities.h */,
+				79FCF8CA15A5CC4D00D98438 /* RKDocument+PDFUtilities.m */,
 				79FCF8CD15A5CCB700D98438 /* RKSection+PDFUtilities.h */,
 				79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */,
 				79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */,
@@ -1294,9 +1306,10 @@
 				79FCF8BF15A5C5A100D98438 /* RKFootnotePDFConverter.h in Headers */,
 				79FCF8C315A5C5B500D98438 /* RKListItemPDFConverter.h in Headers */,
 				79FCF8C715A5C5CD00D98438 /* RKPlaceholderPDFConverter.h in Headers */,
-				79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilitites.h in Headers */,
+				79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilities.h in Headers */,
 				79FCF8CF15A5CCB700D98438 /* RKSection+PDFUtilities.h in Headers */,
 				79FCF8D315A5CEE100D98438 /* NSAttributedString+PDFUtilities.h in Headers */,
+				7972CD3E15A60A0100A87348 /* RKSection+PDFCoreTextConversion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1542,9 +1555,10 @@
 				79FCF8C015A5C5A100D98438 /* RKFootnotePDFConverter.m in Sources */,
 				79FCF8C415A5C5B500D98438 /* RKListItemPDFConverter.m in Sources */,
 				79FCF8C815A5C5CD00D98438 /* RKPlaceholderPDFConverter.m in Sources */,
-				79FCF8CC15A5CC4D00D98438 /* RKDocument+PDFUtilitites.m in Sources */,
+				79FCF8CC15A5CC4D00D98438 /* RKDocument+PDFUtilities.m in Sources */,
 				79FCF8D015A5CCB700D98438 /* RKSection+PDFUtilities.m in Sources */,
 				79FCF8D415A5CEE100D98438 /* NSAttributedString+PDFUtilities.m in Sources */,
+				7972CD3F15A60A0100A87348 /* RKSection+PDFCoreTextConversion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

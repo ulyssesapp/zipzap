@@ -6,22 +6,14 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKDocument, RKPDFTextObject;
+@class RKDocument, RKPDFTextObject, RKSection;
 
-/*!
- @abstract Specifies enumeration options for text objects during PDF rendering
- @const
-    RKPDFRenderingEnumerateForPage          The enumeration index is relative to the number of text objects of the same class used in the currently rendered page. This index is newly calculated for each page. 
-                                            Requesting the index for the same text object on different pages might lead to different results.
- 
-    RKPDFRenderingEnumerateForSection       The enumeration index is relative to the number of text objects of the same class inside the section of the text object
-    RKPDFRenderingEnumerateForDocument      The enumeration index is relative to the number of text objects of the same class inside the current document
- */
 typedef enum : NSUInteger {
-    RKPDFRenderingEnumerateForPage          = 0,
-    RKPDFRenderingEnumerateForSection       = 1,
-    RKPDFRenderingEnumerateForDocument      = 2
-}RKPDFRenderingEnumerationPolicy;
+    RKNoteIndexForDocument          = 0,
+    RKNoteIndexForSection           = 1,
+    RKNoteIndexForPage              = 2    
+}RKNoteIndexType;
+
 
 /*!
  @abstract A context storing all information required during the PDF rendering
@@ -30,7 +22,7 @@ typedef enum : NSUInteger {
 
 /*!
  @abstract Initializes a new PDF context using a RTF document
- @discussion Creates a PDF context for the given document using the document meta data.
+ @discussion Creates a PDF context for the given document using the document meta data. The sections of the document are initially not added to the context.
  */
 - (id)initWithDocument:(RKDocument *)document;
 
@@ -59,7 +51,17 @@ typedef enum : NSUInteger {
 /*!
  @abstract The number of the currently rendered page
  */
+@property (nonatomic, readonly) NSUInteger currentSectionNumber;
+
+/*!
+ @abstract The number of the currently rendered page
+ */
 @property (nonatomic, readonly) NSUInteger currentPageNumber;
+
+/*!
+ @abstract The number of the currently rendered column
+ */
+@property (nonatomic, readonly) NSUInteger currentColumnNumber;
 
 /*!
  @abstract The number of the currently rendered page (using the requested string format of the current section)
@@ -67,58 +69,71 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong, readonly) NSString* stringForCurrentPageNumber;
 
 /*!
- @abstract The number of the currently rendered section
- */
-@property (nonatomic, strong, readonly) NSString* stringForCurrentSectionNumber;
-
-/*!
  @abstract The graphics context of the current rendering
  */
 @property (nonatomic, retain, readonly) __attribute__((NSObject)) CGContextRef pdfContext;
-
-/*!
- @abstract The footnote string that has not been rendered so far
- */
-@property (nonatomic, strong) NSAttributedString *remainingFootnotes;
 
 
 
 #pragma mark - Section managment
 
 /*!
- @abstract Adds an additional section to the rendering
+ @abstract Adds a section to the rendering
  */
 - (void)insertSection:(RKSection *)section atIndex:(NSUInteger)index;
 
+/*!
+ @abstract Adds a section to the rendering
+ */
+- (void)appendSection:(RKSection *)section;
 
 
-#pragma mark - Text object managment
+
+#pragma mark - Footnote managment
 
 /*!
- @abstract Registers a text object to the document for a certain section
+ @abstract All footnotes and endnotes that have been collected so far that should be shown on the end of the document
+ @discussion An array of dictionaries containing the attributed string of the footnote in core text representation (RKFootnoteContentKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
  */
-- (void)registerTextObject:(RKPDFTextObject *)textObject forSection:(RKSection *)section withEnumerationPolicy:(RKPDFRenderingEnumerationPolicy)enumerationPolicy;
+@property (nonatomic, strong, readonly) NSArray *documentNotes;
 
 /*!
- @abstract Provides the index of a text object
- @discussion Returns NSNotFound if the object is not registered.
+ @abstract All footnotes and endnotes that have been collected so far that should be shown on the end of the current section
+ @discussion An array of dictionaries containing the attributed string of the footnote in core text representation (RKFootnoteContentKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
  */
-- (NSUInteger)indexOfTextObject:(RKPDFTextObject *)textObject;
+@property (nonatomic, strong, readonly) NSArray *sectionNotes;
 
 /*!
- @abstract Returns a dictionary mapping from the indices of all text objects to such text object instance that have been registered for a certain section and page
+ @abstract All footnotes and endnotes that have been collected so far that should be shown on the end of the current page
+ @discussion An array of dictionaries containing the attributed string of the footnote in core text representation (RKFootnoteContentKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
  */
-- (NSDictionary *)textObjectsForAttributeName:(NSString *)attributeName section:(RKSection *)section page:(NSUInteger)page;
+@property (nonatomic, strong, readonly) NSArray *pageNotes;
 
 /*!
- @abstract Returns a dictionary mapping from the indices of all text objects to such text object instance that have been registered for a certain section
+ @abstract Requests an enumeration string for the given note with respect to the enumeration policy of the document, the current section and page
+ @discussion The note is registered either to the documentNotes, sectionNotes or pageNotes.
  */
-- (NSDictionary *)textObjectsForAttributeName:(NSString *)attributeName section:(RKSection *)section;
+- (NSString *)enumeratorForNote:(NSAttributedString *)note isFootnote:(BOOL)isFootnote;
 
 /*!
- @abstract Returns a dictionary mapping from the indices of all text objects to such text object instance that have been registered globally
+ @abstract Provides the index type for footnotes according to the document settings
  */
-- (NSDictionary *)textObjectsForAttributeName:(NSString *)attributeName;
+@property (nonatomic, readonly) RKNoteIndexType indexTypeForFootnotes;
+
+/*!
+ @abstract Provides the index type for endnotes according to the document settings
+ */
+@property (nonatomic, readonly) RKNoteIndexType indexTypeForEndnotes;
+
+
+
+
+#pragma mark - Footnote rendering support
+
+/*!
+ @abstract Truncates a range from the document note with the lowest index. If the note becomes empty, the note is removed from the dictionary
+ */
+- (void)truncateHeadOfNoteIndex:(RKNoteIndexType)noteIndexType toIndex:(NSUInteger)index;
 
 
 
