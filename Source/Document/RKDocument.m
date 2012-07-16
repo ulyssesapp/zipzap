@@ -31,18 +31,22 @@
         #if !TARGET_OS_IPHONE
             NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
 
-            self.pageSize = printInfo.paperSize;
-            self.pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
+            _pageSize = printInfo.paperSize;
+            _pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
         #elif TARGET_OS_IPHONE
-            self.pageSize = CGSizeMake(595, 842);
-            self.pageInsets = RKPageInsetsMake(90, 72, 72, 90);
+            _pageSize = CGSizeMake(595, 842);
+            _pageInsets = RKPageInsetsMake(90, 72, 72, 90);
         #endif
 
-        self.pageOrientation = RKPageOrientationPortrait;
-        self.hyphenationEnabled = NO;
+        _pageOrientation = RKPageOrientationPortrait;
+        _hyphenationEnabled = NO;
         
-        self.footnoteEnumerationPolicy = RKFootnoteEnumerationPerPage;
-        self.endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
+        _footnoteEnumerationPolicy = RKFootnoteEnumerationPerPage;
+        _endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
+
+        // Set header / footer spacing to RTF default
+        _headerSpacing = 36;
+        _footerSpacing = 36;
     }
     
     return self;
@@ -69,6 +73,9 @@
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
     
+    copy.headerSpacing = _headerSpacing;
+    copy.footerSpacing = _footerSpacing;
+    
     return copy;
 }
 
@@ -77,7 +84,7 @@
     self = [self init];
     
     if (self) {
-        self.sections = initialSections;
+        _sections = initialSections;
     }
     
     return self;

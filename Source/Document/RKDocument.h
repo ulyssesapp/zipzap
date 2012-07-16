@@ -75,6 +75,16 @@
 @property(nonatomic) CGSize pageSize;
 
 /*!
+ @abstract The distance from the top page border to the header in points
+ */
+@property(nonatomic) CGFloat headerSpacing;
+
+/*!
+ @abstract The distance from the bottom page border to the footer in points
+ */
+@property(nonatomic) CGFloat footerSpacing;
+
+/*!
  @abstract Page insets in points
  */
 @property(nonatomic) RKPageInsets pageInsets;
