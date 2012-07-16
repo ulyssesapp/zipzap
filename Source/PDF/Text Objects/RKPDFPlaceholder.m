@@ -47,7 +47,7 @@
             break;
             
         case RKPlaceholderSectionNumber:
-            placeholderValue = [NSString stringWithFormat: @"%lu", context.currentSectionNumber];
+            placeholderValue = [NSString stringWithFormat: @"%lu", context.currentSectionNumber+1];
             break;
             
         default:
