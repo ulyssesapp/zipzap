@@ -63,6 +63,7 @@
         
         _headers = [NSMutableDictionary new];
         _footers = [NSMutableDictionary new];
+        _columnSpacing = 36;
     }
     
     return self;
@@ -93,13 +94,48 @@
     copy.numberOfColumns = self.numberOfColumns;
     copy.indexOfFirstPage = self.indexOfFirstPage;
     copy.pageNumberingStyle = self.pageNumberingStyle;
+    copy.columnSpacing = self.columnSpacing;
     
     return copy;
 }
 
+- (BOOL)isEqual:(RKSection *)object
+{
+    if (![object isKindOfClass: RKSection.class])
+        return NO;
+    
+    // Compare headers
+    __block BOOL headersEqual = YES;
+    
+    [self enumerateHeadersUsingBlock:^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
+        headersEqual &= [header isEqual: [object headerForPage: (pageSelector == RKPageSelectorAll) ? RKPageSelectionFirst : pageSelector]];
+    }];
+    
+    if (!headersEqual)
+        return NO;
+
+    // Compare footer
+    __block BOOL footersEqual = YES;
+    
+    [self enumerateFootersUsingBlock:^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
+        footersEqual &= [footer isEqual: [object footerForPage: (pageSelector == RKPageSelectorAll) ? RKPageSelectionFirst : pageSelector]];
+    }];
+    
+    if (!footersEqual)
+        return NO;
+    
+    // Compare others
+    return  [self.content isEqual: object.content]
+        &&  (self.numberOfColumns == object.numberOfColumns)
+        &&  (self.indexOfFirstPage == object.indexOfFirstPage)
+        &&  (self.pageNumberingStyle == object.pageNumberingStyle)
+        &&  (self.columnSpacing == object.columnSpacing)
+    ;
+}
+
 - (id)initWithContent:(NSAttributedString *)initialContent
 {
-     NSAssert(initialContent != nil, @"Initial content string must not be nil");    
+     NSAssert(initialContent != nil, @"Initial content string must not be nil");
     
     self = [self init];
     

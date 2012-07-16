@@ -12,6 +12,8 @@
 		50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
+		7927539915B4B34B00E97B35 /* NSDictionary+FlagSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 7927539715B4B34B00E97B35 /* NSDictionary+FlagSerialization.h */; };
+		7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7927539815B4B34B00E97B35 /* NSDictionary+FlagSerialization.m */; };
 		792D68F514DEC823009FF3A4 /* SenTestCase+RKCocoaIntegrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 792D68F414DEC823009FF3A4 /* SenTestCase+RKCocoaIntegrationTest.m */; };
 		7934474B14F146ED00F5DEB6 /* RKStyleNameAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C486B614F1465100B29A1E /* RKStyleNameAttributeWriterTest.m */; };
 		7935615214DB3B1F00FC0C1C /* RKListStyle+FormatStringParserAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935615014DB3B1F00FC0C1C /* RKListStyle+FormatStringParserAdditions.h */; };
@@ -33,6 +35,11 @@
 		7935619814DC6DF000FC0C1C /* RKFootnoteWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935619714DC6DF000FC0C1C /* RKFootnoteWriterTest.m */; };
 		7935619B14DC6E1600FC0C1C /* RKFootnoteWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935619914DC6E1500FC0C1C /* RKFootnoteWriter.h */; };
 		7935619C14DC6E1600FC0C1C /* RKFootnoteWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935619A14DC6E1500FC0C1C /* RKFootnoteWriter.m */; };
+		7935C5E015B49B5A007281D6 /* RKSection+RKPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935C5DE15B49B5A007281D6 /* RKSection+RKPersistence.h */; };
+		7935C5E115B49B5A007281D6 /* RKSection+RKPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935C5DF15B49B5A007281D6 /* RKSection+RKPersistence.m */; };
+		7935C5E415B49B6C007281D6 /* RKDocument+RKPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935C5E215B49B6C007281D6 /* RKDocument+RKPersistence.h */; };
+		7935C5E515B49B6C007281D6 /* RKDocument+RKPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935C5E315B49B6C007281D6 /* RKDocument+RKPersistence.m */; };
+		7935C5E915B4A6C2007281D6 /* RKDocumentPersistenceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935C5E815B4A6C2007281D6 /* RKDocumentPersistenceTest.m */; };
 		79470FE7152C5AB900254072 /* RKListEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 79470FE5152C5AB900254072 /* RKListEnumerator.h */; };
 		79470FE8152C5AB900254072 /* RKListEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 79470FE6152C5AB900254072 /* RKListEnumerator.m */; };
 		79470FE9152C5C8800254072 /* RKListEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 79470FE6152C5AB900254072 /* RKListEnumerator.m */; };
@@ -333,6 +340,8 @@
 		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
 		50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RTFKitTests-Info.plist"; sourceTree = "<group>"; };
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
+		7927539715B4B34B00E97B35 /* NSDictionary+FlagSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+FlagSerialization.h"; path = "Persistency/Utils/NSDictionary+FlagSerialization.h"; sourceTree = "<group>"; };
+		7927539815B4B34B00E97B35 /* NSDictionary+FlagSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+FlagSerialization.m"; path = "Persistency/Utils/NSDictionary+FlagSerialization.m"; sourceTree = "<group>"; };
 		792D68F314DEC823009FF3A4 /* SenTestCase+RKCocoaIntegrationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "SenTestCase+RKCocoaIntegrationTest.h"; path = "Utils/SenTestCase+RKCocoaIntegrationTest.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		792D68F414DEC823009FF3A4 /* SenTestCase+RKCocoaIntegrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SenTestCase+RKCocoaIntegrationTest.m"; path = "Utils/SenTestCase+RKCocoaIntegrationTest.m"; sourceTree = "<group>"; };
 		7935615014DB3B1F00FC0C1C /* RKListStyle+FormatStringParserAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKListStyle+FormatStringParserAdditions.h"; path = "Writer/Utils/RKListStyle+FormatStringParserAdditions.h"; sourceTree = "<group>"; };
@@ -359,6 +368,13 @@
 		7935619714DC6DF000FC0C1C /* RKFootnoteWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = RKFootnoteWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKFootnoteWriterTest.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		7935619914DC6E1500FC0C1C /* RKFootnoteWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootnoteWriter.h; path = "Writer/Attribute Writer/Attachments/RKFootnoteWriter.h"; sourceTree = "<group>"; };
 		7935619A14DC6E1500FC0C1C /* RKFootnoteWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootnoteWriter.m; path = "Writer/Attribute Writer/Attachments/RKFootnoteWriter.m"; sourceTree = "<group>"; };
+		7935C5DE15B49B5A007281D6 /* RKSection+RKPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKSection+RKPersistence.h"; path = "Persistency/RKSection+RKPersistence.h"; sourceTree = "<group>"; };
+		7935C5DF15B49B5A007281D6 /* RKSection+RKPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKSection+RKPersistence.m"; path = "Persistency/RKSection+RKPersistence.m"; sourceTree = "<group>"; };
+		7935C5E215B49B6C007281D6 /* RKDocument+RKPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKDocument+RKPersistence.h"; path = "Persistency/RKDocument+RKPersistence.h"; sourceTree = "<group>"; };
+		7935C5E315B49B6C007281D6 /* RKDocument+RKPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKDocument+RKPersistence.m"; path = "Persistency/RKDocument+RKPersistence.m"; sourceTree = "<group>"; };
+		7935C5E615B4A12E007281D6 /* RKPersistenceContext+PrivateStorageAccessors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RKPersistenceContext+PrivateStorageAccessors.h"; path = "Persistency/Context/RKPersistenceContext+PrivateStorageAccessors.h"; sourceTree = "<group>"; };
+		7935C5E715B4A6C2007281D6 /* RKDocumentPersistenceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentPersistenceTest.h; path = Persistency/RKDocumentPersistenceTest.h; sourceTree = "<group>"; };
+		7935C5E815B4A6C2007281D6 /* RKDocumentPersistenceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocumentPersistenceTest.m; path = Persistency/RKDocumentPersistenceTest.m; sourceTree = "<group>"; };
 		7936184114E2C44C00FB08E7 /* RKTextListWriterAdditions+TextExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKTextListWriterAdditions+TextExtensions.h"; path = "Utils/RKTextListWriterAdditions+TextExtensions.h"; sourceTree = "<group>"; };
 		79470FE5152C5AB900254072 /* RKListEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListEnumerator.h; path = Utils/RKListEnumerator.h; sourceTree = "<group>"; };
 		79470FE6152C5AB900254072 /* RKListEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListEnumerator.m; path = Utils/RKListEnumerator.m; sourceTree = "<group>"; };
@@ -727,6 +743,15 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
+		7927539115B4B2CD00E97B35 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7927539715B4B34B00E97B35 /* NSDictionary+FlagSerialization.h */,
+				7927539815B4B34B00E97B35 /* NSDictionary+FlagSerialization.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		7935613614DAF74200FC0C1C /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1051,11 +1076,16 @@
 		79CE4A4E1599D8A700C83EF6 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				7935C5E215B49B6C007281D6 /* RKDocument+RKPersistence.h */,
+				7935C5E315B49B6C007281D6 /* RKDocument+RKPersistence.m */,
+				7935C5DE15B49B5A007281D6 /* RKSection+RKPersistence.h */,
+				7935C5DF15B49B5A007281D6 /* RKSection+RKPersistence.m */,
 				79CE4AE61599FFDF00C83EF6 /* NSAttributedString+RKPersistence.h */,
 				79CE4AE71599FFE000C83EF6 /* NSAttributedString+RKPersistence.m */,
 				79CE4AE81599FFE200C83EF6 /* RKPersistence.h */,
 				79CE4A791599E3D300C83EF6 /* Attribute Values */,
 				79CE4A9E1599E41600C83EF6 /* Context */,
+				7927539115B4B2CD00E97B35 /* Utils */,
 			);
 			name = Persistence;
 			sourceTree = "<group>";
@@ -1093,6 +1123,7 @@
 			children = (
 				79CE4B16159A001B00C83EF6 /* RKPersistenceContext.h */,
 				79CE4B17159A001B00C83EF6 /* RKPersistenceContext.m */,
+				7935C5E615B4A12E007281D6 /* RKPersistenceContext+PrivateStorageAccessors.h */,
 				79CE4B14159A001B00C83EF6 /* RKListStyle+RKPersistence.h */,
 				79CE4B15159A001B00C83EF6 /* RKListStyle+RKPersistence.m */,
 			);
@@ -1104,6 +1135,8 @@
 			children = (
 				79CE4AE31599FFBA00C83EF6 /* NSAttributedStringPersistenceTest.h */,
 				79CE4AE41599FFBA00C83EF6 /* NSAttributedStringPersistenceTest.m */,
+				7935C5E715B4A6C2007281D6 /* RKDocumentPersistenceTest.h */,
+				7935C5E815B4A6C2007281D6 /* RKDocumentPersistenceTest.m */,
 			);
 			name = Persistence;
 			sourceTree = "<group>";
@@ -1355,6 +1388,9 @@
 				796C958D15ACA5B200713471 /* RKAnchorRenderer.h in Headers */,
 				796C959115ACA60300713471 /* RKAnchorLinkRenderer.h in Headers */,
 				796C959515AD6F2200713471 /* RKPDFFrame.h in Headers */,
+				7935C5E015B49B5A007281D6 /* RKSection+RKPersistence.h in Headers */,
+				7935C5E415B49B6C007281D6 /* RKDocument+RKPersistence.h in Headers */,
+				7927539915B4B34B00E97B35 /* NSDictionary+FlagSerialization.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1609,6 +1645,9 @@
 				796C958E15ACA5B200713471 /* RKAnchorRenderer.m in Sources */,
 				796C959215ACA60300713471 /* RKAnchorLinkRenderer.m in Sources */,
 				796C959615AD6F2200713471 /* RKPDFFrame.m in Sources */,
+				7935C5E115B49B5A007281D6 /* RKSection+RKPersistence.m in Sources */,
+				7935C5E515B49B6C007281D6 /* RKDocument+RKPersistence.m in Sources */,
+				7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1650,6 +1689,7 @@
 				79B148A8151A14D700F14200 /* SenTestCase+RKTestHelper.m in Sources */,
 				79A55278152C607B008EADAB /* RKListEnumeratorTest.m in Sources */,
 				79CE4AE51599FFBA00C83EF6 /* NSAttributedStringPersistenceTest.m in Sources */,
+				7935C5E915B4A6C2007281D6 /* RKDocumentPersistenceTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -88,4 +88,9 @@
  */
 @property(nonatomic) RKPageNumberingStyle pageNumberingStyle;
 
+/*!
+ @abstract Column spacing in points
+ */
+@property(nonatomic) CGFloat columnSpacing;
+
 @end

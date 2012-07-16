@@ -8,6 +8,7 @@
 
 #import "NSTextAttachment+RKPersistence.h"
 #import "RKPersistenceContext.h"
+#import "RKPersistenceContext+PrivateStorageAccessors.h"
 
 NSString *NSTextAttachmentFileIndexPersistenceKey = @"fileIdentifier";
 

@@ -7,7 +7,7 @@
 //
 
 #import "RKListItem+RKPersistence.h"
-#import "RKPersistenceContext.h"
+#import "RKPersistenceContext+PrivateStorageAccessors.h"
 
 NSString *RKListItemListStyleIndexPersistenceKey = @"listStyle";
 NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";

@@ -69,14 +69,41 @@
     copy.endnoteEnumerationStyle = _endnoteEnumerationStyle;
     copy.footnoteEnumerationPolicy = _footnoteEnumerationPolicy;
     copy.endnoteEnumerationPolicy = _endnoteEnumerationPolicy;
+    copy.headerSpacing = _headerSpacing;
+    copy.footerSpacing = _footerSpacing;
 
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
     
-    copy.headerSpacing = _headerSpacing;
-    copy.footerSpacing = _footerSpacing;
-    
     return copy;
+}
+
+- (BOOL)isEqual:(RKDocument*)object
+{
+    if (![object isKindOfClass: RKDocument.class])
+        return false;
+    
+    return      [self.sections isEqual: object.sections]
+            &&  [self.metadata isEqual: object.metadata]
+            &&  [self.paragraphStyles isEqual: object.paragraphStyles]
+            &&  [self.characterStyles isEqual: object.characterStyles]    
+            &&  (self.hyphenationEnabled == object.hyphenationEnabled)
+            &&  (self.pageSize.width == object.pageSize.width)
+            &&  (self.pageSize.height == object.pageSize.height)
+            &&  (self.pageInsets.top == object.pageInsets.top)
+            &&  (self.pageInsets.left == object.pageInsets.left)
+            &&  (self.pageInsets.right == object.pageInsets.right)
+            &&  (self.pageInsets.bottom == object.pageInsets.bottom)
+            &&  (self.pageOrientation == object.pageOrientation)
+            &&  (self.footnotePlacement == object.footnotePlacement)
+            &&  (self.endnotePlacement == object.endnotePlacement)
+            &&  (self.footnoteEnumerationStyle == object.footnoteEnumerationStyle)
+            &&  (self.endnoteEnumerationStyle == object.endnoteEnumerationStyle)
+            &&  (self.footnoteEnumerationPolicy == object.footnoteEnumerationPolicy)
+            &&  (self.endnoteEnumerationPolicy == object.endnoteEnumerationPolicy)
+            &&  (self.headerSpacing == object.headerSpacing)
+            &&  (self.footerSpacing == object.footerSpacing)    
+    ;
 }
 
 - (id)initWithSections:(NSArray *)initialSections

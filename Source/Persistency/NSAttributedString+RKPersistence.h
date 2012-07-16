@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+@class RKPersistenceContext;
+
 /*!
  @abstract Allows to serialize an attributed string that uses RTFKit features to a property list
  */
@@ -36,5 +38,17 @@
  @discussion Serializes all attributes as specified by 'persistableAttributeTypes'.
  */
 - (id)RTFKitPropertyListRepresentation;
+
+/*!
+ @abstract Creates an attribute dictionary from its property list representation
+ @discussion A persistence context must be provided that serializes additional data for certain attributes.
+ */
++ (NSDictionary *)attributeDictionaryFromRTFKitPropertyListRepresentation:(id)serializedAttributes usingContext:(RKPersistenceContext *)context error:(NSError **)error;
+
+/*!
+ @abstract Serializes an attribute dictionary to its property list representation
+ @discussion A persistence context must be provided that serializes additional data for certain attributes.
+ */
++ (id)RTFKitPropertyListRepresentationForAttributeDictionary:(NSDictionary *)attributes usingContext:(RKPersistenceContext *)context;
 
 @end

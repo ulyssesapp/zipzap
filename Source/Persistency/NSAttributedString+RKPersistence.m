@@ -143,8 +143,6 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
 
 + (NSAttributedString *)instanceWithRTFKitPropertyListRepresentation:(id)propertyList usingContext:(RKPersistenceContext *)context error:(NSError **)error
 {
-    NSDictionary *persistableAttributeTypes = self.persistableAttributeTypes;
-    
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
     
     // Get data from property list
@@ -158,28 +156,39 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
     for (NSDictionary *attributesForRange in attributesForRanges)
     {
         NSDictionary *rangeDescriptor = attributesForRange[RKPersistenceAttributeRangeKey];
-        NSDictionary *attributes = attributesForRange[RKPersistenceAttributeValuesKey];
+        NSDictionary *serializedAttributes = attributesForRange[RKPersistenceAttributeValuesKey];
         
         NSRange attributeRange = NSMakeRange([rangeDescriptor[RKPersistenceRangeLocationKey] unsignedIntegerValue], [rangeDescriptor[RKPersistenceRangeLengthKey] unsignedIntegerValue]);
         
-        [attributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id<RKPersistence> serializedAttributeValue, BOOL *stop) {
-            // Get handler class for attribute
-            Class handlerClass = [persistableAttributeTypes objectForKey: attributeName];
-            NSParameterAssert([handlerClass conformsToProtocol: @protocol(RKPersistence)]);
-            
-            // Translate attribute value
-            id attributeValue = [handlerClass instanceWithRTFKitPropertyListRepresentation:serializedAttributeValue usingContext:context error:error];
-            if (!attributeValue) {
-                *stop = YES;
-                return;
-            }
-            
-            // Setup attributed string
-            [attributedString addAttribute:attributeName value:attributeValue range:attributeRange];
-        }];
+        NSDictionary *deserializedAttributes = [self.class attributeDictionaryFromRTFKitPropertyListRepresentation:serializedAttributes usingContext:context error:error];
+        [attributedString addAttributes:deserializedAttributes range:attributeRange];
     }
     
     return attributedString;
+}
+
++ (NSDictionary *)attributeDictionaryFromRTFKitPropertyListRepresentation:(id)serializedAttributes usingContext:(RKPersistenceContext *)context error:(NSError **)error
+{
+    NSDictionary *persistableAttributeTypes = self.persistableAttributeTypes;
+    NSMutableDictionary *deserializedAttributes = [NSMutableDictionary new];
+    
+    [serializedAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id<RKPersistence> serializedAttributeValue, BOOL *stop) {
+        // Get handler class for attribute
+        Class handlerClass = [persistableAttributeTypes objectForKey: attributeName];
+        NSParameterAssert([handlerClass conformsToProtocol: @protocol(RKPersistence)]);
+        
+        // Translate attribute value
+        id attributeValue = [handlerClass instanceWithRTFKitPropertyListRepresentation:serializedAttributeValue usingContext:context error:error];
+        if (!attributeValue) {
+            *stop = YES;
+            return;
+        }
+        
+        // Setup attributed string
+        [deserializedAttributes setObject:attributeValue forKey:attributeName];
+    }];
+    
+    return deserializedAttributes;
 }
 
 
@@ -188,32 +197,11 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
 
 - (NSDictionary *)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
-    NSDictionary *persistableAttributeTypes = self.class.persistableAttributeTypes;
     NSMutableArray *attributesForRanges = [NSMutableArray new];
     
     [self enumerateAttributesInRange:NSMakeRange(0, self.length) options:0 usingBlock:^(NSDictionary *attributes, NSRange range, BOOL *stop) {
         // Translate attributes in range
-        NSMutableDictionary *translatedAttributes = [NSMutableDictionary new];
-        
-        [attributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeKey, id attributeValue, BOOL *stop) {
-            // Ignore nil values
-            if (!attributeValue)
-                return;
-            
-            // Ignore not supported attributes
-            if (![persistableAttributeTypes objectForKey: attributeKey])
-                return;
-            
-            // Only accept valid types
-            // There is one special case hardcoded here: NSLinkAttributeName may be NSString or NSURL.
-            NSParameterAssert([attributeValue isKindOfClass: [persistableAttributeTypes objectForKey: attributeKey]] || ([attributeKey isEqual: NSLinkAttributeName] && [attributeValue isKindOfClass: NSString.class]));
-            
-            // Translate the attribute value
-            NSParameterAssert ([attributeValue conformsToProtocol: @protocol(RKPersistence)]);
-            
-            id serializedAttributeValue = [attributeValue RTFKitPropertyListRepresentationUsingContext: context];
-            [translatedAttributes setObject:serializedAttributeValue forKey:attributeKey];
-        }];
+        NSMutableDictionary *translatedAttributes = [self.class RTFKitPropertyListRepresentationForAttributeDictionary:attributes usingContext:context];
         
         // Create descriptor for attributes in range
         NSDictionary *attributeRange = @{ RKPersistenceRangeLocationKey: @(range.location), RKPersistenceRangeLengthKey: @(range.length) };
@@ -230,6 +218,35 @@ NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
         RKPersistenceStringContentKey:      self.string,
         RKPersistenceAttributeRangesKey:    attributesForRanges
     };
+}
+
++ (id)RTFKitPropertyListRepresentationForAttributeDictionary:(NSDictionary *)attributes usingContext:(RKPersistenceContext *)context
+{
+    NSMutableDictionary *translatedAttributes = [NSMutableDictionary new];
+    NSDictionary *persistableAttributeTypes = self.persistableAttributeTypes;
+    
+    [attributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeKey, id attributeValue, BOOL *stop) {
+        // Ignore nil values
+        if (!attributeValue)
+            return;
+        
+        // Ignore not supported attributes
+        if (![persistableAttributeTypes objectForKey: attributeKey])
+            return;
+        
+        // Only accept valid types
+        // There is one special case hardcoded here: NSLinkAttributeName may be NSString or NSURL.
+        NSParameterAssert([attributeValue isKindOfClass: [persistableAttributeTypes objectForKey: attributeKey]] || ([attributeKey isEqual: NSLinkAttributeName] && [attributeValue isKindOfClass: NSString.class]));
+        
+        // Translate the attribute value
+        NSParameterAssert ([attributeValue conformsToProtocol: @protocol(RKPersistence)]);
+        
+        id serializedAttributeValue = [attributeValue RTFKitPropertyListRepresentationUsingContext: context];
+        if (serializedAttributeValue)
+            [translatedAttributes setObject:serializedAttributeValue forKey:attributeKey];
+    }];
+    
+    return translatedAttributes;
 }
 
 @end
