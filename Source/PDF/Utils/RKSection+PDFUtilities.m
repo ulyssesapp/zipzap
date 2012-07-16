@@ -7,6 +7,8 @@
 //
 
 #import "RKSection+PDFUtilities.h"
+#import "RKPDFRenderingContext.h"
+
 #import "NSString+RKNumberFormatting.h"
 
 @implementation RKSection (PDFUtilities)
@@ -32,6 +34,17 @@
     
     NSAssert(false, @"Invalid page numbering style");
     return nil;
+}
+
+- (RKPageSelectionMask)pageSelectorForContext:(RKPDFRenderingContext *)renderingContext
+{
+    if (renderingContext.pageNumberOfCurrentSection == 0)
+        return RKPageSelectionFirst;
+
+    if (renderingContext.currentPageNumber % 2)
+        return RKPageSelectionRight;
+    else
+        return RKPageSelectionLeft;
 }
 
 @end

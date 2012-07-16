@@ -20,7 +20,7 @@
 
 /*!
  @abstract Generates a representation required for PDF conversion using a PDF rendering context.
- @discussion Calls the appropriate RKPDFRepresentationConverter classes.
+ @discussion Calls the appropriate RKCoreTextRepresentationConverter classes.
  */
 - (NSAttributedString *)coreTextRepresentationUsingContext:(RKPDFRenderingContext *)context;
 

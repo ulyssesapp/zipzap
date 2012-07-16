@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKDocument, RKPDFTextObject, RKSection;
+@class RKDocument, RKPDFTextObject, RKSection, RKListEnumerator;
 
 typedef enum : NSUInteger {
     RKNoteIndexForDocument          = 0,
@@ -54,9 +54,14 @@ typedef enum : NSUInteger {
 @property (nonatomic, readonly) NSUInteger currentSectionNumber;
 
 /*!
- @abstract The number of the currently rendered page
+ @abstract The number of the currently rendered page (document wide)
  */
 @property (nonatomic, readonly) NSUInteger currentPageNumber;
+
+/*!
+ @abstract The number of the currently rendered page (for current section)
+ */
+@property (nonatomic, readonly) NSUInteger pageNumberOfCurrentSection;
 
 /*!
  @abstract The number of the currently rendered column
@@ -73,6 +78,15 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, retain, readonly) __attribute__((NSObject)) CGContextRef pdfContext;
 
+#if TARGET_OS_MAC
+
+/*!
+ @abstract The graphics context of the current rendering as NSGraphicsContext
+ */
+@property (nonatomic, retain, readonly) __attribute__((NSObject)) NSGraphicsContext *nsPdfContext;
+
+
+#endif
 
 
 #pragma mark - Section managment
@@ -135,6 +149,14 @@ typedef enum : NSUInteger {
  */
 - (void)truncateHeadOfNoteIndex:(RKNoteIndexType)noteIndexType toIndex:(NSUInteger)index;
 
+
+
+#pragma mark - List rendering
+
+/*!
+ @abstract A list enumerator used to keep track over list styles and their enumeration states
+ */
+@property (nonatomic, strong, readonly) RKListEnumerator *listEnumerator;
 
 
 #pragma mark - Page context

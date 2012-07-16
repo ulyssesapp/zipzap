@@ -24,19 +24,24 @@
 - (NSDictionary *)pdfMetadata;
 
 /*!
+ @abstract Provides the bounding box that can be used for content according to the page insets of a document
+ */
+- (CGRect)boundingBoxForContent;
+
+/*!
  @abstract Provides a bounding box for a column with a certain height
  */
-- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeight:(CGFloat)height;
+- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGSize)header footer:(CGSize)footer;
 
 /*!
  @abstract Provides a bounding box for the header of a section page
  */
-- (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section withHeight:(CGFloat)height;
+- (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section;
 
 /*!
  @abstract Provides a preliminiary bounding box for the footer of a section page
  */
-- (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section withHeight:(CGFloat)height;
+- (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section;
 
 /*!
  @abstract Generates a footnote marker for the given index according to the style setting

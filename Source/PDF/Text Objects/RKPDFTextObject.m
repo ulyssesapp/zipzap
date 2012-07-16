@@ -10,34 +10,15 @@
 
 @implementation RKPDFTextObject
 
-+ (NSString *)attributeName
+- (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
 {
-    NSAssert(false, @"Abstract method called");
-    return nil;
-}
-
-- (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex
-{
-    NSAssert(false, @"Abstract method called");
     return;
 }
 
-- (CGFloat)widthUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex
+- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex
 {
     NSAssert(false, @"Abstract method called");
-    return 0;
-}
-
-- (CGFloat)lineAscentUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex
-{
-    NSAssert(false, @"Abstract method called");
-    return 0;
-}
-
-- (CGFloat)lineDescentUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex
-{
-    NSAssert(false, @"Abstract method called");
-    return 0;
+    return nil;
 }
 
 @end

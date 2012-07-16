@@ -8,17 +8,28 @@
 
 #import "RKSection+PDFCoreTextConversion.h"
 
-@implementation RKSection (PDFCoreTextConversion)
+#import "NSAttributedString+PDFCoreTextConversion.h"
 
-+ (void)registerConverter:(Class)converter
-{
-    NSAssert(false, @"Not implemented yet");
-}
+@implementation RKSection (PDFCoreTextConversion)
 
 - (RKSection *)coreTextRepresentationUsingContext:(RKPDFRenderingContext *)context
 {
-    NSAssert(false, @"Not implemented yet");
-    return nil;
+    RKSection *convertedSection = [self copy];
+    
+    // Convert content
+    convertedSection.content = [self.content coreTextRepresentationUsingContext: context];
+    
+    // Convert header
+    [self enumerateHeadersUsingBlock:^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
+        [convertedSection setHeader:[header coreTextRepresentationUsingContext: context] forPages:pageSelector];
+    }];
+    
+    // Convert footer
+    [self enumerateFootersUsingBlock:^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
+        [convertedSection setFooter:[footer coreTextRepresentationUsingContext: context] forPages:pageSelector];
+    }];
+    
+    return convertedSection;
 }
 
 @end

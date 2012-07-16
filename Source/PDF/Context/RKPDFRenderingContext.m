@@ -10,6 +10,7 @@
 #import "RKDocument+PDFUtilities.h"
 #import "RKSection+PDFUtilities.h"
 #import "RKPDFTextObject.h"
+#import "RKListEnumerator.h"
 
 #import "NSAttributedString+PDFUtilities.h"
 
@@ -33,6 +34,10 @@
     // Note counters
     NSUInteger _footnoteCounter;
     NSUInteger _endnoteCounter;
+    
+    // The graphics context
+    CGContextRef _pdfContext;
+    NSGraphicsContext *nsPdfContext;
 }
 
 @end
@@ -40,7 +45,7 @@
 
 @implementation RKPDFRenderingContext
 
-@synthesize sections=_sections, documentNotes=_documentNotes, sectionNotes=_sectionNotes, pageNotes=_pageNotes;
+@synthesize sections=_sections, documentNotes=_documentNotes, sectionNotes=_sectionNotes, pageNotes=_pageNotes, nsPdfContext=_nsPdfContext, pdfContext=_pdfContext;
 
 - (id)initWithDocument:(RKDocument *)document
 {
@@ -54,24 +59,33 @@
     CGRect mediaBox = document.pdfMediaBox;
     
     _pdfContext = CGPDFContextCreate(dataConsumer, &mediaBox, (__bridge CFDictionaryRef)document.pdfMetadata);
+    #if TARGET_OS_MAC
+    _nsPdfContext = [NSGraphicsContext graphicsContextWithGraphicsPort:_pdfContext flipped:NO];
+    #endif
     
     // Initialize other references
     _document = document;
-    _sections = [document.sections mutableCopy];
+    _sections = [NSMutableArray new];
 
-    _currentSectionNumber = NSNotFound;
-    _currentPageNumber = NSNotFound;
-    _currentColumnNumber = NSNotFound;
+    _currentSectionNumber = NSUIntegerMax;
+    _currentPageNumber = NSUIntegerMax;
+    _currentColumnNumber = NSUIntegerMax;
+    _pageNumberOfCurrentSection = NSUIntegerMax;
     
     _documentNotes = [NSMutableArray new];
     _sectionNotes = [NSMutableArray new];
     _pageNotes = [NSMutableArray new];
+    
+    _listEnumerator = [RKListEnumerator new];
     
     return self;
 }
 
 - (NSData *)close
 {
+    if (_pageNumberOfCurrentSection != NSUIntegerMax)
+        CGPDFContextEndPage(_pdfContext);
+    
     CGPDFContextClose(_pdfContext);
     return _pdfData;
 }
@@ -104,12 +118,8 @@
 
 - (void)nextSection
 {
-    // End current page
-    if (_currentSectionNumber != NSNotFound)
-        CGPDFContextEndPage(_pdfContext);
-
     // Update page and section counter
-    _currentPageNumber = NSNotFound;
+    _pageNumberOfCurrentSection = NSUIntegerMax;
     _currentSectionNumber ++;
     
     // Reset footnote counter, if required
@@ -123,14 +133,17 @@
 
 - (void)startNewPage
 {
-    NSAssert(self.currentSectionNumber != NSNotFound, @"No section entered");
+    NSAssert(self.currentSectionNumber != NSUIntegerMax, @"No section entered");
 
     // End current page
-    if (_currentPageNumber != NSNotFound)
+    if (_currentPageNumber != NSUIntegerMax)
         CGPDFContextEndPage(_pdfContext);
     // Reset page counter if no page was ended
     else
         _currentPageNumber = 0;
+    
+    if (_pageNumberOfCurrentSection == NSUIntegerMax)
+        _pageNumberOfCurrentSection = 0;
     
     // Start new page
     CGRect mediaBox = _document.pdfMediaBox;
@@ -140,7 +153,8 @@
     
     // Update page counter
     _currentPageNumber ++;
-    _currentColumnNumber = NSNotFound;
+    _pageNumberOfCurrentSection ++;
+    _currentColumnNumber = NSUIntegerMax;
     
     // Reset footnote counter, if required
     if (self.document.footnoteEnumerationPolicy == RKFootnoteEnumerationPerPage)
@@ -153,9 +167,9 @@
 
 - (BOOL)startNewColumn
 {
-    NSAssert(self.currentSectionNumber != NSNotFound, @"No section entered");
+    NSAssert(self.currentSectionNumber != NSUIntegerMax, @"No section entered");
     
-    if (_currentColumnNumber == NSNotFound) {
+    if (_currentColumnNumber == NSUIntegerMax) {
         _currentColumnNumber = 0;
         return YES;
     }

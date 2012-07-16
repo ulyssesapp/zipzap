@@ -37,6 +37,11 @@
  */
 - (BOOL)hasSingleObjectForAllPagesInDictionary:(NSDictionary *)map;
 
+/*!
+ @abstract Enumerates all objects according to their page selectors
+ */
+- (void)enumerateObjectsInPageSetting:(NSMutableDictionary *)dictionary usingBlock:(void(^)(RKPageSelectionMask pageSelector, id object))block;
+
 @end
 
 
@@ -122,6 +127,11 @@
     return [self hasSingleObjectForAllPagesInDictionary: _headers];
 }
 
+- (void)enumerateHeadersUsingBlock:(void (^)(RKPageSelectionMask, NSAttributedString *))block
+{
+    [self enumerateObjectsInPageSetting:_headers usingBlock:block];
+}
+
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
 {
     return [self objectForPage:pageMask fromDictionary:_footers];
@@ -136,6 +146,12 @@
 {
     return [self hasSingleObjectForAllPagesInDictionary: _footers];
 }
+
+- (void)enumerateFootersUsingBlock:(void (^)(RKPageSelectionMask, NSAttributedString *))block
+{
+    [self enumerateObjectsInPageSetting:_footers usingBlock:block];
+}
+
 
 #pragma mark -
 
@@ -179,6 +195,18 @@
     return (    (([self objectForPage:RKPageSelectionLeft fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
              && (([self objectForPage:RKPageSelectionFirst fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
            );
+}
+
+- (void)enumerateObjectsInPageSetting:(NSMutableDictionary *)dictionary usingBlock:(void(^)(RKPageSelectionMask pageSelector, id object))block
+{
+    if ([self hasSingleObjectForAllPagesInDictionary:dictionary]) {
+        block(RKPageSelectorAll, [self objectForPage:RKPageSelectionFirst fromDictionary:dictionary]);
+        return;
+    }
+    
+    [dictionary enumerateKeysAndObjectsUsingBlock:^(NSNumber *selector, id object, BOOL *stop) {
+        block(selector.unsignedIntegerValue, object);
+    }];
 }
 
 @end

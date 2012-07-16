@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "RKPDFRepresentationConverter.h"
+#import "RKCoreTextRepresentationConverter.h"
 
-@interface RKListItemPDFConverter : RKPDFRepresentationConverter
+@interface RKListItemCoreTextConverter : RKCoreTextRepresentationConverter
 
 @end

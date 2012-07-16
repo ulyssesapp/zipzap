@@ -16,6 +16,11 @@
 /*!
  @abstract Initializes the image with a file wrapper
  */
-- (id)initWithFileWrapper:(NSFileWrapper *)file;
+- (id)initWithFileWrapper:(NSFileWrapper *)file context:(RKPDFRenderingContext *)context;
+
+/*!
+ @abstract The file wrapper associated with the object
+ */
+@property (nonatomic, strong, readonly) NSFileWrapper *fileWrapper;
 
 @end

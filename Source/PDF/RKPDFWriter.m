@@ -10,10 +10,14 @@
 
 #import "RKPDFRenderingContext.h"
 #import "RKDocument.h"
+#import "RKFramesetter.h"
+#import "RKPDFFrame.h"
 
 #import "RKSection+PDFCoreTextConversion.h"
 #import "RKSection+PDFUtilities.h"
+#import "RKDocument+PDFUtilities.h"
 #import "NSAttributedString+PDFUtilities.h"
+#import "NSAttributedString+PDFCoreTextConversion.h"
 
 @interface RKPDFWriter ()
 
@@ -29,7 +33,7 @@
 + (NSData *)PDFFromDocument:(RKDocument *)document
 {
     RKPDFRenderingContext *context = [[RKPDFRenderingContext alloc] initWithDocument: document];
-
+    
     // Convert all sections to core text representation
     for (RKSection *section in document.sections) {
         // Convert section
@@ -39,6 +43,7 @@
     
     // Apply rendering per section
     for (RKSection *section in context.sections) {
+        [context nextSection];
         [self renderSection:section usingContext:context];
     }
     
@@ -47,7 +52,53 @@
 
 + (void)renderSection:(RKSection *)section usingContext:(RKPDFRenderingContext *)context
 {
+    // Convert content string
+    NSAttributedString *contentString = section.content;
+    NSRange remainingRange = NSMakeRange(0, contentString.length);
     
+    // Render pages
+    while (remainingRange.length) {
+        [context startNewPage];
+        
+        RKPageSelectionMask pageSelector = [section pageSelectorForContext: context];
+        
+        // Layout and render header
+        NSAttributedString *headerString = [section headerForPage: pageSelector];
+        CGRect headerConstraints = CGRectMake(0,0,0,0);
+        
+        if (headerString) {
+            headerConstraints = [context.document boundingBoxForPageHeaderOfSection: section];
+            RKPDFFrame *headerFrame = [RKFramesetter frameForAttributedString:headerString usingRange:NSMakeRange(0, headerString.length) rect:headerConstraints context:context];
+
+            [headerFrame renderWithRenderedRange:NULL renderedBoundingBox:&headerConstraints usingBlock:nil];
+        }
+
+        // Layout and render footer
+        NSAttributedString *footerString = [section footerForPage: pageSelector];
+        CGRect footerConstraints = CGRectMake(0,0,0,0);
+        
+        if (footerString) {
+            footerConstraints = [context.document boundingBoxForPageFooterOfSection: section];
+            RKPDFFrame *footerFrame = [RKFramesetter frameForAttributedString:footerString usingRange:NSMakeRange(0, footerString.length) rect:footerConstraints context:context];
+            
+            [footerFrame renderWithRenderedRange:NULL renderedBoundingBox:&footerConstraints usingBlock:nil];
+        }
+        
+        // Calculate column constraints
+        for (NSUInteger columnIndex = 0; columnIndex < section.numberOfColumns; columnIndex ++) {
+            [context startNewColumn];
+            
+            CGRect columnBox = [context.document boundingBoxForColumn:columnIndex section:section withHeader:headerConstraints.size footer:footerConstraints.size];
+
+            // Layout content
+            NSRange renderedRange;
+            RKPDFFrame *contentFrame = [RKFramesetter frameForAttributedString:contentString usingRange:remainingRange rect:columnBox context:context];
+            
+            [contentFrame renderWithRenderedRange:&renderedRange renderedBoundingBox:NULL usingBlock:nil];
+            remainingRange.location += renderedRange.length;
+            remainingRange.length -= renderedRange.length;
+        }
+    }
 }
 
 @end

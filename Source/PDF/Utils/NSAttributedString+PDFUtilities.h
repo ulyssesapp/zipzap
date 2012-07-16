@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKTextObject, RKPDFRenderingContext;
+@class RKPDFTextObject, RKPDFRenderingContext;
 
 
 /*!
@@ -32,6 +32,18 @@ extern NSString *RKTextObjectAttributeName;
 extern NSString *RKTextRendererAttributeName;
 
 /*!
+ @abstract An attribute that contains the name of an anchor
+ @discussion NSString
+ */
+extern NSString *RKPDFAnchorAttributeName;
+
+/*!
+ @abstract An attribute that contains a link to an anchor
+ @discussion NSString with the anchor name
+ */
+extern NSString *RKPDFAnchorLinkAttributeName;
+
+/*!
  @abstract Utility methods for PDF generation
  */
 @interface NSAttributedString (PDFUtilities)
@@ -47,15 +59,20 @@ extern NSString *RKTextRendererAttributeName;
  */
 + (NSAttributedString *)noteListWithNotes:(NSArray *)notes;
 
+/*!
+ @abstract Provides an attributed string with a fixed-width and fixed-height spacing
+ */
++ (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width;
+
 @end
 
 @interface NSMutableAttributedString (PDFCoreTextConversion)
 
 /*!
  @abstract Sets the given character as text object using custom rendering
- @discussion Specifies a CTRunDelegate such that the handlers of the text object are called during rendering
+ @discussion Only one text object can be placed on the same index at once. It depends on the type of the text object whether additional text renderers are effective or not.
  */
-- (void)addTextObjectAttribute:(RKTextObject *)textObject atIndex:(NSUInteger)index;
+- (void)addTextObjectAttribute:(RKPDFTextObject *)textObject atIndex:(NSUInteger)index;
 
 /*!
  @abstract Adds a custom text render to an attributed string range respecting the priority of the renderer class

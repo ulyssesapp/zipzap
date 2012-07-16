@@ -9,6 +9,12 @@
 #import "RKPDFTextRenderer.h"
 
 /*!
+ @abstract The attribute used to describe the background color in a core text representation
+ @discussion References a CGColorRef
+ */
+extern NSString *RKPDFBackgroundColorAttributeName;
+
+/*!
  @abstract Adds a background color on a text area after rendering
  */
 @interface RKPDFBackgroundColorRenderer : RKPDFTextRenderer

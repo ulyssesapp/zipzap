@@ -8,6 +8,9 @@
 
 #import "NSAttributedString+PDFUtilities.h"
 
+#import "RKAnchorRenderer.h"
+#import "RKAnchorLinkRenderer.h"
+
 #import "RKFootnote.h"
 #import "RKPDFFootnote.h"
 
@@ -16,8 +19,8 @@ NSString *RKFootnoteEnumerationStringKey    = @"enumerationString";
 
 NSString *RKTextObjectAttributeName         = @"RKTextObject";
 NSString *RKTextRendererAttributeName       = @"RKTextRenderer";
-NSString *RKPDFAnchorName                   = @"RKAnchor";
-NSString *RKPDFAnchorReferenceName          = @"RKAnchorLink";
+NSString *RKPDFAnchorAttributeName          = @"RKAnchor";
+NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
 
 @implementation NSAttributedString (PDFUtilities)
 
@@ -49,30 +52,71 @@ NSString *RKPDFAnchorReferenceName          = @"RKAnchorLink";
     return noteList;
 }
 
++ (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width
+{
+    CTFontRef baseFont = CTFontCreateWithName(CFSTR("Helvetica"), height, NULL);
+
+    NSDictionary *fontAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithFloat: width], kCTFontFixedAdvanceAttribute,
+                                    nil
+                                   ];
+    
+    CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)fontAttributes);
+    CTFontRef fixedFont = CTFontCreateCopyWithAttributes(baseFont, 0.0, NULL, fontDescriptor);
+    
+    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@" " attributes:[NSDictionary dictionaryWithObjectsAndKeys: (__bridge id)fixedFont, (__bridge id)kCTFontAttributeName, nil]];
+    
+    CFRelease(fontDescriptor);
+    CFRelease(fixedFont);
+    CFRelease(baseFont);
+    
+    return spacer;
+}
+
 @end
 
 @implementation NSMutableAttributedString (PDFUtilities)
 
-- (void)addTextObjectAttribute:(RKTextObject *)textObject atIndex:(NSUInteger)index
+- (void)addTextObjectAttribute:(RKPDFTextObject *)textObject atIndex:(NSUInteger)index
 {
-    CTR
-    
-   [self addAttribute:kCTRunDelegateAttributeName value:(__bridge_transfer id)runDelegate range:NSMakeRange(index, 1)];
+    [self addAttribute:RKTextObjectAttributeName value:textObject range:NSMakeRange(index, 1)];
 }
 
-- (void)addTextRenderer:(Class)textRender forRange:(NSRange)range
+- (void)addTextRenderer:(Class)textRenderer forRange:(NSRange)range
 {
-    NSAssert(false, @"Not implemented yet");
+    // Update existing renderer ranges
+    [self enumerateAttribute:RKTextRendererAttributeName inRange:range options:0 usingBlock:^(NSArray *renderer, NSRange range, BOOL *stop) {
+        // Set new renderer
+        if (!renderer) {
+            [self addAttribute:RKTextRendererAttributeName value:[NSArray arrayWithObject: textRenderer] range:range];
+            return;
+        }
+        
+        // Update existing renderer
+        NSMutableArray *updatedRenderer = [renderer mutableCopy];
+        
+        [updatedRenderer addObject: textRenderer];
+        [updatedRenderer sortUsingComparator:^NSComparisonResult(Class rendererA, Class rendererB) {
+            if ([rendererA priority] < [rendererB priority])
+                return NSOrderedAscending;
+            else
+                return NSOrderedDescending;
+        }];
+        
+        [self addAttribute:RKTextRendererAttributeName value:updatedRenderer range:range];
+    }];
 }
 
 - (void)addLocalDestinationAnchor:(NSString *)anchorName forRange:(NSRange)range
 {
-    NSAssert(false, @"Not implemented yet");
+    [self addAttribute:RKPDFAnchorAttributeName value:anchorName range:range];
+    [self addTextRenderer:RKAnchorRenderer.class forRange:range];
 }
 
 - (void)addLocalDestinationLinkForAnchor:(NSString *)anchorName forRange:(NSRange)range
 {
-    NSAssert(false, @"Not implemented yet");
+    [self addAttribute:RKPDFAnchorLinkAttributeName value:anchorName range:range];
+    [self addTextRenderer:RKAnchorLinkRenderer.class forRange:range];
 }
 
 @end

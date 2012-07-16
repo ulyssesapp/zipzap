@@ -24,15 +24,9 @@ typedef enum : NSUInteger {
 }RKTextObjectEnumerationPolicy;
 
 /*!
- @abstract (Abstract class) Represents a single-character unit inside an attributed string that requires custom rendering for PDF output
+ @abstract (Abstract class) Represents a placeholder inside an attributed string that has content which is determined during rendering and uses a custom renderer
  */
 @interface RKPDFTextObject : NSObject
-
-/*!
- @abstract (Abstract) The attribute name from which the text object was derived
- @discussion Used for enumeration
- */
-+ (NSString *)originalAttributeName;
 
 /*!
  @abstract An enumeration policy that describes how this particular text object should be enumerated
@@ -40,23 +34,14 @@ typedef enum : NSUInteger {
 @property (nonatomic) RKTextObjectEnumerationPolicy enumerationPolicy;
 
 /*!
- @abstract (Abstract) Renders the object using a rendering context
+ @abstract (Semi-Abstract) Re-Renders the actual object using a rendering context
+ @discussion If not overriden, this method just does nothing.
  */
-- (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex;
+- (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect;
 
 /*!
- @abstract (Abstract) Determines the rendering width of a text object
+ @abstract Provides a replacement string for the text object according to the current context
  */
-- (CGFloat)widthUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex;
-
-/*!
- @abstract (Abstract) Determines the line ascent height of a text object
- */
-- (CGFloat)lineAscentUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex;
-
-/*!
- @abstract (Abstract) Determines the line descent height of a text object
- */
-- (CGFloat)lineDescentUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex;
+- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex;
 
 @end

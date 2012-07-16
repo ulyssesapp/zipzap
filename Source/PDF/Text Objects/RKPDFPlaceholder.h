@@ -18,4 +18,9 @@
  */
 - (id)initWithPlaceholderType:(RKPlaceholderType)placeholderType;
 
+/*!
+ @abstract The placeholder type of the placeholder
+ */
+@property (nonatomic, readonly) RKPlaceholderType placeholderType;
+
 @end

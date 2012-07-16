@@ -10,13 +10,13 @@
 
 @implementation RKPDFTextRenderer
 
-+ (NSUInteger)priority
++ (NSInteger)priority
 {
     NSAssert(false, @"Abstract method called");
     return 0;
 }
 
-+ (void)renderUsingContext:(RKPDFRenderingContext *)context run:(CTRunRef)run
++ (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect
 {
     NSAssert(false, @"Abstract method called");
     return;

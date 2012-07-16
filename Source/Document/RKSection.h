@@ -43,6 +43,11 @@
 - (BOOL)hasSingleHeaderForAllPages;
 
 /*!
+ @abstract Enumerates all headers that have been set by their page mask
+ */
+- (void)enumerateHeadersUsingBlock:(void(^)(RKPageSelectionMask pageSelector, NSAttributedString *header))block;
+
+/*!
  @abstract Retruns the footer for a single or multiple page types
  */
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask;
@@ -56,6 +61,11 @@
  @abstract Returns true, if all footers are identic
  */
 - (BOOL)hasSingleFooterForAllPages;
+
+/*!
+ @abstract Enumerates all headers that have been set by their page mask
+ */
+- (void)enumerateFootersUsingBlock:(void(^)(RKPageSelectionMask pageSelector, NSAttributedString *footer))block;
 
 /*!
  @abstract Content of the section
