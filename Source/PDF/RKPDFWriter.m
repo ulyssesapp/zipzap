@@ -69,8 +69,9 @@
         if (headerString) {
             headerConstraints = [context.document boundingBoxForPageHeaderOfSection: section];
             RKPDFFrame *headerFrame = [RKFramesetter frameForAttributedString:headerString usingRange:NSMakeRange(0, headerString.length) rect:headerConstraints context:context];
-
-            [headerFrame renderWithRenderedRange:NULL renderedBoundingBox:&headerConstraints usingBlock:nil];
+            headerConstraints = headerFrame.visibleBoundingBox;
+                        
+            [headerFrame renderWithRenderedRange:NULL usingOrigin:headerFrame.boundingBox.origin block:nil];
         }
 
         // Layout and render footer
@@ -80,21 +81,23 @@
         if (footerString) {
             footerConstraints = [context.document boundingBoxForPageFooterOfSection: section];
             RKPDFFrame *footerFrame = [RKFramesetter frameForAttributedString:footerString usingRange:NSMakeRange(0, footerString.length) rect:footerConstraints context:context];
-            
-            [footerFrame renderWithRenderedRange:NULL renderedBoundingBox:&footerConstraints usingBlock:nil];
+            footerConstraints = footerFrame.boundingBox;
+            footerConstraints.origin.y = footerFrame.boundingBox.origin.y - footerFrame.boundingBox.size.height + footerFrame.visibleBoundingBox.size.height;
+
+            [footerFrame renderWithRenderedRange:NULL usingOrigin:footerConstraints.origin block:nil];
         }
-        
+
         // Calculate column constraints
         for (NSUInteger columnIndex = 0; columnIndex < section.numberOfColumns; columnIndex ++) {
             [context startNewColumn];
             
-            CGRect columnBox = [context.document boundingBoxForColumn:columnIndex section:section withHeader:headerConstraints.size footer:footerConstraints.size];
+            CGRect columnBox = [context.document boundingBoxForColumn:columnIndex section:section withHeader:headerConstraints footer:footerConstraints];
 
             // Layout content
             NSRange renderedRange;
             RKPDFFrame *contentFrame = [RKFramesetter frameForAttributedString:contentString usingRange:remainingRange rect:columnBox context:context];
             
-            [contentFrame renderWithRenderedRange:&renderedRange renderedBoundingBox:NULL usingBlock:nil];
+            [contentFrame renderWithRenderedRange:&renderedRange usingOrigin:columnBox.origin block:nil];
             remainingRange.location += renderedRange.length;
             remainingRange.length -= renderedRange.length;
         }

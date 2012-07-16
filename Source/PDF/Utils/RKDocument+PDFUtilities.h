@@ -31,7 +31,7 @@
 /*!
  @abstract Provides a bounding box for a column with a certain height
  */
-- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGSize)header footer:(CGSize)footer;
+- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer;
 
 /*!
  @abstract Provides a bounding box for the header of a section page

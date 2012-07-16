@@ -55,18 +55,27 @@
     return boundingBox;
 }
 
-- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGSize)header footer:(CGSize)footer
+- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer
 {
     CGRect pageBounds = self.boundingBoxForContent;
-/*
-    pageBounds.origin.y += footer.height + RKFooterSpacing;
-    pageBounds.size.height -= header.height + RKHeaderSpacing;
+
+    // Shrink page for footer, if needed
+    if (footer.size.height > (pageBounds.origin.y - RKFooterSpacing)) {
+        pageBounds.origin.y = footer.origin.y + footer.size.height + RKFooterSpacing;
+        pageBounds.size.height -= (footer.origin.y + footer.size.height - pageBounds.origin.y + RKFooterSpacing);
+    }
     
-    NSUInteger columnWidth = (pageBounds.size.width - (RKColumnSpacing * section.numberOfColumns) / section.numberOfColumns);
+    // Shrink page for header, if needed
+    if ((pageBounds.origin.y + pageBounds.size.height) > (header.origin.y - RKHeaderSpacing)) {
+        pageBounds.size.height -= (pageBounds.origin.y + pageBounds.size.height) - (header.origin.y - RKHeaderSpacing);
+    }
+
+    // Determine column size and position
+    NSUInteger columnWidth = (pageBounds.size.width - (section.columnSpacing * (section.numberOfColumns - 1))) / section.numberOfColumns;
     
     pageBounds.size.width = columnWidth;
-    pageBounds.origin.x = (columnWidth + RKColumnSpacing) * column;
- */   
+    pageBounds.origin.x = pageBounds.origin.x + (columnWidth + section.columnSpacing) * column;
+
     return pageBounds;
 }
 
@@ -75,6 +84,7 @@
     CGRect boundingBox = self.boundingBoxForContent;
     
     // The footer section may occupy at most the half of the page
+    boundingBox.origin.y = self.footerSpacing;
     boundingBox.size.height = boundingBox.size.height / 2;
     
     return boundingBox;
@@ -85,8 +95,8 @@
     CGRect boundingBox = self.boundingBoxForContent;
     
     // The header section may occupy at most the half of the page
-    boundingBox.origin.y = boundingBox.size.height - boundingBox.size.height / 2;
-    boundingBox.size.height = boundingBox.size.height / 2;
+    boundingBox.origin.y = self.pdfMediaBox.size.height - self.headerSpacing - (boundingBox.size.height / 2.0f);
+    boundingBox.size.height = boundingBox.size.height / 2.0f;
     
     return boundingBox;
 }

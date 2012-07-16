@@ -26,13 +26,25 @@
     NSRange _visibleStringRange;
     NSArray *_textObjectRanges;
     RKPDFRenderingContext *_context;
+    
+    CGRect _boundingBox;
+    CGRect _visibleBoundingBox;
+    
+    NSArray *_lineRectsWithoutDescent;
+    NSArray *_lineRects;
 }
+
+/*!
+ @abstract Determines the bounding box of a run
+ @discussion The height of the run is taken from the given bounding box (which is usually the bounding box of the line containing the run)
+ */
+- (CGRect)boundingBoxForRun:(CTRunRef)run insideLine:(CTLineRef)line withBoundingBox:(CGRect)lineRect;
 
 @end
 
 @implementation RKPDFFrame
 
-@synthesize visibleStringRange=_visibleStringRange;
+@synthesize visibleStringRange=_visibleStringRange, lineRects=_lineRects, lineRectsWithoutDescent=_lineRectsWithoutDescent, boundingBox=_boundingBox, visibleBoundingBox=_visibleBoundingBox;
 
 - (id)initWithFrame:(CTFrameRef)frame attributedString:(NSAttributedString *)attributedString sourceRange:(NSRange)sourceRange textObjectRanges:(NSArray *)textObjectRanges context:(RKPDFRenderingContext *)context
 {
@@ -50,6 +62,60 @@
         CFRange frameRange = CTFrameGetStringRange(frame);
         
         _visibleStringRange = [self sourceRangeForRange: NSMakeRange(frameRange.location, frameRange.length)];
+        
+        // Determine bounding box
+        CGPathRef framePath = CTFrameGetPath(_frame);
+        _boundingBox = CGPathGetBoundingBox(framePath);
+
+        // Determine line boundings
+        NSMutableArray *lineRects = [NSMutableArray new];
+        NSMutableArray *lineRectsWithoutDescent = [NSMutableArray new];
+        
+        _lineRects = lineRects;
+        _lineRectsWithoutDescent = lineRectsWithoutDescent;
+        
+        NSArray *lines = (__bridge id)CTFrameGetLines(_frame);
+        CGPoint *lineOrigins = alloca(lines.count * sizeof(CGPoint));
+        CTFrameGetLineOrigins(_frame, CFRangeMake(0,0), lineOrigins);
+        
+        [lines enumerateObjectsUsingBlock:^(id lineObject, NSUInteger lineIndex, BOOL *stop) {
+            CTLineRef line = (__bridge CTLineRef)lineObject;
+            CGPoint lineOrigin = lineOrigins[lineIndex];
+
+            CGFloat ascent;
+            CGFloat descent;
+            CGFloat leading;
+            
+            CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+            
+            CGRect lineRectWithoutDescent;
+            CGRect frameBounds = self.boundingBox;
+            CGRect imageBounds = CTLineGetImageBounds(line, _context.pdfContext);
+            
+            lineRectWithoutDescent.origin.x = frameBounds.origin.x + lineOrigin.x;
+            lineRectWithoutDescent.origin.y = frameBounds.origin.y + lineOrigin.y;
+            lineRectWithoutDescent.size.height = ascent;
+            lineRectWithoutDescent.size.width = imageBounds.size.width;
+                        
+            CGRect lineRectWithDescent = lineRectWithoutDescent;
+            lineRectWithDescent.origin.y -= descent;
+            lineRectWithDescent.size.height += descent;
+
+            [lineRects addObject: [NSValue valueWithRect: lineRectWithDescent]];
+            [lineRectsWithoutDescent addObject: [NSValue valueWithRect: lineRectWithoutDescent]];
+        }];
+
+        // Determine visible size
+        _visibleBoundingBox = _boundingBox;
+        _visibleBoundingBox.size.height = 0;
+        
+        if (lineRects.count) {
+            CGRect firstLineBox = [lineRects[0] rectValue];
+            CGRect lastLineBox = [lineRects.lastObject rectValue];
+
+            _visibleBoundingBox.size.height = (firstLineBox.origin.y + firstLineBox.size.height) - lastLineBox.origin.y;
+            _visibleBoundingBox.origin.y = lastLineBox.origin.y;
+        }
     }
     
     return self;
@@ -58,14 +124,6 @@
 - (void)dealloc
 {
     //CFRelease(_frame);
-}
-
-- (CGRect)boundingBox
-{
-    CGPathRef path = CTFrameGetPath(_frame);
-    CGRect boundingBox = CGPathGetBoundingBox(path);
-    
-    return boundingBox;
 }
 
 - (NSRange)sourceRangeForRange:(NSRange)translatedRange
@@ -77,24 +135,26 @@
     return sourceRange;
 }
 
-- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut renderedBoundingBox:(CGRect *)renderedBoundingBoxOut usingBlock:(void(^)(NSRange lineRange, BOOL *stop))block
+- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin block:(void(^)(NSRange lineRange, BOOL *stop))block
 {
     __block NSRange renderedRange = NSMakeRange(0, 0);
-    __block CGRect renderedBoundingBox = self.boundingBox;
-    renderedBoundingBox.size.height = 0;
 
     NSArray *lines = (__bridge id)CTFrameGetLines(_frame);
-    CGPoint *lineOrigins = alloca(lines.count * sizeof(CGPoint));
 
     CGContextSaveGState(_context.pdfContext);
+    CGContextTranslateCTM(_context.pdfContext, origin.x - self.boundingBox.origin.x, origin.y - self.boundingBox.origin.y);
     CGContextSetTextMatrix(_context.pdfContext, CGAffineTransformIdentity);
-    
-    CTFrameGetLineOrigins(_frame, CFRangeMake(0,0), lineOrigins);
+
+    CGPathRef path = CTFrameGetPath(_frame);
+//    CGRect rect = CGPathGetBoundingBox(path);
+    CGRect rect = self.visibleBoundingBox;
+    CGContextSetFillColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0, 0, 0.1));
+    CGContextFillRect(_context.pdfContext, rect);
     
     [lines enumerateObjectsUsingBlock:^(id lineObject, NSUInteger lineIndex, BOOL *stop) {
         CTLineRef line = (__bridge CTLineRef)lineObject;
-        CGRect lineRectWithDescent = [self boundingBoxForLine:line usingLineOrigin:lineOrigins[lineIndex] includingDescent:YES];
-        CGRect lineRectWithoutDescent = [self boundingBoxForLine:line usingLineOrigin:lineOrigins[lineIndex] includingDescent:NO];
+        CGRect lineRectWithDescent = [self.lineRects[lineIndex] rectValue];
+        CGRect lineRectWithoutDescent = [self.lineRectsWithoutDescent[lineIndex] rectValue];
         CFRange lineRange = CTLineGetStringRange(line);
         
         // Query the acceptance of line
@@ -106,7 +166,6 @@
         
         // Update rendered range
         renderedRange.length += lineRange.length;
-        renderedBoundingBox.size.height += lineRectWithDescent.size.height;
         
         // Apply text renderer
         NSArray *runs = (__bridge id)CTLineGetGlyphRuns(line);
@@ -161,31 +220,8 @@
     if (renderedRangeOut)
         *renderedRangeOut = [self sourceRangeForRange: renderedRange];
     
-    if (renderedBoundingBoxOut)
-        *renderedBoundingBoxOut = renderedBoundingBox;
-    
     // Restore graphics context
     CGContextRestoreGState(_context.pdfContext);
-}
-
-- (CGRect)boundingBoxForLine:(CTLineRef)line usingLineOrigin:(CGPoint)lineOrigin includingDescent:(BOOL)includingDescent
-{
-    CGFloat ascent;
-    CGFloat descent;
-    CGFloat leading;
-    
-    CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
-    
-    CGRect boundingBox;
-    CGRect frameBounds = self.boundingBox;
-    CGRect imageBounds = CTLineGetImageBounds(line, _context.pdfContext);
-
-    boundingBox.origin.x = frameBounds.origin.x + lineOrigin.x;
-    boundingBox.origin.y = frameBounds.origin.y + lineOrigin.y - (includingDescent ? descent : 0);
-    boundingBox.size.height = ascent + (includingDescent ? descent : 0);
-    boundingBox.size.width = imageBounds.size.width;
-    
-    return boundingBox;
 }
 
 - (CGRect)boundingBoxForRun:(CTRunRef)run insideLine:(CTLineRef)line withBoundingBox:(CGRect)lineRect
