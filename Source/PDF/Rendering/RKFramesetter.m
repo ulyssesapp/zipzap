@@ -39,7 +39,7 @@
     NSRange upperBoundRange = [self estimatedVisibleRangeForAttributedString:attributedString usingRange:range rect:rect];
     
     // Translate text objects
-    NSArray *textObjectRanges;
+    NSArray *textObjectRanges = nil;
     NSAttributedString *layoutedString = [self instantiateTextObjectsOfAttributedString:attributedString inRange:upperBoundRange frameSize:rect.size context:context textObjectRanges:&textObjectRanges];
     
     // Layout string
@@ -70,7 +70,7 @@
     return NSMakeRange(fitRange.location, fitRange.length);
 }
 
-+ (NSAttributedString *)instantiateTextObjectsOfAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)sourceRange frameSize:(CGSize)frameSize context:(RKPDFRenderingContext *)context textObjectRanges:(NSArray **)ranges
++ (NSAttributedString *)instantiateTextObjectsOfAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)sourceRange frameSize:(CGSize)frameSize context:(RKPDFRenderingContext *)context textObjectRanges:(NSArray **)textObjectRangesOut
 {
     // Translate text objects
     NSMutableArray *textObjectRanges = [NSMutableArray new];
@@ -97,6 +97,9 @@
         offset += translatedTextObject.length - attributeRange.length;
     }];
 
+    if (textObjectRangesOut)
+        *textObjectRangesOut = textObjectRanges;
+    
     return translateableString;
 }
 

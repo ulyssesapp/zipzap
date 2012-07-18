@@ -126,18 +126,34 @@
     //CFRelease(_frame);
 }
 
-- (NSRange)sourceRangeForRange:(NSRange)translatedRange
+- (NSRange)sourceRangeForRange:(NSRange)frameRange
 {
-    NSRange sourceRange = NSMakeRange(_sourceRange.location + translatedRange.location, translatedRange.length);
+    NSRange translatedRange = NSMakeRange(frameRange.location, frameRange.length);
     
-/*    for (NSValue *rangeObject in _textObjectRanges) {
-        NSRange range = rangeObject.rangeValue;
+    for (NSValue *rangeObject in _textObjectRanges) {
+        NSRange textObjectRange = rangeObject.rangeValue;
         
-        if (translatedRange.location < ra )
+        // The translated range is after the text object range: we just crop the expanded length of the text object
+        if (translatedRange.location >= (textObjectRange.location + textObjectRange.length)) {
+            translatedRange.location -= textObjectRange.length - 1;
+            continue;
+        }
         
-    }*/
+        // The translated range is inside the text object range: we set it to its beginning and crop the overlapping length
+        if ((translatedRange.location >= textObjectRange.location) && (translatedRange.location < textObjectRange.location + textObjectRange.length)) {
+            translatedRange.length -= (textObjectRange.length + textObjectRange.location) - translatedRange.location -+ 1;
+            translatedRange.location -= (translatedRange.location - textObjectRange.location);
+            continue;
+        }
+        
+        // The translated range contains the text object: we crop the text object out of its length
+        if ((translatedRange.location <= textObjectRange.location) && ((translatedRange.location + translatedRange.length) >= (textObjectRange.location + textObjectRange.length))) {
+            translatedRange.length -= textObjectRange.length - 1;
+            continue;
+        }
+    }
     
-    return sourceRange;
+    return NSMakeRange(translatedRange.location + _sourceRange.location, translatedRange.length);
 }
 
 - (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin block:(void(^)(NSRange lineRange, CGRect lineBoundingBox, NSUInteger lineIndex, BOOL *stop))block
@@ -150,6 +166,18 @@
     CGContextSaveGState(_context.pdfContext);
     CGContextTranslateCTM(_context.pdfContext, origin.x - self.boundingBox.origin.x, origin.y - self.boundingBox.origin.y);
     CGContextSetTextMatrix(_context.pdfContext, CGAffineTransformIdentity);
+
+    // Only used for debugging: Draw a box outside
+    CGContextSaveGState(_context.pdfContext);
+    CGRect frameRect = self.boundingBox;
+    CGContextSetFillColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0, 0, 0.1));
+    CGContextFillRect(_context.pdfContext, frameRect);
+
+    frameRect = self.visibleBoundingBox;
+    CGContextSetStrokeColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0.0, 0.0, 0.2));
+    CGContextSetLineWidth(_context.pdfContext, 0.5);
+    CGContextStrokeRect(_context.pdfContext, frameRect);
+    CGContextRestoreGState(_context.pdfContext);
     
     // Render lines
     [lines enumerateObjectsUsingBlock:^(id lineObject, NSUInteger lineIndex, BOOL *stop) {
