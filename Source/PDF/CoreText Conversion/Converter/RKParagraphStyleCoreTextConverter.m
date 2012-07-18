@@ -56,6 +56,8 @@
         
         [converted removeAttribute:NSParagraphStyleAttributeName range:range];
         [converted addAttribute:(__bridge id)kCTParagraphStyleAttributeName value:(__bridge id)convertedStyle range:range];
+        
+        CFRelease(convertedStyle);
     }];
 
     return converted;

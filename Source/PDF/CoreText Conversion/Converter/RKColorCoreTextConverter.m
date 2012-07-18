@@ -57,7 +57,7 @@
         CGColorRef convertedColor = [color CGColorWithGenericRGBColorSpace];
         [attributedString addAttribute:newAttributeName value:(__bridge id)convertedColor range:range];
         
-        CFRetain(convertedColor);
+        CFRelease(convertedColor);
         
         // Use a renderer, if given
         if (renderer)

@@ -42,11 +42,8 @@
         #if TARGET_OS_MAC
             NSImage *image = [[NSImage alloc] initWithData:self.fileWrapper.regularFileContents];
             _image = [image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
-        #else
-            #warning Not supported!
+            _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
         #endif
-        
-        _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
     }
     
     return self;
@@ -54,7 +51,7 @@
 
 - (void)dealloc
 {
-//    CFRelease(_image);
+    CFRelease(_image);
 }
 
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect

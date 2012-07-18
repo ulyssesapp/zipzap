@@ -71,8 +71,8 @@
     self = [self init];
     
     if (self) {
-        CFRetain(frame);
         _frame = frame;
+        CFRetain(_frame);
         
         _attributedString = attributedString;
         _sourceRange = sourceRange;
@@ -143,7 +143,7 @@
 
 - (void)dealloc
 {
-    //CFRelease(_frame);
+    CFRelease(_frame);
 }
 
 - (NSRange)sourceRangeForRange:(NSRange)frameRange

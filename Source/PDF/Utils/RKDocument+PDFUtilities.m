@@ -160,6 +160,8 @@
     
     CGContextStrokeLineSegments(pdfContext, (CGPoint[]){startPoint, endPoint}, 2);
     CGContextRestoreGState(pdfContext);
+    
+    CFRelease(black);
 }
 
 @end

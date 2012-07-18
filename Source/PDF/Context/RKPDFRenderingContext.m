@@ -61,6 +61,7 @@
     CGRect mediaBox = document.pdfMediaBox;
     
     _pdfContext = CGPDFContextCreate(dataConsumer, &mediaBox, (__bridge CFDictionaryRef)document.pdfMetadata);
+    
     #if TARGET_OS_MAC
     _nsPdfContext = [NSGraphicsContext graphicsContextWithGraphicsPort:_pdfContext flipped:NO];
     #endif
@@ -81,6 +82,8 @@
     _pageNotes = [NSMutableArray new];
     
     _listEnumerator = [RKListEnumerator new];
+
+    CFRelease(dataConsumer);
     
     return self;
 }
@@ -91,6 +94,8 @@
         CGPDFContextEndPage(_pdfContext);
     
     CGPDFContextClose(_pdfContext);
+    CFRelease(_pdfContext);
+
     return _pdfData;
 }
 
