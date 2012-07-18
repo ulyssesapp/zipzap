@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import "RKPDFWriterTypes.h"
+
 @class RKPDFRenderingContext;
 
 /*!
@@ -17,7 +19,7 @@
  @abstract Renders the given frame using the given range.
  @discussion Returns the bounding box of the actual rendered frame. Applies custom rendering methods for layout runs of RKTextRendererAttributeName. Executes the given block for each line of the frame allowing to stop rendering at an arbitrary line.
  */
-- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin block:(void(^)(NSRange lineRange, CGRect lineBoundingBox, NSUInteger lineIndex, BOOL *stop))block;
+- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin options:(RKPDFWriterRenderingOptions)options block:(void(^)(NSRange lineRange, CGRect lineBoundingBox, NSUInteger lineIndex, BOOL *stop))block;
 
 /*!
  @abstract The bounding box surrounding the visible part of the frame

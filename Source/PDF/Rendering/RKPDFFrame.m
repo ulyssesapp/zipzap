@@ -15,21 +15,36 @@
 
 #import "NSAttributedString+PDFUtilities.h"
 
+// Helper used to convert CFRange to NSRange
 #define NSRangeFromCFRange(__range)         NSMakeRange(__range.location, __range.length)
 
 @interface RKPDFFrame ()
 {
+    // The core text frame containing the text layout
     CTFrameRef _frame;
-    
-    NSAttributedString *_attributedString;
-    NSRange _sourceRange;
-    NSRange _visibleStringRange;
-    NSArray *_textObjectRanges;
+
+    // The rendering context used for this frame
     RKPDFRenderingContext *_context;
     
+    // The attributed string in core text representation after instantiating all RKPDFTextObjects
+    NSAttributedString *_attributedString;
+    
+    // The text range in the original source string (used for providing ranges of text lines inside the source string)
+    NSRange _sourceRange;
+
+    // Text ranges of all text objects inside the rendered string (used to calculate ranges of text lines inside the source string)
+    NSArray *_textObjectRanges;
+    
+    // The visible string range inside the source string
+    NSRange _visibleStringRange;
+
+    // The original bounding box of the frame
     CGRect _boundingBox;
+    
+    // The bounding box around the visible content of the frame
     CGRect _visibleBoundingBox;
     
+    // The bounding boxes around the text lines of the frame with and without descent
     NSArray *_lineRectsWithoutDescent;
     NSArray *_lineRects;
 }
@@ -39,6 +54,11 @@
  @discussion The height of the run is taken from the given bounding box (which is usually the bounding box of the line containing the run)
  */
 - (CGRect)boundingBoxForRun:(CTRunRef)run insideLine:(CTLineRef)line withBoundingBox:(CGRect)lineRect;
+
+/*!
+ @abstract Adds text frame markers for debugging during the rendering of a frame.
+ */
+- (void)renderDebugFramesWithOptions:(RKPDFWriterRenderingOptions)options;
 
 @end
 
@@ -156,7 +176,7 @@
     return NSMakeRange(translatedRange.location + _sourceRange.location, translatedRange.length);
 }
 
-- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin block:(void(^)(NSRange lineRange, CGRect lineBoundingBox, NSUInteger lineIndex, BOOL *stop))block
+- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin options:(RKPDFWriterRenderingOptions)options block:(void (^)(NSRange, CGRect, NSUInteger, BOOL *))block
 {
     __block NSRange renderedRange = NSMakeRange(0, 0);
 
@@ -167,17 +187,8 @@
     CGContextTranslateCTM(_context.pdfContext, origin.x - self.boundingBox.origin.x, origin.y - self.boundingBox.origin.y);
     CGContextSetTextMatrix(_context.pdfContext, CGAffineTransformIdentity);
 
-    // Only used for debugging: Draw a box outside
-    CGContextSaveGState(_context.pdfContext);
-    CGRect frameRect = self.boundingBox;
-    CGContextSetFillColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0, 0, 0.1));
-    CGContextFillRect(_context.pdfContext, frameRect);
-
-    frameRect = self.visibleBoundingBox;
-    CGContextSetStrokeColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0.0, 0.0, 0.2));
-    CGContextSetLineWidth(_context.pdfContext, 0.5);
-    CGContextStrokeRect(_context.pdfContext, frameRect);
-    CGContextRestoreGState(_context.pdfContext);
+    // Only used for debugging: Draw text frames
+    [self renderDebugFramesWithOptions: options];
     
     // Render lines
     [lines enumerateObjectsUsingBlock:^(id lineObject, NSUInteger lineIndex, BOOL *stop) {
@@ -267,6 +278,28 @@
     CGRect runRect = CGRectMake(lineRect.origin.x + CTLineGetOffsetForStringIndex(line, runRange.location, NULL), lineRect.origin.y, runWidth, lineRect.size.height);
 
     return runRect;
+}
+
+- (void)renderDebugFramesWithOptions:(RKPDFWriterRenderingOptions)options
+{
+    // Show text frames
+    if (options & RKPDFWriterShowTextFrames) {
+        CGRect frameRect = self.boundingBox;
+        
+        CGContextSaveGState(_context.pdfContext);
+        CGContextSetFillColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(0, 0, 0, 0.1));
+        CGContextFillRect(_context.pdfContext, frameRect);
+    }
+    
+    // Add bounding boxes around text, if requested
+    if (options & RKPDFWriterShowBoundingBoxes) {
+        CGRect frameRect = self.visibleBoundingBox;
+        
+        CGContextSetStrokeColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0.0, 0.0, 0.2));
+        CGContextSetLineWidth(_context.pdfContext, 0.5);
+        CGContextStrokeRect(_context.pdfContext, frameRect);
+        CGContextRestoreGState(_context.pdfContext);
+    }
 }
 
 @end

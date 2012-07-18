@@ -145,7 +145,7 @@
 
 - (NSData *)PDF
 {
-    return [RKPDFWriter PDFFromDocument: self];
+    return [RKPDFWriter PDFFromDocument:self options:0];
 }
 
 @end

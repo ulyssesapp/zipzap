@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#include "RKPDFWriterTypes.h"
+
 @class RKDocument;
 
 /*!
@@ -16,6 +18,6 @@
 /*!
  @abstract Generates a PDF file from an RKDocument
  */
-+ (NSData *)PDFFromDocument:(RKDocument *)document;
++ (NSData *)PDFFromDocument:(RKDocument *)document options:(RKPDFWriterRenderingOptions)options;
 
 @end
