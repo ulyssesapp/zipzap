@@ -130,27 +130,28 @@
 {
     NSRange sourceRange = NSMakeRange(_sourceRange.location + translatedRange.location, translatedRange.length);
     
-    #warning To be done!
+/*    for (NSValue *rangeObject in _textObjectRanges) {
+        NSRange range = rangeObject.rangeValue;
+        
+        if (translatedRange.location < ra )
+        
+    }*/
     
     return sourceRange;
 }
 
-- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin block:(void(^)(NSRange lineRange, BOOL *stop))block
+- (void)renderWithRenderedRange:(NSRange *)renderedRangeOut usingOrigin:(CGPoint)origin block:(void(^)(NSRange lineRange, CGRect lineBoundingBox, NSUInteger lineIndex, BOOL *stop))block
 {
     __block NSRange renderedRange = NSMakeRange(0, 0);
 
     NSArray *lines = (__bridge id)CTFrameGetLines(_frame);
 
+    // We move the coordinate system to the actual drawing origin
     CGContextSaveGState(_context.pdfContext);
     CGContextTranslateCTM(_context.pdfContext, origin.x - self.boundingBox.origin.x, origin.y - self.boundingBox.origin.y);
     CGContextSetTextMatrix(_context.pdfContext, CGAffineTransformIdentity);
-
-    CGPathRef path = CTFrameGetPath(_frame);
-//    CGRect rect = CGPathGetBoundingBox(path);
-    CGRect rect = self.visibleBoundingBox;
-    CGContextSetFillColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0, 0, 0.1));
-    CGContextFillRect(_context.pdfContext, rect);
     
+    // Render lines
     [lines enumerateObjectsUsingBlock:^(id lineObject, NSUInteger lineIndex, BOOL *stop) {
         CTLineRef line = (__bridge CTLineRef)lineObject;
         CGRect lineRectWithDescent = [self.lineRects[lineIndex] rectValue];
@@ -159,7 +160,9 @@
         
         // Query the acceptance of line
         if (block) {
-            block([self sourceRangeForRange: NSMakeRange(lineRange.location, lineRange.length)], stop);
+            *stop = NO;
+
+            block([self sourceRangeForRange: NSMakeRange(lineRange.location, lineRange.length)], lineRectWithDescent, lineIndex, stop);
             if (*stop)
                 return;
         }
@@ -183,9 +186,8 @@
             NSDictionary *runAttributes = (__bridge NSDictionary *)CTRunGetAttributes(run);
             
             // Apply baseline offset, if any
-            if (runAttributes[NSBaselineOffsetAttributeName])
-                CGContextSetTextPosition(_context.pdfContext, lineRectWithoutDescent.origin.x, lineRectWithoutDescent.origin.y + [runAttributes[NSBaselineOffsetAttributeName] floatValue]);
-            
+            CGContextSetTextPosition(_context.pdfContext, lineRectWithoutDescent.origin.x, lineRectWithoutDescent.origin.y + [runAttributes[NSBaselineOffsetAttributeName] floatValue]);
+
             // Apply pre-renderer (negative priority)
             NSArray *renderers = runAttributes[RKTextRendererAttributeName];
             NSInteger rendererIndex = 0;

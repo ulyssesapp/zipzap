@@ -13,8 +13,9 @@
 
 #import "RKFootnote.h"
 #import "RKPDFFootnote.h"
+#import "RKFontAdditions.h"
 
-NSString *RKFootnoteContentKey              = @"content";
+NSString *RKFootnoteObjectKey               = @"footnote";
 NSString *RKFootnoteEnumerationStringKey    = @"enumerationString";
 
 NSString *RKTextObjectAttributeName         = @"RKTextObject";
@@ -24,32 +25,54 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
 
 @implementation NSAttributedString (PDFUtilities)
 
-- (NSAttributedString *)noteWithEnumerationString:(NSString *)enumerationString
++ (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString
 {
-    NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString: [NSString stringWithFormat: @"%@\t", enumerationString]];
-    [enumerator addAttribute:(__bridge id)kCTSuperscriptAttributeName value:@(1) range:NSMakeRange(0, enumerationString.length)];
-        
-    NSMutableAttributedString *note = [self mutableCopy];
-    
-    [note insertAttributedString:enumerator atIndex:0];
+    NSMutableAttributedString *noteString = [note.footnoteContent mutableCopy];
+    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingAttributes:[noteString attributesAtIndex:0 effectiveRange:NULL]];
 
-    return note;
+    // Add enumerator and spacing
+    [noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
+    [noteString insertAttributedString:enumerator atIndex:0];
+    
+    // Add anchor for enumerator
+    [noteString addLocalDestinationAnchor:note.footnoteAnchor forRange:NSMakeRange(0, 1)];
+
+    // Indent newlines
+    NSMutableString *content = [noteString mutableString];
+    [content replaceOccurrencesOfString:@"\n" withString:@"\n\t" options:0 range:NSMakeRange(0, content.length)];
+    
+    return noteString;
 }
 
-+ (NSAttributedString *)noteListWithNotes:(NSArray *)notes
++ (NSAttributedString *)noteListFromNotes:(NSArray *)notes
 {
     NSMutableAttributedString *noteList = [NSMutableAttributedString new];
     
     for (NSDictionary *noteDescriptor in notes) {
-        NSAttributedString *note = [noteDescriptor[RKFootnoteContentKey] noteWithEnumerationString: noteDescriptor[RKFootnoteEnumerationStringKey]];
+        NSAttributedString *note = [self attributedStringWithNote:[noteDescriptor objectForKey: RKFootnoteObjectKey] enumerationString:[noteDescriptor objectForKey: RKFootnoteEnumerationStringKey]];
         
-        if (![noteList.string hasSuffix: @"\n"])
+        if ((noteList.length > 0) && ![noteList.string hasSuffix: @"\n"])
             [noteList appendAttributedString: [[NSAttributedString alloc] initWithString: @"\n"]];
         
         [noteList appendAttributedString: note];
     }
     
     return noteList;
+}
+
++ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingAttributes:(NSDictionary *)attributes
+{
+    NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString:enumeratorString attributes:attributes];
+    
+    // Style footnote
+    NSFont *font = [attributes objectForKey: NSFontAttributeName];
+    if (!font)
+        font = [NSFont RTFDefaultFont];
+    
+    [enumerator addAttribute:NSFontAttributeName value:[NSFont fontWithName:font.fontName size:font.pointSize / 2.0f] range:NSMakeRange(0, enumerator.length)];
+    [enumerator addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (font.pointSize / 2.0f)] range:NSMakeRange(0, enumerator.length)];
+    
+    return enumerator;
 }
 
 + (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width
@@ -64,13 +87,18 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)fontAttributes);
     CTFontRef fixedFont = CTFontCreateCopyWithAttributes(baseFont, 0.0, NULL, fontDescriptor);
     
-    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@" " attributes:[NSDictionary dictionaryWithObjectsAndKeys: (__bridge id)fixedFont, (__bridge id)kCTFontAttributeName, nil]];
+    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@"\u202f" attributes:[NSDictionary dictionaryWithObjectsAndKeys: (__bridge id)fixedFont, (__bridge id)kCTFontAttributeName, nil]];
     
     CFRelease(fontDescriptor);
     CFRelease(fixedFont);
     CFRelease(baseFont);
     
     return spacer;
+}
+
++ (NSDictionary *)attributesForLocalDestinationLink:(NSString *)anchorName
+{
+    
 }
 
 @end

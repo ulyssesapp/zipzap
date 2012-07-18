@@ -11,6 +11,7 @@
 #import "RKPDFRenderingContext.h"
 
 #import "NSAttributedString+PDFUtilities.h"
+#import "RKDocument+PDFUtilities.h"
 
 
 @interface RKPDFImage ()
@@ -19,6 +20,11 @@
     CGSize _imageSize;
     CGImageRef _image;
 }
+
+/*!
+ @abstract Calculates the actual size that can be used by the image inside a frame of a certain size
+ */
+- (CGSize)scaledSizeForSize:(CGSize)frameSize;
 
 @end
 
@@ -53,12 +59,29 @@
 
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
 {
-    CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x, rect.origin.y, _imageSize.width, _imageSize.height), _image);
+    CGSize actualSize = [self scaledSizeForSize: rect.size];
+    
+    CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x, rect.origin.y, actualSize.width, actualSize.height), _image);
 }
 
-- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex
+- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex frameSize:(CGSize)frameSize
 {
-    return [NSAttributedString spacingWithHeight:_imageSize.height width:_imageSize.width];
+    CGSize actualSize = [self scaledSizeForSize: frameSize];
+    
+    return [NSAttributedString spacingWithHeight:actualSize.height width:actualSize.width];
+}
+
+- (CGSize)scaledSizeForSize:(CGSize)frameSize
+{
+    CGFloat scale = 1;
+    
+    if (_imageSize.width > frameSize.width)
+        scale = frameSize.width / _imageSize.width;
+    
+    if ((_imageSize.height * scale) > frameSize.height)
+        scale = frameSize.height / _imageSize.height;
+
+    return CGSizeMake(_imageSize.width * scale, _imageSize.height * scale);
 }
 
 @end

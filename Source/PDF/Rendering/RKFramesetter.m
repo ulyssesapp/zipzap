@@ -23,9 +23,9 @@
 
 /*!
  @abstract Creates a new attributed string by replacing all text objects by their context-specific, final representation
- @discussion Passes out an array with the ranges of all former text objects that can be used to re-translate string ranges
+ @discussion Passes out an array with the ranges of all former text objects that can be used to re-translate string ranges. The returned string is shortened to the given range.
  */
-+ (NSAttributedString *)instantiateTextObjectOfAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range context:(RKPDFRenderingContext *)context textObjectRanges:(NSArray **)ranges;
++ (NSAttributedString *)instantiateTextObjectsOfAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range frameSize:(CGSize)frameSize context:(RKPDFRenderingContext *)context textObjectRanges:(NSArray **)ranges;
 
 @end
 
@@ -40,7 +40,7 @@
     
     // Translate text objects
     NSArray *textObjectRanges;
-    NSAttributedString *layoutedString = [self instantiateTextObjectOfAttributedString:attributedString inRange:upperBoundRange context:context textObjectRanges:&textObjectRanges];
+    NSAttributedString *layoutedString = [self instantiateTextObjectsOfAttributedString:attributedString inRange:upperBoundRange frameSize:rect.size context:context textObjectRanges:&textObjectRanges];
     
     // Layout string
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)layoutedString);
@@ -70,26 +70,31 @@
     return NSMakeRange(fitRange.location, fitRange.length);
 }
 
-+ (NSAttributedString *)instantiateTextObjectOfAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range context:(RKPDFRenderingContext *)context textObjectRanges:(NSArray **)ranges
++ (NSAttributedString *)instantiateTextObjectsOfAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)sourceRange frameSize:(CGSize)frameSize context:(RKPDFRenderingContext *)context textObjectRanges:(NSArray **)ranges
 {
     // Translate text objects
     NSMutableArray *textObjectRanges = [NSMutableArray new];
-    NSMutableAttributedString *translateableString = [[attributedString attributedSubstringFromRange: range] mutableCopy];
+    NSMutableAttributedString *translateableString = [[attributedString attributedSubstringFromRange: sourceRange] mutableCopy];
     
     __block NSUInteger offset = 0;
     
-    [attributedString enumerateAttribute:RKTextObjectAttributeName inRange:range options:0 usingBlock:^(RKPDFTextObject *textObject, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:RKTextObjectAttributeName inRange:sourceRange options:0 usingBlock:^(RKPDFTextObject *textObject, NSRange attributeRange, BOOL *stop) {
         if (!textObject)
             return;
         
+        NSRange translatedRange = NSMakeRange(attributeRange.location - sourceRange.location + offset, attributeRange.length);
+        
         // Translate text object
-        NSAttributedString *translatedTextObject = [textObject replacementStringUsingContext:context attributedString:attributedString atIndex:range.location];
-        [translateableString replaceCharactersInRange:NSMakeRange(range.location + offset, range.length) withAttributedString:translatedTextObject];
-        [translateableString addTextObjectAttribute:textObject atIndex:range.location];
+        NSAttributedString *translatedTextObject = [textObject replacementStringUsingContext:context attributedString:attributedString atIndex:attributeRange.location frameSize:frameSize];
         
-        [textObjectRanges addObject: [NSValue valueWithRange: NSMakeRange(range.location + offset, translatedTextObject.length)]];
+        // Replace translated object in the output string
+        [translateableString replaceCharactersInRange:translatedRange withAttributedString:translatedTextObject];
+        [translateableString addTextObjectAttribute:textObject atIndex:translatedRange.location];
         
-        offset += translatedTextObject.length - range.length;
+        // Remember the original position of the translated object
+        [textObjectRanges addObject: [NSValue valueWithRange: NSMakeRange(translatedRange.location, translatedTextObject.length)]];
+        
+        offset += translatedTextObject.length - attributeRange.length;
     }];
 
     return translateableString;

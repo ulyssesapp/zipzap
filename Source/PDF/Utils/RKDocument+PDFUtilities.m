@@ -8,13 +8,20 @@
 
 #import "RKDocument+PDFUtilities.h"
 
+#import "RKPDFRenderingContext.h"
+
 #import "NSString+RKNumberFormatting.h"
 
-#define RKHeaderSpacing         5.0
-#define RKFooterSpacing         5.0
-#define RKColumnSpacing         5.0
+#define RKFootnoteSpacing       5.0
+#define RKHeaderSpacing         10.0
+#define RKFooterSpacing         10.0
+#define RKColumnSpacing         10.0
 
 @implementation RKDocument (PDFUtilities)
+
+
+
+#pragma mark - Layouting
 
 - (CGRect)pdfMediaBox
 {
@@ -101,6 +108,9 @@
     return boundingBox;
 }
 
+
+#pragma mark - Footnote handling
+
 + (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle
 {
     switch (enumerationStyle) {
@@ -123,6 +133,33 @@
             return [NSString chicagoManualOfStyleNumeralsFromUnsignedInteger: index];
     }
     
+}
+
+- (CGRect)boundingBoxForFootnotesFromColumnRect:(CGRect)columnRect height:(CGFloat)height
+{
+    CGRect footnoteRect = columnRect;
+    footnoteRect.size.height = height - RKFootnoteSpacing;
+    
+    return footnoteRect;
+}
+
+- (void)drawFootnoteSeparatorForBoundingBox:(CGRect)boundingBox toContext:(RKPDFRenderingContext *)context
+{
+    CGContextRef pdfContext = context.pdfContext;
+    CGColorRef black = CGColorCreateGenericGray(0, 1);
+    
+    CGContextSaveGState(pdfContext);
+    
+    CGContextSetStrokeColorWithColor(pdfContext, black);
+    CGContextSetLineWidth(pdfContext, 1);
+    
+    CGFloat separatorWidth = (boundingBox.size.width > 100) ? 100 : (boundingBox.size.width / 5);
+    
+    CGPoint startPoint = CGPointMake(boundingBox.origin.x, boundingBox.origin.y + boundingBox.size.height + 2);
+    CGPoint endPoint = CGPointMake(startPoint.x + separatorWidth, startPoint.y);
+    
+    CGContextStrokeLineSegments(pdfContext, (CGPoint[]){startPoint, endPoint}, 2);
+    CGContextRestoreGState(pdfContext);
 }
 
 @end

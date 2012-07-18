@@ -17,11 +17,17 @@
 
 /*!
  @abstract Initializes the footnote object with an attributed string that can be used for PDF rendering
+ @discussion The given footnote content is automatically converted to core text representation.
  */
 - (id)initWithContent:(NSAttributedString *)footnoteContent isEndnote:(BOOL)isEndnote context:(RKPDFRenderingContext *)context;
 
 /*!
- @abstract The footnote content
+ @abstract The anchor of the footnote that can be used to reference it inside a PDF document
+ */
+@property (nonatomic, strong, readonly) NSString *footnoteAnchor;
+
+/*!
+ @abstract The footnote content in core text representation
  */
 @property (nonatomic, strong, readonly) NSAttributedString *footnoteContent;
 

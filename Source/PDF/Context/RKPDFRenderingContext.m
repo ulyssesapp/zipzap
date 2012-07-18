@@ -10,6 +10,7 @@
 #import "RKDocument+PDFUtilities.h"
 #import "RKSection+PDFUtilities.h"
 #import "RKPDFTextObject.h"
+#import "RKPDFFootnote.h"
 #import "RKListEnumerator.h"
 
 #import "NSAttributedString+PDFUtilities.h"
@@ -34,6 +35,7 @@
     // Note counters
     NSUInteger _footnoteCounter;
     NSUInteger _endnoteCounter;
+    NSUInteger _footnoteAnchorCounter;
     
     // The graphics context
     CGContextRef _pdfContext;
@@ -71,6 +73,8 @@
     _currentPageNumber = NSUIntegerMax;
     _currentColumnNumber = NSUIntegerMax;
     _pageNumberOfCurrentSection = NSUIntegerMax;
+    
+    _footnoteAnchorCounter = 0;
     
     _documentNotes = [NSMutableArray new];
     _sectionNotes = [NSMutableArray new];
@@ -113,7 +117,10 @@
 
 - (NSString *)stringForCurrentPageNumber
 {
-    return [self.currentSection stringForPageNumber: (self.currentPageNumber + 1)];
+    if (self.currentSection.indexOfFirstPage == NSNotFound)
+        return [self.currentSection stringForPageNumber: (self.currentPageNumber)];
+    else
+        return [self.currentSection stringForPageNumber: (self.pageNumberOfCurrentSection)];
 }
 
 - (void)nextSection
@@ -163,6 +170,9 @@
     // Reset endnote counter, if required
     if (self.document.endnoteEnumerationPolicy == RKFootnoteEnumerationPerPage)
         _endnoteCounter = 0;
+    
+    // Reset page notes
+    _pageNotes = [NSMutableArray new];
 }
 
 - (BOOL)startNewColumn
@@ -187,32 +197,32 @@
 #pragma mark - Footnote managment
 
 
-- (NSString *)enumeratorForNote:(NSAttributedString *)note isFootnote:(BOOL)isFootnote;
+- (NSString *)enumeratorForNote:(RKPDFFootnote *)note
 {
-    RKNoteIndexType noteIndexType = (isFootnote) ? [self indexTypeForFootnotes] : [self indexTypeForEndnotes];
+    RKNoteIndexType noteIndexType = (note.isEndnote) ? [self indexTypeForEndnotes] : [self indexTypeForFootnotes];
     NSMutableArray *noteIndex = [self noteIndexForType: noteIndexType];
     
     // Test, whether there is already a key
     for (NSDictionary *noteDescriptor in noteIndex) {
-        if ([noteDescriptor[RKFootnoteContentKey] isEqual: note])
+        if ([noteDescriptor objectForKey: RKFootnoteObjectKey] == note)
             return noteDescriptor[RKFootnoteEnumerationStringKey];
     }
 
     NSString *enumerationString;
     
     // Otherwise create an enumeration string
-    if (isFootnote) {
-        _footnoteCounter ++;
-        enumerationString = [RKDocument footnoteMarkerForIndex:_footnoteCounter usingEnumerationStyle:self.document.footnoteEnumerationStyle];
-    }
-    else {
+    if (note.isEndnote) {
         _endnoteCounter ++;
         enumerationString = [RKDocument footnoteMarkerForIndex:_footnoteCounter usingEnumerationStyle:self.document.endnoteEnumerationStyle];
+    }
+    else {
+        _footnoteCounter ++;
+        enumerationString = [RKDocument footnoteMarkerForIndex:_footnoteCounter usingEnumerationStyle:self.document.footnoteEnumerationStyle];
     }
 
     // Register note to index
     NSDictionary *noteDescriptor = @{
-        RKFootnoteContentKey:               note,
+        RKFootnoteObjectKey:                note,
         RKFootnoteEnumerationStringKey:     enumerationString
     };
 
@@ -269,28 +279,35 @@
     return 0;
 }
 
-
-
-#pragma mark - Footnote rendering support
-
-- (void)truncateHeadOfNoteIndex:(RKNoteIndexType)noteIndexType toIndex:(NSUInteger)truncationIndex
+- (NSArray *)registeredPageNotesInAttributedString:(NSAttributedString *)string range:(NSRange)range
 {
-    NSMutableArray *noteIndex = [self noteIndexForType: noteIndexType];
-
-    // Get footnote
-    NSAttributedString *attributedString = noteIndex[0];
-    if (!attributedString)
-        return;
+    NSMutableArray *extractedPageNotes = [NSMutableArray new];
     
-    // Just remove the footnote if truncated to 0
-    if (attributedString.length <= truncationIndex) {
-        [noteIndex removeObjectAtIndex: 0];
-        return;
-    }
+    // This document has no page notes
+    if (self.document.footnotePlacement != RKFootnotePlacementSamePage)
+        return extractedPageNotes;
+    
+    // Extract notes
+    [string enumerateAttribute:RKTextObjectAttributeName inRange:range options:0 usingBlock:^(RKPDFFootnote *currentFootnote, NSRange range, BOOL *stop) {
+        // We are only interested in footnotes - ignore other text objects
+        if (![currentFootnote isKindOfClass: RKPDFFootnote.class] || currentFootnote.isEndnote)
+            return;
         
-    // Truncate the string
-    attributedString = [attributedString attributedSubstringFromRange:NSMakeRange(truncationIndex, attributedString.length - truncationIndex)];
-    noteIndex[0] = attributedString;
+        for (NSDictionary *pageNote in self.pageNotes) {
+            // Add descriptor, if it has been registered to this page
+            if ([pageNote objectForKey: RKFootnoteObjectKey] == currentFootnote)
+                [extractedPageNotes addObject: pageNote];
+        }
+    }];
+    
+    return extractedPageNotes;
+}
+
+- (NSString *)newFootnoteAnchor
+{
+    _footnoteAnchorCounter ++;
+    
+    return [NSString stringWithFormat: @"note-%lu", _footnoteAnchorCounter];
 }
 
 @end

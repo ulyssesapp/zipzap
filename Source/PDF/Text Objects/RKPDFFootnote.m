@@ -12,11 +12,13 @@
 
 #import "NSAttributedString+PDFCoreTextConversion.h"
 #import "NSAttributedString+PDFUtilities.h"
+#import "RKFontAdditions.h"
 
 @interface RKPDFFootnote ()
 {
     NSAttributedString *_footnoteContent;
     BOOL _isEndnote;
+    NSString *_footnoteAnchor;
 }
 
 @end
@@ -32,6 +34,7 @@
     if (self) {
         _footnoteContent = [footnoteContent coreTextRepresentationUsingContext: context];
         _isEndnote = isEndnote;
+        _footnoteAnchor = [context newFootnoteAnchor];
     }
     
     return self;
@@ -42,16 +45,22 @@
     return;
 }
 
-- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)index
+- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)index frameSize:(CGSize)frameSize
 {
     // Enumerate and register footnote
-    NSString *enumerator = [context enumeratorForNote:self.footnoteContent isFootnote:!self.isEndnote];
-    
+    NSString *enumerator = [context enumeratorForNote:self];
+
     // Create a replacement string (using superscript)
-    NSMutableAttributedString *replacementString = [[NSMutableAttributedString alloc] initWithString:enumerator attributes:[attributedString attributesAtIndex:index effectiveRange:NULL]];
-    [replacementString addAttribute:(__bridge id)kCTSuperscriptAttributeName value:[NSNumber numberWithInteger: 1] range:NSMakeRange(0, replacementString.length)];
+    NSMutableDictionary *attributes = [[attributedString attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
     
-    return replacementString;
+    // Remove text object from enumerator string
+    [attributes removeObjectForKey: RKTextObjectAttributeName];
+    
+    // Create replacement string
+    NSMutableAttributedString *replacement = [[NSAttributedString footnoteEnumeratorFromString:enumerator usingAttributes:attributes] mutableCopy];
+    [replacement addLocalDestinationLinkForAnchor:_footnoteAnchor forRange:NSMakeRange(0, replacement.length)];
+    
+    return replacement;
 }
 
 @end

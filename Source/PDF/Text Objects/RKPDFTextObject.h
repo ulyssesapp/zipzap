@@ -41,7 +41,8 @@ typedef enum : NSUInteger {
 
 /*!
  @abstract Provides a replacement string for the text object according to the current context
+ @discussion Receives the attributed string and the index of the text object and the size of the frame that is currently created.
  */
-- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex;
+- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex frameSize:(CGSize)size;
 
 @end

@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKPDFTextObject, RKPDFRenderingContext;
+@class RKPDFTextObject, RKPDFRenderingContext, RKPDFFootnote;
 
 
 /*!
- @abstract The key mapping to the content inside a footnote descriptor
+ @abstract The key mapping to the RKPDFFootnote object inside a footnote descriptor
  */
-extern NSString *RKFootnoteContentKey;
+extern NSString *RKFootnoteObjectKey;
 
 /*!
  @abstract The key mapping to the enumeration string inside a footnote descriptor
@@ -50,17 +50,25 @@ extern NSString *RKPDFAnchorLinkAttributeName;
 
 /*!
  @abstract Creates a new attributed string from the current string by applying the footnote style using a footnote index.
+ @discussion  The generated attributed string is in core text representation.
  */
-- (NSAttributedString *)noteWithEnumerationString:(NSString *)enumerationString;
++ (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString;
 
 /*!
- @abstract Creates an attributed string containing the given footnotes or endnotes
+ @abstract Creates an attributed string containing the given footnotes or endnotes. The generated attributed string is in core text representation.
  @discussion The notes are stored as an array of footnote descriptors (NSDictionary) containing the footnote content (RKFootnoteContentKey) as NSAttributedString in core text representation and the enumeration string of the footnote (RKFootenoteEnumerationStringKey).
  */
-+ (NSAttributedString *)noteListWithNotes:(NSArray *)notes;
++ (NSAttributedString *)noteListFromNotes:(NSArray *)notes;
+
+/*!
+ @abstract Creates a styled footnote enumerator using a string. The generated attributed string is in core text representation.
+ @discussion The styling of the enumerator is based on the given attribute dictionary. The styling dictionary must only contain attributes in core text representation.
+ */
++ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingAttributes:(NSDictionary *)attributes;
 
 /*!
  @abstract Provides an attributed string with a fixed-width and fixed-height spacing
+ @discussion  The generated attributed string is in core text representation.
  */
 + (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width;
 

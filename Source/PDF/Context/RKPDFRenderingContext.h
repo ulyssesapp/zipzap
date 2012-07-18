@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKDocument, RKPDFTextObject, RKSection, RKListEnumerator;
+@class RKDocument, RKPDFTextObject, RKPDFFootnote, RKSection, RKListEnumerator;
 
 typedef enum : NSUInteger {
     RKNoteIndexForDocument          = 0,
@@ -107,19 +107,19 @@ typedef enum : NSUInteger {
 
 /*!
  @abstract All footnotes and endnotes that have been collected so far that should be shown on the end of the document
- @discussion An array of dictionaries containing the attributed string of the footnote in core text representation (RKFootnoteContentKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
+ @discussion An array of dictionaries containing the attributed string of the footnote RKPDFFootnote object (RKFootnoteObjectKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
  */
 @property (nonatomic, strong, readonly) NSArray *documentNotes;
 
 /*!
  @abstract All footnotes and endnotes that have been collected so far that should be shown on the end of the current section
- @discussion An array of dictionaries containing the attributed string of the footnote in core text representation (RKFootnoteContentKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
+ @discussion An array of dictionaries containing the attributed string of the RKPDFFootnote object (RKFootnoteObjectKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
  */
 @property (nonatomic, strong, readonly) NSArray *sectionNotes;
 
 /*!
  @abstract All footnotes and endnotes that have been collected so far that should be shown on the end of the current page
- @discussion An array of dictionaries containing the attributed string of the footnote in core text representation (RKFootnoteContentKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
+ @discussion An array of dictionaries containing the attributed string of the RKPDFFootnote object (RKFootnoteObjectKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
  */
 @property (nonatomic, strong, readonly) NSArray *pageNotes;
 
@@ -127,7 +127,7 @@ typedef enum : NSUInteger {
  @abstract Requests an enumeration string for the given note with respect to the enumeration policy of the document, the current section and page
  @discussion The note is registered either to the documentNotes, sectionNotes or pageNotes.
  */
-- (NSString *)enumeratorForNote:(NSAttributedString *)note isFootnote:(BOOL)isFootnote;
+- (NSString *)enumeratorForNote:(RKPDFFootnote *)note;
 
 /*!
  @abstract Provides the index type for footnotes according to the document settings
@@ -139,17 +139,16 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, readonly) RKNoteIndexType indexTypeForEndnotes;
 
-
-
-
-#pragma mark - Footnote rendering support
+/*!
+ @abstract Provides all page notes that are visible in the 'pageNotes' array and in the given attributed string range
+ @discussion Returns an array of dictionaries containing the attributed string of the footnote in core text representation (RKFootnoteContentKey) and the enumeration string of the note (RKFootnoteEnumerationStringKey). The array is ordered by the expected output ordering for the notes.
+ */
+- (NSArray *)registeredPageNotesInAttributedString:(NSAttributedString *)string range:(NSRange)range;
 
 /*!
- @abstract Truncates a range from the document note with the lowest index. If the note becomes empty, the note is removed from the dictionary
+ @abstract Creates a new, unique footnote anchor
  */
-- (void)truncateHeadOfNoteIndex:(RKNoteIndexType)noteIndexType toIndex:(NSUInteger)index;
-
-
+- (NSString *)newFootnoteAnchor;
 
 #pragma mark - List rendering
 

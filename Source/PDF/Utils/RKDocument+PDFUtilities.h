@@ -8,6 +8,8 @@
 
 #import "RKDocument.h"
 
+@class RKPDFRenderingContext;
+
 /*!
  @abstract Utility methods for PDF generation
  */
@@ -34,6 +36,11 @@
 - (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer;
 
 /*!
+ @abstract Provides a bounding box for footnotes based on the bounding box of a certain column limited by a given height
+ */
+- (CGRect)boundingBoxForFootnotesFromColumnRect:(CGRect)columnRect height:(CGFloat)height;
+
+/*!
  @abstract Provides a bounding box for the header of a section page
  */
 - (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section;
@@ -47,5 +54,10 @@
  @abstract Generates a footnote marker for the given index according to the style setting
  */
 + (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle;
+
+/*!
+ @abstract Draws a footnote separator to a given context using the given bounding box around the footnotes
+ */
+- (void)drawFootnoteSeparatorForBoundingBox:(CGRect)boundingBox toContext:(RKPDFRenderingContext *)context;
 
 @end
