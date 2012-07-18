@@ -96,11 +96,6 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     return spacer;
 }
 
-+ (NSDictionary *)attributesForLocalDestinationLink:(NSString *)anchorName
-{
-    
-}
-
 @end
 
 @implementation NSMutableAttributedString (PDFUtilities)
