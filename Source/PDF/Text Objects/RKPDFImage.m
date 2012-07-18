@@ -51,7 +51,8 @@
 
 - (void)dealloc
 {
-    CFRelease(_image);
+    if (_image)
+        CFRelease(_image);
 }
 
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
