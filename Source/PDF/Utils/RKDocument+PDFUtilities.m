@@ -73,7 +73,7 @@
     }
     
     // Shrink page for header, if needed
-    if ((pageBounds.origin.y + pageBounds.size.height) > (header.origin.y - RKHeaderSpacing)) {
+    if (((pageBounds.origin.y + pageBounds.size.height) > (header.origin.y - RKHeaderSpacing)) && (header.size.height)) {
         pageBounds.size.height -= (pageBounds.origin.y + pageBounds.size.height) - (header.origin.y - RKHeaderSpacing);
     }
 
