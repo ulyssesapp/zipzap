@@ -23,8 +23,9 @@
 
 /*!
  @abstract Renders a section using the given context
+ @discussion If the section is the last section of the document, document endnotes are extended to the section
  */
-+ (void)renderSection:(RKSection *)section usingContext:(RKPDFRenderingContext *)context;
++ (void)renderSection:(RKSection *)section usingContext:(RKPDFRenderingContext *)context isLastSection:(BOOL)isLastSection;
 
 @end
 
@@ -42,15 +43,15 @@
     }
     
     // Apply rendering per section
-    for (RKSection *section in context.sections) {
+    [context.sections enumerateObjectsUsingBlock:^(RKSection *section, NSUInteger sectionIndex, BOOL *stop) {
         [context nextSection];
-        [self renderSection:section usingContext:context];
-    }
+        [self renderSection:section usingContext:context isLastSection:(sectionIndex == (context.sections.count - 1))];
+    }];
     
     return [context close];
 }
 
-+ (void)renderSection:(RKSection *)section usingContext:(RKPDFRenderingContext *)context
++ (void)renderSection:(RKSection *)section usingContext:(RKPDFRenderingContext *)context isLastSection:(BOOL)isLastSection
 {
     // Convert content string
     NSAttributedString *contentString = section.content;
@@ -105,19 +106,16 @@
             CGRect columnBox = [context.document boundingBoxForColumn:columnIndex section:section withHeader:headerConstraints footer:footerConstraints];
 
             // Render column
-            NSRange renderedRange = [self renderColumnWithAttributedString:contentString inRange:remainingRange boundingBox:columnBox context:context previousFootnotes:remainingFootnotes remainingFootnotes:&remainingFootnotes];
+            NSRange renderedRange = [self renderColumnWithAttributedString:contentString inRange:remainingRange boundingBox:columnBox context:context previousFootnotes:remainingFootnotes remainingFootnotes:&remainingFootnotes isLastSection:isLastSection];
             
             // Update remaining text range
             remainingRange.location += renderedRange.length;
             remainingRange.length -= renderedRange.length;
         }
-        
-        // Are there additional endnotes for this section, append them...
-        // TBD...
     }
 }
 
-+ (NSRange)renderColumnWithAttributedString:(NSAttributedString *)contentString inRange:(NSRange)contentRange boundingBox:(CGRect)columnBox context:(RKPDFRenderingContext *)context previousFootnotes:(NSAttributedString *)previousFootnotes remainingFootnotes:(NSAttributedString **)remainingFootnotesOut
++ (NSRange)renderColumnWithAttributedString:(NSAttributedString *)contentString inRange:(NSRange)contentRange boundingBox:(CGRect)columnBox context:(RKPDFRenderingContext *)context previousFootnotes:(NSAttributedString *)previousFootnotes remainingFootnotes:(NSAttributedString **)remainingFootnotesOut isLastSection:(BOOL)isLastSection
 {
     // Create a prelimary layout the contents of the frame
     RKPDFFrame *contentFrame = [RKFramesetter frameForAttributedString:contentString usingRange:contentRange rect:columnBox context:context];
@@ -133,9 +131,15 @@
 
         // Get footnotes for current line
         NSArray *currentFootnotes = [context registeredPageNotesInAttributedString:contentString range:lineRange];
-        NSAttributedString *currentFootnoteString = [NSAttributedString noteListFromNotes: currentFootnotes];
+
+        // Add endnotes to the footnotes, if we are on the last line of the column
+        if ((lineRange.location + lineRange.length) >= contentString.length) {
+            currentFootnotes = [self appendEndnotesToNotes:currentFootnotes isLastSection:isLastSection context:context];
+        }
 
         // Create an attributed string for the footnote section (consisting of previous footnotes and the current footnotes)
+        NSAttributedString *currentFootnoteString = [NSAttributedString noteListFromNotes: currentFootnotes];
+        
         NSMutableAttributedString *estimatedFootnotes = [renderableFootnotes mutableCopy];
         if (currentFootnoteString.length) {
             if (estimatedFootnotes.length)
@@ -143,7 +147,7 @@
 
             [estimatedFootnotes appendAttributedString: currentFootnoteString];
         }
-
+        
         // Estimate, whether we can render the current line together with at least the beginning of its first footnote
         RKPDFFrame *currentFootnoteFrame = [RKFramesetter frameForAttributedString:estimatedFootnotes usingRange:NSMakeRange(0, estimatedFootnotes.length) rect:footnoteBox context:context];
         NSRange visibleFootnoteRange = currentFootnoteFrame.visibleStringRange;
@@ -182,6 +186,23 @@
     
     // We return the range we've rendered so far from the current column
     return renderedRange;
+}
+
++ (NSArray *)appendEndnotesToNotes:(NSArray *)notes isLastSection:(BOOL)isLastSection context:(RKPDFRenderingContext *)context
+{
+    NSMutableArray *allNotes = notes ? [notes mutableCopy] : [NSMutableArray new];
+    
+    // Add section notes
+    if (context.sectionNotes)
+        [allNotes addObjectsFromArray: context.sectionNotes];
+    
+    // Add document notes, if we are in the last section
+    if (isLastSection) {
+        if (context.documentNotes)
+            [allNotes addObjectsFromArray: context.documentNotes];
+    }
+    
+    return allNotes;
 }
 
 @end

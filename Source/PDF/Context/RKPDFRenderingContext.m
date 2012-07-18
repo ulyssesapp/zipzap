@@ -213,7 +213,7 @@
     // Otherwise create an enumeration string
     if (note.isEndnote) {
         _endnoteCounter ++;
-        enumerationString = [RKDocument footnoteMarkerForIndex:_footnoteCounter usingEnumerationStyle:self.document.endnoteEnumerationStyle];
+        enumerationString = [RKDocument footnoteMarkerForIndex:_endnoteCounter usingEnumerationStyle:self.document.endnoteEnumerationStyle];
     }
     else {
         _footnoteCounter ++;
