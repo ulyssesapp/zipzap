@@ -62,9 +62,9 @@ extern NSString *RKPDFAnchorLinkAttributeName;
 
 /*!
  @abstract Creates a styled footnote enumerator using a string. The generated attributed string is in core text representation.
- @discussion The styling of the enumerator is based on the given attribute dictionary. The styling dictionary must only contain attributes in core text representation.
+ @discussion The styling of the enumerator is based on the given font.
  */
-+ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingAttributes:(NSDictionary *)attributes;
++ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(NSFont *)font;
 
 /*!
  @abstract Provides an attributed string with a fixed-width and fixed-height spacing

@@ -28,7 +28,7 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
 + (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString
 {
     NSMutableAttributedString *noteString = [note.footnoteContent mutableCopy];
-    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingAttributes:[noteString attributesAtIndex:0 effectiveRange:NULL]];
+    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL]];
 
     // Add enumerator and spacing
     [noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
@@ -60,12 +60,11 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     return noteList;
 }
 
-+ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingAttributes:(NSDictionary *)attributes
++ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(NSFont *)font
 {
-    NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString:enumeratorString attributes:attributes];
+    NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString:enumeratorString];
     
     // Style footnote
-    NSFont *font = [attributes objectForKey: NSFontAttributeName];
     if (!font)
         font = [NSFont RTFDefaultFont];
     

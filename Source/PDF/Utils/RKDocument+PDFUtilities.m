@@ -151,7 +151,7 @@
     CGContextSaveGState(pdfContext);
     
     CGContextSetStrokeColorWithColor(pdfContext, black);
-    CGContextSetLineWidth(pdfContext, 1);
+    CGContextSetLineWidth(pdfContext, 1.0f);
     
     CGFloat separatorWidth = (boundingBox.size.width > 100) ? 100 : (boundingBox.size.width / 5);
     
