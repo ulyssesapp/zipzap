@@ -21,6 +21,8 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
 
 + (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect
 {
+    NSFont *font = [attributedString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];    
+    
     // Get strikethrough style
     NSUInteger style = [[attributedString attribute:NSStrikethroughStyleAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
     if (!style)
@@ -51,10 +53,12 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     }
 
     // Set stroke width
+    CGFloat strokeWidth = font ? font.underlineThickness : 1.0f;
+
     if (style & NSUnderlineStyleThick)
-        CGContextSetLineWidth(context.pdfContext, 3);
+        CGContextSetLineWidth(context.pdfContext, strokeWidth * 2);
     else
-        CGContextSetLineWidth(context.pdfContext, 1);
+        CGContextSetLineWidth(context.pdfContext, strokeWidth);
     
     // Paint stroke
     CGContextStrokeLineSegments(context.pdfContext, (CGPoint[]){startPoint, endPoint}, 2);
