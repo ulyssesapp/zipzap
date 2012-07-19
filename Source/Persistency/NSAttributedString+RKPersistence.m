@@ -117,10 +117,16 @@ NSMutableDictionary *NSAttributedStringPersistableEnums;
                                           [NSNumber numberWithInteger: 3],          @"rigthToLeftOverride",
                                          nil];
         
+        NSDictionary *placeholderTypes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          [NSNumber numberWithInteger: RKPlaceholderPageNumber],    @"pageNumber",
+                                          [NSNumber numberWithInteger: RKPlaceholderSectionNumber], @"sectionNumber",
+                                         nil];
+        
         NSAttributedStringPersistableEnums = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                               superscriptStyles, NSSuperscriptAttributeName,
                                               ligaturStyles, NSLigatureAttributeName,
                                               writingDirection, NSWritingDirectionAttributeName,
+                                              placeholderTypes, RKPlaceholderAttributeName,
                                              nil];
     }
 }
