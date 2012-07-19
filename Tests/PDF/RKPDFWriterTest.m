@@ -101,9 +101,6 @@
 
 - (void)testPDFRendering
 {
-    
-    return;
-    
 	NSURL *expectedURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"expected" withExtension:nil subdirectory:@"Test Data/pdf"];
 	NSURL *originalURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"source" withExtension:nil subdirectory:@"Test Data/pdf"];
     
