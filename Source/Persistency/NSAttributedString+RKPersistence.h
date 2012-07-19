@@ -19,6 +19,18 @@
 + (void)registerNumericAttributeForPersistence:(NSString *)attributeName;
 
 /*!
+ @abstract Registers a numeric attribute for serialization.
+ @discussion Receives a mapping from enumeration value names to value.
+ */
++ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingSignedEnumeration:(NSDictionary *)enumeration;
+
+/*!
+ @abstract Registers a numeric attribute for serialization.
+ @discussion Receives a mapping from enumeration flag names to value.
+ */
++ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingFlags:(NSDictionary *)flags;
+
+/*!
  @abstract Registers a string attribute for serialization.
  */
 + (void)registerStringAttributeForPersistence:(NSString *)attributeName;

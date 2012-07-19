@@ -18,8 +18,8 @@ NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
 {
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
 
-    NSUInteger indentationLevel = [propertyList[RKListItemIndentationLevelPersistenceKey] unsignedIntegerValue];
-    RKListStyle *listStyle = [context listStyleForIndex: [propertyList[RKListItemListStyleIndexPersistenceKey] unsignedIntegerValue]];
+    NSUInteger indentationLevel = [[propertyList objectForKey: RKListItemIndentationLevelPersistenceKey] unsignedIntegerValue];
+    RKListStyle *listStyle = [context listStyleForIndex: [[propertyList objectForKey: RKListItemListStyleIndexPersistenceKey] unsignedIntegerValue]];
     if (!listStyle)
         return nil;
     
@@ -30,10 +30,10 @@ NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
 
 - (id)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
-    return @{
-        RKListItemListStyleIndexPersistenceKey:         @([context indexForListStyle: self.listStyle]),
-        RKListItemIndentationLevelPersistenceKey:       @(self.indentationLevel)
-    };
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSNumber numberWithUnsignedInteger: [context indexForListStyle: self.listStyle]],      RKListItemListStyleIndexPersistenceKey,
+            [NSNumber numberWithUnsignedInteger: self.indentationLevel],                            RKListItemIndentationLevelPersistenceKey,
+           nil];
 }
 
 @end

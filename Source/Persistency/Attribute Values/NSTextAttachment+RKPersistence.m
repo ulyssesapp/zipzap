@@ -26,9 +26,7 @@ NSString *NSTextAttachmentFileIndexPersistenceKey = @"fileIdentifier";
 
 - (id)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
-    return @{
-        NSTextAttachmentFileIndexPersistenceKey:      @([context indexForFileWrapper: self.fileWrapper])
-    };
+    return [NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger: [context indexForFileWrapper: self.fileWrapper]] forKey:NSTextAttachmentFileIndexPersistenceKey];
 }
 
 @end

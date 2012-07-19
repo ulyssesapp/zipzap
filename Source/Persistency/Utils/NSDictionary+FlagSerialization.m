@@ -14,12 +14,22 @@
 {
     NSMutableArray *serializedFlags = [NSMutableArray new];
     __block NSUInteger cleanedFlags = flags;
+
+    // Sort flags, so we can detect multi-bit flags that imply other flags
+    NSArray *sortedFlags = [self.allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString *key1, NSString *key2) {
+        if ([[self objectForKey: key1] unsignedIntegerValue] < [[self objectForKey: key2] unsignedIntegerValue])
+            return NSOrderedAscending;
+        else
+            return NSOrderedDescending;
+    }];
     
-    [self enumerateKeysAndObjectsUsingBlock:^(NSString *flagName, NSNumber *flag, BOOL *stop) {
+    // Detect flags that have been set so far
+    [sortedFlags enumerateObjectsUsingBlock:^(NSString *flagName, NSUInteger idx, BOOL *stop) {
+        NSNumber *flag = [self objectForKey: flagName];
         NSUInteger flagValue = flag.unsignedIntegerValue;
         
         if (flagValue == 0) {
-            if (flags == 0) {
+            if (cleanedFlags == 0) {
                 // We have a flag with value 0, and we should serialize 0.
                 [serializedFlags addObject: flagName];
                 *stop = YES;
@@ -30,7 +40,7 @@
         }
         
         // We have a flag with a value
-        if (flags & flagValue) {
+        if (cleanedFlags & flagValue) {
             [serializedFlags addObject: flagName];
             cleanedFlags &= ~flagValue;
         }
