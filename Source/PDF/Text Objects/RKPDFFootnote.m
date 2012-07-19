@@ -51,7 +51,7 @@
     NSString *enumerator = [context enumeratorForNote:self];
     
     // Create replacement string
-    NSFont *font = [attributedString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+    NSFont *font = [attributedString attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
     NSMutableAttributedString *replacement = [[NSAttributedString footnoteEnumeratorFromString:enumerator usingFont:font] mutableCopy];
 
     // Add link to footnote
