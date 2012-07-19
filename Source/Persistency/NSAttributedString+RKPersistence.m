@@ -137,6 +137,22 @@ NSMutableDictionary *NSAttributedStringPersistableEnums;
     [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
 }
 
++ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingFlags:(NSDictionary *)flags
+{
+    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
+    
+    [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
+    [NSAttributedStringPersistableFlags setObject:flags forKey:attributeName];
+}
+
++ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingSignedEnumeration:(NSDictionary *)enumeration
+{
+    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
+    
+    [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
+    [NSAttributedStringPersistableEnums setObject:enumeration forKey:attributeName];
+}
+
 + (void)registerStringAttributeForPersistence:(NSString *)attributeName
 {
     NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
