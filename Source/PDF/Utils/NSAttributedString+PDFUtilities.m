@@ -76,10 +76,14 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
 
 + (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width
 {
+    static NSCharacterSet *spacingCharacterSet;
+    spacingCharacterSet = spacingCharacterSet ?: [NSCharacterSet characterSetWithCharactersInString:@"\u202f"];
+    
     CTFontRef baseFont = CTFontCreateWithName(CFSTR("Helvetica"), height, NULL);
 
     NSDictionary *fontAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithFloat: width], kCTFontFixedAdvanceAttribute,
+                                    spacingCharacterSet, kCTFontCharacterSetAttribute,
                                     nil
                                    ];
     
