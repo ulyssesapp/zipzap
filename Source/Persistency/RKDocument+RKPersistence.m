@@ -53,27 +53,48 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
     self = [self init];
     
     if (self) {
-        self.hyphenationEnabled = [[propertyList objectForKey: RKPersistencyHyphenationEnabledKey] boolValue];
-        self.pageSize = NSMakeSize([[propertyList objectForKey: RKPersistencyPageWidthKey] floatValue], [[propertyList objectForKey: RKPersistencyPageHeightKey] floatValue]);
-        self.headerSpacing = [[propertyList objectForKey: RKPersistencyHeaderSpacingKey] floatValue];
-        self.footerSpacing = [[propertyList objectForKey: RKPersistencyFooterSpacingKey] floatValue];
-
-        self.pageInsets = RKPageInsetsMake([[propertyList objectForKey: RKPersistencyPageInsetsTopKey] floatValue],
-                                         [[propertyList objectForKey: RKPersistencyPageInsetsLeftKey] floatValue],
-                                         [[propertyList objectForKey: RKPersistencyPageInsetsRightKey] floatValue],
-                                         [[propertyList objectForKey: RKPersistencyPageInsetsBottomKey] floatValue]
-                                        );
+        if ([propertyList objectForKey: RKPersistencyHyphenationEnabledKey])
+            self.hyphenationEnabled = [[propertyList objectForKey: RKPersistencyHyphenationEnabledKey] boolValue];
         
-        self.pageOrientation = [[self.class serializationTableForPageOrientation] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyPageOrientationKey] error:NULL];
-        self.footnotePlacement = [[self.class serializationTableForFootnotePlacement] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnotePlacementKey] error:NULL];
-        self.endnotePlacement = [[self.class serializationTableForEndnotePlacement] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyEndnotePlacementKey] error:NULL];
-        self.footnoteEnumerationStyle = [[self.class serializationTableForFootnoteEnumerationStyle] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteEnumerationStyleKey] error:NULL];
-        self.endnoteEnumerationStyle = [[self.class serializationTableForFootnoteEnumerationStyle] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyEndnoteEnumerationStyleKey] error:NULL];
+        if ([propertyList objectForKey: RKPersistencyPageWidthKey])
+            self.pageSize = NSMakeSize([[propertyList objectForKey: RKPersistencyPageWidthKey] floatValue], [[propertyList objectForKey: RKPersistencyPageHeightKey] floatValue]);
+        
+        if ([propertyList objectForKey: RKPersistencyHeaderSpacingKey])
+            self.headerSpacing = [[propertyList objectForKey: RKPersistencyHeaderSpacingKey] floatValue];
+        
+        if ([propertyList objectForKey: RKPersistencyFooterSpacingKey])
+            self.footerSpacing = [[propertyList objectForKey: RKPersistencyFooterSpacingKey] floatValue];
 
-        self.footnoteEnumerationPolicy = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteEnumerationPolicyKey] error:NULL];
-        self.endnoteEnumerationPolicy = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyEndnoteEnumerationPolicyKey] error:NULL];
+        if ([propertyList objectForKey: RKPersistencyPageInsetsTopKey])
+            self.pageInsets = RKPageInsetsMake([[propertyList objectForKey: RKPersistencyPageInsetsTopKey] floatValue],
+                                             [[propertyList objectForKey: RKPersistencyPageInsetsLeftKey] floatValue],
+                                             [[propertyList objectForKey: RKPersistencyPageInsetsRightKey] floatValue],
+                                             [[propertyList objectForKey: RKPersistencyPageInsetsBottomKey] floatValue]
+                                            );
+        
+        if ([propertyList objectForKey: RKPersistencyPageOrientationKey])
+            self.pageOrientation = [[self.class serializationTableForPageOrientation] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyPageOrientationKey] error:NULL];
+        
+        if ([propertyList objectForKey: RKPersistencyFootnotePlacementKey])
+            self.footnotePlacement = [[self.class serializationTableForFootnotePlacement] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnotePlacementKey] error:NULL];
 
-        self.sectionNumberingStyle = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencySectionNumberingStyleKey] error:NULL];
+        if ([propertyList objectForKey: RKPersistencyEndnotePlacementKey])
+            self.endnotePlacement = [[self.class serializationTableForEndnotePlacement] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyEndnotePlacementKey] error:NULL];
+        
+        if ([propertyList objectForKey: RKPersistencyFootnoteEnumerationStyleKey])
+            self.footnoteEnumerationStyle = [[self.class serializationTableForFootnoteEnumerationStyle] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteEnumerationStyleKey] error:NULL];
+
+        if ([propertyList objectForKey: RKPersistencyEndnoteEnumerationStyleKey])
+            self.endnoteEnumerationStyle = [[self.class serializationTableForFootnoteEnumerationStyle] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyEndnoteEnumerationStyleKey] error:NULL];
+
+        if ([propertyList objectForKey: RKPersistencyFootnoteEnumerationPolicyKey])
+            self.footnoteEnumerationPolicy = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteEnumerationPolicyKey] error:NULL];
+
+        if ([propertyList objectForKey: RKPersistencyEndnoteEnumerationPolicyKey])
+            self.endnoteEnumerationPolicy = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyEndnoteEnumerationPolicyKey] error:NULL];
+
+        if ([propertyList objectForKey: RKPersistencySectionNumberingStyleKey])
+            self.sectionNumberingStyle = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencySectionNumberingStyleKey] error:NULL];
         
         // De-serialize meta data, if any
         if ([[propertyList objectForKey: RKPersistencyMetadataKey] isKindOfClass: NSDictionary.class])

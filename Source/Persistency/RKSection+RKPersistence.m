@@ -88,6 +88,8 @@ NSString *RKPersistencePageMaskRightSuffix      = @"Right";
     
     for (NSUInteger maskIndex = 0; maskIndex < 3; maskIndex ++) {
         NSDictionary *serializedPageObject = [propertyList objectForKey: [self.class serializableSelectorForMask:masks[maskIndex] usingPrefix:prefix]];
+        if (!serializedPageObject)
+            continue;
         
         NSAttributedString *pageObject = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:serializedPageObject error:error];
         if (pageObject)
