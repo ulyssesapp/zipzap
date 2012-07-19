@@ -55,6 +55,7 @@
 		795C1BDC14ED70590041EB69 /* RKStyleName.m in Sources */ = {isa = PBXBuildFile; fileRef = 795C1BDA14ED70590041EB69 /* RKStyleName.m */; };
 		795E673415B70A6B001836AB /* RKPDFWriterTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 795E673215B70A53001836AB /* RKPDFWriterTypes.h */; };
 		795E673515B70A6C001836AB /* RKPDFWriterTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 795E673215B70A53001836AB /* RKPDFWriterTypes.h */; };
+		795E673915B81C8E001836AB /* RKPDFWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 795E673815B81C8E001836AB /* RKPDFWriterTest.m */; };
 		796C955C15AC7E1600713471 /* RKFramesetter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796C955A15AC7E1600713471 /* RKFramesetter.h */; };
 		796C955D15AC7E1600713471 /* RKFramesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C955B15AC7E1600713471 /* RKFramesetter.m */; };
 		796C956015AC945800713471 /* RKCoreTextRepresentationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C955F15AC945700713471 /* RKCoreTextRepresentationConverter.m */; };
@@ -391,6 +392,8 @@
 		795C1BD914ED70590041EB69 /* RKStyleName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStyleName.h; path = Document/Attributes/RKStyleName.h; sourceTree = "<group>"; };
 		795C1BDA14ED70590041EB69 /* RKStyleName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKStyleName.m; path = Document/Attributes/RKStyleName.m; sourceTree = "<group>"; };
 		795E673215B70A53001836AB /* RKPDFWriterTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RKPDFWriterTypes.h; path = PDF/Utils/RKPDFWriterTypes.h; sourceTree = "<group>"; };
+		795E673715B81C8E001836AB /* RKPDFWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFWriterTest.h; path = PDF/RKPDFWriterTest.h; sourceTree = "<group>"; };
+		795E673815B81C8E001836AB /* RKPDFWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFWriterTest.m; path = PDF/RKPDFWriterTest.m; sourceTree = "<group>"; };
 		796C955A15AC7E1600713471 /* RKFramesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFramesetter.h; path = PDF/Rendering/RKFramesetter.h; sourceTree = "<group>"; };
 		796C955B15AC7E1600713471 /* RKFramesetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFramesetter.m; path = PDF/Rendering/RKFramesetter.m; sourceTree = "<group>"; };
 		796C955F15AC945700713471 /* RKCoreTextRepresentationConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKCoreTextRepresentationConverter.m; path = "PDF/CoreText Conversion/Converter/RKCoreTextRepresentationConverter.m"; sourceTree = "<group>"; };
@@ -727,6 +730,7 @@
 				79CE4AA41599E79F00C83EF6 /* Persistence */,
 				79F673B114C84AA3005D03FA /* Document */,
 				796EAC1014D947FB001E8401 /* Writer */,
+				795E673615B81C64001836AB /* PDF */,
 				79A359A214D1A1D10076A5F7 /* Utils */,
 				50317D7514C4954000F23C04 /* Other */,
 			);
@@ -813,6 +817,15 @@
 				79C486B614F1465100B29A1E /* RKStyleNameAttributeWriterTest.m */,
 			);
 			name = "Style Naming";
+			sourceTree = "<group>";
+		};
+		795E673615B81C64001836AB /* PDF */ = {
+			isa = PBXGroup;
+			children = (
+				795E673715B81C8E001836AB /* RKPDFWriterTest.h */,
+				795E673815B81C8E001836AB /* RKPDFWriterTest.m */,
+			);
+			name = PDF;
 			sourceTree = "<group>";
 		};
 		796EAB9614D94761001E8401 /* Writer */ = {
@@ -1696,6 +1709,7 @@
 				79A55278152C607B008EADAB /* RKListEnumeratorTest.m in Sources */,
 				79CE4AE51599FFBA00C83EF6 /* NSAttributedStringPersistenceTest.m in Sources */,
 				7935C5E915B4A6C2007281D6 /* RKDocumentPersistenceTest.m in Sources */,
+				795E673915B81C8E001836AB /* RKPDFWriterTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
