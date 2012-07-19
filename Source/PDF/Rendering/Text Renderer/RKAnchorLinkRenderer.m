@@ -22,7 +22,11 @@
 + (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect
 {
     NSString *anchor = [attributedString attribute:RKPDFAnchorLinkAttributeName atIndex:range.location effectiveRange:NULL];
+
+    // Transform coordinates to current CTM
+    runRect = CGRectApplyAffineTransform(runRect, CGContextGetCTM(context.pdfContext));
     
+    // Place link
     CGPDFContextSetDestinationForRect(context.pdfContext, (__bridge CFStringRef)anchor, runRect);
 }
 

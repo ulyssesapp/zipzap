@@ -29,6 +29,10 @@
     else
         NSAssert(false, @"Invalid argument");
     
+    // Transform coordinates to current CTM
+    runRect = CGRectApplyAffineTransform(runRect, CGContextGetCTM(context.pdfContext));
+    
+    // Place link
     CGPDFContextSetURLForRect(context.pdfContext, (__bridge CFURLRef)URL, runRect);
 }
 
