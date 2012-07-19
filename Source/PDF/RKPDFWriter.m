@@ -136,8 +136,16 @@
     __block NSMutableAttributedString *renderableFootnotes = [previousFootnotes mutableCopy] ?: [NSMutableAttributedString new];
     __block RKPDFFrame *footnoteFrame = [RKFramesetter frameForAttributedString:renderableFootnotes usingRange:NSMakeRange(0, renderableFootnotes.length) rect:columnBox context:context];
 
+    __block BOOL pendingPageBreak = NO;
+    
     // Render text lines
     [contentFrame renderWithRenderedRange:&renderedRange usingOrigin:columnBox.origin options:options block:^(NSRange lineRange, CGRect lineBoundingBox, NSUInteger lineIndex, BOOL *stop) {
+        // Skip this line, if we have a pending page break
+        if (pendingPageBreak) {
+            *stop = YES;
+            return;
+        }
+        
         // Get the maximum space we can occupy for footnotes unitl the current line (occupy the entire box wihtout spacings, if we are at line 0)
         CGRect footnoteBox = [context.document boundingBoxForFootnotesFromColumnRect:columnBox height:(lineBoundingBox.origin.y - columnBox.origin.y)];
 
@@ -174,6 +182,10 @@
         // Continue with the new footnote string
         footnoteFrame = currentFootnoteFrame;
         renderableFootnotes = estimatedFootnotes;
+        
+        // Did the current line propose a page break? If yes: stop after this line
+        if ([contentString.string rangeOfString:@"\f" options:0 range:lineRange].length == 1)
+            pendingPageBreak = YES;
     }];
     
     // Render footnotes and determine remaining footnote string
