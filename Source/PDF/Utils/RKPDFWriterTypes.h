@@ -13,6 +13,6 @@
  RKPDFWriterShowTextFrames           Adds text frames around text frames (intended for debugging layout settings)
  */
 typedef enum : NSUInteger {
-    RKPDFWriterShowBoundingBoxes     = 0,
-    RKPDFWriterShowTextFrames        = 1,
+    RKPDFWriterShowBoundingBoxes     = (1 << 0),
+    RKPDFWriterShowTextFrames        = (1 << 1),
 }RKPDFWriterRenderingOptions;

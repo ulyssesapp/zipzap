@@ -282,20 +282,22 @@
 
 - (void)renderDebugFramesWithOptions:(RKPDFWriterRenderingOptions)options
 {
-    // Show text frames
+    // Add bounding boxes around text, if requested
     if (options & RKPDFWriterShowTextFrames) {
-        CGRect frameRect = self.boundingBox;
+        CGRect frameRect = self.visibleBoundingBox;
         
         CGContextSaveGState(_context.pdfContext);
         CGContextSetFillColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(0, 0, 0, 0.1));
         CGContextFillRect(_context.pdfContext, frameRect);
+        CGContextRestoreGState(_context.pdfContext);
     }
-    
-    // Add bounding boxes around text, if requested
+
+    // Show text frames
     if (options & RKPDFWriterShowBoundingBoxes) {
-        CGRect frameRect = self.visibleBoundingBox;
-        
-        CGContextSetStrokeColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(1.0, 0.0, 0.0, 0.2));
+        CGRect frameRect = self.boundingBox;
+
+        CGContextSaveGState(_context.pdfContext);
+        CGContextSetStrokeColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.2));
         CGContextSetLineWidth(_context.pdfContext, 0.5);
         CGContextStrokeRect(_context.pdfContext, frameRect);
         CGContextRestoreGState(_context.pdfContext);
