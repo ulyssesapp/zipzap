@@ -43,7 +43,7 @@
         
         _footnoteEnumerationPolicy = RKFootnoteEnumerationPerPage;
         _endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
-
+        
         // Set header / footer spacing to RTF default
         _headerSpacing = 36;
         _footerSpacing = 36;
@@ -71,7 +71,8 @@
     copy.endnoteEnumerationPolicy = _endnoteEnumerationPolicy;
     copy.headerSpacing = _headerSpacing;
     copy.footerSpacing = _footerSpacing;
-
+    copy.sectionNumberingStyle = _sectionNumberingStyle;
+    
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
     

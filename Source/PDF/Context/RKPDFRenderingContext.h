@@ -74,6 +74,11 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong, readonly) NSString* stringForCurrentPageNumber;
 
 /*!
+ @abstract The number of the currently rendered page (using the requested string format of the current section)
+ */
+@property (nonatomic, strong, readonly) NSString* stringForCurrentSectionNumber;
+
+/*!
  @abstract The graphics context of the current rendering
  */
 @property (nonatomic, retain, readonly) __attribute__((NSObject)) CGContextRef pdfContext;

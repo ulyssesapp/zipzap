@@ -164,4 +164,27 @@
     CFRelease(black);
 }
 
+- (NSString *)stringForSectionNumber:(NSUInteger)sectionNumber
+{
+    switch (self.sectionNumberingStyle) {
+        case RKPageNumberingAlphabeticLowerCase:
+            return [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: sectionNumber];
+            
+        case RKPageNumberingAlphabeticUpperCase:
+            return [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: sectionNumber];
+            
+        case RKPageNumberingRomanLowerCase:
+            return [NSString lowerCaseRomanNumeralsFromUnsignedInteger: sectionNumber];
+            
+        case RKPageNumberingRomanUpperCase:
+            return [NSString upperCaseRomanNumeralsFromUnsignedInteger: sectionNumber];
+            
+        case RKPageNumberingDecimal:
+            return [NSString stringWithFormat: @"%lu", sectionNumber];
+    }
+    
+    NSAssert(false, @"Invalid section numbering style");
+    return nil;
+}
+
 @end

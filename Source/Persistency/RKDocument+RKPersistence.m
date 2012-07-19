@@ -35,6 +35,7 @@ NSString *RKPersistencyFootnoteEnumerationPolicyKey     = @"footnoteEnumerationP
 NSString *RKPersistencyEndnoteEnumerationPolicyKey      = @"endnoteEnumerationPolicy";
 NSString *RKPersistencyParagraphStylesKey               = @"paragraphStyles";
 NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
+NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyle";
 
 @interface RKDocument (RKPersistencePrivateMethods)
 
@@ -72,6 +73,8 @@ NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
         self.footnoteEnumerationPolicy = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteEnumerationPolicyKey] error:NULL];
         self.endnoteEnumerationPolicy = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyEndnoteEnumerationPolicyKey] error:NULL];
 
+        self.sectionNumberingStyle = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencySectionNumberingStyleKey] error:NULL];
+        
         // De-serialize meta data, if any
         if ([[propertyList objectForKey: RKPersistencyMetadataKey] isKindOfClass: NSDictionary.class])
             self.metadata = [propertyList objectForKey: RKPersistencyMetadataKey];
@@ -129,6 +132,7 @@ NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
     propertyList[RKPersistencyEndnoteEnumerationStyleKey] = [[self.class serializationTableForFootnoteEnumerationStyle] stringFromUnsignedEnumValue: self.endnoteEnumerationStyle];
     propertyList[RKPersistencyFootnoteEnumerationPolicyKey] =[[self.class serializationTableForFootnoteEnumerationPolicy] stringFromUnsignedEnumValue: self.footnoteEnumerationPolicy];
     propertyList[RKPersistencyEndnoteEnumerationPolicyKey] =  [[self.class serializationTableForFootnoteEnumerationPolicy] stringFromUnsignedEnumValue: self.endnoteEnumerationPolicy];
+    propertyList[RKPersistencySectionNumberingStyleKey] = [[self.class serializationTableForSectionNumberingStyle] stringFromSignedEnumValue: self.sectionNumberingStyle];
 
     // Serialize metadata, if any
     if (self.metadata)
@@ -257,6 +261,22 @@ NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
          [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationPerSection],         @"perSection",
          [NSNumber numberWithUnsignedInteger: RKFootnoteContinuousEnumeration],         @"continuous",
          nil
+     ];
+    
+    return serializationTable;
+}
+
++ (NSDictionary *)serializationTableForSectionNumberingStyle
+{
+    static NSDictionary * serializationTable;
+    serializationTable = serializationTable ?:
+    [NSDictionary dictionaryWithObjectsAndKeys:
+     [NSNumber numberWithUnsignedInteger: RKPageNumberingDecimal],              @"decimal",
+     [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanLowerCase],       @"romanLowerCase",
+     [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanUpperCase],       @"romanUpperCase",
+     [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticLowerCase],  @"alphabeticLowerCase",
+     [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticUpperCase],  @"alphabeticUpperCase",
+     nil
      ];
     
     return serializationTable;

@@ -128,6 +128,11 @@
         return [self.currentSection stringForPageNumber: (self.pageNumberOfCurrentSection)];
 }
 
+- (NSString *)stringForCurrentSectionNumber
+{
+        return [self.document stringForSectionNumber: self.currentSectionNumber + 1];
+}
+
 - (void)nextSection
 {
     // Update page and section counter

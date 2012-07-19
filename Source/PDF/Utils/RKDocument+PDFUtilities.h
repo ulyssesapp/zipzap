@@ -60,4 +60,9 @@
  */
 - (void)drawFootnoteSeparatorForBoundingBox:(CGRect)boundingBox toContext:(RKPDFRenderingContext *)context;
 
+/*!
+ @abstract Converts the number of a section to a string according to the sectionNumberingStyle of the document
+ */
+- (NSString *)stringForSectionNumber:(NSUInteger)sectionNumber;
+
 @end

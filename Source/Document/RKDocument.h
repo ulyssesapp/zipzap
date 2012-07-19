@@ -137,6 +137,11 @@
  */
 @property(nonatomic,strong,readwrite) NSDictionary *characterStyles;
 
+/*!
+ @abstract Section numbering style
+ */
+@property(nonatomic) RKPageNumberingStyle sectionNumberingStyle;
+
 @end
 
 /*!
