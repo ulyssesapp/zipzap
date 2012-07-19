@@ -26,14 +26,27 @@
 {
     NSMutableAttributedString *converted = [attributedString mutableCopy];
     
-    // Emulate superscript
+    __block NSUInteger offset = 0;
+    
     [attributedString enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSTextAttachment *attachment, NSRange range, BOOL *stop) {
+        NSRange fixedRange = NSMakeRange(range.location + offset, range.length);
+
         if (!attachment)
             return;
-        
+
+        // Create image
         RKPDFImage *pdfImage = [[RKPDFImage alloc] initWithFileWrapper:attachment.fileWrapper context:context];
-        
-        [converted addTextObjectAttribute:pdfImage atIndex:range.location];
+
+        if (pdfImage) {
+            [converted addTextObjectAttribute:pdfImage atIndex:fixedRange.location];
+        }
+        else {
+            NSMutableString *convertedString = converted.mutableString;
+            [convertedString replaceCharactersInRange:fixedRange withString:@""];
+            
+            offset -= range.length;
+        }
+
     }];
     
     return converted;

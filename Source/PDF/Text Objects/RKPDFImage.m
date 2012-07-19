@@ -41,6 +41,9 @@
         
         #if TARGET_OS_MAC
             NSImage *image = [[NSImage alloc] initWithData:self.fileWrapper.regularFileContents];
+            if (!image)
+                return nil;
+        
             _image = [image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
             _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
         #endif

@@ -15,6 +15,7 @@
 
 /*!
  @abstract Initializes the image with a file wrapper
+ @discussion Returns 'nil' if the image file is not valid
  */
 - (id)initWithFileWrapper:(NSFileWrapper *)file context:(RKPDFRenderingContext *)context;
 
