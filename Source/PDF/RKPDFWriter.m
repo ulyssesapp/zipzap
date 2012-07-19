@@ -180,11 +180,17 @@
     NSAttributedString *remainingFootnotes = nil;
 
     if (footnoteFrame && footnoteFrame.visibleStringRange.length) {
+        // Calculate position for footnotes on the bottom of the column
+        CGRect originalFootnoteBox = footnoteFrame.boundingBox;
+        CGRect visibleFootnoteBox = footnoteFrame.visibleBoundingBox;
+        CGRect displacedFootnoteBox = originalFootnoteBox;
+        displacedFootnoteBox.origin.y = originalFootnoteBox.origin.y - originalFootnoteBox.size.height + visibleFootnoteBox.size.height;
+        
         // Render footnotes
-        [footnoteFrame renderWithRenderedRange:NULL usingOrigin:columnBox.origin options:options block:nil];
+        [footnoteFrame renderWithRenderedRange:NULL usingOrigin:displacedFootnoteBox.origin options:options block:nil];
 
         // Draw separator
-        [context.document drawFootnoteSeparatorForBoundingBox:footnoteFrame.visibleBoundingBox toContext:context];
+        [context.document drawFootnoteSeparatorForBoundingBox:displacedFootnoteBox toContext:context];
         
         // Determine remaining footnote string
         NSRange visibleRange = footnoteFrame.visibleStringRange;
