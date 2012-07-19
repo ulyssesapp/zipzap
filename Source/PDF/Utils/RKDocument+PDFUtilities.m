@@ -67,7 +67,7 @@
     CGRect pageBounds = self.boundingBoxForContent;
 
     // Shrink page for footer, if needed
-    if (footer.size.height > (pageBounds.origin.y - RKFooterSpacing)) {
+    if ((footer.origin.y + footer.size.height) > (pageBounds.origin.y - RKFooterSpacing)) {
         pageBounds.origin.y = footer.origin.y + footer.size.height + RKFooterSpacing;
         pageBounds.size.height -= (footer.origin.y + footer.size.height - pageBounds.origin.y + RKFooterSpacing);
     }
