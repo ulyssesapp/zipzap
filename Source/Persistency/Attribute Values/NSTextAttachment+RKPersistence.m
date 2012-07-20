@@ -19,14 +19,20 @@ NSString *NSTextAttachmentFileIndexPersistenceKey = @"fileIdentifier";
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
 
     NSTextAttachment *textAttachment = [NSTextAttachment new];
-    textAttachment.fileWrapper = [context fileWrapperForIndex: [[propertyList objectForKey: NSTextAttachmentFileIndexPersistenceKey] unsignedIntegerValue]];
+    NSNumber *fileIndexObject = [propertyList objectForKey: NSTextAttachmentFileIndexPersistenceKey];
+    
+    if (fileIndexObject)
+        textAttachment.fileWrapper = [context fileWrapperForIndex: [fileIndexObject unsignedIntegerValue]];
     
     return textAttachment;
 }
 
 - (id)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
-    return [NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger: [context indexForFileWrapper: self.fileWrapper]] forKey:NSTextAttachmentFileIndexPersistenceKey];
+    if (self.fileWrapper)
+        return [NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedInteger: [context indexForFileWrapper: self.fileWrapper]] forKey:NSTextAttachmentFileIndexPersistenceKey];
+    else
+        return [NSDictionary new];
 }
 
 @end
