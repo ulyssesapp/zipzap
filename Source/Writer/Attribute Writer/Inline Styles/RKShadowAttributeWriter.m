@@ -29,7 +29,7 @@
         NSAssert([shadowObject isKindOfClass: NSShadow.class], @"Expecting shadow attribute");
 
         NSShadow *shadow = shadowObject;
-        CGColorRef color = [[shadow shadowColor] CGColorWithGenericRGBColorSpace];
+        CGColorRef color = [[shadow shadowColor] newCGColorWithGenericRGBColorSpace];
     #else    
         NSAssert([shadowObject isKindOfClass: RKShadow.class], @"Expecting shadow attribute");
     

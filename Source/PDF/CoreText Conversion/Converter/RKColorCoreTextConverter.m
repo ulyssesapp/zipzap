@@ -54,7 +54,7 @@
             return;
         
         // Set color attribute
-        CGColorRef convertedColor = [color CGColorWithGenericRGBColorSpace];
+        CGColorRef convertedColor = [color newCGColorWithGenericRGBColorSpace];
         [attributedString addAttribute:newAttributeName value:(__bridge id)convertedColor range:range];
         
         CFRelease(convertedColor);

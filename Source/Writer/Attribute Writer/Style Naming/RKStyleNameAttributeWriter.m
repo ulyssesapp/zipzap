@@ -47,6 +47,10 @@
         styleTypeOpeningTag = @"{\\cs";
         styleTypeClosingTag = @"}";
     }
+    else {
+        NSAssert(false, @"Invalid style attribute");
+        return;
+    }
 
     // We just ignore the default style or unknown styles, because:
     // - Character styles are inside {groups} and thus reset after the end of the group

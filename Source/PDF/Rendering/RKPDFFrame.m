@@ -286,21 +286,28 @@
     if (options & RKPDFWriterShowTextFrames) {
         CGRect frameRect = self.visibleBoundingBox;
         
+        CGColorRef fillColor = CGColorCreateGenericRGB(0, 0, 0, 0.1);
+        
         CGContextSaveGState(_context.pdfContext);
-        CGContextSetFillColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(0, 0, 0, 0.1));
+        CGContextSetFillColorWithColor(_context.pdfContext, fillColor);
         CGContextFillRect(_context.pdfContext, frameRect);
         CGContextRestoreGState(_context.pdfContext);
+        
+        CFRelease(fillColor);
     }
 
     // Show text frames
     if (options & RKPDFWriterShowBoundingBoxes) {
         CGRect frameRect = self.boundingBox;
+        CGColorRef frameColor = CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.2);
 
         CGContextSaveGState(_context.pdfContext);
-        CGContextSetStrokeColorWithColor(_context.pdfContext, CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.2));
+        CGContextSetStrokeColorWithColor(_context.pdfContext, frameColor);
         CGContextSetLineWidth(_context.pdfContext, 0.5);
         CGContextStrokeRect(_context.pdfContext, frameRect);
         CGContextRestoreGState(_context.pdfContext);
+        
+        CFRelease(frameColor);
     }
 }
 

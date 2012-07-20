@@ -59,18 +59,23 @@ NSString *RKPersistencePageMaskRightSuffix      = @"Right";
             self.content = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:propertyList[RKPersistenceContentKey] error:error];
 
         // Deserialize header and footer
-        [self setupPageObjectsFromPropertyList:propertyList usingPrefix:RKPersistenceHeaderKey error:error block:^(RKPageSelectionMask selector, NSAttributedString *pageObject) {
+        BOOL success;
+        
+        success = [self setupPageObjectsFromPropertyList:propertyList usingPrefix:RKPersistenceHeaderKey error:error block:^(RKPageSelectionMask selector, NSAttributedString *pageObject) {
             [self setHeader:pageObject forPages:selector];
         }];
-        [self setupPageObjectsFromPropertyList:propertyList usingPrefix:RKPersistenceFooterKey error:error block:^(RKPageSelectionMask selector, NSAttributedString *pageObject) {
+        success |= [self setupPageObjectsFromPropertyList:propertyList usingPrefix:RKPersistenceFooterKey error:error block:^(RKPageSelectionMask selector, NSAttributedString *pageObject) {
             [self setFooter:pageObject forPages:selector];
         }];
+        
+        if (!success)
+            return nil;
     }
 
     return self;
 }
 
-- (void)setupPageObjectsFromPropertyList:(NSDictionary *)propertyList usingPrefix:(NSString *)prefix error:(NSError **)error block:(void(^)(RKPageSelectionMask selector, NSAttributedString *pageObject))block
+- (BOOL)setupPageObjectsFromPropertyList:(NSDictionary *)propertyList usingPrefix:(NSString *)prefix error:(NSError **)error block:(void(^)(RKPageSelectionMask selector, NSAttributedString *pageObject))block
 {
     // Do we have the same mask for all pages?
     NSDictionary *allPageSerialized = [propertyList objectForKey: [self.class serializableSelectorForMask:RKPageSelectorAll usingPrefix:prefix]];
@@ -79,8 +84,10 @@ NSString *RKPersistencePageMaskRightSuffix      = @"Right";
         NSAttributedString *pageObject = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:allPageSerialized error:error];
         if (pageObject)
             block(RKPageSelectorAll, pageObject);
+        else
+            return NO;
     
-        return;
+        return YES;
     }
 
     // Deserialize further masks
@@ -94,7 +101,11 @@ NSString *RKPersistencePageMaskRightSuffix      = @"Right";
         NSAttributedString *pageObject = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:serializedPageObject error:error];
         if (pageObject)
             block(masks[maskIndex], pageObject);
+        else
+            return NO;
     }
+    
+    return YES;
 }
 
 - (id)RTFKitPropertyListRepresentation

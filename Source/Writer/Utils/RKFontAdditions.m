@@ -11,7 +11,7 @@
 CTFontRef RKGetDefaultFont(void)
 {
     static CTFontRef defaultFont;
-    defaultFont = (defaultFont) ?: CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL);
+    defaultFont = (defaultFont) ?: CTFontCreateWithName(CFSTR("Helvetica"), 12, NULL);
     
     return defaultFont;
 }
