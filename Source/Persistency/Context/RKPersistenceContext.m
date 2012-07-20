@@ -90,7 +90,7 @@ NSString *NSFileWrapperFileNamePersistenceKey                   = @"filename";
     
     for (NSFileWrapper *fileWrapper in _fileWrappers)
         [serializedFileWrapper addObject: @{
-            NSFileWrapperDataPersistenceKey:        fileWrapper.regularFileContents,
+            NSFileWrapperDataPersistenceKey:       fileWrapper.regularFileContents,
             NSFileWrapperFileNamePersistenceKey:   fileWrapper.filename ?: (fileWrapper.preferredFilename ?: @"")
          }];
 

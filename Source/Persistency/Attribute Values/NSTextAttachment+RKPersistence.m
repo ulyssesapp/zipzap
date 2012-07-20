@@ -19,7 +19,7 @@ NSString *NSTextAttachmentFileIndexPersistenceKey = @"fileIdentifier";
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
 
     NSTextAttachment *textAttachment = [NSTextAttachment new];
-    textAttachment.fileWrapper = [context fileWrapperForIndex: [propertyList[NSTextAttachmentFileIndexPersistenceKey] unsignedIntegerValue]];
+    textAttachment.fileWrapper = [context fileWrapperForIndex: [[propertyList objectForKey: NSTextAttachmentFileIndexPersistenceKey] unsignedIntegerValue]];
     
     return textAttachment;
 }
