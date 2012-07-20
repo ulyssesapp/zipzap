@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>endnoteEnumerationStyle</key>
+	<string>alphabeticUpperCase</string>
 	<key>sections</key>
 	<array>
 		<dict>
@@ -301,6 +303,23 @@ Pellentesque vulputate diam id nunc hendrerit euismod. In cursus scelerisque nib
 						<key>attributeRange</key>
 						<dict>
 							<key>location</key>
+							<integer>5</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKEndnote</key>
+							<dict>
+								<key>string</key>
+								<string>This is a endnote that appears at the end of the document.</string>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
 							<integer>200</integer>
 							<key>length</key>
 							<integer>1</integer>
@@ -350,10 +369,39 @@ And while some may see them as the crazy ones, We see genius. Because the people
 					</dict>
 				</array>
 				<key>string</key>
-				<string>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec enim ante, pellentesque eget pretium a, blandit vitae risus. Vivamus vitae dignissim leo. Sed ac sapien quis ligula dignissim  consequat . Fusce eu magna metus, non vulputate arcu. Suspendisse sit amet magna augue, quis imperdiet nunc. Vivamus vitae est elit. Curabitur ac libero et sem scelerisque molestie. Phasellus id nulla id erat commodo dictum a id justo. Aenean tempor odio quis ipsum pellentesque pulvinar. Donec malesuada molestie felis, nec dignissim quam faucibus quis.
+				<string>Lorem  ipsum dolor sit amet, consectetur adipiscing elit. Donec enim ante, pellentesque eget pretium a, blandit vitae risus. Vivamus vitae dignissim leo. Sed ac sapien quis ligula dignissim  consequat . Fusce eu magna metus, non vulputate arcu. Suspendisse sit amet magna augue, quis imperdiet nunc. Vivamus vitae est elit. Curabitur ac libero et sem scelerisque molestie. Phasellus id nulla id erat commodo dictum a id justo. Aenean tempor odio quis ipsum pellentesque pulvinar. Donec malesuada molestie felis, nec dignissim quam faucibus quis.
 Suspendisse ultricies mollis adipiscing. Aenean sed ante a enim hendrerit tincidunt vel nec quam. Vestibulum eu nisl orci. Donec ipsum sem, tempor et facilisis tempus, tristique vel risus. Sed quis nisi mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi sollicitudin tincidunt purus et pellentesque. Mauris id velit a libero volutpat sodales non sagittis lectus. In imperdiet ipsum nec est bibendum  aliquam. Vivamus blandit ultrices semper.
 Proin lacinia ante ac justo luctus id adipiscing lacus posuere. Vestibulum ultrices, ipsum eu pulvinar porttitor, velit urna congue purus, quis vulputate odio mauris vel ligula. Nam laoreet vestibulum diam sed eleifend. Vestibulum nec orci orci. Aenean eget massa lorem, at aliquet mi. Curabitur scelerisque mauris non tortor ultrices fringilla. Donec feugiat facilisis orci, nec vehicula nisl imperdiet sed. Sed lobortis iaculis nunc, vel tempor justo commodo vel. Nulla vel massa nisi. Proin porttitor aliquam ultricies. Suspendisse ut lacus a ante rhoncus placerat. Nam ultrices lorem vitae metus interdum facilisis.
 Pellentesque vulputate diam id nunc hendrerit euismod. In cursus scelerisque nibh, eget dictum arcu gravida et. Mauris sed quam risus. Pellentesque iaculis porta libero, at auctor eros hendrerit non. Cras lectus eros, fermentum at cursus ultrices, tincidunt nec erat. Nam a leo libero. Etiam ut risus rutrum justo dictum varius. Donec id urna ante, in eleifend massa. Integer felis felis, rhoncus congue ullamcorper id, vestibulum non odio.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>4</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKFootnote</key>
+							<dict>
+								<key>string</key>
+								<string>This footnote appears at the bottom of the page!</string>
+							</dict>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>This  is a simple text.</string>
 			</dict>
 		</dict>
 	</array>
