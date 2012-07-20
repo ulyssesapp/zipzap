@@ -38,13 +38,13 @@
 
 - (RKPageSelectionMask)pageSelectorForContext:(RKPDFRenderingContext *)renderingContext
 {
-    if (renderingContext.pageNumberOfCurrentSection == 0)
+    if (renderingContext.pageNumberOfCurrentSection == 1)
         return RKPageSelectionFirst;
 
     if (renderingContext.currentPageNumber % 2)
-        return RKPageSelectionRight;
-    else
         return RKPageSelectionLeft;
+    else
+        return RKPageSelectionRight;
 }
 
 @end
