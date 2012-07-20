@@ -235,13 +235,17 @@
 
 - (void)enumerateObjectsInPageSetting:(NSMutableDictionary *)dictionary usingBlock:(void(^)(RKPageSelectionMask pageSelector, id object))block
 {
+    if (!dictionary.count)
+        return;
+    
     if ([self hasSingleObjectForAllPagesInDictionary:dictionary]) {
         block(RKPageSelectorAll, [self objectForPage:RKPageSelectionFirst fromDictionary:dictionary]);
         return;
     }
     
     [dictionary enumerateKeysAndObjectsUsingBlock:^(NSNumber *selector, id object, BOOL *stop) {
-        block(selector.unsignedIntegerValue, object);
+        if (object)
+            block(selector.unsignedIntegerValue, object);
     }];
 }
 
