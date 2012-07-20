@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sectionNumberingStyle</key>
+	<string>romanLowerCase</string>
+	<key>sections</key>
+	<array>
+		<dict>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>footerAll</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>2</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>sectionNumber</string>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>-   - Abschnitt</string>
+			</dict>
+			<key>headerAll</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>2</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>pageNumber</string>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>-   - Seite</string>
+			</dict>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array/>
+				<key>string</key>
+				<string>This is the second section.Here’s to the crazy ones. The misfits. The rebels. The troublemakers.
+The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them. Because they change things. They push the human race forward.And while some may see them as the crazy ones, We see genius. Because the people who are crazy enough to think they can change the world, Are the ones who do.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>indexOfFirstPage</key>
+			<integer>10</integer>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>footerAll</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>2</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>sectionNumber</string>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>-   - Abschnitt</string>
+			</dict>
+			<key>headerAll</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>2</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>pageNumber</string>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>-   - Seite (Nummerierung ab 10)</string>
+			</dict>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array/>
+				<key>string</key>
+				<string>This is the second section.Here’s to the crazy ones. The misfits. The rebels. The troublemakers.
+The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them. Because they change things. They push the human race forward.And while some may see them as the crazy ones, We see genius. Because the people who are crazy enough to think they can change the world, Are the ones who do.</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>pageNumberingStyle</key>
+			<string>romanUpperCase</string>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>footerAll</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>2</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>sectionNumber</string>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>-   - Section</string>
+			</dict>
+			<key>headerAll</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>2</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>pageNumber</string>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>-   - Page</string>
+			</dict>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array/>
+				<key>string</key>
+				<string>This is the second section.Here’s to the crazy ones. The misfits. The rebels. The troublemakers.
+The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them. Because they change things. They push the human race forward.And while some may see them as the crazy ones, We see genius. Because the people who are crazy enough to think they can change the world, Are the ones who do.</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

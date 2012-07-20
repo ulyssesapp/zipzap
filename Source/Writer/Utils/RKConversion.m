@@ -65,7 +65,7 @@
     NSString *sanitizedFilename = [self stringByFoldingWithOptions:NSDiacriticInsensitiveSearch|NSWidthInsensitiveSearch locale:[NSLocale systemLocale]];
     
     // Removing unicode characters
-    sanitizedFilename = [[NSString alloc] initWithData:[self dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] encoding:NSASCIIStringEncoding];
+    sanitizedFilename = [[NSString alloc] initWithData:[sanitizedFilename dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] encoding:NSASCIIStringEncoding];
     
     // Replace all characters that are used by RTF
     NSMutableString *rtfSafeFilename = [NSMutableString stringWithString: sanitizedFilename];
@@ -123,10 +123,10 @@
     return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1];
 }
 
-- (CGColorRef)CGColorWithGenericRGBColorSpace
+- (CGColorRef)newCGColorWithGenericRGBColorSpace
 {
     NSColor *rgbColor = [self colorUsingColorSpaceName: NSCalibratedRGBColorSpace];
-    
+
     return CGColorCreateGenericRGB(rgbColor.redComponent, rgbColor.greenComponent, rgbColor.blueComponent, 1.0);    
 }
 

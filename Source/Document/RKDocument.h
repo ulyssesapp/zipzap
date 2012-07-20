@@ -38,23 +38,6 @@
 - (id)initWithSections:(NSArray *)array;
 
 /*!
- @abstract Exports the document as RTF with embedded pictures
- */
-- (NSData *)RTF;
-
-/*!
- @abstract Exports the document as RTF without pictures
- */
-- (NSData *)plainRTF;
-
-/*!
- @abstract Exports the document as RTFD 
- @discussion Creates a file wrapper containing the RTF and all referenced pictures
-             This method will modify the preferredFilename of any NSFileWrapper used as text attachment.
- */
-- (NSFileWrapper *)RTFD;
-
-/*!
  @abstract The sections a document consists of.
  */
 @property(nonatomic, strong) NSArray *sections;
@@ -90,6 +73,16 @@
  @abstract Page size in points
  */
 @property(nonatomic) CGSize pageSize;
+
+/*!
+ @abstract The distance from the top page border to the header in points
+ */
+@property(nonatomic) CGFloat headerSpacing;
+
+/*!
+ @abstract The distance from the bottom page border to the footer in points
+ */
+@property(nonatomic) CGFloat footerSpacing;
 
 /*!
  @abstract Page insets in points
@@ -143,6 +136,40 @@
  @discussion A mapping from style names to a NSDictionary containing style information of an attributed string. In order to use a character style in any document section it must be registered here.
  */
 @property(nonatomic,strong,readwrite) NSDictionary *characterStyles;
+
+/*!
+ @abstract Section numbering style
+ */
+@property(nonatomic) RKPageNumberingStyle sectionNumberingStyle;
+
+@end
+
+/*!
+ @abstract Methods for exporting RTFs
+ */
+@interface RKDocument (Exporting)
+
+/*!
+ @abstract Exports the document as RTF with embedded pictures
+ */
+- (NSData *)RTF;
+
+/*!
+ @abstract Exports the document as RTF without pictures
+ */
+- (NSData *)plainRTF;
+
+/*!
+ @abstract Exports the document as RTFD 
+ @discussion Creates a file wrapper containing the RTF and all referenced pictures
+ This method will modify the preferredFilename of any NSFileWrapper used as text attachment.
+ */
+- (NSFileWrapper *)RTFD;
+
+/*!
+ @abstract Exports the document as PDF
+ */
+- (NSData *)PDF;
 
 @end
 

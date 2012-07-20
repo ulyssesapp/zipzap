@@ -23,6 +23,7 @@
 #endif
 
 #if !TARGET_OS_IPHONE
+    #import "RKPersistenceContext.h"
     #import "NSAttributedString+RKPersistence.h"
 #endif
 

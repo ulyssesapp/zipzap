@@ -7,7 +7,7 @@
 //
 
 #import "RKListItem+RKPersistence.h"
-#import "RKPersistenceContext.h"
+#import "RKPersistenceContext+PrivateStorageAccessors.h"
 
 NSString *RKListItemListStyleIndexPersistenceKey = @"listStyle";
 NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
@@ -17,9 +17,9 @@ NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
 + (id<RKPersistence>)instanceWithRTFKitPropertyListRepresentation:(id)propertyList usingContext:(RKPersistenceContext *)context error:(NSError **)error
 {
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
-
-    NSUInteger indentationLevel = [propertyList[RKListItemIndentationLevelPersistenceKey] unsignedIntegerValue];
-    RKListStyle *listStyle = [context listStyleForIndex: [propertyList[RKListItemListStyleIndexPersistenceKey] unsignedIntegerValue]];
+    
+    NSUInteger indentationLevel = [[propertyList objectForKey: RKListItemIndentationLevelPersistenceKey] unsignedIntegerValue];
+    RKListStyle *listStyle = [context listStyleForIndex: [[propertyList objectForKey: RKListItemListStyleIndexPersistenceKey] unsignedIntegerValue]];
     if (!listStyle)
         return nil;
     
@@ -30,10 +30,14 @@ NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
 
 - (id)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
-    return @{
-        RKListItemListStyleIndexPersistenceKey:         @([context indexForListStyle: self.listStyle]),
-        RKListItemIndentationLevelPersistenceKey:       @(self.indentationLevel)
-    };
+    // We never add a list item twice
+    if ([context registerUniqueObject: self])
+        return nil;
+    
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSNumber numberWithUnsignedInteger: [context indexForListStyle: self.listStyle]],      RKListItemListStyleIndexPersistenceKey,
+            [NSNumber numberWithUnsignedInteger: self.indentationLevel],                            RKListItemIndentationLevelPersistenceKey,
+           nil];
 }
 
 @end

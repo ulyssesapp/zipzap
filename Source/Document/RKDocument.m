@@ -9,6 +9,7 @@
 #import "RKDocument.h"
 #import "RKSection.h"
 #import "RKWriter.h"
+#import "RKPDFWriter.h"
 
 @implementation RKDocument
 
@@ -30,18 +31,22 @@
         #if !TARGET_OS_IPHONE
             NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
 
-            self.pageSize = printInfo.paperSize;
-            self.pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
+            _pageSize = printInfo.paperSize;
+            _pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
         #elif TARGET_OS_IPHONE
-            self.pageSize = CGSizeMake(595, 842);
-            self.pageInsets = RKPageInsetsMake(90, 72, 72, 90);
+            _pageSize = CGSizeMake(595, 842);
+            _pageInsets = RKPageInsetsMake(90, 72, 72, 90);
         #endif
 
-        self.pageOrientation = RKPageOrientationPortrait;
-        self.hyphenationEnabled = NO;
+        _pageOrientation = RKPageOrientationPortrait;
+        _hyphenationEnabled = NO;
         
-        self.footnoteEnumerationPolicy = RKFootnoteEnumerationPerPage;
-        self.endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
+        _footnoteEnumerationPolicy = RKFootnoteEnumerationPerPage;
+        _endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
+        
+        // Set header / footer spacing to RTF default
+        _headerSpacing = 36;
+        _footerSpacing = 36;
     }
     
     return self;
@@ -64,11 +69,42 @@
     copy.endnoteEnumerationStyle = _endnoteEnumerationStyle;
     copy.footnoteEnumerationPolicy = _footnoteEnumerationPolicy;
     copy.endnoteEnumerationPolicy = _endnoteEnumerationPolicy;
-
+    copy.headerSpacing = _headerSpacing;
+    copy.footerSpacing = _footerSpacing;
+    copy.sectionNumberingStyle = _sectionNumberingStyle;
+    
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
     
     return copy;
+}
+
+- (BOOL)isEqual:(RKDocument*)object
+{
+    if (![object isKindOfClass: RKDocument.class])
+        return false;
+    
+    return      [self.sections isEqual: object.sections]
+            &&  [self.metadata isEqual: object.metadata]
+            &&  [self.paragraphStyles isEqual: object.paragraphStyles]
+            &&  [self.characterStyles isEqual: object.characterStyles]    
+            &&  (self.hyphenationEnabled == object.hyphenationEnabled)
+            &&  (self.pageSize.width == object.pageSize.width)
+            &&  (self.pageSize.height == object.pageSize.height)
+            &&  (self.pageInsets.top == object.pageInsets.top)
+            &&  (self.pageInsets.left == object.pageInsets.left)
+            &&  (self.pageInsets.right == object.pageInsets.right)
+            &&  (self.pageInsets.bottom == object.pageInsets.bottom)
+            &&  (self.pageOrientation == object.pageOrientation)
+            &&  (self.footnotePlacement == object.footnotePlacement)
+            &&  (self.endnotePlacement == object.endnotePlacement)
+            &&  (self.footnoteEnumerationStyle == object.footnoteEnumerationStyle)
+            &&  (self.endnoteEnumerationStyle == object.endnoteEnumerationStyle)
+            &&  (self.footnoteEnumerationPolicy == object.footnoteEnumerationPolicy)
+            &&  (self.endnoteEnumerationPolicy == object.endnoteEnumerationPolicy)
+            &&  (self.headerSpacing == object.headerSpacing)
+            &&  (self.footerSpacing == object.footerSpacing)    
+    ;
 }
 
 - (id)initWithSections:(NSArray *)initialSections
@@ -76,7 +112,7 @@
     self = [self init];
     
     if (self) {
-        self.sections = initialSections;
+        _sections = initialSections;
     }
     
     return self;
@@ -88,6 +124,10 @@
     
     return [self initWithSections: @[[RKSection sectionWithContent: string]]];
 }
+
+@end
+
+@implementation RKDocument (Exporting)
 
 - (NSData *)RTF
 {
@@ -104,8 +144,12 @@
     return [RKWriter RTFDfromDocument: self];    
 }
 
-@end
+- (NSData *)PDF
+{
+    return [RKPDFWriter PDFFromDocument:self options:0];
+}
 
+@end
 
 @implementation RKDocument (TestingSupport)
 

@@ -64,6 +64,9 @@
     
     [attributes appendFormat: @"\\cols%lu", section.numberOfColumns];
     
+    if (section.numberOfColumns > 1)
+        [attributes appendFormat:@"\\colsx%lu", (NSUInteger)RKPointsToTwips(section.columnSpacing)];
+    
     if (section.indexOfFirstPage != RKContinuousPageNumbering)
         [attributes appendFormat: @"\\pgnstarts%lu\\pgnrestart", section.indexOfFirstPage];
     

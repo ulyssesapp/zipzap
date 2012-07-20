@@ -11,7 +11,16 @@
 CTFontRef RKGetDefaultFont(void)
 {
     static CTFontRef defaultFont;
-    defaultFont = (defaultFont) ?: CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL);
+    defaultFont = (defaultFont) ?: CTFontCreateWithName(CFSTR("Helvetica"), 12, NULL);
     
     return defaultFont;
 }
+
+@implementation NSFont (RTFFontAdditions)
+
++ (NSFont *)RTFDefaultFont
+{
+    return [NSFont fontWithName:@"Helvetica" size:12];
+}
+
+@end

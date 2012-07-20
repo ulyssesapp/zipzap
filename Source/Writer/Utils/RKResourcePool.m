@@ -40,14 +40,17 @@
         _listItemIndices = [NSMutableDictionary new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
-        CGColorRef blackRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){0, 0, 0, 1});
-        CGColorRef whiteRGB = CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){1, 1, 1, 1});
+        CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+
+        CGColorRef blackRGB = CGColorCreate(rgbColorSpace, (CGFloat[]){0, 0, 0, 1});
+        CGColorRef whiteRGB = CGColorCreate(rgbColorSpace, (CGFloat[]){1, 1, 1, 1});
 
         [self indexOfColor: blackRGB];        
         [self indexOfColor: whiteRGB];
         
-        CGColorRelease(blackRGB);
-        CGColorRelease(whiteRGB);
+        CFRelease(blackRGB);
+        CFRelease(whiteRGB);
+        CFRelease(rgbColorSpace);
     }
         
     return self;
@@ -85,12 +88,12 @@
         // We have to remove traits
         CTFontRef traitlessFont = CTFontCreateCopyWithSymbolicTraits(font, 0, NULL, 0, traitMask);
 
-        postscriptName = (__bridge NSString *)CTFontCopyPostScriptName(traitlessFont);
+        postscriptName = (__bridge_transfer NSString *)CTFontCopyPostScriptName(traitlessFont);
         CFRelease(traitlessFont);
     }
     else {
         // Not traits to remove, just use the plain postscript name
-        postscriptName = (__bridge NSString *)CTFontCopyPostScriptName(font);
+        postscriptName = (__bridge_transfer NSString *)CTFontCopyPostScriptName(font);
     }
     
     return postscriptName;

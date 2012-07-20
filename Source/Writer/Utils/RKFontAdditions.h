@@ -10,3 +10,15 @@
  @abstract Returns the default font for RTF documents
  */
 CTFontRef RKGetDefaultFont(void);
+
+/*!
+ @abstract NSFont extensions
+ */
+@interface NSFont (RTFFontAdditions)
+
+/*!
+ @abstract Provides the default for RTF documents (see RKGetDefaultFont)
+ */
++ (NSFont *)RTFDefaultFont;
+
+@end

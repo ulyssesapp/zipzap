@@ -31,4 +31,9 @@
  */
 + (NSString *)upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number;
 
+/*!
+ @abstract Converts an integer number to chicago manual style numerals
+ */
++ (NSString *)chicagoManualOfStyleNumeralsFromUnsignedInteger:(NSUInteger)number;
+
 @end

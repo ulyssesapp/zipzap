@@ -19,7 +19,7 @@
 + (id<RKPersistence>)instanceWithRTFKitPropertyListRepresentation:(id)propertyList usingContext:(RKPersistenceContext *)context error:(NSError **)error;
 
 /*!
-@abstract Serializes an attributed string to a property list representation
+ @abstract Serializes an attributed string to a property list representation
 */
 - (id)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context;
 

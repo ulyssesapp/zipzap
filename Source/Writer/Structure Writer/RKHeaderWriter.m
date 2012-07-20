@@ -369,6 +369,18 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 							   (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
 							   ]];
 
+    // Header / footer spacing
+    if (document.headerSpacing != 36)
+        [attributes appendString: [NSString stringWithFormat:@"\\headery%lu",
+                                   (NSUInteger)RKPointsToTwips(document.headerSpacing)
+                                   ]];
+    
+    if (document.footerSpacing != 36)
+        [attributes appendString: [NSString stringWithFormat:@"\\footery%lu",
+                                   (NSUInteger)RKPointsToTwips(document.footerSpacing)
+                                   ]];
+    
+    
     // Hyphenation settings
     if (document.hyphenationEnabled)
         [attributes appendString:@"\\hyphauto1"];
