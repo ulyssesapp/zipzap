@@ -45,6 +45,8 @@
                 return nil;
         
             _image = [image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
+            CFRetain(_image);
+
             _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
         #endif
     }
