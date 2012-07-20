@@ -30,4 +30,9 @@
  */
 - (RKListStyle *)listStyleForIndex:(NSUInteger)index;
 
+/*!
+ @abstract Registers an object and returns YES, if the object was visited twice.
+ */
+- (BOOL)registerUniqueObject:(id)object;
+
 @end

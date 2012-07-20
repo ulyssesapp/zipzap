@@ -19,6 +19,7 @@ NSString *NSFileWrapperFileNamePersistenceKey                   = @"filename";
 {
     NSMutableArray *_fileWrappers;
     NSMutableArray *_listStyles;
+    NSMutableSet *_uniqueObjects;
 }
 
 @end
@@ -32,6 +33,7 @@ NSString *NSFileWrapperFileNamePersistenceKey                   = @"filename";
     if (self) {
         _fileWrappers = [NSMutableArray new];
         _listStyles = [NSMutableArray new];
+        _uniqueObjects = [NSMutableSet new];
     }
     
     return self;
@@ -79,6 +81,14 @@ NSString *NSFileWrapperFileNamePersistenceKey                   = @"filename";
     return [_listStyles objectAtIndex: index];
 }
 
+- (BOOL)registerUniqueObject:(id)object
+{
+    if ([_uniqueObjects containsObject: object])
+        return YES;
+    
+    [_uniqueObjects addObject: object];
+    return NO;
+}
 
 
 #pragma mark - Persistence
