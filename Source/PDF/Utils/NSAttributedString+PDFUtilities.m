@@ -30,9 +30,14 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     NSMutableAttributedString *noteString = [note.footnoteContent mutableCopy];
     NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL]];
 
+    id paragraphStyle = [noteString attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
+    
     // Add enumerator and spacing
     [noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
     [noteString insertAttributedString:enumerator atIndex:0];
+
+    // Setup paragraph style
+    [noteString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, enumerator.length + 1)];
     
     // Add anchor for enumerator
     [noteString addLocalDestinationAnchor:note.footnoteAnchor forRange:NSMakeRange(0, 1)];
