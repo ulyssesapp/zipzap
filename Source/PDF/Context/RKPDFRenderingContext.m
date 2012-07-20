@@ -125,7 +125,7 @@
     if (self.currentSection.indexOfFirstPage == NSNotFound)
         return [self.currentSection stringForPageNumber: (self.currentPageNumber)];
     else
-        return [self.currentSection stringForPageNumber: (self.pageNumberOfCurrentSection)];
+        return [self.currentSection stringForPageNumber: (self.pageNumberOfCurrentSection + self.currentSection.indexOfFirstPage - 1)];
 }
 
 - (NSString *)stringForCurrentSectionNumber
