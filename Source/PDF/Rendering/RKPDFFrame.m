@@ -154,20 +154,20 @@
         NSRange textObjectRange = rangeObject.rangeValue;
         
         // The translated range is after the text object range: we just crop the expanded length of the text object
-        if (translatedRange.location >= (textObjectRange.location + textObjectRange.length)) {
+        if (frameRange.location >= (textObjectRange.location + textObjectRange.length)) {
             translatedRange.location -= textObjectRange.length - 1;
             continue;
         }
         
         // The translated range is inside the text object range: we set it to its beginning and crop the overlapping length
-        if ((translatedRange.location >= textObjectRange.location) && (translatedRange.location < textObjectRange.location + textObjectRange.length)) {
-            translatedRange.length -= (textObjectRange.length + textObjectRange.location) - translatedRange.location -+ 1;
-            translatedRange.location -= (translatedRange.location - textObjectRange.location);
+        if ((frameRange.location >= textObjectRange.location) && (frameRange.location < textObjectRange.location + textObjectRange.length)) {
+            translatedRange.length -= (textObjectRange.length + textObjectRange.location) - frameRange.location -+ 1;
+            translatedRange.location -= (frameRange.location - textObjectRange.location);
             continue;
         }
         
         // The translated range contains the text object: we crop the text object out of its length
-        if ((translatedRange.location <= textObjectRange.location) && ((translatedRange.location + translatedRange.length) >= (textObjectRange.location + textObjectRange.length))) {
+        if ((frameRange.location <= textObjectRange.location) && ((frameRange.location + frameRange.length) >= (textObjectRange.location + textObjectRange.length))) {
             translatedRange.length -= textObjectRange.length - 1;
             continue;
         }
