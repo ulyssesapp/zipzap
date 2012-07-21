@@ -37,7 +37,8 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     [noteString insertAttributedString:enumerator atIndex:0];
 
     // Setup paragraph style
-    [noteString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, enumerator.length + 1)];
+    if (paragraphStyle)
+        [noteString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, enumerator.length + 1)];
     
     // Add anchor for enumerator
     [noteString addLocalDestinationAnchor:note.footnoteAnchor forRange:NSMakeRange(0, 1)];
