@@ -10,5 +10,8 @@
 
 #if TARGET_OS_IPHONE
 @implementation RKShadow
+
+@synthesize shadowBlurRadius, shadowOffset, shadowColor;
+
 @end
 #endif
