@@ -12,6 +12,22 @@
 		50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
+		790AD8B515BAB9C10011E40E /* RKParagraphStyleWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B315BAB9C10011E40E /* RKParagraphStyleWrapper.h */; };
+		790AD8B815BAB9C60011E40E /* RKParagraphStyleWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8B415BAB9C10011E40E /* RKParagraphStyleWrapper.m */; };
+		790AD8BB15BABD940011E40E /* RKTextTabWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B915BABD940011E40E /* RKTextTabWrapper.h */; };
+		790AD8BC15BABD940011E40E /* RKTextTabWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8BA15BABD940011E40E /* RKTextTabWrapper.m */; };
+		790AD8BD15BAC1020011E40E /* RKParagraphStyleWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8B415BAB9C10011E40E /* RKParagraphStyleWrapper.m */; };
+		790AD8BE15BAC1050011E40E /* RKTextTabWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8BA15BABD940011E40E /* RKTextTabWrapper.m */; };
+		790AD8C115BAC3A40011E40E /* RKParagraphStyleWrapperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8C015BAC3A40011E40E /* RKParagraphStyleWrapperTest.m */; };
+		790AD8C215BAC3A40011E40E /* RKParagraphStyleWrapperTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8C015BAC3A40011E40E /* RKParagraphStyleWrapperTest.m */; };
+		790AD8C315BACF320011E40E /* RKParagraphStyleWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B315BAB9C10011E40E /* RKParagraphStyleWrapper.h */; };
+		790AD8C415BACF350011E40E /* RKTextTabWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B915BABD940011E40E /* RKTextTabWrapper.h */; };
+		790AD8C715BAD0160011E40E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AD8C515BAD0160011E40E /* CoreGraphics.framework */; };
+		790AD8C815BAD0160011E40E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AD8C615BAD0160011E40E /* CoreText.framework */; };
+		790AD8CA15BAD0290011E40E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AD8C915BAD0290011E40E /* UIKit.framework */; };
+		790AD8CD15BAD0890011E40E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AD8C515BAD0160011E40E /* CoreGraphics.framework */; };
+		790AD8CE15BAD0890011E40E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AD8C615BAD0160011E40E /* CoreText.framework */; };
+		790AD8CF15BAD0960011E40E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790AD8C915BAD0290011E40E /* UIKit.framework */; };
 		7927539915B4B34B00E97B35 /* NSDictionary+FlagSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 7927539715B4B34B00E97B35 /* NSDictionary+FlagSerialization.h */; };
 		7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7927539815B4B34B00E97B35 /* NSDictionary+FlagSerialization.m */; };
 		792D68F514DEC823009FF3A4 /* SenTestCase+RKCocoaIntegrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 792D68F414DEC823009FF3A4 /* SenTestCase+RKCocoaIntegrationTest.m */; };
@@ -343,6 +359,15 @@
 		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
 		50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RTFKitTests-Info.plist"; sourceTree = "<group>"; };
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
+		790AD8B315BAB9C10011E40E /* RKParagraphStyleWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWrapper.h; path = Writer/Utils/RKParagraphStyleWrapper.h; sourceTree = "<group>"; };
+		790AD8B415BAB9C10011E40E /* RKParagraphStyleWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWrapper.m; path = Writer/Utils/RKParagraphStyleWrapper.m; sourceTree = "<group>"; };
+		790AD8B915BABD940011E40E /* RKTextTabWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextTabWrapper.h; path = Writer/Utils/RKTextTabWrapper.h; sourceTree = "<group>"; };
+		790AD8BA15BABD940011E40E /* RKTextTabWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextTabWrapper.m; path = Writer/Utils/RKTextTabWrapper.m; sourceTree = "<group>"; };
+		790AD8BF15BAC3A40011E40E /* RKParagraphStyleWrapperTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWrapperTest.h; path = Writer/Utils/RKParagraphStyleWrapperTest.h; sourceTree = "<group>"; };
+		790AD8C015BAC3A40011E40E /* RKParagraphStyleWrapperTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWrapperTest.m; path = Writer/Utils/RKParagraphStyleWrapperTest.m; sourceTree = "<group>"; };
+		790AD8C515BAD0160011E40E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		790AD8C615BAD0160011E40E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
+		790AD8C915BAD0290011E40E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		7927539715B4B34B00E97B35 /* NSDictionary+FlagSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+FlagSerialization.h"; path = "Persistency/Utils/NSDictionary+FlagSerialization.h"; sourceTree = "<group>"; };
 		7927539815B4B34B00E97B35 /* NSDictionary+FlagSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+FlagSerialization.m"; path = "Persistency/Utils/NSDictionary+FlagSerialization.m"; sourceTree = "<group>"; };
 		792D68F314DEC823009FF3A4 /* SenTestCase+RKCocoaIntegrationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "SenTestCase+RKCocoaIntegrationTest.h"; path = "Utils/SenTestCase+RKCocoaIntegrationTest.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -639,6 +664,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				790AD8CA15BAD0290011E40E /* UIKit.framework in Frameworks */,
+				790AD8C715BAD0160011E40E /* CoreGraphics.framework in Frameworks */,
+				790AD8C815BAD0160011E40E /* CoreText.framework in Frameworks */,
 				79E76BE4151752330073153D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -647,6 +675,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				790AD8CF15BAD0960011E40E /* UIKit.framework in Frameworks */,
+				790AD8CD15BAD0890011E40E /* CoreGraphics.framework in Frameworks */,
+				790AD8CE15BAD0890011E40E /* CoreText.framework in Frameworks */,
 				799512181518AFD500D82511 /* libRTFKit.a in Frameworks */,
 				79E76BF1151752330073153D /* SenTestingKit.framework in Frameworks */,
 				79E76BF4151752330073153D /* Foundation.framework in Frameworks */,
@@ -891,6 +922,10 @@
 				795C1BC614EC33620041EB69 /* NSString+RKConvenienceAdditions.m */,
 				7935615B14DB3D4C00FC0C1C /* NSString+RKNumberFormatting.h */,
 				7935615C14DB3D4C00FC0C1C /* NSString+RKNumberFormatting.m */,
+				790AD8B315BAB9C10011E40E /* RKParagraphStyleWrapper.h */,
+				790AD8B415BAB9C10011E40E /* RKParagraphStyleWrapper.m */,
+				790AD8B915BABD940011E40E /* RKTextTabWrapper.h */,
+				790AD8BA15BABD940011E40E /* RKTextTabWrapper.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -982,6 +1017,8 @@
 				7935615614DB3C5B00FC0C1C /* RKListStyle+WriterAdditionsTest.m */,
 				7935615814DB3D0B00FC0C1C /* NSString+RKNumberFormattingTest.h */,
 				7935615914DB3D0B00FC0C1C /* NSString+RKNumberFormattingTest.m */,
+				790AD8BF15BAC3A40011E40E /* RKParagraphStyleWrapperTest.h */,
+				790AD8C015BAC3A40011E40E /* RKParagraphStyleWrapperTest.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1034,6 +1071,9 @@
 		7970958815A71E6000CE9DFA /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				790AD8C915BAD0290011E40E /* UIKit.framework */,
+				790AD8C515BAD0160011E40E /* CoreGraphics.framework */,
+				790AD8C615BAD0160011E40E /* CoreText.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -1409,6 +1449,8 @@
 				7935C5E415B49B6C007281D6 /* RKDocument+RKPersistence.h in Headers */,
 				7927539915B4B34B00E97B35 /* NSDictionary+FlagSerialization.h in Headers */,
 				795E673515B70A6C001836AB /* RKPDFWriterTypes.h in Headers */,
+				790AD8B515BAB9C10011E40E /* RKParagraphStyleWrapper.h in Headers */,
+				790AD8BB15BABD940011E40E /* RKTextTabWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1422,6 +1464,8 @@
 				79B148AE151A15ED00F14200 /* RKShadow.h in Headers */,
 				79B148B3151A281400F14200 /* RKPortableAttributeNames-iOS.h in Headers */,
 				795E673415B70A6B001836AB /* RKPDFWriterTypes.h in Headers */,
+				790AD8C315BACF320011E40E /* RKParagraphStyleWrapper.h in Headers */,
+				790AD8C415BACF350011E40E /* RKTextTabWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1667,6 +1711,8 @@
 				7935C5E115B49B5A007281D6 /* RKSection+RKPersistence.m in Sources */,
 				7935C5E515B49B6C007281D6 /* RKDocument+RKPersistence.m in Sources */,
 				7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */,
+				790AD8BC15BABD940011E40E /* RKTextTabWrapper.m in Sources */,
+				790AD8BD15BAC1020011E40E /* RKParagraphStyleWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1710,6 +1756,7 @@
 				79CE4AE51599FFBA00C83EF6 /* NSAttributedStringPersistenceTest.m in Sources */,
 				7935C5E915B4A6C2007281D6 /* RKDocumentPersistenceTest.m in Sources */,
 				795E673915B81C8E001836AB /* RKPDFWriterTest.m in Sources */,
+				790AD8C115BAC3A40011E40E /* RKParagraphStyleWrapperTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1760,6 +1807,8 @@
 				79B1489F151A118100F14200 /* RKTextAttachmentWriter.m in Sources */,
 				79B148AC151A15E700F14200 /* RKTextAttachment.m in Sources */,
 				79470FE9152C5C8800254072 /* RKListEnumerator.m in Sources */,
+				790AD8B815BAB9C60011E40E /* RKParagraphStyleWrapper.m in Sources */,
+				790AD8BE15BAC1050011E40E /* RKTextTabWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1799,6 +1848,7 @@
 				79B1489E151A117400F14200 /* RKTextAttachmentWriterTest.m in Sources */,
 				79B148A9151A14D800F14200 /* SenTestCase+RKTestHelper.m in Sources */,
 				79A5527A152C632F008EADAB /* RKListEnumeratorTest.m in Sources */,
+				790AD8C215BAC3A40011E40E /* RKParagraphStyleWrapperTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
