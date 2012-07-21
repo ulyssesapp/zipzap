@@ -39,6 +39,10 @@
     
     NSUInteger colorIndex = [resources indexOfColor: color];
     
+    #if !TARGET_OS_IPHONE
+        CFRelease(color);
+    #endif
+    
     return [NSString stringWithFormat:@"\\shad\\shadx%lu\\shady%lu\\shadr%lu\\shadc%lu ",
                    (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
                    (NSUInteger)RKPointsToTwips([shadow shadowOffset].height),
