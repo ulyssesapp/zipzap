@@ -476,6 +476,9 @@
         case kCTRightTextAlignment:
             [rtf appendString:@"\\tqr"];
             break;
+            
+        default:
+            break;
     }
     
     [rtf appendFormat:@"\\tx%lu", (NSUInteger)RKPointsToTwips(location)];
