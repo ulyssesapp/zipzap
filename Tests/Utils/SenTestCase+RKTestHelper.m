@@ -8,6 +8,8 @@
 
 #import "SenTestCase+RKTestHelper.h"
 
+#import "RKTextAttachment.h"
+
 @implementation SenTestCase (RKTestHelper)
 
 - (NSFileWrapper *)testFileWithName:(NSString *)name withExtension:(NSString *)extension

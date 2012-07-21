@@ -144,10 +144,12 @@
     return [RKWriter RTFDfromDocument: self];    
 }
 
+#if !TARGET_OS_IPHONE
 - (NSData *)PDF
 {
     return [RKPDFWriter PDFFromDocument:self options:0];
 }
+#endif
 
 @end
 

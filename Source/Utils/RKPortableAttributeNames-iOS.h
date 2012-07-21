@@ -7,6 +7,9 @@
 //
 
 #if TARGET_OS_IPHONE
+
+#import "RKTextAttachment.h"
+
 /*!
  @abstract Pre-initialized attribute names
  @discussion Internally used, please use the RK*AttributeName macros instead.

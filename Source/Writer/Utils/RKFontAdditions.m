@@ -16,6 +16,7 @@ CTFontRef RKGetDefaultFont(void)
     return defaultFont;
 }
 
+#if !TARGET_OS_IPHONE
 @implementation NSFont (RTFFontAdditions)
 
 + (NSFont *)RTFDefaultFont
@@ -24,3 +25,4 @@ CTFontRef RKGetDefaultFont(void)
 }
 
 @end
+#endif
