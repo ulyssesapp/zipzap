@@ -37,7 +37,8 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     [noteString insertAttributedString:enumerator atIndex:0];
 
     // Setup paragraph style
-    [noteString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, enumerator.length + 1)];
+    if (paragraphStyle)
+        [noteString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, enumerator.length + 1)];
     
     // Add anchor for enumerator
     [noteString addLocalDestinationAnchor:note.footnoteAnchor forRange:NSMakeRange(0, 1)];
@@ -57,7 +58,7 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
         NSAttributedString *note = [self attributedStringWithNote:[noteDescriptor objectForKey: RKFootnoteObjectKey] enumerationString:[noteDescriptor objectForKey: RKFootnoteEnumerationStringKey]];
         
         if ((noteList.length > 0) && ![noteList.string hasSuffix: @"\n"])
-            [noteList appendAttributedString: [[NSAttributedString alloc] initWithString: @"\n"]];
+            [noteList.mutableString appendString: @"\n"];
         
         [noteList appendAttributedString: note];
     }
@@ -73,8 +74,8 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     if (!font)
         font = [NSFont RTFDefaultFont];
     
-    [enumerator addAttribute:NSFontAttributeName value:[NSFont fontWithName:font.fontName size:font.pointSize / 2.0f] range:NSMakeRange(0, enumerator.length)];
-    [enumerator addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (font.pointSize / 2.0f)] range:NSMakeRange(0, enumerator.length)];
+    [enumerator addAttribute:NSFontAttributeName value:[NSFont fontWithName:font.fontName size:font.pointSize / 1.5f] range:NSMakeRange(0, enumerator.length)];
+    [enumerator addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (font.pointSize / 2.5f)] range:NSMakeRange(0, enumerator.length)];
     
     return enumerator;
 }
