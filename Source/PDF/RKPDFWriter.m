@@ -12,6 +12,7 @@
 #import "RKDocument.h"
 #import "RKFramesetter.h"
 #import "RKPDFFrame.h"
+#import "RKPDFLine.h"
 
 #import "RKSection+PDFCoreTextConversion.h"
 #import "RKSection+PDFUtilities.h"
@@ -90,7 +91,7 @@
             headerConstraints = headerFrame.visibleBoundingBox;
             
             // Render header
-            [headerFrame renderWithRenderedRange:NULL usingOrigin:headerFrame.boundingBox.origin options:options block:nil];
+            [headerFrame renderUsingOrigin:headerFrame.boundingBox.origin options:options];
         }
 
         // Layout and render footer
@@ -107,7 +108,7 @@
             footerConstraints.origin.y = footerFrame.boundingBox.origin.y - footerFrame.boundingBox.size.height + footerFrame.visibleBoundingBox.size.height;
 
             // Render footer
-            [footerFrame renderWithRenderedRange:NULL usingOrigin:footerConstraints.origin options:options block:nil];
+            [footerFrame renderUsingOrigin:footerConstraints.origin options:options];
         }
 
         // Render columns
@@ -132,31 +133,26 @@
     // Create a prelimary layout the contents of the frame
     RKPDFFrame *contentFrame = [RKFramesetter frameForAttributedString:contentString usingRange:contentRange rect:columnBox context:context];
 
-    NSRange renderedRange;
+    // Determine footnotes that are still to be rendered
     __block NSMutableAttributedString *renderableFootnotes = [previousFootnotes mutableCopy] ?: [NSMutableAttributedString new];
     __block RKPDFFrame *footnoteFrame = [RKFramesetter frameForAttributedString:renderableFootnotes usingRange:NSMakeRange(0, renderableFootnotes.length) rect:columnBox context:context];
-
-    __block BOOL pendingPageBreak = NO;
     
-    // Render text lines
-    [contentFrame renderWithRenderedRange:&renderedRange usingOrigin:columnBox.origin options:options block:^(NSRange lineRange, CGRect lineBoundingBox, NSUInteger lineIndex, BOOL *stop) {
-        // Skip this line, if we have a pending page break
-        if (pendingPageBreak) {
-            *stop = YES;
-            return;
-        }
-        
+    // Determine renderable lines
+    __block NSRange renderedRange = NSMakeRange(contentRange.location, 0);
+    __block NSUInteger lineCount = 0;
+    
+    [contentFrame.lines enumerateObjectsUsingBlock:^(RKPDFLine *line, NSUInteger lineIndex, BOOL *stop) {
         // Get the maximum space we can occupy for footnotes unitl the current line (occupy the entire box wihtout spacings, if we are at line 0)
-        CGRect footnoteBox = [context.document boundingBoxForFootnotesFromColumnRect:columnBox height:(lineBoundingBox.origin.y - columnBox.origin.y)];
-
+        CGRect footnoteBox = [context.document boundingBoxForFootnotesFromColumnRect:columnBox height:(line.boundingBox.origin.y - columnBox.origin.y)];
+        
         // Get footnotes for current line
-        NSArray *currentFootnotes = [context registeredPageNotesInAttributedString:contentString range:lineRange];
-
+        NSArray *currentFootnotes = [context registeredPageNotesInAttributedString:contentString range:line.range];
+        
         // Add endnotes to the footnotes, if we are on the last line of the column
-        if ((lineRange.location + lineRange.length) >= contentString.length) {
+        if ((line.range.location + line.range.length) >= contentString.length) {
             currentFootnotes = [self appendEndnotesToNotes:currentFootnotes isLastSection:isLastSection context:context];
         }
-
+        
         // Create an attributed string for the footnote section (consisting of previous footnotes and the current footnotes)
         NSAttributedString *currentFootnoteString = [NSAttributedString noteListFromNotes: currentFootnotes];
         
@@ -164,29 +160,38 @@
         if (currentFootnoteString.length) {
             if (estimatedFootnotes.length)
                 [estimatedFootnotes appendAttributedString: [[NSAttributedString alloc] initWithString:@"\n"]];
-
+            
             [estimatedFootnotes appendAttributedString: currentFootnoteString];
         }
         
         // Estimate, whether we can render the current line together with at least the beginning of its first footnote
         RKPDFFrame *currentFootnoteFrame = [RKFramesetter frameForAttributedString:estimatedFootnotes usingRange:NSMakeRange(0, estimatedFootnotes.length) rect:footnoteBox context:context];
         NSRange visibleFootnoteRange = currentFootnoteFrame.visibleStringRange;
-
+        
         // If the current footnote box does not contain the additional footnotes of the current line, we can skip the line
         // We can also skip the line, if the new footnote frame is smaller than the last one
         if ((currentFootnoteString.length && (visibleFootnoteRange.length < renderableFootnotes.length)) || (footnoteFrame.visibleStringRange.length > currentFootnoteFrame.visibleStringRange.length)) {
             *stop = YES;
             return;
         }
-
+        
         // Continue with the new footnote string
         footnoteFrame = currentFootnoteFrame;
         renderableFootnotes = estimatedFootnotes;
         
+        // We accept the line for rendering
+        lineCount = lineIndex + 1;
+        renderedRange.length += line.range.length;
+        
         // Did the current line propose a page break? If yes: stop after this line
-        if ([contentString.string rangeOfString:@"\f" options:0 range:lineRange].length == 1)
-            pendingPageBreak = YES;
+        if ([contentString.string rangeOfString:@"\f" options:0 range:line.range].length == 1) {
+            *stop = YES;
+            return;
+        }
     }];
+    
+    // Render lines
+    [contentFrame renderLines:lineCount usingOrigin:columnBox.origin options:options];
     
     // Render footnotes and determine remaining footnote string
     NSAttributedString *remainingFootnotes = nil;
@@ -199,7 +204,7 @@
         displacedFootnoteBox.origin.y = originalFootnoteBox.origin.y - originalFootnoteBox.size.height + visibleFootnoteBox.size.height;
         
         // Render footnotes
-        [footnoteFrame renderWithRenderedRange:NULL usingOrigin:displacedFootnoteBox.origin options:options block:nil];
+        [footnoteFrame renderUsingOrigin:displacedFootnoteBox.origin options:options];
 
         // Draw separator
         [context.document drawFootnoteSeparatorForBoundingBox:displacedFootnoteBox toContext:context];

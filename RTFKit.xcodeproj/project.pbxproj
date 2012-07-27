@@ -40,6 +40,8 @@
 		7935C5E415B49B6C007281D6 /* RKDocument+RKPersistence.h in Headers */ = {isa = PBXBuildFile; fileRef = 7935C5E215B49B6C007281D6 /* RKDocument+RKPersistence.h */; };
 		7935C5E515B49B6C007281D6 /* RKDocument+RKPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935C5E315B49B6C007281D6 /* RKDocument+RKPersistence.m */; };
 		7935C5E915B4A6C2007281D6 /* RKDocumentPersistenceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935C5E815B4A6C2007281D6 /* RKDocumentPersistenceTest.m */; };
+		7945209415C2C34300E47B0B /* RKPDFLine.h in Headers */ = {isa = PBXBuildFile; fileRef = 7945209215C2C34300E47B0B /* RKPDFLine.h */; };
+		7945209515C2C34300E47B0B /* RKPDFLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7945209315C2C34300E47B0B /* RKPDFLine.m */; };
 		79470FE7152C5AB900254072 /* RKListEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 79470FE5152C5AB900254072 /* RKListEnumerator.h */; };
 		79470FE8152C5AB900254072 /* RKListEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 79470FE6152C5AB900254072 /* RKListEnumerator.m */; };
 		79470FE9152C5C8800254072 /* RKListEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 79470FE6152C5AB900254072 /* RKListEnumerator.m */; };
@@ -384,6 +386,8 @@
 		7935C5E715B4A6C2007281D6 /* RKDocumentPersistenceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentPersistenceTest.h; path = Persistency/RKDocumentPersistenceTest.h; sourceTree = "<group>"; };
 		7935C5E815B4A6C2007281D6 /* RKDocumentPersistenceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocumentPersistenceTest.m; path = Persistency/RKDocumentPersistenceTest.m; sourceTree = "<group>"; };
 		7936184114E2C44C00FB08E7 /* RKTextListWriterAdditions+TextExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKTextListWriterAdditions+TextExtensions.h"; path = "Utils/RKTextListWriterAdditions+TextExtensions.h"; sourceTree = "<group>"; };
+		7945209215C2C34300E47B0B /* RKPDFLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFLine.h; path = PDF/Rendering/RKPDFLine.h; sourceTree = "<group>"; };
+		7945209315C2C34300E47B0B /* RKPDFLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFLine.m; path = PDF/Rendering/RKPDFLine.m; sourceTree = "<group>"; };
 		79470FE5152C5AB900254072 /* RKListEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListEnumerator.h; path = Utils/RKListEnumerator.h; sourceTree = "<group>"; };
 		79470FE6152C5AB900254072 /* RKListEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListEnumerator.m; path = Utils/RKListEnumerator.m; sourceTree = "<group>"; };
 		795C1BC114EC1AEF0041EB69 /* RKListStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListStyle.h; path = Source/Document/Styles/RKListStyle.h; sourceTree = SOURCE_ROOT; };
@@ -1192,6 +1196,8 @@
 				796C959315AD6F1F00713471 /* RKPDFFrame.h */,
 				796C959415AD6F2000713471 /* RKPDFFrame.m */,
 				796C959715AD700F00713471 /* RKPDFFrame+PrivateFramesetterMethods.h */,
+				7945209215C2C34300E47B0B /* RKPDFLine.h */,
+				7945209315C2C34300E47B0B /* RKPDFLine.m */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -1428,6 +1434,7 @@
 				795E673515B70A6C001836AB /* RKPDFWriterTypes.h in Headers */,
 				79FB2B2215C18DAF0010EA47 /* RKAdditionalParagraphStyle.h in Headers */,
 				79FB2B2F15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.h in Headers */,
+				7945209415C2C34300E47B0B /* RKPDFLine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1688,6 +1695,7 @@
 				7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */,
 				79FB2B2315C18DAF0010EA47 /* RKAdditionalParagraphStyle.m in Sources */,
 				79FB2B3015C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.m in Sources */,
+				7945209515C2C34300E47B0B /* RKPDFLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
