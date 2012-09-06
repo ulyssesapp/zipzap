@@ -54,8 +54,14 @@
     CTFontRef font = (__bridge CTFontRef)[attributedString attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
     NSMutableAttributedString *replacement = [[NSAttributedString footnoteEnumeratorFromString:enumerator usingFont:font] mutableCopy];
 
+    // Add "," to enumerator, if other footnote follows
+    BOOL hasSeparator = (attributedString.length > index+1) && ([attributedString attribute:RKFootnoteAttributeName atIndex:index+1 effectiveRange:NULL] || [attributedString attribute:RKEndnoteAttributeName atIndex:index+1 effectiveRange:NULL]);
+    
+    if (hasSeparator)
+        [replacement.mutableString appendString: @","];
+
     // Add link to footnote
-    [replacement addLocalDestinationLinkForAnchor:_footnoteAnchor forRange:NSMakeRange(0, replacement.length)];
+    [replacement addLocalDestinationLinkForAnchor:_footnoteAnchor forRange:NSMakeRange(0, replacement.length - (hasSeparator ? 1 : 0))];
     
     return replacement;
 }

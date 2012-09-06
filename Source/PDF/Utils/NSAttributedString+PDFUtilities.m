@@ -58,7 +58,7 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
         NSAttributedString *note = [self attributedStringWithNote:[noteDescriptor objectForKey: RKFootnoteObjectKey] enumerationString:[noteDescriptor objectForKey: RKFootnoteEnumerationStringKey]];
         
         if ((noteList.length > 0) && ![noteList.string hasSuffix: @"\n"])
-            [noteList appendAttributedString: [[NSAttributedString alloc] initWithString: @"\n"]];
+            [noteList.mutableString appendString: @"\n"];
         
         [noteList appendAttributedString: note];
     }
@@ -80,8 +80,7 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     [enumerator addAttribute:NSFontAttributeName value:(__bridge id)subscriptFont range:NSMakeRange(0, enumerator.length)];
     [enumerator addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: pointSize] range:NSMakeRange(0, enumerator.length)];
     
-    CFRelease(subscriptFont);
-    
+    CFRelease(subscriptFont);    
     return enumerator;
 }
 

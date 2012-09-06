@@ -177,6 +177,8 @@
 		795E673415B70A6B001836AB /* RKPDFWriterTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 795E673215B70A53001836AB /* RKPDFWriterTypes.h */; };
 		795E673515B70A6C001836AB /* RKPDFWriterTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 795E673215B70A53001836AB /* RKPDFWriterTypes.h */; };
 		795E673915B81C8E001836AB /* RKPDFWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 795E673815B81C8E001836AB /* RKPDFWriterTest.m */; };
+		79672B0715F8A61B0021A886 /* RKPDFLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7945209315C2C34300E47B0B /* RKPDFLine.m */; };
+		79672B0915F8A61C0021A886 /* RKPDFLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 7945209315C2C34300E47B0B /* RKPDFLine.m */; };
 		796C955C15AC7E1600713471 /* RKFramesetter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796C955A15AC7E1600713471 /* RKFramesetter.h */; };
 		796C955D15AC7E1600713471 /* RKFramesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C955B15AC7E1600713471 /* RKFramesetter.m */; };
 		796C956015AC945800713471 /* RKCoreTextRepresentationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C955F15AC945700713471 /* RKCoreTextRepresentationConverter.m */; };
@@ -389,6 +391,11 @@
 		79F673B814C84AE0005D03FA /* RKSection.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673B614C84AE0005D03FA /* RKSection.h */; };
 		79F673B914C84AE0005D03FA /* RKSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F673B714C84AE0005D03FA /* RKSection.m */; };
 		79F673CC14C875BB005D03FA /* RKTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 79F673CB14C875BA005D03FA /* RKTypes.h */; };
+		79FB2B2215C18DAF0010EA47 /* RKAdditionalParagraphStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FB2B2015C18DAF0010EA47 /* RKAdditionalParagraphStyle.h */; };
+		79FB2B2315C18DAF0010EA47 /* RKAdditionalParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FB2B2115C18DAF0010EA47 /* RKAdditionalParagraphStyle.m */; };
+		79FB2B2F15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FB2B2D15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.h */; };
+		79FB2B3015C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FB2B2E15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.m */; };
+		79FB2B3315C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FB2B3215C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.m */; };
 		79FCF84615A5A72C00D98438 /* RKPDFWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF84415A5A72C00D98438 /* RKPDFWriter.h */; };
 		79FCF84715A5A72C00D98438 /* RKPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF84515A5A72C00D98438 /* RKPDFWriter.m */; };
 		79FCF86D15A5B05A00D98438 /* RKPDFRenderingContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF86B15A5B05A00D98438 /* RKPDFRenderingContext.h */; };
@@ -526,6 +533,8 @@
 		7935C5E715B4A6C2007281D6 /* RKDocumentPersistenceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDocumentPersistenceTest.h; path = Persistency/RKDocumentPersistenceTest.h; sourceTree = "<group>"; };
 		7935C5E815B4A6C2007281D6 /* RKDocumentPersistenceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDocumentPersistenceTest.m; path = Persistency/RKDocumentPersistenceTest.m; sourceTree = "<group>"; };
 		7936184114E2C44C00FB08E7 /* RKTextListWriterAdditions+TextExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKTextListWriterAdditions+TextExtensions.h"; path = "Utils/RKTextListWriterAdditions+TextExtensions.h"; sourceTree = "<group>"; };
+		7945209215C2C34300E47B0B /* RKPDFLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFLine.h; path = PDF/Rendering/RKPDFLine.h; sourceTree = "<group>"; };
+		7945209315C2C34300E47B0B /* RKPDFLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFLine.m; path = PDF/Rendering/RKPDFLine.m; sourceTree = "<group>"; };
 		79470FE5152C5AB900254072 /* RKListEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListEnumerator.h; path = Utils/RKListEnumerator.h; sourceTree = "<group>"; };
 		79470FE6152C5AB900254072 /* RKListEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListEnumerator.m; path = Utils/RKListEnumerator.m; sourceTree = "<group>"; };
 		795C1BC114EC1AEF0041EB69 /* RKListStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListStyle.h; path = Source/Document/Styles/RKListStyle.h; sourceTree = SOURCE_ROOT; };
@@ -700,6 +709,12 @@
 		79F673B614C84AE0005D03FA /* RKSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKSection.h; path = Document/RKSection.h; sourceTree = "<group>"; };
 		79F673B714C84AE0005D03FA /* RKSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKSection.m; path = Document/RKSection.m; sourceTree = "<group>"; };
 		79F673CB14C875BA005D03FA /* RKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKTypes.h; sourceTree = "<group>"; };
+		79FB2B2015C18DAF0010EA47 /* RKAdditionalParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAdditionalParagraphStyle.h; path = Document/Attributes/RKAdditionalParagraphStyle.h; sourceTree = "<group>"; };
+		79FB2B2115C18DAF0010EA47 /* RKAdditionalParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAdditionalParagraphStyle.m; path = Document/Attributes/RKAdditionalParagraphStyle.m; sourceTree = "<group>"; };
+		79FB2B2D15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAdditionalParagraphStyleWriter.h; path = "Writer/Attribute Writer/Paragraph Styles/RKAdditionalParagraphStyleWriter.h"; sourceTree = "<group>"; };
+		79FB2B2E15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAdditionalParagraphStyleWriter.m; path = "Writer/Attribute Writer/Paragraph Styles/RKAdditionalParagraphStyleWriter.m"; sourceTree = "<group>"; };
+		79FB2B3115C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAdditionalParagraphStyleWriterTest.h; path = "Writer/Attribute Writer/Paragraph Styles/RKAdditionalParagraphStyleWriterTest.h"; sourceTree = "<group>"; };
+		79FB2B3215C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAdditionalParagraphStyleWriterTest.m; path = "Writer/Attribute Writer/Paragraph Styles/RKAdditionalParagraphStyleWriterTest.m"; sourceTree = "<group>"; };
 		79FCF84415A5A72C00D98438 /* RKPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFWriter.h; path = PDF/RKPDFWriter.h; sourceTree = "<group>"; };
 		79FCF84515A5A72C00D98438 /* RKPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFWriter.m; path = PDF/RKPDFWriter.m; sourceTree = "<group>"; };
 		79FCF86B15A5B05A00D98438 /* RKPDFRenderingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFRenderingContext.h; path = PDF/Context/RKPDFRenderingContext.h; sourceTree = "<group>"; };
@@ -952,6 +967,8 @@
 				79AD205414E1939900F5616C /* RKPlaceholder.m */,
 				795C1BD914ED70590041EB69 /* RKStyleName.h */,
 				795C1BDA14ED70590041EB69 /* RKStyleName.m */,
+				79FB2B2015C18DAF0010EA47 /* RKAdditionalParagraphStyle.h */,
+				79FB2B2115C18DAF0010EA47 /* RKAdditionalParagraphStyle.m */,
 			);
 			name = Attributes;
 			sourceTree = "<group>";
@@ -959,6 +976,8 @@
 		7935617014DC1CE000FC0C1C /* Paragraph Styles */ = {
 			isa = PBXGroup;
 			children = (
+				79FB2B3115C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.h */,
+				79FB2B3215C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.m */,
 				7935617114DC1CF500FC0C1C /* RKParagraphStyleWriterTest.h */,
 				7935617214DC1CF500FC0C1C /* RKParagraphStyleWriterTest.m */,
 				7935618114DC22DB00FC0C1C /* RKListItemWriterTest.h */,
@@ -974,6 +993,8 @@
 				7935617814DC1D3000FC0C1C /* RKParagraphStyleWriter.m */,
 				7935617C14DC22C100FC0C1C /* RKListItemWriter.h */,
 				7935617D14DC22C100FC0C1C /* RKListItemWriter.m */,
+				79FB2B2D15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.h */,
+				79FB2B2E15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.m */,
 			);
 			name = "Paragraph Styles";
 			sourceTree = "<group>";
@@ -1323,6 +1344,8 @@
 				796C959315AD6F1F00713471 /* RKPDFFrame.h */,
 				796C959415AD6F2000713471 /* RKPDFFrame.m */,
 				796C959715AD700F00713471 /* RKPDFFrame+PrivateFramesetterMethods.h */,
+				7945209215C2C34300E47B0B /* RKPDFLine.h */,
+				7945209315C2C34300E47B0B /* RKPDFLine.m */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -1547,6 +1570,8 @@
 				7935C5E415B49B6C007281D6 /* RKDocument+RKPersistence.h in Headers */,
 				7927539915B4B34B00E97B35 /* NSDictionary+FlagSerialization.h in Headers */,
 				795E673515B70A6C001836AB /* RKPDFWriterTypes.h in Headers */,
+				79FB2B2215C18DAF0010EA47 /* RKAdditionalParagraphStyle.h in Headers */,
+				79FB2B2F15C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.h in Headers */,
 				790AD8B515BAB9C10011E40E /* RKParagraphStyleWrapper.h in Headers */,
 				790AD8BB15BABD940011E40E /* RKTextTabWrapper.h in Headers */,
 				790AD90915BAD3F30011E40E /* RKPDFFrame+PrivateFramesetterMethods.h in Headers */,
@@ -1873,6 +1898,9 @@
 				790AD9A315BC0BF00011E40E /* RKShadowSerializer.m in Sources */,
 				790AD9A715BC0BF00011E40E /* RKTextAttachmentSerializer.m in Sources */,
 				790AD9AD15BC107C0011E40E /* RKLinkSerializer.m in Sources */,
+				79FB2B2315C18DAF0010EA47 /* RKAdditionalParagraphStyle.m in Sources */,
+				79FB2B3015C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.m in Sources */,
+				79672B0915F8A61C0021A886 /* RKPDFLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1917,6 +1945,7 @@
 				795E673915B81C8E001836AB /* RKPDFWriterTest.m in Sources */,
 				790AD8C115BAC3A40011E40E /* RKParagraphStyleWrapperTest.m in Sources */,
 				7971429C15BC1FA20082A67B /* RKDocumentPersistenceTest.m in Sources */,
+				79FB2B3315C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2015,6 +2044,7 @@
 				7971428F15BC15050082A67B /* RKParagraphStyleSerializer.m in Sources */,
 				7971429115BC15050082A67B /* RKListStyleSerializer.m in Sources */,
 				7971429315BC1E480082A67B /* RKAttributeSerializer.m in Sources */,
+				79672B0715F8A61B0021A886 /* RKPDFLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,7 @@
 
 #import "NSString+RKNumberFormatting.h"
 
-#define RKFootnoteSpacing       5.0
+#define RKFootnoteSpacing       15.0
 #define RKHeaderSpacing         10.0
 #define RKFooterSpacing         10.0
 #define RKColumnSpacing         10.0
