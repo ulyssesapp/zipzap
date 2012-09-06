@@ -19,6 +19,21 @@
 + (void)registerAttributeSerializer:(Class)serializer forAttribute:(NSString *)attributeName;
 
 /*!
+ @abstract Registers the serialization of a flag-based attribute using the given mapping from flag names to flag values.
+ */
++ (void)registerAttributeWithName:(NSString *)attributeName usingFlags:(NSDictionary *)flagStyles;
+
+/*!
+ @abstract Registers the serialization of an enumeration-based attribute using the given mapping from enumeration identifiers to values.
+ */
++ (void)registerAttributeWithName:(NSString *)attributeName usingEnumeration:(NSDictionary *)enumerationStyles;
+
+/*!
+ @abstract Registers the serialization of a numeric attribute.
+ */
++ (void)registerNumericAttributeWithName:(NSString *)attributeName;
+
+/*!
  @abstract Initializes an attributed string from its property list representation
  */
 - (id)initWithRTFKitPropertyListRepresentation:(id)propertyList error:(NSError **)error;

@@ -1297,13 +1297,13 @@
 		79CE4A4E1599D8A700C83EF6 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				790AD93F15BBF8450011E40E /* Attribute Writer */,
 				7935C5E215B49B6C007281D6 /* RKDocument+RKPersistence.h */,
 				7935C5E315B49B6C007281D6 /* RKDocument+RKPersistence.m */,
 				7935C5DE15B49B5A007281D6 /* RKSection+RKPersistence.h */,
 				7935C5DF15B49B5A007281D6 /* RKSection+RKPersistence.m */,
 				79CE4AE61599FFDF00C83EF6 /* NSAttributedString+RKPersistence.h */,
 				79CE4AE71599FFE000C83EF6 /* NSAttributedString+RKPersistence.m */,
+				790AD93F15BBF8450011E40E /* Attribute Writer */,
 				79CE4A9E1599E41600C83EF6 /* Context */,
 				7927539115B4B2CD00E97B35 /* Utils */,
 			);

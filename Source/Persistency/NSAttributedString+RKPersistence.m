@@ -9,6 +9,7 @@
 #import "NSAttributedString+RKPersistence.h"
 
 #import "RKAttributeSerializer.h"
+#import "RKStyleAttributeSerializer.h"
 
 #import "NSDictionary+FlagSerialization.h"
 
@@ -46,6 +47,20 @@ NSMutableDictionary *NSAttributedStringSerializers;
     [NSAttributedStringSerializers setObject:serializer forKey:attributeName];
 }
 
++ (void)registerAttributeWithName:(NSString *)attributeName usingFlags:(NSDictionary *)flagStyles
+{
+	[RKStyleAttributeSerializer registerAttributeWithName:attributeName usingFlags:flagStyles];
+}
+
++ (void)registerAttributeWithName:(NSString *)attributeName usingEnumeration:(NSDictionary *)enumerationStyles
+{
+	[RKStyleAttributeSerializer registerAttributeWithName:attributeName usingEnumeration:enumerationStyles];
+}
+
++ (void)registerNumericAttributeWithName:(NSString *)attributeName
+{
+	[RKStyleAttributeSerializer registerNumericAttributeWithName:attributeName];
+}
 
 
 #pragma mark - Deserialization

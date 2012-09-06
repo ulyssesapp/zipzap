@@ -12,26 +12,26 @@
 
 @implementation RKStyleAttributeSerializer
 
-NSDictionary *RKStyleAttributeSerializerUnderlineStyles;
-NSDictionary *RKStyleAttributeSerializerSuperscriptStyles;
-NSDictionary *RKStyleAttributeSerializerLigatureStyles;
-NSDictionary *RKStyleAttributeSerializerPlaceholderStyles;
+NSMutableDictionary *RKStyleAttributeSerializerFlagStyles;
+NSMutableDictionary *RKStyleAttributeSerializerEnumerationStyles;
+NSMutableArray *RKStyleAttributeSerializerNumericStyles;
 
 + (void)load
 {
     @autoreleasepool {
-        [NSAttributedString registerAttributeSerializer:self forAttribute:RKUnderlineStyleAttributeName];
-        [NSAttributedString registerAttributeSerializer:self forAttribute:RKStrikethroughStyleAttributeName];
-        [NSAttributedString registerAttributeSerializer:self forAttribute:RKLigatureAttributeName];
-        [NSAttributedString registerAttributeSerializer:self forAttribute:RKPlaceholderAttributeName];
-        [NSAttributedString registerAttributeSerializer:self forAttribute:RKSuperscriptAttributeName];
+		// Register flat numeric attributes
+        [self registerNumericAttributeWithName: RKStrokeWidthAttributeName];
+        [self registerNumericAttributeWithName: RKBaselineOffsetAttributeName];
+        [self registerNumericAttributeWithName: RKKernAttributeName];
+        [self registerNumericAttributeWithName: RKObliquenessAttributeName];
+		
         [NSAttributedString registerAttributeSerializer:self forAttribute:RKStrokeWidthAttributeName];
         [NSAttributedString registerAttributeSerializer:self forAttribute:RKBaselineOffsetAttributeName];
         [NSAttributedString registerAttributeSerializer:self forAttribute:RKKernAttributeName];
-        [NSAttributedString registerAttributeSerializer:self forAttribute:RKBaselineOffsetAttributeName];        
+        [NSAttributedString registerAttributeSerializer:self forAttribute:RKObliquenessAttributeName];        
         
-        // Setup serialization descriptions for styles
-        RKStyleAttributeSerializerUnderlineStyles = [NSDictionary dictionaryWithObjectsAndKeys:
+        // Serialization of underline styles
+        NSDictionary *underlineStyles = [NSDictionary dictionaryWithObjectsAndKeys:
                                                      [NSNumber numberWithUnsignedInteger: RKUnderlineStyleNone],            @"none",
                                                      [NSNumber numberWithUnsignedInteger: RKUnderlineStyleSingle],          @"single",
                                                      [NSNumber numberWithUnsignedInteger: RKUnderlineStyleThick],           @"thick",
@@ -42,70 +42,107 @@ NSDictionary *RKStyleAttributeSerializerPlaceholderStyles;
                                                      [NSNumber numberWithUnsignedInteger: RKUnderlinePatternDashDotDot],    @"dashDotDot",
                                                      [NSNumber numberWithUnsignedInteger: RKUnderlineByWordMask],           @"underlineByWord",
                                                     nil];
-        
-        RKStyleAttributeSerializerSuperscriptStyles = [NSDictionary dictionaryWithObjectsAndKeys:
+
+        [self registerAttributeWithName:RKUnderlineStyleAttributeName usingEnumeration:underlineStyles];
+		[NSAttributedString registerAttributeSerializer:self forAttribute:RKUnderlineStyleAttributeName];
+
+        [self registerAttributeWithName:RKStrikethroughStyleAttributeName usingEnumeration:underlineStyles];		
+        [NSAttributedString registerAttributeSerializer:self forAttribute:RKStrikethroughStyleAttributeName];
+		
+		// Serialization of superscript styles        
+        NSDictionary *superscriptStyles = [NSDictionary dictionaryWithObjectsAndKeys:
                                                        [NSNumber numberWithInteger: 0],          @"none",
                                                        [NSNumber numberWithInteger: 1],          @"superscript",
                                                        [NSNumber numberWithInteger: -1],         @"subscript",
                                                       nil];
+		
+		[self registerAttributeWithName:RKSuperscriptAttributeName usingEnumeration:superscriptStyles];
+        [NSAttributedString registerAttributeSerializer:self forAttribute:RKSuperscriptAttributeName];
         
-        RKStyleAttributeSerializerLigatureStyles= [NSDictionary dictionaryWithObjectsAndKeys:
+		// Serialization of ligature styles
+        NSDictionary *ligatureStyles = [NSDictionary dictionaryWithObjectsAndKeys:
                                                    [NSNumber numberWithInteger: 0],          @"none",
                                                    [NSNumber numberWithInteger: 1],          @"standard",
                                                    [NSNumber numberWithInteger: 2],          @"all",
                                                   nil];
+
+		[self registerAttributeWithName:RKLigatureAttributeName usingEnumeration:ligatureStyles];		
+        [NSAttributedString registerAttributeSerializer:self forAttribute:RKLigatureAttributeName];
         
-        RKStyleAttributeSerializerPlaceholderStyles = [NSDictionary dictionaryWithObjectsAndKeys:
+		// Serialization of placeholer styles
+        NSDictionary *placeholderStyles = [NSDictionary dictionaryWithObjectsAndKeys:
                                                        [NSNumber numberWithInteger: RKPlaceholderPageNumber],    @"pageNumber",
                                                        [NSNumber numberWithInteger: RKPlaceholderSectionNumber], @"sectionNumber",
                                                       nil];
+		[self registerAttributeWithName:RKPlaceholderAttributeName usingEnumeration:placeholderStyles];
+        [NSAttributedString registerAttributeSerializer:self forAttribute:RKPlaceholderAttributeName];
+		
     }
+}
+
++ (void)registerAttributeWithName:(NSString *)attributeName usingFlags:(NSDictionary *)flagStyles
+{
+	if (!RKStyleAttributeSerializerFlagStyles)
+		RKStyleAttributeSerializerFlagStyles = [NSMutableDictionary new];
+	
+	[RKStyleAttributeSerializerFlagStyles setObject:flagStyles forKey:attributeName];
+}
+
++ (void)registerAttributeWithName:(NSString *)attributeName usingEnumeration:(NSDictionary *)enumerationStyles
+{
+	if (!RKStyleAttributeSerializerEnumerationStyles)
+		RKStyleAttributeSerializerEnumerationStyles = [NSMutableDictionary new];
+	
+	[RKStyleAttributeSerializerEnumerationStyles setObject:enumerationStyles forKey:attributeName];	
+}
+
++ (void)registerNumericAttributeWithName:(NSString *)attributeName
+{
+	if (!RKStyleAttributeSerializerNumericStyles)
+		RKStyleAttributeSerializerNumericStyles = [NSMutableArray new];
+	
+	[RKStyleAttributeSerializerNumericStyles addObject: attributeName];
 }
 
 + (NSNumber *)attributeValueForPropertyList:(id)propertyList attributeName:(NSString *)attributeName context:(RKPersistenceContext *)context error:(NSError **)error
 {
-    if ([attributeName isEqual: RKUnderlineStyleAttributeName])
-        return [NSNumber numberWithUnsignedInteger: [RKStyleAttributeSerializerUnderlineStyles flagsFromArray:propertyList error:error]];
+	// Is it a flag attribute?
+	NSDictionary *flags = [RKStyleAttributeSerializerFlagStyles objectForKey: attributeName];
+	if (flags) 
+		return [NSNumber numberWithUnsignedInteger: [flags flagsFromArray:propertyList error:error]];
 
-    if ([attributeName isEqual: RKStrikethroughStyleAttributeName])
-        return [NSNumber numberWithUnsignedInteger: [RKStyleAttributeSerializerUnderlineStyles flagsFromArray:propertyList error:error]];
+	// Is it an enumeration attribute?
+	NSDictionary *enumerations = [RKStyleAttributeSerializerEnumerationStyles objectForKey: attributeName];
+	if (enumerations)
+		return [NSNumber numberWithInteger: [enumerations signedEnumValueFromString:propertyList error:error]];
 
-    if ([attributeName isEqual: RKSuperscriptAttributeName])
-        return [NSNumber numberWithInteger: [RKStyleAttributeSerializerSuperscriptStyles signedEnumValueFromString:propertyList error:error]];
-    
-    if ([attributeName isEqual: RKLigatureAttributeName])
-        return [NSNumber numberWithInteger: [RKStyleAttributeSerializerLigatureStyles signedEnumValueFromString:propertyList error:error]];
+	
+	// Is it a flat numeric attribute?
+	if ([RKStyleAttributeSerializerNumericStyles containsObject: attributeName])
+		return propertyList;
 
-    if ([attributeName isEqual: RKPlaceholderAttributeName])
-        return [NSNumber numberWithInteger: [RKStyleAttributeSerializerPlaceholderStyles signedEnumValueFromString:propertyList error:error]];
-    
-    if ([attributeName isEqual: RKStrokeWidthAttributeName] || [attributeName isEqual: RKBaselineOffsetAttributeName] || [attributeName isEqual: RKKernAttributeName] || [attributeName isEqual: RKStrokeWidthAttributeName])
-        return propertyList;
-    
+	// Attribute not found
     NSAssert(false, @"Invalid attribute deserialized");
     return nil;
 }
 
 + (id)propertyListForAttribute:(NSString *)attributeName value:(NSNumber *)attributeValue context:(RKPersistenceContext *)context
 {
-    if ([attributeName isEqual: RKUnderlineStyleAttributeName])
-        return [RKStyleAttributeSerializerUnderlineStyles arrayFromFlags:attributeValue.unsignedIntegerValue];
-
-    if ([attributeName isEqual: RKStrikethroughStyleAttributeName])
-        return [RKStyleAttributeSerializerUnderlineStyles arrayFromFlags:attributeValue.unsignedIntegerValue];
-    
-    if ([attributeName isEqual: RKSuperscriptAttributeName])
-        return [RKStyleAttributeSerializerSuperscriptStyles stringFromSignedEnumValue:attributeValue.integerValue];
-    
-    if ([attributeName isEqual: RKLigatureAttributeName])
-        return [RKStyleAttributeSerializerLigatureStyles stringFromSignedEnumValue:attributeValue.integerValue];
-    
-    if ([attributeName isEqual: RKPlaceholderAttributeName])
-        return [RKStyleAttributeSerializerPlaceholderStyles stringFromSignedEnumValue:attributeValue.integerValue];
-    
-    if ([attributeName isEqual: RKBaselineOffsetAttributeName] || [attributeName isEqual: RKKernAttributeName] || [attributeName isEqual: RKStrokeWidthAttributeName])
-        return attributeValue;
-    
+	// Is it a flag attribute?
+	NSDictionary *flags = [RKStyleAttributeSerializerFlagStyles objectForKey: attributeName];
+	if (flags)
+		return [flags arrayFromFlags: attributeValue.unsignedIntegerValue];
+	
+	// Is it an enumeration attribute?
+	NSDictionary *enumeration = [RKStyleAttributeSerializerEnumerationStyles objectForKey: attributeName];
+	if (enumeration)
+		return [enumeration stringFromSignedEnumValue: attributeValue.integerValue];
+	
+	// Is it a flat numeric attribute?
+	if ([RKStyleAttributeSerializerNumericStyles containsObject: attributeName])
+		return attributeValue;
+	
+	// Attribute not found
     NSAssert(false, @"Invalid attribute deserialized");
     return nil;
 }
