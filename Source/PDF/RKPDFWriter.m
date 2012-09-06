@@ -35,6 +35,12 @@
 + (NSRange)renderColumnWithAttributedString:(NSAttributedString *)contentString inRange:(NSRange)contentRange boundingBox:(CGRect)columnBox context:(RKPDFRenderingContext *)context previousFootnotes:(NSAttributedString *)previousFootnotes remainingFootnotes:(NSAttributedString **)remainingFootnotesOut isLastSection:(BOOL)isLastSection options:(RKPDFWriterRenderingOptions)options;
 
 /*!
+ @abstract Determines the number of lines of the given frame can be actually rendered when considering its footnotes and footnotes that remained from a previous frame
+ @discussion Returns the determined number of frames. Passes all footnotes that belong to the rendering run, as well as a frame containing the pre-rendered footnotes.
+ */
+ + (NSUInteger)renderableLinesInFrame:(RKPDFFrame *)contentFrame ofString:(NSAttributedString *)contentString withPreviousFootnotes:(NSAttributedString *)previousFootnotes isLastSection:(BOOL)isLastSection usingFoonoteFrame:(RKPDFFrame **)footnoteFrameOut renderableFootnotes:(NSAttributedString **)renderableFootnotesOut;
+
+/*!
  @abstract Appends document and section endnotes to the given list of footnotes.
  @discussion Document endnotes are only appended if 'isLastSection' is true. The notes are taken from the given context.
  */
@@ -128,17 +134,78 @@
     }
 }
 
-+ (NSRange)renderColumnWithAttributedString:(NSAttributedString *)contentString inRange:(NSRange)contentRange boundingBox:(CGRect)columnBox context:(RKPDFRenderingContext *)context previousFootnotes:(NSAttributedString *)previousFootnotes remainingFootnotes:(NSAttributedString **)remainingFootnotesOut isLastSection:(BOOL)isLastSection options:(RKPDFWriterRenderingOptions)options
++ (NSRange)renderColumnWithAttributedString:(NSAttributedString *)contentString
+									inRange:(NSRange)contentRange
+								boundingBox:(CGRect)columnBox
+									context:(RKPDFRenderingContext *)context
+						  previousFootnotes:(NSAttributedString *)previousFootnotes
+						 remainingFootnotes:(NSAttributedString **)remainingFootnotesOut
+							  isLastSection:(BOOL)isLastSection
+									options:(RKPDFWriterRenderingOptions)options
 {
     // Create a prelimary layout the contents of the frame
     RKPDFFrame *contentFrame = [RKFramesetter frameForAttributedString:contentString usingRange:contentRange rect:columnBox context:context];
 
+	// Determine which lines and footnotes can be rendered
+	RKPDFFrame *footnoteFrame;
+	NSAttributedString *renderableFootnotes;
+	
+	NSUInteger lineCount = [self renderableLinesInFrame:contentFrame ofString:contentString withPreviousFootnotes:previousFootnotes isLastSection:isLastSection usingFoonoteFrame:&footnoteFrame renderableFootnotes:&renderableFootnotes];
+    
+    // Render lines
+    [contentFrame renderLines:lineCount usingOrigin:columnBox.origin options:options];
+    
+    // Render footnotes and determine remaining footnote string
+    NSAttributedString *remainingFootnotes = nil;
+
+    if (footnoteFrame && footnoteFrame.visibleStringRange.length) {
+        // Calculate position for footnotes on the bottom of the column
+        CGRect originalFootnoteBox = footnoteFrame.boundingBox;
+        CGRect visibleFootnoteBox = footnoteFrame.visibleBoundingBox;
+        CGRect displacedFootnoteBox = originalFootnoteBox;
+        displacedFootnoteBox.origin.y = originalFootnoteBox.origin.y - originalFootnoteBox.size.height + visibleFootnoteBox.size.height;
+        
+        // Render footnotes
+        [footnoteFrame renderUsingOrigin:displacedFootnoteBox.origin options:options];
+
+        // Draw separator
+        [context.document drawFootnoteSeparatorForBoundingBox:displacedFootnoteBox toContext:context];
+        
+        // Determine remaining footnote string
+        NSRange visibleRange = footnoteFrame.visibleStringRange;
+        
+        if (visibleRange.length < renderableFootnotes.length)
+            remainingFootnotes = [renderableFootnotes attributedSubstringFromRange:NSMakeRange(visibleRange.length, renderableFootnotes.length - visibleRange.length)];
+    }
+
+    if (remainingFootnotesOut)
+        *remainingFootnotesOut = remainingFootnotes;
+    
+    // We return the range we've rendered so far from the current column
+	if (lineCount == 0)
+		return NSMakeRange(contentRange.location, 0);
+	
+	NSUInteger firstLineLocation = [[contentFrame.lines objectAtIndex: 0] range].location;
+	NSUInteger lastLineEnd = NSMaxRange([[contentFrame.lines objectAtIndex: (lineCount - 1)] range]);
+		
+	return NSMakeRange(firstLineLocation, lastLineEnd - firstLineLocation);
+}
+
++ (NSUInteger)renderableLinesInFrame:(RKPDFFrame *)contentFrame
+							ofString:(NSAttributedString *)contentString
+			   withPreviousFootnotes:(NSAttributedString *)previousFootnotes
+					   isLastSection:(BOOL)isLastSection
+				   usingFoonoteFrame:(RKPDFFrame **)footnoteFrameOut
+				 renderableFootnotes:(NSAttributedString **)renderableFootnotesOut
+{
+	RKPDFRenderingContext *context = contentFrame.context;
+	CGRect columnBox = contentFrame.boundingBox;
+	
     // Determine footnotes that are still to be rendered
     __block NSMutableAttributedString *renderableFootnotes = [previousFootnotes mutableCopy] ?: [NSMutableAttributedString new];
     __block RKPDFFrame *footnoteFrame = [RKFramesetter frameForAttributedString:renderableFootnotes usingRange:NSMakeRange(0, renderableFootnotes.length) rect:columnBox context:context];
     
     // Determine renderable lines
-    __block NSRange renderedRange = NSMakeRange(contentRange.location, 0);
     __block NSUInteger lineCount = 0;
     
     [contentFrame.lines enumerateObjectsUsingBlock:^(RKPDFLine *line, NSUInteger lineIndex, BOOL *stop) {
@@ -174,14 +241,15 @@
             *stop = YES;
             return;
         }
-        
+		
+		// 
+		
         // Continue with the new footnote string
         footnoteFrame = currentFootnoteFrame;
         renderableFootnotes = estimatedFootnotes;
         
         // We accept the line for rendering
         lineCount = lineIndex + 1;
-        renderedRange.length += line.range.length;
         
         // Did the current line propose a page break? If yes: stop after this line
         if ([contentString.string rangeOfString:@"\f" options:0 range:line.range].length == 1) {
@@ -189,38 +257,13 @@
             return;
         }
     }];
-    
-    // Render lines
-    [contentFrame renderLines:lineCount usingOrigin:columnBox.origin options:options];
-    
-    // Render footnotes and determine remaining footnote string
-    NSAttributedString *remainingFootnotes = nil;
-
-    if (footnoteFrame && footnoteFrame.visibleStringRange.length) {
-        // Calculate position for footnotes on the bottom of the column
-        CGRect originalFootnoteBox = footnoteFrame.boundingBox;
-        CGRect visibleFootnoteBox = footnoteFrame.visibleBoundingBox;
-        CGRect displacedFootnoteBox = originalFootnoteBox;
-        displacedFootnoteBox.origin.y = originalFootnoteBox.origin.y - originalFootnoteBox.size.height + visibleFootnoteBox.size.height;
-        
-        // Render footnotes
-        [footnoteFrame renderUsingOrigin:displacedFootnoteBox.origin options:options];
-
-        // Draw separator
-        [context.document drawFootnoteSeparatorForBoundingBox:displacedFootnoteBox toContext:context];
-        
-        // Determine remaining footnote string
-        NSRange visibleRange = footnoteFrame.visibleStringRange;
-        
-        if (visibleRange.length < renderableFootnotes.length)
-            remainingFootnotes = [renderableFootnotes attributedSubstringFromRange:NSMakeRange(visibleRange.length, renderableFootnotes.length - visibleRange.length)];
-    }
-
-    if (remainingFootnotesOut)
-        *remainingFootnotesOut = remainingFootnotes;
-    
-    // We return the range we've rendered so far from the current column
-    return renderedRange;
+	
+	if (footnoteFrameOut)
+		*footnoteFrameOut = footnoteFrame;
+	if (renderableFootnotesOut)
+		*renderableFootnotesOut = renderableFootnotes;
+	
+	return lineCount;
 }
 
 + (NSArray *)appendEndnotesToNotes:(NSArray *)notes isLastSection:(BOOL)isLastSection context:(RKPDFRenderingContext *)context

@@ -47,4 +47,9 @@
  */
 @property (nonatomic, readonly) NSArray *lines;
 
+/*!
+ @abstract The context used for rendering the frame
+ */
+@property (nonatomic, readonly) RKPDFRenderingContext *context;
+
 @end
