@@ -9,7 +9,7 @@
 #import "RKListItemCoreTextConverter.h"
 #import "RTFKit.h"
 #import "RKListStyle+WriterAdditions.h"
-#import "RKListEnumerator.h"
+#import "RKListCounter.h"
 #import "RKPDFRenderingContext.h"
 
 #import "NSAttributedString+PDFCoreTextConversion.h"
@@ -33,7 +33,7 @@
             return;
         
         // Insert marker string (include a tab behave the same as the cocoa text engine)
-        NSString *markerString = [NSString stringWithFormat:@"\t%@\t", [context.listEnumerator markerForListItem: listItem]];
+        NSString *markerString = [NSString stringWithFormat:@"\t%@\t", [context.listCounter markerForListItem: listItem]];
         NSAttributedString *styledMarkerString = [[NSAttributedString alloc] initWithString:markerString attributes:[attributedString attributesAtIndex:range.location effectiveRange:NULL]];
         
         [converted insertAttributedString:styledMarkerString atIndex:range.location + insertionOffset];

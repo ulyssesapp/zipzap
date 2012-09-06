@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKDocument, RKPDFTextObject, RKPDFFootnote, RKSection, RKListEnumerator;
+@class RKDocument, RKPDFTextObject, RKPDFFootnote, RKSection, RKListCounter;
 
 typedef enum : NSUInteger {
     RKNoteIndexForDocument          = 0,
@@ -31,6 +31,28 @@ typedef enum : NSUInteger {
  @discussion Do not use a context after closing it.
  */
 - (NSData *)close;
+
+
+#pragma mark - Context nesting
+
+/*!
+ @abstract Saves the current state of the context 
+ @discussion Does not save any state that is related to PDF rendering. Such state must be saved using the CGContext APIs.
+ */
+- (void)saveState;
+
+/*!
+ @abstract Restores a saved context state
+ */
+- (void)restoreState;
+
+/*!
+ @abstract Discards the last saved state and keeps the current state
+ */
+- (void)commitToLastState;
+
+
+#pragma mark - Context properties
 
 /*!
  @abstract The document that is associated with this context
@@ -160,7 +182,7 @@ typedef enum : NSUInteger {
 /*!
  @abstract A list enumerator used to keep track over list styles and their enumeration states
  */
-@property (nonatomic, strong, readonly) RKListEnumerator *listEnumerator;
+@property (nonatomic, strong, readonly) RKListCounter *listCounter;
 
 
 #pragma mark - Page context
