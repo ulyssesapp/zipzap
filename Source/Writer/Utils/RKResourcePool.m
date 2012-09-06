@@ -9,10 +9,11 @@
 #import "RKResourcePool.h"
 #import "RKSection.h"
 #import "RKConversion.h"
-#import "RKListEnumerator.h"
+#import "RKListCounter.h"
 #import "RKDocument.h"
 #import "RKListStyle.h"
 #import "RKListItem.h"
+#import "RKListCounter.h"
 
 @interface RKResourcePool()
 {
@@ -20,8 +21,7 @@
     NSMutableArray		*_colors;
     NSMutableArray		*_fonts;
 
-    NSMutableDictionary	*_listStyles;
-    NSMutableDictionary	*_listItemIndices;
+	RKListCounter		*_listCounter;
 }
 
 @end
@@ -36,8 +36,7 @@
         _fonts = [NSMutableArray new];
         _colors = [NSMutableArray new];
         _attachmentFileWrappers = [NSMutableDictionary new];
-        _listStyles = [NSMutableDictionary new];
-        _listItemIndices = [NSMutableDictionary new];
+		_listCounter = [RKListCounter new];
         
         // Adding the two default colors (black is required; white is useful for \cb1
         CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
@@ -203,96 +202,6 @@
     [_attachmentFileWrappers setValue:fileWrapper forKey:filename];
     
     return filename;
-}
-
-#pragma mark - Text Lists
-
-+ (NSUInteger)maximumListStyleIndex
-{
-    // According to the RTF specification Word seems to allow only numbers between 1 and 31680
-    return 31000;
-}
-
-- (NSNumber *)unusedListIndex
-{
-    if (!RKDocument.isUsingRandomListIdentifier) {
-        // In testing mode we have to use stable IDs
-        return @(_listStyles.count + 1);
-    }
-        
-    NSNumber *listIndex;
-    NSUInteger maximumIndex = RKResourcePool.maximumListStyleIndex;
-    
-    if (_listStyles.count < (maximumIndex / 50)) {
-        // Create a random index unless we have only 1/50 of random numbers used
-        do {
-            listIndex = @((random() % (maximumIndex - 1)) + 1);
-        }while ([_listStyles objectForKey: listIndex]);
-    }
-    else {
-        // Otherwise we break the Cut&Paste bug-to-bug compatibility with Word to prevent bad perfomance and crashes and create linear numbers on top of the maximum...
-        NSArray *sortedIndices = [_listStyles.allKeys sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"unsignedIntegerValue" ascending:NO]]];
-        listIndex = @([sortedIndices.lastObject unsignedIntegerValue] + 1);
-    }
-        
-    return listIndex;
-}
-
-- (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
-{
-    NSArray *keys = [_listStyles allKeysForObject: listStyle];
-    
-    if (!keys.count) {
-        NSNumber *listIndex = [self unusedListIndex];
-        [_listStyles setObject:listStyle forKey:listIndex];
-        [_listItemIndices setObject:[NSMutableArray new] forKey:listIndex];
-
-        return listIndex.unsignedIntegerValue;
-    }
-    
-    return [keys[0] unsignedIntegerValue];
-}
-
-- (NSDictionary *)listStyles
-{
-    return _listStyles;
-}
-
-- (void)resetCounterOfList:(RKListStyle *)listStyle
-{
-    NSArray *keys = [_listStyles allKeysForObject: listStyle];
-    
-    // Style unknown
-    if (!keys.count)
-        return;
-    
-    // Reset style
-    _listItemIndices[keys[0]] = [NSMutableArray new];
-}
-
-- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
-{
-    NSUInteger listIndex = [self indexOfListStyle: textList];    
-    NSMutableArray *itemNumbers = _listItemIndices[@(listIndex)];
-    
-    // Truncate nested item numbers, if a higher item number is increased
-    if (level + 1 < itemNumbers.count) {
-        [itemNumbers removeObjectsInRange: NSMakeRange(level + 1, itemNumbers.count - level - 1)];
-    }
-    
-    if (level >= itemNumbers.count) {
-        // Fill with 1 if requested, nested list is deeper nested than the current list length
-        for (NSUInteger position = itemNumbers.count; position < level + 1; position ++) {
-            [itemNumbers addObject: @([textList startNumberForLevel: position])];
-        }
-    }
-    else {
-        // Increment requested counter
-        NSUInteger currentItemNumber = [itemNumbers[level] unsignedIntegerValue] + 1;
-        itemNumbers[level] = @(currentItemNumber);
-    }
-
-    return [itemNumbers copy];
 }
 
 @end

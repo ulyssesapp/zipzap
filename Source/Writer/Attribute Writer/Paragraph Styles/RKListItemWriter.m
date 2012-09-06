@@ -154,8 +154,8 @@
                   resources:(RKResourcePool *)resources
 {
     if (listItem) {
-        NSUInteger listIndex = [resources indexOfListStyle: listItem.listStyle];
-        NSArray *itemNumbers = [resources incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle];
+        NSUInteger listIndex = [resources.listCounter indexOfListStyle: listItem.listStyle];
+        NSArray *itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle];
         
         NSString *markerString = [RKListStyle systemCompatibleMarker: [[listItem.listStyle markerForItemNumbers:itemNumbers] RTFEscapedString]];
 

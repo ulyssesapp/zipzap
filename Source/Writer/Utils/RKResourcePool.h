@@ -6,17 +6,12 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKDocument, RKListStyle;
+@class RKDocument, RKListStyle, RKListCounter;
 
 /*!
  @abstract Manages files, font and color definitions from an RKDocument
  */
 @interface RKResourcePool : NSObject
-
-/*!
- @abstract Provides the maximum index that is used for list styles
- */
-+ (NSUInteger)maximumListStyleIndex;
 
 /*!
  @abstract Initializes the resource pool with a certain document
@@ -45,10 +40,6 @@
  */
 - (NSString *)registerFileWrapper:(NSFileWrapper *)file;
 
-/*!
- @abstract Returns the index of a list
- */
-- (NSUInteger)indexOfListStyle:(RKListStyle *)textList;
 
 /*!
  @abstract Returns the index of a paragraph style
@@ -62,16 +53,6 @@
  */
 - (NSUInteger)indexOfCharacterStyle:(NSString *)characterStyleName;
 
-/*!
- @abstract Resets the item number of a list
- */
-- (void)resetCounterOfList:(RKListStyle *)listStyle;
-
-/*!
- @abstract Returns a new item number of a list level
- @discussion All item numbers for more nested list levels will be reset to the starting number of the level
- */
-- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
 
 /*!
  @abstract Returns the collected font families sorted by their indices
@@ -88,12 +69,11 @@
 /*!
  @abstract A dictionary mapping from filenames to the file wrappers of all attached files
  */
-@property (nonatomic,strong,readonly) NSDictionary *attachmentFileWrappers;
+@property (nonatomic, strong, readonly) NSDictionary *attachmentFileWrappers;
 
 /*!
- @abstract Returns the collected list styles
- @discussion A mapping from random list style numbers to RKListStyle
+ @abstract Keeps track of all lists and their enumeration counts during the processing of an attributed string
  */
-- (NSDictionary *)listStyles;
+@property (nonatomic, strong, readonly) RKListCounter *listCounter;
 
 @end

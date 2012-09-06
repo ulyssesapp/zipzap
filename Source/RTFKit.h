@@ -27,4 +27,4 @@
 #import "NSAttributedString+RKPersistence.h"
 
 #import "RKPortableAttributeNames.h"
-#import "RKListEnumerator.h"
+#import "RKListCounter.h"

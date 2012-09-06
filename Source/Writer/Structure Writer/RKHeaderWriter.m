@@ -164,7 +164,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)listTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSDictionary *listStyles = [resources listStyles];
+    NSDictionary *listStyles = resources.listCounter.listStyles;
     
     if (listStyles.count == 0)
         return @"";
@@ -230,7 +230,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSDictionary *listStyles = [resources listStyles];
+    NSDictionary *listStyles = resources.listCounter.listStyles;
     
     if (listStyles.count == 0)
         return @"";
