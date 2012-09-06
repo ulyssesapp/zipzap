@@ -16,6 +16,7 @@
 #import "RKFootnote.h"
 #import "RKPlaceholder.h"
 #import "RKStyleName.h"
+#import "RKAdditionalParagraphStyle.h"
 
 #if TARGET_OS_IPHONE
     #import "RKShadow.h"

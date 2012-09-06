@@ -12,4 +12,26 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 
 @implementation RKAdditionalParagraphStyle
 
+- (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
+{
+	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph);
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];
+	newStyle.keepWithFollowingParagraph = self.keepWithFollowingParagraph;
+	
+	return newStyle;
+}
+
+- (NSString *)description
+{
+	return [NSString stringWithFormat: @"RKAdditionalParagraphStyle: ("
+											"keepWithFollowingParagraph: %d"
+										")",
+			self.keepWithFollowingParagraph
+			];
+}
+
 @end

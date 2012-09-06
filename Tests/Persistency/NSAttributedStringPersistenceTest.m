@@ -9,7 +9,6 @@
 #import "NSAttributedStringPersistenceTest.h"
 
 #import "RKParagraphStyleWrapper.h"
-#import "NSAttributedString+RKPersistence.h"
 
 extern NSString *RKPersistenceStringContentKey;
 extern NSString *RKPersistenceAttributeRangesKey;
@@ -280,6 +279,20 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     STAssertFalse(originalItem == reparsedItem, @"Items must not be identical");
     
     STAssertEqualObjects(originalItem, reparsedItem, @"Items must be equal");
+}
+
+- (void)testAdditionalParagraphStyles
+{
+	RKAdditionalParagraphStyle *paragraphStyle = [RKAdditionalParagraphStyle new];
+	paragraphStyle.keepWithFollowingParagraph = YES;
+	
+	NSAttributedString *originalString = [[NSAttributedString alloc] initWithString: @"abc" attributes:[NSDictionary dictionaryWithObject:paragraphStyle forKey:RKAdditionalParagraphStyleAttributeName]];
+	
+	NSDictionary *plist = [originalString RTFKitPropertyListRepresentation];
+	NSAttributedString *reparsedString = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
+	
+	RKAdditionalParagraphStyle *reparsedStyle = [reparsedString attribute:RKAdditionalParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
+	STAssertEqualObjects(paragraphStyle, reparsedStyle, @"Invalid deserialization.");
 }
 
 @end
