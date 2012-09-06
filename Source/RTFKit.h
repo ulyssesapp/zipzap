@@ -22,10 +22,8 @@
     #import "RKTextAttachment.h"
 #endif
 
-#if !TARGET_OS_IPHONE
-    #import "RKPersistenceContext.h"
-    #import "NSAttributedString+RKPersistence.h"
-#endif
+#import "RKPersistenceContext.h"
+#import "NSAttributedString+RKPersistence.h"
 
 #import "RKPortableAttributeNames.h"
 #import "RKListEnumerator.h"

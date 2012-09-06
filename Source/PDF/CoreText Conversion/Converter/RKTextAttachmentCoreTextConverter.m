@@ -12,6 +12,7 @@
 
 #import "NSAttributedString+PDFCoreTextConversion.h"
 #import "NSAttributedString+PDFUtilities.h"
+#import "RKTextAttachment.h"
 
 @implementation RKTextAttachmentCoreTextConverter
 
@@ -28,7 +29,7 @@
     
     __block NSUInteger offset = 0;
     
-    [attributedString enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSTextAttachment *attachment, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:RKAttachmentAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(RKTextAttachment *attachment, NSRange range, BOOL *stop) {
         NSRange fixedRange = NSMakeRange(range.location + offset, range.length);
 
         if (!attachment)

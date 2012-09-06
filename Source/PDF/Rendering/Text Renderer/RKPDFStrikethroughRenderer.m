@@ -21,7 +21,7 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
 
 + (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect
 {
-    NSFont *font = [attributedString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];    
+    CTFontRef font = (__bridge CTFontRef)[attributedString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
     
     // Get strikethrough style
     NSUInteger style = [[attributedString attribute:NSStrikethroughStyleAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
@@ -32,7 +32,7 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     CGPoint startPoint = runRect.origin;
     startPoint.y += runRect.size.height / 2;
     
-    CGFloat baselineOffset = [[attributedString attribute:NSBaselineOffsetAttributeName atIndex:range.location effectiveRange:NULL] floatValue];
+    CGFloat baselineOffset = [[attributedString attribute:RKBaselineOffsetAttributeName atIndex:range.location effectiveRange:NULL] floatValue];
     startPoint.y += baselineOffset / 2;
     
     CGPoint endPoint = startPoint;
@@ -47,15 +47,16 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     if (color)
         CGContextSetStrokeColorWithColor(pdfContext, color);
     else {
-        CGColorRef blackColor = CGColorCreateGenericRGB(0, 0, 0, 1);
+        CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceGray();
+        CGColorRef blackColor = CGColorCreate(colorspace, (CGFloat[]){0, 1.0});
         CGContextSetStrokeColorWithColor(pdfContext, blackColor);
         CFRelease(blackColor);
     }
 
     // Set stroke width
-    CGFloat strokeWidth = font ? font.underlineThickness : 1.0f;
+    CGFloat strokeWidth = font ? CTFontGetUnderlineThickness(font)  : 1.0f;
 
-    if (style & NSUnderlineStyleThick)
+    if (style & RKUnderlineStyleThick)
         CGContextSetLineWidth(context.pdfContext, strokeWidth * 2);
     else
         CGContextSetLineWidth(context.pdfContext, strokeWidth);

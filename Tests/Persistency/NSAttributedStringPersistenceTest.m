@@ -8,6 +8,7 @@
 
 #import "NSAttributedStringPersistenceTest.h"
 
+#import "RKParagraphStyleWrapper.h"
 #import "NSAttributedString+RKPersistence.h"
 
 extern NSString *RKPersistenceStringContentKey;
@@ -24,6 +25,25 @@ extern NSString *RKPersistenceContextFileWrappersPersistenceKey;
 extern NSString *RKPersistenceContextListStylesPersistenceKey;
 
 @implementation NSAttributedStringPersistenceTest
+
+#if !TARGET_OS_IPHONE
+
++ (id)plattformColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
+{
+    return [NSColor colorWithCalibratedRed:0.1 green:0.3 blue:0.2 alpha:0.1];
+}
+
+#else
+
++ (id)plattformColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
+{
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorSpace, (CGFloat[]){red, green, blue, alpha});
+    CFRelease (colorSpace);
+    return (__bridge id)color;
+}
+
+#endif
 
 - (void)testPersistingUnstyledString
 {
@@ -47,26 +67,36 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
     
     // First range
-    [original addAttribute:NSFontAttributeName value:[NSFont fontWithName:@"Helvetica-BoldOblique" size:32] range:NSMakeRange(1,2)];
-    [original addAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:0.1 green:0.2 blue:0.3 alpha:0.4] range:NSMakeRange(1,2)];
+    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica-BoldOblique"), 32, NULL);
+    
+    [original addAttribute:RKFontAttributeName value:(__bridge id)font range:NSMakeRange(1,2)];
+    [original addAttribute:RKBackgroundColorAttributeName value:[self.class plattformColorWithRed:0.1 green:0.2 blue:0.3 alpha:0.4] range:NSMakeRange(1,2)];
 
+    CFRelease(font);
+    
     // Different range
-    [original addAttribute:NSUnderlineStyleAttributeName value:@(2) range:NSMakeRange(3,3)];
-    [original addAttribute:NSStrikethroughStyleAttributeName value:@(1) range:NSMakeRange(3,3)];
-    [original addAttribute:NSStrokeWidthAttributeName value:@(1) range:NSMakeRange(3,3)];
+    [original addAttribute:RKUnderlineStyleAttributeName value:@(2) range:NSMakeRange(3,3)];
+    [original addAttribute:RKStrikethroughStyleAttributeName value:@(1) range:NSMakeRange(3,3)];
+    [original addAttribute:RKStrokeWidthAttributeName value:@(1) range:NSMakeRange(3,3)];
         
-    [original addAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:0.1 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
-    [original addAttribute:NSForegroundColorAttributeName value:[NSColor colorWithCalibratedRed:0.2 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
-    [original addAttribute:NSUnderlineColorAttributeName value:[NSColor colorWithCalibratedRed:0.3 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
-    [original addAttribute:NSStrikethroughColorAttributeName value:[NSColor colorWithCalibratedRed:0.4 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
-    [original addAttribute:NSStrokeColorAttributeName value:[NSColor colorWithCalibratedRed:0.5 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
+    [original addAttribute:RKBackgroundColorAttributeName value:[self.class plattformColorWithRed:0.1 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
+    [original addAttribute:RKForegroundColorAttributeName value:[self.class plattformColorWithRed:0.2 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
+    [original addAttribute:RKUnderlineColorAttributeName value:[self.class plattformColorWithRed:0.3 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
+    [original addAttribute:RKStrikethroughColorAttributeName value:[self.class plattformColorWithRed:0.4 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
+    [original addAttribute:RKStrokeColorAttributeName value:[self.class plattformColorWithRed:0.5 green:0.3 blue:0.2 alpha:0.1] range:NSMakeRange(3,1)];
     
-    NSShadow *shadow = [NSShadow new];
+    #if !TARGET_OS_IPHONE
+        NSShadow *shadow = [NSShadow new];
+        shadow.shadowColor = [self.class plattformColorWithRed:0.6 green:0.3 blue:0.2 alpha:0.1];
+    #else
+        RKShadow *shadow = [RKShadow new];
+        shadow.shadowColor = (__bridge CGColorRef)[self.class plattformColorWithRed:0.6 green:0.3 blue:0.2 alpha:0.1];
+    #endif
+
     shadow.shadowBlurRadius = 4.0f;
-    shadow.shadowColor = [NSColor colorWithCalibratedRed:0.6 green:0.3 blue:0.2 alpha:0.1];
-    shadow.shadowOffset = NSMakeSize(33.0f, 55.0f);
+    shadow.shadowOffset = CGSizeMake(33.0f, 55.0f);
     
-    [original addAttribute:NSShadowAttributeName value:shadow range:NSMakeRange(3,5)];
+    [original addAttribute:RKShadowAttributeName value:shadow range:NSMakeRange(3,5)];
     
     // Test re-reading
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
@@ -92,6 +122,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     STAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 
+#if !TARGET_OS_IPHONE
 - (void)testPersistingSimpleParagraphStyles
 {
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"A\nB\nC\n"];
@@ -104,23 +135,38 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     STAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
+#else
+- (void)testPersistingSimpleParagraphStyles
+{
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"A\nB\nC\n"];
+    
+    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(NULL, 0);
+    [original addAttribute:RKParagraphStyleAttributeName value:(__bridge id)paragraphStyle range:NSMakeRange(2,4)];
+    
+    // Test re-reading
+    NSDictionary *plist = [original RTFKitPropertyListRepresentation];
+    NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
+    STAssertEqualObjects(original, reparsed, @"Error in serialization");
+}
+#endif
 
 - (void)testAttachments
 {
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
 
-    NSTextAttachment *attachment = [NSTextAttachment new];
+    RKTextAttachment *attachment = [RKTextAttachment new];
     attachment.fileWrapper = file;
     
-    NSAttributedString *original = [NSAttributedString attributedStringWithAttachment:attachment];
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
+    [original addAttribute:RKAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];
 
     // Test re-reading (an immediate comparison is not possible, since attachments cannot be compared directly)
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     STAssertEqualObjects(original.string, reparsed.string, @"Error in serialization");
     
-    NSTextAttachment *reparsedAttachment = [reparsed attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
+    RKTextAttachment *reparsedAttachment = [reparsed attribute:RKAttachmentAttributeName atIndex:0 effectiveRange:NULL];
     NSFileWrapper *reparsedFile = reparsedAttachment.fileWrapper;
     
     STAssertFalse(attachment == reparsedAttachment, @"Attachment should not be equal!");
@@ -135,17 +181,17 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
     
     // First range: NSURL
-    [original addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://the-soulmen.com/"] range:NSMakeRange(1,2)];
+    [original addAttribute:RKLinkAttributeName value:[NSURL URLWithString:@"http://the-soulmen.com/"] range:NSMakeRange(1,2)];
     
     // Different range: NSString
-    [original addAttribute:NSLinkAttributeName value:@"http://www.the-soulmen.com/" range:NSMakeRange(3,3)];
+    [original addAttribute:RKLinkAttributeName value:@"http://www.the-soulmen.com/" range:NSMakeRange(3,3)];
     
     // Test re-reading (direct comparison fails, since the NSString is re-parsed as NSURL)
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
 
-    NSURL *firstURL = [reparsed attribute:NSLinkAttributeName atIndex:1 effectiveRange:NULL];
-    NSURL *secondURL = [reparsed attribute:NSLinkAttributeName atIndex:3 effectiveRange:NULL];
+    NSURL *firstURL = [reparsed attribute:RKLinkAttributeName atIndex:1 effectiveRange:NULL];
+    NSURL *secondURL = [reparsed attribute:RKLinkAttributeName atIndex:3 effectiveRange:NULL];
     
     STAssertEqualObjects(firstURL.absoluteString, @"http://the-soulmen.com/", @"Link not correctly converted");
     STAssertEqualObjects(secondURL.absoluteString, @"http://www.the-soulmen.com/", @"Link not correctly converted");
@@ -179,10 +225,11 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
     
-    NSTextAttachment *attachment = [NSTextAttachment new];
+    RKTextAttachment *attachment = [RKTextAttachment new];
     attachment.fileWrapper = file;
     
-    NSAttributedString *footnote = [NSAttributedString attributedStringWithAttachment:attachment];
+    NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
+    [footnote addAttribute:RKAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];
 
     // Build container
     NSAttributedString *original = [NSAttributedString attributedStringWithFootnote: footnote];
@@ -194,7 +241,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     
     NSAttributedString *reparsedFootnote = [reparsed attribute:RKFootnoteAttributeName atIndex:0 effectiveRange:NULL];
     
-    NSTextAttachment *reparsedAttachment = [reparsedFootnote attribute:NSAttachmentAttributeName atIndex:0 effectiveRange:NULL];
+    RKTextAttachment *reparsedAttachment = [reparsedFootnote attribute:RKAttachmentAttributeName atIndex:0 effectiveRange:NULL];
     NSFileWrapper *reparsedFile = reparsedAttachment.fileWrapper;
     
     STAssertFalse(attachment == reparsedAttachment, @"Attachment should not be equal!");
@@ -233,38 +280,6 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     STAssertFalse(originalItem == reparsedItem, @"Items must not be identical");
     
     STAssertEqualObjects(originalItem, reparsedItem, @"Items must be equal");
-}
-
-- (void)testUserDefinedNumericAttribute
-{
-    [NSAttributedString registerNumericAttributeForPersistence:@"myNumericAttribute"];
-    
-    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
-    
-    // First range: NSURL
-    [original addAttribute:@"myNumericAttribute" value:@(123) range:NSMakeRange(1,2)];
-    
-    // Test re-reading
-    NSDictionary *plist = [original RTFKitPropertyListRepresentation];
-    NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    
-    STAssertEqualObjects(original, reparsed, @"Not correctly persisted.");
-}
-
-- (void)testUserDefinedStringAttribute
-{
-    [NSAttributedString registerStringAttributeForPersistence:@"myStringAttribute"];
-    
-    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"This is a String!"];
-    
-    // First range: NSURL
-    [original addAttribute:@"myStringAttribute" value:@"xyz" range:NSMakeRange(1,2)];
-    
-    // Test re-reading
-    NSDictionary *plist = [original RTFKitPropertyListRepresentation];
-    NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    
-    STAssertEqualObjects(original, reparsed, @"Not correctly persisted.");
 }
 
 @end

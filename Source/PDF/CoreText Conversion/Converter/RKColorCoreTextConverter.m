@@ -39,25 +39,26 @@
     
     [self convertColorAttributeWithName:NSForegroundColorAttributeName inAttributedString:converted toCoreTextAttribute:(__bridge id)kCTForegroundColorAttributeName usingRenderer:nil];
     [self convertColorAttributeWithName:NSBackgroundColorAttributeName inAttributedString:converted toCoreTextAttribute:RKPDFBackgroundColorAttributeName usingRenderer:RKPDFBackgroundColorRenderer.class];
-    [self convertColorAttributeWithName:NSUnderlineColorAttributeName inAttributedString:converted toCoreTextAttribute:(__bridge id)kCTUnderlineColorAttributeName usingRenderer:nil];
+    [self convertColorAttributeWithName:RKUnderlineColorAttributeName inAttributedString:converted toCoreTextAttribute:(__bridge id)kCTUnderlineColorAttributeName usingRenderer:nil];
     [self convertColorAttributeWithName:NSStrokeColorAttributeName inAttributedString:converted toCoreTextAttribute:(__bridge id)kCTStrokeColorAttributeName usingRenderer:nil];
-    [self convertColorAttributeWithName:NSStrikethroughColorAttributeName inAttributedString:converted toCoreTextAttribute:RKPDFStrikethroughColorAttributeName usingRenderer:nil];
+    [self convertColorAttributeWithName:RKStrikethroughColorAttributeName inAttributedString:converted toCoreTextAttribute:RKPDFStrikethroughColorAttributeName usingRenderer:nil];
 
     return converted;
 }
 
 + (void)convertColorAttributeWithName:(NSString *)attributeName inAttributedString:(NSMutableAttributedString *)attributedString toCoreTextAttribute:(NSString *)newAttributeName usingRenderer:(Class)renderer
 {
-    // Emulate superscript
-    [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSColor *color, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:attributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(id color, NSRange range, BOOL *stop) {
         if (!color)
             return;
-        
+                
+        #if !TARGET_OS_IPHONE
         // Set color attribute
         CGColorRef convertedColor = [color newCGColorWithGenericRGBColorSpace];
         [attributedString addAttribute:newAttributeName value:(__bridge id)convertedColor range:range];
         
         CFRelease(convertedColor);
+        #endif
         
         // Use a renderer, if given
         if (renderer)

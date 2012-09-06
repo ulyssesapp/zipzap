@@ -39,7 +39,10 @@
     
     // The graphics context
     CGContextRef _pdfContext;
-    NSGraphicsContext *nsPdfContext;
+    
+    #if !TARGET_OS_IPHONE
+        NSGraphicsContext *nsPdfContext;
+    #endif
 }
 
 @end
@@ -47,7 +50,11 @@
 
 @implementation RKPDFRenderingContext
 
-@synthesize sections=_sections, documentNotes=_documentNotes, sectionNotes=_sectionNotes, pageNotes=_pageNotes, nsPdfContext=_nsPdfContext, pdfContext=_pdfContext;
+@synthesize sections=_sections, documentNotes=_documentNotes, sectionNotes=_sectionNotes, pageNotes=_pageNotes, pdfContext=_pdfContext;
+
+#if !TARGET_OS_IPHONE
+@synthesize nsPdfContext=_nsPdfContext;
+#endif
 
 - (id)initWithDocument:(RKDocument *)document
 {
@@ -62,7 +69,7 @@
     
     _pdfContext = CGPDFContextCreate(dataConsumer, &mediaBox, (__bridge CFDictionaryRef)document.pdfMetadata);
     
-    #if TARGET_OS_MAC
+    #if !TARGET_OS_IPHONE
     _nsPdfContext = [NSGraphicsContext graphicsContextWithGraphicsPort:_pdfContext flipped:NO];
     #endif
     

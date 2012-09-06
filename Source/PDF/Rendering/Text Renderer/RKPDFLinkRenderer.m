@@ -19,7 +19,7 @@
 
 + (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect
 {
-    id link = [attributedString attribute:NSLinkAttributeName atIndex:range.location effectiveRange:NULL];
+    id link = [attributedString attribute:RKLinkAttributeName atIndex:range.location effectiveRange:NULL];
     NSURL *URL;
     
     if ([link isKindOfClass: NSString.class])

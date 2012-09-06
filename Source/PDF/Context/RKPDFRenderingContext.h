@@ -83,7 +83,7 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, retain, readonly) __attribute__((NSObject)) CGContextRef pdfContext;
 
-#if TARGET_OS_MAC
+#if !TARGET_OS_IPHONE
 
 /*!
  @abstract The graphics context of the current rendering as NSGraphicsContext

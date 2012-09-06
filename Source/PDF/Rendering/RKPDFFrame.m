@@ -12,6 +12,7 @@
 #import "RKPDFRenderingContext.h"
 #import "RKPDFTextRenderer.h"
 #import "RKPDFTextObject.h"
+#import "RKRect.h"
 
 #import "NSAttributedString+PDFUtilities.h"
 
@@ -121,8 +122,8 @@
             lineRectWithDescent.origin.y -= descent;
             lineRectWithDescent.size.height += descent;
 
-            [lineRects addObject: [NSValue valueWithRect: lineRectWithDescent]];
-            [lineRectsWithoutDescent addObject: [NSValue valueWithRect: lineRectWithoutDescent]];
+            [lineRects addObject: [RKRect rectWithRect: lineRectWithDescent]];
+            [lineRectsWithoutDescent addObject: [RKRect rectWithRect: lineRectWithoutDescent]];
         }];
 
         // Determine visible size
@@ -225,7 +226,7 @@
             NSDictionary *runAttributes = (__bridge NSDictionary *)CTRunGetAttributes(run);
             
             // Apply baseline offset, if any
-            CGContextSetTextPosition(_context.pdfContext, lineRectWithoutDescent.origin.x, lineRectWithoutDescent.origin.y + [runAttributes[NSBaselineOffsetAttributeName] floatValue]);
+            CGContextSetTextPosition(_context.pdfContext, lineRectWithoutDescent.origin.x, lineRectWithoutDescent.origin.y + [runAttributes[RKBaselineOffsetAttributeName] floatValue]);
 
             // Apply pre-renderer (negative priority)
             NSArray *renderers = runAttributes[RKTextRendererAttributeName];
@@ -285,8 +286,9 @@
     // Add bounding boxes around text, if requested
     if (options & RKPDFWriterShowTextFrames) {
         CGRect frameRect = self.visibleBoundingBox;
-        
-        CGColorRef fillColor = CGColorCreateGenericRGB(0, 0, 0, 0.1);
+
+        CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+        CGColorRef fillColor = CGColorCreate(rgbColorSpace, (CGFloat[]){0, 0, 0, 0.1});
         
         CGContextSaveGState(_context.pdfContext);
         CGContextSetFillColorWithColor(_context.pdfContext, fillColor);
@@ -294,12 +296,14 @@
         CGContextRestoreGState(_context.pdfContext);
         
         CFRelease(fillColor);
+        CFRelease(rgbColorSpace);
     }
 
     // Show text frames
     if (options & RKPDFWriterShowBoundingBoxes) {
         CGRect frameRect = self.boundingBox;
-        CGColorRef frameColor = CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.2);
+        CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+        CGColorRef frameColor = CGColorCreate(rgbColorSpace, (CGFloat[]){0, 0, 0, 0.2});
 
         CGContextSaveGState(_context.pdfContext);
         CGContextSetStrokeColorWithColor(_context.pdfContext, frameColor);
@@ -308,6 +312,7 @@
         CGContextRestoreGState(_context.pdfContext);
         
         CFRelease(frameColor);
+        CFRelease(rgbColorSpace);
     }
 }
 

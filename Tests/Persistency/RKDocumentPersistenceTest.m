@@ -9,6 +9,8 @@
 #import "RKDocumentPersistenceTest.h"
 
 #import "RKDocument+RKPersistence.h"
+#import "RKSection.h"
+#import "RKPortableAttributeNames.h"
 
 @implementation RKDocumentPersistenceTest
 
@@ -37,9 +39,9 @@
     // Create test document
     RKDocument *testDocument = [[RKDocument alloc] initWithSections: [NSArray arrayWithObject: testSection]];
     
-    testDocument.metadata = [NSDictionary dictionaryWithObject:@"abc" forKey:NSTitleDocumentAttribute];
+    testDocument.metadata = [NSDictionary dictionaryWithObject:@"abc" forKey:RKTitleDocumentAttribute];
     testDocument.hyphenationEnabled = YES;
-    testDocument.pageSize = NSMakeSize(100, 200);
+    testDocument.pageSize =  CGSizeMake(100, 200);
     testDocument.footerSpacing = 5;
     testDocument.headerSpacing = 6;
     testDocument.pageInsets = RKPageInsetsMake(1, 2, 3, 4);
@@ -52,11 +54,21 @@
     testDocument.footnoteEnumerationStyle = RKFootnoteEnumerationAlphabeticLowerCase;
     testDocument.endnoteEnumerationStyle = RKFootnoteEnumerationAlphabeticUpperCase;
     
-    NSDictionary *paragraphStyle = [NSDictionary dictionaryWithObject:[NSParagraphStyle defaultParagraphStyle] forKey:NSParagraphStyleAttributeName];
+    #if !TARGET_OS_IPHONE
+        NSDictionary *paragraphStyle = [NSDictionary dictionaryWithObject:[NSParagraphStyle defaultParagraphStyle] forKey:NSParagraphStyleAttributeName];
+    #else
+        CTParagraphStyleRef sourceStyle = CTParagraphStyleCreate(NULL, 0);
+        NSDictionary *paragraphStyle = [NSDictionary dictionaryWithObject:(__bridge id)sourceStyle forKey:RKParagraphStyleAttributeName];
+        CFRelease(sourceStyle);
+    #endif
+
     testDocument.paragraphStyles = [NSDictionary dictionaryWithObject:paragraphStyle forKey:@"My Paragraph"];
 
-    NSDictionary *characterStyle = [NSDictionary dictionaryWithObject:[NSFont fontWithName:@"Helvetica-Bold" size:22] forKey:NSFontAttributeName];
+    CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica-Bold"), 22, NULL);
+    NSDictionary *characterStyle = [NSDictionary dictionaryWithObject:(__bridge id)font forKey:RKFontAttributeName];
     testDocument.characterStyles = [NSDictionary dictionaryWithObject:characterStyle forKey:@"My Font"];
+
+    CFRelease(font);
     
     // Serialize document
     NSDictionary *serializedDocument = testDocument.RTFKitPropertyListRepresentation;

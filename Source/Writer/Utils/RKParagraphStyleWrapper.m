@@ -12,7 +12,20 @@
 
 @implementation RKParagraphStyleWrapper
 
-@synthesize textAlignment, firstLineHeadIndent, headIndent, tailIndent, tabStops, defaultTabInterval, lineBreakMode, lineHeightMultiple, maximumLineHeight, minimumLineHeight, lineSpacing, paragraphSpacing, paragraphSpacingBefore, baseWritingDirection;
+@synthesize textAlignment, firstLineHeadIndent, headIndent, tailIndent, tabStops, defaultTabInterval, lineBreakMode, lineHeightMultiple, maximumLineHeight, minimumLineHeight, lineSpacing, paragraphSpacing, paragraphSpacingBefore, baseWritingDirection, hyphenationFactor;
+
++ (RKParagraphStyleWrapper *)newDefaultParagraphStyle
+{
+    #if !TARGET_OS_IPHONE
+        return [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: [NSParagraphStyle defaultParagraphStyle]];
+    #else
+        CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(NULL, 0);
+        RKParagraphStyleWrapper *wrapper = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: paragraphStyle];
+        CFRelease(paragraphStyle);
+    
+        return wrapper;
+    #endif
+}
 
 - (id)initWithCTParagraphStyle:(CTParagraphStyleRef)paragraphStyle
 {
@@ -72,6 +85,7 @@
         paragraphSpacing = paragraphStyle.paragraphSpacing;
         paragraphSpacingBefore = paragraphStyle.paragraphSpacingBefore;
         baseWritingDirection = paragraphStyle.baseWritingDirection;
+        hyphenationFactor = paragraphStyle.hyphenationFactor;
      
         NSMutableArray *rkTabStops = [NSMutableArray new];
         
@@ -133,6 +147,7 @@
     paragraphStyle.paragraphSpacingBefore = self.paragraphSpacingBefore;
     paragraphStyle.baseWritingDirection = self.baseWritingDirection;
     paragraphStyle.defaultTabInterval = self.defaultTabInterval;
+    paragraphStyle.hyphenationFactor = self.hyphenationFactor;
     
     NSMutableArray *nsTabStops = [NSMutableArray new];
     

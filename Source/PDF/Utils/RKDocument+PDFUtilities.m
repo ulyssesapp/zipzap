@@ -26,9 +26,9 @@
 - (CGRect)pdfMediaBox
 {
     if (self.pageOrientation == RKPageOrientationLandscape)
-        return NSMakeRect(0 , 0, self.pageSize.height, self.pageSize.width);
+        return CGRectMake(0 , 0, self.pageSize.height, self.pageSize.width);
     else
-        return NSMakeRect(0 , 0, self.pageSize.width, self.pageSize.height);
+        return CGRectMake(0 , 0, self.pageSize.width, self.pageSize.height);
 }
 
 - (NSDictionary *)pdfMetadata
@@ -36,17 +36,17 @@
     NSDictionary *originalMetaData = self.metadata;
     NSMutableDictionary *metaData = [NSMutableDictionary new];
 
-    if (originalMetaData[NSAuthorDocumentAttribute])
-        metaData[(__bridge id)kCGPDFContextAuthor] = originalMetaData[NSAuthorDocumentAttribute];
+    if (originalMetaData[RKAuthorDocumentAttribute])
+        metaData[(__bridge id)kCGPDFContextAuthor] = originalMetaData[RKAuthorDocumentAttribute];
 
-    if (originalMetaData[NSTitleDocumentAttribute])
-        metaData[(__bridge id)kCGPDFContextTitle] = originalMetaData[NSTitleDocumentAttribute];
+    if (originalMetaData[RKTitleDocumentAttribute])
+        metaData[(__bridge id)kCGPDFContextTitle] = originalMetaData[RKTitleDocumentAttribute];
     
-    if (originalMetaData[NSSubjectDocumentAttribute])
-        metaData[(__bridge id)kCGPDFContextSubject] = originalMetaData[NSSubjectDocumentAttribute];
+    if (originalMetaData[RKSubjectDocumentAttribute])
+        metaData[(__bridge id)kCGPDFContextSubject] = originalMetaData[RKSubjectDocumentAttribute];
 
-    if (originalMetaData[NSKeywordsDocumentAttribute])
-        metaData[(__bridge id)kCGPDFContextKeywords] = originalMetaData[NSKeywordsDocumentAttribute];
+    if (originalMetaData[RKKeywordsDocumentAttribute])
+        metaData[(__bridge id)kCGPDFContextKeywords] = originalMetaData[RKKeywordsDocumentAttribute];
     
     return metaData;
 }
@@ -146,8 +146,9 @@
 - (void)drawFootnoteSeparatorForBoundingBox:(CGRect)boundingBox toContext:(RKPDFRenderingContext *)context
 {
     CGContextRef pdfContext = context.pdfContext;
-    CGColorRef black = CGColorCreateGenericGray(0, 1);
-    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+    CGColorRef black = CGColorCreate(colorSpace, (CGFloat[]){0, 1.0});
+
     CGContextSaveGState(pdfContext);
     
     CGContextSetStrokeColorWithColor(pdfContext, black);
@@ -162,6 +163,7 @@
     CGContextRestoreGState(pdfContext);
     
     CFRelease(black);
+    CFRelease(colorSpace);
 }
 
 - (NSString *)stringForSectionNumber:(NSUInteger)sectionNumber

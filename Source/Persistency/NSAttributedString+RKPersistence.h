@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKPersistenceContext;
+@class RKPersistenceContext, RKAttributeSerializer;
 
 /*!
  @abstract Allows to serialize an attributed string that uses RTFKit features to a property list
@@ -14,31 +14,9 @@
 @interface NSAttributedString (RKPersistence)
 
 /*!
- @abstract Registers a numeric attribute for serialization.
+ @abstract Registers an attribute serializer to the RTFKit serialization 
  */
-+ (void)registerNumericAttributeForPersistence:(NSString *)attributeName;
-
-/*!
- @abstract Registers a numeric attribute for serialization.
- @discussion Receives a mapping from enumeration value names to value.
- */
-+ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingSignedEnumeration:(NSDictionary *)enumeration;
-
-/*!
- @abstract Registers a numeric attribute for serialization.
- @discussion Receives a mapping from enumeration flag names to value.
- */
-+ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingFlags:(NSDictionary *)flags;
-
-/*!
- @abstract Registers a string attribute for serialization.
- */
-+ (void)registerStringAttributeForPersistence:(NSString *)attributeName;
-
-/*!
- @abstract Specifies a mapping from names to classes of all attributes that can be persisted.
- */
-+ (NSDictionary *)persistableAttributeTypes;
++ (void)registerAttributeSerializer:(Class)serializer forAttribute:(NSString *)attributeName;
 
 /*!
  @abstract Initializes an attributed string from its property list representation
@@ -50,6 +28,17 @@
  @discussion Serializes all attributes as specified by 'persistableAttributeTypes'.
  */
 - (id)RTFKitPropertyListRepresentation;
+
+/*!
+ @abstract Initializes an attributed string from its property list representation
+ */
++ (NSAttributedString *)instanceWithRTFKitPropertyListRepresentation:(id)propertyList usingContext:(RKPersistenceContext *)context error:(NSError **)error;
+
+/*!
+ @abstract Serializes an attributed string to a property list representation
+ @discussion Serializes all attributes as specified by 'persistableAttributeTypes'.
+ */
+- (NSDictionary *)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context;
 
 /*!
  @abstract Creates an attribute dictionary from its property list representation

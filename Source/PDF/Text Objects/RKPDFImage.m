@@ -39,16 +39,24 @@
     if (self) {
         _fileWrapper = file;
         
-        #if TARGET_OS_MAC
+        #if !TARGET_OS_IPHONE
             NSImage *image = [[NSImage alloc] initWithData:self.fileWrapper.regularFileContents];
             if (!image)
                 return nil;
         
             _image = [image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
             CFRetain(_image);
-
-            _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
+        #else
+            UIImage *image = [[UIImage alloc] initWithData:self.fileWrapper.regularFileContents];
+            if (!image)
+                return nil;
+        
+            _image = image.CGImage;
+            CFRetain(_image);
         #endif
+
+        if (_image)
+            _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
     }
     
     return self;

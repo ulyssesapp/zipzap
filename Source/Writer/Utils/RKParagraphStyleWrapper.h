@@ -12,6 +12,11 @@
 @interface RKParagraphStyleWrapper : NSObject
 
 /*!
+ @abstract Creates a new default paragraph style wrapper
+ */
++ (RKParagraphStyleWrapper *)newDefaultParagraphStyle;
+
+/*!
  @abstract Initializes the wrapper with the given paragraph style
  */
 - (id)initWithCTParagraphStyle:(CTParagraphStyleRef)paragraphStyle;
@@ -102,5 +107,10 @@
  @abstract The writing direction
  */
 @property (nonatomic, readwrite) CTWritingDirection baseWritingDirection;
+
+/*!
+ @abstract The hyphenation factor
+ */
+@property (nonatomic, readwrite) CGFloat hyphenationFactor;
 
 @end

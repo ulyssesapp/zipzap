@@ -20,6 +20,9 @@ extern NSString *__RKAttachmentAttributeName;
 extern NSString *__RKStrikethroughStyleAttributeName;
 extern NSString *__RKStrikethroughColorAttributeName;
 extern NSString *__RKShadowAttributeName;
+extern NSString *__RKBaselineOffsetAttributeName;
+extern NSString *__RKLigatureAttributeName;
+extern NSString *__RKKernAttributeName;
 
 /*!
  @abstract Meta data style names
@@ -123,6 +126,28 @@ extern NSString *RKCategoryDocumentAttribute;
 #define RKShadowAttributeName                   __RKShadowAttributeName
 
 /*!
+ @abstract Baseline attribute
+ @discussion Number with float containing the baseline offset
+ */
+#define RKBaselineOffsetAttributeName           __RKBaselineOffsetAttributeName
+
+/*!
+ @abstract Ligatur attribute
+ */
+#define RKLigatureAttributeName                 __RKLigatureAttributeName
+
+/*!
+ @abstract Kerning attribute
+ @discussion Number with float containing the kerning offset
+ */
+#define RKKernAttributeName                     __RKKernAttributeName
+
+/*!
+ @abstract Obliqueness attribute
+ */
+#define RKObliquenessAttributeName              NSObliquenessAttributeName
+
+/*!
  @abstract Underlining styles
  @discussion See kCTUnderlineStyle constants
  */
@@ -141,6 +166,7 @@ extern NSString *RKCategoryDocumentAttribute;
  @abstract Underlining pattern
  @discussion See kCTUnderlinePattern constants
  */
+#define RKUnderlinePatternDot                   kCTUnderlinePatternDot
 #define RKUnderlinePatternDash                  kCTUnderlinePatternDash
 #define RKUnderlinePatternDashDot               kCTUnderlinePatternDashDot
 #define RKUnderlinePatternDashDotDot            kCTUnderlinePatternDashDotDot

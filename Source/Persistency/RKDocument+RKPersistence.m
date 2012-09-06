@@ -57,7 +57,7 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
             self.hyphenationEnabled = [[propertyList objectForKey: RKPersistencyHyphenationEnabledKey] boolValue];
         
         if ([propertyList objectForKey: RKPersistencyPageWidthKey])
-            self.pageSize = NSMakeSize([[propertyList objectForKey: RKPersistencyPageWidthKey] floatValue], [[propertyList objectForKey: RKPersistencyPageHeightKey] floatValue]);
+            self.pageSize = CGSizeMake([[propertyList objectForKey: RKPersistencyPageWidthKey] floatValue], [[propertyList objectForKey: RKPersistencyPageHeightKey] floatValue]);
         
         if ([propertyList objectForKey: RKPersistencyHeaderSpacingKey])
             self.headerSpacing = [[propertyList objectForKey: RKPersistencyHeaderSpacingKey] floatValue];

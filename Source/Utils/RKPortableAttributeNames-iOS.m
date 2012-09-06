@@ -14,6 +14,9 @@ NSString *__RKAttachmentAttributeName = @"CTAttachmentAttributeName__RKAttribute
 NSString *__RKStrikethroughStyleAttributeName = @"CTStrikethroughStyleAttributeName__RKAttributeName";
 NSString *__RKStrikethroughColorAttributeName = @"CTStrikeThroughColorAttributeName__RKAttributeName";
 NSString *__RKShadowAttributeName = @"CTShadowAttributeName__RKAttributeName";
+NSString *__RKBaselineOffsetAttributeName = @"CTBaselineOffsetAttributeName";
+NSString *__RKLigatureAttributeName = @"NSLigature";
+NSString *__RKKernAttributeName = @"NSKern";
 
 NSString *RKTitleDocumentAttribute = @"RKTitleDocumentAttribute";      
 NSString *RKCompanyDocumentAttribute = @"RKCompanyDocumentAttribute";    

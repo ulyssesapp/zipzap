@@ -124,7 +124,7 @@
         
         if (expectedPDFFile)
             expectedPNGData = [self pngDataForPDFData: expectedPDFFile.regularFileContents];
-                
+
         // Compare both files
         STAssertTrue([generatedPNGData isEqualToData: expectedPNGData], @"Expected and generated bitmap data differ: %@. See generated data at %@.", originalFilename, verificationURL);
     }];

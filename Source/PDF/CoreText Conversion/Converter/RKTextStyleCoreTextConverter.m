@@ -18,13 +18,15 @@
 
 + (void)load
 {
+	#if !TARGET_OS_IPHONE
     // We assume the following application kit attributes to be directly convertable
     NSAssert([(__bridge id)kCTUnderlineStyleAttributeName isEqual: NSUnderlineStyleAttributeName], @"Styles not convertable");
     NSAssert([(__bridge id)kCTStrokeWidthAttributeName isEqual: NSStrokeWidthAttributeName], @"Styles not convertable");
     NSAssert([(__bridge id)kCTKernAttributeName isEqual: NSKernAttributeName], @"Styles not convertable");
     NSAssert([(__bridge id)kCTLigatureAttributeName isEqual: NSLigatureAttributeName], @"Styles not convertable");
     NSAssert([(__bridge id)kCTVerticalFormsAttributeName isEqual: NSVerticalGlyphFormAttributeName], @"Styles not convertable");
-    
+    #endif
+	
     @autoreleasepool {
         [NSAttributedString registerConverter: self];
     }
@@ -43,15 +45,16 @@
     }];
     
     // Emulate superscript / subscript
-    [attributedString enumerateAttribute:NSSuperscriptAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:RKSuperscriptAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
         if (!modeObject)
             return;
 
-        NSFont *font = [attributedString attribute:NSFontAttributeName atIndex:range.location effectiveRange:NULL];
+        CTFontRef font = (__bridge CTFontRef)[attributedString attribute:NSFontAttributeName atIndex:range.location effectiveRange:NULL];
         if (!font)
-            font = [NSFont RTFDefaultFont];
+            font = RKGetDefaultFont();
         
-        [converted addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (font.pointSize / 2.0f) * modeObject.floatValue] range:range];
+        [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (CTFontGetSize(font) / 2.0f) * modeObject.floatValue] range:range];
+        [converted removeAttribute:RKSuperscriptAttributeName range:range];
     }];
     
     return converted;

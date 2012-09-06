@@ -27,7 +27,7 @@
     NSMutableAttributedString *converted = [attributedString mutableCopy];
     
     // Emulate superscript
-    [attributedString enumerateAttribute:NSLinkAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:RKLinkAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
         if (!modeObject)
             return;
         

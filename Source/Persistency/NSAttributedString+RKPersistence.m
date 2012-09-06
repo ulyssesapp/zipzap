@@ -7,9 +7,8 @@
 //
 
 #import "NSAttributedString+RKPersistence.h"
-#import "NSAttributedString+RKPersistenceBackend.h"
 
-#import "RKPersistenceContext.h"
+#import "RKAttributeSerializer.h"
 
 #import "NSDictionary+FlagSerialization.h"
 
@@ -37,133 +36,14 @@ NSString *RKPersistenceRangeLengthKey = @"length";
 
 @implementation NSAttributedString (RKPersistence)
 
-NSMutableDictionary *NSAttributedStringPersistableAttributeTypes;
-NSMutableDictionary *NSAttributedStringPersistableFlags;
-NSMutableDictionary *NSAttributedStringPersistableEnums;
+NSMutableDictionary *NSAttributedStringSerializers;
 
-+ (void)load
++ (void)registerAttributeSerializer:(Class)serializer forAttribute:(NSString *)attributeName
 {
-    @autoreleasepool {
-        NSAttributedStringPersistableAttributeTypes = [NSMutableDictionary new];
-        NSAttributedStringPersistableFlags = [NSMutableDictionary new];
-        NSAttributedStringPersistableEnums = [NSMutableDictionary new];
-        
-        NSAttributedStringPersistableAttributeTypes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            NSFont.class,                       NSFontAttributeName,
-            NSParagraphStyle.class,             NSParagraphStyleAttributeName,
-            NSColor.class,                      NSForegroundColorAttributeName,
-            NSNumber.class,                     NSUnderlineStyleAttributeName,
-            NSNumber.class,                     NSSuperscriptAttributeName,
-            NSColor.class,                      NSBackgroundColorAttributeName,     
-            NSTextAttachment.class,             NSAttachmentAttributeName,          
-            NSNumber.class,                     NSLigatureAttributeName,            
-            NSNumber.class,                     NSBaselineOffsetAttributeName,      
-            NSNumber.class,                     NSKernAttributeName,                
-            NSURL.class,                        NSLinkAttributeName,                
-            NSNumber.class,                     NSStrokeWidthAttributeName,         
-            NSColor.class,                      NSStrokeColorAttributeName,         
-            NSColor.class,                      NSUnderlineColorAttributeName,      
-            NSNumber.class,                     NSStrikethroughStyleAttributeName,  
-            NSColor.class,                      NSStrikethroughColorAttributeName,  
-            NSShadow.class,                     NSShadowAttributeName,              
-            NSNumber.class,                     NSObliquenessAttributeName,         
-            NSNumber.class,                     NSExpansionAttributeName,           
-            NSNumber.class,                     NSWritingDirectionAttributeName,    
-            NSNumber.class,                     NSVerticalGlyphFormAttributeName,   
-            RKListItem.class,                   RKTextListItemAttributeName,        
-            NSAttributedString.class,           RKFootnoteAttributeName,            
-            NSAttributedString.class,           RKEndnoteAttributeName,             
-            NSNumber.class,                     RKPlaceholderAttributeName,         
-            NSString.class,                     RKCharacterStyleNameAttributeName,  
-            NSString.class,                     RKParagraphStyleNameAttributeName,
-            nil
-        ];
-        
-        // Flags that can be persisted
-        NSDictionary *underlineStyles = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlineStyleNone],            @"none",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlineStyleSingle],          @"single",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlineStyleThick],           @"thick",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlineStyleDouble],          @"double",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlinePatternDot],           @"dot",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlinePatternDash],          @"dash",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlinePatternDashDot],       @"dashDot",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlinePatternDashDotDot],    @"dashDotDot",
-                                         [NSNumber numberWithUnsignedInteger: NSUnderlineByWordMask],           @"underlineByWord",
-                                         nil];
-
-        NSAttributedStringPersistableFlags = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                               underlineStyles, NSUnderlineStyleAttributeName,
-                                               underlineStyles, NSStrikethroughStyleAttributeName,
-                                              nil];
-        
-        // Enums that can be persisted
-        NSDictionary *superscriptStyles = [NSDictionary dictionaryWithObjectsAndKeys:
-                                           [NSNumber numberWithInteger: 0],          @"none",
-                                           [NSNumber numberWithInteger: 1],          @"superscript",
-                                           [NSNumber numberWithInteger: -1],         @"subscript",
-                                           nil];
-        
-        NSDictionary *ligaturStyles = [NSDictionary dictionaryWithObjectsAndKeys:
-                                           [NSNumber numberWithInteger: 0],          @"none",
-                                           [NSNumber numberWithInteger: 1],          @"standard",
-                                           [NSNumber numberWithInteger: 2],          @"all",
-                                          nil];
-
-        NSDictionary *writingDirection = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          [NSNumber numberWithInteger: 0],          @"leftToRightEmbedding",
-                                          [NSNumber numberWithInteger: 1],          @"rightToLeftEmbedding",
-                                          [NSNumber numberWithInteger: 2],          @"leftToRightOverride",
-                                          [NSNumber numberWithInteger: 3],          @"rigthToLeftOverride",
-                                         nil];
-        
-        NSDictionary *placeholderTypes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          [NSNumber numberWithInteger: RKPlaceholderPageNumber],    @"pageNumber",
-                                          [NSNumber numberWithInteger: RKPlaceholderSectionNumber], @"sectionNumber",
-                                         nil];
-        
-        NSAttributedStringPersistableEnums = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                              superscriptStyles, NSSuperscriptAttributeName,
-                                              ligaturStyles, NSLigatureAttributeName,
-                                              writingDirection, NSWritingDirectionAttributeName,
-                                              placeholderTypes, RKPlaceholderAttributeName,
-                                             nil];
-    }
-}
-
-+ (NSDictionary *)persistableAttributeTypes
-{
-    return NSAttributedStringPersistableAttributeTypes;
-}
-
-+ (void)registerNumericAttributeForPersistence:(NSString *)attributeName
-{
-    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
+    if (!NSAttributedStringSerializers)
+        NSAttributedStringSerializers = [NSMutableDictionary new];
     
-    [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
-}
-
-+ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingFlags:(NSDictionary *)flags
-{
-    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
-    
-    [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
-    [NSAttributedStringPersistableFlags setObject:flags forKey:attributeName];
-}
-
-+ (void)registerNumericAttributeForPersistence:(NSString *)attributeName usingSignedEnumeration:(NSDictionary *)enumeration
-{
-    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
-    
-    [NSAttributedStringPersistableAttributeTypes setObject:NSNumber.class forKey:attributeName];
-    [NSAttributedStringPersistableEnums setObject:enumeration forKey:attributeName];
-}
-
-+ (void)registerStringAttributeForPersistence:(NSString *)attributeName
-{
-    NSParameterAssert(![NSAttributedStringPersistableAttributeTypes objectForKey: attributeName]);
-    
-    [NSAttributedStringPersistableAttributeTypes setObject:NSString.class forKey:attributeName];
+    [NSAttributedStringSerializers setObject:serializer forKey:attributeName];
 }
 
 
@@ -190,30 +70,12 @@ NSMutableDictionary *NSAttributedStringPersistableEnums;
 
 + (NSDictionary *)attributeDictionaryFromRTFKitPropertyListRepresentation:(id)serializedAttributes usingContext:(RKPersistenceContext *)context error:(NSError **)error
 {
-    NSDictionary *persistableAttributeTypes = self.persistableAttributeTypes;
     NSMutableDictionary *deserializedAttributes = [NSMutableDictionary new];
     
-    [serializedAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id<RKPersistence> serializedAttributeValue, BOOL *stop) {
+    [serializedAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id serializedAttributeValue, BOOL *stop) {
         // Get handler class for attribute
-        Class handlerClass = [persistableAttributeTypes objectForKey: attributeName];
-        NSParameterAssert([handlerClass conformsToProtocol: @protocol(RKPersistence)]);
-        
-        id attributeValue = nil;
-        
-        // Translate enum, if possible
-        NSDictionary *enumDescriptor = [NSAttributedStringPersistableEnums objectForKey: attributeName];
-        if (enumDescriptor && [serializedAttributeValue isKindOfClass: NSString.class])
-            attributeValue = [NSNumber numberWithInteger: [enumDescriptor signedEnumValueFromString:(NSString *)serializedAttributeValue error:error]];
-        
-        // Translation, if flag value
-        NSDictionary *flagDescriptor = [NSAttributedStringPersistableFlags objectForKey: attributeName];
-        if (flagDescriptor && [serializedAttributeValue isKindOfClass: NSArray.class])
-            attributeValue = [NSNumber numberWithUnsignedInteger: [flagDescriptor flagsFromArray:(NSArray *)serializedAttributeValue error:error]];
-        
-        // Translate other attribute value
-        if (!attributeValue)
-            attributeValue = [handlerClass instanceWithRTFKitPropertyListRepresentation:serializedAttributeValue usingContext:context error:error];
-        
+        Class handler = [NSAttributedStringSerializers objectForKey: attributeName];
+        id attributeValue = [handler attributeValueForPropertyList:serializedAttributeValue attributeName:attributeName context:context error:error];
         if (!attributeValue) {
             *stop = YES;
             return;
@@ -227,7 +89,8 @@ NSMutableDictionary *NSAttributedStringPersistableEnums;
 }
 
 
-#pragma mark - Serialization
+
+#pragma mark - Serialization methods with new context
 
 - (id)RTFKitPropertyListRepresentation
 {
@@ -244,57 +107,27 @@ NSMutableDictionary *NSAttributedStringPersistableEnums;
 + (id)RTFKitPropertyListRepresentationForAttributeDictionary:(NSDictionary *)attributes usingContext:(RKPersistenceContext *)context
 {
     NSMutableDictionary *translatedAttributes = [NSMutableDictionary new];
-    NSDictionary *persistableAttributeTypes = self.persistableAttributeTypes;
     
     [attributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeKey, id attributeValue, BOOL *stop) {
         // Ignore nil values
         if (!attributeValue)
             return;
         
-        // Ignore not supported attributes
-        if (![persistableAttributeTypes objectForKey: attributeKey])
-            return;
-        
-        // Only accept valid types
-        // There is one special case hardcoded here: NSLinkAttributeName may be NSString or NSURL.
-        NSParameterAssert([attributeValue isKindOfClass: [persistableAttributeTypes objectForKey: attributeKey]] || ([attributeKey isEqual: NSLinkAttributeName] && [attributeValue isKindOfClass: NSString.class]));
-
-        id serializedAttributeValue = nil;
-        
-        // Translation, if enum value
-        NSDictionary *enumDescriptor = [NSAttributedStringPersistableEnums objectForKey: attributeKey];
-        if (enumDescriptor)
-            serializedAttributeValue = [enumDescriptor stringFromSignedEnumValue: [attributeValue integerValue]];
-        
-        // Translation, if flag value
-        NSDictionary *flagDescriptor = [NSAttributedStringPersistableFlags objectForKey: attributeKey];
-        if (flagDescriptor)
-            serializedAttributeValue = [flagDescriptor arrayFromFlags: [attributeValue unsignedIntegerValue]];
-        
-        // Translate attribute value, if neither enum nor flag
-        if (!flagDescriptor && !flagDescriptor) {
-            NSParameterAssert ([attributeValue conformsToProtocol: @protocol(RKPersistence)]);
-               
-            serializedAttributeValue = [attributeValue RTFKitPropertyListRepresentationUsingContext: context];
+        Class handler = [NSAttributedStringSerializers objectForKey: attributeKey];
+        if (handler) {
+            id serializedAttributeValue = [handler propertyListForAttribute:attributeKey value:attributeValue context:context];
+            if (serializedAttributeValue)
+                [translatedAttributes setObject:serializedAttributeValue forKey:attributeKey];
         }
-
-        if (serializedAttributeValue)
-            [translatedAttributes setObject:serializedAttributeValue forKey:attributeKey];
     
     }];
     
     return translatedAttributes;
 }
 
-@end
 
 
-/*!
- @abstract Backend methods for serialization
- */
-@implementation NSAttributedString (RKPersistenceBackend)
-
-#pragma mark - Deserialization methods
+#pragma mark - Serialization methods with predefined context
 
 + (NSAttributedString *)instanceWithRTFKitPropertyListRepresentation:(id)propertyList usingContext:(RKPersistenceContext *)context error:(NSError **)error
 {
@@ -322,10 +155,6 @@ NSMutableDictionary *NSAttributedStringPersistableEnums;
     return attributedString;
 }
 
-
-
-#pragma mark - Serialization methods
-
 - (NSDictionary *)RTFKitPropertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
     NSMutableArray *attributesForRanges = [NSMutableArray new];
@@ -345,10 +174,10 @@ NSMutableDictionary *NSAttributedStringPersistableEnums;
     }];
     
     // Create property list
-    return @{
-        RKPersistenceStringContentKey:      self.string,
-        RKPersistenceAttributeRangesKey:    attributesForRanges
-    };
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+            self.string,            RKPersistenceStringContentKey,
+            attributesForRanges,    RKPersistenceAttributeRangesKey,
+           nil];
 }
 
 @end

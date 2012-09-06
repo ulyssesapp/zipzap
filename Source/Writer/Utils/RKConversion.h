@@ -51,6 +51,11 @@
 - (CGColorRef)newCGColorWithGenericRGBColorSpace;
 
 /*!
+ @abstract Converts a color to the generic RGBA color space and creates a CGColor from it
+ */
+- (CGColorRef)newCGColorWithGenericRGBAColorSpace;
+
+/*!
  @abstract Generates a color object that must not be converted to be valid for RTF
  */
 + (NSColor *)rtfColorFromColor:(NSColor *)color;

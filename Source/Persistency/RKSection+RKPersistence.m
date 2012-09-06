@@ -56,7 +56,7 @@ NSString *RKPersistencePageMaskRightSuffix      = @"Right";
         
         // Deserialize content string
         if ([propertyList objectForKey: RKPersistenceContentKey])
-            self.content = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:propertyList[RKPersistenceContentKey] error:error];
+            self.content = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:[propertyList objectForKey: RKPersistenceContentKey] error:error];
 
         // Deserialize header and footer
         BOOL success;

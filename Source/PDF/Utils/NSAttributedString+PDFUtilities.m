@@ -28,7 +28,7 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
 + (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString
 {
     NSMutableAttributedString *noteString = [note.footnoteContent mutableCopy];
-    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL]];
+    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:(__bridge CTFontRef)[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL]];
 
     id paragraphStyle = [noteString attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
     
@@ -66,16 +66,21 @@ NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
     return noteList;
 }
 
-+ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(NSFont *)font
++ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(CTFontRef)font
 {
     NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString:enumeratorString];
     
     // Style footnote
     if (!font)
-        font = [NSFont RTFDefaultFont];
+        font = RKGetDefaultFont();
     
-    [enumerator addAttribute:NSFontAttributeName value:[NSFont fontWithName:font.fontName size:font.pointSize / 2.0f] range:NSMakeRange(0, enumerator.length)];
-    [enumerator addAttribute:NSBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (font.pointSize / 2.0f)] range:NSMakeRange(0, enumerator.length)];
+    CGFloat pointSize = CTFontGetSize(font) / 2.0;
+    CTFontRef subscriptFont = CTFontCreateCopyWithAttributes(font, pointSize, NULL, NULL);
+    
+    [enumerator addAttribute:NSFontAttributeName value:(__bridge id)subscriptFont range:NSMakeRange(0, enumerator.length)];
+    [enumerator addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: pointSize] range:NSMakeRange(0, enumerator.length)];
+    
+    CFRelease(subscriptFont);
     
     return enumerator;
 }
