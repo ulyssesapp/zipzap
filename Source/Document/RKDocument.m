@@ -91,7 +91,7 @@
             &&  [self.paragraphStyles isEqual: object.paragraphStyles]
             &&  [self.characterStyles isEqual: object.characterStyles]    
             &&  (self.hyphenationEnabled == object.hyphenationEnabled)
-			&&  [self.locale isEqual: object.locale]
+			&&  [self.locale.localeIdentifier isEqual: object.locale.localeIdentifier]
             &&  (self.pageSize.width == object.pageSize.width)
             &&  (self.pageSize.height == object.pageSize.height)
             &&  (self.pageInsets.top == object.pageInsets.top)
