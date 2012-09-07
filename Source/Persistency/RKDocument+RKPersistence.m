@@ -18,6 +18,7 @@
 NSString *RKPersistencySectionsKey                      = @"sections";
 NSString *RKPersistencyMetadataKey                      = @"metadata";
 NSString *RKPersistencyHyphenationEnabledKey            = @"hyphenationEnabled";
+NSString *RKPersistencyDocumentLocaleKey				= @"localeKey";
 NSString *RKPersistencyPageWidthKey                     = @"pageWidth";
 NSString *RKPersistencyPageHeightKey                    = @"pageHeight";
 NSString *RKPersistencyHeaderSpacingKey                 = @"headerSpacing";
@@ -56,6 +57,9 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
         if ([propertyList objectForKey: RKPersistencyHyphenationEnabledKey])
             self.hyphenationEnabled = [[propertyList objectForKey: RKPersistencyHyphenationEnabledKey] boolValue];
         
+		if ([propertyList objectForKey: RKPersistencyDocumentLocaleKey])
+			self.locale = [[NSLocale alloc] initWithLocaleIdentifier: [propertyList objectForKey: RKPersistencyDocumentLocaleKey]];
+		
         if ([propertyList objectForKey: RKPersistencyPageWidthKey])
             self.pageSize = CGSizeMake([[propertyList objectForKey: RKPersistencyPageWidthKey] floatValue], [[propertyList objectForKey: RKPersistencyPageHeightKey] floatValue]);
         
@@ -138,6 +142,7 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
     NSMutableDictionary *propertyList = [NSMutableDictionary new];
     
     propertyList[RKPersistencyHyphenationEnabledKey] = [NSNumber numberWithBool: self.hyphenationEnabled];
+	propertyList[RKPersistencyDocumentLocaleKey] = self.locale.localeIdentifier;
     propertyList[RKPersistencyPageWidthKey] = [NSNumber numberWithFloat: self.pageSize.width];
     propertyList[RKPersistencyPageHeightKey] = [NSNumber numberWithFloat: self.pageSize.height];
     propertyList[RKPersistencyHeaderSpacingKey] = [NSNumber numberWithFloat: self.headerSpacing];

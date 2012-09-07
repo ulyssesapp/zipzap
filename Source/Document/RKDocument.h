@@ -70,6 +70,11 @@
 @property(nonatomic) BOOL hyphenationEnabled;
 
 /*!
+ @abstract Specifies a locale for the document (set to the default locale)
+ */
+@property(nonatomic) NSLocale *locale;
+
+/*!
  @abstract Page size in points
  */
 @property(nonatomic) CGSize pageSize;

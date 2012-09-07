@@ -40,6 +40,7 @@
 
         _pageOrientation = RKPageOrientationPortrait;
         _hyphenationEnabled = NO;
+		_locale = [NSLocale currentLocale];
         
         _footnoteEnumerationPolicy = RKFootnoteEnumerationPerPage;
         _endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
@@ -60,6 +61,7 @@
     copy.metadata = [self.metadata copy];
 
     copy.hyphenationEnabled = _hyphenationEnabled;
+	copy.locale = _locale;
     copy.pageSize = _pageSize;
     copy.pageInsets = _pageInsets;
     copy.pageOrientation = _pageOrientation;
@@ -89,6 +91,7 @@
             &&  [self.paragraphStyles isEqual: object.paragraphStyles]
             &&  [self.characterStyles isEqual: object.characterStyles]    
             &&  (self.hyphenationEnabled == object.hyphenationEnabled)
+			&&  [self.locale isEqual: object.locale]
             &&  (self.pageSize.width == object.pageSize.width)
             &&  (self.pageSize.height == object.pageSize.height)
             &&  (self.pageInsets.top == object.pageInsets.top)
