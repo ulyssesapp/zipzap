@@ -63,7 +63,7 @@
     }
 	
     NSNumber *listIndex;
-    NSUInteger maximumIndex = RKResourcePool.maximumListStyleIndex;
+    NSUInteger maximumIndex = RKListCounter.maximumListStyleIndex;
     
     if (_listStyles.count < (maximumIndex / 50)) {
         // Create a random index unless we have only 1/50 of random numbers used
