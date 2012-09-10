@@ -6,16 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface NSMutableString (Hyphenation)
-
-/*!
- @abstract Inserts the given hyphenation character according to the hyphenation rules of the given locale.
- @discussion Returns NO, if the locale does not support hyphenation.
- */
-- (BOOL)insertHyphenationCharacter:(NSString *)hyphenationCharacter forLocale:(NSLocale *)locale inRange:(NSRange)range;
-
-@end
-
 @interface NSString (Hyphenation)
 
 /*!
@@ -23,6 +13,12 @@
  @discussion Applies no hyphenation if the given locale does not support it.
  */
 - (NSString *)stringByHyphenatingWithCharacter:(NSString *)hyphenationCharacter locale:(NSLocale *)locale inRange:(NSRange)range;
+
+/*!
+ @abstract Enumerates all possible hyphenation points in the given string using the given locale
+ @discussion Returns NO, if hyphenation is not available for the given locale. Mutation is allowed within the given string range.
+ */
+- (BOOL)enumerateHyphenationsInRange:(NSRange)range usingLocale:(NSLocale *)locale block:(void(^)(NSUInteger index, NSString *suggestedSeparator))block;
 
 @end
 

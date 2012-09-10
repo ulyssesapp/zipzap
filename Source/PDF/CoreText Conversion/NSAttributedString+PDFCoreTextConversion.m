@@ -10,6 +10,10 @@
 
 #import "RKAttributedStringWriter.h"
 #import "RKCoreTextRepresentationConverter.h"
+#import "RKPDFRenderingContext.h"
+#import "NSAttributedString+PDFUtilities.h"
+
+#import "NSString+Hyphenation.h"
 
 @implementation NSAttributedString (PDFCoreTextConversion)
 
@@ -35,6 +39,22 @@ NSMutableArray *NSAttributedStringCoreTextConverters;
         convertedString = [converter coreTextRepresentationForAttributedString:convertedString usingContext:context];
     }
     
+	// Apply hyphenation, if requested
+	if (context.document.hyphenationEnabled && context.document.locale.supportsHyphenation) {
+		NSMutableAttributedString *hyphenatedString = [convertedString mutableCopy];
+		
+		// Detect hyphenations
+		[hyphenatedString.mutableString enumerateHyphenationsInRange:NSMakeRange(0, hyphenatedString.length) usingLocale:context.document.locale block:^(NSUInteger index, NSString *suggestedSeparator) {
+			// Add soft-hyphenation as hint for Core Text
+			[hyphenatedString.mutableString insertString:@"\u00ad" atIndex:index];
+			
+			// Remember the suggested hyphenation char for the given locale
+			[hyphenatedString addAttribute:RKHyphenationCharacterAttributeName value:suggestedSeparator range:NSMakeRange(index, 1)];
+		}];
+		
+		convertedString = hyphenatedString;
+	}
+	
     return convertedString;
 }
 

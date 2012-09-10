@@ -8,6 +8,10 @@
 
 @class RKPDFTextObject, RKPDFRenderingContext, RKPDFFootnote;
 
+/*!
+ @abstract An attribute denoting the hyphenation character that should be used a soft hyphenation
+ */
+extern NSString *RKHyphenationCharacterAttributeName;
 
 /*!
  @abstract The key mapping to the RKPDFFootnote object inside a footnote descriptor

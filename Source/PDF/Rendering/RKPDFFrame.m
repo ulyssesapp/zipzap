@@ -15,6 +15,7 @@
 #import "RKPDFLine.h"
 #import "NSAttributedString+PDFUtilities.h"
 
+
 // Helper used to convert CFRange to NSRange
 #define NSRangeFromCFRange(__range)         NSMakeRange(__range.location, __range.length)
 
@@ -188,9 +189,49 @@
         RKPDFLine *line = _lines[lineIndex];
 
         CTLineRef ctLine = (__bridge CTLineRef)_ctLines[lineIndex];
+		CFRange lineRange = CTLineGetStringRange(ctLine);
+		
         CGRect lineRectWithDescent = line.boundingBox;
         CGRect lineRectWithoutDescent = line.boundingBoxWithoutDescent;
 
+		// Does the line end with a soft hyphenation character? Add it
+		BOOL isCopiedLine = NO;
+		NSUInteger hyphenPosition = lineRange.location + lineRange.length - 1;
+
+		if ((hyphenPosition < _attributedString.length) && ([_attributedString.string characterAtIndex: hyphenPosition] == RKSoftHyphenCharacter)) {
+			NSMutableAttributedString *lineString = [[_attributedString attributedSubstringFromRange: NSMakeRange(lineRange.location, lineRange.length)] mutableCopy];
+			
+			// Get hyphenation character
+			NSString *hyphenationCharacter = [_attributedString attribute:RKHyphenationCharacterAttributeName atIndex:hyphenPosition effectiveRange:NULL];
+			if (!hyphenationCharacter)
+				hyphenationCharacter = @"-";
+			
+			// Place hyphenation character
+			[lineString.mutableString replaceCharactersInRange:NSMakeRange(lineRange.length-1, 1) withString: hyphenationCharacter];
+			
+			// Create line with substring
+			ctLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)lineString);
+
+			// Get text alignment
+			CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)[lineString attribute:(__bridge NSString*)kCTParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
+			CTTextAlignment alignment;
+			CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &alignment);
+			
+			// Render line with justified alignment, if required
+			if (alignment == kCTJustifiedTextAlignment) {
+				CTLineRef justifiedLine = CTLineCreateJustifiedLine(ctLine, 1.0, line.boundingBox.size.width);
+				if (justifiedLine) {
+					CFRelease(ctLine);
+					ctLine = justifiedLine;
+				}
+				else {
+					NSLog(@"Cannot justify line %lu in section %lu on page %lu in column %lu.", lineIndex + 1, _context.currentSectionNumber + 1, _context.currentPageNumber, _context.currentColumnNumber + 1);
+				}
+			}
+			
+			isCopiedLine = YES;
+		}
+		
         // Apply text renderer
         NSArray *runs = (__bridge id)CTLineGetGlyphRuns(ctLine);
         CGContextSetTextPosition(_context.pdfContext, lineRectWithoutDescent.origin.x, lineRectWithoutDescent.origin.y);
@@ -237,6 +278,10 @@
             
             CGContextRestoreGState(_context.pdfContext);
         }
+		
+		// Free line, if it was copied
+		if (isCopiedLine)
+			CFRelease(ctLine);
     }
     
     // Restore graphics context

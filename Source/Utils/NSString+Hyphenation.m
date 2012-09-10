@@ -8,41 +8,42 @@
 
 #import "NSString+Hyphenation.h"
 
-@implementation NSMutableString (Hyphenation)
+@implementation NSString (Hyphenation)
 
-- (BOOL)insertHyphenationCharacter:(NSString *)hyphenationCharacter forLocale:(NSLocale *)locale inRange:(NSRange)range
+- (NSString *)stringByHyphenatingWithCharacter:(NSString *)hyphenationCharacter locale:(NSLocale *)locale inRange:(NSRange)range
+{
+	NSMutableString *mutableString = [self mutableCopy];
+	
+	[mutableString enumerateHyphenationsInRange:range usingLocale:locale block:^(NSUInteger index, NSString *suggestedSeparator) {
+		[mutableString insertString:hyphenationCharacter atIndex:index];
+	}];
+	
+	return mutableString;
+}
+
+- (BOOL)enumerateHyphenationsInRange:(NSRange)range usingLocale:(NSLocale *)locale block:(void(^)(NSUInteger index, NSString *suggestedSeparator))block
 {
 	if (!locale.supportsHyphenation)
 		return NO;
-		
+	
 	// Enumerate words inside string
 	[self enumerateSubstringsInRange:range options:NSStringEnumerationByWords usingBlock:^(NSString *word, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
 		CFStringRef cfWord = (__bridge CFStringRef)word;
 		CFIndex beforeLocation = word.length;
 		
 		while (beforeLocation > 0) {
-			beforeLocation = CFStringGetHyphenationLocationBeforeIndex(cfWord, beforeLocation, CFRangeMake(0, word.length), 0, (__bridge CFLocaleRef)locale, NULL);
+			UTF32Char suggestedSeparator;
+			
+			beforeLocation = CFStringGetHyphenationLocationBeforeIndex(cfWord, beforeLocation, CFRangeMake(0, word.length), 0, (__bridge CFLocaleRef)locale, &suggestedSeparator);
 			
 			if (beforeLocation == kCFNotFound)
 				break;
 			
-			[self insertString:hyphenationCharacter atIndex:substringRange.location + beforeLocation];
+			block(substringRange.location + beforeLocation, [NSString stringWithFormat:@"%C", (unichar)suggestedSeparator]);
 		}
 	}];
 	
 	return YES;
-}
-
-@end
-
-@implementation NSString (Hyphenation)
-
-- (NSString *)stringByHyphenatingWithCharacter:(NSString *)hyphenationCharacter locale:(NSLocale *)locale inRange:(NSRange)range
-{
-	NSMutableString *mutableString = [self mutableCopy];
-	[mutableString insertHyphenationCharacter:hyphenationCharacter forLocale:locale inRange:range];
-	
-	return mutableString;
 }
 
 @end

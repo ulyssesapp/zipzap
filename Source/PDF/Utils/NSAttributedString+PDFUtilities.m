@@ -22,6 +22,7 @@ NSString *RKTextObjectAttributeName         = @"RKTextObject";
 NSString *RKTextRendererAttributeName       = @"RKTextRenderer";
 NSString *RKPDFAnchorAttributeName          = @"RKAnchor";
 NSString *RKPDFAnchorLinkAttributeName      = @"RKAnchorLink";
+NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 
 @implementation NSAttributedString (PDFUtilities)
 
