@@ -192,6 +192,28 @@
 			lineRect.origin.x += _visibleBoundingBox.size.width - lineRect.size.width;
 			break;
 	}
+
+	// Apply fixed line spacing
+	CGFloat lineSpacing = paragraphStyle.lineSpacing;
+	lineRect.origin.y -= lineSpacing;
+	lineRect.size.height += lineSpacing;
+	yOffset += lineSpacing;
+	
+	// Apply relative line spacing
+	CGFloat newHeight = lineRect.size.height;
+	
+	if (paragraphStyle.lineHeightMultiple)
+		newHeight *= paragraphStyle.lineHeightMultiple;
+	
+	// Apply maximum / minimum line heights
+	if (paragraphStyle.maximumLineHeight && (newHeight > paragraphStyle.maximumLineHeight))
+		newHeight = paragraphStyle.maximumLineHeight;
+	
+	if (newHeight < paragraphStyle.minimumLineHeight)
+		newHeight = paragraphStyle.minimumLineHeight;
+	
+	lineRect.origin.y -= newHeight - lineRect.size.height;
+	lineRect.size.height += newHeight - lineRect.size.height;
 	
 	// Apply paragraph spacing
 	if (isFirstInParagraph) {
@@ -204,17 +226,9 @@
 	if (isLastInParagraph) {
 		CGFloat spacingAfter = paragraphStyle.paragraphSpacing;
 		
-		lineRect.origin.y -= spacingAfter;
 		lineRect.size.height += spacingAfter;
-		yOffset += spacingAfter;
 	}
 	
-	// Apply line spacing
-	CGFloat lineSpacing = paragraphStyle.lineSpacing;
-	lineRect.origin.y -= lineSpacing;
-	lineRect.size.height += lineSpacing;
-	yOffset += lineSpacing;
-
 	// Determine offset within line
 	if (yOffsetOut)
 		*yOffsetOut = yOffset;

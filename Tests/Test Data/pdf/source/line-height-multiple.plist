@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sections</key>
+	<array>
+		<dict>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>0</integer>
+							<key>length</key>
+							<integer>384</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>NSParagraphStyle</key>
+							<dict>
+								<key>lineHeightMultiple</key>
+								<integer>4</integer>
+								<key>paragraphSpacing</key>
+								<integer>10</integer>
+								<key>alignment</key>
+								<string>justified</string>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>384</integer>
+							<key>length</key>
+							<integer>620</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>NSParagraphStyle</key>
+							<dict>
+								<key>lineHeightMultiple</key>
+								<integer>4</integer>
+								<key>maximumLineHeight</key>
+								<string>20</string>
+								<key>paragraphSpacing</key>
+								<integer>10</integer>
+								<key>alignment</key>
+								<string>justified</string>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>1004</integer>
+							<key>length</key>
+							<integer>473</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>NSParagraphStyle</key>
+							<dict>
+								<key>lineHeightMultiple</key>
+								<real>0.1</real>
+								<key>minimumLineHeight</key>
+								<string>50</string>
+								<key>paragraphSpacing</key>
+								<integer>10</integer>
+								<key>alignment</key>
+								<string>justified</string>
+							</dict>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>This text has a line height multiple of 4 and is unconstrained. This text has a line height multiple of 4 and is unconstrained. This text has a line height multiple of 4 and is unconstrained. This text has a line height multiple of 4 and is unconstrained. This text has a line height multiple of 4 and is unconstrained. This text has a line height multiple of 4 and is unconstrained.
+This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20. This text has a line height multiple of 4, but is constrained to 20.
+This text has a line height multiple of 0.1, but is constraint to at least 50. This text has a line height multiple of 0.1, but is constraint to at least 50. This text has a line height multiple of 0.1, but is constraint to at least 50. This text has a line height multiple of 0.1, but is constraint to at least 50. This text has a line height multiple of 0.1, but is constraint to at least 50. This text has a line height multiple of 0.1, but is constraint to at least 50.</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
