@@ -189,4 +189,9 @@
     return nil;
 }
 
+- (CGFloat)footnoteSpacing
+{
+	return RKFootnoteSpacing;
+}
+
 @end

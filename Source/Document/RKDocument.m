@@ -150,7 +150,7 @@
 #if !TARGET_OS_IPHONE
 - (NSData *)PDF
 {
-    return [RKPDFWriter PDFFromDocument:self options:(RKPDFWriterShowBoundingBoxes|RKPDFWriterShowTextFrames)];
+    return [RKPDFWriter PDFFromDocument:self options:(RKPDFWriterShowMaximumFrameBounds|RKPDFWriterShowVisibleFrameBounds)];
 }
 #endif
 

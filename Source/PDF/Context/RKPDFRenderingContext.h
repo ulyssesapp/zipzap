@@ -33,25 +33,6 @@ typedef enum : NSUInteger {
 - (NSData *)close;
 
 
-#pragma mark - Context nesting
-
-/*!
- @abstract Saves the current state of the context 
- @discussion Does not save any state that is related to PDF rendering. Such state must be saved using the CGContext APIs.
- */
-- (void)saveState;
-
-/*!
- @abstract Restores a saved context state
- */
-- (void)restoreState;
-
-/*!
- @abstract Discards the last saved state and keeps the current state
- */
-- (void)commitToLastState;
-
-
 #pragma mark - Context properties
 
 /*!

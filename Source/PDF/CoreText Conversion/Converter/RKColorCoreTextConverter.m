@@ -10,7 +10,7 @@
 
 #import "RKConversion.h"
 #import "RKPDFBackgroundColorRenderer.h"
-#import "RKPDFStrikethroughRenderer.h"
+#import "RKPDFTextDecorationRenderer.h"
 
 #import "NSAttributedString+PDFCoreTextConversion.h"
 #import "NSAttributedString+PDFUtilities.h"

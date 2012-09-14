@@ -112,7 +112,7 @@
         NSDictionary *originalFilePlist = [NSPropertyListSerialization propertyListWithData:originalFile.regularFileContents options:0 format:NULL error:nil];
         RKDocument *document = [[RKDocument alloc] initWithRTFKitPropertyListRepresentation:originalFilePlist error:nil];
         
-        NSData *generatedPDFData = [RKPDFWriter PDFFromDocument:document options:RKPDFWriterShowBoundingBoxes|RKPDFWriterShowTextFrames];
+        NSData *generatedPDFData = [RKPDFWriter PDFFromDocument:document options:RKPDFWriterShowMaximumFrameBounds|RKPDFWriterShowVisibleFrameBounds];
         NSData *generatedPNGData = [self pngDataForPDFData: generatedPDFData];
         
         // Write expected data to temporary folder (used to verify tests manually)

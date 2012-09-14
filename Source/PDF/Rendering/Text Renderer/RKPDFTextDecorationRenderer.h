@@ -14,6 +14,6 @@
  */
 extern NSString *RKPDFStrikethroughColorAttributeName;
 
-@interface RKPDFStrikethroughRenderer : RKPDFTextRenderer
+@interface RKPDFTextDecorationRenderer : RKPDFTextRenderer
 
 @end

@@ -8,7 +8,7 @@
 
 #import "RKTextStyleCoreTextConverter.h"
 
-#import "RKPDFStrikethroughRenderer.h"
+#import "RKPDFTextDecorationRenderer.h"
 
 #import "RKFontAdditions.h"
 #import "NSAttributedString+PDFCoreTextConversion.h"
@@ -20,7 +20,6 @@
 {
 	#if !TARGET_OS_IPHONE
     // We assume the following application kit attributes to be directly convertable
-    NSAssert([(__bridge id)kCTUnderlineStyleAttributeName isEqual: NSUnderlineStyleAttributeName], @"Styles not convertable");
     NSAssert([(__bridge id)kCTStrokeWidthAttributeName isEqual: NSStrokeWidthAttributeName], @"Styles not convertable");
     NSAssert([(__bridge id)kCTKernAttributeName isEqual: NSKernAttributeName], @"Styles not convertable");
     NSAssert([(__bridge id)kCTLigatureAttributeName isEqual: NSLigatureAttributeName], @"Styles not convertable");
@@ -37,11 +36,19 @@
     NSMutableAttributedString *converted = [attributedString mutableCopy];
 
     // Emulate strikethrough
-    [attributedString enumerateAttribute:NSStrikethroughStyleAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:RKStrikethroughStyleAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
         if (!modeObject)
             return;
         
-        [converted addTextRenderer:RKPDFStrikethroughRenderer.class forRange:range];
+        [converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:range];
+    }];
+
+    // Emulate underline
+    [attributedString enumerateAttribute:(__bridge NSString *)kCTUnderlineStyleAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
+        if (!modeObject)
+            return;
+        
+        [converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:range];
     }];
     
     // Emulate superscript / subscript
@@ -53,7 +60,7 @@
         if (!font)
             font = RKGetDefaultFont();
         
-        [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (CTFontGetSize(font) / 2.0f) * modeObject.floatValue] range:range];
+        [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (CTFontGetSize(font) / 1.5f) * modeObject.floatValue] range:range];
         [converted removeAttribute:RKSuperscriptAttributeName range:range];
     }];
     

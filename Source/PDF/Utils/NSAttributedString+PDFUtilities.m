@@ -75,11 +75,11 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     if (!font)
         font = RKGetDefaultFont();
     
-    CGFloat pointSize = CTFontGetSize(font) / 2.0;
+    CGFloat pointSize = CTFontGetSize(font) / 1.75;
     CTFontRef subscriptFont = CTFontCreateCopyWithAttributes(font, pointSize, NULL, NULL);
     
     [enumerator addAttribute:NSFontAttributeName value:(__bridge id)subscriptFont range:NSMakeRange(0, enumerator.length)];
-    [enumerator addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: pointSize] range:NSMakeRange(0, enumerator.length)];
+    [enumerator addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: CTFontGetSize(font) / 2.75] range:NSMakeRange(0, enumerator.length)];
     
     CFRelease(subscriptFont);    
     return enumerator;

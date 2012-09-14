@@ -15,70 +15,6 @@
 	<key>sections</key>
 	<array>
 		<dict>
-			<key>footerAll</key>
-			<dict>
-				<key>attributeRanges</key>
-				<array>
-					<dict>
-						<key>attributeRange</key>
-						<dict>
-							<key>length</key>
-							<integer>5</integer>
-							<key>location</key>
-							<integer>0</integer>
-						</dict>
-						<key>attributeValues</key>
-						<dict>
-							<key>NSParagraphStyle</key>
-							<dict>
-								<key>alignment</key>
-								<string>center</string>
-							</dict>
-						</dict>
-					</dict>
-					<dict>
-						<key>attributeRange</key>
-						<dict>
-							<key>length</key>
-							<integer>1</integer>
-							<key>location</key>
-							<integer>2</integer>
-						</dict>
-						<key>attributeValues</key>
-						<dict>
-							<key>RKPlaceholder</key>
-							<string>pageNumber</string>
-						</dict>
-					</dict>
-				</array>
-				<key>string</key>
-				<string>-   -</string>
-			</dict>
-			<key>headerAll</key>
-			<dict>
-				<key>attributeRanges</key>
-				<array>
-					<dict>
-						<key>attributeRange</key>
-						<dict>
-							<key>length</key>
-							<integer>43</integer>
-							<key>location</key>
-							<integer>0</integer>
-						</dict>
-						<key>attributeValues</key>
-						<dict>
-							<key>NSParagraphStyle</key>
-							<dict>
-								<key>alignment</key>
-								<string>center</string>
-							</dict>
-						</dict>
-					</dict>
-				</array>
-				<key>string</key>
-				<string>This document shows all important features!</string>
-			</dict>
 			<key>columnSpacing</key>
 			<real>36</real>
 			<key>content</key>
@@ -116,8 +52,8 @@ With a second paragraph
 A nested quote!
 A
 B
-A code block **should** not be parsed!
-For images and videos, there are several options:
+A code block **should** not be parsed! 
+For images and videos, there are several options:
 Empty image ￼
 Image with relative URL ￼
 Image with relative URL + file ￼
@@ -144,6 +80,10 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSUnderline</key>
+							<array>
+								<string>thick</string>
+							</array>
 							<key>NSFont</key>
 							<dict>
 								<key>size</key>
@@ -168,15 +108,15 @@ Video with file
 								<key>hyphenationFactor</key>
 								<real>0</real>
 								<key>alignment</key>
-								<string>natural</string>
+								<string>right</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -214,7 +154,7 @@ Video with file
 								<key>tabStops</key>
 								<array/>
 								<key>headIndent</key>
-								<real>0</real>
+								<integer>0</integer>
 								<key>lineHeightMulitple</key>
 								<real>0</real>
 								<key>lineBreakMode</key>
@@ -223,14 +163,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -261,6 +201,32 @@ Video with file
 							</dict>
 							<key>RKParagraphStyleName</key>
 							<string>Heading 3</string>
+							<key>NSBackgroundColor</key>
+							<dict>
+								<key>alpha</key>
+								<integer>1</integer>
+								<key>green</key>
+								<integer>1</integer>
+								<key>blue</key>
+								<integer>0</integer>
+								<key>red</key>
+								<integer>0</integer>
+							</dict>
+							<key>NSStrikethrough</key>
+							<array>
+								<string>single</string>
+							</array>
+							<key>NSStrikethroughColor</key>
+							<dict>
+								<key>green</key>
+								<integer>0</integer>
+								<key>alpha</key>
+								<integer>1</integer>
+								<key>blue</key>
+								<integer>0</integer>
+								<key>red</key>
+								<integer>1</integer>
+							</dict>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -277,14 +243,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -315,6 +281,22 @@ Video with file
 							</dict>
 							<key>RKParagraphStyleName</key>
 							<string>Heading 4</string>
+							<key>NSUnderlineColor</key>
+							<dict>
+								<key>alpha</key>
+								<integer>1</integer>
+								<key>green</key>
+								<integer>0</integer>
+								<key>blue</key>
+								<integer>0</integer>
+								<key>red</key>
+								<integer>1</integer>
+							</dict>
+							<key>NSUnderline</key>
+							<array>
+								<string>underlineByWord</string>
+								<string>single</string>
+							</array>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -331,14 +313,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -385,14 +367,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -439,14 +421,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -484,13 +466,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -522,7 +504,7 @@ Video with file
 								<key>tabStops</key>
 								<array/>
 								<key>headIndent</key>
-								<real>0</real>
+								<integer>0</integer>
 								<key>lineHeightMulitple</key>
 								<real>0</real>
 								<key>lineBreakMode</key>
@@ -530,15 +512,15 @@ Video with file
 								<key>hyphenationFactor</key>
 								<real>0</real>
 								<key>alignment</key>
-								<string>natural</string>
+								<string>left</string>
+								<key>paragraphSpacingBefore</key>
+								<integer>0</integer>
 								<key>minimumLineHeight</key>
 								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<integer>0</integer>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -587,14 +569,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -634,14 +616,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -690,14 +672,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -737,14 +719,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -793,14 +775,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -840,14 +822,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -869,6 +851,17 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSUnderlineColor</key>
+							<dict>
+								<key>alpha</key>
+								<real>1</real>
+								<key>green</key>
+								<real>0</real>
+								<key>blue</key>
+								<real>1</real>
+								<key>red</key>
+								<real>0</real>
+							</dict>
 							<key>NSLink</key>
 							<string>http://the-soulmen.com/</string>
 							<key>RKParagraphStyleName</key>
@@ -893,7 +886,7 @@ Video with file
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
-								<real>12</real>
+								<integer>12</integer>
 								<key>tabStops</key>
 								<array/>
 								<key>headIndent</key>
@@ -906,14 +899,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -953,14 +946,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1002,14 +995,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1054,14 +1047,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1099,13 +1092,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -1146,14 +1139,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1200,14 +1193,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1254,14 +1247,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1308,14 +1301,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1362,14 +1355,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1416,14 +1409,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1470,14 +1463,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1524,14 +1517,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1578,14 +1571,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1623,13 +1616,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -1670,14 +1663,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1724,14 +1717,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1778,14 +1771,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1832,14 +1825,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1886,14 +1879,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1940,14 +1933,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -1994,14 +1987,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2048,14 +2041,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2102,14 +2095,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2147,13 +2140,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -2201,14 +2194,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
-								<real>0</real>
-								<key>lineSpacing</key>
-								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>30</real>
 								<key>paragraphSpacingBefore</key>
 								<real>0</real>
+								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<real>30</real>
+								<key>lineSpacing</key>
+								<real>1.299999952316284</real>
 								<key>tailIndent</key>
 								<real>-30</real>
 								<key>maximumLineHeight</key>
@@ -2246,13 +2239,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -2300,14 +2293,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
-								<real>0</real>
-								<key>lineSpacing</key>
-								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>30</real>
 								<key>paragraphSpacingBefore</key>
 								<real>0</real>
+								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<real>30</real>
+								<key>lineSpacing</key>
+								<real>1.299999952316284</real>
 								<key>tailIndent</key>
 								<real>-30</real>
 								<key>maximumLineHeight</key>
@@ -2345,13 +2338,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -2399,14 +2392,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
-								<real>0</real>
-								<key>lineSpacing</key>
-								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>30</real>
 								<key>paragraphSpacingBefore</key>
 								<real>0</real>
+								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<real>30</real>
+								<key>lineSpacing</key>
+								<real>1.299999952316284</real>
 								<key>tailIndent</key>
 								<real>-30</real>
 								<key>maximumLineHeight</key>
@@ -2444,13 +2437,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -2505,14 +2498,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
-								<real>0</real>
-								<key>lineSpacing</key>
-								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>30</real>
 								<key>paragraphSpacingBefore</key>
 								<real>0</real>
+								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<real>30</real>
+								<key>lineSpacing</key>
+								<real>1.299999952316284</real>
 								<key>tailIndent</key>
 								<real>-30</real>
 								<key>maximumLineHeight</key>
@@ -2566,14 +2559,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
-								<real>0</real>
-								<key>lineSpacing</key>
-								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>30</real>
 								<key>paragraphSpacingBefore</key>
 								<real>0</real>
+								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<real>30</real>
+								<key>lineSpacing</key>
+								<real>1.299999952316284</real>
 								<key>tailIndent</key>
 								<real>-30</real>
 								<key>maximumLineHeight</key>
@@ -2611,13 +2604,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -2665,14 +2658,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
-								<real>0</real>
-								<key>lineSpacing</key>
-								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>28</real>
 								<key>paragraphSpacingBefore</key>
 								<real>0</real>
+								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<real>28</real>
+								<key>lineSpacing</key>
+								<real>1.299999952316284</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2710,13 +2703,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -2757,14 +2750,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2811,14 +2804,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2858,14 +2851,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2907,14 +2900,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -2961,14 +2954,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3008,14 +3001,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3057,14 +3050,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3111,14 +3104,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3158,14 +3151,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3207,14 +3200,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3261,14 +3254,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3308,14 +3301,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3357,14 +3350,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3411,14 +3404,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3458,14 +3451,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3510,14 +3503,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3564,14 +3557,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3611,14 +3604,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3663,14 +3656,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3717,14 +3710,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3764,14 +3757,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3816,14 +3809,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3863,14 +3856,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3917,14 +3910,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -3971,14 +3964,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -4025,14 +4018,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -4079,14 +4072,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -4133,14 +4126,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -4178,13 +4171,13 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
-								<key>minimumLineHeight</key>
+								<key>paragraphSpacingBefore</key>
 								<real>0</real>
-								<key>lineSpacing</key>
+								<key>minimumLineHeight</key>
 								<real>0</real>
 								<key>firstLineHeadIndent</key>
 								<real>0</real>
-								<key>paragraphSpacingBefore</key>
+								<key>lineSpacing</key>
 								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
@@ -4225,14 +4218,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -4299,14 +4292,14 @@ Video with file
 												<real>0</real>
 												<key>alignment</key>
 												<string>natural</string>
+												<key>paragraphSpacingBefore</key>
+												<real>0</real>
 												<key>minimumLineHeight</key>
+												<real>0</real>
+												<key>firstLineHeadIndent</key>
 												<real>0</real>
 												<key>lineSpacing</key>
 												<real>1.299999952316284</real>
-												<key>firstLineHeadIndent</key>
-												<real>0</real>
-												<key>paragraphSpacingBefore</key>
-												<real>0</real>
 												<key>tailIndent</key>
 												<real>0</real>
 												<key>maximumLineHeight</key>
@@ -4336,14 +4329,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -4383,14 +4376,14 @@ Video with file
 								<real>0</real>
 								<key>alignment</key>
 								<string>natural</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
 								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
 								<real>0</real>
 								<key>lineSpacing</key>
 								<real>1.299999952316284</real>
-								<key>firstLineHeadIndent</key>
-								<real>0</real>
-								<key>paragraphSpacingBefore</key>
-								<real>0</real>
 								<key>tailIndent</key>
 								<real>0</real>
 								<key>maximumLineHeight</key>
@@ -4956,18 +4949,82 @@ Video with file
 					</array>
 				</dict>
 			</dict>
+			<key>footerAll</key>
+			<dict>
+				<key>string</key>
+				<string>-   -</string>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>length</key>
+							<integer>5</integer>
+							<key>location</key>
+							<integer>0</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>NSParagraphStyle</key>
+							<dict>
+								<key>alignment</key>
+								<string>center</string>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>length</key>
+							<integer>1</integer>
+							<key>location</key>
+							<integer>2</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>pageNumber</string>
+						</dict>
+					</dict>
+				</array>
+			</dict>
 			<key>numberOfColumns</key>
 			<integer>2</integer>
-			<key>indexOfFirstPage</key>
-			<integer>9223372036854775807</integer>
 			<key>pageNumberingStyle</key>
 			<string>decimal</string>
+			<key>indexOfFirstPage</key>
+			<integer>9223372036854775807</integer>
+			<key>headerAll</key>
+			<dict>
+				<key>string</key>
+				<string>This document shows all important features!</string>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>length</key>
+							<integer>43</integer>
+							<key>location</key>
+							<integer>0</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>NSParagraphStyle</key>
+							<dict>
+								<key>alignment</key>
+								<string>center</string>
+							</dict>
+						</dict>
+					</dict>
+				</array>
+			</dict>
 		</dict>
 	</array>
-	<key>endnotePlacement</key>
-	<string>documentEnd</string>
 	<key>endnoteEnumerationStyle</key>
 	<string>decimal</string>
+	<key>endnotePlacement</key>
+	<string>documentEnd</string>
 	<key>pageInsetsTop</key>
 	<real>90</real>
 	<key>headerSpacing</key>
@@ -4989,7 +5046,7 @@ Video with file
 	<key>sectionNumberingStyle</key>
 	<string>decimal</string>
 	<key>hyphenationEnabled</key>
-	<false/>
+	<true/>
 	<key>pageInsetsLeft</key>
 	<real>72</real>
 </dict>

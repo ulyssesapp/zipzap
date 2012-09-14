@@ -25,22 +25,43 @@
 {
 	if (!locale.supportsHyphenation)
 		return NO;
+
+	// We default to the document locale
+	__block NSString *currentLanguage = [locale objectForKey: NSLocaleLanguageCode];
+	__block NSLocale *currentLocale = locale;
 	
-	// Enumerate words inside string
-	[self enumerateSubstringsInRange:range options:NSStringEnumerationByWords usingBlock:^(NSString *word, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		CFStringRef cfWord = (__bridge CFStringRef)word;
-		CFIndex beforeLocation = word.length;
+	// Enumerate sentences to detect locale
+	[self enumerateSubstringsInRange:range options:NSStringEnumerationBySentences usingBlock:^(NSString *sentence, NSRange sentenceRange, NSRange enclosingRange, BOOL *stop) {
+		// Detect the language of the current sentence
+		NSString *sentenceLanguage = (__bridge_transfer NSString*)CFStringTokenizerCopyBestStringLanguage((__bridge CFStringRef)sentence, CFRangeMake(0, sentence.length > 100 ? 100 : sentence.length));
 		
-		while (beforeLocation > 0) {
-			UTF32Char suggestedSeparator;
-			
-			beforeLocation = CFStringGetHyphenationLocationBeforeIndex(cfWord, beforeLocation, CFRangeMake(0, word.length), 0, (__bridge CFLocaleRef)locale, &suggestedSeparator);
-			
-			if (beforeLocation == kCFNotFound)
-				break;
-			
-			block(substringRange.location + beforeLocation, [NSString stringWithFormat:@"%C", (unichar)suggestedSeparator]);
+		// Switch the locale, if required
+		if (sentenceLanguage && ![sentenceLanguage isEqual: currentLanguage]) {
+			NSString *localeIdentifier = [NSLocale localeIdentifierFromComponents:@{NSLocaleLanguageCode: sentenceLanguage}];
+			if (localeIdentifier) {
+				currentLocale = [[NSLocale alloc] initWithLocaleIdentifier: localeIdentifier];
+				currentLanguage = sentenceLanguage;
+			}
 		}
+		
+		// Hyphenate words in sentence
+		[self enumerateSubstringsInRange:sentenceRange options:NSStringEnumerationByWords usingBlock:^(NSString *word, NSRange wordRange, NSRange enclosingRange, BOOL *stop) {
+			CFStringRef cfWord = (__bridge CFStringRef)word;
+			CFIndex beforeLocation = word.length;
+			
+			while (beforeLocation > 0) {
+				UTF32Char suggestedSeparator;
+				
+				beforeLocation = CFStringGetHyphenationLocationBeforeIndex(cfWord, beforeLocation, CFRangeMake(0, word.length), 0, (__bridge CFLocaleRef)currentLocale, &suggestedSeparator);
+				
+				if (beforeLocation == kCFNotFound)
+					break;
+				
+				block(wordRange.location + beforeLocation, [NSString stringWithFormat:@"%C", (unichar)suggestedSeparator]);
+			}
+		}];
+		
+		
 	}];
 	
 	return YES;

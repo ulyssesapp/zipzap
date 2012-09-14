@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKPDFRenderingContext;
+@class RKPDFRenderingContext, RKPDFLine;
 
 /*!
  @abstract Methods used for text attributes requiring special rendering
@@ -22,6 +22,6 @@
 /*!
  @abstract (Abstract) Re-Renders the given attribute to the given context using the given text run
  */
-+ (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect;
++ (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run line:(RKPDFLine *)line boundingBox:(CGRect)runRect;
 
 @end

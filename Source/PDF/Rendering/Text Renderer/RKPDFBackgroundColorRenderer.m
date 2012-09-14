@@ -19,7 +19,7 @@ NSString *RKPDFBackgroundColorAttributeName = @"RKPDFBackgroundColor";
     return -NSIntegerMax;
 }
 
-+ (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect
++ (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run line:(RKPDFLine *)line boundingBox:(CGRect)runRect
 {
     CGColorRef color = (__bridge CGColorRef)[attributedString attribute:RKPDFBackgroundColorAttributeName atIndex:range.location effectiveRange:NULL];
     CGContextRef pdfContext = context.pdfContext;

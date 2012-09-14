@@ -112,55 +112,6 @@
 }
 
 
-#pragma mark - State managment
-
-- (void)saveState
-{
-	NSDictionary *savedState = [NSDictionary dictionaryWithObjectsAndKeys:
-								[_sections mutableCopy], @"sections",
-								[NSNumber numberWithUnsignedInteger: _currentSectionNumber], @"currentSectionNumber",
-								[NSNumber numberWithUnsignedInteger: _currentPageNumber], @"currentPageNumber",
-								[NSNumber numberWithUnsignedInteger: _currentColumnNumber], @"currentColumnNumber",
-								[NSNumber numberWithUnsignedInteger: _pageNumberOfCurrentSection], @"pageNumberOfCurrentSection",								
-								[_documentNotes mutableCopy], @"documentNotes",
-								[_sectionNotes mutableCopy], @"sectionNotes",
-								[_pageNotes mutableCopy], @"pageNotes",
-								[NSNumber numberWithUnsignedInteger: _footnoteCounter], @"footnoteCounter",
-								[NSNumber numberWithUnsignedInteger: _endnoteCounter], @"endnoteCounter",
-								[NSNumber numberWithUnsignedInteger: _footnoteAnchorCounter], @"footnoteAnchorCounter",
-								[_listCounter copy], @"listCounter",
-							   nil];
-	
-	[_savedStates addObject: savedState];
-}
-- (void)restoreState
-{
-	NSAssert(_savedStates.count, @"No saved rendering context available.");
-	
-	NSDictionary *lastState = _savedStates.lastObject;
-	[_savedStates removeLastObject];
-	
-	_sections = [lastState objectForKey: @"sections"];
-	_currentSectionNumber = [[lastState objectForKey: @"currentSectionNumber"] unsignedIntegerValue];
-	_currentPageNumber = [[lastState objectForKey: @"currentPageNumber"] unsignedIntegerValue];
-	_currentColumnNumber = [[lastState objectForKey: @"currentColumnNumber"] unsignedIntegerValue];
-	_pageNumberOfCurrentSection = [[lastState objectForKey: @"pageNumberOfCurrentSection"] unsignedIntegerValue];
-	_documentNotes = [lastState objectForKey: @"documentNotes"];
-	_sectionNotes = [lastState objectForKey: @"sectionNotes"];
-	_pageNotes = [lastState objectForKey: @"pageNotes"];
-	_footnoteCounter = [[lastState objectForKey: @"footnoteCounter"] unsignedIntegerValue];
-	_endnoteCounter = [[lastState objectForKey: @"endnoteCounter"] unsignedIntegerValue];
-	_footnoteAnchorCounter = [[lastState objectForKey: @"footnoteAnchorCounter"] unsignedIntegerValue];
-	_listCounter = [lastState objectForKey: @"listCounter"];
-}
-
-- (void)commitToLastState
-{
-	NSAssert(_savedStates.count, @"No saved rendering context available.");	
-	
-	[_savedStates removeLastObject];
-}
-
 
 #pragma mark - Section managment
 
@@ -270,7 +221,6 @@
 
 
 #pragma mark - Footnote managment
-
 
 - (NSString *)enumeratorForNote:(RKPDFFootnote *)note
 {

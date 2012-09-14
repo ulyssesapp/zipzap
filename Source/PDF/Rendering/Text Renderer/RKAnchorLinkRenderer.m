@@ -19,7 +19,7 @@
     return 100;
 }
 
-+ (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run boundingBox:(CGRect)runRect
++ (void)renderUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString range:(NSRange)range run:(CTRunRef)run line:(RKPDFLine *)line boundingBox:(CGRect)runRect
 {
     NSString *anchor = [attributedString attribute:RKPDFAnchorLinkAttributeName atIndex:range.location effectiveRange:NULL];
 

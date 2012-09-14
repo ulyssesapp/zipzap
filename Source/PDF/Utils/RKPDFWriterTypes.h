@@ -9,10 +9,10 @@
 /*!
  @abstract Rendering options for PDF output
  @const
- RKPDFWriterShowBoundingBoxes        Adds bounding boxes around the actually rendered text frames (intended for debugging layout settings)
- RKPDFWriterShowTextFrames           Adds text frames around text frames (intended for debugging layout settings)
+ RKPDFWriterShowVisibleFrameBounds			Adds bounding boxes around the actually rendered text frames (intended for debugging layout settings)
+ RKPDFWriterShowMaximumFrameBounds           Adds text frames around text frames (intended for debugging layout settings)
  */
 typedef enum : NSUInteger {
-    RKPDFWriterShowBoundingBoxes     = (1 << 0),
-    RKPDFWriterShowTextFrames        = (1 << 1),
+    RKPDFWriterShowVisibleFrameBounds		= (1 << 0),
+    RKPDFWriterShowMaximumFrameBounds       = (1 << 1),
 }RKPDFWriterRenderingOptions;

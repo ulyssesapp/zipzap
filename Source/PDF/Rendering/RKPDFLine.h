@@ -2,49 +2,69 @@
 //  RKPDFLine.h
 //  RTFKit
 //
-//  Created by Friedrich Gräter on 27.07.12.
+//  Created by Friedrich Gräter on 12.09.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-/*!
- @abstract A renderable line
- */
+@class RKPDFRenderingContext, RKParagraphStyleWrapper;
+
 @interface RKPDFLine : NSObject
 
 /*!
- @abstract Initializes a new line with its bounding box (without descent)
+ @abstract Creates a PDF line from the given attributed string using the given range and width.
+ @discussion Creates a justified line depending on the paragraph style and respects the line spacing of the line. The method instantiates all text objects in the attributed string using the given context.
  */
-- (id)initWithBoundingBox:(CGRect)boundingBox ascent:(CGFloat)ascent descent:(CGFloat)descent leading:(CGFloat)leading range:(NSRange)range;
+- (id)initWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight context:(RKPDFRenderingContext *)context;
 
 /*!
- @abstract The bounding box around the line without descent (absolute coordinates)
+ @abstract The range of the line in the source string
  */
-@property (nonatomic, readonly) CGRect boundingBox;
+@property (nonatomic, readonly) NSRange visibleRange;
 
 /*!
- @abstract The line recht with descent (absolute coordinates)
+ @abstract The size of the line
  */
-@property (nonatomic, readonly) CGRect boundingBoxWithoutDescent;
+@property (nonatomic, readonly) CGSize size;
 
 /*!
- @abstract The ascent height of the line
+ @abstract The ascent of a line
  */
 @property (nonatomic, readonly) CGFloat ascent;
 
 /*!
- @abstract The descent height of the line
+ @abstract The descent of a line
  */
 @property (nonatomic, readonly) CGFloat descent;
 
 /*!
- @abstract The leading whitespace of the line
+ @abstract The leading of a line
  */
 @property (nonatomic, readonly) CGFloat leading;
 
 /*!
- @abstract The range of the source string that belongs to the line
+ @abstract The attributed string of the line
+ @discussion Might contain the hyphen used to wrap the line
  */
-@property (nonatomic, readonly) NSRange range;
+@property (nonatomic, readonly) NSAttributedString *content;
 
+/*!
+ @abstract The context used to render the line
+ */
+@property (nonatomic, readonly) RKPDFRenderingContext *context;
+
+/*!
+ @abstract The paragraph style of the line
+ */
+@property (nonatomic, readonly) RKParagraphStyleWrapper *paragraphStyle;
+
+/*!
+ @abstract The RTFKit-specific paragraph style of the line
+ */
+@property (nonatomic, readonly) RKAdditionalParagraphStyle *additionalParagraphStyle;
+
+/*!
+ @abstract Renders a frane to uts graphics context within the given rect.
+ */
+- (void)renderUsingOrigin:(CGPoint)rect;
 
 @end

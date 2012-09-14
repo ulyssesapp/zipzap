@@ -32,6 +32,10 @@
     self = [self init];
     
     if (self) {
+		// No paragraph style? Create default.
+		if (!paragraphStyle)
+			return [RKParagraphStyleWrapper newDefaultParagraphStyle];
+		
         CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &textAlignment);
         CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(CGFloat), &firstLineHeadIndent);
         CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierHeadIndent, sizeof(CGFloat), &headIndent);
@@ -68,6 +72,9 @@
     self = [self init];
     
     if (self) {
+		if (!paragraphStyle)
+			return [RKParagraphStyleWrapper newDefaultParagraphStyle];
+		
         textAlignment = paragraphStyle.alignment;
         firstLineHeadIndent = paragraphStyle.firstLineHeadIndent;
         headIndent = paragraphStyle.headIndent;

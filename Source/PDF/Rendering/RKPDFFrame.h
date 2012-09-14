@@ -2,54 +2,92 @@
 //  RKPDFFrame.h
 //  RTFKit
 //
-//  Created by Friedrich Gräter on 11.07.12.
+//  Created by Friedrich Gräter on 12.09.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
 #import "RKPDFWriterTypes.h"
 
-@class RKPDFRenderingContext;
+@class RKPDFRenderingContext, RKPDFLine;
 
 /*!
- @abstract A frame layout
+ @abstract Specifies the growing direction of a frame
+ @const
+	RKPDFFrameGrowingDownwards			The frame grows from top to bottom
+	RKPDFFrameGrowingUpwards			The frame grows from bottom to top
  */
+typedef enum : NSUInteger {
+	RKPDFFrameGrowingDownwards		= 0,
+	RKPDFFrameGrowingUpwards		= 1
+}RKPDFFrameGrowingDirection;
+
 @interface RKPDFFrame : NSObject
 
 /*!
- @abstract Renders the given frame
- @discussion See renderLines: usingOrigin: options:
+ @abstract Initializes a frame with a bounding box, a growing direction and a context
  */
-- (void)renderUsingOrigin:(CGPoint)origin options:(RKPDFWriterRenderingOptions)options;
+- (id)initWithRect:(CGRect)boundingBox growingDirection:(RKPDFFrameGrowingDirection)growingDirection context:(RKPDFRenderingContext *)context;
 
 /*!
- @abstract Renders the given frame upto the given line.
- @discussion Applies custom rendering methods for layout runs of RKTextRendererAttributeName. 
+ @abstract Appends all lines of the given attributed string (in core text representation)
+ @discussion After layouting a line, the given block is called with the string range of the line. If a widowWidth (the width of the first line in a succeeding frame) is given, the block gets informed if the next line of a paragraph will result to a widow if the column would terminate after the current line. The block is allowed to remove lines during its execution. All text objects in the attributed string will be instantiated by the method.
  */
-- (void)renderLines:(NSUInteger)lineCount usingOrigin:(CGPoint)origin options:(RKPDFWriterRenderingOptions)options;
+- (void)appendAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidowWidth:(CGFloat)widowWidth block:(void(^)(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop))block;
 
 /*!
- @abstract The bounding box surrounding the visible part of the frame
+ @abstract Removes one or multiple lines from the end of the frame
  */
-@property (nonatomic, readonly) CGRect visibleBoundingBox;
+- (void)removeLinesFromEnd:(NSUInteger)lineCount;
 
 /*!
- @abstract The bounding box required to render the entire frame
+ @abstract Passes a line object with a certain index
+ */
+- (RKPDFLine *)lineAtIndex:(NSUInteger)lineIndex;
+
+/*!
+ @abstract Passes the last line of the frame
+ */
+- (RKPDFLine *)lastLine;
+
+/*!
+ @abstract Tests, whether the frame can be extended by a line with the given height without hurting its maxium height constraint
+ */
+- (BOOL)canAppendLineWithHeight:(CGFloat)expectedLineHeight;
+
+/*!
+ @abstract The rect of the frame
  */
 @property (nonatomic, readonly) CGRect boundingBox;
 
 /*!
- @abstract The text range inside the source string used to render the frame
+ @abstract The visible rect of the frame
  */
-@property (nonatomic, readonly) NSRange visibleStringRange;
+@property (nonatomic, readonly) CGRect visibleBoundingBox;
 
 /*!
- @abstract The lines of the frame (array of RKPDFLine)
+ @abstract The length of the visible string
+ */
+@property (nonatomic, readonly) NSUInteger visibleStringLength;
+
+/*!
+ @abstract The lines of the frame (array of RKPDFLine*)
  */
 @property (nonatomic, readonly) NSArray *lines;
 
 /*!
- @abstract The context used for rendering the frame
+ @abstract Specifies the maximum height the frame might reach (initialized to the bounding box of the frame)
+ @discussion Might be set after initialization. However this property will be only considered when adding further lines to the frame.
  */
-@property (nonatomic, readonly) RKPDFRenderingContext *context;
+@property (nonatomic, readwrite) CGFloat maximumHeight;
+
+/*!
+ @abstract The growing direction of the frame
+ */
+@property (nonatomic, readonly) RKPDFFrameGrowingDirection growingDirection;
+
+/*!
+ @abstract Renders a frane to its graphics context within the given rect.
+ */
+- (void)renderUsingOptions:(RKPDFWriterRenderingOptions)options;
 
 @end
