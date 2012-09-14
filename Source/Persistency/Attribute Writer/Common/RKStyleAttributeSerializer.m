@@ -43,10 +43,10 @@ NSMutableArray *RKStyleAttributeSerializerNumericStyles;
                                                      [NSNumber numberWithUnsignedInteger: RKUnderlineByWordMask],           @"underlineByWord",
                                                     nil];
 
-        [self registerAttributeWithName:RKUnderlineStyleAttributeName usingEnumeration:underlineStyles];
+        [self registerAttributeWithName:RKUnderlineStyleAttributeName usingFlags:underlineStyles];
 		[NSAttributedString registerAttributeSerializer:self forAttribute:RKUnderlineStyleAttributeName];
 
-        [self registerAttributeWithName:RKStrikethroughStyleAttributeName usingEnumeration:underlineStyles];		
+        [self registerAttributeWithName:RKStrikethroughStyleAttributeName usingFlags:underlineStyles];		
         [NSAttributedString registerAttributeSerializer:self forAttribute:RKStrikethroughStyleAttributeName];
 		
 		// Serialization of superscript styles        
