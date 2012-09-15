@@ -122,7 +122,7 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
     
     if ([propertyList objectForKey: RKParagraphStyleParagraphSpacingBeforePersistenceKey])
         paragraphStyle.paragraphSpacingBefore = [[propertyList objectForKey: RKParagraphStyleParagraphSpacingBeforePersistenceKey] floatValue];
-    
+
     if ([propertyList objectForKey: RKParagraphStyleLineBreakModePersistenceKey])
         paragraphStyle.lineBreakMode = [RKParagraphStyleLineBreakModeEnumDescription unsignedEnumValueFromString: [propertyList objectForKey: RKParagraphStyleLineBreakModePersistenceKey] error:error];
     

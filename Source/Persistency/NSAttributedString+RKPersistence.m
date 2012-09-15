@@ -50,16 +50,19 @@ NSMutableDictionary *NSAttributedStringSerializers;
 + (void)registerAttributeWithName:(NSString *)attributeName usingFlags:(NSDictionary *)flagStyles
 {
 	[RKStyleAttributeSerializer registerAttributeWithName:attributeName usingFlags:flagStyles];
+	[self registerAttributeSerializer:RKStyleAttributeSerializer.class forAttribute:attributeName];
 }
 
 + (void)registerAttributeWithName:(NSString *)attributeName usingEnumeration:(NSDictionary *)enumerationStyles
 {
 	[RKStyleAttributeSerializer registerAttributeWithName:attributeName usingEnumeration:enumerationStyles];
+	[self registerAttributeSerializer:RKStyleAttributeSerializer.class forAttribute:attributeName];
 }
 
 + (void)registerNumericAttributeWithName:(NSString *)attributeName
 {
 	[RKStyleAttributeSerializer registerNumericAttributeWithName:attributeName];
+	[self registerAttributeSerializer:RKStyleAttributeSerializer.class forAttribute:attributeName];
 }
 
 
