@@ -29,7 +29,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 + (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString
 {
     NSMutableAttributedString *noteString = [note.footnoteContent mutableCopy];
-    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:(__bridge CTFontRef)[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL]];
+    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:(__bridge CTFontRef)[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL] enumeratorFactor: 1.25];
 
     id paragraphStyle = [noteString attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
     
@@ -67,7 +67,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     return noteList;
 }
 
-+ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(CTFontRef)font
++ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(CTFontRef)font enumeratorFactor:(CGFloat)enumeratorFactor
 {
     NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString:enumeratorString];
     
@@ -75,11 +75,11 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     if (!font)
         font = RKGetDefaultFont();
     
-    CGFloat pointSize = CTFontGetSize(font) / 1.75;
+    CGFloat pointSize = CTFontGetSize(font) / enumeratorFactor;
     CTFontRef subscriptFont = CTFontCreateCopyWithAttributes(font, pointSize, NULL, NULL);
     
     [enumerator addAttribute:NSFontAttributeName value:(__bridge id)subscriptFont range:NSMakeRange(0, enumerator.length)];
-    [enumerator addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: CTFontGetSize(font) / 2.75] range:NSMakeRange(0, enumerator.length)];
+    [enumerator addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: CTFontGetSize(font) / (enumeratorFactor + 1.0f)] range:NSMakeRange(0, enumerator.length)];
     
     CFRelease(subscriptFont);    
     return enumerator;
