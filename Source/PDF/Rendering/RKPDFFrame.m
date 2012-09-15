@@ -227,6 +227,7 @@
 		CGFloat spacingAfter = paragraphStyle.paragraphSpacing;
 		
 		yOffset += spacingAfter;
+		lineRect.origin.y -= spacingAfter;
 		lineRect.size.height += spacingAfter;
 	}
 	
