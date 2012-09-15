@@ -226,6 +226,7 @@
 	if (isLastInParagraph) {
 		CGFloat spacingAfter = paragraphStyle.paragraphSpacing;
 		
+		yOffset += spacingAfter;
 		lineRect.size.height += spacingAfter;
 	}
 	
