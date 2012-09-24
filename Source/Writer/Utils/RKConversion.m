@@ -123,14 +123,14 @@
     return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1];
 }
 
-- (CGColorRef)newCGColorWithGenericRGBColorSpace
+- (CGColorRef)CGColorUsingGenericRGBColorSpace
 {
     NSColor *rgbColor = [self colorUsingColorSpaceName: NSCalibratedRGBColorSpace];
 
     return CGColorCreateGenericRGB(rgbColor.redComponent, rgbColor.greenComponent, rgbColor.blueComponent, 1.0);    
 }
 
-- (CGColorRef)newCGColorWithGenericRGBAColorSpace
+- (CGColorRef)CGColorUsingGenericRGBAColorSpace
 {
     NSColor *rgbColor = [self colorUsingColorSpaceName: NSCalibratedRGBColorSpace];
     

@@ -54,7 +54,7 @@
                 
         #if !TARGET_OS_IPHONE
         // Set color attribute
-        CGColorRef convertedColor = [color newCGColorWithGenericRGBColorSpace];
+        CGColorRef convertedColor = [color CGColorUsingGenericRGBColorSpace];
         [attributedString addAttribute:newAttributeName value:(__bridge id)convertedColor range:range];
         
         CFRelease(convertedColor);
