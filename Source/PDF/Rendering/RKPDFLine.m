@@ -25,20 +25,20 @@
 
 @implementation RKPDFLine
 
-- (id)initWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight context:(RKPDFRenderingContext *)context
+- (id)initWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight justificationAllowed:(BOOL)justificationAllowed context:(RKPDFRenderingContext *)context
 {
 	self = [super init];
 	
 	if (self) {
 		_context = context;
 		
-		[self setupWithAttributedString:attributedString inRange:range usingWidth:width maximumHeight:maximumHeight];
+		[self setupWithAttributedString:attributedString inRange:range usingWidth:width maximumHeight:maximumHeight justificationAllowed:justificationAllowed];
 	}
 	
 	return self;
 }
 
-- (void)setupWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight
+- (void)setupWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight justificationAllowed:(BOOL)justificationAllowed
 {
 	NSMutableAttributedString *lineContent = [[attributedString attributedSubstringFromRange: range] mutableCopy];
 	__block NSInteger instantiationExtension = 0;
@@ -114,7 +114,7 @@
 	_additionalParagraphStyle = [lineContent attribute:RKAdditionalParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
 	
 	// Create a justified alignment if requested
-	if ((_paragraphStyle.textAlignment == kCTJustifiedTextAlignment) && (CTLineGetImageBounds(ctLine, _context.pdfContext).size.width > (width * 0.75))) {
+	if ((_paragraphStyle.textAlignment == kCTJustifiedTextAlignment) && (justificationAllowed)) {
 		CTLineRef justifiedLine = CTLineCreateJustifiedLine(ctLine, 1.0, width);
 		if (justifiedLine) {
 			CFRelease(ctLine);
