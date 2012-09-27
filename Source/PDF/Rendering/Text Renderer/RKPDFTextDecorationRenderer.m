@@ -85,15 +85,12 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
 			CGPoint glyphPosition = glyphPositions[glyphCount];
 			CGSize glyphAdvance = glyphAdvances[glyphCount];
 			CGRect glyphBound = glyphBounds[glyphCount];
-
-			// Do not draw over a descending glyph, it is forbidden (like for underline)
-			BOOL interruptPath = (keepDescents && (glyphBound.origin.y < (yOffset - strokeWidth)));
-			
+		
 			// If word-wise stroking is requested, ignore empty glyphs
 			BOOL closePath = ((style & RKUnderlineByWordMask) && (glyphBound.size.width == 0));
 
 			// Do we need to close the current path?
-			if (interruptPath || closePath) {
+			if (closePath) {
 				if (!CGContextIsPathEmpty(pdfContext)) {
 					CGContextClosePath(pdfContext);
 					CGContextStrokePath(pdfContext);
