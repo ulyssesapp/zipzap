@@ -11,7 +11,10 @@
 CTFontRef RKGetDefaultFont(void)
 {
     static CTFontRef defaultFont;
-    defaultFont = (defaultFont) ?: CTFontCreateWithName(CFSTR("Helvetica"), 12, NULL);
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		defaultFont = CTFontCreateWithName(CFSTR("Helvetica"), 12, NULL);
+	});
     
     return defaultFont;
 }

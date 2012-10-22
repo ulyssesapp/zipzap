@@ -224,26 +224,32 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
 + (NSDictionary *)serializationTableForFootnotePlacement
 {
     static NSDictionary * serializationTable;
-    serializationTable = serializationTable ?:
-        [NSDictionary dictionaryWithObjectsAndKeys:
-                    [NSNumber numberWithUnsignedInteger: RKFootnotePlacementSamePage],        @"samePage",
-                    [NSNumber numberWithUnsignedInteger: RKFootnotePlacementSectionEnd],      @"sectionEnd",
-                    [NSNumber numberWithUnsignedInteger: RKFootnotePlacementDocumentEnd],     @"documentEnd",
-                    nil
-        ];
-    
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable = 
+			[NSDictionary dictionaryWithObjectsAndKeys:
+						[NSNumber numberWithUnsignedInteger: RKFootnotePlacementSamePage],        @"samePage",
+						[NSNumber numberWithUnsignedInteger: RKFootnotePlacementSectionEnd],      @"sectionEnd",
+						[NSNumber numberWithUnsignedInteger: RKFootnotePlacementDocumentEnd],     @"documentEnd",
+						nil
+			];
+	});
+
     return serializationTable;
 }
 
 + (NSDictionary *)serializationTableForEndnotePlacement
 {
     static NSDictionary * serializationTable;
-    serializationTable = serializationTable ?:
-        [NSDictionary dictionaryWithObjectsAndKeys:
-                    [NSNumber numberWithUnsignedInteger: RKEndnotePlacementDocumentEnd],     @"documentEnd",
-                    [NSNumber numberWithUnsignedInteger: RKEndnotePlacementSectionEnd],      @"sectionEnd",
-                    nil
-         ];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable = 
+			[NSDictionary dictionaryWithObjectsAndKeys:
+						[NSNumber numberWithUnsignedInteger: RKEndnotePlacementDocumentEnd],     @"documentEnd",
+						[NSNumber numberWithUnsignedInteger: RKEndnotePlacementSectionEnd],      @"sectionEnd",
+						nil
+			 ];
+	});
     
     return serializationTable;
 }
@@ -251,12 +257,15 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
 + (NSDictionary *)serializationTableForPageOrientation
 {
     static NSDictionary * serializationTable;
-    serializationTable = serializationTable ?:
-    [NSDictionary dictionaryWithObjectsAndKeys:
-         [NSNumber numberWithUnsignedInteger: RKPageOrientationPortrait],     @"portrait",
-         [NSNumber numberWithUnsignedInteger: RKPageOrientationLandscape],    @"landscape",
-         nil
-     ];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable =
+		[NSDictionary dictionaryWithObjectsAndKeys:
+			 [NSNumber numberWithUnsignedInteger: RKPageOrientationPortrait],     @"portrait",
+			 [NSNumber numberWithUnsignedInteger: RKPageOrientationLandscape],    @"landscape",
+			 nil
+		 ];
+	});
     
     return serializationTable;
 }
@@ -264,30 +273,36 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
 + (NSDictionary *)serializationTableForFootnoteEnumerationStyle
 {
     static NSDictionary * serializationTable;
-    serializationTable = serializationTable ?:
-    [NSDictionary dictionaryWithObjectsAndKeys:
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationDecimal],                @"decimal",
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationAlphabeticLowerCase],    @"alphabeticLowerCase",
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationAlphabeticUpperCase],    @"alphabeticUpperCase",
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationRomanLowerCase],         @"romanLowerCase",
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationRomanUpperCase],         @"romanUpperCase",
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationChicagoManual],          @"chicagoManual",
-         nil
-     ];
-    
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		 serializationTable = 
+		[NSDictionary dictionaryWithObjectsAndKeys:
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationDecimal],                @"decimal",
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationAlphabeticLowerCase],    @"alphabeticLowerCase",
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationAlphabeticUpperCase],    @"alphabeticUpperCase",
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationRomanLowerCase],         @"romanLowerCase",
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationRomanUpperCase],         @"romanUpperCase",
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationChicagoManual],          @"chicagoManual",
+			 nil
+		 ];
+	});
+
     return serializationTable;
 }
 
 + (NSDictionary *)serializationTableForFootnoteEnumerationPolicy
 {
     static NSDictionary * serializationTable;
-    serializationTable = serializationTable ?:
-    [NSDictionary dictionaryWithObjectsAndKeys:
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationPerPage],            @"perPage",
-         [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationPerSection],         @"perSection",
-         [NSNumber numberWithUnsignedInteger: RKFootnoteContinuousEnumeration],         @"continuous",
-         nil
-     ];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable = 
+		[NSDictionary dictionaryWithObjectsAndKeys:
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationPerPage],            @"perPage",
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationPerSection],         @"perSection",
+			 [NSNumber numberWithUnsignedInteger: RKFootnoteContinuousEnumeration],         @"continuous",
+			 nil
+		 ];
+	});
     
     return serializationTable;
 }
@@ -295,15 +310,18 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
 + (NSDictionary *)serializationTableForSectionNumberingStyle
 {
     static NSDictionary * serializationTable;
-    serializationTable = serializationTable ?:
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingDecimal],              @"decimal",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanLowerCase],       @"romanLowerCase",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanUpperCase],       @"romanUpperCase",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticLowerCase],  @"alphabeticLowerCase",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticUpperCase],  @"alphabeticUpperCase",
-     nil
-     ];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable = 
+		[NSDictionary dictionaryWithObjectsAndKeys:
+		 [NSNumber numberWithUnsignedInteger: RKPageNumberingDecimal],              @"decimal",
+		 [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanLowerCase],       @"romanLowerCase",
+		 [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanUpperCase],       @"romanUpperCase",
+		 [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticLowerCase],  @"alphabeticLowerCase",
+		 [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticUpperCase],  @"alphabeticUpperCase",
+		 nil
+		 ];
+	});
     
     return serializationTable;
 }

@@ -15,7 +15,9 @@
     static NSDictionary *romanNumeralsMap = nil;
     static NSArray *romanNumeralsOrdering = nil;
     
-    romanNumeralsMap = (romanNumeralsMap) ?: 
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+        romanNumeralsMap = 
         @{@1U: @"i",
          @10U: @"x",
          @100U: @"c",
@@ -30,8 +32,8 @@
          @900U: @"xc",
          @9000U: @"cm"};
 
-    romanNumeralsOrdering = (romanNumeralsOrdering) ?:
-        [[romanNumeralsMap allKeys] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];    
+		romanNumeralsOrdering = [[romanNumeralsMap allKeys] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:nil ascending:NO]]];
+	});
     
     if (number == 0)
         return @"0";
@@ -72,7 +74,10 @@
 + (NSString *)chicagoManualOfStyleNumeralsFromUnsignedInteger:(NSUInteger)number
 {
     static NSArray *markers;
-    markers = @[@"*", @"†", @"‡", @"§"];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		markers = @[@"*", @"†", @"‡", @"§"];
+	});
     
     if (number == 0)
         return @"0";

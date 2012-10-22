@@ -38,19 +38,23 @@
     static NSDictionary *colorTags = nil;
     static NSDictionary *defaultColorTags = nil;
     
-    colorTags = (colorTags) ?: @{RKBackgroundColorAttributeName: @"\\cb",
-                                RKForegroundColorAttributeName: @"\\cf",
-                                RKUnderlineColorAttributeName: @"\\ulc",
-                                RKStrikethroughColorAttributeName: @"\\strikec",
-                                RKStrokeColorAttributeName: @"\\strokec"};
-    
-    // There are different default colors for background (= 1) and stroke styles (= 0)
-    // We may not use \\ulc0 since it will activate underlining in OpenOffice
-    defaultColorTags = (defaultColorTags) ?: @{RKBackgroundColorAttributeName: @"\\cb1 ",
-                                              RKForegroundColorAttributeName: @"\\cf0 ",
-                                              RKUnderlineColorAttributeName: @"",
-                                              RKStrikethroughColorAttributeName: @"\\strikec0 ",
-                                              RKStrokeColorAttributeName: @"\\strokec0 "};
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		colorTags = @{RKBackgroundColorAttributeName: @"\\cb",
+					  RKForegroundColorAttributeName: @"\\cf",
+					  RKUnderlineColorAttributeName: @"\\ulc",
+					  RKStrikethroughColorAttributeName: @"\\strikec",
+					  RKStrokeColorAttributeName: @"\\strokec"};
+		
+		// There are different default colors for background (= 1) and stroke styles (= 0)
+		// We may not use \\ulc0 since it will activate underlining in OpenOffice
+		defaultColorTags = @{RKBackgroundColorAttributeName: @"\\cb1 ",
+							 RKForegroundColorAttributeName: @"\\cf0 ",
+							 RKUnderlineColorAttributeName: @"",
+							 RKStrikethroughColorAttributeName: @"\\strikec0 ",
+							 RKStrokeColorAttributeName: @"\\strokec0 "};
+	});
+	
     
     if (colorIndex != NSNotFound) {
         return [NSString stringWithFormat:@"%@%lu ", colorTags[attributeName], colorIndex];        

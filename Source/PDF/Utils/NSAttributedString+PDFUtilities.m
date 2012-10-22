@@ -88,7 +88,10 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 + (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width
 {
     static NSCharacterSet *spacingCharacterSet;
-    spacingCharacterSet = spacingCharacterSet ?: [NSCharacterSet characterSetWithCharactersInString:@"\u202f"];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		spacingCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"\u202f"];
+	});
     
     CTFontRef baseFont = CTFontCreateWithName(CFSTR("Helvetica"), height, NULL);
 
