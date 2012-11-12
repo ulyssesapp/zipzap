@@ -91,7 +91,7 @@ typedef enum : NSUInteger {
 /*!
  @abstract The graphics context of the current rendering as NSGraphicsContext
  */
-@property (nonatomic, retain, readonly) __attribute__((NSObject)) NSGraphicsContext *nsPdfContext;
+@property (nonatomic, retain, readonly) NSGraphicsContext *nsPdfContext;
 
 
 #endif
