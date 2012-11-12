@@ -59,8 +59,11 @@
 - (NSString *)sanitizedFilenameForRTFD
 {
     static NSRegularExpression *unsafeFilenameCharsRegExp = nil;
-    unsafeFilenameCharsRegExp = (unsafeFilenameCharsRegExp) ?: [NSRegularExpression regularExpressionWithPattern:@"[\\{\\}\\*\\?/\\\\]" options:0 error:NULL];
-    
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		unsafeFilenameCharsRegExp = [NSRegularExpression regularExpressionWithPattern:@"[\\{\\}\\*\\?/\\\\]" options:0 error:NULL];
+	});
+        
     // Removing diacritic characters
     NSString *sanitizedFilename = [self stringByFoldingWithOptions:NSDiacriticInsensitiveSearch|NSWidthInsensitiveSearch locale:[NSLocale systemLocale]];
     

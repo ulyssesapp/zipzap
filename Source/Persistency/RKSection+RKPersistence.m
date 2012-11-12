@@ -168,15 +168,18 @@ NSString *RKPersistencePageMaskRightSuffix      = @"Right";
 + (NSDictionary *)serializationTableForPageNumberingStyle
 {
     static NSDictionary * serializationTable;
-    serializationTable = serializationTable ?:
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingDecimal],              @"decimal",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanLowerCase],       @"romanLowerCase",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanUpperCase],       @"romanUpperCase",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticLowerCase],  @"alphabeticLowerCase",
-     [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticUpperCase],  @"alphabeticUpperCase",
-     nil
-     ];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable =
+			[NSDictionary dictionaryWithObjectsAndKeys:
+			 [NSNumber numberWithUnsignedInteger: RKPageNumberingDecimal],              @"decimal",
+			 [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanLowerCase],       @"romanLowerCase",
+			 [NSNumber numberWithUnsignedInteger: RKPageNumberingRomanUpperCase],       @"romanUpperCase",
+			 [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticLowerCase],  @"alphabeticLowerCase",
+			 [NSNumber numberWithUnsignedInteger: RKPageNumberingAlphabeticUpperCase],  @"alphabeticUpperCase",
+			 nil
+			 ];
+	});
     
     return serializationTable;
 }

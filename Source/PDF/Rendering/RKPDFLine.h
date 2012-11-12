@@ -14,7 +14,7 @@
  @abstract Creates a PDF line from the given attributed string using the given range and width.
  @discussion Creates a justified line depending on the paragraph style and respects the line spacing of the line. The method instantiates all text objects in the attributed string using the given context.
  */
-- (id)initWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight context:(RKPDFRenderingContext *)context;
+- (id)initWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight justificationAllowed:(BOOL)justificationAllowed context:(RKPDFRenderingContext *)context;
 
 /*!
  @abstract The range of the line in the source string
