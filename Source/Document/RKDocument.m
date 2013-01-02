@@ -147,12 +147,15 @@
     return [RKWriter RTFDfromDocument: self];    
 }
 
-#if !TARGET_OS_IPHONE
 - (NSData *)PDF
 {
+#if !TARGET_OS_IPHONE
     return [RKPDFWriter PDFFromDocument:self options:0];
-}
+#else
+	NSAssert(NO, @"PDF not implemented on iOS.");
+	return nil;
 #endif
+}
 
 @end
 
