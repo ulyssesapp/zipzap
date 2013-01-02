@@ -23,6 +23,7 @@ extern NSString *__RKShadowAttributeName;
 extern NSString *__RKBaselineOffsetAttributeName;
 extern NSString *__RKLigatureAttributeName;
 extern NSString *__RKKernAttributeName;
+extern NSString *__RKObliquenessAttributeName;
 
 /*!
  @abstract Meta data style names
@@ -145,7 +146,7 @@ extern NSString *RKCategoryDocumentAttribute;
 /*!
  @abstract Obliqueness attribute
  */
-#define RKObliquenessAttributeName              NSObliquenessAttributeName
+#define RKObliquenessAttributeName              __RKObliquenessAttributeName
 
 /*!
  @abstract Underlining styles

@@ -17,6 +17,7 @@ NSString *__RKShadowAttributeName = @"CTShadowAttributeName__RKAttributeName";
 NSString *__RKBaselineOffsetAttributeName = @"CTBaselineOffsetAttributeName";
 NSString *__RKLigatureAttributeName = @"NSLigature";
 NSString *__RKKernAttributeName = @"NSKern";
+NSString *__RKObliquenessAttributeName = @"RKObliqueness";
 
 NSString *RKTitleDocumentAttribute = @"RKTitleDocumentAttribute";      
 NSString *RKCompanyDocumentAttribute = @"RKCompanyDocumentAttribute";    
