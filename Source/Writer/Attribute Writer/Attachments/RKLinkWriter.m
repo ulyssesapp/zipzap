@@ -29,7 +29,7 @@
 
 {
     if (value) {
-        NSString *absoluteUrl = ([value isKindOfClass: [NSString class]]) ? value : [value absoluteString];
+        NSString *absoluteUrl = ([value isKindOfClass: [NSURL class]]) ? [value absoluteString] : value;
             
         [taggedString registerTag:[NSString stringWithFormat:@"{\\field{\\*\\fldinst{HYPERLINK \"%@\"}}{\\fldrslt ", absoluteUrl]
                       forPosition:range.location];
