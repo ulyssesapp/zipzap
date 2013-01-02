@@ -49,6 +49,12 @@ typedef enum : NSUInteger {
 + (NSString *)stylesheetTagsFromAttributes:(NSDictionary *)attributes resources:(RKResourcePool *)resources;
 
 /*!
+ @abstract Adjusts all attributes of an attributed string by executing style-specific preprocessing methods
+ @discussion The generated attributed string will be finally used for RTF generation.
+ */
++ (NSAttributedString *)attributedStringByAdjustingStyles:(NSAttributedString *)attributedString;
+
+/*!
  @abstract Converts an attributed string to RTF
  */
 + (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;

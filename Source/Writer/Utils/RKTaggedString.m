@@ -71,12 +71,12 @@
         [NSException raise:NSRangeException format:@"Position %lu beyond string bounded by %lu.", position, [originalString length]];
     }
     
-    NSNumber *mapIndex = [NSNumber numberWithUnsignedInteger:position];
-    NSMutableArray *tags = [tagPositions objectForKey:mapIndex];
+    NSNumber *mapIndex = @(position);
+    NSMutableArray *tags = tagPositions[mapIndex];
     
     if (!tags) {
         tags = [NSMutableArray new];
-        [tagPositions setObject:tags forKey:mapIndex];
+        tagPositions[mapIndex] = tags;
     }
     
     return tags;
@@ -122,7 +122,7 @@
         lastSourceOffset = currentSourceOffset;
         
         // Insert tags
-        for (NSString *tag in [tagPositions objectForKey: mapIndex]) {
+        for (NSString *tag in tagPositions[mapIndex]) {
             [flattened appendString: tag];
         }
     }

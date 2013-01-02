@@ -83,24 +83,29 @@
                        inRange:(NSRange)range
                      resources:(RKResourcePool *)resources
 {
-    // Add prefix
-    [taggedString registerTag:@"{\\pict\\picscalex100\\picscaley100\\pngblip\n" forPosition:range.location];
-
     // Convert content only, if it is a regular file
     if (!fileWrapper.isRegularFile)
         return;
-    
+
+    // Encode image
     NSData *originalImage = [fileWrapper regularFileContents];
     
-    #if !TARGET_OS_IPHONE
-        NSData *convertedImage = [[NSBitmapImageRep imageRepWithData: originalImage] representationUsingType:NSPNGFileType properties:nil ];
-    #else
-        UIImage *image = [UIImage imageWithData: originalImage];
-        NSData *convertedImage = UIImagePNGRepresentation(image);
-    #endif
-
+#if !TARGET_OS_IPHONE
+    NSData *convertedImage = [[NSBitmapImageRep imageRepWithData: originalImage] representationUsingType:NSPNGFileType properties:nil ];
+#else
+    UIImage *image = [UIImage imageWithData: originalImage];
+    NSData *convertedImage = UIImagePNGRepresentation(image);
+#endif
+    
+    NSString *encodedImage = [convertedImage stringWithRTFHexEncoding];
+    if (!encodedImage)
+        return;
+    
+    // Add prefix
+    [taggedString registerTag:@"{\\pict\\picscalex100\\picscaley100\\pngblip\n" forPosition:range.location];
+    
     // Add content
-    [taggedString registerTag:[convertedImage stringWithRTFHexEncoding] forPosition:range.location];
+    [taggedString registerTag:encodedImage forPosition:range.location];
     
     // Add suffix
     [taggedString registerTag:@"\n}" forPosition:range.location];
@@ -111,7 +116,11 @@
                          inRange:(NSRange)range
                        resources:(RKResourcePool *)resources
 {
-    NSString *filename = [resources registerFileWrapper:fileWrapper];
+    // Ignore empty files or files without a file name
+    if (!fileWrapper || !fileWrapper.filename || !fileWrapper.preferredFilename)
+        return;
+    
+    NSString *filename = [resources registerFileWrapper: fileWrapper];
     
     // Register the tag
     // Note: the 0xAC byte is required by the RTFD definition

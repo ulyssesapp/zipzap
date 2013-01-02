@@ -12,14 +12,12 @@
 
 @implementation RKTextAttachment
 
-@synthesize fileWrapper;
-
 - (id)initWithFileWrapper:(NSFileWrapper *)initialFileWrapper
 {
     self = [self init];
     
     if (self) {
-        fileWrapper = initialFileWrapper;
+        _fileWrapper = initialFileWrapper;
     }
     
     return self;

@@ -18,7 +18,7 @@
     RKResourcePool *resources = [RKResourcePool new];
     
     // Tagging defined font
-    [RKFontAttributeWriter addTagsForAttribute:RKFontAttributeName value:(__bridge_transfer id)font effectiveRange:NSMakeRange(1,2) toString:string originalString:nil attachmentPolicy:0 resources:resources];
+    [RKFontAttributeWriter addTagsForAttribute:RKFontAttributeName value:(__bridge id)font effectiveRange:NSMakeRange(1,2) toString:string originalString:nil attachmentPolicy:0 resources:resources];
 
     // Tagging default font
     [RKFontAttributeWriter addTagsForAttribute:RKFontAttributeName value:nil effectiveRange:NSMakeRange(3,1) toString:string originalString:nil attachmentPolicy:0 resources:resources];

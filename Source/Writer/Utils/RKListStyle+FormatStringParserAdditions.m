@@ -18,15 +18,21 @@
 + (NSRange)rangeOfEnumerationPlaceholder:(NSString *)formatString
 {
     static NSRegularExpression *placeholderExpression;
-    placeholderExpression = (placeholderExpression) ?: [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
-    
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		placeholderExpression = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%[drRaA]" options:0 error:nil];
+	});
+        
     return [placeholderExpression rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
 }
 
 + (NSRange)rangeOfLinkedLevelPlaceholder:(NSString *)formatString
 {
     static NSRegularExpression *placeholderExpression;
-    placeholderExpression = (placeholderExpression) ?: [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		placeholderExpression = [NSRegularExpression regularExpressionWithPattern:@"(?<!%)%\\*" options:0 error:nil];
+	});    
     
     return [placeholderExpression rangeOfFirstMatchInString:formatString options:0 range:NSMakeRange(0, formatString.length)];
 }
@@ -36,7 +42,10 @@
 - (void)scanFullFormatStringOfLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger currentLevel))block
 {
     static NSRegularExpression *tokenRegEx;
-    tokenRegEx = (tokenRegEx) ?: [NSRegularExpression regularExpressionWithPattern:@"%[%*daArR]" options:0 error:nil];
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		tokenRegEx = [NSRegularExpression regularExpressionWithPattern:@"%[%*daArR]" options:0 error:nil];
+	});
 
     NSMutableArray *tokens = [NSMutableArray new];
     NSMutableArray *levels = [NSMutableArray new];
@@ -84,7 +93,7 @@
 
     // Iterate over all tokens
     [tokens enumerateObjectsUsingBlock:^(NSString *token, NSUInteger tokenIndex, BOOL *stop) {
-        block(token, [[levels objectAtIndex: tokenIndex] unsignedIntegerValue]);
+        block(token, [levels[tokenIndex] unsignedIntegerValue]);
     }];
 }
 

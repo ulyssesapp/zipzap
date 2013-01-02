@@ -29,4 +29,12 @@
     NSAssert(NO, @"Method not implemented");
 }
 
++ (void)preprocessAttribute:(NSString *)attributeName
+                      value:(id)attributeValue
+             effectiveRange:(NSRange)range
+         ofAttributedString:(NSMutableAttributedString *)preprocessedString
+{
+    return;
+}
+
 @end

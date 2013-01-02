@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sections</key>
+	<array>
+		<dict>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>content</key>
+			<dict>
+				<key>string</key>
+				<string>Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+This paragraph tends to generate a widow since it is at the wrong position of the text! But this widow would not be an orphan!
+Bla
+Bla
+Bla
+Bla
+</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

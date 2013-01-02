@@ -63,4 +63,40 @@
  */
 - (NSUInteger)numberOfLevels;
 
+/*!
+ @abstract Specifies the indentation offsets for each list level to the first line of a list item
+ @discussion Array of NSNumber containing floats.
+ */
+@property (nonatomic) NSArray *firstLineHeadIndentOffsets;
+
+/*!
+ @abstract Specifies the indentation offsets for each list level to all succeeding lines of a list item
+ @discussion Array of NSNumber containing floats.
+ */
+@property (nonatomic) NSArray *headIndentOffsets;
+
+/*!
+ @abstract Specifies the tab stop locations for each list level (relative to the first line head indent of the level)
+ @discussion Array of Array of NSNumber containing floats.
+ */
+@property (nonatomic) NSArray *tabStopLocations;
+
+/*!
+ @abstract Specifies the tab stop alignments for each list level
+ @discussion Array of Array of NSNumber containing NSTabAlignment.
+ */
+@property (nonatomic) NSArray *tabStopAlignments;
+
+/*!
+ @abstract Accessor for the level formats
+ @discussion Array of NSString
+ */
+@property (strong, readonly) NSArray *levelFormats;
+
+/*!
+ @abstract Accessor for the level starting numbers
+ @discussion Array of NSNumber
+ */
+@property (strong, readonly) NSArray *startNumbers;
+
 @end

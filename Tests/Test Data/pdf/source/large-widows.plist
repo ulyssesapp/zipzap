@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>pageWidth</key>
+	<integer>584</integer>
+	<key>pageHeight</key>
+	<integer>80</integer>
+	<key>sections</key>
+	<array>
+		<dict>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>length</key>
+							<integer>330</integer>
+							<key>location</key>
+							<integer>0</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>NSFont</key>
+							<dict>
+								<key>size</key>
+								<integer>20</integer>
+								<key>name</key>
+								<string>Helvetica-Bold</string>
+							</dict>
+							<key>RKParagraphStyleName</key>
+							<string>Heading 1</string>
+							<key>NSUnderline</key>
+							<array>
+								<string>thick</string>
+							</array>
+							<key>NSParagraphStyle</key>
+							<dict>
+								<key>paragraphSpacing</key>
+								<real>14</real>
+								<key>tabStops</key>
+								<array/>
+								<key>headIndent</key>
+								<real>0</real>
+								<key>lineHeightMulitple</key>
+								<real>0</real>
+								<key>lineBreakMode</key>
+								<string>wordWrap</string>
+								<key>hyphenationFactor</key>
+								<real>0</real>
+								<key>alignment</key>
+								<string>right</string>
+								<key>paragraphSpacingBefore</key>
+								<real>0</real>
+								<key>minimumLineHeight</key>
+								<real>0</real>
+								<key>firstLineHeadIndent</key>
+								<real>0</real>
+								<key>lineSpacing</key>
+								<real>1.299999952316284</real>
+								<key>tailIndent</key>
+								<real>0</real>
+								<key>maximumLineHeight</key>
+								<real>0</real>
+								<key>defaultTabInterval</key>
+								<real>30</real>
+								<key>baseWritingDirection</key>
+								<string>natural</string>
+							</dict>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+Bla
+This paragraph tends to generate a widow and an orphan since it is at the wrong position of the text!
+Bla
+Bla
+Bla
+Bla
+</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

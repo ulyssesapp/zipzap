@@ -10,13 +10,15 @@
 #import "RKConversion.h"
 
 @interface RKListStyle () {
-    NSArray     *levelFormats;
-    NSArray     *startNumbers;
+    NSArray     *_levelFormats;
+    NSArray     *_startNumbers;
 }
 
 @end
 
 @implementation RKListStyle
+
+@synthesize levelFormats=_levelFormats, startNumbers=_startNumbers, firstLineHeadIndentOffsets, headIndentOffsets, tabStopLocations, tabStopAlignments;
 
 + (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats;
 {
@@ -33,12 +35,12 @@
     self = [self init];
     
     if (self) {
-        if (levelFormats.count >= RKListMaxiumLevelCount) {
+        if (_levelFormats.count >= RKListMaxiumLevelCount) {
             [NSException raise:NSRangeException format:@"Level nesting is limited to %u.", RKListMaxiumLevelCount];
         }    
 
-        levelFormats = initialLevelFormats;        
-        startNumbers = initialStartNumbers;
+        _levelFormats = initialLevelFormats;
+        _startNumbers = initialStartNumbers;
     }
     
     return self;
@@ -48,17 +50,17 @@
 {
     NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
     
-    if (levelIndex >= levelFormats.count)
+    if (levelIndex >= self.levelFormats.count)
         return @"";
     
-    return [levelFormats objectAtIndex: levelIndex];
+    return self.levelFormats[levelIndex];
 }
 
 -(NSUInteger)startNumberForLevel:(NSUInteger)levelIndex
 {
     NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
     
-    NSNumber *startItemNumber = [startNumbers objectAtIndex: levelIndex];
+    NSNumber *startItemNumber = self.startNumbers[levelIndex];
     
     if (startItemNumber == nil)
         return 1;
@@ -68,7 +70,20 @@
 
 - (NSUInteger)numberOfLevels
 {
-    return levelFormats.count;
+    return self.levelFormats.count;
+}
+
+- (BOOL)isEqual:(RKListStyle *)other
+{
+    if (![other isKindOfClass: RKListStyle.class])
+        return NO;
+    
+    return [self.levelFormats isEqual: other.levelFormats] && [self.startNumbers isEqual: other.startNumbers];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat: @"(RKListStyle levelFormats:%@ startNumbers:%@)", self.levelFormats, self.startNumbers];
 }
 
 @end

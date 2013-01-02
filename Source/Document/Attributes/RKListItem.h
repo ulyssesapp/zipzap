@@ -28,12 +28,12 @@ extern NSString *RKTextListItemAttributeName;
 /*!
  @abstract A reference to the list style identifying the text list
  */
-@property(nonatomic,strong,readonly) RKListStyle *listStyle;
+@property(nonatomic,strong,readwrite) RKListStyle *listStyle;
 
 /*!
  @abstract The indentation level used by the list
  */
-@property(nonatomic,readonly) NSUInteger indentationLevel;
+@property(nonatomic,readwrite) NSUInteger indentationLevel;
 
 @end
 

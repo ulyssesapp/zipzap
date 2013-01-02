@@ -77,32 +77,26 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 {
     // An ordered lookup table mapping from the field keys to the field titles and types representing RTF document meta data
     RKHeaderWriterMetadataDescriptions = 
-                           [NSArray arrayWithObjects:
-                            [NSArray arrayWithObjects: RKTitleDocumentAttribute,                @"\\title",         [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCompanyDocumentAttribute,              @"\\*\\company",    [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class], nil],
-                            [NSArray arrayWithObjects: RKSubjectDocumentAttribute,              @"\\subject",       [NSString class], nil],
-                            [NSArray arrayWithObjects: RKAuthorDocumentAttribute,               @"\\author",        [NSString class], nil],
-                            [NSArray arrayWithObjects: RKKeywordsDocumentAttribute,             @"\\keywords",      [NSArray class], nil],
-                            [NSArray arrayWithObjects: RKCommentDocumentAttribute,              @"\\doccomm",       [NSString class], nil],
-                            [NSArray arrayWithObjects: RKEditorDocumentAttribute,               @"\\*\\editor",     [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class], nil],
-                            [NSArray arrayWithObjects: RKModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class], nil],
-                            [NSArray arrayWithObjects: RKManagerDocumentAttribute,              @"\\manager",       [NSString class], nil],
-                            [NSArray arrayWithObjects: RKCategoryDocumentAttribute,             @"\\category",      [NSString class], nil],
-                            nil
-                           ];
+                           @[@[RKTitleDocumentAttribute,                @"\\title",         [NSString class]],
+                            @[RKCompanyDocumentAttribute,              @"\\*\\company",    [NSString class]],
+                            @[RKCopyrightDocumentAttribute,            @"\\*\\copyright",  [NSString class]],
+                            @[RKSubjectDocumentAttribute,              @"\\subject",       [NSString class]],
+                            @[RKAuthorDocumentAttribute,               @"\\author",        [NSString class]],
+                            @[RKKeywordsDocumentAttribute,             @"\\keywords",      [NSArray class]],
+                            @[RKCommentDocumentAttribute,              @"\\doccomm",       [NSString class]],
+                            @[RKEditorDocumentAttribute,               @"\\*\\editor",     [NSString class]],
+                            @[RKCreationTimeDocumentAttribute,         @"\\creatim",       [NSDate class]],
+                            @[RKModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class]],
+                            @[RKManagerDocumentAttribute,              @"\\manager",       [NSString class]],
+                            @[RKCategoryDocumentAttribute,             @"\\category",      [NSString class]]];
     
     RKHeaderWriterFootnoteStyleNames = 
-                            [NSDictionary dictionaryWithObjectsAndKeys:
-                             @"ar",  [NSNumber numberWithInt:RKFootnoteEnumerationDecimal],
-                             @"rlc", [NSNumber numberWithInt:RKFootnoteEnumerationRomanLowerCase],
-                             @"ruc", [NSNumber numberWithInt:RKFootnoteEnumerationRomanUpperCase],
-                             @"alc", [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticLowerCase],
-                             @"auc", [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticUpperCase],
-                             @"chi", [NSNumber numberWithInt:RKFootnoteEnumerationChicagoManual],
-                             nil
-                             ];
+                            @{[NSNumber numberWithInt:RKFootnoteEnumerationDecimal]: @"ar",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationRomanLowerCase]: @"rlc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationRomanUpperCase]: @"ruc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticLowerCase]: @"alc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticUpperCase]: @"auc",
+                             [NSNumber numberWithInt:RKFootnoteEnumerationChicagoManual]: @"chi"};
 }
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
@@ -170,25 +164,25 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)listTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSArray *listStyles = [resources listStyles];
+    NSDictionary *listStyles = resources.listCounter.listStyles;
     
     if (listStyles.count == 0)
         return @"";
     
     NSMutableString *listTable = [NSMutableString stringWithString:@"{\\*\\listtable "];
     
-    [listStyles enumerateObjectsUsingBlock:^(RKListStyle *listStyle, NSUInteger listIndex, BOOL *stop) {
+    [listStyles enumerateKeysAndObjectsUsingBlock:^(NSNumber *listIndex, RKListStyle *listStyle, BOOL *stop) {
         NSMutableString *listLevelsString = [NSMutableString new];
         
         for (NSUInteger levelIndex = 0; levelIndex < listStyle.numberOfLevels; levelIndex ++)  {
-            [listLevelsString appendString: [self entryForLevel:levelIndex inList:listStyle listIndex:listIndex]];
+            [listLevelsString appendString: [self entryForLevel:levelIndex inList:listStyle listIndex:listIndex.unsignedIntegerValue]];
         }
                 
-        [listTable appendFormat:@"{\\list\\listtemplateid%lu\\listhybrid%@\\listid%lu{\\listname list%lu}}",
-         listIndex + 1,
+        [listTable appendFormat:@"{\\list\\listtemplateid%@\\listhybrid%@\\listid%@{\\listname list%@}}",
+         listIndex,
          listLevelsString,
-         listIndex + 1,
-         listIndex + 1
+         listIndex,
+         listIndex
          ];
     }];
     
@@ -201,7 +195,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 {
     NSArray *placeholderPositions;
     NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%lu %@;}", 
-                                 ((listIndex + 1) * 1000) + (level + 1), 
+                                 (listIndex * 10) + level,
                                  [list formatStringOfLevel:level placeholderPositions:&placeholderPositions]
                                 ];
     
@@ -225,7 +219,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%lu\\levelnfc%lu"
                                         "\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                                         "%@%@%@"
-                                        "\\levelfollow2\\levellegal0\\levelnorestart0}",
+                                        "\\levelfollow0\\levellegal0\\levelnorestart0}",
             startNumber,
             formatCode,
             textSystemFormatString,
@@ -236,16 +230,17 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources
 {
-    NSArray *listStyles = [resources listStyles];
+    NSDictionary *listStyles = resources.listCounter.listStyles;
     
     if (listStyles.count == 0)
         return @"";
 
     NSMutableString *overrideTable = [NSMutableString stringWithString:@"{\\*\\listoverridetable"];
     
-    for (NSUInteger listIndex = 1; listIndex < listStyles.count + 1; listIndex ++) {
-        [overrideTable appendFormat:@"{\\listoverride\\listid%lu\\listoverridecount0\\ls%lu}", listIndex, listIndex];
-    }
+    [listStyles enumerateKeysAndObjectsUsingBlock:^(NSNumber *listIndex, RKListStyle *listStyle, BOOL *stop) {
+        [overrideTable appendFormat:@"{\\listoverride\\listid%@\\listoverridecount0\\ls%@}", listIndex, listIndex];
+    }];
+
     
     [overrideTable appendString:@"}\n"];
     
@@ -257,26 +252,26 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSMutableString *infoTable = [NSMutableString stringWithString:@"{\\info"];
     
     for (NSArray *description in RKHeaderWriterMetadataDescriptions) {
-        id itemValue = [document.metadata objectForKey:[description objectAtIndex:RKMetaDescriptionAccessorKey]];
+        id itemValue = (document.metadata)[description[RKMetaDescriptionAccessorKey]];
         
         if (itemValue) {
             NSString *convertedValue;
             
-            if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSString class]]) {
+            if ([description[RKMetaDescriptionExpectedType] isEqual: [NSString class]]) {
                 convertedValue = [itemValue RTFEscapedString];
             }
-             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSArray class]]) {
+             else if ([description[RKMetaDescriptionExpectedType] isEqual: [NSArray class]]) {
                  NSArray *arrayItem = itemValue;
                  convertedValue = [arrayItem componentsJoinedByString:@", "];
             }
-             else if ([[description objectAtIndex:RKMetaDescriptionExpectedType] isEqual: [NSDate class]]) {
+             else if ([description[RKMetaDescriptionExpectedType] isEqual: [NSDate class]]) {
                 convertedValue = [itemValue RTFDate];
             }
             else {
                 NSAssert(false, @"Invalid meta data definitions");
             }
             
-            [infoTable appendFormat:@"{%@ %@}", [description objectAtIndex:RKMetaDescriptionExportedTag], convertedValue];
+            [infoTable appendFormat:@"{%@ %@}", description[RKMetaDescriptionExportedTag], convertedValue];
         }
     }
     
@@ -317,13 +312,13 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     [attributes appendString:@"\\aftnbj"];    
     
     // Footnote layouting
-    NSString *footnoteStyle = [RKHeaderWriterFootnoteStyleNames objectForKey:[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
+    NSString *footnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
     
     if (footnoteStyle != nil)
         [attributes appendFormat:@"\\ftnn%@", footnoteStyle];
 
     // Endnote layouting (using \aftnn and \saftn improves compatibility with Word)
-    NSString *endnoteStyle = [RKHeaderWriterFootnoteStyleNames objectForKey:[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
+    NSString *endnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
     
     if (footnoteStyle != nil)
         [attributes appendFormat:@"\\aftnn%@\\saftnn%@", endnoteStyle, endnoteStyle];
@@ -374,6 +369,18 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 							   (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
 							   ]];
 
+    // Header / footer spacing
+    if (document.headerSpacing != 36)
+        [attributes appendString: [NSString stringWithFormat:@"\\headery%lu",
+                                   (NSUInteger)RKPointsToTwips(document.headerSpacing)
+                                   ]];
+    
+    if (document.footerSpacing != 36)
+        [attributes appendString: [NSString stringWithFormat:@"\\footery%lu",
+                                   (NSUInteger)RKPointsToTwips(document.footerSpacing)
+                                   ]];
+    
+    
     // Hyphenation settings
     if (document.hyphenationEnabled)
         [attributes appendString:@"\\hyphauto1"];

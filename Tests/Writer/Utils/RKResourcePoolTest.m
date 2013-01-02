@@ -121,17 +121,17 @@
     RKResourcePool *resources = [RKResourcePool new];
     
     // Initialization
-    NSArray *itemNumbers = [resources incrementItemNumbersForListLevel:0 ofList:textList];
+    NSArray *itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:0 ofList:textList];
     STAssertEquals(itemNumbers.count, (NSUInteger)1, @"Invalid item count");
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
     
     // Increment existing
-    itemNumbers = [resources incrementItemNumbersForListLevel:0 ofList:textList];
+    itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:0 ofList:textList];
     STAssertEquals(itemNumbers.count, (NSUInteger)1, @"Invalid item count");
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");    
 
     // Extend existing
-    itemNumbers = [resources incrementItemNumbersForListLevel:3 ofList:textList];
+    itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:3 ofList:textList];
     STAssertEquals(itemNumbers.count, (NSUInteger)4, @"Invalid item count");
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:1] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
@@ -139,7 +139,7 @@
     STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)12, @"Invalid item number");
     
     // Increment extension
-    itemNumbers = [resources incrementItemNumbersForListLevel:3 ofList:textList];
+    itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:3 ofList:textList];
     STAssertEquals(itemNumbers.count, (NSUInteger)4, @"Invalid item count");
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:1] unsignedIntegerValue], (NSUInteger)1, @"Invalid item number");
@@ -147,13 +147,13 @@
     STAssertEquals([[itemNumbers objectAtIndex:3] unsignedIntegerValue], (NSUInteger)13, @"Invalid item number");
     
     // Truncate and increment
-    itemNumbers = [resources incrementItemNumbersForListLevel:1 ofList:textList];
+    itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:1 ofList:textList];
     STAssertEquals(itemNumbers.count, (NSUInteger)2, @"Invalid item count");
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:1] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
 
     // Extend again
-    itemNumbers = [resources incrementItemNumbersForListLevel:3 ofList:textList];
+    itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:3 ofList:textList];
     STAssertEquals(itemNumbers.count, (NSUInteger)4, @"Invalid item count");
     STAssertEquals([[itemNumbers objectAtIndex:0] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
     STAssertEquals([[itemNumbers objectAtIndex:1] unsignedIntegerValue], (NSUInteger)2, @"Invalid item number");
