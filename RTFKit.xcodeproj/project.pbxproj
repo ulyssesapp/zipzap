@@ -12,6 +12,8 @@
 		50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
+		507D8B2316946A730042EB32 /* RKAdditionalParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FB2B2115C18DAF0010EA47 /* RKAdditionalParagraphStyle.m */; };
+		507D8B2416946A7B0042EB32 /* RKPDFColumn.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A8F4661602222300A9DA63 /* RKPDFColumn.m */; };
 		790AD8B515BAB9C10011E40E /* RKParagraphStyleWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B315BAB9C10011E40E /* RKParagraphStyleWrapper.h */; };
 		790AD8B815BAB9C60011E40E /* RKParagraphStyleWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8B415BAB9C10011E40E /* RKParagraphStyleWrapper.m */; };
 		790AD8BB15BABD940011E40E /* RKTextTabWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B915BABD940011E40E /* RKTextTabWrapper.h */; };
@@ -2073,6 +2075,8 @@
 				79DE038A15F8A8C5001AE98F /* RKAdditionalParagraphStyleSerializer.m in Sources */,
 				7946E9401601DDB40028EF11 /* RKPDFFrame.m in Sources */,
 				79A8F46F1602223700A9DA63 /* RKPDFLine.m in Sources */,
+				507D8B2316946A730042EB32 /* RKAdditionalParagraphStyle.m in Sources */,
+				507D8B2416946A7B0042EB32 /* RKPDFColumn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2155,8 +2159,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -2189,8 +2193,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
