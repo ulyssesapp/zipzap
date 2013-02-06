@@ -29,9 +29,15 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 + (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString
 {
     NSMutableAttributedString *noteString = [note.footnoteContent mutableCopy];
-    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:(__bridge CTFontRef)[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL] enumeratorFactor: 1.25];
-
-    id paragraphStyle = [noteString attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
+	CTFontRef fontRef = NULL;
+	id paragraphStyle;
+	
+	if (noteString.length) {
+		fontRef = (__bridge CTFontRef)[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+		paragraphStyle = [noteString attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
+	}
+	
+    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:fontRef enumeratorFactor: 1.25];
     
     // Add enumerator and spacing
     [noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
