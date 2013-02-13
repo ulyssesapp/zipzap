@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>pageHeight</key>
-	<real>842</real>
+	<integer>595</integer>
 	<key>pageWidth</key>
-	<real>595</real>
+	<integer>842</integer>
 	<key>footnoteEnumerationStyle</key>
 	<string>decimal</string>
 	<key>endnoteEnumerationPolicy</key>
@@ -80,10 +80,6 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
-							<key>NSUnderline</key>
-							<array>
-								<string>thick</string>
-							</array>
 							<key>NSFont</key>
 							<dict>
 								<key>size</key>
@@ -93,6 +89,10 @@ Video with file
 							</dict>
 							<key>RKParagraphStyleName</key>
 							<string>Heading 1</string>
+							<key>NSUnderline</key>
+							<array>
+								<string>thick</string>
+							</array>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -851,6 +851,12 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSLink</key>
+							<string>http://the-soulmen.com/</string>
+							<key>RKParagraphStyleName</key>
+							<string>Paragraph</string>
+							<key>RKCharacterStyleName</key>
+							<string>Link</string>
 							<key>NSUnderlineColor</key>
 							<dict>
 								<key>alpha</key>
@@ -862,12 +868,6 @@ Video with file
 								<key>red</key>
 								<real>0</real>
 							</dict>
-							<key>NSLink</key>
-							<string>http://the-soulmen.com/</string>
-							<key>RKParagraphStyleName</key>
-							<string>Paragraph</string>
-							<key>RKCharacterStyleName</key>
-							<string>Link</string>
 							<key>NSColor</key>
 							<dict>
 								<key>alpha</key>
@@ -4990,10 +4990,6 @@ Video with file
 			</dict>
 			<key>numberOfColumns</key>
 			<integer>2</integer>
-			<key>pageNumberingStyle</key>
-			<string>decimal</string>
-			<key>indexOfFirstPage</key>
-			<integer>9223372036854775807</integer>
 			<key>headerAll</key>
 			<dict>
 				<key>string</key>
@@ -5019,6 +5015,10 @@ Video with file
 					</dict>
 				</array>
 			</dict>
+			<key>indexOfFirstPage</key>
+			<integer>9223372036854775807</integer>
+			<key>pageNumberingStyle</key>
+			<string>decimal</string>
 		</dict>
 	</array>
 	<key>endnoteEnumerationStyle</key>
