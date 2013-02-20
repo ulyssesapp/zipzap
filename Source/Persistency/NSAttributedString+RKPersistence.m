@@ -86,14 +86,15 @@ NSMutableDictionary *NSAttributedStringSerializers;
     return [self initWithAttributedString: prototype];
 }
 
-+ (NSDictionary *)attributeDictionaryFromRTFKitPropertyListRepresentation:(id)serializedAttributes usingContext:(RKPersistenceContext *)context error:(NSError **)error
++ (NSDictionary *)attributeDictionaryFromRTFKitPropertyListRepresentation:(id)serializedAttributes usingContext:(RKPersistenceContext *)context error:(NSError **)outError
 {
     NSMutableDictionary *deserializedAttributes = [NSMutableDictionary new];
-    
+	__block NSError *error;
+	
     [serializedAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id serializedAttributeValue, BOOL *stop) {
         // Get handler class for attribute
         Class handler = [NSAttributedStringSerializers objectForKey: attributeName];
-        id attributeValue = [handler attributeValueForPropertyList:serializedAttributeValue attributeName:attributeName context:context error:error];
+        id attributeValue = [handler attributeValueForPropertyList:serializedAttributeValue attributeName:attributeName context:context error:&error];
         if (!attributeValue) {
             *stop = YES;
             return;
@@ -103,6 +104,7 @@ NSMutableDictionary *NSAttributedStringSerializers;
         [deserializedAttributes setObject:attributeValue forKey:attributeName];
     }];
     
+	if (outError) *outError = error;
     return deserializedAttributes;
 }
 
