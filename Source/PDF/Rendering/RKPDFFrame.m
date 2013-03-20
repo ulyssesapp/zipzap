@@ -82,7 +82,13 @@
 	[attributedString.string enumerateSubstringsInRange:range options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange paragraphRange, BOOL *stop) {
 		__block NSUInteger lineOfParagraph = 0;
 		NSRange remainingParagraphRange = paragraphRange;
-		
+
+		// When rendering starts inside a paragraph, we will not assume to render the paragraph's first line (e.g. for ignore before spacings and first line indents)
+		if (range.location && !NSEqualRanges([attributedString.string paragraphRangeForRange: paragraphRange], paragraphRange)) {
+			lineOfParagraph = 1;
+		}
+				
+		// Render paragraphs
 		while (remainingParagraphRange.length > 0) {
 			BOOL isFirstLineOfParagraph = !lineOfParagraph;
 
