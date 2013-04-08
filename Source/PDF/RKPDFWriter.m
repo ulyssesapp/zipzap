@@ -120,9 +120,9 @@
 			// Add content
 			if (remainingContentRange.length)
 				[column appendContent:contentString inRange:remainingContentRange];
-			
+
 			// Append endnotes, if required
-			BOOL isLastPartOfSection = ((remainingContentRange.location < contentString.length) && (NSMaxRange(remainingContentRange) == contentString.length));
+			BOOL isLastPartOfSection = (NSMaxRange(remainingContentRange) == contentString.length);
 			if (!endnotesAppended && isLastPartOfSection) {
 				NSAttributedString *endnotes = nil;
 				NSMutableArray *endnoteStrings = [NSMutableArray new];
@@ -147,8 +147,8 @@
 				remainingContentRange.location += column.contentFrame.visibleStringLength;
 				remainingContentRange.length = contentString.length - remainingContentRange.location;
 			}
-				
-			// Get the remaining footnotes
+			
+			// Get the actual remaining footnotes
 			if (column.footnotesFrame.lines.count) {
 				remainingFootnotesRange.location = column.visibleFootnotesLength;
 				remainingFootnotesRange.length = column.footnotes.length - remainingFootnotesRange.location;

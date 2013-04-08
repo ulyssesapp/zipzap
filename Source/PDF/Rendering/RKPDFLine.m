@@ -15,7 +15,7 @@
 
 #import "NSAttributedString+PDFUtilities.h"
 
-// An offset (NSNumber) describing the position displacement of a fully instantiated attributed string to its source
+// An offset (NSNumber of NSInteger) describing the position displacement of a fully instantiated attributed string to its source
 NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiationOffset";
 
 @interface RKPDFLine ()
@@ -57,13 +57,14 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		NSAttributedString *replacementString = [textObject replacementStringUsingContext:_context attributedString:lineContent atIndex:range.location frameSize:CGSizeMake(width, maximumHeight)];
 		if (!replacementString)
 			return;
-			
+
+		// Apply replacement string
 		[lineContent replaceCharactersInRange:range withAttributedString:replacementString];
-		[lineContent addAttribute:RKTextObjectAttributeName value:textObject range:range];
+		[lineContent addAttribute:RKTextObjectAttributeName value:textObject range: NSMakeRange(range.location, replacementString.length)];
 		
+		// Record offset displacement from this position
 		instantiationExtension += (replacementString.length - range.length);
-		
-		[lineContent addAttribute:RKPDFLineInstantiationOffsetAttributeName value:@(instantiationExtension) range:range];
+		[lineContent addAttribute:RKPDFLineInstantiationOffsetAttributeName value:@(instantiationExtension) range:NSMakeRange(range.location, lineContent.length - range.location)];
 	}];
 	
 	// Estimate space for line wrap
@@ -130,7 +131,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	}
 
 	// Get position displacement
-	NSUInteger displacement = [[lineContent attribute:RKPDFLineInstantiationOffsetAttributeName atIndex:(suggestedBreak - 1) effectiveRange:NULL] unsignedIntegerValue];
+	NSInteger displacement = [[lineContent attribute:RKPDFLineInstantiationOffsetAttributeName atIndex:(suggestedBreak - 1) effectiveRange:NULL] unsignedIntegerValue];
 	
 	// Setup line properties
 	_line = ctLine;
