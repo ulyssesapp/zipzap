@@ -6,6 +6,10 @@
 	<integer>584</integer>
 	<key>pageHeight</key>
 	<integer>80</integer>
+	<key>pageInsetsTop</key>
+	<real>1</real>
+	<key>pageInsetsBottom</key>
+	<real>1</real>
 	<key>sections</key>
 	<array>
 		<dict>
