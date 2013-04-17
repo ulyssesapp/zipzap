@@ -48,12 +48,12 @@
 /*!
  @abstract Converts a color to the generic RGB color space and creates a CGColor from it
  */
-- (CGColorRef)CGColorUsingGenericRGBColorSpace;
+- (CGColorRef)newCGColorUsingGenericRGBColorSpace;
 
 /*!
  @abstract Converts a color to the generic RGBA color space and creates a CGColor from it
  */
-- (CGColorRef)CGColorUsingGenericRGBAColorSpace;
+- (CGColorRef)newCGColorUsingGenericRGBAColorSpace;
 
 /*!
  @abstract Generates a color object that must not be converted to be valid for RTF

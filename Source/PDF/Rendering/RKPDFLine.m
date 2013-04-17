@@ -15,6 +15,9 @@
 
 #import "NSAttributedString+PDFUtilities.h"
 
+// An offset (NSNumber of NSInteger) describing the position displacement of a fully instantiated attributed string to its source
+NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiationOffset";
+
 @interface RKPDFLine ()
 {
 	CTLineRef _line;
@@ -54,11 +57,14 @@
 		NSAttributedString *replacementString = [textObject replacementStringUsingContext:_context attributedString:lineContent atIndex:range.location frameSize:CGSizeMake(width, maximumHeight)];
 		if (!replacementString)
 			return;
-			
+
+		// Apply replacement string
 		[lineContent replaceCharactersInRange:range withAttributedString:replacementString];
-		[lineContent addAttribute:RKTextObjectAttributeName value:textObject range:range];
+		[lineContent addAttribute:RKTextObjectAttributeName value:textObject range: NSMakeRange(range.location, replacementString.length)];
 		
+		// Record offset displacement from this position
 		instantiationExtension += (replacementString.length - range.length);
+		[lineContent addAttribute:RKPDFLineInstantiationOffsetAttributeName value:@(instantiationExtension) range:NSMakeRange(range.location, lineContent.length - range.location)];
 	}];
 	
 	// Estimate space for line wrap
@@ -124,10 +130,13 @@
 			NSLog(@"Cannot justify line for string: %@ on page %lu. Use unjustified variant.", lineContent.string, _context.currentPageNumber);
 	}
 
+	// Get position displacement
+	NSInteger displacement = [[lineContent attribute:RKPDFLineInstantiationOffsetAttributeName atIndex:(suggestedBreak - 1) effectiveRange:NULL] unsignedIntegerValue];
+	
 	// Setup line properties
 	_line = ctLine;
 	_content = lineContent;
-	_visibleRange = NSMakeRange(range.location, suggestedBreak - instantiationExtension);
+	_visibleRange = NSMakeRange(range.location, suggestedBreak - displacement);
 	_size = CTLineGetImageBounds(ctLine, _context.pdfContext).size;
 	
 	// Setup line metrics

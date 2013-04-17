@@ -25,10 +25,8 @@
 
 - (CGRect)pdfMediaBox
 {
-    if (self.pageOrientation == RKPageOrientationLandscape)
-        return CGRectMake(0 , 0, self.pageSize.height, self.pageSize.width);
-    else
-        return CGRectMake(0 , 0, self.pageSize.width, self.pageSize.height);
+	// Use given page size for media box. Width and Height are already adjusted when another page orientation is used.
+    return CGRectMake(0, 0, self.pageSize.width, self.pageSize.height);
 }
 
 - (NSDictionary *)pdfMetadata

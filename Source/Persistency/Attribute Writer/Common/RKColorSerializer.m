@@ -57,7 +57,7 @@ NSString *RKColorAlphaComponentPersistenceKey = @"alpha";
     CGColorRef color;
     
     #if !TARGET_OS_IPHONE
-        color = [((NSColor *)attributeValue) CGColorUsingGenericRGBAColorSpace];
+        color = [((NSColor *)attributeValue) newCGColorUsingGenericRGBAColorSpace];
     #else
         color = (__bridge CGColorRef)attributeValue;
     #endif

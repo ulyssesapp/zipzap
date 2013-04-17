@@ -72,7 +72,7 @@
         CGColorRef color;
         
         #if !TARGET_OS_IPHONE
-            color = [colorObject CGColorUsingGenericRGBColorSpace];
+            color = [colorObject newCGColorUsingGenericRGBColorSpace];
         #else
             color = (__bridge CGColorRef)colorObject;            
         #endif
