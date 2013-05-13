@@ -161,7 +161,7 @@
 		NSString *markerStyle = [RKAttributedStringWriter stylesheetTagsFromAttributes:listItem.markerStyle resources:resources];
 
         // Register the list marker
-        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%li\\ilvl%li {%@\\listtext%@}%@", listIndex, listItem.indentationLevel, markerStyle, markerString, markerStyle] forPosition:range.location];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%li\\ilvl%li {%@\\listtext%@}", listIndex, listItem.indentationLevel, markerStyle, markerString] forPosition:range.location];
 		
 		// For compatibility reasons we require each list item to terminate with a \par (otherwise Word inherits the paragraph style set at the paragraph break for the list marker)
 		if ([attributedString.string characterAtIndex: NSMaxRange(range)-1] != '\n')
