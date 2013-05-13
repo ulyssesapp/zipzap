@@ -158,9 +158,14 @@
         NSArray *itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle];
         
         NSString *markerString = [RKListStyle systemCompatibleMarker: [[listItem.listStyle markerForItemNumbers:itemNumbers] RTFEscapedString]];
+		NSString *markerStyle = [RKAttributedStringWriter stylesheetTagsFromAttributes:listItem.markerStyle resources:resources];
 
         // Register the list marker
-        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%li\\ilvl%li {\\listtext%@}", listIndex, listItem.indentationLevel, markerString] forPosition:range.location];
+        [taggedString registerTag:[NSString stringWithFormat:@"\\ls%li\\ilvl%li {%@\\listtext%@}%@", listIndex, listItem.indentationLevel, markerStyle, markerString, markerStyle] forPosition:range.location];
+		
+		// For compatibility reasons we require each list item to terminate with a \par (otherwise Word inherits the paragraph style set at the paragraph break for the list marker)
+		if ([attributedString.string characterAtIndex: NSMaxRange(range)-1] != '\n')
+			[taggedString registerClosingTag:@"\\par\\pard" forPosition:NSMaxRange(range)];
     }
 }
 
