@@ -31,10 +31,19 @@
     [attributedString enumerateAttribute:RKTextListItemAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(RKListItem *listItem, NSRange range, BOOL *stop) {
         if (!listItem)
             return;
-        
+       
+		// Prepare attributes for list marker
+		NSDictionary *currentAttributes = [attributedString attributesAtIndex:range.location effectiveRange:nil];
+		NSMutableDictionary *listMarkerAttributes = [listItem.markerStyle mutableCopy] ?: [NSMutableDictionary new];
+		
+		if (currentAttributes[NSParagraphStyleAttributeName])
+			listMarkerAttributes[NSParagraphStyleAttributeName] = currentAttributes[NSParagraphStyleAttributeName];
+		if (currentAttributes[RKAdditionalParagraphStyleAttributeName])
+			listMarkerAttributes[RKAdditionalParagraphStyleAttributeName] = currentAttributes[RKAdditionalParagraphStyleAttributeName];
+		
         // Insert marker string (include a tab behave the same as the cocoa text engine)
         NSString *markerString = [NSString stringWithFormat:@"\t%@\t", [context.listCounter markerForListItem: listItem]];
-        NSAttributedString *styledMarkerString = [[NSAttributedString alloc] initWithString:markerString attributes:[attributedString attributesAtIndex:range.location effectiveRange:NULL]];
+        NSAttributedString *styledMarkerString = [[NSAttributedString alloc] initWithString:markerString attributes:listMarkerAttributes];
         
         [converted insertAttributedString:styledMarkerString atIndex:range.location + insertionOffset];
         insertionOffset += markerString.length;
