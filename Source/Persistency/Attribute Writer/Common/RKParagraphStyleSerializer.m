@@ -99,7 +99,7 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
     if ([propertyList objectForKey: RKParagraphStyleHeadIndentPersistenceKey])
         paragraphStyle.headIndent = [[propertyList objectForKey: RKParagraphStyleHeadIndentPersistenceKey] floatValue];
     
-    if ([propertyList objectForKey: RKParagraphStyleHeadIndentPersistenceKey])
+    if ([propertyList objectForKey: RKParagraphStyleTailIndentPersistenceKey])
         paragraphStyle.tailIndent = [[propertyList objectForKey: RKParagraphStyleTailIndentPersistenceKey] floatValue];
     
     if ([propertyList objectForKey: RKParagraphStyleDefaultTabIntervalPersistenceKey])
