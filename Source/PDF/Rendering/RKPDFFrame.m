@@ -184,11 +184,18 @@
 	lineRect.origin = CGPointMake(_visibleBoundingBox.origin.x, _visibleBoundingBox.origin.y - line.size.height);
 	lineRect.size = line.size;
 	
-	// Apply indentation
+	// Apply head indentation
 	if (isFirstInParagraph)
 		lineRect.origin.x += paragraphStyle.firstLineHeadIndent;
 	else
 		lineRect.origin.x += paragraphStyle.headIndent;
+	
+	// Apply tail indentation
+	if (paragraphStyle.tailIndent > 0)
+		lineRect.size.width = paragraphStyle.tailIndent - lineRect.origin.x;
+	else
+		lineRect.size.width += paragraphStyle.tailIndent;
+	
 	
 	// Adjust text alignment
 	switch (paragraphStyle.textAlignment) {
@@ -256,16 +263,23 @@
 	CGFloat width = _boundingBox.size.width;
 	CGFloat headIndent = 0;
 	CGFloat firstLineHeadIndent = 0;
+	CGFloat tailIndent = 0;
 	
 	CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)[attributedString attribute:(__bridge NSString*)kCTParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL];
 	CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierHeadIndent, sizeof(CGFloat), &headIndent);
 	CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(CGFloat), &firstLineHeadIndent);
+	CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierTailIndent, sizeof(CGFloat), &tailIndent);
 	
 	if (isFirstInParagraph && (firstLineHeadIndent < width))
 		width -= firstLineHeadIndent;
 	else if (headIndent < width)
 		width -= headIndent;
 	
+	if (tailIndent > 0)
+		width -= _boundingBox.size.width - tailIndent;
+	else
+		width += tailIndent;
+
 	return width;
 }
 
