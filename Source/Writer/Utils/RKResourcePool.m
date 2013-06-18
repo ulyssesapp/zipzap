@@ -195,8 +195,13 @@
     NSAssert(fileWrapper, @"No file given");
     
     NSString *originalFilename = (fileWrapper.preferredFilename) ?: (fileWrapper.filename) ?: @"";
-    NSString *filename = [NSString stringWithFormat: @"%lu.%@", _attachmentFileWrappers.count, [originalFilename sanitizedFilenameForRTFD]];
+	
+	// Re-use file wrapper if it has already been registered
+	if ([_attachmentFileWrappers objectForKey: fileWrapper.preferredFilename] == fileWrapper)
+		return fileWrapper.preferredFilename;
     
+	// Generate unique filename
+	NSString *filename = [NSString stringWithFormat: @"%lu-%@", _attachmentFileWrappers.count, [originalFilename sanitizedFilenameForRTFD]];
     fileWrapper.preferredFilename = filename;
 
     [_attachmentFileWrappers setValue:fileWrapper forKey:filename];
