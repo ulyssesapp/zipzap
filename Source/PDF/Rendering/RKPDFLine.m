@@ -110,9 +110,6 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		}
 	}
 
-	// Remove hyphenation attribute on line setting (fixes a weird CoreText bug if a line run contains an UTF-8 character like \u1D7BA)
-	[lineContent removeAttribute:RKHyphenationCharacterAttributeName range:NSMakeRange(0, suggestedBreak)];
-	
 	// Layout the line
 	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((__bridge CFAttributedStringRef)lineContent);
 	CTLineRef ctLine = CTTypesetterCreateLine(typesetter, CFRangeMake(0, suggestedBreak));
