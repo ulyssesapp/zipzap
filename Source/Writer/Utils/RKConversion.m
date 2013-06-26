@@ -32,16 +32,20 @@
             case '\f':
                 [escapedString appendString: @"\\page\n"];
                 break;                
-            
+
             case '\n':
             case '\r':
+                [escapedString appendString: @"\\par\n"];
+                break;
+                
+            case RKLineSeparatorCharacter:
                 [escapedString appendString: @"\\line\n"];
                 break;
                 
             default:
                 if (currentChar > 127) {
                     // All Non-ASCII are converted to \uN commands
-                    [escapedString appendFormat: @"\\u%u", currentChar];
+                    [escapedString appendFormat: @"\\u%u ", currentChar];
                 }
                 else {
                     [escapedString appendFormat: @"%C", currentChar];
@@ -55,13 +59,16 @@
 - (NSString *)sanitizedFilenameForRTFD
 {
     static NSRegularExpression *unsafeFilenameCharsRegExp = nil;
-    unsafeFilenameCharsRegExp = (unsafeFilenameCharsRegExp) ?: [NSRegularExpression regularExpressionWithPattern:@"[\\{\\}\\*\\?/\\\\]" options:0 error:NULL];
-    
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		unsafeFilenameCharsRegExp = [NSRegularExpression regularExpressionWithPattern:@"[\\{\\}\\*\\?/\\\\]" options:0 error:NULL];
+	});
+        
     // Removing diacritic characters
     NSString *sanitizedFilename = [self stringByFoldingWithOptions:NSDiacriticInsensitiveSearch|NSWidthInsensitiveSearch locale:[NSLocale systemLocale]];
     
     // Removing unicode characters
-    sanitizedFilename = [[NSString alloc] initWithData:[self dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] encoding:NSASCIIStringEncoding];
+    sanitizedFilename = [[NSString alloc] initWithData:[sanitizedFilename dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] encoding:NSASCIIStringEncoding];
     
     // Replace all characters that are used by RTF
     NSMutableString *rtfSafeFilename = [NSMutableString stringWithString: sanitizedFilename];
@@ -119,12 +126,20 @@
     return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1];
 }
 
-- (CGColorRef)CGColorWithGenericRGBColorSpace
+- (CGColorRef)newCGColorUsingGenericRGBColorSpace
+{
+    NSColor *rgbColor = [self colorUsingColorSpaceName: NSCalibratedRGBColorSpace];
+
+    return CGColorCreateGenericRGB(rgbColor.redComponent, rgbColor.greenComponent, rgbColor.blueComponent, 1.0);    
+}
+
+- (CGColorRef)newCGColorUsingGenericRGBAColorSpace
 {
     NSColor *rgbColor = [self colorUsingColorSpaceName: NSCalibratedRGBColorSpace];
     
-    return CGColorCreateGenericRGB(rgbColor.redComponent, rgbColor.greenComponent, rgbColor.blueComponent, 1.0);    
+    return CGColorCreateGenericRGB(rgbColor.redComponent, rgbColor.greenComponent, rgbColor.blueComponent, rgbColor.alphaComponent);
 }
+
 
 @end 
 

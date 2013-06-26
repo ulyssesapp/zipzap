@@ -200,7 +200,7 @@
         STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
     }];
     
-    STAssertEqualObjects([converted string], @"abc\n", @"Invalid string content");    
+    STAssertEqualObjects([converted string], @"abc", @"Invalid string content");
 }
 
 - (void)testPictureAttachmentCocoaIntegrationWithPlainRTF
@@ -217,7 +217,7 @@
         STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
     }];
     
-    STAssertEqualObjects([converted string], @"abc\n", @"Invalid string content");    
+    STAssertEqualObjects([converted string], @"abc", @"Invalid string content");    
 }
 
 - (void)testPictureAttachmentCocoaIntegrationWithRTFD
@@ -230,7 +230,7 @@
     
     NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:NULL];
 
-    STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc\n", RKAttachmentCharacter]), @"Invalid string content"); 
+    STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]), @"Invalid string content"); 
     
     NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
     
@@ -248,7 +248,7 @@
     
     NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:NULL];
     
-    STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc\n", RKAttachmentCharacter]), @"Invalid string content"); 
+    STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]), @"Invalid string content");
     
     NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
     

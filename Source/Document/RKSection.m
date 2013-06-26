@@ -13,8 +13,8 @@
  */
 @interface RKSection ()
 {
-    NSMutableDictionary *headers;
-    NSMutableDictionary *footers;
+    NSMutableDictionary *_headers;
+    NSMutableDictionary *_footers;
 }
 
 /*!
@@ -37,12 +37,15 @@
  */
 - (BOOL)hasSingleObjectForAllPagesInDictionary:(NSDictionary *)map;
 
+/*!
+ @abstract Enumerates all objects according to their page selectors
+ */
+- (void)enumerateObjectsInPageSetting:(NSMutableDictionary *)dictionary usingBlock:(void(^)(RKPageSelectionMask pageSelector, id object))block;
+
 @end
 
 
 @implementation RKSection
-
-@synthesize content, numberOfColumns, indexOfFirstPage, pageNumberingStyle;
 
 + (id)sectionWithContent:(NSAttributedString *)content
 {
@@ -54,12 +57,13 @@
     self = [super init];
     
     if (self) {
-        numberOfColumns = 1;
-        indexOfFirstPage = RKContinuousPageNumbering;
-        pageNumberingStyle = RKPageNumberingDecimal;
+        _numberOfColumns = 1;
+        _indexOfFirstPage = RKContinuousPageNumbering;
+        _pageNumberingStyle = RKPageNumberingDecimal;
         
-        headers = [NSMutableDictionary new];
-        footers = [NSMutableDictionary new];
+        _headers = [NSMutableDictionary new];
+        _footers = [NSMutableDictionary new];
+        _columnSpacing = 36;
     }
     
     return self;
@@ -90,18 +94,53 @@
     copy.numberOfColumns = self.numberOfColumns;
     copy.indexOfFirstPage = self.indexOfFirstPage;
     copy.pageNumberingStyle = self.pageNumberingStyle;
+    copy.columnSpacing = self.columnSpacing;
     
     return copy;
 }
 
+- (BOOL)isEqual:(RKSection *)object
+{
+    if (![object isKindOfClass: RKSection.class])
+        return NO;
+    
+    // Compare headers
+    __block BOOL headersEqual = YES;
+    
+    [self enumerateHeadersUsingBlock:^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
+        headersEqual &= [header isEqual: [object headerForPage: (pageSelector == RKPageSelectorAll) ? RKPageSelectionFirst : pageSelector]];
+    }];
+    
+    if (!headersEqual)
+        return NO;
+
+    // Compare footer
+    __block BOOL footersEqual = YES;
+    
+    [self enumerateFootersUsingBlock:^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
+        footersEqual &= [footer isEqual: [object footerForPage: (pageSelector == RKPageSelectorAll) ? RKPageSelectionFirst : pageSelector]];
+    }];
+    
+    if (!footersEqual)
+        return NO;
+    
+    // Compare others
+    return  [self.content isEqual: object.content]
+        &&  (self.numberOfColumns == object.numberOfColumns)
+        &&  (self.indexOfFirstPage == object.indexOfFirstPage)
+        &&  (self.pageNumberingStyle == object.pageNumberingStyle)
+        &&  (self.columnSpacing == object.columnSpacing)
+    ;
+}
+
 - (id)initWithContent:(NSAttributedString *)initialContent
 {
-     NSAssert(initialContent != nil, @"Initial content string must not be nil");    
+     NSAssert(initialContent != nil, @"Initial content string must not be nil");
     
     self = [self init];
     
     if (self) {
-        content = initialContent;
+        _content = initialContent;
     }
     
     return self;
@@ -111,33 +150,44 @@
 
 - (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self objectForPage:pageMask fromDictionary:headers];
+    return [self objectForPage:pageMask fromDictionary:_headers];
 }
 
 - (void)setHeader:(NSAttributedString *)header forPages:(RKPageSelectionMask)pageMask
 {
-    [self setObject:header forPages:pageMask toDictionary:headers];
+    [self setObject:header forPages:pageMask toDictionary:_headers];
 }
 
 - (BOOL)hasSingleHeaderForAllPages
 {
-    return [self hasSingleObjectForAllPagesInDictionary: headers];
+    return [self hasSingleObjectForAllPagesInDictionary: _headers];
+}
+
+- (void)enumerateHeadersUsingBlock:(void (^)(RKPageSelectionMask, NSAttributedString *))block
+{
+    [self enumerateObjectsInPageSetting:_headers usingBlock:block];
 }
 
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask
 {
-    return [self objectForPage:pageMask fromDictionary:footers];
+    return [self objectForPage:pageMask fromDictionary:_footers];
 }
 
 - (void)setFooter:(NSAttributedString *)footer forPages:(RKPageSelectionMask)pageMask
 {
-   [self setObject:footer forPages:pageMask toDictionary:footers];
+   [self setObject:footer forPages:pageMask toDictionary:_footers];
 }
 
 - (BOOL)hasSingleFooterForAllPages
 {
-    return [self hasSingleObjectForAllPagesInDictionary: footers];
+    return [self hasSingleObjectForAllPagesInDictionary: _footers];
 }
+
+- (void)enumerateFootersUsingBlock:(void (^)(RKPageSelectionMask, NSAttributedString *))block
+{
+    [self enumerateObjectsInPageSetting:_footers usingBlock:block];
+}
+
 
 #pragma mark -
 
@@ -146,7 +196,7 @@
     NSAssert(!(pageMask & (~RKPageSelectionFirst)) || !(pageMask & (~RKPageSelectionLeft)) || !(pageMask & (~RKPageSelectionRight)), 
              @"Invalid page mask used in query.");
     
-    return [dictionary objectForKey: [NSNumber numberWithUnsignedInteger:pageMask]];
+    return dictionary[@(pageMask)];
 }
 
 - (void)setObject:(id)object forSinglePage:(RKPageSelectionMask)page toDictionary:(NSMutableDictionary *)dictionary
@@ -157,7 +207,7 @@
     NSNumber *key = [NSNumber numberWithUnsignedInt:page];
         
     if (object) {
-        [dictionary setObject:object forKey:key];
+        dictionary[key] = object;
     }
     else {
         [dictionary removeObjectForKey: key];
@@ -181,6 +231,22 @@
     return (    (([self objectForPage:RKPageSelectionLeft fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
              && (([self objectForPage:RKPageSelectionFirst fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
            );
+}
+
+- (void)enumerateObjectsInPageSetting:(NSMutableDictionary *)dictionary usingBlock:(void(^)(RKPageSelectionMask pageSelector, id object))block
+{
+    if (!dictionary.count)
+        return;
+    
+    if ([self hasSingleObjectForAllPagesInDictionary:dictionary]) {
+        block(RKPageSelectorAll, [self objectForPage:RKPageSelectionFirst fromDictionary:dictionary]);
+        return;
+    }
+    
+    [dictionary enumerateKeysAndObjectsUsingBlock:^(NSNumber *selector, id object, BOOL *stop) {
+        if (object)
+            block(selector.unsignedIntegerValue, object);
+    }];
 }
 
 @end

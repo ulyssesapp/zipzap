@@ -12,15 +12,13 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 
 @implementation RKListItem
 
-@synthesize listStyle, indentationLevel;
-
 - (id)initWithStyle:(RKListStyle *)initialListStyle indentationLevel:(NSUInteger)initialIndentationLevel
 {
     self = [self init];
     
     if (self) {
-        listStyle = initialListStyle;
-        indentationLevel = initialIndentationLevel;
+        _listStyle = initialListStyle;
+        _indentationLevel = initialIndentationLevel;
     }
 
     return self;
@@ -29,6 +27,19 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
 + (RKListItem *)listItemWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel
 {
     return [[RKListItem alloc] initWithStyle:listStyle indentationLevel:indentationLevel];
+}
+
+- (BOOL)isEqual:(RKListItem *)other
+{
+    if (![other isKindOfClass: RKListItem.class])
+        return NO;
+    
+    return [self.listStyle isEqual: other.listStyle] && (self.indentationLevel == other.indentationLevel);
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"(RKTextListItem list:%@ indentationLevel:%lu)", [self.listStyle description], self.indentationLevel];
 }
 
 @end

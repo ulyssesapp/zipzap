@@ -24,4 +24,8 @@
 @property (nonatomic, strong) NSFileWrapper *fileWrapper;
 
 @end
+#else
+
+#define RKTextAttachment        NSTextAttachment
+
 #endif

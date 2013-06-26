@@ -26,6 +26,7 @@
 
 /*!
  @abstract Adds a tag for a certain attribute
+ @discussion The selected range is inside a paragraph of the attributed string
  */
 + (void)addTagsForAttribute:(NSString *)attributeName 
                       value:(id)value 
@@ -34,5 +35,14 @@
              originalString:(NSAttributedString *)attributedString 
            attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources;
+
+/*!
+ @abstract Pre-processes the given attribute
+ @discussion The selected range is the longest effective range of the attribute. It is allowed to modify attributed of the attributed string. If not overriden by a subclass, no action occurs.
+ */
++ (void)preprocessAttribute:(NSString *)attributeName
+                      value:(id)attributeValue
+             effectiveRange:(NSRange)range
+         ofAttributedString:(NSMutableAttributedString *)preprocessedString;
 
 @end

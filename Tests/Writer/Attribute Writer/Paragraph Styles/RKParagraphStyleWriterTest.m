@@ -367,7 +367,7 @@
     paragraphStyleA.alignment = kCTCenterTextAlignment;
     paragraphStyleB.alignment = kCTRightTextAlignment;
 
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaabbb"];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa\nbbb"];
     
     id targetSpecificStyleA = [paragraphStyleA targetSpecificRepresentation];
     id targetSpecificStyleB = [paragraphStyleB targetSpecificRepresentation];
@@ -375,7 +375,7 @@
     [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificStyleA range:NSMakeRange(0,1)];
     [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificStyleB range:NSMakeRange(1,1)];
     
-    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: @"aaabbb"];
+    RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: @"aaa\nbbb"];
     
     [RKParagraphStyleWriter addTagsForAttribute:RKParagraphStyleAttributeName 
                                           value:targetSpecificStyleA 
@@ -388,7 +388,7 @@
 
     [RKParagraphStyleWriter addTagsForAttribute:RKParagraphStyleAttributeName 
                                           value:targetSpecificStyleB 
-                                 effectiveRange:NSMakeRange(3,3) 
+                                 effectiveRange:NSMakeRange(4,3)
                                        toString:taggedString 
                                  originalString:attributedString 
                                attachmentPolicy:0 
@@ -400,8 +400,7 @@
                           "aaa"
                           "\\par\n"
                           "\\pard \\qr\\pardeftab0 "
-                          "bbb"
-                          "\\par\n", 
+                          "bbb",
                          @"Invalid flattening"
                         );
 }

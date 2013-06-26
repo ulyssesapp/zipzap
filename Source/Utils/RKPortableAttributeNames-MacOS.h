@@ -8,6 +8,8 @@
 
 #if !TARGET_OS_IPHONE
 
+#import "RKTextAttachment.h"
+
 /*!
  @abstract Macros used to abstract plattform specific constants
  */
@@ -25,6 +27,10 @@
 #define RKSuperscriptAttributeName              NSSuperscriptAttributeName
 #define RKParagraphStyleAttributeName           NSParagraphStyleAttributeName
 #define RKShadowAttributeName                   NSShadowAttributeName
+#define RKBaselineOffsetAttributeName           NSBaselineOffsetAttributeName
+#define RKLigatureAttributeName                 NSLigatureAttributeName
+#define RKKernAttributeName                     NSKernAttributeName
+#define RKObliquenessAttributeName              NSObliquenessAttributeName
 
 #define RKUnderlineStyleNone                    NSUnderlineStyleNone
 #define RKUnderlineStyleSingle                  NSUnderlineStyleSingle
@@ -33,11 +39,13 @@
 
 #define RKUnderlineByWordMask                   NSUnderlineByWordMask
 
+#define RKUnderlinePatternDot                   NSUnderlinePatternDot
 #define RKUnderlinePatternDash                  NSUnderlinePatternDash
 #define RKUnderlinePatternDashDot               NSUnderlinePatternDashDot
 #define RKUnderlinePatternDashDotDot            NSUnderlinePatternDashDotDot
 
-#define RKAttachmentCharacter                   (unichar)NSAttachmentCharacter
+#define RKAttachmentCharacter                   ((unichar)NSAttachmentCharacter)
+#define RKLineSeparatorCharacter                ((unichar)NSLineSeparatorCharacter)
 
 #define RKTitleDocumentAttribute                NSTitleDocumentAttribute
 #define RKCompanyDocumentAttribute              NSCompanyDocumentAttribute
@@ -53,3 +61,5 @@
 #define RKCategoryDocumentAttribute             NSCategoryDocumentAttribute
 
 #endif
+
+

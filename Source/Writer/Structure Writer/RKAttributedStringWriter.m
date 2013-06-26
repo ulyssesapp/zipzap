@@ -32,45 +32,77 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     
     // Register handler
     [RKAttributedStringWriterHandlers addObject:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-        attributeName,                          @"attributeName",
-        [NSNumber numberWithInt:priority],      @"priority",
-        attributeWriter,                        @"writerClass",
-        nil
-      ]
+     @{@"attributeName": attributeName,
+        @"priority": [NSNumber numberWithInt:priority],
+        @"writerClass": attributeWriter}
     ];
     
     // Order handlers by priority
     // Additionally order them by attribute name to improve testability
-    [RKAttributedStringWriterHandlers sortUsingDescriptors:[NSArray arrayWithObjects: [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], 
+    [RKAttributedStringWriterHandlers sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES], 
                                                                                       [NSSortDescriptor sortDescriptorWithKey:@"writerClass.description" ascending:YES],
-                                                                                      [NSSortDescriptor sortDescriptorWithKey:@"attributeName" ascending:YES],
-                                                            nil
-                                                           ]];
+                                                                                      [NSSortDescriptor sortDescriptorWithKey:@"attributeName" ascending:YES]]];
     
     // Validate type conformance
     NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
 }
 
-+ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSAttributedString *)attributedStringByAdjustingStyles:(NSAttributedString *)attributedString
 {
     NSString *baseString = attributedString.string;
+    
+    // Pre-process any styles
+    NSMutableAttributedString *preprocessedString = [attributedString mutableCopy];
+    
+    for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
+        NSString *attributeName = handlerDescription[@"attributeName"];
+        Class handler = handlerDescription[@"writerClass"];
+        
+        // We operate on a per-paragraph level
+        [preprocessedString enumerateAttribute:attributeName inRange:NSMakeRange(0, baseString.length) options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+            [handler preprocessAttribute:attributeName
+                                   value:attributeValue
+                          effectiveRange:attributeRange
+                      ofAttributedString:preprocessedString
+             ];
+        }];
+    }
+    
+    return preprocessedString;
+}
+
++ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
+{
+    NSAttributedString *preprocessedString = [self attributedStringByAdjustingStyles: attributedString];
+    
+    NSString *baseString = preprocessedString.string;
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: baseString];
     
     // Write attribute styles
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
-        NSString *attributeName = [handlerDescription objectForKey: @"attributeName"];
-        Class handler = [handlerDescription objectForKey: @"writerClass"];
+        NSString *attributeName = handlerDescription[@"attributeName"];
+        Class handler = handlerDescription[@"writerClass"];
+        NSUInteger priority = [handlerDescription[@"priority"] unsignedIntegerValue];
             
         // We operate on a per-paragraph level
         [baseString enumerateSubstringsInRange:NSMakeRange(0, baseString.length) options:NSStringEnumerationByParagraphs usingBlock:
          ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-                [attributedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+             __block NSUInteger attributeCountPerParagraph = 0;
+             
+             [preprocessedString enumerateAttribute:attributeName inRange:enclosingRange options:0 usingBlock:^(id attributeValue, NSRange attributeRange, BOOL *stop) {
+                    if (attributeValue)
+                        attributeCountPerParagraph ++;
+                 
+                    // Ensure that we only apply one paragraph style of a certain type per paragraph
+                    if ((attributeCountPerParagraph > 1) && ((priority == RKAttributedStringWriterPriorityParagraphLevel) || (priority == RKAttributedStringWriterPriorityParagraphStyleSheetLevel)))
+                        return;
+
+                    // Translate style
                     [handler addTagsForAttribute:attributeName 
                                            value:attributeValue 
                                   effectiveRange:attributeRange 
                                         toString:taggedString 
-                                  originalString:attributedString 
+                                  originalString:preprocessedString 
                                 attachmentPolicy:attachmentPolicy 
                                        resources:resources
                     ];
@@ -87,8 +119,8 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     
     // Write attribute styles
     for (NSDictionary *handlerDescription in RKAttributedStringWriterHandlers) {
-        NSString *attributeName = [handlerDescription objectForKey: @"attributeName"];
-        Class handler = [handlerDescription objectForKey: @"writerClass"];
+        NSString *attributeName = handlerDescription[@"attributeName"];
+        Class handler = handlerDescription[@"writerClass"];
 
         id attributeValue = [attributes valueForKey:attributeName];
         

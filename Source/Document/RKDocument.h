@@ -38,23 +38,6 @@
 - (id)initWithSections:(NSArray *)array;
 
 /*!
- @abstract Exports the document as RTF with embedded pictures
- */
-- (NSData *)RTF;
-
-/*!
- @abstract Exports the document as RTF without pictures
- */
-- (NSData *)plainRTF;
-
-/*!
- @abstract Exports the document as RTFD 
- @discussion Creates a file wrapper containing the RTF and all referenced pictures
-             This method will modify the preferredFilename of any NSFileWrapper used as text attachment.
- */
-- (NSFileWrapper *)RTFD;
-
-/*!
  @abstract The sections a document consists of.
  */
 @property(nonatomic, strong) NSArray *sections;
@@ -87,9 +70,24 @@
 @property(nonatomic) BOOL hyphenationEnabled;
 
 /*!
+ @abstract Specifies a locale for the document (set to the default locale)
+ */
+@property(nonatomic) NSLocale *locale;
+
+/*!
  @abstract Page size in points
  */
 @property(nonatomic) CGSize pageSize;
+
+/*!
+ @abstract The distance from the top page border to the header in points
+ */
+@property(nonatomic) CGFloat headerSpacing;
+
+/*!
+ @abstract The distance from the bottom page border to the footer in points
+ */
+@property(nonatomic) CGFloat footerSpacing;
 
 /*!
  @abstract Page insets in points
@@ -143,5 +141,59 @@
  @discussion A mapping from style names to a NSDictionary containing style information of an attributed string. In order to use a character style in any document section it must be registered here.
  */
 @property(nonatomic,strong,readwrite) NSDictionary *characterStyles;
+
+/*!
+ @abstract Section numbering style
+ */
+@property(nonatomic) RKPageNumberingStyle sectionNumberingStyle;
+
+@end
+
+/*!
+ @abstract Methods for exporting RTFs
+ */
+@interface RKDocument (Exporting)
+
+/*!
+ @abstract Exports the document as RTF with embedded pictures
+ */
+- (NSData *)RTF;
+
+/*!
+ @abstract Exports the document as RTF without pictures
+ */
+- (NSData *)plainRTF;
+
+/*!
+ @abstract Exports the document as RTFD 
+ @discussion Creates a file wrapper containing the RTF and all referenced pictures
+ This method will modify the preferredFilename of any NSFileWrapper used as text attachment.
+ */
+- (NSFileWrapper *)RTFD;
+
+/*!
+ @abstract Exports the document as PDF
+ */
+- (NSData *)PDF;
+
+@end
+
+
+/*!
+ @abstract Methods required to test RTF generation
+ */
+@interface RKDocument (TestingSupport)
+
+/*!
+ @abstract Changes the usage of random list identifiers in RKDocument exports
+ @discussion Normally, RTFKit has to create random list identifiers for compatibility with Microsoft Word. To improve testing, this can be switched off here.
+ */
++ (void)useRandomListIdentifiers:(BOOL)useRandomListIdentifier;
+
+/*!
+ @abstract Specifies whether RTFKit is using random list identifier or not
+ @discussion This is usually set to YES (it might be only switched off for testing)
+ */
++ (BOOL)isUsingRandomListIdentifier;
 
 @end

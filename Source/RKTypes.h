@@ -97,3 +97,8 @@ typedef enum : NSUInteger {
  @see RKTwipsToPoints
  */
 #define RKTwipsToPoints(__twips)        ((__twips) / (typeof(__twips))20)
+
+/*!
+ @abstract The character used to indicate hyphenation
+*/
+#define RKSoftHyphenCharacter			((unichar)0xAD)

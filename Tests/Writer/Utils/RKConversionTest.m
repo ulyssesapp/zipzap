@@ -16,15 +16,15 @@
     STAssertEqualObjects([@"abc \\ def" RTFEscapedString], @"abc \\\\ def", @"Invalid backslash conversion");
     STAssertEqualObjects([@"abc { def" RTFEscapedString], @"abc \\{ def", @"Invalid conversion of {");
     STAssertEqualObjects([@"abc } def" RTFEscapedString], @"abc \\} def", @"Invalid conversion of }");
-    STAssertEqualObjects([@"abc \n def" RTFEscapedString], @"abc \\line\n def", @"Invalid conversion of }");
+    STAssertEqualObjects([@"abc \n def" RTFEscapedString], @"abc \\par\n def", @"Invalid conversion of }");
     STAssertEqualObjects([@"abc \t def" RTFEscapedString], @"abc \\tab  def", @"Invalid conversion of }");
     STAssertEqualObjects([@"abc \f def" RTFEscapedString], @"abc \\page\n def", @"Invalid conversion of }");    
 
     // Converting also characters in CP1252 to unicode
-    STAssertEqualObjects([@"abc ä def" RTFEscapedString], @"abc \\u228 def", @"Invalid unicode conversion");
+    STAssertEqualObjects([@"abc ä def" RTFEscapedString], @"abc \\u228  def", @"Invalid unicode conversion");
     
     // Converting a pure unicode charracter
-    STAssertEqualObjects([@"abc ∮ def" RTFEscapedString], @"abc \\u8750 def", @"Invalid unicode conversion");
+    STAssertEqualObjects([@"abc ∮ def" RTFEscapedString], @"abc \\u8750  def", @"Invalid unicode conversion");
 }
 
 - (void)testConvertToRTFDate

@@ -260,7 +260,7 @@
 
 - (void)testGenerateListTable
 {
-    NSArray *overrides = [NSArray arrayWithObjects: 
+    NSArray *overrides = [NSArray arrayWithObjects:
                           [NSNumber numberWithUnsignedInteger: 1],
                           [NSNumber numberWithUnsignedInteger: 3],                         
                           [NSNumber numberWithUnsignedInteger: 1],                         
@@ -278,8 +278,8 @@
     // Register lists to a resource pool
     RKResourcePool *resources = [RKResourcePool new];
                                   
-    [resources indexOfListStyle: firstList];
-    [resources indexOfListStyle: secondList];
+    [resources.listCounter indexOfListStyle: firstList];
+    [resources.listCounter indexOfListStyle: secondList];
     
     // Generate header
     NSString *listTable = [RKHeaderWriter listTableFromResourceManager:resources];
@@ -293,26 +293,26 @@
                     // levelcf0 (decimal)
                     "\\levelstartat1\\levelnfc0\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker \\{decimal\\}.}"
-                    "{\\leveltext\\leveltemplateid1001 \\'04\t\\'00.\t;}"
+                    "{\\leveltext\\leveltemplateid10 \\'04\t\\'00.\t;}"
                     "{\\levelnumbers \\'02;}"
-                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                    "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"
                 "{\\listlevel"
                     // levelcf4 (lower case letter)
                     "\\levelstartat1\\levelnfc4\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker \\{lower-alpha\\}.}"
                     "\\levelprepend"
-                    "{\\leveltext\\leveltemplateid1002 \\'06\t\\'00.\\'01.\t;}"
+                    "{\\leveltext\\leveltemplateid11 \\'06\t\\'00.\\'01.\t;}"
                     "{\\levelnumbers \\'02\\'04;}"
-                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                    "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"                         
                 "{\\listlevel"
                     // Different starting number; levelcf2 (lower case roman)
                     "\\levelstartat1\\levelnfc2\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker \\{lower-roman\\}.}" 
-                    "{\\leveltext\\leveltemplateid1003 \\'04\t\\'02.\t;}"
+                    "{\\leveltext\\leveltemplateid12 \\'04\t\\'02.\t;}"
                     "{\\levelnumbers \\'02;}"
-                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                    "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"                         
                 "\\listid1"
                 "{\\listname list1}"
@@ -324,17 +324,17 @@
                     // levelcf0 (decimal)
                     "\\levelstartat1\\levelnfc0\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker ---------\\{decimal\\}}"
-                    "{\\leveltext\\leveltemplateid2001 \\'0c\t---------\\'00\t;}"
+                    "{\\leveltext\\leveltemplateid20 \\'0c\t---------\\'00\t;}"
                     "{\\levelnumbers \\'0b;}"
-                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                    "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"
                 "{\\listlevel"
                     // levelcf23 (bullet)
                     "\\levelstartat3\\levelnfc23\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
                     "{\\*\\levelmarker -}"
-                    "{\\leveltext\\leveltemplateid2002 \\'03\t-\t;}"
+                    "{\\leveltext\\leveltemplateid21 \\'03\t-\t;}"
                     "{\\levelnumbers ;}"
-                    "\\levelfollow2\\levellegal0\\levelnorestart0"
+                    "\\levelfollow0\\levellegal0\\levelnorestart0"
                 "}"                         
                 "\\listid2"
                 "{\\listname list2}"
@@ -352,8 +352,8 @@
     // Register lists to a resource pool
     RKResourcePool *resources = [RKResourcePool new];
     
-    [resources indexOfListStyle: firstList];
-    [resources indexOfListStyle: secondList];
+    [resources.listCounter indexOfListStyle: firstList];
+    [resources.listCounter indexOfListStyle: secondList];
     
     // Generate header
     NSString *listTable = [RKHeaderWriter listOverrideTableFromResourceManager:resources];
@@ -440,7 +440,7 @@
     NSData *rtf = [document RTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
-    STAssertEqualObjects([rereadString string], @"abc\n", @"Invalid content");
+    STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
     
     STAssertEquals([[rereadDocumentProperties objectForKey:NSPaperSizeDocumentAttribute] sizeValue], document.pageSize, @"Invalid paper size");
     STAssertEquals([[rereadDocumentProperties objectForKey:NSLeftMarginDocumentAttribute] floatValue], (float)document.pageInsets.left, @"Invalid margin");
@@ -475,7 +475,7 @@
     NSData *rtf = [document RTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
-    STAssertEqualObjects([rereadString string], @"abc\n", @"Invalid content");
+    STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
     
     STAssertEqualObjects([rereadDocumentProperties objectForKey:NSTitleDocumentAttribute], @"Title", @"Invalid meta data");
     STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCompanyDocumentAttribute], @"Company", @"Invalid meta data");

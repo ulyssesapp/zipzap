@@ -34,16 +34,10 @@
 
 + (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(NSNumber *)superScriptModeObject resources:(RKResourcePool *)resources
 {
-    NSInteger mode = [superScriptModeObject integerValue];
+    if (!superScriptModeObject.integerValue)
+        return @"";
     
-    if (mode > 0) {
-        return [NSString stringWithFormat:@"\\super0 "];
-    }
-    else if (mode < 0) {
-        return [NSString stringWithFormat:@"\\sub0 "];
-    }
-
-    return @"";
+    return [NSString stringWithFormat:@"\\nosupersub "];
 }
 
 @end

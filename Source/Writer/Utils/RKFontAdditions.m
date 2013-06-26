@@ -11,7 +11,21 @@
 CTFontRef RKGetDefaultFont(void)
 {
     static CTFontRef defaultFont;
-    defaultFont = (defaultFont) ?: CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL);
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		defaultFont = CTFontCreateWithName(CFSTR("Helvetica"), 12, NULL);
+	});
     
     return defaultFont;
 }
+
+#if !TARGET_OS_IPHONE
+@implementation NSFont (RTFFontAdditions)
+
++ (NSFont *)RTFDefaultFont
+{
+    return [NSFont fontWithName:@"Helvetica" size:12];
+}
+
+@end
+#endif

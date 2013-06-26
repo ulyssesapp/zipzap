@@ -7,7 +7,7 @@
 //
 
 #import "RKListEnumeratorTest.h"
-#import "RKListEnumerator.h"
+#import "RKListCounter.h"
 #import "RKListStyle.h"
 #import "RKListItem.h"
 
@@ -46,7 +46,7 @@
     RKListItem *listBItemABAA = [RKListItem listItemWithStyle:listStyleB indentationLevel:3];
     RKListItem *listBItemB = [RKListItem listItemWithStyle:listStyleB indentationLevel:0];    
     
-    RKListEnumerator *enumerator = [RKListEnumerator new];
+    RKListCounter *enumerator = [RKListCounter new];
     
     STAssertEqualObjects([enumerator markerForListItem: listAItemA], @"1.", @"Invalid marker");
     STAssertEqualObjects([enumerator markerForListItem: listBItemA], @"1.", @"Invalid marker");    

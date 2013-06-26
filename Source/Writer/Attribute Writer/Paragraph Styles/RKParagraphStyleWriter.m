@@ -111,19 +111,14 @@
            attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
                   resources:(RKResourcePool *)resources
 {
-    NSString *paragraphHeader = [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:range resources:resources];
+    if (!paragraphStyle)
+        return;
 
+    NSString *paragraphHeader = [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:range resources:resources];
+    
     // We add \pard before each paragraph to reset the current paragraph styling
     [taggedString registerTag:@"\\pard " forPosition:range.location];
-
     [taggedString registerTag:paragraphHeader forPosition:range.location];
-    
-    [taggedString registerClosingTag:@"\\par\n" forPosition:NSMaxRange(range)];
-    
-    // Remove terminating newline, since Cocoa will add automatically a newline on the end of a paragraph
-    if ([[[attributedString string] substringWithRange:range] hasSuffix:@"\n"]) {
-        [taggedString removeRange:NSMakeRange(NSMaxRange(range) - 1, 1)];
-    }
 }
 
 + (NSString *)stylesheetTagForAttribute:(NSString *)attributeName 
@@ -481,9 +476,12 @@
         case kCTRightTextAlignment:
             [rtf appendString:@"\\tqr"];
             break;
+            
+        default:
+            break;
     }
     
-    [rtf appendFormat:@"\\tx%u", (NSUInteger)RKPointsToTwips(location)];
+    [rtf appendFormat:@"\\tx%lu", (NSUInteger)RKPointsToTwips(location)];
     
     return rtf;
 }
