@@ -12,10 +12,6 @@
 
 #import "NSString+RKNumberFormatting.h"
 
-#define RKFootnoteSpacing       15.0
-#define RKHeaderSpacing         10.0
-#define RKFooterSpacing         10.0
-#define RKColumnSpacing         10.0
 
 @implementation RKDocument (PDFUtilities)
 
@@ -65,14 +61,14 @@
     CGRect pageBounds = self.boundingBoxForContent;
 
     // Shrink page for footer, if needed
-    if ((footer.origin.y + footer.size.height) > (pageBounds.origin.y - RKFooterSpacing)) {
-        pageBounds.origin.y = footer.origin.y + footer.size.height + RKFooterSpacing;
-        pageBounds.size.height -= (footer.origin.y + footer.size.height - pageBounds.origin.y + RKFooterSpacing);
+    if ((footer.origin.y + footer.size.height) > (pageBounds.origin.y - self.footerSpacingBefore)) {
+        pageBounds.origin.y = footer.origin.y + footer.size.height + self.footerSpacingBefore;
+        pageBounds.size.height -= (footer.origin.y + footer.size.height - pageBounds.origin.y + self.footerSpacingAfter);
     }
     
     // Shrink page for header, if needed
-    if (((pageBounds.origin.y + pageBounds.size.height) > (header.origin.y - RKHeaderSpacing)) && (header.size.height)) {
-        pageBounds.size.height -= (pageBounds.origin.y + pageBounds.size.height) - (header.origin.y - RKHeaderSpacing);
+    if (((pageBounds.origin.y + pageBounds.size.height) > (header.origin.y - self.headerSpacingAfter)) && (header.size.height)) {
+        pageBounds.size.height -= (pageBounds.origin.y + pageBounds.size.height) - (header.origin.y - self.headerSpacingAfter);
     }
 
     // Determine column size and position
@@ -89,7 +85,7 @@
     CGRect boundingBox = self.boundingBoxForContent;
     
     // The footer section may occupy at most the half of the page
-    boundingBox.origin.y = self.footerSpacing;
+    boundingBox.origin.y = self.footerSpacingAfter;
     boundingBox.size.height = boundingBox.size.height / 2;
     
     return boundingBox;
@@ -100,7 +96,7 @@
     CGRect boundingBox = self.boundingBoxForContent;
     
     // The header section may occupy at most the half of the page
-    boundingBox.origin.y = self.pdfMediaBox.size.height - self.headerSpacing - (boundingBox.size.height / 2.0f);
+    boundingBox.origin.y = self.pdfMediaBox.size.height - self.headerSpacingBefore - (boundingBox.size.height / 2.0f);
     boundingBox.size.height = boundingBox.size.height / 2.0f;
     
     return boundingBox;
@@ -136,7 +132,7 @@
 - (CGRect)boundingBoxForFootnotesFromColumnRect:(CGRect)columnRect height:(CGFloat)height
 {
     CGRect footnoteRect = columnRect;
-    footnoteRect.size.height = height - RKFootnoteSpacing;
+    footnoteRect.size.height = height - self.footnoteSpacingBefore;
     
     return footnoteRect;
 }
@@ -185,11 +181,6 @@
     
     NSAssert(false, @"Invalid section numbering style");
     return nil;
-}
-
-- (CGFloat)footnoteSpacing
-{
-	return RKFootnoteSpacing;
 }
 
 @end

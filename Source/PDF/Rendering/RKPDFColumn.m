@@ -50,7 +50,7 @@
 		_contentFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingDownwards context:context];
 		_footnotesFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingUpwards context:context];
 		
-		_footnotesFrame.maximumHeight -= _context.document.footnoteSpacing;
+		_footnotesFrame.maximumHeight -= _context.document.footnoteSpacingBefore;
 	}
 	
 	return self;
@@ -206,7 +206,7 @@
 
 - (CGFloat)maximumContentHeight
 {
-	return _boundingBox.size.height - _footnotesFrame.visibleBoundingBox.size.height - ((_footnotesFrame.lines.count > 0) ? _context.document.footnoteSpacing : 0);
+	return _boundingBox.size.height - _footnotesFrame.visibleBoundingBox.size.height - ((_footnotesFrame.lines.count > 0) ? _context.document.footnoteSpacingBefore : 0);
 }
 
 

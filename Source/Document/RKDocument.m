@@ -46,8 +46,12 @@
         _endnoteEnumerationPolicy = RKFootnoteContinuousEnumeration;
         
         // Set header / footer spacing to RTF default
-        _headerSpacing = 36;
-        _footerSpacing = 36;
+        _headerSpacingBefore = 36;
+		_headerSpacingAfter = 10;
+		_footerSpacingBefore = 10;
+        _footerSpacingAfter = 36;
+		
+		_footnoteSpacingBefore = 15;
     }
     
     return self;
@@ -71,8 +75,10 @@
     copy.endnoteEnumerationStyle = _endnoteEnumerationStyle;
     copy.footnoteEnumerationPolicy = _footnoteEnumerationPolicy;
     copy.endnoteEnumerationPolicy = _endnoteEnumerationPolicy;
-    copy.headerSpacing = _headerSpacing;
-    copy.footerSpacing = _footerSpacing;
+    copy.headerSpacingBefore = _headerSpacingBefore;
+    copy.headerSpacingAfter = _headerSpacingAfter;
+    copy.footerSpacingBefore = _footerSpacingBefore;
+	copy.footerSpacingAfter = _footerSpacingAfter;
     copy.sectionNumberingStyle = _sectionNumberingStyle;
     
     copy.paragraphStyles = [_paragraphStyles copy];
@@ -105,8 +111,10 @@
             &&  (self.endnoteEnumerationStyle == object.endnoteEnumerationStyle)
             &&  (self.footnoteEnumerationPolicy == object.footnoteEnumerationPolicy)
             &&  (self.endnoteEnumerationPolicy == object.endnoteEnumerationPolicy)
-            &&  (self.headerSpacing == object.headerSpacing)
-            &&  (self.footerSpacing == object.footerSpacing)    
+            &&  (self.headerSpacingBefore == object.headerSpacingBefore)
+            &&  (self.headerSpacingAfter == object.headerSpacingAfter)
+            &&  (self.footerSpacingBefore == object.footerSpacingBefore)
+            &&  (self.footerSpacingAfter == object.footerSpacingAfter)
     ;
 }
 

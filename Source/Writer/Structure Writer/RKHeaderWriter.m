@@ -370,14 +370,14 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 							   ]];
 
     // Header / footer spacing
-    if (document.headerSpacing != 36)
+    if (document.headerSpacingBefore != 36)
         [attributes appendString: [NSString stringWithFormat:@"\\headery%lu",
-                                   (NSUInteger)RKPointsToTwips(document.headerSpacing)
+                                   (NSUInteger)RKPointsToTwips(document.headerSpacingBefore)
                                    ]];
     
-    if (document.footerSpacing != 36)
+    if (document.footerSpacingAfter != 36)
         [attributes appendString: [NSString stringWithFormat:@"\\footery%lu",
-                                   (NSUInteger)RKPointsToTwips(document.footerSpacing)
+                                   (NSUInteger)RKPointsToTwips(document.footerSpacingAfter)
                                    ]];
     
     

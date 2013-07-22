@@ -64,10 +64,10 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
             self.pageSize = CGSizeMake([[propertyList objectForKey: RKPersistencyPageWidthKey] floatValue], [[propertyList objectForKey: RKPersistencyPageHeightKey] floatValue]);
         
         if ([propertyList objectForKey: RKPersistencyHeaderSpacingKey])
-            self.headerSpacing = [[propertyList objectForKey: RKPersistencyHeaderSpacingKey] floatValue];
+            self.headerSpacingBefore = [[propertyList objectForKey: RKPersistencyHeaderSpacingKey] floatValue];
         
         if ([propertyList objectForKey: RKPersistencyFooterSpacingKey])
-            self.footerSpacing = [[propertyList objectForKey: RKPersistencyFooterSpacingKey] floatValue];
+            self.footerSpacingAfter = [[propertyList objectForKey: RKPersistencyFooterSpacingKey] floatValue];
 
         if ([propertyList objectForKey: RKPersistencyPageInsetsTopKey])
             self.pageInsets = RKPageInsetsMake([[propertyList objectForKey: RKPersistencyPageInsetsTopKey] floatValue],
@@ -145,8 +145,8 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
 	propertyList[RKPersistencyDocumentLocaleKey] = self.locale.localeIdentifier;
     propertyList[RKPersistencyPageWidthKey] = [NSNumber numberWithFloat: self.pageSize.width];
     propertyList[RKPersistencyPageHeightKey] = [NSNumber numberWithFloat: self.pageSize.height];
-    propertyList[RKPersistencyHeaderSpacingKey] = [NSNumber numberWithFloat: self.headerSpacing];
-    propertyList[RKPersistencyFooterSpacingKey] = [NSNumber numberWithFloat: self.footerSpacing];
+    propertyList[RKPersistencyHeaderSpacingKey] = [NSNumber numberWithFloat: self.headerSpacingBefore];
+    propertyList[RKPersistencyFooterSpacingKey] = [NSNumber numberWithFloat: self.footerSpacingAfter];
     propertyList[RKPersistencyPageInsetsTopKey] = [NSNumber numberWithFloat: self.pageInsets.top];
     propertyList[RKPersistencyPageInsetsBottomKey] = [NSNumber numberWithFloat: self.pageInsets.bottom];
     propertyList[RKPersistencyPageInsetsLeftKey] = [NSNumber numberWithFloat: self.pageInsets.left];

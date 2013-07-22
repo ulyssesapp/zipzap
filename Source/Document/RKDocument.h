@@ -82,12 +82,30 @@
 /*!
  @abstract The distance from the top page border to the header in points
  */
-@property(nonatomic) CGFloat headerSpacing;
+@property(nonatomic) CGFloat headerSpacingBefore;
+
+/*!
+ @abstract The minimum distance from the the header to the content area.
+ @discussion PDF-only.
+ */
+@property(nonatomic) CGFloat headerSpacingAfter;
+
+/*!
+ @abstract The minimum distance from the the footer to the content area.
+ @discussion PDF-only.
+ */
+@property(nonatomic) CGFloat footerSpacingBefore;
 
 /*!
  @abstract The distance from the bottom page border to the footer in points
  */
-@property(nonatomic) CGFloat footerSpacing;
+@property(nonatomic) CGFloat footerSpacingAfter;
+
+/*!
+ @abstract The distance from the content text to the footnotes
+ @discussion PDF-only.
+ */
+@property(nonatomic) CGFloat footnoteSpacingBefore;
 
 /*!
  @abstract Page insets in points

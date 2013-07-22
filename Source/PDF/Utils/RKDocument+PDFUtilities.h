@@ -65,9 +65,4 @@
  */
 - (NSString *)stringForSectionNumber:(NSUInteger)sectionNumber;
 
-/*!
- @abstract Provides the spacing height between footnotes and text
- */
-- (CGFloat)footnoteSpacing;
-
 @end
