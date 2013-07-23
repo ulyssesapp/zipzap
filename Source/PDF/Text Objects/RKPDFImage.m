@@ -41,17 +41,23 @@
         
         #if !TARGET_OS_IPHONE
             NSImage *image = [[NSImage alloc] initWithData:self.fileWrapper.regularFileContents];
-            if (!image)
+            if (!image || NSEqualSizes(image.size, NSZeroSize))
                 return nil;
         
             _image = [image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
+			if (!_image)
+				return nil;
+		
             CFRetain(_image);
         #else
             UIImage *image = [[UIImage alloc] initWithData:self.fileWrapper.regularFileContents];
-            if (!image)
+            if (!image || CGSizeEqualToSize(image.size, CGSizeZero))
                 return nil;
         
             _image = image.CGImage;
+			if (!_image)
+				return nil;
+		
             CFRetain(_image);
         #endif
 
