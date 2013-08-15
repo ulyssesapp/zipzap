@@ -42,8 +42,8 @@
     testDocument.metadata = [NSDictionary dictionaryWithObject:@"abc" forKey:RKTitleDocumentAttribute];
     testDocument.hyphenationEnabled = YES;
     testDocument.pageSize =  CGSizeMake(100, 200);
-    testDocument.footerSpacing = 5;
-    testDocument.headerSpacing = 6;
+    testDocument.footerSpacingAfter = 5;
+    testDocument.headerSpacingBefore = 6;
     testDocument.pageInsets = RKPageInsetsMake(1, 2, 3, 4);
     testDocument.footnotePlacement = RKFootnotePlacementSectionEnd;
     testDocument.endnotePlacement = RKEndnotePlacementSectionEnd;

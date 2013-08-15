@@ -91,12 +91,12 @@
     
     NSString *registeredFilename = [resourceManager registerFileWrapper:originalFileWrapper];
     
-    STAssertEqualObjects(registeredFilename, @"0.foo____.png", @"Invalid filename generated");
+    STAssertEqualObjects(registeredFilename, @"0-foo____.png", @"Invalid filename generated");
     STAssertEquals(resourceManager.attachmentFileWrappers.count, (NSUInteger)1, @"Invalid count of files");
     
     NSFileWrapper *registeredFileWrapper = [resourceManager.attachmentFileWrappers.allValues objectAtIndex:0];
     
-    STAssertEqualObjects([resourceManager.attachmentFileWrappers.allKeys objectAtIndex:0], @"0.foo____.png", @"Invalid filename");
+    STAssertEqualObjects([resourceManager.attachmentFileWrappers.allKeys objectAtIndex:0], @"0-foo____.png", @"Invalid filename");
     
     STAssertEqualObjects([registeredFileWrapper regularFileContents], [originalFileWrapper regularFileContents], @"File contents differ");
 }

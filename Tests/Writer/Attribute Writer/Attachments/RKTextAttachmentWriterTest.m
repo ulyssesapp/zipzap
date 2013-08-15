@@ -137,7 +137,7 @@
     // Correct tag placement
     STAssertEqualObjects(flattened,
                          @"--"
-                         "{{\\NeXTGraphic 0.image.png \\width0 \\height0}¬}"
+                         "{{\\NeXTGraphic 0-image.png \\width0 \\height0}¬}"
                          "--",
                          @"Invalid tag generated"
                         );
@@ -147,7 +147,7 @@
 
     NSFileWrapper *registeredFile = [resources.attachmentFileWrappers.allValues  objectAtIndex:0];
     
-    STAssertEqualObjects(registeredFile.preferredFilename, @"0.image.png", @"Invalid file name");
+    STAssertEqualObjects(registeredFile.preferredFilename, @"0-image.png", @"Invalid file name");
     STAssertEqualObjects(registeredFile.regularFileContents, [[picture fileWrapper] regularFileContents], @"File contents differ");
 }
 
@@ -170,7 +170,7 @@
     // Correct tag placement
     STAssertEqualObjects(flattened,
                          @"--"
-                         "{{\\NeXTGraphic 0.movie.mov \\width0 \\height0}¬}"
+                         "{{\\NeXTGraphic 0-movie.mov \\width0 \\height0}¬}"
                          "--",
                          @"Invalid tag generated"
                          );
@@ -180,7 +180,7 @@
     
     NSFileWrapper *registeredFile = [resources.attachmentFileWrappers.allValues objectAtIndex:0];
     
-    STAssertEqualObjects(registeredFile.preferredFilename, @"0.movie.mov", @"Invalid file name");
+    STAssertEqualObjects(registeredFile.preferredFilename, @"0-movie.mov", @"Invalid file name");
     STAssertEqualObjects(registeredFile.regularFileContents, [[movie fileWrapper] regularFileContents], @"File contents differ");
 }
 
@@ -234,7 +234,7 @@
     
     NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
     
-    STAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0.image.png", @"Invalid filename");
+    STAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0-image.png", @"Invalid filename");
     STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, picture.fileWrapper.regularFileContents, @"File contents differ");
 }
 
@@ -252,7 +252,7 @@
     
     NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
     
-    STAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0.movie.mov", @"Invalid filename");
+    STAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0-movie.mov", @"Invalid filename");
     STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, movie.fileWrapper.regularFileContents, @"File contents differ");
 }
 #endif

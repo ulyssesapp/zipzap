@@ -33,7 +33,7 @@
     }
     
     // Render PDF to bitmap
-    CGContextRef bitmapContext = CGBitmapContextCreate(NULL, bitmapSize.width, bitmapSize.height, 8, 4 * bitmapSize.width, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB), kCGImageAlphaPremultipliedLast);
+    CGContextRef bitmapContext = CGBitmapContextCreate(NULL, bitmapSize.width, bitmapSize.height, 8, 4 * bitmapSize.width, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB), (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
     CGFloat currentBitmapPos = 0;
     
     CGColorRef whiteColor = CGColorCreateGenericGray(1, 1);
