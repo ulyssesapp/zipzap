@@ -41,7 +41,7 @@
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)originalString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+           conversionPolicy:(RKConversionPolicy)conversionPolicy 
                   resources:(RKResourcePool *)resources;
 {
     [taggedString registerTag:[self openingTagsForAttribute:attributeName value:value resources:resources] forPosition:range.location];

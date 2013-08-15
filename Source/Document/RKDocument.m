@@ -140,14 +140,14 @@
 
 @implementation RKDocument (Exporting)
 
-- (NSData *)RTF
+- (NSData *)wordRTF
 {
-    return [RKWriter RTFfromDocument: self];
+    return [RKWriter wordRTFfromDocument: self];
 }
 
-- (NSData *)plainRTF
+- (NSData *)systemRTF
 {
-    return [RKWriter plainRTFfromDocument: self];
+    return [RKWriter systemRTFfromDocument: self];
 }
 
 - (NSFileWrapper *)RTFD

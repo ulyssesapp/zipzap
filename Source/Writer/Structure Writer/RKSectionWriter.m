@@ -25,35 +25,35 @@
            attributed strings are surrounded by the given tag
  */
 + (NSString *)translateAttributedStringMap:(NSDictionary *)attributedStringMap
-                      withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                      withConversionPolicy:(RKConversionPolicy)conversionPolicy 
                                  resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Translates all headers of a section to RTF
  */
-+ (NSString *)headersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSString *)headersForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Translates all footers of a section to RTF
  */
-+ (NSString *)footersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSString *)footersForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Translates the content of a section to RTF
  */
-+ (NSString *)contentForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources;
++ (NSString *)contentForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources;
 
 @end
 
 @implementation RKSectionWriter
 
-+ (NSString *)RTFFromSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSString *)RTFFromSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
     NSString *sectionAttributes = [self sectionAttributesForSection:section];
 
-    NSString *headers = [self headersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
-    NSString *footers = [self footersForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
-    NSString *content = [self contentForSection:section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources];
+    NSString *headers = [self headersForSection:section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources];
+    NSString *footers = [self footersForSection:section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources];
+    NSString *content = [self contentForSection:section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources];
     
     return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@", sectionAttributes, headers, footers, content];
 }
@@ -96,7 +96,7 @@
 }
 
 + (NSString *)translateAttributedStringMap:(NSDictionary *)attributedStringMap
-                   withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+                   withConversionPolicy:(RKConversionPolicy)conversionPolicy 
                               resources:(RKResourcePool *)resources
 {
     NSMutableString *translation = [NSMutableString new];    
@@ -105,7 +105,7 @@
         NSAttributedString *attributedString = attributedStringMap[tag];
 
         [translation appendString:
-         [NSString stringWithRTFGroupTag:tag body:[RKAttributedStringWriter RTFFromAttributedString:attributedString withAttachmentPolicy:attachmentPolicy resources:resources]]
+         [NSString stringWithRTFGroupTag:tag body:[RKAttributedStringWriter RTFFromAttributedString:attributedString withConversionPolicy:conversionPolicy resources:resources]]
         ];
         [translation appendString: @"\n"];
     }
@@ -113,7 +113,7 @@
     return translation;
 }
 
-+ (NSString *)headersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSString *)headersForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
     NSMutableDictionary *translationTable = [NSMutableDictionary new];
 
@@ -131,11 +131,11 @@
         translationTable[@"headerf"] = firstHeader;
 
 
-    return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
+    return [self translateAttributedStringMap:translationTable withConversionPolicy:conversionPolicy resources:resources];
 
 }
 
-+ (NSString *)footersForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSString *)footersForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
     NSMutableDictionary *translationTable = [NSMutableDictionary new];
     
@@ -152,12 +152,12 @@
     if (firstFooter)
         translationTable[@"footerf"] = firstFooter;
     
-    return [self translateAttributedStringMap:translationTable withAttachmentPolicy:attachmentPolicy resources:resources];
+    return [self translateAttributedStringMap:translationTable withConversionPolicy:conversionPolicy resources:resources];
 }
 
-+ (NSString *)contentForSection:(RKSection *)section withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSString *)contentForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
-    return [RKAttributedStringWriter RTFFromAttributedString:section.content withAttachmentPolicy:attachmentPolicy resources:resources];
+    return [RKAttributedStringWriter RTFFromAttributedString:section.content withConversionPolicy:conversionPolicy resources:resources];
 }
 
 @end

@@ -9,31 +9,19 @@
 @class RKDocument;
 
 /*!
- @abstract Attachment policies for RTF generation
- @const RKAttachmentPolicyIgnore        Ignore all attachments
-        RKAttachmentPolicyEmbed         Embed all attachments as \pict commands as in RTF
-        RKAttachmentPolicyReference     Create references to all attachments for RTFD generation
- */
-typedef enum : NSUInteger {
-    RKAttachmentPolicyIgnore = 0,
-    RKAttachmentPolicyEmbed = 1,
-    RKAttachmentPolicyReference = 2
-} RKAttachmentPolicy;
-
-/*!
  @abstract The internally used RTF writer
  */
 @interface RKWriter : NSObject
 
 /*!
- @abstract Builds an RTF document without attached files
+ @abstract Builds an RTF document without attached files, optimized for system compatibility
  */
-+ (NSData *)plainRTFfromDocument:(RKDocument *)document;
++ (NSData *)systemRTFfromDocument:(RKDocument *)document;
 
 /*!
- @abstract Builds an RTF from an RTFDocument
+ @abstract Builds an RTF from an RTFDocument containing embedded images, optimized for Word compatibility
  */
-+ (NSData *)RTFfromDocument:(RKDocument *)document;
++ (NSData *)wordRTFfromDocument:(RKDocument *)document;
 
 /*!
  @abstract Builds an RTF from an RTFDocument

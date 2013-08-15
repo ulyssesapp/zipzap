@@ -71,7 +71,7 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     return preprocessedString;
 }
 
-+ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool *)resources
++ (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
     NSAttributedString *preprocessedString = [self attributedStringByAdjustingStyles: attributedString];
     
@@ -103,7 +103,7 @@ NSMutableArray *RKAttributedStringWriterHandlers;
                                   effectiveRange:attributeRange 
                                         toString:taggedString 
                                   originalString:preprocessedString 
-                                attachmentPolicy:attachmentPolicy 
+                                conversionPolicy:conversionPolicy 
                                        resources:resources
                     ];
                 }];

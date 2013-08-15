@@ -124,7 +124,7 @@
                                      effectiveRange:NSMakeRange(1,1) 
                                            toString:taggedString 
                                      originalString:nil 
-                                   attachmentPolicy:0 
+                                   conversionPolicy:0 
                                           resources:resources
      ];
     
@@ -142,7 +142,7 @@
                                      effectiveRange:NSMakeRange(1,1) 
                                            toString:taggedString 
                                      originalString:nil 
-                                   attachmentPolicy:0 
+                                   conversionPolicy:0 
                                           resources:resources
      ];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid paragraph stylesheet used");
@@ -158,7 +158,7 @@
                                      effectiveRange:NSMakeRange(1,1) 
                                            toString:taggedString 
                                      originalString:nil 
-                                   attachmentPolicy:0 
+                                   conversionPolicy:0 
                                           resources:resources
     ];
     STAssertEqualObjects([taggedString flattenedRTFString], 
@@ -183,7 +183,7 @@
                                      effectiveRange:NSMakeRange(1,1) 
                                            toString:taggedString 
                                      originalString:nil 
-                                   attachmentPolicy:0 
+                                   conversionPolicy:0 
                                           resources:resources
     ];
 
@@ -208,7 +208,7 @@
                                      effectiveRange:NSMakeRange(1,1) 
                                            toString:taggedString 
                                      originalString:nil 
-                                   attachmentPolicy:0 
+                                   conversionPolicy:0 
                                           resources:resources
      ];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
@@ -224,7 +224,7 @@
                                      effectiveRange:NSMakeRange(1,1) 
                                            toString:taggedString 
                                      originalString:nil 
-                                   attachmentPolicy:0 
+                                   conversionPolicy:0 
                                           resources:resources
      ];
     STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
@@ -240,7 +240,7 @@
                                      effectiveRange:NSMakeRange(1,1) 
                                            toString:taggedString 
                                      originalString:nil 
-                                   attachmentPolicy:0 
+                                   conversionPolicy:0 
                                           resources:resources
      ];
     
@@ -348,9 +348,9 @@
     [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(36, 6)];
     
     #if !TARGET_OS_IPHONE
-        [self assertRTF:[document RTF] withTestDocument:@"stylesheet"];
+        [self assertRTF:[document wordRTF] withTestDocument:@"stylesheet"];
     #else
-        [self assertRTF:[document RTF] withTestDocument:@"stylesheet-ios"];
+        [self assertRTF:[document wordRTF] withTestDocument:@"stylesheet-ios"];
     #endif
 }
 

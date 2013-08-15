@@ -13,7 +13,7 @@
 - (void)testGeneratingEmptyRTFDocument
 {
     RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@""]];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"empty"];
 }
@@ -21,7 +21,7 @@
 - (void)testGeneratingSimpleRTFDocument
 {
     RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@"abcdefä \\ { }"]];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
 
     [self assertRTF: converted withTestDocument: @"simple"];
 }

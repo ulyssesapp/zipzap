@@ -16,7 +16,7 @@
     NSNumber *placeholder = [NSNumber numberWithInt:RKPlaceholderPageNumber];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", RKAttachmentCharacter]];
     
-    [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:nil];
+    [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:nil];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
@@ -30,7 +30,7 @@
     NSNumber *placeholder = [NSNumber numberWithInt:RKPlaceholderSectionNumber];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@">%C<", RKAttachmentCharacter]];
     
-    [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:nil];
+    [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:nil];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
@@ -73,7 +73,7 @@
     
     // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"placeholder"];
 }

@@ -24,7 +24,7 @@
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"abc"];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"abc"];
     
-    [writer addTagsForAttribute:styleName value:style effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:attributedString attachmentPolicy:0 resources:nil];
+    [writer addTagsForAttribute:styleName value:style effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:attributedString conversionPolicy:0 resources:nil];
     
     STAssertEqualObjects([taggedString flattenedRTFString], expectedTranslation, @"Invalid style");
     

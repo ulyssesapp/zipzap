@@ -34,10 +34,10 @@
     RKResourcePool *resources = [RKResourcePool new];
     
     // Tagging defined color
-    [RKColorAttributeWriter addTagsForAttribute:colorStyleName value:color effectiveRange:NSMakeRange(1,2) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
+    [RKColorAttributeWriter addTagsForAttribute:colorStyleName value:color effectiveRange:NSMakeRange(1,2) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
     
     // Tagging default color
-    [RKColorAttributeWriter addTagsForAttribute:colorStyleName value:nil effectiveRange:NSMakeRange(3,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
+    [RKColorAttributeWriter addTagsForAttribute:colorStyleName value:nil effectiveRange:NSMakeRange(3,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
     
     STAssertEqualObjects([taggedString flattenedRTFString],
                          ([NSString stringWithFormat:

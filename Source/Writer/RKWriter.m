@@ -7,6 +7,7 @@
 //
 
 #import "RKWriter.h"
+#import "RKConversionPolicy.h"
 #import "RKResourcePool.h"
 #import "RKHeaderWriter.h"
 #import "RKBodyWriter.h"
@@ -17,20 +18,20 @@
  @abstract Writes out the contents of an RKDocument as RTF as an NSData object
  @discussion The handling of inline attachments can be switched between the NextStep (RTFD) format and the Microsoft format. It also returns a resource pool that describes all resources that have been collected through the document processing. The document will be encoded to ISO-Latin-1 as required by the RTF standard.
  */
-+ (NSData *)RTFDataFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool **)resourcesOut;
++ (NSData *)RTFDataFromDocument:(RKDocument *)document withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool **)resourcesOut;
 
 @end
 
 @implementation RKWriter
 
-+ (NSData *)RTFfromDocument:(RKDocument *)document
++ (NSData *)wordRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyEmbed resources:NULL];
+    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyConvertAttachments resources:NULL];
 }
 
-+ (NSData *)plainRTFfromDocument:(RKDocument *)document
++ (NSData *)systemRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyIgnore resources:NULL];
+    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyPositionListMarkerUsingTabs resources:NULL];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
@@ -38,7 +39,7 @@
     RKResourcePool *resources;
     
     // Generate RTF document
-    NSData *rtfContent = [self RTFDataFromDocument:document withAttachmentPolicy:RKAttachmentPolicyReference resources:&resources];
+    NSData *rtfContent = [self RTFDataFromDocument:document withConversionPolicy:(RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments|RKConversionPolicyPositionListMarkerUsingTabs) resources:&resources];
     NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:rtfContent];
 
     // Pacakge image files
@@ -50,7 +51,7 @@
     return [[NSFileWrapper alloc] initDirectoryWithFileWrappers:packageFiles ];
 }
 
-+ (NSData *)RTFDataFromDocument:(RKDocument *)document withAttachmentPolicy:(RKAttachmentPolicy)attachmentPolicy resources:(RKResourcePool **)resourcesOut
++ (NSData *)RTFDataFromDocument:(RKDocument *)document withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool **)resourcesOut
 {
     RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
 
@@ -58,7 +59,7 @@
         *resourcesOut = resources;
     
     // Tranlsate body and header
-    NSString *body = [RKBodyWriter RTFBodyFromDocument:document withAttachmentPolicy:attachmentPolicy resources:resources];
+    NSString *body = [RKBodyWriter RTFBodyFromDocument:document withConversionPolicy:conversionPolicy resources:resources];
     NSString *head = [RKHeaderWriter RTFHeaderFromDocument:document withResources:resources];
     
     // Generate document and encode it to ISO-Latin-1

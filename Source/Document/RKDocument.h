@@ -173,14 +173,14 @@
 @interface RKDocument (Exporting)
 
 /*!
- @abstract Exports the document as RTF with embedded pictures
+ @abstract Exports the document as RTF with embedded pictures, optimized for Microsoft Word.
  */
-- (NSData *)RTF;
+- (NSData *)wordRTF;
 
 /*!
- @abstract Exports the document as RTF without pictures
+ @abstract Exports the document as RTF without pictures, optimized for the Cocoa text system.
  */
-- (NSData *)plainRTF;
+- (NSData *)systemRTF;
 
 /*!
  @abstract Exports the document as RTFD 

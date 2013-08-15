@@ -37,7 +37,7 @@
              effectiveRange:(NSRange)range
                    toString:(RKTaggedString *)taggedString
              originalString:(NSAttributedString *)originalString
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy
+           conversionPolicy:(RKConversionPolicy)conversionPolicy
                   resources:(RKResourcePool *)resources;
 {
     [taggedString registerTag:[self stylesheetTagForAttribute:attributeName value:value styleSetting:nil resources:resources] forPosition:range.location];

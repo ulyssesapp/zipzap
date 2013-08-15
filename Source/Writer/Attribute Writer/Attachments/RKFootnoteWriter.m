@@ -25,13 +25,13 @@
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+           conversionPolicy:(RKConversionPolicy)conversionPolicy 
                   resources:(RKResourcePool *)resources
 {
     if (footnote) {
         NSString *noteTag = ([attributeName isEqual: RKEndnoteAttributeName] ) ? @"footnote\\ftnalt {\\super \\chftn }" : @"footnote {\\super \\chftn }";
                 
-        NSString *noteContent = [NSString stringWithRTFGroupTag:noteTag body:[RKAttributedStringWriter RTFFromAttributedString:footnote withAttachmentPolicy:RKAttachmentPolicyIgnore resources:resources]];
+        NSString *noteContent = [NSString stringWithRTFGroupTag:noteTag body:[RKAttributedStringWriter RTFFromAttributedString:footnote withConversionPolicy:RKConversionPolicySkippingAttachments(conversionPolicy) resources:resources]];
         
         // Footnote marker
         [taggedString registerTag:@"{\\super \\chftn }" forPosition:range.location];

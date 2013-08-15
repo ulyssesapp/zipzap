@@ -48,7 +48,7 @@
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+           conversionPolicy:(RKConversionPolicy)conversionPolicy 
                   resources:(RKResourcePool *)resources
 {
     if (textAttachment) {
@@ -58,20 +58,17 @@
             NSAssert([textAttachment isKindOfClass: RKTextAttachment.class], @"Expecting NSTextAttachment");
         #endif        
         
-        NSFileWrapper *fileWrapper = [textAttachment fileWrapper];
-        
-        switch (attachmentPolicy) {
-            case RKAttachmentPolicyEmbed:
-                [self addTagsForEmbeddedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
-                break;
-            
-            case RKAttachmentPolicyReference:
-                [self addTagsForReferencedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
-                break;
-                
-            case RKAttachmentPolicyIgnore:
-                break;            
-        }
+        // Convert images only, if allowed
+		if (conversionPolicy & RKConversionPolicyConvertAttachments) {
+			NSFileWrapper *fileWrapper = [textAttachment fileWrapper];
+			
+			if (conversionPolicy & RKConversionPolicyReferenceAttachments)
+				// Convert reference attachments for RTFD
+				 [self addTagsForReferencedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
+			else
+				// Create inline attachments for Word-RTF
+				[self addTagsForEmbeddedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
+		}
         
         // Select attachment charracter for removal in any case
         [taggedString removeRange:range];

@@ -23,7 +23,7 @@
     [attributedString addAttribute:RKAdditionalParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];
     
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"a"];
-    [RKAdditionalParagraphStyleWriter addTagsForAttribute:RKAdditionalParagraphStyleAttributeName value:paragraphStyle effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:nil];
+    [RKAdditionalParagraphStyleWriter addTagsForAttribute:RKAdditionalParagraphStyleAttributeName value:paragraphStyle effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:nil];
     
     // Test with default settings
     STAssertEqualObjects([taggedString flattenedRTFString],

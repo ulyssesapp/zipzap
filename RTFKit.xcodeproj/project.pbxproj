@@ -130,6 +130,8 @@
 		790AD9AC15BC107C0011E40E /* RKLinkSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD9A915BC10500011E40E /* RKLinkSerializer.h */; };
 		790AD9AD15BC107C0011E40E /* RKLinkSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD9AA15BC105D0011E40E /* RKLinkSerializer.m */; };
 		790AD9AE15BC107C0011E40E /* RKLinkSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD9AA15BC105D0011E40E /* RKLinkSerializer.m */; };
+		79118CB117BCEF2C00D5E346 /* RKConversionPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 79118CB017BCEF2C00D5E346 /* RKConversionPolicy.h */; };
+		79118CB217BCEF2C00D5E346 /* RKConversionPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 79118CB017BCEF2C00D5E346 /* RKConversionPolicy.h */; };
 		7927539915B4B34B00E97B35 /* NSDictionary+FlagSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 7927539715B4B34B00E97B35 /* NSDictionary+FlagSerialization.h */; };
 		7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 7927539815B4B34B00E97B35 /* NSDictionary+FlagSerialization.m */; };
 		7934474B14F146ED00F5DEB6 /* RKStyleNameAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C486B614F1465100B29A1E /* RKStyleNameAttributeWriterTest.m */; };
@@ -501,6 +503,7 @@
 		790AD99815BC0BEC0011E40E /* RKTextAttachmentSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentSerializer.m; path = "Persistency/Attribute Writer/Common/RKTextAttachmentSerializer.m"; sourceTree = "<group>"; };
 		790AD9A915BC10500011E40E /* RKLinkSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkSerializer.h; path = "Persistency/Attribute Writer/Common/RKLinkSerializer.h"; sourceTree = "<group>"; };
 		790AD9AA15BC105D0011E40E /* RKLinkSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkSerializer.m; path = "Persistency/Attribute Writer/Common/RKLinkSerializer.m"; sourceTree = "<group>"; };
+		79118CB017BCEF2C00D5E346 /* RKConversionPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKConversionPolicy.h; path = Writer/RKConversionPolicy.h; sourceTree = "<group>"; };
 		7927539715B4B34B00E97B35 /* NSDictionary+FlagSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+FlagSerialization.h"; path = "Persistency/Utils/NSDictionary+FlagSerialization.h"; sourceTree = "<group>"; };
 		7927539815B4B34B00E97B35 /* NSDictionary+FlagSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+FlagSerialization.m"; path = "Persistency/Utils/NSDictionary+FlagSerialization.m"; sourceTree = "<group>"; };
 		7935615014DB3B1F00FC0C1C /* RKListStyle+FormatStringParserAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKListStyle+FormatStringParserAdditions.h"; path = "Writer/Utils/RKListStyle+FormatStringParserAdditions.h"; sourceTree = "<group>"; };
@@ -1059,6 +1062,7 @@
 			isa = PBXGroup;
 			children = (
 				796EAB9A14D9479B001E8401 /* RKWriter.h */,
+				79118CB017BCEF2C00D5E346 /* RKConversionPolicy.h */,
 				796EAB9B14D9479B001E8401 /* RKWriter.m */,
 				796EAB9714D9476F001E8401 /* Attribute Writer */,
 				796EAB9814D9477D001E8401 /* Structure Writer */,
@@ -1610,6 +1614,7 @@
 				7946E93E1601DDAE0028EF11 /* RKPDFWriterTypes.h in Headers */,
 				79A8F4671602222300A9DA63 /* RKPDFColumn.h in Headers */,
 				79A8F46C1602223700A9DA63 /* RKPDFLine.h in Headers */,
+				79118CB117BCEF2C00D5E346 /* RKConversionPolicy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1654,6 +1659,7 @@
 				790AD91215BADE4A0011E40E /* RKSection+RKPersistence.h in Headers */,
 				790AD91415BADE4A0011E40E /* NSAttributedString+RKPersistence.h in Headers */,
 				790AD92C15BADE4A0011E40E /* RKPersistenceContext.h in Headers */,
+				79118CB217BCEF2C00D5E346 /* RKConversionPolicy.h in Headers */,
 				790AD92E15BADE4A0011E40E /* RKPersistenceContext+PrivateStorageAccessors.h in Headers */,
 				790AD92F15BADE4A0011E40E /* RKListStyle+RKPersistence.h in Headers */,
 				790AD93115BADE4A0011E40E /* NSDictionary+FlagSerialization.h in Headers */,

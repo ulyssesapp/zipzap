@@ -48,7 +48,7 @@
     
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
-    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
+    STAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\headerl \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text}\n",
                          @"Invalid header generated"
                          );
@@ -56,7 +56,7 @@
     [section setHeader:nil forPages:RKPageSelectionLeft];
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
-    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
+    STAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\headerr \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text}\n",
                          @"Invalid header generated"
                          );
@@ -64,7 +64,7 @@
     [section setHeader:nil forPages:RKPageSelectionRight];
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
-    STAssertEqualObjects([RKSectionWriter headersForSection:section withAttachmentPolicy:0 resources:resources],
+    STAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\headerf \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text}\n",
                          @"Invalid header generated"
                          );    
@@ -77,7 +77,7 @@
     
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
-    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
+    STAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\footerl \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text}\n",
                          @"Invalid footer generated"
                          );
@@ -85,7 +85,7 @@
     [section setFooter:nil forPages:RKPageSelectionLeft];
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
-    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
+    STAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\footerr \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text}\n",
                          @"Invalid footer generated"
                          );
@@ -93,7 +93,7 @@
     [section setFooter:nil forPages:RKPageSelectionRight];
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
-    STAssertEqualObjects([RKSectionWriter footersForSection:section withAttachmentPolicy:0 resources:resources],
+    STAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\footerf \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text}\n",
                          @"Invalid footer generated"
                          );    
@@ -107,7 +107,7 @@
    
     // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"section"];
 }
@@ -121,7 +121,7 @@
     sectionA.numberOfColumns = 2;
         
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"multicolumn"];
 }
@@ -145,7 +145,7 @@
     [sectionSwitch setFooter:[[NSAttributedString alloc] initWithString:@"Footer for right pages"] forPages:RKPageSelectionRight];
     
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionAll, sectionSwitch, nil]];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"headersAndFooters"];
 }
@@ -182,7 +182,7 @@
     sectionAlphabeticUpper.pageNumberingStyle = RKPageNumberingAlphabeticUpperCase;
     
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionDecimal, sectionRomanLower, sectionRomanUpper, sectionAlphabeticLower, sectionAlphabeticUpper, nil]];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"pagenumbering"];
 }

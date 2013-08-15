@@ -20,7 +20,7 @@
 
 - (NSAttributedString *)convertAndRereadSingleSectionDocument:(RKDocument *)document
 {
-    NSData *rtf = [document RTF];
+    NSData *rtf = [document wordRTF];
 
     return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:nil];
 }
@@ -31,7 +31,7 @@
     document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);   
     
-    NSData *rtf = [document plainRTF];
+    NSData *rtf = [document systemRTF];
     
     return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
 }
@@ -42,7 +42,7 @@
     document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
     
-    NSData *rtf = [document RTF];
+    NSData *rtf = [document wordRTF];
 
     return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
 }
@@ -141,10 +141,10 @@
     NSMutableDictionary *attributesMap = [NSMutableDictionary new];
     
     [attributedString enumerateAttribute:attributeName inRange:range options:0 usingBlock:^(id attributeValue, NSRange range, BOOL *stop) {
-        NSDictionary *rangeDictionary = [NSString stringWithFormat:@"%lu-%lu", range.location, range.length];
+        NSString *rangeDictionaryKey = [NSString stringWithFormat:@"%lu-%lu", range.location, range.length];
         
         if (attributeValue)        
-            [attributesMap setObject:attributeValue forKey:rangeDictionary];
+            [attributesMap setObject:attributeValue forKey:rangeDictionaryKey];
     }];
     
     return attributesMap;

@@ -382,7 +382,7 @@
                                  effectiveRange:NSMakeRange(0,3) 
                                        toString:taggedString 
                                  originalString:attributedString 
-                               attachmentPolicy:0 
+                               conversionPolicy:0 
                                       resources:nil
     ];
 
@@ -391,7 +391,7 @@
                                  effectiveRange:NSMakeRange(4,3)
                                        toString:taggedString 
                                  originalString:attributedString 
-                               attachmentPolicy:0 
+                               conversionPolicy:0 
                                       resources:nil
      ];
 

@@ -25,7 +25,7 @@
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+           conversionPolicy:(RKConversionPolicy)conversionPolicy 
                   resources:(RKResourcePool *)resources;
 {
     if (!styleName)

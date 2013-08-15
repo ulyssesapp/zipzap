@@ -21,7 +21,7 @@
                        effectiveRange:NSMakeRange(1,1) 
                              toString:taggedString 
                        originalString:nil 
-                     attachmentPolicy:0
+                     conversionPolicy:0
                             resources:nil
      ];    
 
@@ -30,7 +30,7 @@
                        effectiveRange:NSMakeRange(2,1) 
                              toString:taggedString 
                        originalString:nil 
-                     attachmentPolicy:0
+                     conversionPolicy:0
                             resources:nil
      ];      
     

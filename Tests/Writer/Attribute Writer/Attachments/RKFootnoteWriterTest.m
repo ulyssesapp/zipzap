@@ -21,7 +21,7 @@
     NSString *string = [NSString stringWithFormat:@">%C<", RKAttachmentCharacter];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
     
-    [RKFootnoteWriter addTagsForAttribute:RKFootnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
+    [RKFootnoteWriter addTagsForAttribute:RKFootnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
@@ -44,7 +44,7 @@
     NSString *string = [NSString stringWithFormat:@">%C<", RKAttachmentCharacter];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:string];
     
-    [RKFootnoteWriter addTagsForAttribute:RKEndnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil attachmentPolicy:0 resources:resources];
+    [RKFootnoteWriter addTagsForAttribute:RKEndnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
@@ -90,7 +90,7 @@
 
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"footnote"];
 }
@@ -108,7 +108,7 @@
     
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
-    NSData *converted = [document RTF];
+    NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"endnote"];
 }

@@ -7,6 +7,7 @@
 //
 
 #import "RKWriter.h"
+#import "RKConversionPolicy.h"
 #import "RKResourcePool.h"
 #import "RKTaggedString.h"
 
@@ -33,7 +34,7 @@
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 
-           attachmentPolicy:(RKAttachmentPolicy)attachmentPolicy 
+           conversionPolicy:(RKConversionPolicy)conversionPolicy 
                   resources:(RKResourcePool *)resources;
 
 /*!

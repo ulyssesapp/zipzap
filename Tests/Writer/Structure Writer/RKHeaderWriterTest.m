@@ -437,7 +437,7 @@
     
     NSDictionary *rereadDocumentProperties;
     
-    NSData *rtf = [document RTF];
+    NSData *rtf = [document wordRTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
     STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
@@ -472,7 +472,7 @@
     
     NSDictionary *rereadDocumentProperties;
     
-    NSData *rtf = [document RTF];
+    NSData *rtf = [document wordRTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
     STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");

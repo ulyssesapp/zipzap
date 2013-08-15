@@ -22,7 +22,7 @@
                                  effectiveRange:NSMakeRange(2,1) 
                                        toString:taggedString 
                                  originalString:nil 
-                               attachmentPolicy:RKAttachmentPolicyIgnore 
+                               conversionPolicy:0
                                       resources:resources
     ];
     
@@ -41,7 +41,7 @@
                                  effectiveRange:NSMakeRange(2,1) 
                                        toString:taggedString 
                                  originalString:nil 
-                               attachmentPolicy:RKAttachmentPolicyEmbed
+                               conversionPolicy:RKConversionPolicyConvertAttachments
                                       resources:resources
     ];
 
@@ -85,7 +85,7 @@
                                  effectiveRange:NSMakeRange(2,1) 
                                        toString:taggedString 
                                  originalString:nil 
-                               attachmentPolicy:RKAttachmentPolicyEmbed
+                               conversionPolicy:RKConversionPolicyConvertAttachments
                                       resources:resources
      ];
     
@@ -129,7 +129,7 @@
                                  effectiveRange:NSMakeRange(2,1) 
                                        toString:taggedString 
                                  originalString:nil 
-                               attachmentPolicy:RKAttachmentPolicyReference
+                               conversionPolicy:RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments
                                       resources:resources
      ];
     NSString *flattened = [taggedString flattenedRTFString];
@@ -162,7 +162,7 @@
                                  effectiveRange:NSMakeRange(2,1) 
                                        toString:taggedString 
                                  originalString:nil 
-                               attachmentPolicy:RKAttachmentPolicyReference
+                               conversionPolicy:RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments
                                       resources:resources
      ];
     NSString *flattened = [taggedString flattenedRTFString];
