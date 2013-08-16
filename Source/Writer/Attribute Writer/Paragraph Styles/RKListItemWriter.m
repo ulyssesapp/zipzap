@@ -60,6 +60,10 @@
 			
 		paragraphStyle.tabStops = newTabStops;
 	}];
+	
+	// Inside of an RKListItem, nested paragraphs must use line breaks but not paragraph breaks.
+	if (range.length > 1)
+		[preprocessedString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\u2028" options:0 range:NSMakeRange(range.location, range.length - 1)];
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName

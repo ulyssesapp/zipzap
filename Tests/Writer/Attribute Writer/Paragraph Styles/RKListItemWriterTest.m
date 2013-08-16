@@ -68,7 +68,7 @@
     
     NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@""];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A\u2028B"] withStyle:textList withIndentationLevel:0];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A\nB"] withStyle:textList withIndentationLevel:0];
     
     [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] withStyle:textList withIndentationLevel:1];
     [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] withStyle:textList withIndentationLevel:2];
