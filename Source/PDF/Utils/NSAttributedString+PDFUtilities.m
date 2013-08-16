@@ -37,7 +37,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 		paragraphStyle = [noteString attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
 	}
 	
-    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:fontRef enumeratorFactor: 1.25];
+    NSAttributedString *enumerator = [NSAttributedString footnoteEnumeratorFromString:enumerationString usingFont:fontRef enumeratorFactor: 1.25 attributes:@{}];
     
     // Add enumerator and spacing
     [noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
@@ -73,9 +73,9 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     return noteList;
 }
 
-+ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(CTFontRef)font enumeratorFactor:(CGFloat)enumeratorFactor
++ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(CTFontRef)font enumeratorFactor:(CGFloat)enumeratorFactor attributes:(NSDictionary *)attributes
 {
-    NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString:enumeratorString];
+    NSMutableAttributedString *enumerator = [[NSMutableAttributedString alloc] initWithString:enumeratorString attributes:attributes];
     
     // Style footnote
     if (!font)
@@ -83,7 +83,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     
     CGFloat pointSize = CTFontGetSize(font) / enumeratorFactor;
     CTFontRef subscriptFont = CTFontCreateCopyWithAttributes(font, pointSize, NULL, NULL);
-    
+	
     [enumerator addAttribute:NSFontAttributeName value:(__bridge id)subscriptFont range:NSMakeRange(0, enumerator.length)];
     [enumerator addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: CTFontGetSize(font) / (enumeratorFactor + 1.0f)] range:NSMakeRange(0, enumerator.length)];
     
