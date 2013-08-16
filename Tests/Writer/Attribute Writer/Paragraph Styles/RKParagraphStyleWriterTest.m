@@ -244,7 +244,7 @@
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
     STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
-                         @"\\ri19940\\curi19940\\pardeftab0"
+                         @"\\ri19940\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -256,7 +256,7 @@
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
     STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
-                         @"\\ri60\\curi60\\pardeftab0"
+                         @"\\ri60\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -268,7 +268,7 @@
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
     STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
-                         @"\\rtlpar\\ri19940\\curi19940\\pardeftab0"
+                         @"\\rtlpar\\ri19940\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -280,7 +280,7 @@
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
     STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
-                         @"\\rtlpar\\ri60\\curi60\\pardeftab0"
+                         @"\\rtlpar\\ri60\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
@@ -335,9 +335,9 @@
     STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:resources],
                          @"\\rtlpar"
                          "\\qr"
-                         "\\fi-20\\cufi-20"
-                         "\\li40\\culi40"
-                         "\\ri60\\curi60"
+                         "\\fi-20"
+                         "\\li40"
+                         "\\ri60"
                          // RTF requires the ordering \\slN\\slmultN
                          "\\slleading80"
                          "\\sl1200\\slmult1"

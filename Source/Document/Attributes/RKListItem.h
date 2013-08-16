@@ -31,11 +31,6 @@ extern NSString *RKTextListItemAttributeName;
 @property(nonatomic,strong,readwrite) RKListStyle *listStyle;
 
 /*!
- @abstract An attribute dictionary describing the styling of the list marker.
- */
-@property(nonatomic,strong,readwrite) NSDictionary *markerStyle;
-
-/*!
  @abstract The indentation level used by the list
  */
 @property(nonatomic,readwrite) NSUInteger indentationLevel;

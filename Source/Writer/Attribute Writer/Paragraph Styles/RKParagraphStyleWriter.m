@@ -343,8 +343,7 @@
     NSUInteger roundedFirstLineHeadIndent = RKPointsToTwips(firstLineHeadIndent - headIndent);
     
     if (roundedFirstLineHeadIndent != 0)
-        [rtf appendFormat:@"\\fi%li\\cufi%li",
-         roundedFirstLineHeadIndent,
+        [rtf appendFormat:@"\\fi%li",
          roundedFirstLineHeadIndent
          ];
 
@@ -352,7 +351,7 @@
     NSUInteger roundedHeadIndent = RKPointsToTwips(headIndent);    
     
     if (roundedHeadIndent != 0)
-        [rtf appendFormat:@"\\li%lu\\culi%lu", roundedHeadIndent, roundedHeadIndent];
+        [rtf appendFormat:@"\\li%lu", roundedHeadIndent];
     
     // Tail indenting
     if ((NSInteger)RKPointsToTwips(tailIndent) != 0) {
@@ -368,7 +367,7 @@
             indent = (NSInteger)RKPointsToTwips(fabs(tailIndent));
         }
         
-        [rtf appendFormat:@"\\ri%li\\curi%li", indent, indent];
+        [rtf appendFormat:@"\\ri%li", indent];
     }
     
     return rtf;

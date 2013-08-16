@@ -33,6 +33,7 @@
                       value:(id)attributeValue
              effectiveRange:(NSRange)range
          ofAttributedString:(NSMutableAttributedString *)preprocessedString
+				usingPolicy:(RKAttributePreprocessingPolicy)preprocessing
 {
     return;
 }

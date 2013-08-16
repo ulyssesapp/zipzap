@@ -12,6 +12,15 @@
 #import "RKTaggedString.h"
 
 /*!
+ @abstract A policy that should be applied during the preprocessing of an attributed string.
+ 
+ @const RKAttributePreprocessorListMarkerPositionsUsingIndent				Specifies that a list marker should be positioned using the first line indent, rather than by tabs. This is required for MS Word export.
+ */
+typedef enum : NSUInteger {
+	RKAttributePreprocessorListMarkerPositionsUsingIndent		= (1 << 0)
+}RKAttributePreprocessingPolicy;
+
+/*!
  @abstract Abstract class for converting attributes to RTF tags
  */
 @interface RKAttributeWriter : NSObject
@@ -44,6 +53,7 @@
 + (void)preprocessAttribute:(NSString *)attributeName
                       value:(id)attributeValue
              effectiveRange:(NSRange)range
-         ofAttributedString:(NSMutableAttributedString *)preprocessedString;
+         ofAttributedString:(NSMutableAttributedString *)preprocessedString
+				usingPolicy:(RKAttributePreprocessingPolicy)preprocessing;
 
 @end

@@ -94,14 +94,21 @@ NSMutableDictionary *NSAttributedStringSerializers;
     [serializedAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *attributeName, id serializedAttributeValue, BOOL *stop) {
         // Get handler class for attribute
         Class handler = [NSAttributedStringSerializers objectForKey: attributeName];
-        id attributeValue = [handler attributeValueForPropertyList:serializedAttributeValue attributeName:attributeName context:context error:&error];
-        if (!attributeValue) {
-            *stop = YES;
-            return;
-        }
+		if (handler) {
+			id attributeValue = [handler attributeValueForPropertyList:serializedAttributeValue attributeName:attributeName context:context error:&error];
+			if (!attributeValue) {
+				*stop = YES;
+				return;
+			}
+
+			// Setup attribute dictionary
+			[deserializedAttributes setObject:attributeValue forKey:attributeName];
+		}
+		else {
+			// Just keep unknown attributes
+			[deserializedAttributes setObject:serializedAttributeValue forKey:attributeName];
+		}
         
-        // Setup attributed string
-        [deserializedAttributes setObject:attributeValue forKey:attributeName];
     }];
     
 	if (outError) *outError = error;
@@ -139,6 +146,10 @@ NSMutableDictionary *NSAttributedStringSerializers;
             if (serializedAttributeValue)
                 [translatedAttributes setObject:serializedAttributeValue forKey:attributeKey];
         }
+		else {
+			// Just keep unknown attributes
+			[translatedAttributes setObject:attributeValue forKey:attributeKey];
+		}
     
     }];
     

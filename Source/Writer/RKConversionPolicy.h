@@ -12,14 +12,14 @@
  @const RKConversionPolicyConvertAttachments			Specifies that image attachments should be converted (should be set for RTFD and Word, but not for plain system RTF).
  @const	RKConversionPolicyReferenceAttachments			Specifies that image attachments should be referenced, instead of directly embedded. (should be set for RTFD)
 
- @const RKConversionPolicyPositionListMarkerUsingTabs	Specifies that list markers should be positioned using tabs, instead of paragaph indents only (should be set for system-compatible RTF).
+ @const RKConversionPolicyPositionListMarkerUsingIndent	Specifies that list markers should be positioned using the first line indent, rather than tabs. Required for Word export.
  
  */
 typedef enum : NSUInteger {
     RKConversionPolicyConvertAttachments			= (1 << 0),
 	RKConversionPolicyReferenceAttachments			= (1 << 1),
 	
-	RKConversionPolicyPositionListMarkerUsingTabs	= (1 << 2)
+	RKConversionPolicyPositionListMarkerUsingIndent	= (1 << 2)
 } RKConversionPolicy;
 
 

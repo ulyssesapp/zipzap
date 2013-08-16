@@ -53,7 +53,7 @@ typedef enum : NSUInteger {
  @abstract Adjusts all attributes of an attributed string by executing style-specific preprocessing methods
  @discussion The generated attributed string will be finally used for RTF generation.
  */
-+ (NSAttributedString *)attributedStringByAdjustingStyles:(NSAttributedString *)attributedString;
++ (NSAttributedString *)attributedStringByAdjustingStyles:(NSAttributedString *)attributedString usingPreprocessingPolicy:(RKAttributePreprocessingPolicy)preprocessingPolicy;
 
 /*!
  @abstract Converts an attributed string to RTF

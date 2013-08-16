@@ -29,7 +29,7 @@
                           ];
 
     // Create a simple list
-    RKListStyle *listStyleA = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%*%d.", @"%*%d.", @"%*%d.", @"%*%d.", nil]];
+    RKListStyle *listStyleA = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%*%d.", @"%*%d.", @"%*%d.", @"%*%d.", nil] styles:nil];
     RKListItem *listAItemA = [RKListItem listItemWithStyle:listStyleA indentationLevel:0];
     RKListItem *listAItemAA = [RKListItem listItemWithStyle:listStyleA indentationLevel:1];
     RKListItem *listAItemAB = [RKListItem listItemWithStyle:listStyleA indentationLevel:1];
@@ -38,7 +38,7 @@
     RKListItem *listAItemB = [RKListItem listItemWithStyle:listStyleA indentationLevel:0];    
     
     // Create a list, where level 4 will start the item count with 12
-    RKListStyle *listStyleB = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%*%d.", @"%*%d.", @"%*%d.", @"%*%d.", nil] startNumbers:overrides];
+    RKListStyle *listStyleB = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%*%d.", @"%*%d.", @"%*%d.", @"%*%d.", nil] styles:nil startNumbers:overrides];
     RKListItem *listBItemA = [RKListItem listItemWithStyle:listStyleB indentationLevel:0];
     RKListItem *listBItemAA = [RKListItem listItemWithStyle:listStyleB indentationLevel:1];
     RKListItem *listBItemAB = [RKListItem listItemWithStyle:listStyleB indentationLevel:1];

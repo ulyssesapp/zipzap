@@ -47,7 +47,7 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     NSAssert([attributeWriter isSubclassOfClass: [RKAttributeWriter class]], @"Invalid attribute writer registered");
 }
 
-+ (NSAttributedString *)attributedStringByAdjustingStyles:(NSAttributedString *)attributedString
++ (NSAttributedString *)attributedStringByAdjustingStyles:(NSAttributedString *)attributedString usingPreprocessingPolicy:(RKAttributePreprocessingPolicy)preprocessingPolicy
 {
     NSString *baseString = attributedString.string;
     
@@ -64,6 +64,7 @@ NSMutableArray *RKAttributedStringWriterHandlers;
                                    value:attributeValue
                           effectiveRange:attributeRange
                       ofAttributedString:preprocessedString
+							 usingPolicy:preprocessingPolicy
              ];
         }];
     }
@@ -73,7 +74,9 @@ NSMutableArray *RKAttributedStringWriterHandlers;
 
 + (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
-    NSAttributedString *preprocessedString = [self attributedStringByAdjustingStyles: attributedString];
+	RKAttributePreprocessingPolicy adjustmentPolicy = (conversionPolicy & RKConversionPolicyPositionListMarkerUsingIndent) ? RKAttributePreprocessorListMarkerPositionsUsingIndent : 0;
+	
+    NSAttributedString *preprocessedString = [self attributedStringByAdjustingStyles:attributedString usingPreprocessingPolicy:adjustmentPolicy];
     
     NSString *baseString = preprocessedString.string;
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: baseString];

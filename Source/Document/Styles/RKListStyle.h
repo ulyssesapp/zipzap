@@ -33,25 +33,32 @@
                 %%      %-Charracter
                 %*      Insert level string of a higher level here
  
+ Additionally an array of marker styles may be passed. See -levelStyles for further details.
+ 
  @note This is in contrast to NSTextList where prepending is done using a prepend flag. Since Word does not provide a prepend flag and some locales require to sort enumerations in another direction, we have to encode the placeholder ordering manually.
  */
-+ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)levelFormats;
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)levelFormats styles:(NSArray *)levelStyles;
 
 /*!
- @abstract Creates a text list that overrides the start positions of selected levels
+ @abstract Creates a text list that overrides the start positions of selected levels. Additionally an array of marker styles may be passed. See -levelStyles for further details.
  */
-+ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)levelFormats startNumbers:(NSArray *)startNumbers;
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)levelFormats styles:(NSArray *)levelStyles startNumbers:(NSArray *)startNumbers;
 
 /*!
- @abstract Initializes a text list that overrides the start positions of selected levels
+ @abstract Initializes a text list that overrides the start positions of selected levels. Additionally an array of marker styles may be passed. See -levelStyles for further details.
  @discussion See listStyleWithLevelFormats
  */
-- (id)initWithLevelFormats:(NSArray *)levelFormats startNumbers:(NSArray *)startNumbers;
+- (id)initWithLevelFormats:(NSArray *)levelFormats styles:(NSArray *)levelStyles startNumbers:(NSArray *)startNumbers;
 
 /*!
  @abstract Returns the format definition for a certain level
  */
 - (NSString *)formatForLevel:(NSUInteger)levelIndex;
+
+/*!
+ @abstract Returns the marker style for a certain level
+ */
+- (NSDictionary *)markerStyleForLevel:(NSUInteger)levelIndex;
 
 /*!
  @abstract Returns the starting item number of alever
@@ -64,34 +71,16 @@
 - (NSUInteger)numberOfLevels;
 
 /*!
- @abstract Specifies the indentation offsets for each list level to the first line of a list item
- @discussion Array of NSNumber containing floats.
- */
-@property (nonatomic) NSArray *firstLineHeadIndentOffsets;
-
-/*!
- @abstract Specifies the indentation offsets for each list level to all succeeding lines of a list item
- @discussion Array of NSNumber containing floats.
- */
-@property (nonatomic) NSArray *headIndentOffsets;
-
-/*!
- @abstract Specifies the tab stop locations for each list level (relative to the first line head indent of the level)
- @discussion Array of Array of NSNumber containing floats.
- */
-@property (nonatomic) NSArray *tabStopLocations;
-
-/*!
- @abstract Specifies the tab stop alignments for each list level
- @discussion Array of Array of NSNumber containing NSTabAlignment.
- */
-@property (nonatomic) NSArray *tabStopAlignments;
-
-/*!
  @abstract Accessor for the level formats
  @discussion Array of NSString
  */
 @property (strong, readonly) NSArray *levelFormats;
+
+/*!
+ @abstract Accesor for the marker styles for each level
+ @discussion Array of NSDictionary containing string attributes. Additionally the keys RKListStyleMarkerLocationKey and RKListStyleMarkerWidthKey are interpreted.
+ */
+@property (strong, readonly) NSArray *levelStyles;
 
 /*!
  @abstract Accessor for the level starting numbers
@@ -100,3 +89,16 @@
 @property (strong, readonly) NSArray *startNumbers;
 
 @end
+
+/*!
+ @abstract Key used inside the style of a list level to determine the location of a list marker relative to the leading page margin in points.
+ @discussion Maps to NSNumber. See -levelStyles of RKListStyle.
+ */
+extern NSString *RKListStyleMarkerLocationKey;
+
+/*!
+ @abstract Key used inside the style of a list level to specify the width of a list marker in points.
+ @discussion Maps to NSNumber. See -levelStyles of RKListStyle.
+ */
+extern NSString *RKListStyleMarkerWidthKey;
+

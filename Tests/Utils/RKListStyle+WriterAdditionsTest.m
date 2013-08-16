@@ -20,7 +20,9 @@
                                                                   @"-- %a --", 
                                                                   @"-- %A --", 
                                                                   @"-- * --",
-                                                                  nil ]];
+                                                                  nil ]
+															 styles:nil
+							  ];
     
     STAssertEquals([listStyle formatCodeOfLevel: 0], RKListFormatCodeDecimal, @"Invalid format code");
     STAssertEquals([listStyle formatCodeOfLevel: 1], RKListFormatCodeLowerCaseRoman, @"Invalid format code");
@@ -39,7 +41,7 @@
     NSArray *placeholderPositions;
     
     // Generating a simple list
-    RKListStyle *simpleList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"-- %d --", nil]];
+    RKListStyle *simpleList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"-- %d --", nil] styles:nil];
 
     testString = [simpleList formatStringOfLevel:0 placeholderPositions:&placeholderPositions];
     
@@ -49,7 +51,7 @@
     STAssertEqualObjects(testString, @"\\'09\t-- \\'00 --\t", @"Invalid format string");
 
     // Generating a simple list (only bullet point)
-    RKListStyle *bulletPoint = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"-", nil]];
+    RKListStyle *bulletPoint = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"-", nil] styles:nil];
     
     testString = [bulletPoint formatStringOfLevel:0 placeholderPositions:&placeholderPositions];
     
@@ -58,7 +60,7 @@
     STAssertEqualObjects(testString, @"\\'03\t-\t", @"Invalid format string");
     
     // Generating a simple list with keeping the escpae sign and converting RTF-Chars
-    RKListStyle *keepingChars = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%%∮{%d\\%", nil]];
+    RKListStyle *keepingChars = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%%∮{%d\\%", nil] styles:nil];
 
     testString = [keepingChars formatStringOfLevel:0 placeholderPositions:&placeholderPositions];    
     
@@ -74,7 +76,7 @@
     NSArray *placeholderPositions;
     
     // Generating a simple list with multiple markers
-    RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%A.", nil ]];
+    RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%A.", nil ] styles:nil];
 
     testString = [list formatStringOfLevel:2 placeholderPositions:&placeholderPositions];    
     
@@ -88,7 +90,7 @@
 
 - (void)testBuildTextSystemFormatString  
 {
-    RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.ä%%{", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.", @"--", nil ]];
+    RKListStyle *list = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.ä%%{", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.", @"--", nil ] styles:nil];
     
     STAssertEqualObjects([list systemFormatOfLevel: 0], @"{\\*\\levelmarker \\{decimal\\}.\\u228 %\\{}", @"Invalid placeholder");
     STAssertEqualObjects([list systemFormatOfLevel: 1], @"{\\*\\levelmarker \\{lower-roman\\}.}\\levelprepend", @"Invalid placeholder");
@@ -108,7 +110,7 @@
                             [NSNumber numberWithUnsignedInteger:7],
                             nil
                            ];
-    RKListStyle *prependingList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.-{%%∮\\}", nil ]];
+    RKListStyle *prependingList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.-{%%∮\\}", nil ] styles:nil];
     
     NSString *string = [[prependingList markerForItemNumbers: itemNumbers] RTFEscapedString];
     

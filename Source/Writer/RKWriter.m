@@ -26,12 +26,12 @@
 
 + (NSData *)wordRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyConvertAttachments resources:NULL];
+    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyConvertAttachments|RKConversionPolicyPositionListMarkerUsingIndent resources:NULL];
 }
 
 + (NSData *)systemRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyPositionListMarkerUsingTabs resources:NULL];
+    return [self RTFDataFromDocument:document withConversionPolicy:0 resources:NULL];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
@@ -39,7 +39,7 @@
     RKResourcePool *resources;
     
     // Generate RTF document
-    NSData *rtfContent = [self RTFDataFromDocument:document withConversionPolicy:(RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments|RKConversionPolicyPositionListMarkerUsingTabs) resources:&resources];
+    NSData *rtfContent = [self RTFDataFromDocument:document withConversionPolicy:(RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments) resources:&resources];
     NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:rtfContent];
 
     // Pacakge image files

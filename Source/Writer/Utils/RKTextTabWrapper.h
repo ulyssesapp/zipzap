@@ -36,6 +36,11 @@
 #endif
 
 /*!
+ @abstract Designated initializer.
+ */
+- (id)initWithLocation:(CGFloat)location alignment:(CTTextAlignment)alignment;
+
+/*!
  @abstract The tab alignment
  */
 @property (nonatomic, readwrite) CTTextAlignment tabAlignment;

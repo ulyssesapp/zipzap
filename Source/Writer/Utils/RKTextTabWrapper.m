@@ -10,44 +10,42 @@
 
 @implementation RKTextTabWrapper
 
-@synthesize tabAlignment, location;
+@synthesize tabAlignment=_tabAlignment, location=_location;
 
 - (id)initWithCTTextTab:(CTTextTabRef)textTab
 {
-    self = [self init];
-    
-    if (self) {
-        tabAlignment = CTTextTabGetAlignment(textTab);
-        location = CTTextTabGetLocation(textTab);
-    }
-    
-    return self;
+   return [self initWithLocation:CTTextTabGetLocation(textTab) alignment:CTTextTabGetAlignment(textTab)];
 }
 
 - (CTTextTabRef)newCTTextTab
 {
-    return CTTextTabCreate(tabAlignment, location, NULL);
+    return CTTextTabCreate(_tabAlignment, _location, NULL);
 }
 
 #if !TARGET_OS_IPHONE
 
 - (id)initWithNSTextTab:(NSTextTab *)textTab
 {
-    self = [self init];
-    
-    if (self) {
-        tabAlignment = textTab.alignment;
-        location = textTab.location;
-    }
-    
-    return self;
+    return [self initWithLocation:textTab.location alignment:textTab.alignment];
 }
 
 - (NSTextTab *)newNSTextTab
 {
-    return [[NSTextTab alloc] initWithTextAlignment:tabAlignment location:location options:NULL];
+    return [[NSTextTab alloc] initWithTextAlignment:_tabAlignment location:_location options:NULL];
 }
 
 #endif
+
+- (id)initWithLocation:(CGFloat)location alignment:(CTTextAlignment)alignment
+{
+	self = [self init];
+	
+	if (self) {
+		_location = location;
+		_tabAlignment = alignment;
+	}
+	
+	return self;
+}
 
 @end

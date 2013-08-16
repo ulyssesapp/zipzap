@@ -7,53 +7,46 @@
 //
 
 #import "RKListStyle+RKPersistence.h"
+#import "NSAttributedString+RKPersistence.h"
 
-NSString *RKListStyleLevelFormatsPersistenceKey                  = @"levelFormats";
-NSString *RKListStyleStartNumbersPersistenceKey                  = @"startNumbers";
-NSString *RKListStyleHeadIndentOffsetsPersistenceKey             = @"headIndentOffsets";
-NSString *RKListStyleFirstLineHeadIndentOffsetsPersistenceKey    = @"firstLineheadIndentOffsets";
-NSString *RKListStyleTabStopLocationsPersistenceKey              = @"tabStopLocations";
-NSString *RKListStyleTabStopAlignmentsPersistenceKey             = @"tabStopAlignments";
+NSString *RKListStyleLevelFormatsPersistenceKey                 = @"levelFormats";
+NSString *RKListStyleLevelStylesPersistenceKey					= @"levelStyles";
+NSString *RKListStyleStartNumbersPersistenceKey                 = @"startNumbers";
 
 @implementation RKListStyle (RKPersistence)
 
-- (id)initWithPropertyList:(id)propertyList
+- (id)initWithPropertyList:(id)propertyList context:(RKPersistenceContext *)context error:(NSError **)error
 {
     NSParameterAssert([propertyList isKindOfClass: NSDictionary.class]);
     
-    self = [self initWithLevelFormats:propertyList[RKListStyleLevelFormatsPersistenceKey] startNumbers:propertyList[RKListStyleStartNumbersPersistenceKey]];
-    
-    if (self) {
-        self.headIndentOffsets = propertyList[RKListStyleHeadIndentOffsetsPersistenceKey];
-        self.firstLineHeadIndentOffsets = propertyList[RKListStyleFirstLineHeadIndentOffsetsPersistenceKey];
-        self.tabStopLocations = propertyList[RKListStyleTabStopLocationsPersistenceKey];
-        self.tabStopAlignments = propertyList[RKListStyleTabStopAlignmentsPersistenceKey];
-    }
-
-    return self;
+	NSMutableArray *unserializedStyles = [NSMutableArray new];
+	for (NSDictionary *serializedStyle in propertyList[RKListStyleLevelStylesPersistenceKey]) {
+		NSDictionary *unserializedStyle = [NSAttributedString attributeDictionaryFromRTFKitPropertyListRepresentation:serializedStyle usingContext:context error:error];
+		[unserializedStyles addObject: unserializedStyle];
+	}
+	
+    return [self initWithLevelFormats:propertyList[RKListStyleLevelFormatsPersistenceKey] styles:unserializedStyles startNumbers:propertyList[RKListStyleStartNumbersPersistenceKey]];
 }
 
-- (id)propertyListRepresentation
+- (id)propertyListRepresentationUsingContext:(RKPersistenceContext *)context
 {
     NSMutableDictionary *propertyList = [NSMutableDictionary new];
     
     if (self.levelFormats)
         propertyList[RKListStyleLevelFormatsPersistenceKey] = self.levelFormats;
-    
+
+    if (self.levelStyles) {
+		NSMutableArray *serializedStyles = [NSMutableArray new];
+		
+		for (NSDictionary *unserializedAttributes in self.levelStyles) {
+			[serializedStyles addObject: [NSAttributedString RTFKitPropertyListRepresentationForAttributeDictionary:unserializedAttributes usingContext:context]];
+		}
+			 
+		propertyList[RKListStyleLevelStylesPersistenceKey] = serializedStyles;
+	}
+	   
     if (self.startNumbers)
         propertyList[RKListStyleStartNumbersPersistenceKey] = self.startNumbers;
-
-    if (self.firstLineHeadIndentOffsets)
-        propertyList[RKListStyleFirstLineHeadIndentOffsetsPersistenceKey] = self.firstLineHeadIndentOffsets;
-    
-    if (self.headIndentOffsets)
-        propertyList[RKListStyleHeadIndentOffsetsPersistenceKey] = self.headIndentOffsets;
-
-    if (self.tabStopLocations)
-        propertyList[RKListStyleTabStopLocationsPersistenceKey] = self.tabStopLocations;
-
-    if (self.tabStopAlignments)
-        propertyList[RKListStyleTabStopAlignmentsPersistenceKey] = self.tabStopAlignments;
     
     return propertyList;
 }

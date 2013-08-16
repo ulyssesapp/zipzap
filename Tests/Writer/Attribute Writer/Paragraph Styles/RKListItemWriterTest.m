@@ -26,7 +26,12 @@
 
 - (RKListItem *)generateListItem
 {
-    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil]];
+	NSArray *styles = @[@{RKListStyleMarkerLocationKey:@10, RKListStyleMarkerWidthKey:@20},
+						@{RKListStyleMarkerLocationKey:@11, RKListStyleMarkerWidthKey:@21},
+						@{RKListStyleMarkerLocationKey:@12, RKListStyleMarkerWidthKey:@22}
+						];
+		
+    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil] styles:styles];
     RKListItem *textListItem = [RKListItem listItemWithStyle:textList indentationLevel:2];
 
     return textListItem;
@@ -34,24 +39,36 @@
 
 - (NSAttributedString *)generateComplexList
 {
-    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil] 
+	NSArray *styles = @[@{RKListStyleMarkerLocationKey:@100, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@110, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@120, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@130, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@140, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@150, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@160, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@170, RKListStyleMarkerWidthKey:@50},
+						@{RKListStyleMarkerLocationKey:@180, RKListStyleMarkerWidthKey:@50}
+					   ];
+	
+    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil]
+															styles:styles
                                                       startNumbers:[NSArray arrayWithObjects:
-                                                                 [NSNumber numberWithInteger: 1],
-                                                                 [NSNumber numberWithInteger: 3],
-                                                                 [NSNumber numberWithInteger: 1],
-                                                                 [NSNumber numberWithInteger: 1],
-                                                                 [NSNumber numberWithInteger: 1],
-                                                                 [NSNumber numberWithInteger: 1],
-                                                                 [NSNumber numberWithInteger: 1],
-                                                                 [NSNumber numberWithInteger: 1],
-                                                                 [NSNumber numberWithInteger: 1],                                                                 
-                                                                 nil
-                                                                 ]
+																	[NSNumber numberWithInteger: 1],
+																	[NSNumber numberWithInteger: 3],
+																	[NSNumber numberWithInteger: 1],
+																	[NSNumber numberWithInteger: 1],
+																	[NSNumber numberWithInteger: 1],
+																	[NSNumber numberWithInteger: 1],
+																	[NSNumber numberWithInteger: 1],
+																	[NSNumber numberWithInteger: 1],
+																	[NSNumber numberWithInteger: 1],
+																	nil
+                                                                   ]
                             ];
     
     NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@""];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A"] withStyle:textList withIndentationLevel:0];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A\u2028B"] withStyle:textList withIndentationLevel:0];
     
     [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] withStyle:textList withIndentationLevel:1];
     [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] withStyle:textList withIndentationLevel:2];
@@ -215,7 +232,8 @@
     
     // Test acceptance of replacement strings
     STAssertEqualObjects([converted string],
-                         @"\t1.\tA\n"
+                         @"\t1.\tA\u2028"
+						  "B\n"
                          "\t1.iii.\tAA\n"
                          "\t1.iii.a.\tAAA\n"
                          "\t1.iii.b.\tAAB\n"
@@ -247,7 +265,7 @@
 }
 #endif
 
-- (void)testComplexListsAreCompatibleToManualReferenceTest
+- (void)testComplexListsAreCompatibleToManualReferenceTestOnWordRTF
 {
     NSAttributedString *testString = [self generateComplexList];
    
@@ -255,7 +273,18 @@
     RKDocument *document = [RKDocument documentWithAttributedString: testString];
     NSData *converted = [document wordRTF];
     
-    [self assertRTF: converted withTestDocument: @"list"];
+    [self assertRTF: converted withTestDocument: @"list-word"];
+}
+
+- (void)testComplexListsAreCompatibleToManualReferenceTestOnSystemRTF
+{
+    NSAttributedString *testString = [self generateComplexList];
+	
+    // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.
+    RKDocument *document = [RKDocument documentWithAttributedString: testString];
+    NSData *converted = [document systemRTF];
+    
+    [self assertRTF: converted withTestDocument: @"list-system"];
 }
 
 @end

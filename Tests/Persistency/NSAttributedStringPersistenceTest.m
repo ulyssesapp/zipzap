@@ -252,7 +252,8 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
 
 - (void)testListStyles
 {
-    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil] 
+    RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%a.", nil]
+															styles:@[@{NSParagraphStyleAttributeName: [NSParagraphStyle new], RKListStyleMarkerLocationKey: @1, RKListStyleMarkerWidthKey: @2}]
                                                       startNumbers:[NSArray arrayWithObjects:
                                                                     [NSNumber numberWithInteger: 1],
                                                                     [NSNumber numberWithInteger: 3],

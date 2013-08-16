@@ -9,28 +9,24 @@
 #import "RKListStyle.h"
 #import "RKConversion.h"
 
-@interface RKListStyle () {
-    NSArray     *_levelFormats;
-    NSArray     *_startNumbers;
-}
-
-@end
+NSString *RKListStyleMarkerLocationKey		= @"RKListStyleMarkerLocation";
+NSString *RKListStyleMarkerWidthKey			= @"RKListStyleMarkerWidth";
 
 @implementation RKListStyle
 
-@synthesize levelFormats=_levelFormats, startNumbers=_startNumbers, firstLineHeadIndentOffsets, headIndentOffsets, tabStopLocations, tabStopAlignments;
+@synthesize levelFormats=_levelFormats, startNumbers=_startNumbers, levelStyles=_levelStyles;
 
-+ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats;
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats styles:(NSArray *)levelStyles;
 {
-    return [[RKListStyle alloc] initWithLevelFormats: initialLevelFormats startNumbers:nil];
+    return [[RKListStyle alloc] initWithLevelFormats:initialLevelFormats styles:levelStyles startNumbers:nil];
 }
 
-+ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats startNumbers:(NSArray *)startNumbers
++ (RKListStyle *)listStyleWithLevelFormats:(NSArray *)initialLevelFormats styles:(NSArray *)levelStyles startNumbers:(NSArray *)startNumbers
 {
-    return [[RKListStyle alloc] initWithLevelFormats:initialLevelFormats startNumbers:startNumbers];
+    return [[RKListStyle alloc] initWithLevelFormats:initialLevelFormats styles:levelStyles startNumbers:startNumbers];
 }
 
-- (id)initWithLevelFormats:(NSArray *)initialLevelFormats startNumbers:(NSArray *)initialStartNumbers
+- (id)initWithLevelFormats:(NSArray *)initialLevelFormats styles:(NSArray *)levelStyles startNumbers:(NSArray *)startNumbers
 {
     self = [self init];
     
@@ -40,7 +36,8 @@
         }    
 
         _levelFormats = initialLevelFormats;
-        _startNumbers = initialStartNumbers;
+		_levelStyles = levelStyles;
+        _startNumbers = startNumbers;
     }
     
     return self;
@@ -54,6 +51,16 @@
         return @"";
     
     return self.levelFormats[levelIndex];
+}
+
+- (NSDictionary *)markerStyleForLevel:(NSUInteger)levelIndex
+{
+    NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
+    
+    if (levelIndex >= self.levelStyles.count)
+        return @{};
+    
+    return self.levelStyles[levelIndex];
 }
 
 -(NSUInteger)startNumberForLevel:(NSUInteger)levelIndex
@@ -78,12 +85,12 @@
     if (![other isKindOfClass: RKListStyle.class])
         return NO;
     
-    return [self.levelFormats isEqual: other.levelFormats] && [self.startNumbers isEqual: other.startNumbers];
+    return [self.levelFormats isEqual: other.levelFormats] && [self.startNumbers isEqual: other.startNumbers] && [self.levelStyles isEqual: other.levelStyles];
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat: @"(RKListStyle levelFormats:%@ startNumbers:%@)", self.levelFormats, self.startNumbers];
+    return [NSString stringWithFormat: @"(RKListStyle levelFormats:%@ startNumbers:%@ levelStyles:%@)", self.levelFormats, self.startNumbers, self.levelStyles];
 }
 
 @end

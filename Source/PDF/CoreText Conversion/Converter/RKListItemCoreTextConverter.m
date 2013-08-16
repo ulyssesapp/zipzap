@@ -34,7 +34,7 @@
        
 		// Prepare attributes for list marker
 		NSDictionary *currentAttributes = [attributedString attributesAtIndex:range.location effectiveRange:nil];
-		NSMutableDictionary *listMarkerAttributes = [listItem.markerStyle mutableCopy] ?: [NSMutableDictionary new];
+		NSMutableDictionary *listMarkerAttributes = [[listItem.listStyle markerStyleForLevel: listItem.indentationLevel] mutableCopy] ?: [NSMutableDictionary new];
 		
 		if (currentAttributes[NSParagraphStyleAttributeName])
 			listMarkerAttributes[NSParagraphStyleAttributeName] = currentAttributes[NSParagraphStyleAttributeName];

@@ -108,7 +108,7 @@ NSString *NSFileWrapperFileNamePersistenceKey                   = @"filename";
     NSMutableArray *serializedListStyles = [NSMutableArray new];
     
     for (RKListStyle *listStyle in _listStyles)
-        [serializedListStyles addObject: [listStyle propertyListRepresentation]];
+        [serializedListStyles addObject: [listStyle propertyListRepresentationUsingContext: self]];
     
     return @{
         RKPersistenceContextFileWrappersPersistenceKey: serializedFileWrapper,
@@ -131,7 +131,7 @@ NSString *NSFileWrapperFileNamePersistenceKey                   = @"filename";
         
         // De-serialize list styles
         for (id serializedListStyle in propertyList[RKPersistenceContextListStylesPersistenceKey])
-            [_listStyles addObject: [[RKListStyle alloc] initWithPropertyList: serializedListStyle]];
+            [_listStyles addObject: [[RKListStyle alloc] initWithPropertyList:serializedListStyle context:self error:error]];
     }
         
     return self;

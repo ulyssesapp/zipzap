@@ -37,7 +37,10 @@
     NSString *normalizedGenerated = [self normalizeRTFString: generated];
     NSString *normalizedExpected = [self normalizeRTFString: expected];
     
-    STAssertEqualObjects(normalizedGenerated, normalizedExpected, @"Unexpected RTF conversion.", normalizedGenerated, normalizedExpected);
+    STAssertTrue([normalizedGenerated isEqualToString: normalizedExpected], @"Unexpected RTF conversion.", normalizedGenerated, normalizedExpected);
+	if (![normalizedGenerated isEqualToString: normalizedExpected])
+		NSLog(@"\n\n%@\n\nShould be:\n\n%@\n\n", generated, expected);
+	
     if (![normalizedGenerated isEqual: normalizedExpected])
         return;
 }
