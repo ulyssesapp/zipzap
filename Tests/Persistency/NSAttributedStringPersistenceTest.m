@@ -279,7 +279,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     
     STAssertFalse(originalItem == reparsedItem, @"Items must not be identical");
     
-    STAssertEqualObjects(originalItem, reparsedItem, @"Items must be equal");
+    STAssertTrue([originalItem isEqualToListItem: reparsedItem], @"Items must be equal");
 }
 
 - (void)testAdditionalParagraphStyles

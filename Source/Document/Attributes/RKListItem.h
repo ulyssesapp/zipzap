@@ -26,6 +26,11 @@ extern NSString *RKTextListItemAttributeName;
 + (RKListItem *)listItemWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel;
 
 /*!
+ @abstract Returns YES, if two list items use the same list style and indentation level.
+ */
+- (BOOL)isEqualToListItem:(RKListItem *)other;
+
+/*!
  @abstract A reference to the list style identifying the text list
  */
 @property(nonatomic,strong,readwrite) RKListStyle *listStyle;

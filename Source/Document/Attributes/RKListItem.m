@@ -29,7 +29,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     return [[RKListItem alloc] initWithStyle:listStyle indentationLevel:indentationLevel];
 }
 
-- (BOOL)isEqual:(RKListItem *)other
+- (BOOL)isEqualToListItem:(RKListItem *)other
 {
     if (![other isKindOfClass: RKListItem.class])
         return NO;
