@@ -51,8 +51,7 @@
     NSString *enumerator = [context enumeratorForNote:self];
     
     // Create replacement string
-    CTFontRef font = (__bridge CTFontRef)[attributedString attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
-    NSMutableAttributedString *replacement = [[NSAttributedString footnoteEnumeratorFromString:enumerator usingFont:font enumeratorFactor:1.75] mutableCopy];
+    NSMutableAttributedString *replacement = [[NSMutableAttributedString alloc] initWithString:enumerator attributes:[attributedString attributesAtIndex:index effectiveRange:NULL]];
 
     // Add "," to enumerator, if other footnote follows
     BOOL hasSeparator = (attributedString.length > index+1) && ([attributedString attribute:RKFootnoteAttributeName atIndex:index+1 effectiveRange:NULL] || [attributedString attribute:RKEndnoteAttributeName atIndex:index+1 effectiveRange:NULL]);

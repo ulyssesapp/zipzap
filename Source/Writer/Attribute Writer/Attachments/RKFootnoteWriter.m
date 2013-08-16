@@ -29,12 +29,12 @@
                   resources:(RKResourcePool *)resources
 {
     if (footnote) {
-        NSString *noteTag = ([attributeName isEqual: RKEndnoteAttributeName] ) ? @"footnote\\ftnalt {\\super \\chftn }" : @"footnote {\\super \\chftn }";
+        NSString *noteTag = ([attributeName isEqual: RKEndnoteAttributeName] ) ? @"footnote\\ftnalt {\\super \\chftn}" : @"footnote {\\super \\chftn}";
                 
         NSString *noteContent = [NSString stringWithRTFGroupTag:noteTag body:[RKAttributedStringWriter RTFFromAttributedString:footnote withConversionPolicy:RKConversionPolicySkippingAttachments(conversionPolicy) resources:resources]];
         
         // Footnote marker
-        [taggedString registerTag:@"{\\super \\chftn }" forPosition:range.location];
+        [taggedString registerTag:@"{\\chftn}" forPosition:range.location];
         
         // Footnote content
         [taggedString registerTag:noteContent forPosition:range.location];
