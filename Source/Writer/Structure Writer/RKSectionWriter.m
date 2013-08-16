@@ -18,7 +18,7 @@
 /*!
  @abstract Translates all section attributes to RTF command
  */
-+ (NSString *)sectionAttributesForSection:(RKSection *)section;
++ (NSString *)sectionAttributesForSection:(RKSection *)section usingDocument:(RKDocument *)document;
 
 /*!
  @abstract Translates a mapping from tag names to attributed string such that the translated
@@ -47,9 +47,22 @@
 
 @implementation RKSectionWriter
 
+NSDictionary *RSectionWriterFootnoteStyleNames;
+
++ (void)initialize
+{
+	RSectionWriterFootnoteStyleNames =
+		@{[NSNumber numberWithInt:RKFootnoteEnumerationDecimal]: @"ar",
+		  [NSNumber numberWithInt:RKFootnoteEnumerationRomanLowerCase]: @"rlc",
+		  [NSNumber numberWithInt:RKFootnoteEnumerationRomanUpperCase]: @"ruc",
+		  [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticLowerCase]: @"alc",
+		  [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticUpperCase]: @"auc",
+		  [NSNumber numberWithInt:RKFootnoteEnumerationChicagoManual]: @"chi"};
+}
+
 + (NSString *)RTFFromSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
-    NSString *sectionAttributes = [self sectionAttributesForSection:section];
+    NSString *sectionAttributes = [self sectionAttributesForSection:section usingDocument:resources.document];
 
     NSString *headers = [self headersForSection:section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources];
     NSString *footers = [self footersForSection:section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources];
@@ -58,7 +71,7 @@
     return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@", sectionAttributes, headers, footers, content];
 }
 
-+ (NSString *)sectionAttributesForSection:(RKSection *)section
++ (NSString *)sectionAttributesForSection:(RKSection *)section usingDocument:(RKDocument *)document
 {
     NSMutableString *attributes = [NSMutableString stringWithString:@"\\titlepg"];
     
@@ -91,7 +104,40 @@
             [attributes appendFormat: @"\\pgnlcltr"];
             break;
     }
+    
+	// Ensure footnote placement at the bottom of a page
+    [attributes appendString:@"\\sftnbj\\saftnbj"];
 
+	
+    // Footnote syling
+    NSString *footnoteStyle = RSectionWriterFootnoteStyleNames[[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
+    
+    if (footnoteStyle != nil)
+        [attributes appendFormat:@"\\sftnn%@", footnoteStyle];
+	
+    // Endnote layouting (using \aftnn and \saftn improves compatibility with Word)
+    NSString *endnoteStyle = RSectionWriterFootnoteStyleNames[[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
+    
+    if (footnoteStyle != nil)
+        [attributes appendFormat:@"\\saftnn%@", endnoteStyle];
+
+	// Set endnote placement, if endnotes are enumerated per section
+	if (document.endnotePlacement == RKEndnotePlacementSectionEnd)
+		[attributes appendFormat: @"\\endnhere"];
+	
+    // Footnote restart policy
+    switch (document.footnoteEnumerationPolicy) {
+        case (RKFootnoteEnumerationPerPage):
+            [attributes appendString:@"\\sftnrstpg"];
+            break;
+        case (RKFootnoteEnumerationPerSection):
+            [attributes appendString:@"\\sftnrestart"];
+            break;
+        case (RKFootnoteContinuousEnumeration):
+            [attributes appendString:@"\\sftnrstcont"];
+            break;
+    }
+	
     return attributes;
 }
 

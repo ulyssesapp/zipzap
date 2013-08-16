@@ -71,7 +71,6 @@ enum {
 @implementation RKHeaderWriter
 
 NSArray *RKHeaderWriterMetadataDescriptions;
-NSDictionary *RKHeaderWriterFootnoteStyleNames;
 
 + (void)initialize
 {
@@ -89,14 +88,6 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
                             @[RKModificationTimeDocumentAttribute,     @"\\revtim",        [NSDate class]],
                             @[RKManagerDocumentAttribute,              @"\\manager",       [NSString class]],
                             @[RKCategoryDocumentAttribute,             @"\\category",      [NSString class]]];
-    
-    RKHeaderWriterFootnoteStyleNames = 
-                            @{[NSNumber numberWithInt:RKFootnoteEnumerationDecimal]: @"ar",
-                             [NSNumber numberWithInt:RKFootnoteEnumerationRomanLowerCase]: @"rlc",
-                             [NSNumber numberWithInt:RKFootnoteEnumerationRomanUpperCase]: @"ruc",
-                             [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticLowerCase]: @"alc",
-                             [NSNumber numberWithInt:RKFootnoteEnumerationAlphabeticUpperCase]: @"auc",
-                             [NSNumber numberWithInt:RKFootnoteEnumerationChicagoManual]: @"chi"};
 }
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
@@ -296,7 +287,10 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
             [attributes appendString:@"\\fet1\\enddoc"];
             break;
     }
-
+	
+	// Ensure footnote placement at the bottom (seems to be ignored for endnotes).
+    [attributes appendString:@"\\ftnbj\\aftnbj"];
+	
     // Endnote placement
     switch (document.endnotePlacement) {
         case RKEndnotePlacementSectionEnd:
@@ -306,51 +300,35 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
             [attributes appendString:@"\\aenddoc"];
             break;
     }
-    
-    // MS Word requires this in order to enumerate footnotes / endnotes correctly
-    [attributes appendString:@"\\ftnbj"];
-    [attributes appendString:@"\\aftnbj"];    
-    
-    // Footnote layouting
-    NSString *footnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
-    
-    if (footnoteStyle != nil)
-        [attributes appendFormat:@"\\ftnn%@\\sftnn%@", footnoteStyle, footnoteStyle];
-
-    // Endnote layouting (using \aftnn and \saftn improves compatibility with Word)
-    NSString *endnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
-    
-    if (footnoteStyle != nil)
-        [attributes appendFormat:@"\\aftnn%@\\saftnn%@", endnoteStyle, endnoteStyle];
-    
+	
     // Footnote restart policy
     switch (document.footnoteEnumerationPolicy) {
         case (RKFootnoteEnumerationPerPage):
-            [attributes appendString:@"\\ftnrstpg\\sftnrstpg"];
+            [attributes appendString:@"\\ftnrstpg"];
             break;
         case (RKFootnoteEnumerationPerSection):
-            [attributes appendString:@"\\ftnrestart\\sftnrestart"];
+            [attributes appendString:@"\\ftnrestart"];
             break;
         case (RKFootnoteContinuousEnumeration):
-            [attributes appendString:@"\\ftnrstcont\\sftnrstcont"];
+            [attributes appendString:@"\\ftnrstcont"];
             break;
     }
     
     // Endnote restart policy
     switch (document.endnoteEnumerationPolicy) {
         case (RKFootnoteEnumerationPerSection):
-            [attributes appendString:@"\\aftnrestart\\saftnrestart"];
+            [attributes appendString:@"\\aftnrestart"];
             break;
             
         case (RKFootnoteContinuousEnumeration):
-            [attributes appendString:@"\\aftnrstcont\\saftnrstcont"];
+            [attributes appendString:@"\\aftnrstcont"];
             break;
             
         case (RKFootnoteEnumerationPerPage):
             NSAssert(false, @"Invalid policy for endnote enumeration");
             break;
     }
-    
+	
     // Page orientation
     if (document.pageOrientation == RKPageOrientationLandscape)
         [attributes appendString:@"\\landscape"];
@@ -368,7 +346,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
 							   (NSUInteger)RKPointsToTwips(document.pageInsets.right), 
 							   (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
 							   ]];
-
+	
     // Header / footer spacing
     if (document.headerSpacingBefore != 36)
         [attributes appendString: [NSString stringWithFormat:@"\\headery%lu",

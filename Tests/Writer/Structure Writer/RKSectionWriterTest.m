@@ -13,6 +13,12 @@
 
 - (void)testGeneratingSectionSettings
 {
+	RKDocument *document = [RKDocument new];
+	document.footnoteEnumerationStyle = RKFootnoteEnumerationAlphabeticLowerCase;
+	document.footnoteEnumerationPolicy = RKFootnoteEnumerationPerSection;
+	document.endnoteEnumerationStyle = RKFootnoteEnumerationRomanUpperCase;
+	document.endnotePlacement = RKEndnotePlacementSectionEnd;
+	
     RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@""]];
 
     // Settings used in all tests
@@ -21,24 +27,24 @@
     
     // Decimal page numbering
     section.pageNumberingStyle = RKPageNumberingDecimal;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgndec", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section usingDocument:document], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgndec\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Roman lower case
     section.pageNumberingStyle = RKPageNumberingRomanLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnlcrm", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section usingDocument:document], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnlcrm\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Roman upper case
     section.pageNumberingStyle = RKPageNumberingRomanUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucrm", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section usingDocument:document], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucrm\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Letter upper case
     section.pageNumberingStyle = RKPageNumberingAlphabeticUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucltr", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section usingDocument:document], @"\\titlepg\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Letter lower case
     section.indexOfFirstPage = RKContinuousPageNumbering;    
     section.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section], @"\\titlepg\\cols2\\colsx720\\pgnlcltr", @"Invalid translation");
+    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section usingDocument:document], @"\\titlepg\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 }
 
 - (void)testGeneratingHeadersForSomePages

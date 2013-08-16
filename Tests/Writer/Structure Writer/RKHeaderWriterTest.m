@@ -197,10 +197,9 @@
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\facingp"
-                          "\\fet2\\aendnotes"
-                          "\\ftnbj\\aftnbj"
-                          "\\ftnnrlc\\sftnnrlc\\aftnnalc\\saftnnalc"
-                          "\\ftnrestart\\sftnrestart\\aftnrstcont\\saftnrstcont"
+                          "\\fet2"
+                          "\\ftnbj\\aftnbj\\aendnotes"
+                          "\\ftnrestart\\aftnrstcont"
                           "\\paperw2000"
                           "\\paperh4000"
                           "\\margt2000"
@@ -220,10 +219,9 @@
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\facingp"
-                         "\\fet1\\enddoc\\aenddoc"
-                         "\\ftnbj\\aftnbj"
-                         "\\ftnnrlc\\sftnnrlc\\aftnnalc\\saftnnalc"
-                         "\\ftnrestart\\sftnrestart\\aftnrstcont\\saftnrstcont"
+						 "\\fet1\\enddoc"
+						 "\\ftnbj\\aftnbj\\aenddoc"
+						 "\\ftnrestart\\aftnrstcont"
                          "\\landscape"
                          "\\paperw2000"
                          "\\paperh4000"
@@ -242,10 +240,9 @@
     
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\facingp" 
-                         "\\fet1\\endnotes\\aenddoc"
-                         "\\ftnbj\\aftnbj"
-                         "\\ftnnrlc\\sftnnrlc\\aftnnalc\\saftnnalc"
-                         "\\ftnrestart\\sftnrestart\\aftnrstcont\\saftnrstcont"
+						 "\\fet1\\endnotes"
+						 "\\ftnbj\\aftnbj\\aenddoc"
+						 "\\ftnrestart\\aftnrstcont"
                          "\\landscape"
                          "\\paperw2000"
                          "\\paperh4000"
