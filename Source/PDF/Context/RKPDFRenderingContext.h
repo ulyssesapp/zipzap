@@ -109,6 +109,11 @@ typedef enum : NSUInteger {
  */
 - (void)appendSection:(RKSection *)section;
 
+/*!
+ @abstract Flushes all section notes
+ */
+- (void)flushSectionNotes;
+
 
 
 #pragma mark - Footnote managment

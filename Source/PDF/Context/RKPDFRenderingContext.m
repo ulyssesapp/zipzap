@@ -125,6 +125,11 @@
     [self insertSection:section atIndex:_sections.count];
 }
 
+- (void)flushSectionNotes
+{
+	_sectionNotes = [NSMutableArray new];
+}
+
 
 
 #pragma mark - Sections and Pages

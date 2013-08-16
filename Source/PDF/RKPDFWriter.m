@@ -122,7 +122,7 @@
 				[column appendContent:contentString inRange:remainingContentRange];
 
 			// Append endnotes, if required
-			BOOL isLastPartOfSection = (NSMaxRange(remainingContentRange) == contentString.length);
+			BOOL isLastPartOfSection = ((remainingContentRange.location + column.contentFrame.visibleStringLength) >= contentString.length);
 			if (!endnotesAppended && isLastPartOfSection) {
 				NSAttributedString *endnotes = nil;
 				NSMutableArray *endnoteStrings = [NSMutableArray new];
@@ -135,6 +135,8 @@
 				// Generate endnote string and append it to the column
 				endnotes = [NSAttributedString noteListFromNotes: endnoteStrings];
 				[column appendFootnotes:endnotes];
+				
+				[context flushSectionNotes];
 				
 				endnotesAppended = YES;
 			}

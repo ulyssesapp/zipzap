@@ -49,8 +49,6 @@
 		
 		_contentFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingDownwards context:context];
 		_footnotesFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingUpwards context:context];
-		
-		_footnotesFrame.maximumHeight -= _context.document.footnoteSpacingBefore;
 	}
 	
 	return self;
@@ -63,7 +61,7 @@
 
 	[_contentFrame appendAttributedString:contentString inRange:range usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
 		// Reduce possible space for footnotes
-		_footnotesFrame.maximumHeight -= lineHeight;
+		_footnotesFrame.maximumHeight = _boundingBox.size.height - _contentFrame.visibleBoundingBox.size.height - _context.document.footnoteSpacingBefore;
 		
 		// Collect and instantiate all footnotes for the current line
 		NSArray *registeredFootnotes = [_context registeredPageNotesInAttributedString:contentString range:lineRange];
@@ -142,7 +140,7 @@
 	
 	[_footnotesFrame appendAttributedString:footnoteString inRange:NSMakeRange(0, footnoteString.length) usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
 
-		if (!(widowFollows || !lineOfParagraph) || [_footnotesFrame canAppendLineWithHeight: nextLineHeight]) {
+		if (!(widowFollows || !lineOfParagraph) || [_footnotesFrame canAppendLineWithHeight: lineHeight]) {
 			return;
 		}
 		
