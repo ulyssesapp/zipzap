@@ -315,7 +315,7 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     NSString *footnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
     
     if (footnoteStyle != nil)
-        [attributes appendFormat:@"\\ftnn%@", footnoteStyle];
+        [attributes appendFormat:@"\\ftnn%@\\sftnn%@", footnoteStyle, footnoteStyle];
 
     // Endnote layouting (using \aftnn and \saftn improves compatibility with Word)
     NSString *endnoteStyle = RKHeaderWriterFootnoteStyleNames[[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
@@ -326,24 +326,24 @@ NSDictionary *RKHeaderWriterFootnoteStyleNames;
     // Footnote restart policy
     switch (document.footnoteEnumerationPolicy) {
         case (RKFootnoteEnumerationPerPage):
-            [attributes appendString:@"\\ftnrstpg"];
+            [attributes appendString:@"\\ftnrstpg\\sftnrstpg"];
             break;
         case (RKFootnoteEnumerationPerSection):
-            [attributes appendString:@"\\ftnrestart"];
+            [attributes appendString:@"\\ftnrestart\\sftnrestart"];
             break;
         case (RKFootnoteContinuousEnumeration):
-            [attributes appendString:@"\\ftnrstcont"];
+            [attributes appendString:@"\\ftnrstcont\\sftnrstcont"];
             break;
     }
     
     // Endnote restart policy
     switch (document.endnoteEnumerationPolicy) {
         case (RKFootnoteEnumerationPerSection):
-            [attributes appendString:@"\\aftnrestart"];
+            [attributes appendString:@"\\aftnrestart\\saftnrestart"];
             break;
             
         case (RKFootnoteContinuousEnumeration):
-            [attributes appendString:@"\\aftnrstcont"];        
+            [attributes appendString:@"\\aftnrstcont\\saftnrstcont"];
             break;
             
         case (RKFootnoteEnumerationPerPage):
