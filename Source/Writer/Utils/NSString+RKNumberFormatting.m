@@ -88,8 +88,9 @@
     NSMutableString *numerals = [NSMutableString new];
     
     // The Chicago Manual of Style enumerates: *, †, ‡, §, **, ††, ...
-    while (number /= 4)
+    do {
         [numerals appendString: marker];
+	}while (number /= 4);
     
     return numerals;
 }
