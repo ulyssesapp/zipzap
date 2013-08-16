@@ -16,7 +16,6 @@
 @implementation RKDocument (PDFUtilities)
 
 
-
 #pragma mark - Layouting
 
 - (CGRect)pdfMediaBox
@@ -104,30 +103,6 @@
 
 
 #pragma mark - Footnote handling
-
-+ (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle
-{
-    switch (enumerationStyle) {
-        case RKFootnoteEnumerationAlphabeticLowerCase:
-            return [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: index];
-            
-        case RKFootnoteEnumerationAlphabeticUpperCase:
-            return [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: index];
-            
-        case RKFootnoteEnumerationRomanLowerCase:
-            return [NSString lowerCaseRomanNumeralsFromUnsignedInteger: index];
-            
-        case RKFootnoteEnumerationRomanUpperCase:
-            return [NSString upperCaseRomanNumeralsFromUnsignedInteger: index];
-            
-        case RKFootnoteEnumerationDecimal:
-            return [NSString stringWithFormat:@"%lu", index];
-            
-        case RKFootnoteEnumerationChicagoManual:
-            return [NSString chicagoManualOfStyleNumeralsFromUnsignedInteger: index];
-    }
-    
-}
 
 - (CGRect)boundingBoxForFootnotesFromColumnRect:(CGRect)columnRect height:(CGFloat)height
 {

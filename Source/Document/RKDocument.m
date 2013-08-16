@@ -11,6 +11,8 @@
 #import "RKWriter.h"
 #import "RKPDFWriter.h"
 
+#import "NSString+RKNumberFormatting.h"
+
 @implementation RKDocument
 
 + (RKDocument *)documentWithSections:(NSArray *)initialSections
@@ -134,6 +136,30 @@
     NSAssert(string != nil, @"Initialization string must not be nil");
     
     return [self initWithSections: @[[RKSection sectionWithContent: string]]];
+}
+
++ (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle
+{
+    switch (enumerationStyle) {
+        case RKFootnoteEnumerationAlphabeticLowerCase:
+            return [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: index];
+            
+        case RKFootnoteEnumerationAlphabeticUpperCase:
+            return [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: index];
+            
+        case RKFootnoteEnumerationRomanLowerCase:
+            return [NSString lowerCaseRomanNumeralsFromUnsignedInteger: index];
+            
+        case RKFootnoteEnumerationRomanUpperCase:
+            return [NSString upperCaseRomanNumeralsFromUnsignedInteger: index];
+            
+        case RKFootnoteEnumerationDecimal:
+            return [NSString stringWithFormat:@"%lu", index];
+            
+        case RKFootnoteEnumerationChicagoManual:
+            return [NSString chicagoManualOfStyleNumeralsFromUnsignedInteger: index];
+    }
+    
 }
 
 @end

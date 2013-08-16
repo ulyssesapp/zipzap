@@ -165,6 +165,15 @@
  */
 @property(nonatomic) RKPageNumberingStyle sectionNumberingStyle;
 
+
+#pragma mark - Convenience methods
+
+/*!
+ @abstract Generates a footnote marker for the given index according to the style setting.
+ @discussion Convenience method that may be used to guarantee compatibility with formats not supporting footnotes.
+ */
++ (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle;
+
 @end
 
 /*!

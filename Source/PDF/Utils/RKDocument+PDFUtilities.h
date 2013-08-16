@@ -51,11 +51,6 @@
 - (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section;
 
 /*!
- @abstract Generates a footnote marker for the given index according to the style setting
- */
-+ (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle;
-
-/*!
  @abstract Draws a footnote separator to a given context using the given bounding box around the footnotes
  */
 - (void)drawFootnoteSeparatorForBoundingBox:(CGRect)boundingBox toContext:(RKPDFRenderingContext *)context;
