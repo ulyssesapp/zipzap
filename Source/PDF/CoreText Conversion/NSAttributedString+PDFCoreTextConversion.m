@@ -43,15 +43,22 @@ NSMutableArray *NSAttributedStringCoreTextConverters;
 	if (context.document.hyphenationEnabled && context.document.locale.supportsHyphenation) {
 		NSMutableAttributedString *hyphenatedString = [convertedString mutableCopy];
 		
-		// Detect hyphenations
-		[hyphenatedString.mutableString enumerateHyphenationsInRange:NSMakeRange(0, hyphenatedString.length) usingLocale:context.document.locale block:^(NSUInteger index, NSString *suggestedSeparator) {
-			// Add soft-hyphenation as hint for Core Text
-			[hyphenatedString.mutableString insertString:@"\u00ad" atIndex:index];
+		// Only hyphenate if supported by paragraph
+		[hyphenatedString enumerateAttribute:RKAdditionalParagraphStyleAttributeName inRange:NSMakeRange(0, hyphenatedString.length) options:0 usingBlock:^(RKAdditionalParagraphStyle *paragraphStyle, NSRange range, BOOL *stop) {
+			// Skip paragraphs that should not be hyphenated
+			if (!paragraphStyle.hyphenationEnabled)
+				return;
 			
-			// Remember the suggested hyphenation char for the given locale
-			[hyphenatedString addAttribute:RKHyphenationCharacterAttributeName value:suggestedSeparator range:NSMakeRange(index, 1)];
+			// Detect hyphenations
+			[hyphenatedString.mutableString enumerateHyphenationsInRange:range usingLocale:context.document.locale block:^(NSUInteger index, NSString *suggestedSeparator) {
+				// Add soft-hyphenation as hint for Core Text
+				[hyphenatedString.mutableString insertString:@"\u00ad" atIndex:index];
+				
+				// Remember the suggested hyphenation char for the given locale
+				[hyphenatedString addAttribute:RKHyphenationCharacterAttributeName value:suggestedSeparator range:NSMakeRange(index, 1)];
+			}];
 		}];
-		
+				
 		convertedString = hyphenatedString;
 	}
 	

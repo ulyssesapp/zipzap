@@ -10,6 +10,7 @@
 #import "RKAdditionalParagraphStyle.h"
 
 NSString *RKAdditionalParagraphStyleKeepWithFollowingParagraphKey = @"keepWithFollowingParagraph";
+NSString *RKAdditionalParagraphStyleHyphenationEnabledKey = @"hyphenationEnabled";
 
 @implementation RKAdditionalParagraphStyleSerializer
 
@@ -29,6 +30,7 @@ NSString *RKAdditionalParagraphStyleKeepWithFollowingParagraphKey = @"keepWithFo
     
 	RKAdditionalParagraphStyle *paragraphStyle = [RKAdditionalParagraphStyle new];
 	paragraphStyle.keepWithFollowingParagraph = [[propertyList objectForKey: RKAdditionalParagraphStyleKeepWithFollowingParagraphKey] boolValue];
+	paragraphStyle.hyphenationEnabled = [[propertyList objectForKey: RKAdditionalParagraphStyleHyphenationEnabledKey] boolValue];
 	
 	return paragraphStyle;
 }
@@ -37,6 +39,7 @@ NSString *RKAdditionalParagraphStyleKeepWithFollowingParagraphKey = @"keepWithFo
 {
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 				[NSNumber numberWithBool: attributeValue.keepWithFollowingParagraph], RKAdditionalParagraphStyleKeepWithFollowingParagraphKey,
+				[NSNumber numberWithBool: attributeValue.hyphenationEnabled], RKAdditionalParagraphStyleHyphenationEnabledKey,
 			nil];
 }
 

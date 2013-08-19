@@ -14,13 +14,14 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 
 - (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
 {
-	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph);
+	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled);
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
 	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];
 	newStyle.keepWithFollowingParagraph = self.keepWithFollowingParagraph;
+	newStyle.hyphenationEnabled = self.hyphenationEnabled;
 	
 	return newStyle;
 }
@@ -29,8 +30,10 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 {
 	return [NSString stringWithFormat: @"RKAdditionalParagraphStyle: ("
 											"keepWithFollowingParagraph: %d"
+											"hyphenationEnabled: %u"
 										")",
-			self.keepWithFollowingParagraph
+			self.keepWithFollowingParagraph,
+			self.hyphenationEnabled
 			];
 }
 

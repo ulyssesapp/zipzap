@@ -26,10 +26,17 @@
                            styleSetting:(NSDictionary *)styleSetting
                               resources:(RKResourcePool *)resources
 {
+	NSMutableString *tags = [NSMutableString new];
+	
     if (value.keepWithFollowingParagraph)
-        return @"\\keepn ";
-    else
-        return @"";
+        [tags appendString: @"\\keepn "];
+
+	if (value.hyphenationEnabled)
+		[tags appendString: @"\\hyphpar1 "];
+	else if (resources.document.hyphenationEnabled)
+		[tags appendString: @"\\hyphpar0 "];
+	
+	return tags;
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName

@@ -19,4 +19,9 @@ extern NSString *RKAdditionalParagraphStyleAttributeName;
  */
 @property (nonatomic) BOOL keepWithFollowingParagraph;
 
+/*!
+ @abstract Specifies that the current paragraph should be hyphenated.
+ */
+@property (nonatomic) BOOL hyphenationEnabled;
+
 @end
