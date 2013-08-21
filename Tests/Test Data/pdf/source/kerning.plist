@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sections</key>
+	<array>
+		<dict>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>length</key>
+							<integer>4</integer>
+							<key>location</key>
+							<integer>0</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>NSKern</key>
+							<integer>60</integer>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>This is kerning!</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

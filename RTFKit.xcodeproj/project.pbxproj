@@ -182,6 +182,11 @@
 		7962711F15FA29F0001E2BE2 /* NSString+Hyphenation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7962711D15FA29F0001E2BE2 /* NSString+Hyphenation.h */; };
 		7962712015FA29F0001E2BE2 /* NSString+Hyphenation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7962711E15FA29F0001E2BE2 /* NSString+Hyphenation.m */; };
 		7962712415FA2C7F001E2BE2 /* NSStringHyphenationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7962712315FA2C7F001E2BE2 /* NSStringHyphenationTest.m */; };
+		79631C1917C521C100A28103 /* RKKernAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79631C1717C521C100A28103 /* RKKernAttributeWriter.h */; };
+		79631C1A17C521C100A28103 /* RKKernAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79631C1717C521C100A28103 /* RKKernAttributeWriter.h */; };
+		79631C1B17C521C100A28103 /* RKKernAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79631C1817C521C100A28103 /* RKKernAttributeWriter.m */; };
+		79631C1C17C521C100A28103 /* RKKernAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79631C1817C521C100A28103 /* RKKernAttributeWriter.m */; };
+		79631C1E17C5295200A28103 /* RKKernAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79631C1D17C5295200A28103 /* RKKernAttributeWriterTest.m */; };
 		796C956015AC945800713471 /* RKCoreTextRepresentationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C955F15AC945700713471 /* RKCoreTextRepresentationConverter.m */; };
 		796C958515AC9EEC00713471 /* RKPDFTextDecorationRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 796C958315AC9EEB00713471 /* RKPDFTextDecorationRenderer.h */; };
 		796C958615AC9EEC00713471 /* RKPDFTextDecorationRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C958415AC9EEC00713471 /* RKPDFTextDecorationRenderer.m */; };
@@ -562,6 +567,9 @@
 		7962711E15FA29F0001E2BE2 /* NSString+Hyphenation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Hyphenation.m"; path = "Utils/NSString+Hyphenation.m"; sourceTree = "<group>"; };
 		7962712215FA2C7F001E2BE2 /* NSStringHyphenationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSStringHyphenationTest.h; path = Utils/NSStringHyphenationTest.h; sourceTree = "<group>"; };
 		7962712315FA2C7F001E2BE2 /* NSStringHyphenationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSStringHyphenationTest.m; path = Utils/NSStringHyphenationTest.m; sourceTree = "<group>"; };
+		79631C1717C521C100A28103 /* RKKernAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKKernAttributeWriter.h; path = "Writer/Attribute Writer/Inline Styles/RKKernAttributeWriter.h"; sourceTree = "<group>"; };
+		79631C1817C521C100A28103 /* RKKernAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKKernAttributeWriter.m; path = "Writer/Attribute Writer/Inline Styles/RKKernAttributeWriter.m"; sourceTree = "<group>"; };
+		79631C1D17C5295200A28103 /* RKKernAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKKernAttributeWriterTest.m; path = "Writer/Attribute Writer/Inline Styles/RKKernAttributeWriterTest.m"; sourceTree = "<group>"; };
 		796C955F15AC945700713471 /* RKCoreTextRepresentationConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKCoreTextRepresentationConverter.m; path = "PDF/CoreText Conversion/Converter/RKCoreTextRepresentationConverter.m"; sourceTree = "<group>"; };
 		796C958315AC9EEB00713471 /* RKPDFTextDecorationRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFTextDecorationRenderer.h; path = "PDF/Rendering/Text Renderer/RKPDFTextDecorationRenderer.h"; sourceTree = "<group>"; };
 		796C958415AC9EEC00713471 /* RKPDFTextDecorationRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPDFTextDecorationRenderer.m; path = "PDF/Rendering/Text Renderer/RKPDFTextDecorationRenderer.m"; sourceTree = "<group>"; };
@@ -1158,6 +1166,8 @@
 				796EABAD14D947D5001E8401 /* RKColorAttributeWriter.m */,
 				796EABAE14D947D5001E8401 /* RKFontAttributeWriter.h */,
 				796EABAF14D947D5001E8401 /* RKFontAttributeWriter.m */,
+				79631C1717C521C100A28103 /* RKKernAttributeWriter.h */,
+				79631C1817C521C100A28103 /* RKKernAttributeWriter.m */,
 				796EABB214D947D5001E8401 /* RKShadowAttributeWriter.h */,
 				796EABB314D947D5001E8401 /* RKShadowAttributeWriter.m */,
 				796EABB614D947D5001E8401 /* RKStrikethroughStyleAttributeWriter.h */,
@@ -1255,6 +1265,7 @@
 				796EAC2414D9485B001E8401 /* RKShadowAttributeWriterTest.m */,
 				796EAC2714D9485B001E8401 /* RKStrikethroughStyleAttributeWriterTest.h */,
 				796EAC2814D9485B001E8401 /* RKStrikethroughStyleAttributeWriterTest.m */,
+				79631C1D17C5295200A28103 /* RKKernAttributeWriterTest.m */,
 				796EAC2B14D9485B001E8401 /* RKStrokeWidthAttributeWriterTest.h */,
 				796EAC2C14D9485B001E8401 /* RKStrokeWidthAttributeWriterTest.m */,
 				796EAC2D14D9485B001E8401 /* RKSuperscriptAttributeWriterTest.h */,
@@ -1531,6 +1542,7 @@
 				796EABA614D947CA001E8401 /* RKLinkWriter.h in Headers */,
 				796EABA914D947CA001E8401 /* RKTextAttachmentWriter.h in Headers */,
 				796EABC214D947D5001E8401 /* RKColorAttributeWriter.h in Headers */,
+				79631C1917C521C100A28103 /* RKKernAttributeWriter.h in Headers */,
 				796EABC514D947D5001E8401 /* RKFontAttributeWriter.h in Headers */,
 				796EABCB14D947D5001E8401 /* RKShadowAttributeWriter.h in Headers */,
 				796EABD114D947D5001E8401 /* RKStrikethroughStyleAttributeWriter.h in Headers */,
@@ -1632,6 +1644,7 @@
 				799511F41518A3E600D82511 /* RKConversion.h in Headers */,
 				79B148AA151A15D800F14200 /* RTFKit.h in Headers */,
 				79B148AD151A15EA00F14200 /* RKTextAttachment.h in Headers */,
+				79631C1A17C521C100A28103 /* RKKernAttributeWriter.h in Headers */,
 				79B148AE151A15ED00F14200 /* RKShadow.h in Headers */,
 				79B148B3151A281400F14200 /* RKPortableAttributeNames-iOS.h in Headers */,
 				790AD8C315BACF320011E40E /* RKParagraphStyleWrapper.h in Headers */,
@@ -1847,6 +1860,7 @@
 				79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */,
 				79F673B914C84AE0005D03FA /* RKSection.m in Sources */,
 				796EAB9D14D9479B001E8401 /* RKWriter.m in Sources */,
+				79631C1B17C521C100A28103 /* RKKernAttributeWriter.m in Sources */,
 				796EABA714D947CA001E8401 /* RKLinkWriter.m in Sources */,
 				796EABAA14D947CA001E8401 /* RKTextAttachmentWriter.m in Sources */,
 				796EABC314D947D5001E8401 /* RKColorAttributeWriter.m in Sources */,
@@ -1973,6 +1987,7 @@
 				79CE4AE51599FFBA00C83EF6 /* NSAttributedStringPersistenceTest.m in Sources */,
 				795E673915B81C8E001836AB /* RKPDFWriterTest.m in Sources */,
 				790AD8C115BAC3A40011E40E /* RKParagraphStyleWrapperTest.m in Sources */,
+				79631C1E17C5295200A28103 /* RKKernAttributeWriterTest.m in Sources */,
 				7971429C15BC1FA20082A67B /* RKDocumentPersistenceTest.m in Sources */,
 				79FB2B3315C190A80010EA47 /* RKAdditionalParagraphStyleWriterTest.m in Sources */,
 				7962712415FA2C7F001E2BE2 /* NSStringHyphenationTest.m in Sources */,
@@ -1994,6 +2009,7 @@
 				79E76C0E151757EB0073153D /* RKListItem.m in Sources */,
 				79E76C0F1517580E0073153D /* RKFootnote.m in Sources */,
 				79E76C101517580E0073153D /* RKPlaceholder.m in Sources */,
+				79631C1C17C521C100A28103 /* RKKernAttributeWriter.m in Sources */,
 				79E76C111517580E0073153D /* RKStyleName.m in Sources */,
 				79E76C121517580E0073153D /* RKListStyle.m in Sources */,
 				79E76C131517580E0073153D /* RKDocument.m in Sources */,
