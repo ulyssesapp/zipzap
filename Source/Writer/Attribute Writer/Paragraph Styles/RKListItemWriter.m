@@ -40,9 +40,9 @@
 	NSDictionary *markerStyle = [listStyle markerStyleForLevel: listItem.indentationLevel];
 	CGFloat enumeratorLocation = [markerStyle[RKListStyleMarkerLocationKey] floatValue];
 	CGFloat textLocation = [markerStyle[RKListStyleMarkerWidthKey] floatValue] + enumeratorLocation;
-			
+	
 	// Update paragraph style, so tabulators will be used for enumerator positioning (TextEdit)
-	[preprocessedString updateParagraphStyleInRange:range usingBlock:^(RKParagraphStyleWrapper *paragraphStyle) {
+	[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange paragraphRange, RKParagraphStyleWrapper *paragraphStyle) {
 		// Update Indentation
 		paragraphStyle.firstLineHeadIndent = (policy & RKAttributePreprocessorListMarkerPositionsUsingIndent) ? enumeratorLocation : 0;
 		paragraphStyle.headIndent = textLocation;
@@ -57,13 +57,22 @@
 			if (tab.location > textLocation)
 				[newTabStops addObject: tab];
 		}
-			
+				
 		paragraphStyle.tabStops = newTabStops;
 	}];
 	
 	// Inside of an RKListItem, nested paragraphs must use line breaks but not paragraph breaks.
-	if (range.length > 1)
+	if (range.length >= 1) {
+		RKParagraphStyleWrapper *lastParagraphStyle = [preprocessedString wrappedParagraphStyleAtIndex: NSMaxRange(range)-1];
+		
+		// Exchange paragraph breaks by newlines (required by RTF)
 		[preprocessedString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\u2028" options:0 range:NSMakeRange(range.location, range.length - 1)];
+
+		// We need to unify the last and the first paragraph style, since we've exchanged paragraph breaks by newlines.
+		[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange range, RKParagraphStyleWrapper *paragraphStyle) {
+			paragraphStyle.paragraphSpacing = lastParagraphStyle.paragraphSpacing;
+		}];
+	}
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName
