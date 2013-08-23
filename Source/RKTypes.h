@@ -87,6 +87,19 @@ typedef enum : NSUInteger {
 } RKPageSelectionMask;
 
 /*!
+ @abstract Possible page pinding types.
+ 
+ @const RKPageBindingNone			No page binding. First pages placed directly after a section break. (Default)
+ @const RKPageBindingLeft			Page binding on the left side. First pages on the right side. May insert an empty page on the left side on section breaks.
+ @const RKPageBindingRight			Page binding on the right side. First pages on the left side. May insert an empty page on the right side on section breaks.
+ */
+typedef enum : NSUInteger {
+	RKPageBindingNone = 0,
+	RKPageBindingLeft,
+	RKPageBindingRight
+}RKPageBinding;
+
+/*!
  @abstract Simple conversions from Points to TWIPS
  @discussion (1 TWIP = 1 / 20 Point = 1 / 1440 inch)
  */

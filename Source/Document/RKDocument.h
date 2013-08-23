@@ -165,6 +165,12 @@
  */
 @property(nonatomic) RKPageNumberingStyle sectionNumberingStyle;
 
+/*!
+ @abstract Page binding
+ */
+@property(nonatomic) RKPageBinding pageBinding;
+
+
 
 #pragma mark - Convenience methods
 
