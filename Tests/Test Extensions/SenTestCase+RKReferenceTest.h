@@ -27,7 +27,7 @@
 /*!
  @abstract Compares the content of two RTF files. Newlines and tabs are ignored
  */
-- (void)assertGeneratedRTFString:(NSString *)stringA withExpectedString:(NSString *)stringB;
+- (void)assertGeneratedRTFString:(NSString *)stringA withExpectedString:(NSString *)stringB filename:(NSString *)filename;
 
 /*!
  @abstract Loads a test document from TestData and compares it charwise with the given RTF output. Ignores newlines and tabs.

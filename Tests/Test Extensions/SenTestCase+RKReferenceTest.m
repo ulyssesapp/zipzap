@@ -32,14 +32,22 @@
     return [noMultiSpaces stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
 }
 
-- (void)assertGeneratedRTFString:(NSString *)generated withExpectedString:(NSString *)expected
+- (void)assertGeneratedRTFString:(NSString *)generated withExpectedString:(NSString *)expected filename:(NSString *)filename
 {
     NSString *normalizedGenerated = [self normalizeRTFString: generated];
     NSString *normalizedExpected = [self normalizeRTFString: expected];
     
     STAssertTrue([normalizedGenerated isEqualToString: normalizedExpected], @"Unexpected RTF conversion.", normalizedGenerated, normalizedExpected);
-	if (![normalizedGenerated isEqualToString: normalizedExpected])
+	if (![normalizedGenerated isEqualToString: normalizedExpected]) {
+		NSURL *temporaryDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
+		temporaryDirectoryURL = [temporaryDirectoryURL URLByAppendingPathComponent: @"rtfkit-rtf-test-verification"];
+		
+		[NSFileManager.defaultManager createDirectoryAtURL:temporaryDirectoryURL withIntermediateDirectories:YES attributes:nil error:NULL];
+		
+		[generated writeToURL:[[temporaryDirectoryURL URLByAppendingPathComponent: filename] URLByAppendingPathExtension: @"rtf"] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+		
 		NSLog(@"\n\n%@\n\nShould be:\n\n%@\n\n", generated, expected);
+	}
 	
     if (![normalizedGenerated isEqual: normalizedExpected])
         return;
@@ -52,7 +60,7 @@
     
     NSLog(@"Testing with File %@", name);
     
-    return [self assertGeneratedRTFString:rtfContent withExpectedString:testContent];
+    return [self assertGeneratedRTFString:rtfContent withExpectedString:testContent filename:name];
 }
 
 @end
