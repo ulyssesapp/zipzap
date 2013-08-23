@@ -29,6 +29,7 @@
 
 /*!
  @abstract Retruns the headline for a given page type
+ @discussion The page mask may be either a left or right selector. Additionally the first-page selector may be set. If no first page header is given, the left or right page will be used according to the mask.
  */
 - (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask;
 
@@ -49,6 +50,7 @@
 
 /*!
  @abstract Retruns the footer for a single or multiple page types
+ @discussion The page mask may be either a left or right selector. Additionally the first-page selector may be set. If no first page header is given, the left or right page will be used according to the mask. 
  */
 - (NSAttributedString *)footerForPage:(RKPageSelectionMask)pageMask;
 

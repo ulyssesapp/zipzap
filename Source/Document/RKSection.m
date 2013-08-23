@@ -193,10 +193,17 @@
 
 - (id)objectForPage:(RKPageSelectionMask)pageMask fromDictionary:(NSDictionary *)dictionary
 {
-    NSAssert(!(pageMask & (~RKPageSelectionFirst)) || !(pageMask & (~RKPageSelectionLeft)) || !(pageMask & (~RKPageSelectionRight)), 
+    NSAssert((pageMask & (RKPageSelectionLeft | RKPageSelectionRight)) != (RKPageSelectionLeft | RKPageSelectionRight),
              @"Invalid page mask used in query.");
     
-    return dictionary[@(pageMask)];
+	// Use first page, if given. Fall back to left / right otherwise.
+	if (pageMask & RKPageSelectionFirst) {
+		id object = dictionary[@(RKPageSelectionFirst)];
+		if (object)
+			return object;
+	}
+	
+    return dictionary[@(pageMask & (~RKPageSelectionFirst))];
 }
 
 - (void)setObject:(id)object forSinglePage:(RKPageSelectionMask)page toDictionary:(NSMutableDictionary *)dictionary

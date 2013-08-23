@@ -110,7 +110,7 @@
     // Tests the internal functionality used to set headers and footers for invalid page selection
     [section setObject:someText forPages:RKPageSelectorAll toDictionary:textmap];
     
-    STAssertThrows([section objectForPage:(RKPageSelectionFirst|RKPageSelectionLeft) fromDictionary:textmap], @"Expecting assertion failure");
+    STAssertThrows([section objectForPage:(RKPageSelectionRight|RKPageSelectionLeft) fromDictionary:textmap], @"Expecting assertion failure");
 }
 
 - (void)testSetHeader

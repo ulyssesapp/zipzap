@@ -74,7 +74,7 @@
         
         if (headerString) {
             // Get upper bound for the bounding box of the header
-            headerConstraints = [context.document boundingBoxForPageHeaderOfSection: section];
+            headerConstraints = [context.document boundingBoxForPageHeaderOfSection:section pageNumber:context.currentPageNumber];
             
             // Layout header and calculate exact position
             RKPDFFrame *headerFrame = [[RKPDFFrame alloc] initWithRect:headerConstraints growingDirection:NO context:context];
@@ -91,7 +91,7 @@
         
         if (footerString) {
             // Get upper bound for the bounding box of the footer
-            footerConstraints = [context.document boundingBoxForPageFooterOfSection: section];
+            footerConstraints = [context.document boundingBoxForPageFooterOfSection:section pageNumber:context.currentPageNumber];
             
             // Layout header and calculate exact position
             RKPDFFrame *footerFrame = [[RKPDFFrame alloc] initWithRect:footerConstraints growingDirection:YES context:context];
@@ -107,8 +107,8 @@
             [context startNewColumn];
 
             // Get column constraints and the constraints of the succeeding column for widow control
-            CGRect columnBox = [context.document boundingBoxForColumn:columnIndex section:section withHeader:headerConstraints footer:footerConstraints];
-            CGRect nextColumnBox = [context.document boundingBoxForColumn:((columnIndex >= section.numberOfColumns) ? 0 : columnIndex + 1) section:section withHeader:headerConstraints footer:footerConstraints];
+            CGRect columnBox = [context.document boundingBoxForColumn:columnIndex pageNumber:context.currentPageNumber section:section withHeader:headerConstraints footer:footerConstraints];
+            CGRect nextColumnBox = [context.document boundingBoxForColumn:((columnIndex >= section.numberOfColumns) ? 0 : columnIndex + 1) pageNumber:context.currentPageNumber section:section withHeader:headerConstraints footer:footerConstraints];
             
 			// Create column
 			RKPDFColumn *column = [[RKPDFColumn alloc] initWithRect:columnBox widowWidth:nextColumnBox.size.width context:context];

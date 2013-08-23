@@ -8,6 +8,7 @@
 
 #import "RKSection+PDFUtilities.h"
 #import "RKPDFRenderingContext.h"
+#import "RKDocument+PDFUtilities.h"
 
 #import "NSString+RKNumberFormatting.h"
 
@@ -38,13 +39,15 @@
 
 - (RKPageSelectionMask)pageSelectorForContext:(RKPDFRenderingContext *)renderingContext
 {
+	RKPageSelectionMask mask = 0;
+	
     if (renderingContext.pageNumberOfCurrentSection == 1)
-        return RKPageSelectionFirst;
+        mask |= RKPageSelectionFirst;
 
-    if (renderingContext.currentPageNumber % 2)
-        return RKPageSelectionLeft;
+    if ([renderingContext.document isLeftPageForPageNumber: renderingContext.currentPageNumber])
+        return mask | RKPageSelectionLeft;
     else
-        return RKPageSelectionRight;
+        return mask | RKPageSelectionRight;
 }
 
 @end
