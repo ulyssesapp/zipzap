@@ -72,9 +72,10 @@
 			case RKPageBindingRight:
 				if ([context.document isLeftPageForPageNumber: context.currentPageNumber])
 					[context startNewPage];
-				
 				break;
 		}
+		
+		[context resetSectionPageCount];
 	}
 		
     // Render pages as long we have text or footnotes

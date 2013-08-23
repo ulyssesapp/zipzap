@@ -184,6 +184,12 @@ typedef enum : NSUInteger {
 - (void)startNewPage;
 
 /*!
+ @abstract Resets the page count of the current section.
+ @discussion Used for inserting blank pages to a section.
+ */
+- (void)resetSectionPageCount;
+
+/*!
  @abstract Starts a new column in the rendering context
  @discussion Returns NO, if all columns of the page are used.
  */

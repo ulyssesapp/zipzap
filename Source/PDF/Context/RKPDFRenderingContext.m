@@ -157,7 +157,7 @@
 - (void)nextSection
 {
     // Update page and section counter
-    _pageNumberOfCurrentSection = NSUIntegerMax;
+    [self resetSectionPageCount];
     _currentSectionNumber ++;
     
     // Reset footnote counter, if required
@@ -204,6 +204,11 @@
     
     // Reset page notes
     _pageNotes = [NSMutableArray new];
+}
+
+- (void)resetSectionPageCount
+{
+	_pageNumberOfCurrentSection = NSUIntegerMax;
 }
 
 - (BOOL)startNewColumn
