@@ -13,7 +13,7 @@
 
 @interface RKSectionWriter (TestExtensions)
 
-+ (NSString *)sectionAttributesForSection:(RKSection *)section usingDocument:(RKDocument *)document firstPagePosition:(RKSectionFirstPagePosition)firstPagePosition;
++ (NSString *)sectionAttributesForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy usingDocument:(RKDocument *)document firstPagePosition:(RKSectionFirstPagePosition)firstPagePosition;
 + (NSString *)headersForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources;
 + (NSString *)footersForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources;
 + (NSString *)contentForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources;

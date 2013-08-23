@@ -18,7 +18,7 @@
 /*!
  @abstract Translates all section attributes to RTF command
  */
-+ (NSString *)sectionAttributesForSection:(RKSection *)section usingDocument:(RKDocument *)document firstPagePosition:(RKSectionFirstPagePosition)firstPagePosition;
++ (NSString *)sectionAttributesForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy usingDocument:(RKDocument *)document firstPagePosition:(RKSectionFirstPagePosition)firstPagePosition;
 
 /*!
  @abstract Translates a mapping from tag names to attributed string such that the translated
@@ -62,7 +62,7 @@ NSDictionary *RSectionWriterFootnoteStyleNames;
 
 + (NSString *)RTFFromSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy firstPagePosition:(RKSectionFirstPagePosition)firstPagePosition resources:(RKResourcePool *)resources
 {
-    NSString *sectionAttributes = [self sectionAttributesForSection:section usingDocument:resources.document firstPagePosition:firstPagePosition];
+    NSString *sectionAttributes = [self sectionAttributesForSection:section withConversionPolicy:conversionPolicy usingDocument:resources.document firstPagePosition:firstPagePosition];
 
     NSString *headers = [self headersForSection:section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources];
     NSString *footers = [self footersForSection:section withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources];
@@ -71,10 +71,18 @@ NSDictionary *RSectionWriterFootnoteStyleNames;
     return [NSString stringWithFormat:@"\n%@\n%@\n%@\n%@", sectionAttributes, headers, footers, content];
 }
 
-+ (NSString *)sectionAttributesForSection:(RKSection *)section usingDocument:(RKDocument *)document firstPagePosition:(RKSectionFirstPagePosition)firstPagePosition
++ (NSString *)sectionAttributesForSection:(RKSection *)section withConversionPolicy:(RKConversionPolicy)conversionPolicy usingDocument:(RKDocument *)document firstPagePosition:(RKSectionFirstPagePosition)firstPagePosition
 {
-    NSMutableString *attributes = [NSMutableString stringWithString:@"\\titlepg"];
+	// TextEdit / Pages does not support section breaks. Just use a page break instead.
+	if (conversionPolicy & RKConversionPolicyAddLineBreaksOnSectionBreaks) {
+		if (firstPagePosition == RKSectionStartsOnSamePage)
+			return @"";
+		else
+			return @"\\";
+	}
     
+	NSMutableString *attributes = [NSMutableString stringWithString:@"\\titlepg"];
+	
 	switch (firstPagePosition) {
 		case RKSectionStartsOnSamePage:
 			[attributes appendString: @"\\sbknone"];

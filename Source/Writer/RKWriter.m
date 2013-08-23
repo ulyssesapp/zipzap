@@ -31,7 +31,7 @@
 
 + (NSData *)systemRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withConversionPolicy:0 resources:NULL];
+    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyAddLineBreaksOnSectionBreaks resources:NULL];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
@@ -39,7 +39,7 @@
     RKResourcePool *resources;
     
     // Generate RTF document
-    NSData *rtfContent = [self RTFDataFromDocument:document withConversionPolicy:(RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments) resources:&resources];
+    NSData *rtfContent = [self RTFDataFromDocument:document withConversionPolicy:(RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments|RKConversionPolicyAddLineBreaksOnSectionBreaks) resources:&resources];
     NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:rtfContent];
 
     // Pacakge image files
