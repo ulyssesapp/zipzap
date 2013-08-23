@@ -58,6 +58,25 @@
     NSAttributedString *contentString = section.content;
     NSRange remainingContentRange = NSMakeRange(0, contentString.length);
     
+	// Should we add a blank page?
+	if (context.currentPageNumber != NSUIntegerMax) {
+		switch (context.document.pageBinding) {
+			case RKPageBindingNone:
+				break;
+				
+			case RKPageBindingLeft:
+				if (![context.document isLeftPageForPageNumber: context.currentPageNumber])
+					[context startNewPage];
+				break;
+				
+			case RKPageBindingRight:
+				if ([context.document isLeftPageForPageNumber: context.currentPageNumber])
+					[context startNewPage];
+				
+				break;
+		}
+	}
+		
     // Render pages as long we have text or footnotes
     NSAttributedString *footnotesForLastColumn = nil;
 	NSRange remainingFootnotesRange = NSMakeRange(0, 0);
