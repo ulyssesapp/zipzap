@@ -150,9 +150,15 @@ NSDictionary *RSectionWriterFootnoteStyleNames;
     for (NSString *tag in [attributedStringMap.allKeys sortedArrayUsingSelector:@selector(compare:)]) {
         NSAttributedString *attributedString = attributedStringMap[tag];
 
+		NSString *bodyString = [RKAttributedStringWriter RTFFromAttributedString:attributedString withConversionPolicy:conversionPolicy resources:resources];
+		// Add a \par control word, otherwise word will ignore paragraph stylings
+		if (![bodyString rangeOfString:@"\\\\par\\s+" options:NSRegularExpressionSearch|NSAnchoredSearch|NSBackwardsSearch].length)
+			bodyString = [bodyString stringByAppendingString: @"\\par"];
+		
         [translation appendString:
-         [NSString stringWithRTFGroupTag:tag body:[RKAttributedStringWriter RTFFromAttributedString:attributedString withConversionPolicy:conversionPolicy resources:resources]]
+         [NSString stringWithRTFGroupTag:tag body:bodyString]
         ];
+		
         [translation appendString: @"\n"];
     }
 
