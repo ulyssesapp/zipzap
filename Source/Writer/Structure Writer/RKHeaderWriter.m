@@ -273,7 +273,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 
 + (NSString *)documentFormatFromDocument:(RKDocument *)document
 {
-    NSMutableString *attributes = [NSMutableString stringWithString:@"\\facingp"];
+    NSMutableString *attributes = [NSMutableString new];
     
     // Footnote placement
     switch (document.footnotePlacement) {
@@ -333,6 +333,24 @@ NSArray *RKHeaderWriterMetadataDescriptions;
     if (document.pageOrientation == RKPageOrientationLandscape)
         [attributes appendString:@"\\landscape"];
     
+	// Page binding
+	switch (document.pageBinding) {
+		case RKPageBindingNone:
+			break;
+			
+		case RKPageBindingLeft:
+			[attributes appendString: @"\\facingp\\margmirror"];
+			break;
+			
+		case RKPageBindingRight:
+			[attributes appendString: @"\\facingp\\rtlgutter\\margmirror"];
+			break;
+	}
+	
+	// Page gutter
+	if (document.pageBinding != RKPageBindingNone)
+		[attributes appendFormat: @"\\gutter%lu", (NSUInteger)RKPointsToTwips(document.pageGutterWidth)];
+	
     // Paper size
     [attributes appendString: [NSString stringWithFormat:@"\\paperw%lu\\paperh%lu",
 							   (NSUInteger)RKPointsToTwips(document.pageSize.width), 

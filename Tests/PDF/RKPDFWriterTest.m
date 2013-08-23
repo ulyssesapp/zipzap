@@ -83,7 +83,7 @@
 - (NSURL *)writeVerificationDataForFilename:(NSString *)filename usingPDFData:(NSData *)pdfData pngData:(NSData *)pngData
 {
     NSURL *temporaryDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
-    temporaryDirectoryURL = [temporaryDirectoryURL URLByAppendingPathComponent: @"rtfkit-test-verification"];
+    temporaryDirectoryURL = [temporaryDirectoryURL URLByAppendingPathComponent: @"rtfkit-pdf-test-verification"];
     
     [[NSFileManager defaultManager] createDirectoryAtURL:temporaryDirectoryURL withIntermediateDirectories:YES attributes:nil error:NULL];
     
