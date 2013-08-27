@@ -196,7 +196,7 @@
     NSAssert((pageMask & (RKPageSelectionLeft | RKPageSelectionRight)) != (RKPageSelectionLeft | RKPageSelectionRight),
              @"Invalid page mask used in query.");
     
-	// Use first page, if given. Fall back to left / right otherwise.
+	// Use first page if given. Fall back to left / right otherwise.
 	if (pageMask & RKPageSelectionFirst) {
 		id object = dictionary[@(RKPageSelectionFirst)];
 		if (object)

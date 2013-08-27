@@ -97,7 +97,7 @@ typedef enum : NSUInteger {
 	RKPageBindingNone = 0,
 	RKPageBindingLeft,
 	RKPageBindingRight
-}RKPageBindingPosition;
+} RKPageBindingPosition;
 
 /*!
  @abstract Simple conversions from Points to TWIPS
