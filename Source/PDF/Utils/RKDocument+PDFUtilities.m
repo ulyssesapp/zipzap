@@ -48,14 +48,13 @@
 {
 	CGFloat leftMargin = 0;
 	CGFloat rightMargin = 0;
-	CGFloat gutter = (self.pageBinding == RKPageBindingNone) ? 0 : self.pageGutterWidth;
 	
 	if ([self isLeftPageForPageNumber: pageNumber]) {
 		leftMargin = self.pageInsets.right;
-		rightMargin = self.pageInsets.left + gutter;
+		rightMargin = self.pageInsets.left;
 	}
 	else {
-		leftMargin = self.pageInsets.left + gutter;
+		leftMargin = self.pageInsets.left;
 		rightMargin = self.pageInsets.right;
 	}
 	

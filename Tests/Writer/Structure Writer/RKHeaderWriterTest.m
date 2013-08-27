@@ -195,14 +195,13 @@
     [document setFootnoteEnumerationPolicy:RKFootnoteEnumerationPerSection];
     [document setEndnoteEnumerationPolicy: RKFootnoteContinuousEnumeration];
     
-	[document setPageGutterWidth: 10];
 	[document setPageBinding: RKPageBindingRight];
 	
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
                           "\\ftnbj\\aftnbj\\aendnotes"
                           "\\ftnrestart\\aftnrstcont"
-						  "\\facingp\\rtlgutter\\margmirror\\gutter200"
+						  "\\facingp\\rtlgutter\\margmirror"
                           "\\paperw2000"
                           "\\paperh4000"
                           "\\margt2000"

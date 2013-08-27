@@ -347,10 +347,6 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 			break;
 	}
 	
-	// Page gutter
-	if (document.pageBinding != RKPageBindingNone)
-		[attributes appendFormat: @"\\gutter%lu", (NSUInteger)RKPointsToTwips(document.pageGutterWidth)];
-	
     // Paper size
     [attributes appendString: [NSString stringWithFormat:@"\\paperw%lu\\paperh%lu",
 							   (NSUInteger)RKPointsToTwips(document.pageSize.width), 

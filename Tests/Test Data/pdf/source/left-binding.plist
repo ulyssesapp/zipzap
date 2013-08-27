@@ -7,13 +7,11 @@
 	<key>pageInsetsBottom</key>
 	<integer>10</integer>
 	<key>pageInsetsLeft</key>
-	<integer>10</integer>
+	<integer>200</integer>
 	<key>pageInsetsRight</key>
-	<integer>20</integer>
+	<integer>100</integer>
 	<key>pageBinding</key>
 	<string>left</string>
-	<key>pageGutterWidth</key>
-	<integer>72</integer>
 	<key>sections</key>
 	<array>
 		<dict>

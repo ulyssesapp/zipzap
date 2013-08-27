@@ -113,11 +113,6 @@
 @property(nonatomic) RKPageInsets pageInsets;
 
 /*!
- @abstract The width of the page gutter
- */
-@property(nonatomic) CGFloat pageGutterWidth;
-
-/*!
  @abstract Page orientation
  */
 @property(nonatomic) RKPageOrientation pageOrientation;

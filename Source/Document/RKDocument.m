@@ -56,7 +56,6 @@
 		_footnoteSpacingBefore = 15;
 	
 		_pageBinding = RKPageBindingNone;
-		_pageGutterWidth = 0;
     }
     
     return self;
@@ -86,7 +85,6 @@
 	copy.footerSpacingAfter = _footerSpacingAfter;
     copy.sectionNumberingStyle = _sectionNumberingStyle;
 	copy.pageBinding = _pageBinding;
-	copy.pageGutterWidth = _pageGutterWidth;
     
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
@@ -123,7 +121,6 @@
             &&  (self.footerSpacingBefore == object.footerSpacingBefore)
             &&  (self.footerSpacingAfter == object.footerSpacingAfter)
 			&&  (self.pageBinding == object.pageBinding)
-			&&  (self.pageGutterWidth == object.pageGutterWidth)
     ;
 }
 
