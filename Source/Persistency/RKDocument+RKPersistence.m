@@ -37,6 +37,8 @@ NSString *RKPersistencyEndnoteEnumerationPolicyKey      = @"endnoteEnumerationPo
 NSString *RKPersistencyParagraphStylesKey               = @"paragraphStyles";
 NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
 NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyle";
+NSString *RKPersistencyPageBindingKey					= @"pageBinding";
+NSString *RKPersistencyPageGutterWidthKey				= @"pageGutterWidth";
 
 @interface RKDocument (RKPersistencePrivateMethods)
 
@@ -100,6 +102,12 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
         if ([propertyList objectForKey: RKPersistencySectionNumberingStyleKey])
             self.sectionNumberingStyle = [[self.class serializationTableForFootnoteEnumerationPolicy] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencySectionNumberingStyleKey] error:NULL];
         
+		if ([propertyList objectForKey: RKPersistencyPageBindingKey])
+			self.pageBinding = [[self.class serializationTableForPageBinding] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyPageBindingKey] error:NULL];
+		
+		if ([propertyList objectForKey: RKPersistencyPageGutterWidthKey])
+			self.pageGutterWidth = [[propertyList objectForKey: RKPersistencyPageGutterWidthKey] floatValue];
+		
         // De-serialize meta data, if any
         if ([[propertyList objectForKey: RKPersistencyMetadataKey] isKindOfClass: NSDictionary.class])
             self.metadata = [propertyList objectForKey: RKPersistencyMetadataKey];
@@ -159,7 +167,9 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
     propertyList[RKPersistencyFootnoteEnumerationPolicyKey] =[[self.class serializationTableForFootnoteEnumerationPolicy] stringFromUnsignedEnumValue: self.footnoteEnumerationPolicy];
     propertyList[RKPersistencyEndnoteEnumerationPolicyKey] =  [[self.class serializationTableForFootnoteEnumerationPolicy] stringFromUnsignedEnumValue: self.endnoteEnumerationPolicy];
     propertyList[RKPersistencySectionNumberingStyleKey] = [[self.class serializationTableForSectionNumberingStyle] stringFromSignedEnumValue: self.sectionNumberingStyle];
-
+	propertyList[RKPersistencyPageBindingKey] = [[self.class serializationTableForPageBinding] stringFromSignedEnumValue: self.pageBinding];
+	propertyList[RKPersistencyPageGutterWidthKey] = [NSNumber numberWithFloat: self.pageGutterWidth];
+	
     // Serialize metadata, if any
     if (self.metadata)
         propertyList[RKPersistencyMetadataKey] = self.metadata;
@@ -301,6 +311,23 @@ NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyl
 			 [NSNumber numberWithUnsignedInteger: RKFootnoteEnumerationPerSection],         @"perSection",
 			 [NSNumber numberWithUnsignedInteger: RKFootnoteContinuousEnumeration],         @"continuous",
 			 nil
+		 ];
+	});
+    
+    return serializationTable;
+}
+
++ (NSDictionary *)serializationTableForPageBinding
+{
+	static NSDictionary *serializationTable;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable =
+		[NSDictionary dictionaryWithObjectsAndKeys:
+		 [NSNumber numberWithUnsignedInteger: RKPageBindingNone],           @"none",
+		 [NSNumber numberWithUnsignedInteger: RKPageBindingLeft],			@"left",
+		 [NSNumber numberWithUnsignedInteger: RKPageBindingRight],			@"right",
+		 nil
 		 ];
 	});
     

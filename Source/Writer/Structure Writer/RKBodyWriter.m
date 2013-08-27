@@ -18,7 +18,27 @@
     NSMutableString *body = [NSMutableString new];
     
     [document.sections enumerateObjectsUsingBlock:^(id section, NSUInteger index, BOOL *stop) {
-        [body appendString: [RKSectionWriter RTFFromSection:section withConversionPolicy:conversionPolicy resources:resources]];
+		RKSectionFirstPagePosition firstPagePosition;
+		
+		if (index == 0) {
+			// Do not make a page break on the first section
+			firstPagePosition = RKSectionStartsOnSamePage;
+		}
+		else {
+			switch (document.pageBinding) {
+				// No binding: new sections just on the next page
+				case RKPageBindingNone:
+					firstPagePosition = RKSectionStartsOnNextPage;
+					break;
+		
+				case RKPageBindingRight:
+				case RKPageBindingLeft:
+					firstPagePosition = RKSectionStartsOnOddPage;
+					break;
+			}
+		}
+		
+        [body appendString: [RKSectionWriter RTFFromSection:section withConversionPolicy:conversionPolicy firstPagePosition:firstPagePosition resources:resources]];
         
         // Place a section separator only if we have more than one section
         if (index < document.sections.count - 1) {

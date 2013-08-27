@@ -44,20 +44,33 @@
     return metaData;
 }
 
-- (CGRect)boundingBoxForContent
+- (CGRect)contentBoundingBoxForPageNumber:(NSUInteger)pageNumber
 {
-    CGRect boundingBox = self.pdfMediaBox;
-    boundingBox.origin.x += self.pageInsets.left;
+	CGFloat leftMargin = 0;
+	CGFloat rightMargin = 0;
+	CGFloat gutter = (self.pageBinding == RKPageBindingNone) ? 0 : self.pageGutterWidth;
+	
+	if ([self isLeftPageForPageNumber: pageNumber]) {
+		leftMargin = self.pageInsets.right;
+		rightMargin = self.pageInsets.left + gutter;
+	}
+	else {
+		leftMargin = self.pageInsets.left + gutter;
+		rightMargin = self.pageInsets.right;
+	}
+	
+	CGRect boundingBox = self.pdfMediaBox;
+    boundingBox.origin.x += leftMargin;
     boundingBox.origin.y += self.pageInsets.bottom;
     boundingBox.size.height -= self.pageInsets.top + self.pageInsets.bottom;
-    boundingBox.size.width -= self.pageInsets.right + self.pageInsets.left;
-    
+    boundingBox.size.width -= leftMargin + rightMargin;
+	
     return boundingBox;
 }
 
-- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer
+- (CGRect)boundingBoxForColumn:(NSUInteger)column pageNumber:(NSUInteger)pageNumber section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer
 {
-    CGRect pageBounds = self.boundingBoxForContent;
+    CGRect pageBounds = [self contentBoundingBoxForPageNumber: pageNumber];
 
     // Shrink page for footer, if needed
     if ((footer.origin.y + footer.size.height) > (pageBounds.origin.y - self.footerSpacingBefore)) {
@@ -79,9 +92,9 @@
     return pageBounds;
 }
 
-- (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section
+- (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section pageNumber:(NSUInteger)pageNumber
 {
-    CGRect boundingBox = self.boundingBoxForContent;
+    CGRect boundingBox = [self contentBoundingBoxForPageNumber: pageNumber];
     
     // The footer section may occupy at most the half of the page
     boundingBox.origin.y = self.footerSpacingAfter;
@@ -90,9 +103,9 @@
     return boundingBox;
 }
 
-- (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section
+- (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section pageNumber:(NSUInteger)pageNumber
 {
-    CGRect boundingBox = self.boundingBoxForContent;
+    CGRect boundingBox = [self contentBoundingBoxForPageNumber: pageNumber];
     
     // The header section may occupy at most the half of the page
     boundingBox.origin.y = self.pdfMediaBox.size.height - self.headerSpacingBefore - (boundingBox.size.height / 2.0f);
@@ -156,6 +169,20 @@
     
     NSAssert(false, @"Invalid section numbering style");
     return nil;
+}
+
+- (BOOL)isLeftPageForPageNumber:(NSUInteger)pageNumber
+{
+	switch (self.pageBinding) {
+		case RKPageBindingNone:
+			return NO;
+			
+		case RKPageBindingLeft:
+			return ((pageNumber % 2) == 0);
+			
+		case RKPageBindingRight:
+			return ((pageNumber % 2) == 1);
+	}
 }
 
 @end

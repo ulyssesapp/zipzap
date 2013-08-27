@@ -28,12 +28,12 @@
 /*!
  @abstract Provides the bounding box that can be used for content according to the page insets of a document
  */
-- (CGRect)boundingBoxForContent;
+- (CGRect)contentBoundingBoxForPageNumber:(NSUInteger)pageNumber;
 
 /*!
  @abstract Provides a bounding box for a column with a certain height
  */
-- (CGRect)boundingBoxForColumn:(NSUInteger)column section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer;
+- (CGRect)boundingBoxForColumn:(NSUInteger)column pageNumber:(NSUInteger)pageNumber section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer;
 
 /*!
  @abstract Provides a bounding box for footnotes based on the bounding box of a certain column limited by a given height
@@ -43,12 +43,12 @@
 /*!
  @abstract Provides a bounding box for the header of a section page
  */
-- (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section;
+- (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section pageNumber:(NSUInteger)pageNumber;
 
 /*!
  @abstract Provides a preliminiary bounding box for the footer of a section page
  */
-- (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section;
+- (CGRect)boundingBoxForPageFooterOfSection:(RKSection *)section pageNumber:(NSUInteger)pageNumber;
 
 /*!
  @abstract Draws a footnote separator to a given context using the given bounding box around the footnotes
@@ -59,5 +59,10 @@
  @abstract Converts the number of a section to a string according to the sectionNumberingStyle of the document
  */
 - (NSString *)stringForSectionNumber:(NSUInteger)sectionNumber;
+
+/*!
+ @abstract Returns yes if the page is a left page. Otherwise NO.
+ */
+- (BOOL)isLeftPageForPageNumber:(NSUInteger)pageNumber;
 
 @end

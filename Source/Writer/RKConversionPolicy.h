@@ -12,6 +12,8 @@
  @const RKConversionPolicyConvertAttachments			Specifies that image attachments should be converted (should be set for RTFD and Word, but not for plain system RTF).
  @const	RKConversionPolicyReferenceAttachments			Specifies that image attachments should be referenced, instead of directly embedded. (should be set for RTFD)
 
+ @const RKConversionPolicyAddPageBreaksOnSectionBreaks	Specifies that a page break should be inserted on each section break. Required for pages export that does not recognize sections.
+ 
  @const RKConversionPolicyPositionListMarkerUsingIndent	Specifies that list markers should be positioned using the first line indent, rather than tabs. Required for Word export.
  
  */
@@ -19,7 +21,9 @@ typedef enum : NSUInteger {
     RKConversionPolicyConvertAttachments			= (1 << 0),
 	RKConversionPolicyReferenceAttachments			= (1 << 1),
 	
-	RKConversionPolicyPositionListMarkerUsingIndent	= (1 << 2)
+	RKConversionPolicyAddLineBreaksOnSectionBreaks	= (1 << 2),
+	
+	RKConversionPolicyPositionListMarkerUsingIndent	= (1 << 3)
 } RKConversionPolicy;
 
 

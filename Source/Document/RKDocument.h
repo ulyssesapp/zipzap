@@ -113,6 +113,11 @@
 @property(nonatomic) RKPageInsets pageInsets;
 
 /*!
+ @abstract The width of the page gutter
+ */
+@property(nonatomic) CGFloat pageGutterWidth;
+
+/*!
  @abstract Page orientation
  */
 @property(nonatomic) RKPageOrientation pageOrientation;
@@ -164,6 +169,12 @@
  @abstract Section numbering style
  */
 @property(nonatomic) RKPageNumberingStyle sectionNumberingStyle;
+
+/*!
+ @abstract Page binding
+ */
+@property(nonatomic) RKPageBindingPosition pageBinding;
+
 
 
 #pragma mark - Convenience methods
