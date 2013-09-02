@@ -55,7 +55,7 @@
     testDocument.endnoteEnumerationStyle = RKFootnoteEnumerationAlphabeticUpperCase;
     
 	testDocument.pageBinding = RKPageBindingRight;
-	testDocument.doubleSided = YES;
+	testDocument.twoSided = YES;
 	
     #if !TARGET_OS_IPHONE
         NSDictionary *paragraphStyle = [NSDictionary dictionaryWithObject:[NSParagraphStyle defaultParagraphStyle] forKey:NSParagraphStyleAttributeName];

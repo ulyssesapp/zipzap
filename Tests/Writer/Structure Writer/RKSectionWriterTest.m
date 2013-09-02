@@ -160,7 +160,7 @@
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionAll, sectionSwitch, nil]];
 	document.pageBinding = RKPageBindingLeft;
 	document.pageInsets = RKPageInsetsMake(100, 200, 100, 100);
-	document.doubleSided = YES;
+	document.twoSided = YES;
 	
     NSData *converted = [document wordRTF];
     

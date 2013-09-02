@@ -175,7 +175,7 @@
  @abstract Specifies whether the document should is double sided.
  @discussion Will switch the placement of the inner and outer margin for left and right sides. Furthermore, new sections will be placed either only on right or left sides (depending on the page binding option). Thus empty pages may be generated on section breaks. Will be only used for PDF / Word export.
  */
-@property(nonatomic) BOOL doubleSided;
+@property(nonatomic) BOOL twoSided;
 
 
 #pragma mark - Convenience methods

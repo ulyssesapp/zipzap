@@ -38,7 +38,7 @@ NSString *RKPersistencyParagraphStylesKey               = @"paragraphStyles";
 NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
 NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyle";
 NSString *RKPersistencyPageBindingKey					= @"pageBinding";
-NSString *RKPersistencyDoubleSidedKey					= @"doubleSided";
+NSString *RKPersistencyTwoSidedKey					= @"twoSided";
 
 @interface RKDocument (RKPersistencePrivateMethods)
 
@@ -105,8 +105,8 @@ NSString *RKPersistencyDoubleSidedKey					= @"doubleSided";
 		if ([propertyList objectForKey: RKPersistencyPageBindingKey])
 			self.pageBinding = [[self.class serializationTableForPageBinding] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyPageBindingKey] error:NULL];
 		
-		if ([propertyList objectForKey: RKPersistencyDoubleSidedKey])
-			self.doubleSided = [propertyList[RKPersistencyDoubleSidedKey] boolValue];
+		if ([propertyList objectForKey: RKPersistencyTwoSidedKey])
+			self.twoSided = [propertyList[RKPersistencyTwoSidedKey] boolValue];
 		
 		
         // De-serialize meta data, if any
@@ -169,7 +169,7 @@ NSString *RKPersistencyDoubleSidedKey					= @"doubleSided";
     propertyList[RKPersistencyEndnoteEnumerationPolicyKey] =  [[self.class serializationTableForFootnoteEnumerationPolicy] stringFromUnsignedEnumValue: self.endnoteEnumerationPolicy];
     propertyList[RKPersistencySectionNumberingStyleKey] = [[self.class serializationTableForSectionNumberingStyle] stringFromSignedEnumValue: self.sectionNumberingStyle];
 	propertyList[RKPersistencyPageBindingKey] = [[self.class serializationTableForPageBinding] stringFromSignedEnumValue: self.pageBinding];
-	propertyList[RKPersistencyDoubleSidedKey] = @(self.doubleSided);
+	propertyList[RKPersistencyTwoSidedKey] = @(self.twoSided);
 	
     // Serialize metadata, if any
     if (self.metadata)

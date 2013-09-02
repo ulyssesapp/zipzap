@@ -195,7 +195,7 @@
     [document setFootnoteEnumerationPolicy:RKFootnoteEnumerationPerSection];
     [document setEndnoteEnumerationPolicy: RKFootnoteContinuousEnumeration];
 
-	[document setDoubleSided: NO];
+	[document setTwoSided: NO];
 	[document setPageBinding: RKPageBindingLeft];
 	
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
@@ -214,7 +214,7 @@
                          );
 
 	// Test setting: right-binding, non-double sided
-	[document setDoubleSided: NO];
+	[document setTwoSided: NO];
 	[document setPageBinding: RKPageBindingRight];
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
@@ -233,7 +233,7 @@
                          );
 	
 	// Test setting: left-binding, double sided
-	[document setDoubleSided: YES];
+	[document setTwoSided: YES];
 	[document setPageBinding: RKPageBindingLeft];
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
@@ -252,7 +252,7 @@
                          );
 
 	// Test setting: right-binding, double sided
-	[document setDoubleSided: YES];
+	[document setTwoSided: YES];
 	[document setPageBinding: RKPageBindingRight];
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
@@ -271,7 +271,7 @@
                          );
 	
     // Test setting: No Hyphenation, Document endnotes, landscape format, left binding, no-double-sided
-	[document setDoubleSided: NO];
+	[document setTwoSided: NO];
 	[document setPageBinding: RKPageBindingLeft];
 	
     [document setHyphenationEnabled:NO];
@@ -496,7 +496,7 @@
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingLeft;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
-	document.doubleSided = NO;
+	document.twoSided = NO;
 	
     NSData *converted = [document wordRTF];
     
@@ -510,35 +510,35 @@
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingRight;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
-	document.doubleSided = NO;
+	document.twoSided = NO;
 	
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"single-sided-right"];
 }
 
-- (void)testDoubleSidedLeftBindingManualTest
+- (void)testTwoSidedLeftBindingManualTest
 {
 	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Left Binding. Double Sided."]];
 	
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingLeft;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
-	document.doubleSided = YES;
+	document.twoSided = YES;
 	
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"double-sided-left"];
 }
 
-- (void)testDoubleSidedRightBindingManualTest
+- (void)testTwoSidedRightBindingManualTest
 {
 	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Right Binding. Double Sided."]];
 	
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingRight;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
-	document.doubleSided = YES;
+	document.twoSided = YES;
 	
     NSData *converted = [document wordRTF];
     

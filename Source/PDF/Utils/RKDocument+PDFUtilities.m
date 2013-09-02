@@ -173,7 +173,7 @@
 - (BOOL)isLeftPageForPageNumber:(NSUInteger)pageNumber
 {
 	// If not double sided, treat all pages as first page
-	if (!self.doubleSided)
+	if (!self.twoSided)
 		pageNumber = 1;
 	
 	switch (self.pageBinding) {

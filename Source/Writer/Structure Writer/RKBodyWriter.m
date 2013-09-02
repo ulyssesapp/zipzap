@@ -25,7 +25,7 @@
 			firstPagePosition = RKSectionStartsOnSamePage;
 		}
 		else {
-			if (document.doubleSided)
+			if (document.twoSided)
 				firstPagePosition = RKSectionStartsOnOddPage;
 			else
 				firstPagePosition = RKSectionStartsOnNextPage;

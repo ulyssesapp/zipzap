@@ -10,7 +10,7 @@
 	<integer>10</integer>
 	<key>pageInsetsOuter</key>
 	<integer>100</integer>
-	<key>doubleSided</key>
+	<key>twoSided</key>
 	<true/>
 	<key>pageBinding</key>
 	<string>left</string>

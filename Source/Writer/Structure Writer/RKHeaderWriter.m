@@ -344,7 +344,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 	}
 
 	// Double sided
-	if (document.doubleSided)
+	if (document.twoSided)
 		[attributes appendString: @"\\facingp\\margmirror"];
 	
     // Paper size

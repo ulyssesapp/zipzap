@@ -85,7 +85,7 @@
 	copy.footerSpacingAfter = _footerSpacingAfter;
     copy.sectionNumberingStyle = _sectionNumberingStyle;
 	copy.pageBinding = _pageBinding;
-	copy.doubleSided = _doubleSided;
+	copy.twoSided = _twoSided;
     
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
@@ -122,7 +122,7 @@
             &&  (self.footerSpacingBefore == object.footerSpacingBefore)
             &&  (self.footerSpacingAfter == object.footerSpacingAfter)
 			&&  (self.pageBinding == object.pageBinding)
-			&&  (self.doubleSided == object.doubleSided)
+			&&  (self.twoSided == object.twoSided)
     ;
 }
 
