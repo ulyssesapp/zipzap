@@ -34,14 +34,14 @@ typedef enum : NSUInteger {
  @abstract Specifies the insets of a page
  */
 typedef struct {
-    CGFloat top, left, bottom, right;
+    CGFloat top, inner, bottom, outer;
 } RKPageInsets;
 
 
 /*!
  @abstract Generates the insets of a page
  */
-#define RKPageInsetsMake(__top, __left, __right, __bottom)      ((RKPageInsets){.top = __top, .left = __left, .right = __right, .bottom = __bottom})
+#define RKPageInsetsMake(__top, __inner, __outer, __bottom)      ((RKPageInsets){.top = __top, .inner = __inner, .outer = __outer, .bottom = __bottom})
 
 /*!
  @abstract Specifies the style of page numbering inside a section
@@ -89,13 +89,11 @@ typedef enum : NSUInteger {
 /*!
  @abstract Possible page pinding types.
  
- @const RKPageBindingNone			No page binding. First pages placed directly after a section break. (Default)
- @const RKPageBindingLeft			Page binding on the left side. First pages on the right side. May insert an empty page on the left side on section breaks.
- @const RKPageBindingRight			Page binding on the right side. First pages on the left side. May insert an empty page on the right side on section breaks.
+ @const RKPageBindingLeft			Page binding on the left side. On single-sided printing, the inner margin will be on the right side. On double-sided printing, the first pages are placed on the right side.
+ @const RKPageBindingRight			Page binding on the right side. On single-sided printing, the inner margin will be on the left side. On double-sided printing, the first pages are placed on the left side.
  */
 typedef enum : NSUInteger {
-	RKPageBindingNone = 0,
-	RKPageBindingLeft,
+	RKPageBindingLeft = 0,
 	RKPageBindingRight
 } RKPageBindingPosition;
 

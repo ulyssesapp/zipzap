@@ -4425,28 +4425,28 @@ Video with file
 							<key>levelStyles</key>
 							<array>
 								<dict>
-									<key>RKListStyleMarkerWidth</key>
-									<integer>30</integer>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>10</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>40</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>70</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>100</integer>
+									<key>RKListStyleMarkerWidth</key>
+									<integer>30</integer>
 								</dict>
 							</array>
 							<key>firstLineheadIndentOffsets</key>
@@ -4481,10 +4481,10 @@ Video with file
 										<key>name</key>
 										<string>Helvetica-Bold</string>
 									</dict>
-									<key>RKListStyleMarkerWidth</key>
-									<integer>30</integer>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>10</integer>
+									<key>RKListStyleMarkerWidth</key>
+									<integer>30</integer>
 								</dict>
 								<dict>
 									<key>NSFont</key>
@@ -4492,10 +4492,10 @@ Video with file
 										<key>name</key>
 										<string>Helvetica-Italic</string>
 									</dict>
-									<key>RKListStyleMarkerWidth</key>
-									<integer>30</integer>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>40</integer>
+									<key>RKListStyleMarkerWidth</key>
+									<integer>30</integer>
 								</dict>
 								<dict>
 									<key>NSFont</key>
@@ -4503,16 +4503,16 @@ Video with file
 										<key>name</key>
 										<string>Menlo</string>
 									</dict>
-									<key>RKListStyleMarkerWidth</key>
-									<integer>30</integer>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>70</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>100</integer>
+									<key>RKListStyleMarkerWidth</key>
+									<integer>30</integer>
 								</dict>
 							</array>
 							<key>levelFormats</key>
@@ -4531,28 +4531,28 @@ Video with file
 							<key>levelStyles</key>
 							<array>
 								<dict>
-									<key>RKListStyleMarkerWidth</key>
-									<integer>30</integer>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>10</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>40</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>70</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>100</integer>
+									<key>RKListStyleMarkerWidth</key>
+									<integer>30</integer>
 								</dict>
 							</array>
 							<key>levelFormats</key>
@@ -4571,28 +4571,28 @@ Video with file
 							<key>levelStyles</key>
 							<array>
 								<dict>
-									<key>RKListStyleMarkerWidth</key>
-									<integer>30</integer>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>10</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>40</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>70</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>100</integer>
+									<key>RKListStyleMarkerWidth</key>
+									<integer>30</integer>
 								</dict>
 							</array>
 							<key>levelFormats</key>
@@ -4611,28 +4611,28 @@ Video with file
 							<key>levelStyles</key>
 							<array>
 								<dict>
-									<key>RKListStyleMarkerWidth</key>
-									<integer>30</integer>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>10</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>40</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>70</integer>
-								</dict>
-								<dict>
 									<key>RKListStyleMarkerWidth</key>
 									<integer>30</integer>
+								</dict>
+								<dict>
 									<key>RKListStyleMarkerLocation</key>
 									<integer>100</integer>
+									<key>RKListStyleMarkerWidth</key>
+									<integer>30</integer>
 								</dict>
 							</array>
 							<key>levelFormats</key>
@@ -4691,10 +4691,6 @@ Video with file
 			</dict>
 			<key>numberOfColumns</key>
 			<integer>2</integer>
-			<key>pageNumberingStyle</key>
-			<string>decimal</string>
-			<key>indexOfFirstPage</key>
-			<integer>9223372036854775807</integer>
 			<key>headerAll</key>
 			<dict>
 				<key>string</key>
@@ -4720,6 +4716,10 @@ Video with file
 					</dict>
 				</array>
 			</dict>
+			<key>indexOfFirstPage</key>
+			<integer>9223372036854775807</integer>
+			<key>pageNumberingStyle</key>
+			<string>decimal</string>
 		</dict>
 	</array>
 	<key>endnoteEnumerationStyle</key>
@@ -4732,7 +4732,7 @@ Video with file
 	<real>36</real>
 	<key>characterStyles</key>
 	<dict/>
-	<key>pageInsetsRight</key>
+	<key>pageInsetsOuter</key>
 	<real>72</real>
 	<key>footnoteEnumerationPolicy</key>
 	<string>perPage</string>
@@ -4748,7 +4748,7 @@ Video with file
 	<string>decimal</string>
 	<key>hyphenationEnabled</key>
 	<true/>
-	<key>pageInsetsLeft</key>
+	<key>pageInsetsInner</key>
 	<real>72</real>
 </dict>
 </plist>

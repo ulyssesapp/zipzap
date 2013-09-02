@@ -25,17 +25,10 @@
 			firstPagePosition = RKSectionStartsOnSamePage;
 		}
 		else {
-			switch (document.pageBinding) {
-				// No binding: new sections just on the next page
-				case RKPageBindingNone:
-					firstPagePosition = RKSectionStartsOnNextPage;
-					break;
-		
-				case RKPageBindingRight:
-				case RKPageBindingLeft:
-					firstPagePosition = RKSectionStartsOnOddPage;
-					break;
-			}
+			if (document.doubleSided)
+				firstPagePosition = RKSectionStartsOnOddPage;
+			else
+				firstPagePosition = RKSectionStartsOnNextPage;
 		}
 		
         [body appendString: [RKSectionWriter RTFFromSection:section withConversionPolicy:conversionPolicy firstPagePosition:firstPagePosition resources:resources]];

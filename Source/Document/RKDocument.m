@@ -55,7 +55,7 @@
 		
 		_footnoteSpacingBefore = 15;
 	
-		_pageBinding = RKPageBindingNone;
+		_pageBinding = RKPageBindingLeft;
     }
     
     return self;
@@ -85,6 +85,7 @@
 	copy.footerSpacingAfter = _footerSpacingAfter;
     copy.sectionNumberingStyle = _sectionNumberingStyle;
 	copy.pageBinding = _pageBinding;
+	copy.doubleSided = _doubleSided;
     
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
@@ -106,8 +107,8 @@
             &&  (self.pageSize.width == object.pageSize.width)
             &&  (self.pageSize.height == object.pageSize.height)
             &&  (self.pageInsets.top == object.pageInsets.top)
-            &&  (self.pageInsets.left == object.pageInsets.left)
-            &&  (self.pageInsets.right == object.pageInsets.right)
+            &&  (self.pageInsets.inner == object.pageInsets.inner)
+            &&  (self.pageInsets.outer == object.pageInsets.outer)
             &&  (self.pageInsets.bottom == object.pageInsets.bottom)
             &&  (self.pageOrientation == object.pageOrientation)
             &&  (self.footnotePlacement == object.footnotePlacement)
@@ -121,6 +122,7 @@
             &&  (self.footerSpacingBefore == object.footerSpacingBefore)
             &&  (self.footerSpacingAfter == object.footerSpacingAfter)
 			&&  (self.pageBinding == object.pageBinding)
+			&&  (self.doubleSided == object.doubleSided)
     ;
 }
 

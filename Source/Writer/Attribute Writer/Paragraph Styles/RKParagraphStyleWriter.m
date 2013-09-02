@@ -359,7 +359,7 @@
         
         if (tailIndent > 0) {
             // Position is calculated from the leading margin
-            CGFloat pageInnerWidth = resources.document.pageSize.width - resources.document.pageInsets.left - resources.document.pageInsets.right;
+            CGFloat pageInnerWidth = resources.document.pageSize.width - resources.document.pageInsets.inner - resources.document.pageInsets.outer;
             indent = (NSInteger)RKPointsToTwips(pageInnerWidth - fabs(tailIndent));
         }
         else {

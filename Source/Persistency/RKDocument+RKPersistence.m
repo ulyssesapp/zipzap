@@ -25,8 +25,8 @@ NSString *RKPersistencyHeaderSpacingKey                 = @"headerSpacing";
 NSString *RKPersistencyFooterSpacingKey                 = @"footerSpacing";
 NSString *RKPersistencyPageInsetsTopKey                 = @"pageInsetsTop";
 NSString *RKPersistencyPageInsetsBottomKey              = @"pageInsetsBottom";
-NSString *RKPersistencyPageInsetsLeftKey                = @"pageInsetsLeft";
-NSString *RKPersistencyPageInsetsRightKey               = @"pageInsetsRight";
+NSString *RKPersistencyPageInsetsInnerKey               = @"pageInsetsInner";
+NSString *RKPersistencyPageInsetsOuterKey               = @"pageInsetsOuter";
 NSString *RKPersistencyPageOrientationKey               = @"pageOrientation";
 NSString *RKPersistencyFootnotePlacementKey             = @"footnotePlacement";
 NSString *RKPersistencyEndnotePlacementKey              = @"endnotePlacement";
@@ -38,6 +38,7 @@ NSString *RKPersistencyParagraphStylesKey               = @"paragraphStyles";
 NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
 NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyle";
 NSString *RKPersistencyPageBindingKey					= @"pageBinding";
+NSString *RKPersistencyDoubleSidedKey					= @"doubleSided";
 
 @interface RKDocument (RKPersistencePrivateMethods)
 
@@ -72,8 +73,8 @@ NSString *RKPersistencyPageBindingKey					= @"pageBinding";
 
         if ([propertyList objectForKey: RKPersistencyPageInsetsTopKey])
             self.pageInsets = RKPageInsetsMake([[propertyList objectForKey: RKPersistencyPageInsetsTopKey] floatValue],
-                                             [[propertyList objectForKey: RKPersistencyPageInsetsLeftKey] floatValue],
-                                             [[propertyList objectForKey: RKPersistencyPageInsetsRightKey] floatValue],
+                                             [[propertyList objectForKey: RKPersistencyPageInsetsInnerKey] floatValue],
+                                             [[propertyList objectForKey: RKPersistencyPageInsetsOuterKey] floatValue],
                                              [[propertyList objectForKey: RKPersistencyPageInsetsBottomKey] floatValue]
                                             );
         
@@ -103,6 +104,10 @@ NSString *RKPersistencyPageBindingKey					= @"pageBinding";
         
 		if ([propertyList objectForKey: RKPersistencyPageBindingKey])
 			self.pageBinding = [[self.class serializationTableForPageBinding] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyPageBindingKey] error:NULL];
+		
+		if ([propertyList objectForKey: RKPersistencyDoubleSidedKey])
+			self.doubleSided = [propertyList[RKPersistencyDoubleSidedKey] boolValue];
+		
 		
         // De-serialize meta data, if any
         if ([[propertyList objectForKey: RKPersistencyMetadataKey] isKindOfClass: NSDictionary.class])
@@ -153,8 +158,8 @@ NSString *RKPersistencyPageBindingKey					= @"pageBinding";
     propertyList[RKPersistencyFooterSpacingKey] = [NSNumber numberWithFloat: self.footerSpacingAfter];
     propertyList[RKPersistencyPageInsetsTopKey] = [NSNumber numberWithFloat: self.pageInsets.top];
     propertyList[RKPersistencyPageInsetsBottomKey] = [NSNumber numberWithFloat: self.pageInsets.bottom];
-    propertyList[RKPersistencyPageInsetsLeftKey] = [NSNumber numberWithFloat: self.pageInsets.left];
-    propertyList[RKPersistencyPageInsetsRightKey] = [NSNumber numberWithFloat: self.pageInsets.right];
+    propertyList[RKPersistencyPageInsetsInnerKey] = [NSNumber numberWithFloat: self.pageInsets.inner];
+    propertyList[RKPersistencyPageInsetsOuterKey] = [NSNumber numberWithFloat: self.pageInsets.outer];
     propertyList[RKPersistencyPageOrientationKey] = [[self.class serializationTableForPageOrientation] stringFromUnsignedEnumValue: self.pageOrientation];
     propertyList[RKPersistencyFootnotePlacementKey] = [[self.class serializationTableForFootnotePlacement] stringFromUnsignedEnumValue: self.footnotePlacement];
     propertyList[RKPersistencyEndnotePlacementKey] = [[self.class serializationTableForEndnotePlacement] stringFromUnsignedEnumValue: self.endnotePlacement];
@@ -164,6 +169,7 @@ NSString *RKPersistencyPageBindingKey					= @"pageBinding";
     propertyList[RKPersistencyEndnoteEnumerationPolicyKey] =  [[self.class serializationTableForFootnoteEnumerationPolicy] stringFromUnsignedEnumValue: self.endnoteEnumerationPolicy];
     propertyList[RKPersistencySectionNumberingStyleKey] = [[self.class serializationTableForSectionNumberingStyle] stringFromSignedEnumValue: self.sectionNumberingStyle];
 	propertyList[RKPersistencyPageBindingKey] = [[self.class serializationTableForPageBinding] stringFromSignedEnumValue: self.pageBinding];
+	propertyList[RKPersistencyDoubleSidedKey] = @(self.doubleSided);
 	
     // Serialize metadata, if any
     if (self.metadata)
@@ -319,7 +325,6 @@ NSString *RKPersistencyPageBindingKey					= @"pageBinding";
 	dispatch_once(&onceToken, ^{
 		serializationTable =
 		[NSDictionary dictionaryWithObjectsAndKeys:
-		 [NSNumber numberWithUnsignedInteger: RKPageBindingNone],           @"none",
 		 [NSNumber numberWithUnsignedInteger: RKPageBindingLeft],			@"left",
 		 [NSNumber numberWithUnsignedInteger: RKPageBindingRight],			@"right",
 		 nil
