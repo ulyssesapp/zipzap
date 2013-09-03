@@ -179,9 +179,9 @@
 - (void)testGeneratingDocumentFormattingData
 {
     RKDocument *document = [RKDocument new];
-    RKPageInsets insets = {.top = 100.0, .left = 200.0, .right = 300.0, .bottom = 400.0};
+    RKPageInsets insets = {.top = 100.0, .inner = 200.0, .outer = 300.0, .bottom = 400.0};
 
-    // Test setting: Hyphenation, Footnotes on same page, Endnotes on section end, Overriding default size / margins, portrait format
+    // Test setting: Hyphenation, Footnotes on same page, Endnotes on section end, Overriding default size / margins, portrait format, left-binding, non-double sided
     [document setHyphenationEnabled:YES];
     [document setFootnotePlacement:RKFootnotePlacementSamePage];
     [document setEndnotePlacement:RKEndnotePlacementSectionEnd];
@@ -194,15 +194,14 @@
     
     [document setFootnoteEnumerationPolicy:RKFootnoteEnumerationPerSection];
     [document setEndnoteEnumerationPolicy: RKFootnoteContinuousEnumeration];
-    
-	[document setPageGutterWidth: 10];
-	[document setPageBinding: RKPageBindingRight];
+
+	[document setTwoSided: NO];
+	[document setPageBinding: RKPageBindingLeft];
 	
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
                           "\\ftnbj\\aftnbj\\aendnotes"
                           "\\ftnrestart\\aftnrstcont"
-						  "\\facingp\\rtlgutter\\margmirror\\gutter200"
                           "\\paperw2000"
                           "\\paperh4000"
                           "\\margt2000"
@@ -214,12 +213,33 @@
                           @"Document formatting options not correctly translated"
                          );
 
-	// Test setting no binding
-	[document setPageBinding: RKPageBindingNone];
+	// Test setting: right-binding, non-double sided
+	[document setTwoSided: NO];
+	[document setPageBinding: RKPageBindingRight];
     STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
 						 "\\ftnbj\\aftnbj\\aendnotes"
 						 "\\ftnrestart\\aftnrstcont"
+						 "\\rtlgutter"
+						 "\\paperw2000"
+						 "\\paperh4000"
+						 "\\margt2000"
+						 "\\margl6000"
+						 "\\margr4000"
+						 "\\margb8000"
+						 "\\hyphauto1"
+						 "\\uc0 ",
+						 @"Document formatting options not correctly translated"
+                         );
+	
+	// Test setting: left-binding, double sided
+	[document setTwoSided: YES];
+	[document setPageBinding: RKPageBindingLeft];
+    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+                         @"\\fet2"
+						 "\\ftnbj\\aftnbj\\aendnotes"
+						 "\\ftnrestart\\aftnrstcont"
+						 "\\facingp\\margmirror"
 						 "\\paperw2000"
 						 "\\paperh4000"
 						 "\\margt2000"
@@ -230,8 +250,30 @@
 						 "\\uc0 ",
 						 @"Document formatting options not correctly translated"
                          );
+
+	// Test setting: right-binding, double sided
+	[document setTwoSided: YES];
+	[document setPageBinding: RKPageBindingRight];
+    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+                         @"\\fet2"
+						 "\\ftnbj\\aftnbj\\aendnotes"
+						 "\\ftnrestart\\aftnrstcont"
+						 "\\rtlgutter\\facingp\\margmirror"
+						 "\\paperw2000"
+						 "\\paperh4000"
+						 "\\margt2000"
+						 "\\margl6000"
+						 "\\margr4000"
+						 "\\margb8000"
+						 "\\hyphauto1"
+						 "\\uc0 ",
+						 @"Document formatting options not correctly translated"
+                         );
 	
-    // Test setting: No Hyphenation, Document endnotes, landscape format
+    // Test setting: No Hyphenation, Document endnotes, landscape format, left binding, no-double-sided
+	[document setTwoSided: NO];
+	[document setPageBinding: RKPageBindingLeft];
+	
     [document setHyphenationEnabled:NO];
     [document setFootnotePlacement:RKFootnotePlacementDocumentEnd];
     [document setEndnotePlacement:RKEndnotePlacementDocumentEnd];
@@ -440,6 +482,70 @@
     return;   
 }
 
++ (NSAttributedString *)dummyStringWithNotice:(NSString *)dummyString
+{
+	NSString *fillString = @"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+	
+	return [[NSAttributedString alloc] initWithString: [NSString stringWithFormat: @"%@\n%@\n\fNext page\n%@\n\fNext page\n%@\n", dummyString, fillString, fillString, fillString]];
+}
+
+- (void)testSingleSidedLeftBindingManualTest
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Left Binding. Not double Sided."]];
+	
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+	document.pageBinding = RKPageBindingLeft;
+	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
+	document.twoSided = NO;
+	
+    NSData *converted = [document wordRTF];
+    
+    [self assertRTF: converted withTestDocument: @"single-sided-left"];
+}
+
+- (void)testSingleSidedRightBindingManualTest
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Right Binding. Not double Sided."]];
+	
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+	document.pageBinding = RKPageBindingRight;
+	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
+	document.twoSided = NO;
+	
+    NSData *converted = [document wordRTF];
+    
+    [self assertRTF: converted withTestDocument: @"single-sided-right"];
+}
+
+- (void)testTwoSidedLeftBindingManualTest
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Left Binding. Double Sided."]];
+	
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+	document.pageBinding = RKPageBindingLeft;
+	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
+	document.twoSided = YES;
+	
+    NSData *converted = [document wordRTF];
+    
+    [self assertRTF: converted withTestDocument: @"double-sided-left"];
+}
+
+- (void)testTwoSidedRightBindingManualTest
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Right Binding. Double Sided."]];
+	
+    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+	document.pageBinding = RKPageBindingRight;
+	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
+	document.twoSided = YES;
+	
+    NSData *converted = [document wordRTF];
+    
+    [self assertRTF: converted withTestDocument: @"double-sided-right"];
+}
+
+
 #if !TARGET_OS_IPHONE
 
 - (void)testRereadingPageSettingsWithCocoa
@@ -458,8 +564,8 @@
     STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
     
     STAssertEquals([[rereadDocumentProperties objectForKey:NSPaperSizeDocumentAttribute] sizeValue], document.pageSize, @"Invalid paper size");
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSLeftMarginDocumentAttribute] floatValue], (float)document.pageInsets.left, @"Invalid margin");
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSRightMarginDocumentAttribute] floatValue], (float)document.pageInsets.right, @"Invalid margin");
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSLeftMarginDocumentAttribute] floatValue], (float)document.pageInsets.inner, @"Invalid margin");
+    STAssertEquals([[rereadDocumentProperties objectForKey:NSRightMarginDocumentAttribute] floatValue], (float)document.pageInsets.outer, @"Invalid margin");
     STAssertEquals([[rereadDocumentProperties objectForKey:NSTopMarginDocumentAttribute] floatValue], (float)document.pageInsets.top, @"Invalid margin");
     STAssertEquals([[rereadDocumentProperties objectForKey:NSBottomMarginDocumentAttribute] floatValue], (float)document.pageInsets.bottom, @"Invalid margin");    
     STAssertEquals([[rereadDocumentProperties objectForKey:NSHyphenationFactorDocumentAttribute] floatValue], 0.9f, @"Invalid hyphenation setting");    

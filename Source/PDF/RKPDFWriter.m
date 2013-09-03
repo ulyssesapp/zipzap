@@ -59,11 +59,8 @@
     NSRange remainingContentRange = NSMakeRange(0, contentString.length);
     
 	// Should we add a blank page?
-	if (context.currentPageNumber != NSUIntegerMax) {
+	if ((context.currentPageNumber != NSUIntegerMax) && (context.document.twoSided)) {
 		switch (context.document.pageBinding) {
-			case RKPageBindingNone:
-				break;
-				
 			case RKPageBindingLeft:
 				if (![context.document isLeftPageForPageNumber: context.currentPageNumber])
 					[context startNewPage];

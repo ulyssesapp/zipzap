@@ -48,15 +48,14 @@
 {
 	CGFloat leftMargin = 0;
 	CGFloat rightMargin = 0;
-	CGFloat gutter = (self.pageBinding == RKPageBindingNone) ? 0 : self.pageGutterWidth;
 	
 	if ([self isLeftPageForPageNumber: pageNumber]) {
-		leftMargin = self.pageInsets.right;
-		rightMargin = self.pageInsets.left + gutter;
+		leftMargin = self.pageInsets.outer;
+		rightMargin = self.pageInsets.inner;
 	}
 	else {
-		leftMargin = self.pageInsets.left + gutter;
-		rightMargin = self.pageInsets.right;
+		leftMargin = self.pageInsets.inner;
+		rightMargin = self.pageInsets.outer;
 	}
 	
 	CGRect boundingBox = self.pdfMediaBox;
@@ -173,13 +172,16 @@
 
 - (BOOL)isLeftPageForPageNumber:(NSUInteger)pageNumber
 {
+	// If not double sided, treat all pages as first page
+	if (!self.twoSided)
+		pageNumber = 1;
+	
 	switch (self.pageBinding) {
-		case RKPageBindingNone:
-			return NO;
-			
+		// First page on a left-bound document is a right page
 		case RKPageBindingLeft:
 			return ((pageNumber % 2) == 0);
 			
+		// First page on a right-bound document is a left page
 		case RKPageBindingRight:
 			return ((pageNumber % 2) == 1);
 	}

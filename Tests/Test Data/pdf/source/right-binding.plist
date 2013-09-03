@@ -2,18 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>twoSided</key>
+	<true/>
 	<key>pageInsetsTop</key>
 	<integer>10</integer>
 	<key>pageInsetsBottom</key>
 	<integer>10</integer>
-	<key>pageInsetsLeft</key>
-	<integer>10</integer>
-	<key>pageInsetsRight</key>
-	<integer>20</integer>
+	<key>pageInsetsInner</key>
+	<integer>200</integer>
+	<key>pageInsetsOuter</key>
+	<integer>100</integer>
 	<key>pageBinding</key>
 	<string>right</string>
-	<key>pageGutterWidth</key>
-	<integer>72</integer>
 	<key>sections</key>
 	<array>
 		<dict>

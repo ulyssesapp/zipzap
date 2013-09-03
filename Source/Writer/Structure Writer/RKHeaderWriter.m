@@ -335,21 +335,17 @@ NSArray *RKHeaderWriterMetadataDescriptions;
     
 	// Page binding
 	switch (document.pageBinding) {
-		case RKPageBindingNone:
-			break;
-			
 		case RKPageBindingLeft:
-			[attributes appendString: @"\\facingp\\margmirror"];
 			break;
 			
 		case RKPageBindingRight:
-			[attributes appendString: @"\\facingp\\rtlgutter\\margmirror"];
+			[attributes appendString: @"\\rtlgutter"];
 			break;
 	}
-	
-	// Page gutter
-	if (document.pageBinding != RKPageBindingNone)
-		[attributes appendFormat: @"\\gutter%lu", (NSUInteger)RKPointsToTwips(document.pageGutterWidth)];
+
+	// Double sided
+	if (document.twoSided)
+		[attributes appendString: @"\\facingp\\margmirror"];
 	
     // Paper size
     [attributes appendString: [NSString stringWithFormat:@"\\paperw%lu\\paperh%lu",
@@ -358,12 +354,25 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 							   ]];
     
     // Margins
-    [attributes appendString: [NSString stringWithFormat:@"\\margt%lu\\margl%lu\\margr%lu\\margb%lu",
-							   (NSUInteger)RKPointsToTwips(document.pageInsets.top), 
-							   (NSUInteger)RKPointsToTwips(document.pageInsets.left), 
-							   (NSUInteger)RKPointsToTwips(document.pageInsets.right), 
-							   (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
-							   ]];
+	switch (document.pageBinding) {
+		case RKPageBindingLeft:
+			[attributes appendString: [NSString stringWithFormat:@"\\margt%lu\\margl%lu\\margr%lu\\margb%lu",
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.top),
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.inner),
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.outer),
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
+									   ]];
+			break;
+			
+		case RKPageBindingRight:
+			[attributes appendString: [NSString stringWithFormat:@"\\margt%lu\\margl%lu\\margr%lu\\margb%lu",
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.top),
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.outer),
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.inner),
+									   (NSUInteger)RKPointsToTwips(document.pageInsets.bottom)
+									   ]];
+			break;
+	}
 	
     // Header / footer spacing
     if (document.headerSpacingBefore != 36)

@@ -144,10 +144,10 @@
     // Two Sections with different contents
     RKSection *sectionAll = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
     RKSection *sectionSwitch = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
-    
+
     [sectionAll setHeader:[[NSAttributedString alloc] initWithString:@"Header for all pages"] forPages:RKPageSelectorAll];
     [sectionAll setFooter:[[NSAttributedString alloc] initWithString:@"Footer for all pages"] forPages:RKPageSelectorAll];
-
+		
     [sectionSwitch setHeader:[[NSAttributedString alloc] initWithString:@"Header for first pages"] forPages:RKPageSelectionFirst];
     [sectionSwitch setFooter:[[NSAttributedString alloc] initWithString:@"Footer for first pages"] forPages:RKPageSelectionFirst];
     
@@ -159,7 +159,8 @@
     
     RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionAll, sectionSwitch, nil]];
 	document.pageBinding = RKPageBindingLeft;
-	document.pageGutterWidth = 100;
+	document.pageInsets = RKPageInsetsMake(100, 200, 100, 100);
+	document.twoSided = YES;
 	
     NSData *converted = [document wordRTF];
     

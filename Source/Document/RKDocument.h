@@ -113,11 +113,6 @@
 @property(nonatomic) RKPageInsets pageInsets;
 
 /*!
- @abstract The width of the page gutter
- */
-@property(nonatomic) CGFloat pageGutterWidth;
-
-/*!
  @abstract Page orientation
  */
 @property(nonatomic) RKPageOrientation pageOrientation;
@@ -171,10 +166,16 @@
 @property(nonatomic) RKPageNumberingStyle sectionNumberingStyle;
 
 /*!
- @abstract Page binding
+ @abstract Page binding option
+ @discussion Will influence the placement of the inner and outer margin on single-sided printing. On double-sided printing, this option will determine the placement of the first page of the document and each section.
  */
 @property(nonatomic) RKPageBindingPosition pageBinding;
 
+/*!
+ @abstract Specifies whether the document should is double sided.
+ @discussion Will switch the placement of the inner and outer margin for left and right sides. Furthermore, new sections will be placed either only on right or left sides (depending on the page binding option). Thus empty pages may be generated on section breaks. Will be only used for PDF / Word export.
+ */
+@property(nonatomic) BOOL twoSided;
 
 
 #pragma mark - Convenience methods
