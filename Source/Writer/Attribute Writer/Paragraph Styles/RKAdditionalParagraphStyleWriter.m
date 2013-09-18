@@ -36,6 +36,13 @@
 	else if (resources.document.hyphenationEnabled)
 		[tags appendString: @"\\hyphpar0 "];
 	
+	if (value.overrideLineHeightAndSpacing) {
+		CGFloat distance = (value.baseLineDistance <= 0) ? 1 : value.baseLineDistance;
+		
+		// \sl must be a negative value, to indicate absolute line spacing. slmult0 indicates absolute value.
+		[tags appendFormat: @"\\sl-%li\\slmult0", (NSInteger)RKPointsToTwips(distance)];
+	}
+	
 	return tags;
 }
 

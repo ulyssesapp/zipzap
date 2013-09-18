@@ -338,13 +338,13 @@
                          "\\fi-20"
                          "\\li40"
                          "\\ri60"
-                         // RTF requires the ordering \\slN\\slmultN
+                         "\\sb160"
+                         "\\sa180"
+                         // RTF requires the ordering \\slN\\slmult1
                          "\\slleading80"
                          "\\sl1200\\slmult1"
                          "\\slmaximum120"
                          "\\slminimum140"
-                         "\\sb160"
-                         "\\sa180"
                          // Tabs
                          "\\pardeftab220"
                          "\\tx200"

@@ -12,6 +12,20 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 
 @implementation RKAdditionalParagraphStyle
 
+- (id)init
+{
+	self = [super init];
+	
+	if (self) {
+		_keepWithFollowingParagraph = NO;
+		_hyphenationEnabled = NO;
+		_overrideLineHeightAndSpacing = NO;
+		_baseLineDistance = 0;
+	}
+	
+	return self;
+}
+
 - (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
 {
 	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled) && (self.baseLineDistance == object.baseLineDistance) && (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
@@ -31,10 +45,10 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 - (NSString *)description
 {
 	return [NSString stringWithFormat: @"RKAdditionalParagraphStyle: ("
-											"keepWithFollowingParagraph:	%d"
-											"hyphenationEnabled:			%u"
-											"baseLineDistance:				%f"
-										    "overrideLineHeightAndSpacing:	%d"
+											"keepWithFollowingParagraph:	%d, "
+											"hyphenationEnabled:			%u, "
+											"baseLineDistance:				%f, "
+										    "overrideLineHeightAndSpacing:	%d, "
 										")",
 			self.keepWithFollowingParagraph,
 			self.hyphenationEnabled,
