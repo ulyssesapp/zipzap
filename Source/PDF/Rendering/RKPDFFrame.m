@@ -239,8 +239,8 @@
 	}
 	else {
 		// Set line hight from base line distance
-		lineRect.origin.y -= additionalParagraphStyle.baseLineDistance;
-		lineRect.size.height = additionalParagraphStyle.baseLineDistance;
+		lineRect.origin.y -= additionalParagraphStyle.baselineDistance;
+		lineRect.size.height = additionalParagraphStyle.baselineDistance;
 	}
 	
 	// Apply paragraph spacing

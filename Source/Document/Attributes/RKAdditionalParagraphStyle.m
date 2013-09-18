@@ -20,7 +20,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 		_keepWithFollowingParagraph = NO;
 		_hyphenationEnabled = NO;
 		_overrideLineHeightAndSpacing = NO;
-		_baseLineDistance = 0;
+		_baselineDistance = 0;
 	}
 	
 	return self;
@@ -28,7 +28,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 
 - (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
 {
-	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled) && (self.baseLineDistance == object.baseLineDistance) && (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
+	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled) && (self.baselineDistance == object.baselineDistance) && (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -36,7 +36,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];
 	newStyle.keepWithFollowingParagraph = self.keepWithFollowingParagraph;
 	newStyle.hyphenationEnabled = self.hyphenationEnabled;
-	newStyle.baseLineDistance = self.baseLineDistance;
+	newStyle.baselineDistance = self.baselineDistance;
 	newStyle.overrideLineHeightAndSpacing = self.overrideLineHeightAndSpacing;
 	
 	return newStyle;
@@ -47,12 +47,12 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 	return [NSString stringWithFormat: @"RKAdditionalParagraphStyle: ("
 											"keepWithFollowingParagraph:	%d, "
 											"hyphenationEnabled:			%u, "
-											"baseLineDistance:				%f, "
+											"baselineDistance:				%f, "
 										    "overrideLineHeightAndSpacing:	%d, "
 										")",
 			self.keepWithFollowingParagraph,
 			self.hyphenationEnabled,
-			self.baseLineDistance,
+			self.baselineDistance,
 			self.overrideLineHeightAndSpacing
 			];
 }

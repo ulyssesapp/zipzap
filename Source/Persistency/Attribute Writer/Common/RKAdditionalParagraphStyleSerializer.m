@@ -33,7 +33,7 @@ NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"override
 	RKAdditionalParagraphStyle *paragraphStyle = [RKAdditionalParagraphStyle new];
 	paragraphStyle.keepWithFollowingParagraph = [[propertyList objectForKey: RKAdditionalParagraphStyleKeepWithFollowingParagraphKey] boolValue];
 	paragraphStyle.hyphenationEnabled = [[propertyList objectForKey: RKAdditionalParagraphStyleHyphenationEnabledKey] boolValue];
-	paragraphStyle.baseLineDistance = [propertyList[RKAdditionalParagraphStyleBaselineDistanceKey] doubleValue];
+	paragraphStyle.baselineDistance = [propertyList[RKAdditionalParagraphStyleBaselineDistanceKey] doubleValue];
 	paragraphStyle.overrideLineHeightAndSpacing = [propertyList[RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey] boolValue];
 	
 	return paragraphStyle;
@@ -44,7 +44,7 @@ NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"override
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 				[NSNumber numberWithBool: attributeValue.keepWithFollowingParagraph], RKAdditionalParagraphStyleKeepWithFollowingParagraphKey,
 				[NSNumber numberWithBool: attributeValue.hyphenationEnabled], RKAdditionalParagraphStyleHyphenationEnabledKey,
-				[NSNumber numberWithFloat: attributeValue.baseLineDistance], RKAdditionalParagraphStyleBaselineDistanceKey,
+				[NSNumber numberWithFloat: attributeValue.baselineDistance], RKAdditionalParagraphStyleBaselineDistanceKey,
 				[NSNumber numberWithBool: attributeValue.overrideLineHeightAndSpacing], RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey,
 			nil];
 }

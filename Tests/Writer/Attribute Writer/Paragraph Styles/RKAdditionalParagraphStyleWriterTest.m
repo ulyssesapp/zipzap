@@ -39,7 +39,7 @@
     RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
 
 	additionalParagraphStyle.overrideLineHeightAndSpacing = YES;
-	additionalParagraphStyle.baseLineDistance = 10;
+	additionalParagraphStyle.baselineDistance = 10;
     
 	NSParagraphStyle *paragraphStyle = [NSParagraphStyle new];
 	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"a"];

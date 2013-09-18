@@ -28,10 +28,10 @@ extern NSString *RKAdditionalParagraphStyleAttributeName;
  @abstract The distance between the two base lines within a paragraph.
  @discussion Only used if "overrideLineHeightAndSpacing" is set to YES. In this case, line height and spacing settings of NSParagraph will be ignored.
  */
-@property (nonatomic) CGFloat baseLineDistance;
+@property (nonatomic) CGFloat baselineDistance;
 
 /*!
- @abstract Specifies that the line height should be calculated from -baseLineDistance rather from NSParagraph's line height settings.
+ @abstract Specifies that the line height should be calculated from -baselineDistance rather from NSParagraph's line height settings.
  */
 @property (nonatomic) BOOL overrideLineHeightAndSpacing;
 
