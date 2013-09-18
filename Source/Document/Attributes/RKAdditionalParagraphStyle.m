@@ -14,7 +14,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 
 - (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
 {
-	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled);
+	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled) && (self.baseLineDistance == object.baseLineDistance) && (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -22,6 +22,8 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];
 	newStyle.keepWithFollowingParagraph = self.keepWithFollowingParagraph;
 	newStyle.hyphenationEnabled = self.hyphenationEnabled;
+	newStyle.baseLineDistance = self.baseLineDistance;
+	newStyle.overrideLineHeightAndSpacing = self.overrideLineHeightAndSpacing;
 	
 	return newStyle;
 }
@@ -29,11 +31,15 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 - (NSString *)description
 {
 	return [NSString stringWithFormat: @"RKAdditionalParagraphStyle: ("
-											"keepWithFollowingParagraph: %d"
-											"hyphenationEnabled: %u"
+											"keepWithFollowingParagraph:	%d"
+											"hyphenationEnabled:			%u"
+											"baseLineDistance:				%f"
+										    "overrideLineHeightAndSpacing:	%d"
 										")",
 			self.keepWithFollowingParagraph,
-			self.hyphenationEnabled
+			self.hyphenationEnabled,
+			self.baseLineDistance,
+			self.overrideLineHeightAndSpacing
 			];
 }
 

@@ -33,6 +33,9 @@
 	
 	// The visible bounding box around the frame
 	CGRect _visibleBoundingBox;
+	
+	// The actual height for every line that has been layed out
+	NSMapTable *_heightForVisibleLine;
 }
 
 
@@ -53,6 +56,7 @@
 		_boundaryForLine = [NSMutableArray new];
 		_yOffsetsForLine = [NSMutableArray new];
 		_visibleBoundingBox = CGRectMake(boundingBox.origin.x, 0, boundingBox.size.width, 0);
+		_heightForVisibleLine = [NSMapTable mapTableWithKeyOptions:NSMapTableStrongMemory valueOptions:NSMapTableStrongMemory];
 		_maximumHeight = boundingBox.size.height;
 		
 		// The origin of the visible bounding box depends on the growing direction of the frame
@@ -128,7 +132,7 @@
 			
 			if (widowWidth && succeedingLineRange.length && (succeedingLineRange.location < NSMaxRange(remainingParagraphRange))) {
 				RKPDFLine *succeedingLine = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:succeedingLineRange usingWidth:widowWidth maximumHeight:_maximumHeight justificationAllowed:YES context:_context];
-				nextLineHeight = succeedingLine.size.height;
+				nextLineHeight = lineRect.size.height;
 				
 				widowFollows = NSMaxRange(succeedingLine.visibleRange) == NSMaxRange(remainingParagraphRange);
 			}
@@ -140,6 +144,8 @@
 			// Update remaining paragraph size
 			remainingParagraphRange.location += lineRange.length;
 			remainingParagraphRange.length -= lineRange.length;
+			
+			[_heightForVisibleLine setObject:@(lineRect.size.height) forKey:line];
 			
 			if (*stop)
 				break;
@@ -156,7 +162,7 @@
 		CGRect lineRect = [_boundaryForLine.lastObject rectValue];
 		
 		_visibleStringLength -= line.visibleRange.length;
-		_visibleBoundingBox.size.height -= line.size.height;
+		_visibleBoundingBox.size.height -= [[_heightForVisibleLine objectForKey: line] doubleValue];
 		
 		[_lines removeLastObject];
 		[_boundaryForLine removeLastObject];
@@ -177,11 +183,12 @@
 - (CGRect)rectForLine:(RKPDFLine *)line isFirstInParagraph:(BOOL)isFirstInParagraph isLastInParagraph:(BOOL)isLastInParagraph yOffset:(CGFloat *)yOffsetOut
 {
 	RKParagraphStyleWrapper *paragraphStyle = line.paragraphStyle;
+	RKAdditionalParagraphStyle *additionalParagraphStyle = line.additionalParagraphStyle;
 	CGRect lineRect;
 	CGFloat yOffset = 0;
 	
 	// Determine line origin
-	lineRect.origin = CGPointMake(_visibleBoundingBox.origin.x, _visibleBoundingBox.origin.y - line.size.height);
+	lineRect.origin = CGPointMake(_visibleBoundingBox.origin.x, _visibleBoundingBox.origin.y);
 	lineRect.size = line.size;
 	
 	// Apply head indentation
@@ -213,27 +220,34 @@
 			break;
 	}
 
-	// Apply fixed line spacing
-	CGFloat lineSpacing = paragraphStyle.lineSpacing;
-	lineRect.origin.y -= lineSpacing;
-	lineRect.size.height += lineSpacing;
-	yOffset += lineSpacing;
-	
-	// Apply relative line spacing
-	CGFloat newHeight = lineRect.size.height;
-	
-	if (paragraphStyle.lineHeightMultiple)
-		newHeight *= paragraphStyle.lineHeightMultiple;
-	
-	// Apply maximum / minimum line heights
-	if (paragraphStyle.maximumLineHeight && (newHeight > paragraphStyle.maximumLineHeight))
-		newHeight = paragraphStyle.maximumLineHeight;
-	
-	if (newHeight < paragraphStyle.minimumLineHeight)
-		newHeight = paragraphStyle.minimumLineHeight;
-	
-	lineRect.origin.y -= newHeight - lineRect.size.height;
-	lineRect.size.height += newHeight - lineRect.size.height;
+	if (!additionalParagraphStyle.overrideLineHeightAndSpacing) {
+		// Apply line spacing
+		CGFloat lineSpacing = paragraphStyle.lineSpacing;
+		lineRect.origin.y -= lineSpacing;
+		lineRect.size.height += lineSpacing;
+		yOffset += lineSpacing;
+		
+		// Apply relative line height rules
+		CGFloat newHeight = lineRect.size.height;
+		
+		if (paragraphStyle.lineHeightMultiple)
+			newHeight *= paragraphStyle.lineHeightMultiple;
+		
+		// Apply maximum / minimum line heights
+		if (paragraphStyle.maximumLineHeight && (newHeight > paragraphStyle.maximumLineHeight))
+			newHeight = paragraphStyle.maximumLineHeight;
+		
+		if (newHeight < paragraphStyle.minimumLineHeight)
+			newHeight = paragraphStyle.minimumLineHeight;
+
+		lineRect.origin.y -= newHeight;
+		lineRect.size.height = newHeight;
+	}
+	else {
+		// Set line hight from base line distance
+		lineRect.origin.y -= additionalParagraphStyle.baseLineDistance;
+		lineRect.size.height = additionalParagraphStyle.baseLineDistance;
+	}
 	
 	// Apply paragraph spacing
 	if (isFirstInParagraph) {
