@@ -12,9 +12,23 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 
 @implementation RKAdditionalParagraphStyle
 
+- (id)init
+{
+	self = [super init];
+	
+	if (self) {
+		_keepWithFollowingParagraph = NO;
+		_hyphenationEnabled = NO;
+		_overrideLineHeightAndSpacing = NO;
+		_baselineDistance = 0;
+	}
+	
+	return self;
+}
+
 - (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
 {
-	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled);
+	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled) && (self.baselineDistance == object.baselineDistance) && (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -22,6 +36,8 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];
 	newStyle.keepWithFollowingParagraph = self.keepWithFollowingParagraph;
 	newStyle.hyphenationEnabled = self.hyphenationEnabled;
+	newStyle.baselineDistance = self.baselineDistance;
+	newStyle.overrideLineHeightAndSpacing = self.overrideLineHeightAndSpacing;
 	
 	return newStyle;
 }
@@ -29,11 +45,15 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 - (NSString *)description
 {
 	return [NSString stringWithFormat: @"RKAdditionalParagraphStyle: ("
-											"keepWithFollowingParagraph: %d"
-											"hyphenationEnabled: %u"
+											"keepWithFollowingParagraph:	%d, "
+											"hyphenationEnabled:			%u, "
+											"baselineDistance:				%f, "
+										    "overrideLineHeightAndSpacing:	%d, "
 										")",
 			self.keepWithFollowingParagraph,
-			self.hyphenationEnabled
+			self.hyphenationEnabled,
+			self.baselineDistance,
+			self.overrideLineHeightAndSpacing
 			];
 }
 

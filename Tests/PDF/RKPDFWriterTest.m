@@ -80,7 +80,7 @@
     return pngData;
 }
 
-- (NSURL *)writeVerificationDataForFilename:(NSString *)filename usingPDFData:(NSData *)pdfData pngData:(NSData *)pngData
+- (NSURL *)writeVerificationDataForFilename:(NSString *)filename usingPDFData:(NSData *)pdfData pngData:(NSData *)pngData expectedPngData:(NSData *)expectedPngData
 {
     NSURL *temporaryDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
     temporaryDirectoryURL = [temporaryDirectoryURL URLByAppendingPathComponent: @"rtfkit-pdf-test-verification"];
@@ -89,6 +89,7 @@
     
     NSURL *generatedPDFFileURL = [temporaryDirectoryURL URLByAppendingPathComponent:[NSString stringWithFormat: @"%@.pdf", filename]];
     NSURL *generatedPNGFileURL = [temporaryDirectoryURL URLByAppendingPathComponent:[NSString stringWithFormat: @"%@.png", filename]];
+    NSURL *expectedPNGFileURL = [temporaryDirectoryURL URLByAppendingPathComponent:[NSString stringWithFormat: @"%@.expected.png", filename]];
     
     NSFileWrapper *generatedPDFFile = [[NSFileWrapper alloc] initRegularFileWithContents: pdfData];
     [generatedPDFFile writeToURL:generatedPDFFileURL options:0 originalContentsURL:nil error:NULL];
@@ -96,6 +97,11 @@
     NSFileWrapper *generatedPNGFile = [[NSFileWrapper alloc] initRegularFileWithContents: pngData];
     [generatedPNGFile writeToURL:generatedPNGFileURL options:0 originalContentsURL:nil error:NULL];
 
+	if (expectedPngData) {
+		NSFileWrapper *expectedPNGFile = [[NSFileWrapper alloc] initRegularFileWithContents: expectedPngData];
+		[expectedPNGFile writeToURL:expectedPNGFileURL options:0 originalContentsURL:nil error:NULL];
+	}
+	
     return generatedPDFFileURL;
 }
 
@@ -115,9 +121,6 @@
         NSData *generatedPDFData = [RKPDFWriter PDFFromDocument:document options:RKPDFWriterShowMaximumFrameBounds|RKPDFWriterShowVisibleFrameBounds];
         NSData *generatedPNGData = [self pngDataForPDFData: generatedPDFData];
         
-        // Write expected data to temporary folder (used to verify tests manually)
-        NSURL *verificationURL = [self writeVerificationDataForFilename:originalFilename usingPDFData:generatedPDFData pngData:generatedPNGData];
-
         // Convert expected data to bitmap
         NSFileWrapper *expectedPDFFile = [expectedFiles.fileWrappers objectForKey: [NSString stringWithFormat: @"%@.pdf", originalFilename]];
         NSData *expectedPNGData = nil;
@@ -125,6 +128,9 @@
         if (expectedPDFFile)
             expectedPNGData = [self pngDataForPDFData: expectedPDFFile.regularFileContents];
 
+        // Write expected data to temporary folder (used to verify tests manually)
+        NSURL *verificationURL = [self writeVerificationDataForFilename:originalFilename usingPDFData:generatedPDFData pngData:generatedPNGData expectedPngData:expectedPNGData];
+				
         // Compare both files
         STAssertTrue([generatedPNGData isEqualToData: expectedPNGData], @"Expected and generated bitmap data differ: %@. See generated data at %@.", originalFilename, verificationURL);
     }];

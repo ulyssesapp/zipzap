@@ -31,7 +31,7 @@
 /*!
  @abstract Generates the required tags for styling a paragraph
  */
-+ (NSString *)styleTagWithWritingDirection:(CTWritingDirection)baseWritingDirection textAlignment:(CTTextAlignment)textAlignment headIndent:(CGFloat)headIndent firstLineHeadIndent:(CGFloat)firstLineHeadIndent tailIndent:(CGFloat)tailIndent lineSpacing:(CGFloat)lineSpacing lineHeightMultiple:(CGFloat)lineHeightMultiple minimumLineHeight:(CGFloat)minimumLineHeight maximumLineHeight:(CGFloat)maximumLineHeight paragraphSpacingBefore:(CGFloat)paragraphSpacingBefore paragraphSpacingAfter:(CGFloat)paragraphSpacing defaultTabInterval:(CGFloat)defaultTabInterval ofAttributedString:(NSAttributedString *)attributedString paragraphRange:(NSRange)range resources:(RKResourcePool *)resources;
++ (NSString *)styleTagWithWritingDirection:(CTWritingDirection)baseWritingDirection textAlignment:(CTTextAlignment)textAlignment headIndent:(CGFloat)headIndent firstLineHeadIndent:(CGFloat)firstLineHeadIndent tailIndent:(CGFloat)tailIndent lineSpacing:(CGFloat)lineSpacing lineHeightMultiple:(CGFloat)lineHeightMultiple minimumLineHeight:(CGFloat)minimumLineHeight maximumLineHeight:(CGFloat)maximumLineHeight paragraphSpacingBefore:(CGFloat)paragraphSpacingBefore paragraphSpacingAfter:(CGFloat)paragraphSpacing defaultTabInterval:(CGFloat)defaultTabInterval ofAttributedString:(NSAttributedString *)attributedString paragraphRange:(NSRange)range ignoreLineHeightAndSpacing:(BOOL)ignoreLineHeightAndSpacing resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the style tags required to describe the writing direction of a paragraph
@@ -147,6 +147,7 @@
     if (!paragraphStyle)
         return @"";
     
+	RKAdditionalParagraphStyle *additionalStyle = [attributedString attribute:RKAdditionalParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL];
     NSMutableString *rtf = [NSMutableString new];
 
     // Generate basic paragraph style settings
@@ -164,7 +165,8 @@
                   paragraphSpacingAfter:paragraphStyle.paragraphSpacing 
                      defaultTabInterval:paragraphStyle.defaultTabInterval 
                      ofAttributedString:attributedString 
-                         paragraphRange:range 
+                         paragraphRange:range
+			 ignoreLineHeightAndSpacing:additionalStyle.overrideLineHeightAndSpacing
                               resources:resources
       ]
      ];
@@ -283,7 +285,7 @@
 
 #pragma mark - Plattform-independend styling method
 
-+ (NSString *)styleTagWithWritingDirection:(CTWritingDirection)baseWritingDirection textAlignment:(CTTextAlignment)textAlignment headIndent:(CGFloat)headIndent firstLineHeadIndent:(CGFloat)firstLineHeadIndent tailIndent:(CGFloat)tailIndent lineSpacing:(CGFloat)lineSpacing lineHeightMultiple:(CGFloat)lineHeightMultiple minimumLineHeight:(CGFloat)minimumLineHeight maximumLineHeight:(CGFloat)maximumLineHeight paragraphSpacingBefore:(CGFloat)paragraphSpacingBefore paragraphSpacingAfter:(CGFloat)paragraphSpacing defaultTabInterval:(CGFloat)defaultTabInterval ofAttributedString:(NSAttributedString *)attributedString paragraphRange:(NSRange)range resources:(RKResourcePool *)resources
++ (NSString *)styleTagWithWritingDirection:(CTWritingDirection)baseWritingDirection textAlignment:(CTTextAlignment)textAlignment headIndent:(CGFloat)headIndent firstLineHeadIndent:(CGFloat)firstLineHeadIndent tailIndent:(CGFloat)tailIndent lineSpacing:(CGFloat)lineSpacing lineHeightMultiple:(CGFloat)lineHeightMultiple minimumLineHeight:(CGFloat)minimumLineHeight maximumLineHeight:(CGFloat)maximumLineHeight paragraphSpacingBefore:(CGFloat)paragraphSpacingBefore paragraphSpacingAfter:(CGFloat)paragraphSpacing defaultTabInterval:(CGFloat)defaultTabInterval ofAttributedString:(NSAttributedString *)attributedString paragraphRange:(NSRange)range ignoreLineHeightAndSpacing:(BOOL)ignoreLineHeightAndSpacing resources:(RKResourcePool *)resources
 {
     NSMutableString *rtf = [NSMutableString new];
     
@@ -291,10 +293,14 @@
     [rtf appendString: [self styleTagsForWritingDirection: baseWritingDirection]];
     [rtf appendString: [self styleTagsForTextAlignment: textAlignment]];    
     [rtf appendString: [self styleTagsForHeadIndent:headIndent firstLineHeadIndent:firstLineHeadIndent tailIndent:tailIndent resources:resources]];
-    [rtf appendString: [self styleTagsForLineSpacing: lineSpacing]];
-    [rtf appendString: [self styleTagsForLineHeightMultiple:lineHeightMultiple attributedString:attributedString paragraphRange:range]];    
-    [rtf appendString: [self styleTagsForMinimumLineHeight:minimumLineHeight maximumLineHeight:maximumLineHeight]];    
-    [rtf appendString: [self styleTagsForParagraphSpacingBefore:paragraphSpacingBefore after:paragraphSpacing]];
+	[rtf appendString: [self styleTagsForParagraphSpacingBefore:paragraphSpacingBefore after:paragraphSpacing]];
+	
+	// Ignore line height and line spacing if it is specified by an RKAdditionalParagraphStyle
+	if (!ignoreLineHeightAndSpacing) {
+		[rtf appendString: [self styleTagsForLineSpacing: lineSpacing]];
+		[rtf appendString: [self styleTagsForLineHeightMultiple:lineHeightMultiple attributedString:attributedString paragraphRange:range]];
+		[rtf appendString: [self styleTagsForMinimumLineHeight:minimumLineHeight maximumLineHeight:maximumLineHeight]];
+	}
     
     // Default tab interval
     // (While the Cocoa reference says this defaults to "0", it seems to default to "36" - so we will be explicit here)
