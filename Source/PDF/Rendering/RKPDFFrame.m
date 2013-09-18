@@ -33,9 +33,6 @@
 	
 	// The visible bounding box around the frame
 	CGRect _visibleBoundingBox;
-	
-	// The actual height for every line that has been layed out
-	NSMapTable *_heightForVisibleLine;
 }
 
 
@@ -56,7 +53,6 @@
 		_boundaryForLine = [NSMutableArray new];
 		_yOffsetsForLine = [NSMutableArray new];
 		_visibleBoundingBox = CGRectMake(boundingBox.origin.x, 0, boundingBox.size.width, 0);
-		_heightForVisibleLine = [NSMapTable mapTableWithKeyOptions:NSMapTableStrongMemory valueOptions:NSMapTableStrongMemory];
 		_maximumHeight = boundingBox.size.height;
 		
 		// The origin of the visible bounding box depends on the growing direction of the frame
@@ -145,8 +141,6 @@
 			remainingParagraphRange.location += lineRange.length;
 			remainingParagraphRange.length -= lineRange.length;
 			
-			[_heightForVisibleLine setObject:@(lineRect.size.height) forKey:line];
-			
 			if (*stop)
 				break;
 			
@@ -162,7 +156,7 @@
 		CGRect lineRect = [_boundaryForLine.lastObject rectValue];
 		
 		_visibleStringLength -= line.visibleRange.length;
-		_visibleBoundingBox.size.height -= [[_heightForVisibleLine objectForKey: line] doubleValue];
+		_visibleBoundingBox.size.height -= lineRect.size.height;
 		
 		[_lines removeLastObject];
 		[_boundaryForLine removeLastObject];

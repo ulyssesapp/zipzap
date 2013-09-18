@@ -11,6 +11,8 @@
 
 NSString *RKAdditionalParagraphStyleKeepWithFollowingParagraphKey = @"keepWithFollowingParagraph";
 NSString *RKAdditionalParagraphStyleHyphenationEnabledKey = @"hyphenationEnabled";
+NSString *RKAdditionalParagraphStyleBaselineDistanceKey = @"baselineDistance";
+NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"overrideLineHeightAndSpacing";
 
 @implementation RKAdditionalParagraphStyleSerializer
 
@@ -31,6 +33,8 @@ NSString *RKAdditionalParagraphStyleHyphenationEnabledKey = @"hyphenationEnabled
 	RKAdditionalParagraphStyle *paragraphStyle = [RKAdditionalParagraphStyle new];
 	paragraphStyle.keepWithFollowingParagraph = [[propertyList objectForKey: RKAdditionalParagraphStyleKeepWithFollowingParagraphKey] boolValue];
 	paragraphStyle.hyphenationEnabled = [[propertyList objectForKey: RKAdditionalParagraphStyleHyphenationEnabledKey] boolValue];
+	paragraphStyle.baseLineDistance = [propertyList[RKAdditionalParagraphStyleBaselineDistanceKey] doubleValue];
+	paragraphStyle.overrideLineHeightAndSpacing = [propertyList[RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey] boolValue];
 	
 	return paragraphStyle;
 }
@@ -40,6 +44,8 @@ NSString *RKAdditionalParagraphStyleHyphenationEnabledKey = @"hyphenationEnabled
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 				[NSNumber numberWithBool: attributeValue.keepWithFollowingParagraph], RKAdditionalParagraphStyleKeepWithFollowingParagraphKey,
 				[NSNumber numberWithBool: attributeValue.hyphenationEnabled], RKAdditionalParagraphStyleHyphenationEnabledKey,
+				[NSNumber numberWithFloat: attributeValue.baseLineDistance], RKAdditionalParagraphStyleBaselineDistanceKey,
+				[NSNumber numberWithBool: attributeValue.overrideLineHeightAndSpacing], RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey,
 			nil];
 }
 
