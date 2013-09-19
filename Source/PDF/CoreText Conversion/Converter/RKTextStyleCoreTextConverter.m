@@ -53,7 +53,7 @@
     
     // Emulate superscript / subscript
     [attributedString enumerateAttribute:RKSuperscriptAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
-        if (!modeObject)
+        if (!modeObject.floatValue)
             return;
 
         CTFontRef font = (__bridge CTFontRef)[attributedString attribute:NSFontAttributeName atIndex:range.location effectiveRange:NULL];
