@@ -150,7 +150,7 @@
 					[endnoteStrings addObjectsFromArray: context.documentNotes];
 				
 				// Generate endnote string and append it to the column
-				endnotes = [NSAttributedString noteListFromNotes: endnoteStrings];
+				endnotes = [NSAttributedString noteListFromNotes:endnoteStrings context:context];
 				[column appendFootnotes:endnotes];
 				
 				[context flushSectionNotes];

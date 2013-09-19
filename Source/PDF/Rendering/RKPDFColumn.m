@@ -61,7 +61,7 @@
 
 	[_contentFrame appendAttributedString:contentString inRange:range usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
 		// Reduce possible space for footnotes
-		_footnotesFrame.maximumHeight = _boundingBox.size.height - _contentFrame.visibleBoundingBox.size.height - _context.document.footnoteSpacingBefore;
+		_footnotesFrame.maximumHeight = _boundingBox.size.height - _contentFrame.visibleBoundingBox.size.height -  self.footnoteAreaSpacing;
 		
 		// Collect and instantiate all footnotes for the current line
 		NSArray *registeredFootnotes = [_context registeredPageNotesInAttributedString:contentString range:lineRange];
@@ -70,7 +70,7 @@
 			NSUInteger lastVisibleFootnote = _footnotes.length + 1;
 			
 			// Instantiate and append footnote
-			NSMutableAttributedString *footnoteString = [[NSAttributedString attributedStringWithNote:noteDescriptor[RKFootnoteObjectKey] enumerationString:noteDescriptor[RKFootnoteEnumerationStringKey]] mutableCopy];
+			NSMutableAttributedString *footnoteString = [[NSAttributedString attributedStringWithNote:noteDescriptor[RKFootnoteObjectKey] enumerationString:noteDescriptor[RKFootnoteEnumerationStringKey] context:_context] mutableCopy];
 			
 			// Add single newline to footnote, if required
 			[footnoteString.mutableString replaceOccurrencesOfString:@"\n" withString:@"" options:NSAnchoredSearch|NSBackwardsSearch range:NSMakeRange(0, footnoteString.length)];
@@ -169,7 +169,7 @@
 {
 	while (lineCount --) {
 		// Remove all footnotes for the line (we expect that 'removeLinesFormEnd' is only called, if footnotes are continuously added to the column)
-		NSArray *footnoteLines = [_contentLineForFootnoteLine allKeysForObject: @(lineCount)];
+		NSArray *footnoteLines = [_contentLineForFootnoteLine allKeysForObject: @(_contentFrame.lines.count - 1)];
 		[_footnotesFrame removeLinesFromEnd: footnoteLines.count];
 		[_contentLineForFootnoteLine removeObjectsForKeys: footnoteLines];
 		
@@ -204,7 +204,12 @@
 
 - (CGFloat)maximumContentHeight
 {
-	return _boundingBox.size.height - _footnotesFrame.visibleBoundingBox.size.height - ((_footnotesFrame.lines.count > 0) ? _context.document.footnoteSpacingBefore : 0);
+	return _boundingBox.size.height - _footnotesFrame.visibleBoundingBox.size.height - ((_footnotesFrame.lines.count > 0) ? self.footnoteAreaSpacing  : 0);
+}
+
+- (CGFloat)footnoteAreaSpacing
+{
+	return _context.document.footnoteAreaDividerSpacingBefore + _context.document.footnoteAreaDividerSpacingAfter + _context.document.footnoteAreaDividerWidth;
 }
 
 

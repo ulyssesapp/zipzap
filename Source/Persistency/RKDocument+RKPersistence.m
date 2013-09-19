@@ -38,7 +38,18 @@ NSString *RKPersistencyParagraphStylesKey               = @"paragraphStyles";
 NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
 NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyle";
 NSString *RKPersistencyPageBindingKey					= @"pageBinding";
-NSString *RKPersistencyTwoSidedKey					= @"twoSided";
+NSString *RKPersistencyTwoSidedKey						= @"twoSided";
+NSString *RKPersistencyFootnoteAreaAnchorAttributesKey  = @"footnoteAreaAnchorAttributes";
+
+NSString *RKPersistencyFootnoteAreaAnchorAttributes		= @"footnoteAreaAnchorAttributes";
+NSString *RKPersistencyFootnoteAreaSpacingBefore		= @"footnoteAreaDividerSpacingBefore";
+NSString *RKPersistencyFootnoteAreaSpacingAfter			= @"footnoteAreaDividerSpacingAfter";
+NSString *RKPersistencyFootnoteDividerLength			= @"footnoteAreaDividerLength";
+NSString *RKPersistencyFootnoteDividerWidth				= @"footnoteAreaDividerWidth";
+NSString *RKPersistencyFootnoteAreaAnchorInset			= @"footnoteAreaAnchorInset";
+NSString *RKPersistencyFootnoteAreaContentInset			= @"footnoteAreaContentInset";
+NSString *RKPersistencyFootnoteAreaAnchorAlignment		= @"footnoteAreaAnchorAlignment";
+
 
 @interface RKDocument (RKPersistencePrivateMethods)
 
@@ -107,7 +118,34 @@ NSString *RKPersistencyTwoSidedKey					= @"twoSided";
 		
 		if ([propertyList objectForKey: RKPersistencyTwoSidedKey])
 			self.twoSided = [propertyList[RKPersistencyTwoSidedKey] boolValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaSpacingBefore])
+			self.footnoteAreaDividerSpacingBefore = [propertyList[RKPersistencyFootnoteAreaSpacingBefore] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaSpacingAfter])
+			self.footnoteAreaDividerSpacingAfter = [propertyList[RKPersistencyFootnoteAreaSpacingAfter] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteDividerLength])
+			self.footnoteAreaDividerLength = [propertyList[RKPersistencyFootnoteDividerLength] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteDividerWidth])
+			self.footnoteAreaDividerWidth = [propertyList[RKPersistencyFootnoteDividerWidth] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaAnchorInset])
+			self.footnoteAreaAnchorInset = [propertyList[RKPersistencyFootnoteAreaAnchorInset] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaContentInset])
+			self.footnoteAreaContentInset = [propertyList[RKPersistencyFootnoteAreaContentInset] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaAnchorAlignment])
+			self.footnoteAreaAnchorAlignment = [[self.class serializationTableForFootnoteAnchorAlignment] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteAreaAnchorAlignment] error:NULL];
 		
+		
+		if (propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey]) {
+			self.footnoteAreaAnchorAttributes = [NSAttributedString attributeDictionaryFromRTFKitPropertyListRepresentation:propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey] usingContext:[RKPersistenceContext new] error:error] ;
+			if (!self.footnoteAreaAnchorAttributes)
+				return nil;
+		}
 		
         // De-serialize meta data, if any
         if ([[propertyList objectForKey: RKPersistencyMetadataKey] isKindOfClass: NSDictionary.class])
@@ -170,6 +208,18 @@ NSString *RKPersistencyTwoSidedKey					= @"twoSided";
     propertyList[RKPersistencySectionNumberingStyleKey] = [[self.class serializationTableForSectionNumberingStyle] stringFromSignedEnumValue: self.sectionNumberingStyle];
 	propertyList[RKPersistencyPageBindingKey] = [[self.class serializationTableForPageBinding] stringFromSignedEnumValue: self.pageBinding];
 	propertyList[RKPersistencyTwoSidedKey] = @(self.twoSided);
+
+	propertyList[RKPersistencyFootnoteAreaSpacingBefore] = @(self.footnoteAreaDividerSpacingBefore);
+	propertyList[RKPersistencyFootnoteAreaSpacingAfter] = @(self.footnoteAreaDividerSpacingAfter);
+	propertyList[RKPersistencyFootnoteDividerLength] = @(self.footnoteAreaDividerLength);
+	propertyList[RKPersistencyFootnoteDividerWidth] = @(self.footnoteAreaDividerWidth);
+	propertyList[RKPersistencyFootnoteAreaAnchorInset] = @(self.footnoteAreaAnchorInset);
+	propertyList[RKPersistencyFootnoteAreaContentInset] = @(self.footnoteAreaContentInset);
+	propertyList[RKPersistencyFootnoteAreaAnchorAlignment] = [[self.class serializationTableForFootnoteAnchorAlignment] stringFromUnsignedEnumValue: self.footnoteAreaAnchorAlignment];
+	
+	if (propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey])
+		propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey] = [NSAttributedString RTFKitPropertyListRepresentationForAttributeDictionary:self.footnoteAreaAnchorAttributes usingContext:[RKPersistenceContext new]];
+	
 	
     // Serialize metadata, if any
     if (self.metadata)
@@ -352,5 +402,23 @@ NSString *RKPersistencyTwoSidedKey					= @"twoSided";
     
     return serializationTable;
 }
+
++ (NSDictionary *)serializationTableForFootnoteAnchorAlignment
+{
+    static NSDictionary * serializationTable;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable =
+		[NSDictionary dictionaryWithObjectsAndKeys:
+		 [NSNumber numberWithUnsignedInteger: NSLeftTextAlignment],					@"left",
+		 [NSNumber numberWithUnsignedInteger: NSRightTextAlignment],				@"right",
+		 nil
+		 ];
+	});
+    
+    return serializationTable;
+}
+
+
 
 @end
