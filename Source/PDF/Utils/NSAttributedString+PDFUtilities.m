@@ -34,42 +34,54 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 + (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString context:(RKPDFRenderingContext *)context
 {
     NSMutableAttributedString *noteString = [note.footnoteContent mutableCopy];
+	if (!noteString.length)
+		return noteString;
+	
 	CTFontRef fontRef = NULL;
-	RKParagraphStyleWrapper *paragraphStyle;
+	fontRef = (__bridge CTFontRef)[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+
+	// Prepare paragraph attributes for fixing
+	NSRange firstParagraphRange;
 	
-	if (noteString.length) {
-		fontRef = (__bridge CTFontRef)[noteString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
-		paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: (__bridge CTParagraphStyleRef)[noteString attribute:NSParagraphStyleAttributeName atIndex:0 effectiveRange:NULL]];
-	}
+	id paragraphStyle = [noteString attribute:RKParagraphStyleAttributeName atIndex:0 effectiveRange:&firstParagraphRange];
+	id additionalParagraphStyle = [noteString attribute:RKAdditionalParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
 	
-    NSAttributedString *enumerator = [[[NSAttributedString alloc] initWithString:enumerationString attributes:context.document.footnoteAreaAnchorAttributes] coreTextRepresentationUsingContext: context];
+	// Create enumerator string
+	NSDictionary *anchorAttributes = context.document.footnoteAreaAnchorAttributes;
+    NSAttributedString *enumerator = [[[NSAttributedString alloc] initWithString:enumerationString attributes:anchorAttributes] coreTextRepresentationUsingContext: context];
     
     // Add enumerator and spacing. Use tabs before and after divider for placement and alignment.
-	[noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
+	[noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t" attributes:anchorAttributes] atIndex:0];
 	[noteString insertAttributedString:enumerator atIndex:0];
-	[noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
-	
-    // Setup paragraph style
-    if (paragraphStyle) {
-		NSMutableArray *tabStops = [paragraphStyle.tabStops mutableCopy] ?: [NSMutableArray new];
+	[noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t" attributes:anchorAttributes] atIndex:0];
+    
+    // Add anchor for enumerator
+    [noteString addLocalDestinationAnchor:note.footnoteAnchor forRange:NSMakeRange(0, 1)];
 
+	// Fix paragraph attributes
+	if (paragraphStyle)
+		[noteString addAttribute:RKParagraphStyleAttributeName value:paragraphStyle range:firstParagraphRange];
+	if (additionalParagraphStyle)
+		[noteString addAttribute:RKAdditionalParagraphStyleAttributeName value:additionalParagraphStyle range:firstParagraphRange];
+	
+    // Indent newlines to be aligned to the footnote content
+    NSMutableString *content = [noteString mutableString];
+	[content replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, content.length)];
+
+    // Fix tabulator positions in paragraph style
+	[noteString enumerateAttribute:RKParagraphStyleAttributeName inRange:NSMakeRange(0, noteString.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id ctParagraphStyle, NSRange range, BOOL *stop) {
+		RKParagraphStyleWrapper *paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: (__bridge CTParagraphStyleRef)ctParagraphStyle];
+		NSMutableArray *tabStops = [paragraphStyle.tabStops mutableCopy] ?: [NSMutableArray new];
+		
 		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaAnchorInset ?: 1) alignment:context.document.footnoteAreaAnchorAlignment] atIndex:0];
 		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaContentInset ?: 1) alignment:NSNaturalTextAlignment] atIndex:1];
 		
 		paragraphStyle.tabStops = tabStops;
 		
-        [noteString addAttribute:NSParagraphStyleAttributeName value:(__bridge id)paragraphStyle.newCTParagraphStyle range:NSMakeRange(0, enumerator.length + 2)];
-	}
-    
-    // Add anchor for enumerator
-    [noteString addLocalDestinationAnchor:note.footnoteAnchor forRange:NSMakeRange(0, 1)];
-
-    // Indent newlines to be aligned to the footnote content
-    NSMutableString *content = [noteString mutableString];
+        [noteString addAttribute:RKParagraphStyleAttributeName value:(__bridge id)paragraphStyle.newCTParagraphStyle range:range];
+	}];
 	
-	[content replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, content.length)];
-    
-    return noteString;
+	return noteString;
 }
 
 + (NSAttributedString *)noteListFromNotes:(NSArray *)notes context:(RKPDFRenderingContext *)context

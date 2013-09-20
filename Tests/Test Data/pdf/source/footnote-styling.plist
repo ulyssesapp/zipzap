@@ -51,7 +51,8 @@
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
-								<string>This is a Footnote</string>
+								<string>This is a Footnote
+With a second paragraph</string>
 							</dict>
 						</dict>
 					</dict>
@@ -228,7 +229,12 @@
 					</dict>
 				</array>
 				<key>string</key>
-				<string>a  b  c  d  e  f  g  h  i  j   Some Text to show spacing Some Text to show spacing Some Text to show spacing Some Text to show spacing Some Text to show spacing</string>
+				<string>a  b  c  d  e  f  g  h  i  j  
+Some Text to show spacing
+Some Text to show spacing
+Some Text to show spacing
+Some Text to show spacing
+Some Text to show spacing</string>
 			</dict>
 		</dict>
 	</array>

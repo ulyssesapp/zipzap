@@ -26,13 +26,6 @@
 	<integer>0</integer>
 	<key>footnoteAreaAnchorAttributes</key>
 	<dict>
-		<key>NSParagraphStyle</key>
-		<dict>
-			<key>alignment</key>
-			<string>right</string>
-			<key>baseWritingDirection</key>
-			<string>rightToLeft</string>
-		</dict>
 		<key>NSSuperScript</key>
 		<string>superscript</string>
 	</dict>
@@ -75,14 +68,15 @@
 										<key>attributeRange</key>
 										<dict>
 											<key>length</key>
-											<integer>18</integer>
+											<integer>42</integer>
 											<key>location</key>
 											<integer>0</integer>
 										</dict>
 									</dict>
 								</array>
 								<key>string</key>
-								<string>This is a Footnote</string>
+								<string>This is a Footnote
+With a second paragraph</string>
 							</dict>
 						</dict>
 					</dict>
@@ -457,7 +451,12 @@
 					</dict>
 				</array>
 				<key>string</key>
-				<string>a  b  c  d  e  f  g  h  i  j   Some Text to show spacing Some Text to show spacing Some Text to show spacing Some Text to show spacing Some Text to show spacing</string>
+				<string>a  b  c  d  e  f  g  h  i  j  
+Some Text to show spacing
+Some Text to show spacing
+Some Text to show spacing
+Some Text to show spacing
+Some Text to show spacing</string>
 			</dict>
 		</dict>
 	</array>

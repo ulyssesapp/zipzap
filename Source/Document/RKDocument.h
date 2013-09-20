@@ -103,22 +103,25 @@
 
 /*!
  @abstract The string attributes that should be used for styling the footnote anchor in the footnote area of a document
+ @discussion Defaults to superscript. Paragraph style attributes are ignored.
  */
 @property(nonatomic,strong,readwrite) NSDictionary *footnoteAreaAnchorAttributes;
 
 /*!
  @abstract The horizontal position of the footnote divider
- @discussion Currently on NSLeftTextAlignment and NSRightTextAlignment are supported.
+ @discussion Currently on NSLeftTextAlignment and NSRightTextAlignment are supported. PDF only.
  */
 @property(nonatomic) NSTextAlignment footnoteAreaDividerPosition;
 
 /*!
  @abstract The length of the footnote divider
+ @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaDividerLength;
 
 /*!
  @abstract The width of the footnote divider
+ @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaDividerWidth;
 
@@ -136,16 +139,19 @@
 
 /*!
  @abstract The alignment of the footnote anchor.
+ @discussion PDF-only.
  */
 @property(nonatomic) NSTextAlignment footnoteAreaAnchorAlignment;
 
 /*!
  @abstract The inset of the anchor in the footnote area.
+ @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaAnchorInset;
 
 /*!
  @abstract The inset of the footnote anchor
+ @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaContentInset;
 
