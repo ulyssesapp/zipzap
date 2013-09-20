@@ -25,7 +25,7 @@
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\chftn }{\\footnote {\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn } \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
+                         @">{\\chftn }{\\footnote \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\pardeftab0\\tx0\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                          );
     
@@ -48,7 +48,7 @@
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\chftn }{\\footnote\\ftnalt {\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn } \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
+                         @">{\\chftn }{\\footnote\\ftnalt \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\pardeftab0\\tx0\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                           );
     

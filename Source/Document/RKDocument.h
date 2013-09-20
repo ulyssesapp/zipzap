@@ -139,19 +139,16 @@
 
 /*!
  @abstract The alignment of the footnote anchor.
- @discussion PDF-only.
  */
 @property(nonatomic) NSTextAlignment footnoteAreaAnchorAlignment;
 
 /*!
  @abstract The inset of the anchor in the footnote area.
- @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaAnchorInset;
 
 /*!
  @abstract The inset of the footnote anchor
- @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaContentInset;
 
