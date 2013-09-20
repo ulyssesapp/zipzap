@@ -13,7 +13,7 @@
 
 - (void)testGenerateFootnote
 {
-    RKResourcePool *resources = [RKResourcePool new];
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: [RKDocument new]];
     NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
     [footnote addAttribute:RKFontAttributeName value:(__bridge_transfer id)CTFontCreateWithName((__bridge CFStringRef)@"GillSans", 16, NULL) range:NSMakeRange(0, 3)];
@@ -25,18 +25,18 @@
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\super \\chftn }{\\footnote {\\super \\chftn } \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs32\\fsmilli16000 aaa}<",
+                         @">{\\chftn }{\\footnote {\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn } \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                          );
     
     // Font was collected
-    STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)1, @"Invalid count of fonts");
-    STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:0], @"GillSans", @"Missing font");    
+    STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)2, @"Invalid count of fonts");
+    STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:1], @"GillSans", @"Missing font");
 }
 
 - (void)testGenerateEndnote
 {
-    RKResourcePool *resources = [RKResourcePool new];
+    RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: [RKDocument new]];
     NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
     [footnote addAttribute:RKFontAttributeName value:(__bridge_transfer id)CTFontCreateWithName((__bridge CFStringRef)@"GillSans", 16, NULL) range:NSMakeRange(0, 3)];
@@ -48,13 +48,13 @@
     
     // Valid string tagging
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\super \\chftn }{\\footnote\\ftnalt {\\super \\chftn } \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs32\\fsmilli16000 aaa}<",
+                         @">{\\chftn }{\\footnote\\ftnalt {\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn } \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                           );
     
     // Font was collected
-    STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)1, @"Invalid count of fonts");
-    STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:0], @"GillSans", @"Missing font");    
+    STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)2, @"Invalid count of fonts");
+    STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:1], @"GillSans", @"Missing font");
 }
 
 #if !TARGET_OS_IPHONE
@@ -87,6 +87,7 @@
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]];
     
     [original addAttribute:RKFootnoteAttributeName value:footnote range:NSMakeRange(1, 1)];
+	[original addAttribute:RKSuperscriptAttributeName value:@1 range:NSMakeRange(1, 1)];
 
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
@@ -105,6 +106,7 @@
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]];
     
     [original addAttribute:RKEndnoteAttributeName value:endnote range:NSMakeRange(1, 1)];
+	[original addAttribute:RKSuperscriptAttributeName value:@1 range:NSMakeRange(1, 1)];
     
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
