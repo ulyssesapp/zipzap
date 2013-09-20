@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>footnoteAreaAnchorPosition</key>
+	<string>left</string>
+	<key>footnoteAreaDividerPosition</key>
+	<string>left</string>
 	<key>pageWidth</key>
 	<integer>400</integer>
 	<key>pageHeight</key>
@@ -25,8 +29,6 @@
 		<key>NSSuperScript</key>
 		<string>superscript</string>
 	</dict>
-	<key>endnoteEnumerationStyle</key>
-	<string>alphabeticUpperCase</string>
 	<key>sections</key>
 	<array>
 		<dict>

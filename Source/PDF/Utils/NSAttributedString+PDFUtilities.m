@@ -45,16 +45,16 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     NSAttributedString *enumerator = [[[NSAttributedString alloc] initWithString:enumerationString attributes:context.document.footnoteAreaAnchorAttributes] coreTextRepresentationUsingContext: context];
     
     // Add enumerator and spacing. Use tabs before and after divider for placement and alignment.
-    [noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
-    [noteString insertAttributedString:enumerator atIndex:0];
-    [noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
+	[noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
+	[noteString insertAttributedString:enumerator atIndex:0];
+	[noteString insertAttributedString:[[NSAttributedString alloc] initWithString: @"\t"] atIndex:0];
 	
     // Setup paragraph style
     if (paragraphStyle) {
 		NSMutableArray *tabStops = [paragraphStyle.tabStops mutableCopy] ?: [NSMutableArray new];
 
 		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaAnchorInset ?: 1) alignment:context.document.footnoteAreaAnchorAlignment] atIndex:0];
-		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaContentInset ?: 1) alignment:NSLeftTextAlignment] atIndex:1];
+		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaContentInset ?: 1) alignment:NSNaturalTextAlignment] atIndex:1];
 		
 		paragraphStyle.tabStops = tabStops;
 		
@@ -64,9 +64,10 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     // Add anchor for enumerator
     [noteString addLocalDestinationAnchor:note.footnoteAnchor forRange:NSMakeRange(0, 1)];
 
-    // Indent newlines
+    // Indent newlines to be aligned to the footnote content
     NSMutableString *content = [noteString mutableString];
-    [content replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, content.length)];
+	
+	[content replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, content.length)];
     
     return noteString;
 }

@@ -107,6 +107,12 @@
 @property(nonatomic,strong,readwrite) NSDictionary *footnoteAreaAnchorAttributes;
 
 /*!
+ @abstract The horizontal position of the footnote divider
+ @discussion Currently on NSLeftTextAlignment and NSRightTextAlignment are supported.
+ */
+@property(nonatomic) NSTextAlignment footnoteAreaDividerPosition;
+
+/*!
  @abstract The length of the footnote divider
  */
 @property(nonatomic) CGFloat footnoteAreaDividerLength;
@@ -142,7 +148,6 @@
  @abstract The inset of the footnote anchor
  */
 @property(nonatomic) CGFloat footnoteAreaContentInset;
-
 
 /*!
  @abstract Page insets in points

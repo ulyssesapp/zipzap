@@ -67,7 +67,7 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
         RKParagraphStyleBaseWritingDescriptionEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:
                                                                  [NSNumber numberWithInteger: NSWritingDirectionNatural],          @"natural",
                                                                  [NSNumber numberWithInteger: NSWritingDirectionLeftToRight],      @"leftToRight",
-                                                                 [NSNumber numberWithInteger: NSWritingDirectionRightToLeft],      @"RightToLeft",
+                                                                 [NSNumber numberWithInteger: NSWritingDirectionRightToLeft],      @"rightToLeft",
                                                                  nil];
         
         RKTextTabAlignmentEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:

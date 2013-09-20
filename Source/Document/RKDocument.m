@@ -60,7 +60,7 @@
 		_footnoteAreaAnchorInset = 0;
 		_footnoteAreaContentInset = 20;
 		_footnoteAreaAnchorAlignment = NSLeftTextAlignment;
-	
+
 		_pageBinding = RKPageBindingLeft;
     }
     
@@ -96,6 +96,7 @@
 
 	copy.footnoteAreaDividerSpacingBefore = _footnoteAreaDividerSpacingBefore;
 	copy.footnoteAreaDividerSpacingAfter = _footnoteAreaDividerSpacingAfter;
+	copy.footnoteAreaDividerPosition = _footnoteAreaDividerPosition;
 	copy.footnoteAreaDividerLength = _footnoteAreaDividerLength;
 	copy.footnoteAreaDividerWidth = _footnoteAreaDividerWidth;
 	copy.footnoteAreaAnchorInset = _footnoteAreaAnchorInset;
@@ -141,6 +142,7 @@
 			&&  ([self.footnoteAreaAnchorAttributes isEqual: object.footnoteAreaAnchorAttributes])
 			&&  (self.footnoteAreaDividerSpacingBefore == object.footnoteAreaDividerSpacingBefore)
 			&&  (self.footnoteAreaDividerSpacingAfter == object.footnoteAreaDividerSpacingAfter)
+			&&  (self.footnoteAreaDividerPosition == object.footnoteAreaDividerPosition)
 			&&  (self.footnoteAreaDividerLength == object.footnoteAreaDividerLength)
 			&&  (self.footnoteAreaDividerWidth == object.footnoteAreaDividerWidth)
 			&&  (self.footnoteAreaAnchorInset == object.footnoteAreaAnchorInset)

@@ -39,17 +39,16 @@ NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
 NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyle";
 NSString *RKPersistencyPageBindingKey					= @"pageBinding";
 NSString *RKPersistencyTwoSidedKey						= @"twoSided";
-NSString *RKPersistencyFootnoteAreaAnchorAttributesKey  = @"footnoteAreaAnchorAttributes";
 
-NSString *RKPersistencyFootnoteAreaAnchorAttributes		= @"footnoteAreaAnchorAttributes";
-NSString *RKPersistencyFootnoteAreaSpacingBefore		= @"footnoteAreaDividerSpacingBefore";
-NSString *RKPersistencyFootnoteAreaSpacingAfter			= @"footnoteAreaDividerSpacingAfter";
-NSString *RKPersistencyFootnoteDividerLength			= @"footnoteAreaDividerLength";
-NSString *RKPersistencyFootnoteDividerWidth				= @"footnoteAreaDividerWidth";
-NSString *RKPersistencyFootnoteAreaAnchorInset			= @"footnoteAreaAnchorInset";
-NSString *RKPersistencyFootnoteAreaContentInset			= @"footnoteAreaContentInset";
-NSString *RKPersistencyFootnoteAreaAnchorAlignment		= @"footnoteAreaAnchorAlignment";
-
+NSString *RKPersistencyFootnoteAreaAnchorAttributesKey	= @"footnoteAreaAnchorAttributes";
+NSString *RKPersistencyFootnoteAreaSpacingBeforeKey		= @"footnoteAreaDividerSpacingBefore";
+NSString *RKPersistencyFootnoteAreaSpacingAfterKey		= @"footnoteAreaDividerSpacingAfter";
+NSString *RKPersistencyFootnoteDividerPositionKey		= @"footnoteAreaDividerPosition";
+NSString *RKPersistencyFootnoteDividerLengthKey			= @"footnoteAreaDividerLength";
+NSString *RKPersistencyFootnoteDividerWidthKey			= @"footnoteAreaDividerWidth";
+NSString *RKPersistencyFootnoteAreaAnchorInsetKey		= @"footnoteAreaAnchorInset";
+NSString *RKPersistencyFootnoteAreaContentInsetKey		= @"footnoteAreaContentInset";
+NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlignment";
 
 @interface RKDocument (RKPersistencePrivateMethods)
 
@@ -119,27 +118,33 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignment		= @"footnoteAreaAnchorAlignm
 		if ([propertyList objectForKey: RKPersistencyTwoSidedKey])
 			self.twoSided = [propertyList[RKPersistencyTwoSidedKey] boolValue];
 
-		if (propertyList[RKPersistencyFootnoteAreaSpacingBefore])
-			self.footnoteAreaDividerSpacingBefore = [propertyList[RKPersistencyFootnoteAreaSpacingBefore] floatValue];
+		if (propertyList[RKPersistencyFootnoteAreaSpacingBeforeKey])
+			self.footnoteAreaDividerSpacingBefore = [propertyList[RKPersistencyFootnoteAreaSpacingBeforeKey] floatValue];
 
-		if (propertyList[RKPersistencyFootnoteAreaSpacingAfter])
-			self.footnoteAreaDividerSpacingAfter = [propertyList[RKPersistencyFootnoteAreaSpacingAfter] floatValue];
+		if (propertyList[RKPersistencyFootnoteAreaSpacingAfterKey])
+			self.footnoteAreaDividerSpacingAfter = [propertyList[RKPersistencyFootnoteAreaSpacingAfterKey] floatValue];
 
-		if (propertyList[RKPersistencyFootnoteDividerLength])
-			self.footnoteAreaDividerLength = [propertyList[RKPersistencyFootnoteDividerLength] floatValue];
-
-		if (propertyList[RKPersistencyFootnoteDividerWidth])
-			self.footnoteAreaDividerWidth = [propertyList[RKPersistencyFootnoteDividerWidth] floatValue];
-
-		if (propertyList[RKPersistencyFootnoteAreaAnchorInset])
-			self.footnoteAreaAnchorInset = [propertyList[RKPersistencyFootnoteAreaAnchorInset] floatValue];
-
-		if (propertyList[RKPersistencyFootnoteAreaContentInset])
-			self.footnoteAreaContentInset = [propertyList[RKPersistencyFootnoteAreaContentInset] floatValue];
-
-		if (propertyList[RKPersistencyFootnoteAreaAnchorAlignment])
-			self.footnoteAreaAnchorAlignment = [[self.class serializationTableForFootnoteAnchorAlignment] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteAreaAnchorAlignment] error:NULL];
+		if (propertyList[RKPersistencyFootnoteDividerPositionKey])
+			self.footnoteAreaDividerPosition = [[self.class serializationTableForFootnoteDividerPosition] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteDividerPositionKey] error:NULL];
+				
+		if (propertyList[RKPersistencyFootnoteDividerLengthKey])
+			self.footnoteAreaDividerLength = [propertyList[RKPersistencyFootnoteDividerLengthKey] floatValue];
 		
+		if (propertyList[RKPersistencyFootnoteDividerLengthKey])
+			self.footnoteAreaDividerLength = [propertyList[RKPersistencyFootnoteDividerLengthKey] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteDividerWidthKey])
+			self.footnoteAreaDividerWidth = [propertyList[RKPersistencyFootnoteDividerWidthKey] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaAnchorInsetKey])
+			self.footnoteAreaAnchorInset = [propertyList[RKPersistencyFootnoteAreaAnchorInsetKey] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaContentInsetKey])
+			self.footnoteAreaContentInset = [propertyList[RKPersistencyFootnoteAreaContentInsetKey] floatValue];
+
+		if (propertyList[RKPersistencyFootnoteAreaAnchorAlignmentKey])
+			self.footnoteAreaAnchorAlignment = [[self.class serializationTableForFootnoteAnchorAlignment] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyFootnoteAreaAnchorAlignmentKey] error:NULL];
+
 		
 		if (propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey]) {
 			self.footnoteAreaAnchorAttributes = [NSAttributedString attributeDictionaryFromRTFKitPropertyListRepresentation:propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey] usingContext:[RKPersistenceContext new] error:error] ;
@@ -209,13 +214,14 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignment		= @"footnoteAreaAnchorAlignm
 	propertyList[RKPersistencyPageBindingKey] = [[self.class serializationTableForPageBinding] stringFromSignedEnumValue: self.pageBinding];
 	propertyList[RKPersistencyTwoSidedKey] = @(self.twoSided);
 
-	propertyList[RKPersistencyFootnoteAreaSpacingBefore] = @(self.footnoteAreaDividerSpacingBefore);
-	propertyList[RKPersistencyFootnoteAreaSpacingAfter] = @(self.footnoteAreaDividerSpacingAfter);
-	propertyList[RKPersistencyFootnoteDividerLength] = @(self.footnoteAreaDividerLength);
-	propertyList[RKPersistencyFootnoteDividerWidth] = @(self.footnoteAreaDividerWidth);
-	propertyList[RKPersistencyFootnoteAreaAnchorInset] = @(self.footnoteAreaAnchorInset);
-	propertyList[RKPersistencyFootnoteAreaContentInset] = @(self.footnoteAreaContentInset);
-	propertyList[RKPersistencyFootnoteAreaAnchorAlignment] = [[self.class serializationTableForFootnoteAnchorAlignment] stringFromUnsignedEnumValue: self.footnoteAreaAnchorAlignment];
+	propertyList[RKPersistencyFootnoteAreaSpacingBeforeKey] = @(self.footnoteAreaDividerSpacingBefore);
+	propertyList[RKPersistencyFootnoteAreaSpacingAfterKey] = @(self.footnoteAreaDividerSpacingAfter);
+	propertyList[RKPersistencyFootnoteDividerPositionKey] = [[self.class serializationTableForFootnoteDividerPosition] stringFromUnsignedEnumValue: self.footnoteAreaDividerPosition];
+	propertyList[RKPersistencyFootnoteDividerLengthKey] = @(self.footnoteAreaDividerLength);
+	propertyList[RKPersistencyFootnoteDividerWidthKey] = @(self.footnoteAreaDividerWidth);
+	propertyList[RKPersistencyFootnoteAreaAnchorInsetKey] = @(self.footnoteAreaAnchorInset);
+	propertyList[RKPersistencyFootnoteAreaContentInsetKey] = @(self.footnoteAreaContentInset);
+	propertyList[RKPersistencyFootnoteAreaAnchorAlignmentKey] = [[self.class serializationTableForFootnoteAnchorAlignment] stringFromUnsignedEnumValue: self.footnoteAreaAnchorAlignment];
 	
 	if (propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey])
 		propertyList[RKPersistencyFootnoteAreaAnchorAttributesKey] = [NSAttributedString RTFKitPropertyListRepresentationForAttributeDictionary:self.footnoteAreaAnchorAttributes usingContext:[RKPersistenceContext new]];
@@ -419,6 +425,21 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignment		= @"footnoteAreaAnchorAlignm
     return serializationTable;
 }
 
++ (NSDictionary *)serializationTableForFootnoteDividerPosition
+{
+    static NSDictionary * serializationTable;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		serializationTable =
+		[NSDictionary dictionaryWithObjectsAndKeys:
+		 [NSNumber numberWithUnsignedInteger: NSLeftTextAlignment],				@"left",
+		 [NSNumber numberWithUnsignedInteger: NSRightTextAlignment],			@"right",
+		 nil
+		 ];
+	});
+    
+    return serializationTable;
+}
 
 
 @end

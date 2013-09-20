@@ -129,9 +129,10 @@
     
     CGFloat separatorLength = (boundingBox.size.width < self.footnoteAreaDividerLength) ? boundingBox.size.width : self.footnoteAreaDividerLength;
     
+	CGFloat separatorX = (self.footnoteAreaDividerPosition == NSLeftTextAlignment) ? boundingBox.origin.x : boundingBox.origin.x + boundingBox.size.width - self.footnoteAreaDividerLength;
 	CGFloat separatorY = boundingBox.origin.y + boundingBox.size.height + self.footnoteAreaDividerWidth + self.footnoteAreaDividerSpacingAfter;
 	
-    CGPoint startPoint = CGPointMake(boundingBox.origin.x, separatorY);
+    CGPoint startPoint = CGPointMake(separatorX, separatorY);
     CGPoint endPoint = CGPointMake(startPoint.x + separatorLength, separatorY);
     
     CGContextStrokeLineSegments(pdfContext, (CGPoint[]){startPoint, endPoint}, 2);
