@@ -54,7 +54,7 @@
 	
     // Test with default settings
     STAssertEqualObjects([taggedString flattenedRTFString],
-                         @"\\pard \\pardeftab0\\tx560\\tx1120\\tx1680\\tx2240\\tx2800\\tx3360\\tx3920\\tx4480\\tx5040\\tx5600\\tx6160\\tx6720 \\sl200\\slmult1"
+                         @"\\pard \\pardeftab0\\tx560\\tx1120\\tx1680\\tx2240\\tx2800\\tx3360\\tx3920\\tx4480\\tx5040\\tx5600\\tx6160\\tx6720 \\sl200\\slmult0"
                          "a",
                          @"Invalid translation"
                          );

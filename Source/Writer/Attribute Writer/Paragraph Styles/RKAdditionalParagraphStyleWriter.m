@@ -39,8 +39,8 @@
 	if (value.overrideLineHeightAndSpacing) {
 		CGFloat distance = (value.baselineDistance <= 0) ? 1 : value.baselineDistance;
 		
-		// \sl must be a positive value, to ensure that the line as at least the height of the tallest character. slmult1 indicates that it should be treated as multiple (multiplication factor will be actually determined by the editor).
-		[tags appendFormat: @"\\sl%li\\slmult1", (NSInteger)RKPointsToTwips(distance)];
+		// \sl must be a positive value, to ensure that the line as at least the height of the tallest character.
+		[tags appendFormat: @"\\sl%li\\slmult0", (NSInteger)RKPointsToTwips(distance)];
 	}
 	
 	return tags;
