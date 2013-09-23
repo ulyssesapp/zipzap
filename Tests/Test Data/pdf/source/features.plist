@@ -979,6 +979,11 @@ Video with file
 							<string>Paragraph</string>
 							<key>RKCharacterStyleName</key>
 							<string>image</string>
+							<key>RKImageAttachment</key>
+							<dict>
+								<key>fileIdentifier</key>
+								<integer>0</integer>
+							</dict>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -1011,11 +1016,6 @@ Video with file
 								<real>30</real>
 								<key>baseWritingDirection</key>
 								<string>natural</string>
-							</dict>
-							<key>NSAttachment</key>
-							<dict>
-								<key>fileIdentifier</key>
-								<integer>0</integer>
 							</dict>
 						</dict>
 					</dict>
@@ -2835,6 +2835,8 @@ Video with file
 						<dict>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
+							<key>RKImageAttachment</key>
+							<dict/>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -2868,8 +2870,6 @@ Video with file
 								<key>baseWritingDirection</key>
 								<string>natural</string>
 							</dict>
-							<key>NSAttachment</key>
-							<dict/>
 						</dict>
 					</dict>
 					<dict>
@@ -2983,6 +2983,8 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKImageAttachment</key>
+							<dict/>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
 							<key>NSParagraphStyle</key>
@@ -3018,8 +3020,6 @@ Video with file
 								<key>baseWritingDirection</key>
 								<string>natural</string>
 							</dict>
-							<key>NSAttachment</key>
-							<dict/>
 						</dict>
 					</dict>
 					<dict>
@@ -3133,6 +3133,8 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKImageAttachment</key>
+							<dict/>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
 							<key>NSParagraphStyle</key>
@@ -3168,8 +3170,6 @@ Video with file
 								<key>baseWritingDirection</key>
 								<string>natural</string>
 							</dict>
-							<key>NSAttachment</key>
-							<dict/>
 						</dict>
 					</dict>
 					<dict>
@@ -3283,6 +3283,8 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKImageAttachment</key>
+							<dict/>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
 							<key>NSParagraphStyle</key>
@@ -3318,8 +3320,6 @@ Video with file
 								<key>baseWritingDirection</key>
 								<string>natural</string>
 							</dict>
-							<key>NSAttachment</key>
-							<dict/>
 						</dict>
 					</dict>
 					<dict>
@@ -3433,6 +3433,11 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKImageAttachment</key>
+							<dict>
+								<key>fileIdentifier</key>
+								<integer>1</integer>
+							</dict>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
 							<key>NSParagraphStyle</key>
@@ -3467,11 +3472,6 @@ Video with file
 								<real>30</real>
 								<key>baseWritingDirection</key>
 								<string>natural</string>
-							</dict>
-							<key>NSAttachment</key>
-							<dict>
-								<key>fileIdentifier</key>
-								<integer>1</integer>
 							</dict>
 						</dict>
 					</dict>
@@ -3586,6 +3586,11 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKImageAttachment</key>
+							<dict>
+								<key>fileIdentifier</key>
+								<integer>1</integer>
+							</dict>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
 							<key>NSParagraphStyle</key>
@@ -3620,11 +3625,6 @@ Video with file
 								<real>30</real>
 								<key>baseWritingDirection</key>
 								<string>natural</string>
-							</dict>
-							<key>NSAttachment</key>
-							<dict>
-								<key>fileIdentifier</key>
-								<integer>1</integer>
 							</dict>
 						</dict>
 					</dict>
@@ -3739,6 +3739,11 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKImageAttachment</key>
+							<dict>
+								<key>fileIdentifier</key>
+								<integer>2</integer>
+							</dict>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
 							<key>NSParagraphStyle</key>
@@ -3773,11 +3778,6 @@ Video with file
 								<real>30</real>
 								<key>baseWritingDirection</key>
 								<string>natural</string>
-							</dict>
-							<key>NSAttachment</key>
-							<dict>
-								<key>fileIdentifier</key>
-								<integer>2</integer>
 							</dict>
 						</dict>
 					</dict>
@@ -4722,18 +4722,20 @@ Video with file
 			<string>decimal</string>
 		</dict>
 	</array>
+	<key>pageInsetsOuter</key>
+	<real>72</real>
 	<key>endnoteEnumerationStyle</key>
 	<string>decimal</string>
 	<key>endnotePlacement</key>
 	<string>documentEnd</string>
 	<key>pageInsetsTop</key>
 	<real>90</real>
-	<key>headerSpacing</key>
-	<real>36</real>
+	<key>sectionNumberingStyle</key>
+	<string>decimal</string>
 	<key>characterStyles</key>
 	<dict/>
-	<key>pageInsetsOuter</key>
-	<real>72</real>
+	<key>headerSpacing</key>
+	<real>36</real>
 	<key>footnoteEnumerationPolicy</key>
 	<string>perPage</string>
 	<key>pageOrientation</key>
@@ -4744,8 +4746,6 @@ Video with file
 	<real>36</real>
 	<key>pageInsetsBottom</key>
 	<real>90</real>
-	<key>sectionNumberingStyle</key>
-	<string>decimal</string>
 	<key>hyphenationEnabled</key>
 	<true/>
 	<key>pageInsetsInner</key>

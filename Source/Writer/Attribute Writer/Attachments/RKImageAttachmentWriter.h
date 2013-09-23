@@ -1,5 +1,5 @@
 //
-//  RKTextAttachmentWriter.h
+//  RKImageAttachmentWriter.h
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 27.01.12.
@@ -11,6 +11,6 @@
 /*!
  @abstract Writes out all tags required for text attachments
  */
-@interface RKTextAttachmentWriter : RKAttributeWriter
+@interface RKImageAttachmentWriter : RKAttributeWriter
 
 @end

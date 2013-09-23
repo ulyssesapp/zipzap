@@ -122,10 +122,6 @@
 		790AD9A215BC0BF00011E40E /* RKShadowSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD99515BC0BE90011E40E /* RKShadowSerializer.h */; };
 		790AD9A315BC0BF00011E40E /* RKShadowSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD99615BC0BEB0011E40E /* RKShadowSerializer.m */; };
 		790AD9A415BC0BF00011E40E /* RKShadowSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD99615BC0BEB0011E40E /* RKShadowSerializer.m */; };
-		790AD9A515BC0BF00011E40E /* RKTextAttachmentSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD99715BC0BEC0011E40E /* RKTextAttachmentSerializer.h */; };
-		790AD9A615BC0BF00011E40E /* RKTextAttachmentSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD99715BC0BEC0011E40E /* RKTextAttachmentSerializer.h */; };
-		790AD9A715BC0BF00011E40E /* RKTextAttachmentSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD99815BC0BEC0011E40E /* RKTextAttachmentSerializer.m */; };
-		790AD9A815BC0BF00011E40E /* RKTextAttachmentSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD99815BC0BEC0011E40E /* RKTextAttachmentSerializer.m */; };
 		790AD9AB15BC107C0011E40E /* RKLinkSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD9A915BC10500011E40E /* RKLinkSerializer.h */; };
 		790AD9AC15BC107C0011E40E /* RKLinkSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD9A915BC10500011E40E /* RKLinkSerializer.h */; };
 		790AD9AD15BC107C0011E40E /* RKLinkSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD9AA15BC105D0011E40E /* RKLinkSerializer.m */; };
@@ -198,8 +194,8 @@
 		796EAB9D14D9479B001E8401 /* RKWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAB9B14D9479B001E8401 /* RKWriter.m */; };
 		796EABA614D947CA001E8401 /* RKLinkWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABA214D947CA001E8401 /* RKLinkWriter.h */; };
 		796EABA714D947CA001E8401 /* RKLinkWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABA314D947CA001E8401 /* RKLinkWriter.m */; };
-		796EABA914D947CA001E8401 /* RKTextAttachmentWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABA414D947CA001E8401 /* RKTextAttachmentWriter.h */; };
-		796EABAA14D947CA001E8401 /* RKTextAttachmentWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABA514D947CA001E8401 /* RKTextAttachmentWriter.m */; };
+		796EABA914D947CA001E8401 /* RKImageAttachmentWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABA414D947CA001E8401 /* RKImageAttachmentWriter.h */; };
+		796EABAA14D947CA001E8401 /* RKImageAttachmentWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABA514D947CA001E8401 /* RKImageAttachmentWriter.m */; };
 		796EABC214D947D5001E8401 /* RKColorAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABAC14D947D5001E8401 /* RKColorAttributeWriter.h */; };
 		796EABC314D947D5001E8401 /* RKColorAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABAD14D947D5001E8401 /* RKColorAttributeWriter.m */; };
 		796EABC514D947D5001E8401 /* RKFontAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EABAE14D947D5001E8401 /* RKFontAttributeWriter.h */; };
@@ -229,7 +225,7 @@
 		796EAC0D14D947F6001E8401 /* RKTaggedString.h in Headers */ = {isa = PBXBuildFile; fileRef = 796EAC0514D947F6001E8401 /* RKTaggedString.h */; };
 		796EAC0E14D947F6001E8401 /* RKTaggedString.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC0614D947F6001E8401 /* RKTaggedString.m */; };
 		796EAC1B14D94850001E8401 /* RKLinkWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC1814D94850001E8401 /* RKLinkWriterTest.m */; };
-		796EAC1C14D94850001E8401 /* RKTextAttachmentWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC1A14D94850001E8401 /* RKTextAttachmentWriterTest.m */; };
+		796EAC1C14D94850001E8401 /* RKImageAttachmentWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC1A14D94850001E8401 /* RKImageAttachmentWriterTest.m */; };
 		796EAC3314D9485B001E8401 /* RKColorAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC1E14D9485B001E8401 /* RKColorAttributeWriterTest.m */; };
 		796EAC3414D9485B001E8401 /* RKFontAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC2014D9485B001E8401 /* RKFontAttributeWriterTest.m */; };
 		796EAC3614D9485B001E8401 /* RKShadowAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC2414D9485B001E8401 /* RKShadowAttributeWriterTest.m */; };
@@ -303,12 +299,10 @@
 		79AD205C14E194EE00F5616C /* RKPlaceholderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD205A14E194EE00F5616C /* RKPlaceholderWriter.m */; };
 		79AD206014E195D700F5616C /* RKPlaceholderWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AD205F14E195D700F5616C /* RKPlaceholderWriterTest.m */; };
 		79B1489C151A0E1200F14200 /* RKShadowAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC2414D9485B001E8401 /* RKShadowAttributeWriterTest.m */; };
-		79B1489E151A117400F14200 /* RKTextAttachmentWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC1A14D94850001E8401 /* RKTextAttachmentWriterTest.m */; };
-		79B1489F151A118100F14200 /* RKTextAttachmentWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABA514D947CA001E8401 /* RKTextAttachmentWriter.m */; };
+		79B1489E151A117400F14200 /* RKImageAttachmentWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EAC1A14D94850001E8401 /* RKImageAttachmentWriterTest.m */; };
+		79B1489F151A118100F14200 /* RKImageAttachmentWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796EABA514D947CA001E8401 /* RKImageAttachmentWriter.m */; };
 		79B148AA151A15D800F14200 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
 		79B148AB151A15E200F14200 /* RTFKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6914C4951C00F23C04 /* RTFKit.h */; };
-		79B148AC151A15E700F14200 /* RKTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B148A1151A11E500F14200 /* RKTextAttachment.m */; };
-		79B148AD151A15EA00F14200 /* RKTextAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 79B148A0151A11E500F14200 /* RKTextAttachment.h */; };
 		79B148AE151A15ED00F14200 /* RKShadow.h in Headers */ = {isa = PBXBuildFile; fileRef = 79717A2D1519F88C0016FB3E /* RKShadow.h */; };
 		79B148B3151A281400F14200 /* RKPortableAttributeNames-iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 79E76C5815176BFC0073153D /* RKPortableAttributeNames-iOS.h */; };
 		79C486B314F1463400B29A1E /* RKStyleNameAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C486B114F1463400B29A1E /* RKStyleNameAttributeWriter.h */; };
@@ -324,6 +318,10 @@
 		79CE4B1B159A001B00C83EF6 /* RKPersistenceContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE4B17159A001B00C83EF6 /* RKPersistenceContext.m */; };
 		79D33FAD14EE7E0100553901 /* RKInlineStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79D33FAB14EE7E0100553901 /* RKInlineStyleWriter.h */; };
 		79D33FAE14EE7E0100553901 /* RKInlineStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D33FAC14EE7E0100553901 /* RKInlineStyleWriter.m */; };
+		79D4D27817F08FBE00EC5504 /* RKImageAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 79D4D27617F08FBE00EC5504 /* RKImageAttachment.h */; };
+		79D4D27917F08FBE00EC5504 /* RKImageAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D4D27717F08FBE00EC5504 /* RKImageAttachment.m */; };
+		79D4D27C17F0904D00EC5504 /* RKImageAttachmentSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 79D4D27A17F0904D00EC5504 /* RKImageAttachmentSerializer.h */; };
+		79D4D27E17F090E200EC5504 /* RKImageAttachmentSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D4D27B17F0904D00EC5504 /* RKImageAttachmentSerializer.m */; };
 		79DE038715F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 79DE038515F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.h */; };
 		79DE038815F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DE038615F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.m */; };
 		79DE038A15F8A8C5001AE98F /* RKAdditionalParagraphStyleSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DE038615F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.m */; };
@@ -506,8 +504,6 @@
 		790AD99415BC0BE80011E40E /* RKFontSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFontSerializer.m; path = "Persistency/Attribute Writer/Common/RKFontSerializer.m"; sourceTree = "<group>"; };
 		790AD99515BC0BE90011E40E /* RKShadowSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKShadowSerializer.h; path = "Persistency/Attribute Writer/Common/RKShadowSerializer.h"; sourceTree = "<group>"; };
 		790AD99615BC0BEB0011E40E /* RKShadowSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKShadowSerializer.m; path = "Persistency/Attribute Writer/Common/RKShadowSerializer.m"; sourceTree = "<group>"; };
-		790AD99715BC0BEC0011E40E /* RKTextAttachmentSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextAttachmentSerializer.h; path = "Persistency/Attribute Writer/Common/RKTextAttachmentSerializer.h"; sourceTree = "<group>"; };
-		790AD99815BC0BEC0011E40E /* RKTextAttachmentSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentSerializer.m; path = "Persistency/Attribute Writer/Common/RKTextAttachmentSerializer.m"; sourceTree = "<group>"; };
 		790AD9A915BC10500011E40E /* RKLinkSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkSerializer.h; path = "Persistency/Attribute Writer/Common/RKLinkSerializer.h"; sourceTree = "<group>"; };
 		790AD9AA15BC105D0011E40E /* RKLinkSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkSerializer.m; path = "Persistency/Attribute Writer/Common/RKLinkSerializer.m"; sourceTree = "<group>"; };
 		79118CB017BCEF2C00D5E346 /* RKConversionPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKConversionPolicy.h; path = Writer/RKConversionPolicy.h; sourceTree = "<group>"; };
@@ -581,8 +577,8 @@
 		796EAB9B14D9479B001E8401 /* RKWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKWriter.m; path = Writer/RKWriter.m; sourceTree = "<group>"; };
 		796EABA214D947CA001E8401 /* RKLinkWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkWriter.h; path = "Writer/Attribute Writer/Attachments/RKLinkWriter.h"; sourceTree = "<group>"; };
 		796EABA314D947CA001E8401 /* RKLinkWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkWriter.m; path = "Writer/Attribute Writer/Attachments/RKLinkWriter.m"; sourceTree = "<group>"; };
-		796EABA414D947CA001E8401 /* RKTextAttachmentWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextAttachmentWriter.h; path = "Writer/Attribute Writer/Attachments/RKTextAttachmentWriter.h"; sourceTree = "<group>"; };
-		796EABA514D947CA001E8401 /* RKTextAttachmentWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentWriter.m; path = "Writer/Attribute Writer/Attachments/RKTextAttachmentWriter.m"; sourceTree = "<group>"; };
+		796EABA414D947CA001E8401 /* RKImageAttachmentWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKImageAttachmentWriter.h; path = "Writer/Attribute Writer/Attachments/RKImageAttachmentWriter.h"; sourceTree = "<group>"; };
+		796EABA514D947CA001E8401 /* RKImageAttachmentWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKImageAttachmentWriter.m; path = "Writer/Attribute Writer/Attachments/RKImageAttachmentWriter.m"; sourceTree = "<group>"; };
 		796EABAC14D947D5001E8401 /* RKColorAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKColorAttributeWriter.h; path = "Writer/Attribute Writer/Inline Styles/RKColorAttributeWriter.h"; sourceTree = "<group>"; };
 		796EABAD14D947D5001E8401 /* RKColorAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKColorAttributeWriter.m; path = "Writer/Attribute Writer/Inline Styles/RKColorAttributeWriter.m"; sourceTree = "<group>"; };
 		796EABAE14D947D5001E8401 /* RKFontAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFontAttributeWriter.h; path = "Writer/Attribute Writer/Inline Styles/RKFontAttributeWriter.h"; sourceTree = "<group>"; };
@@ -613,8 +609,8 @@
 		796EAC0614D947F6001E8401 /* RKTaggedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTaggedString.m; path = Writer/Utils/RKTaggedString.m; sourceTree = "<group>"; };
 		796EAC1714D94850001E8401 /* RKLinkWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLinkWriterTest.h; path = "Writer/Attribute Writer/Attachments/RKLinkWriterTest.h"; sourceTree = "<group>"; };
 		796EAC1814D94850001E8401 /* RKLinkWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLinkWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKLinkWriterTest.m"; sourceTree = "<group>"; };
-		796EAC1914D94850001E8401 /* RKTextAttachmentWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextAttachmentWriterTest.h; path = "Writer/Attribute Writer/Attachments/RKTextAttachmentWriterTest.h"; sourceTree = "<group>"; };
-		796EAC1A14D94850001E8401 /* RKTextAttachmentWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKTextAttachmentWriterTest.m"; sourceTree = "<group>"; };
+		796EAC1914D94850001E8401 /* RKImageAttachmentWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKImageAttachmentWriterTest.h; path = "Writer/Attribute Writer/Attachments/RKImageAttachmentWriterTest.h"; sourceTree = "<group>"; };
+		796EAC1A14D94850001E8401 /* RKImageAttachmentWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKImageAttachmentWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKImageAttachmentWriterTest.m"; sourceTree = "<group>"; };
 		796EAC1D14D9485B001E8401 /* RKColorAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKColorAttributeWriterTest.h; path = "Writer/Attribute Writer/Inline Styles/RKColorAttributeWriterTest.h"; sourceTree = "<group>"; };
 		796EAC1E14D9485B001E8401 /* RKColorAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKColorAttributeWriterTest.m; path = "Writer/Attribute Writer/Inline Styles/RKColorAttributeWriterTest.m"; sourceTree = "<group>"; };
 		796EAC1F14D9485B001E8401 /* RKFontAttributeWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFontAttributeWriterTest.h; path = "Writer/Attribute Writer/Inline Styles/RKFontAttributeWriterTest.h"; sourceTree = "<group>"; };
@@ -687,8 +683,6 @@
 		79AD205A14E194EE00F5616C /* RKPlaceholderWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPlaceholderWriter.m; path = "Writer/Attribute Writer/Attachments/RKPlaceholderWriter.m"; sourceTree = "<group>"; };
 		79AD205E14E195D700F5616C /* RKPlaceholderWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPlaceholderWriterTest.h; path = "Writer/Attribute Writer/Attachments/RKPlaceholderWriterTest.h"; sourceTree = "<group>"; };
 		79AD205F14E195D700F5616C /* RKPlaceholderWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = RKPlaceholderWriterTest.m; path = "Writer/Attribute Writer/Attachments/RKPlaceholderWriterTest.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		79B148A0151A11E500F14200 /* RKTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextAttachment.h; path = Source/Document/Styles/RKTextAttachment.h; sourceTree = SOURCE_ROOT; };
-		79B148A1151A11E500F14200 /* RKTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachment.m; path = Source/Document/Styles/RKTextAttachment.m; sourceTree = SOURCE_ROOT; };
 		79B148B2151A27F400F14200 /* RKPortableAttributeNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RKPortableAttributeNames.h; path = Utils/RKPortableAttributeNames.h; sourceTree = "<group>"; };
 		79B148B4151A283400F14200 /* RKPortableAttributeNames-MacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RKPortableAttributeNames-MacOS.h"; path = "Utils/RKPortableAttributeNames-MacOS.h"; sourceTree = "<group>"; };
 		79C486B114F1463400B29A1E /* RKStyleNameAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKStyleNameAttributeWriter.h; path = "Writer/Attribute Writer/Style Naming/RKStyleNameAttributeWriter.h"; sourceTree = "<group>"; };
@@ -707,6 +701,10 @@
 		79CE4B17159A001B00C83EF6 /* RKPersistenceContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPersistenceContext.m; path = Persistency/Context/RKPersistenceContext.m; sourceTree = "<group>"; };
 		79D33FAB14EE7E0100553901 /* RKInlineStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKInlineStyleWriter.h; path = "Writer/Attribute Writer/Inline Styles/RKInlineStyleWriter.h"; sourceTree = "<group>"; };
 		79D33FAC14EE7E0100553901 /* RKInlineStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKInlineStyleWriter.m; path = "Writer/Attribute Writer/Inline Styles/RKInlineStyleWriter.m"; sourceTree = "<group>"; };
+		79D4D27617F08FBE00EC5504 /* RKImageAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKImageAttachment.h; path = Document/Attributes/RKImageAttachment.h; sourceTree = "<group>"; };
+		79D4D27717F08FBE00EC5504 /* RKImageAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKImageAttachment.m; path = Document/Attributes/RKImageAttachment.m; sourceTree = "<group>"; };
+		79D4D27A17F0904D00EC5504 /* RKImageAttachmentSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKImageAttachmentSerializer.h; path = "Persistency/Attribute Writer/Common/RKImageAttachmentSerializer.h"; sourceTree = "<group>"; };
+		79D4D27B17F0904D00EC5504 /* RKImageAttachmentSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKImageAttachmentSerializer.m; path = "Persistency/Attribute Writer/Common/RKImageAttachmentSerializer.m"; sourceTree = "<group>"; };
 		79DE038515F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAdditionalParagraphStyleSerializer.h; path = "Persistency/Attribute Writer/Common/RKAdditionalParagraphStyleSerializer.h"; sourceTree = "<group>"; };
 		79DE038615F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAdditionalParagraphStyleSerializer.m; path = "Persistency/Attribute Writer/Common/RKAdditionalParagraphStyleSerializer.m"; sourceTree = "<group>"; };
 		79E76BE2151752330073153D /* libRTFKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRTFKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -942,10 +940,10 @@
 				790AD99415BC0BE80011E40E /* RKFontSerializer.m */,
 				790AD99515BC0BE90011E40E /* RKShadowSerializer.h */,
 				790AD99615BC0BEB0011E40E /* RKShadowSerializer.m */,
-				790AD99715BC0BEC0011E40E /* RKTextAttachmentSerializer.h */,
-				790AD99815BC0BEC0011E40E /* RKTextAttachmentSerializer.m */,
 				790AD94715BBF93C0011E40E /* RKFootnoteSerializer.h */,
 				790AD94815BBF93C0011E40E /* RKFootnoteSerializer.m */,
+				79D4D27A17F0904D00EC5504 /* RKImageAttachmentSerializer.h */,
+				79D4D27B17F0904D00EC5504 /* RKImageAttachmentSerializer.m */,
 				790AD94B15BBFA9E0011E40E /* RKStyleAttributeSerializer.h */,
 				790AD94C15BBFA9E0011E40E /* RKStyleAttributeSerializer.m */,
 				790AD95915BBFD6E0011E40E /* RKStyleNamingAttributeSerializer.h */,
@@ -976,8 +974,6 @@
 				795C1BC214EC1AEF0041EB69 /* RKListStyle.m */,
 				79717A2D1519F88C0016FB3E /* RKShadow.h */,
 				79717A2E1519F88C0016FB3E /* RKShadow.m */,
-				79B148A0151A11E500F14200 /* RKTextAttachment.h */,
-				79B148A1151A11E500F14200 /* RKTextAttachment.m */,
 			);
 			name = Styles;
 			path = ../Tests;
@@ -996,6 +992,8 @@
 				795C1BDA14ED70590041EB69 /* RKStyleName.m */,
 				79FB2B2015C18DAF0010EA47 /* RKAdditionalParagraphStyle.h */,
 				79FB2B2115C18DAF0010EA47 /* RKAdditionalParagraphStyle.m */,
+				79D4D27617F08FBE00EC5504 /* RKImageAttachment.h */,
+				79D4D27717F08FBE00EC5504 /* RKImageAttachment.m */,
 			);
 			name = Attributes;
 			sourceTree = "<group>";
@@ -1149,8 +1147,8 @@
 			children = (
 				796EABA214D947CA001E8401 /* RKLinkWriter.h */,
 				796EABA314D947CA001E8401 /* RKLinkWriter.m */,
-				796EABA414D947CA001E8401 /* RKTextAttachmentWriter.h */,
-				796EABA514D947CA001E8401 /* RKTextAttachmentWriter.m */,
+				796EABA414D947CA001E8401 /* RKImageAttachmentWriter.h */,
+				796EABA514D947CA001E8401 /* RKImageAttachmentWriter.m */,
 				7935619914DC6E1500FC0C1C /* RKFootnoteWriter.h */,
 				7935619A14DC6E1500FC0C1C /* RKFootnoteWriter.m */,
 				79AD205914E194EE00F5616C /* RKPlaceholderWriter.h */,
@@ -1244,8 +1242,8 @@
 			children = (
 				796EAC1714D94850001E8401 /* RKLinkWriterTest.h */,
 				796EAC1814D94850001E8401 /* RKLinkWriterTest.m */,
-				796EAC1914D94850001E8401 /* RKTextAttachmentWriterTest.h */,
-				796EAC1A14D94850001E8401 /* RKTextAttachmentWriterTest.m */,
+				796EAC1914D94850001E8401 /* RKImageAttachmentWriterTest.h */,
+				796EAC1A14D94850001E8401 /* RKImageAttachmentWriterTest.m */,
 				7935619614DC6DF000FC0C1C /* RKFootnoteWriterTest.h */,
 				7935619714DC6DF000FC0C1C /* RKFootnoteWriterTest.m */,
 				79AD205E14E195D700F5616C /* RKPlaceholderWriterTest.h */,
@@ -1540,7 +1538,7 @@
 				79F673CC14C875BB005D03FA /* RKTypes.h in Headers */,
 				796EAB9C14D9479B001E8401 /* RKWriter.h in Headers */,
 				796EABA614D947CA001E8401 /* RKLinkWriter.h in Headers */,
-				796EABA914D947CA001E8401 /* RKTextAttachmentWriter.h in Headers */,
+				796EABA914D947CA001E8401 /* RKImageAttachmentWriter.h in Headers */,
 				796EABC214D947D5001E8401 /* RKColorAttributeWriter.h in Headers */,
 				79631C1917C521C100A28103 /* RKKernAttributeWriter.h in Headers */,
 				796EABC514D947D5001E8401 /* RKFontAttributeWriter.h in Headers */,
@@ -1568,6 +1566,7 @@
 				79AD204014E140AC00F5616C /* NSAttributedString+RKCalculationAdditions.h in Headers */,
 				79AD204614E1430100F5616C /* RKFontAdditions.h in Headers */,
 				79AD205514E1939900F5616C /* RKPlaceholder.h in Headers */,
+				79D4D27C17F0904D00EC5504 /* RKImageAttachmentSerializer.h in Headers */,
 				79AD205B14E194EE00F5616C /* RKPlaceholderWriter.h in Headers */,
 				79C4BED714E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.h in Headers */,
 				795C1BC314EC1AEF0041EB69 /* RKListStyle.h in Headers */,
@@ -1583,6 +1582,7 @@
 				79CE4B18159A001B00C83EF6 /* RKListStyle+RKPersistence.h in Headers */,
 				79CE4B1A159A001B00C83EF6 /* RKPersistenceContext.h in Headers */,
 				79FCF84615A5A72C00D98438 /* RKPDFWriter.h in Headers */,
+				79D4D27817F08FBE00EC5504 /* RKImageAttachment.h in Headers */,
 				79FCF86D15A5B05A00D98438 /* RKPDFRenderingContext.h in Headers */,
 				79FCF87115A5B4E400D98438 /* RKPDFTextObject.h in Headers */,
 				79FCF87D15A5B96200D98438 /* RKPDFImage.h in Headers */,
@@ -1625,7 +1625,6 @@
 				790AD99915BC0BF00011E40E /* RKColorSerializer.h in Headers */,
 				790AD99D15BC0BF00011E40E /* RKFontSerializer.h in Headers */,
 				790AD9A115BC0BF00011E40E /* RKShadowSerializer.h in Headers */,
-				790AD9A515BC0BF00011E40E /* RKTextAttachmentSerializer.h in Headers */,
 				790AD9AB15BC107C0011E40E /* RKLinkSerializer.h in Headers */,
 				79DE038715F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.h in Headers */,
 				7962711F15FA29F0001E2BE2 /* NSString+Hyphenation.h in Headers */,
@@ -1643,7 +1642,6 @@
 			files = (
 				799511F41518A3E600D82511 /* RKConversion.h in Headers */,
 				79B148AA151A15D800F14200 /* RTFKit.h in Headers */,
-				79B148AD151A15EA00F14200 /* RKTextAttachment.h in Headers */,
 				79631C1A17C521C100A28103 /* RKKernAttributeWriter.h in Headers */,
 				79B148AE151A15ED00F14200 /* RKShadow.h in Headers */,
 				79B148B3151A281400F14200 /* RKPortableAttributeNames-iOS.h in Headers */,
@@ -1686,7 +1684,6 @@
 				790AD99A15BC0BF00011E40E /* RKColorSerializer.h in Headers */,
 				790AD99E15BC0BF00011E40E /* RKFontSerializer.h in Headers */,
 				790AD9A215BC0BF00011E40E /* RKShadowSerializer.h in Headers */,
-				790AD9A615BC0BF00011E40E /* RKTextAttachmentSerializer.h in Headers */,
 				790AD9AC15BC107C0011E40E /* RKLinkSerializer.h in Headers */,
 				7971428815BC15050082A67B /* RKFootnoteSerializer.h in Headers */,
 				7971428A15BC15050082A67B /* RKStyleAttributeSerializer.h in Headers */,
@@ -1862,7 +1859,7 @@
 				796EAB9D14D9479B001E8401 /* RKWriter.m in Sources */,
 				79631C1B17C521C100A28103 /* RKKernAttributeWriter.m in Sources */,
 				796EABA714D947CA001E8401 /* RKLinkWriter.m in Sources */,
-				796EABAA14D947CA001E8401 /* RKTextAttachmentWriter.m in Sources */,
+				796EABAA14D947CA001E8401 /* RKImageAttachmentWriter.m in Sources */,
 				796EABC314D947D5001E8401 /* RKColorAttributeWriter.m in Sources */,
 				796EABC614D947D5001E8401 /* RKFontAttributeWriter.m in Sources */,
 				796EABCC14D947D5001E8401 /* RKShadowAttributeWriter.m in Sources */,
@@ -1933,6 +1930,7 @@
 				7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */,
 				790AD8BC15BABD940011E40E /* RKTextTabWrapper.m in Sources */,
 				790AD8BD15BAC1020011E40E /* RKParagraphStyleWrapper.m in Sources */,
+				79D4D27E17F090E200EC5504 /* RKImageAttachmentSerializer.m in Sources */,
 				790AD90D15BAD62E0011E40E /* RKRect.m in Sources */,
 				790AD94315BBF86F0011E40E /* RKAttributeSerializer.m in Sources */,
 				790AD94A15BBF93C0011E40E /* RKFootnoteSerializer.m in Sources */,
@@ -1943,7 +1941,7 @@
 				790AD99B15BC0BF00011E40E /* RKColorSerializer.m in Sources */,
 				790AD99F15BC0BF00011E40E /* RKFontSerializer.m in Sources */,
 				790AD9A315BC0BF00011E40E /* RKShadowSerializer.m in Sources */,
-				790AD9A715BC0BF00011E40E /* RKTextAttachmentSerializer.m in Sources */,
+				79D4D27917F08FBE00EC5504 /* RKImageAttachment.m in Sources */,
 				790AD9AD15BC107C0011E40E /* RKLinkSerializer.m in Sources */,
 				79FB2B2315C18DAF0010EA47 /* RKAdditionalParagraphStyle.m in Sources */,
 				79FB2B3015C18F3F0010EA47 /* RKAdditionalParagraphStyleWriter.m in Sources */,
@@ -1962,7 +1960,7 @@
 				79F673B514C84ACC005D03FA /* RKDocumentTest.m in Sources */,
 				797DA1CA14C97E05000DDAF3 /* RKSectionTest.m in Sources */,
 				796EAC1B14D94850001E8401 /* RKLinkWriterTest.m in Sources */,
-				796EAC1C14D94850001E8401 /* RKTextAttachmentWriterTest.m in Sources */,
+				796EAC1C14D94850001E8401 /* RKImageAttachmentWriterTest.m in Sources */,
 				796EAC3314D9485B001E8401 /* RKColorAttributeWriterTest.m in Sources */,
 				796EAC3414D9485B001E8401 /* RKFontAttributeWriterTest.m in Sources */,
 				796EAC3614D9485B001E8401 /* RKShadowAttributeWriterTest.m in Sources */,
@@ -2046,8 +2044,7 @@
 				799511EB15189F1500D82511 /* RKPortableAttributeNames-iOS.m in Sources */,
 				79717A31151A036C0016FB3E /* RKShadow.m in Sources */,
 				79717A32151A03960016FB3E /* RKShadowAttributeWriter.m in Sources */,
-				79B1489F151A118100F14200 /* RKTextAttachmentWriter.m in Sources */,
-				79B148AC151A15E700F14200 /* RKTextAttachment.m in Sources */,
+				79B1489F151A118100F14200 /* RKImageAttachmentWriter.m in Sources */,
 				79470FE9152C5C8800254072 /* RKListCounter.m in Sources */,
 				790AD8B815BAB9C60011E40E /* RKParagraphStyleWrapper.m in Sources */,
 				790AD8BE15BAC1050011E40E /* RKTextTabWrapper.m in Sources */,
@@ -2087,7 +2084,6 @@
 				790AD99C15BC0BF00011E40E /* RKColorSerializer.m in Sources */,
 				790AD9A015BC0BF00011E40E /* RKFontSerializer.m in Sources */,
 				790AD9A415BC0BF00011E40E /* RKShadowSerializer.m in Sources */,
-				790AD9A815BC0BF00011E40E /* RKTextAttachmentSerializer.m in Sources */,
 				790AD9AE15BC107C0011E40E /* RKLinkSerializer.m in Sources */,
 				7971428915BC15050082A67B /* RKFootnoteSerializer.m in Sources */,
 				7971428B15BC15050082A67B /* RKStyleAttributeSerializer.m in Sources */,
@@ -2132,7 +2128,7 @@
 				79E76C4C151758770073153D /* NSString+RKNumberFormattingTest.m in Sources */,
 				79E76C4D151758770073153D /* RKWriterTest.m in Sources */,
 				79B1489C151A0E1200F14200 /* RKShadowAttributeWriterTest.m in Sources */,
-				79B1489E151A117400F14200 /* RKTextAttachmentWriterTest.m in Sources */,
+				79B1489E151A117400F14200 /* RKImageAttachmentWriterTest.m in Sources */,
 				79A5527A152C632F008EADAB /* RKListEnumeratorTest.m in Sources */,
 				790AD8C215BAC3A40011E40E /* RKParagraphStyleWrapperTest.m in Sources */,
 				7971429515BC1E560082A67B /* NSAttributedStringPersistenceTest.m in Sources */,

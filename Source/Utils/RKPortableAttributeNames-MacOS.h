@@ -8,8 +8,6 @@
 
 #if !TARGET_OS_IPHONE
 
-#import "RKTextAttachment.h"
-
 /*!
  @abstract Macros used to abstract plattform specific constants
  */
@@ -23,7 +21,6 @@
 #define RKStrokeColorAttributeName              NSStrokeColorAttributeName
 #define RKStrokeWidthAttributeName              NSStrokeWidthAttributeName
 #define RKLinkAttributeName                     NSLinkAttributeName
-#define RKAttachmentAttributeName               NSAttachmentAttributeName
 #define RKSuperscriptAttributeName              NSSuperscriptAttributeName
 #define RKParagraphStyleAttributeName           NSParagraphStyleAttributeName
 #define RKShadowAttributeName                   NSShadowAttributeName

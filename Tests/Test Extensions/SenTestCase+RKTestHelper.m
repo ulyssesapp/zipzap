@@ -8,7 +8,7 @@
 
 #import "SenTestCase+RKTestHelper.h"
 
-#import "RKTextAttachment.h"
+#import "RKImageAttachment.h"
 
 @implementation SenTestCase (RKTestHelper)
 
@@ -26,13 +26,9 @@
     return wrapper;
 }
 
-- (id)textAttachmentWithName:(NSString *)name withExtension:(NSString *)extension
+- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margins:(NSEdgeInsets)margins
 {
-#if !TARGET_OS_IPHONE
-    return [[NSTextAttachment alloc] initWithFileWrapper: [self testFileWithName:name withExtension:extension]];
-#else
-    return [[RKTextAttachment alloc] initWithFileWrapper: [self testFileWithName:name withExtension:extension]];
-#endif
+	return [[RKImageAttachment alloc] initWithFile:[self testFileWithName:name withExtension:extension] margins:margins];
 }
 
 @end

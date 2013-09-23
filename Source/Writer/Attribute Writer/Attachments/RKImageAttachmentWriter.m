@@ -1,5 +1,5 @@
 //
-//  RKTextAttachmentWriter.m
+//  RKImageAttachmentWriter.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 27.01.12.
@@ -7,13 +7,14 @@
 //
 
 #import "RKAttributedStringWriter.h"
-#import "RKTextAttachmentWriter.h"
+#import "RKImageAttachmentWriter.h"
+#import "RKImageAttachment.h"
 #import "RKTaggedString.h"
 #import "RKResourcePool.h"
 #import "RKWriter.h"
 #import "RKConversion.h"
 
-@interface RKTextAttachmentWriter ()
+@interface RKImageAttachmentWriter ()
 /*!
  @abstract Generates the tags for an embedded picture file
  @discussion If the image file is not a PNG, it will be converted if possible
@@ -34,17 +35,17 @@
 
 @end
 
-@implementation RKTextAttachmentWriter
+@implementation RKImageAttachmentWriter
 
 + (void)load
 {
     @autoreleasepool {
-        [RKAttributedStringWriter registerWriter:self forAttribute:RKAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKImageAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
     }
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName
-                      value:(id)textAttachment
+                      value:(RKImageAttachment *)textAttachment
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 
@@ -52,15 +53,11 @@
                   resources:(RKResourcePool *)resources
 {
     if (textAttachment) {
-        #if !TARGET_OS_IPHONE
-            NSAssert([textAttachment isKindOfClass: NSTextAttachment.class], @"Expecting NSTextAttachment");
-        #else
-            NSAssert([textAttachment isKindOfClass: RKTextAttachment.class], @"Expecting NSTextAttachment");
-        #endif        
-        
+        NSAssert([textAttachment isKindOfClass: RKImageAttachment.class], @"Expecting NSTextAttachment");
+		
         // Convert images only, if allowed
 		if (conversionPolicy & RKConversionPolicyConvertAttachments) {
-			NSFileWrapper *fileWrapper = [textAttachment fileWrapper];
+			NSFileWrapper *fileWrapper = [textAttachment imageFile];
 			
 			if (conversionPolicy & RKConversionPolicyReferenceAttachments)
 				// Convert reference attachments for RTFD
