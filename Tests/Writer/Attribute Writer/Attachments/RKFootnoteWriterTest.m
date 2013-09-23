@@ -80,17 +80,21 @@
 - (void)testFootnotesAreCompatibleToManualReferenceTest
 {
     // Footnote with some inline formatting
-    NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];    
+    NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     [footnote addAttribute:RKFontAttributeName value:(__bridge_transfer id)CTFontCreateWithName((__bridge CFStringRef)@"Helvetica-Bold", 12, NULL) range:NSMakeRange(1,1)];
     
     // Text with an inline footnote
-    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]];
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc %@", RKAttachmentCharacter, [@"" stringByPaddingToLength:4000 withString:@"lorem " startingAtIndex:0]]];
     
     [original addAttribute:RKFootnoteAttributeName value:footnote range:NSMakeRange(1, 1)];
 	[original addAttribute:RKSuperscriptAttributeName value:@1 range:NSMakeRange(1, 1)];
 
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
+	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+	document.footnoteAreaDividerSpacingBefore = 60;
+	document.footnoteAreaDividerSpacingAfter = 60;
+	
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"footnote"];
@@ -103,13 +107,17 @@
     [endnote addAttribute:RKFontAttributeName value:(__bridge_transfer id)CTFontCreateWithName((__bridge CFStringRef)@"Helvetica-Bold", 12, NULL) range:NSMakeRange(1,1)];
     
     // Text with an inline footnote
-    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]];
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc %@", RKAttachmentCharacter, [@"" stringByPaddingToLength:4000 withString:@"lorem " startingAtIndex:0]]];
     
     [original addAttribute:RKEndnoteAttributeName value:endnote range:NSMakeRange(1, 1)];
 	[original addAttribute:RKSuperscriptAttributeName value:@1 range:NSMakeRange(1, 1)];
     
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
+	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+	document.footnoteAreaDividerSpacingBefore = 60;
+	document.footnoteAreaDividerSpacingAfter = 60;
+	
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"endnote"];

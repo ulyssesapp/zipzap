@@ -109,7 +109,7 @@
 
 /*!
  @abstract The horizontal position of the footnote divider
- @discussion Currently on NSLeftTextAlignment and NSRightTextAlignment are supported. PDF only.
+ @discussion Currently on NSLeftTextAlignment and NSRightTextAlignment are supported.
  */
 @property(nonatomic) NSTextAlignment footnoteAreaDividerPosition;
 
@@ -127,13 +127,11 @@
 
 /*!
  @abstract The distance from the content text to the divider of the footnotes area
- @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaDividerSpacingBefore;
 
 /*!
  @abstract The distance from the divider of the footnote are to its content
- @discussion PDF-only.
  */
 @property(nonatomic) CGFloat footnoteAreaDividerSpacingAfter;
 

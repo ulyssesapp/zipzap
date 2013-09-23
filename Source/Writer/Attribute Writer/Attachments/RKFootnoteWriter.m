@@ -58,6 +58,8 @@
                 
         // Remove attachment charracter
         [taggedString removeRange: range];
+		
+		resources.containsFootnotes = YES;
     }
 }
 
