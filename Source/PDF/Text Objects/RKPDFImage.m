@@ -8,6 +8,7 @@
 
 #import "RKPDFImage.h"
 
+#import "RKImageAttachment.h"
 #import "RKPDFRenderingContext.h"
 
 #import "NSAttributedString+PDFUtilities.h"
@@ -16,31 +17,29 @@
 
 @interface RKPDFImage ()
 {
-    NSFileWrapper *_fileWrapper;
+	// The size of the image as loaded from disk
     CGSize _imageSize;
+	
+	// The full size of the image (including its margins)
+	CGSize _fullSize;
+	
+	// The image loaded from disk
     CGImageRef _image;
 }
-
-/*!
- @abstract Calculates the actual size that can be used by the image inside a frame of a certain size
- */
-- (CGSize)scaledSizeForSize:(CGSize)frameSize;
 
 @end
 
 @implementation RKPDFImage
 
-@synthesize fileWrapper=_fileWrapper;
-
-- (id)initWithFileWrapper:(NSFileWrapper *)file context:(RKPDFRenderingContext *)context
+- (id)initWithImageAttachment:(RKImageAttachment *)attachment context:(RKPDFRenderingContext *)context
 {
     self = [self init];
     
     if (self) {
-        _fileWrapper = file;
+        _imageAttachment = attachment;
         
         #if !TARGET_OS_IPHONE
-            NSImage *image = [[NSImage alloc] initWithData:self.fileWrapper.regularFileContents];
+            NSImage *image = [[NSImage alloc] initWithData:_imageAttachment.imageFile.regularFileContents];
             if (!image || NSEqualSizes(image.size, NSZeroSize))
                 return nil;
         
@@ -61,8 +60,12 @@
             CFRetain(_image);
         #endif
 
-        if (_image)
+        if (_image) {
+			NSEdgeInsets margins = self.imageAttachment.margins;
+			
             _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
+			_fullSize = CGSizeMake(_imageSize.width + margins.left + margins.right, _imageSize.height + margins.top + margins.bottom);
+		}
     }
     
     return self;
@@ -76,22 +79,29 @@
 
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
 {
-    CGSize actualSize = [self scaledSizeForSize: rect.size];
-    
-    CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x, rect.origin.y, actualSize.width, actualSize.height), _image);
+    CGSize actualSize = [self scaledSizeForMaximumSize: rect.size];
+    NSEdgeInsets margins = self.imageAttachment.margins;
+	
+    CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x + margins.left, rect.origin.y + margins.bottom, actualSize.width, actualSize.height), _image);
 }
 
 - (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex frameSize:(CGSize)frameSize
 {
-    CGSize actualSize = [self scaledSizeForSize: frameSize];
-    
-    return [NSAttributedString spacingWithHeight:actualSize.height width:actualSize.width];
+    CGSize actualSize = [self scaledSizeForMaximumSize: frameSize];
+    NSEdgeInsets margins = self.imageAttachment.margins;
+	
+    return [NSAttributedString spacingWithHeight:(actualSize.height + margins.top + margins.bottom) width:(actualSize.width + margins.left + margins.right)];
 }
 
-- (CGSize)scaledSizeForSize:(CGSize)frameSize
+- (CGSize)scaledSizeForMaximumSize:(CGSize)frameSize
 {
     CGFloat scale = 1;
     
+	// Scale without margins
+	NSEdgeInsets margins = self.imageAttachment.margins;
+	frameSize.width = (frameSize.width - margins.left - margins.right) ?: 0;
+	frameSize.height = (frameSize.height - margins.top - margins.bottom) ?: 0;
+	
     if (_imageSize.width > frameSize.width)
         scale = frameSize.width / _imageSize.width;
     

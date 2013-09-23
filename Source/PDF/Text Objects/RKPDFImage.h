@@ -8,6 +8,8 @@
 
 #import "RKPDFTextObject.h"
 
+@class RKImageAttachment;
+
 /*!
  @abstract An image inside an attributed string used for PDF rendering
  */
@@ -17,11 +19,11 @@
  @abstract Initializes the image with a file wrapper
  @discussion Returns 'nil' if the image file is not valid
  */
-- (id)initWithFileWrapper:(NSFileWrapper *)file context:(RKPDFRenderingContext *)context;
+- (id)initWithImageAttachment:(RKImageAttachment *)image context:(RKPDFRenderingContext *)context;
 
 /*!
- @abstract The file wrapper associated with the object
+ @abstract The image attachment associated with the object.
  */
-@property (nonatomic, strong, readonly) NSFileWrapper *fileWrapper;
+@property (nonatomic, strong, readonly) RKImageAttachment *imageAttachment;
 
 @end

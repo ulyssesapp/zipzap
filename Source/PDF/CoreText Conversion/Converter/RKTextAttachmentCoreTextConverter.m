@@ -36,7 +36,7 @@
             return;
 
         // Create image
-        RKPDFImage *pdfImage = [[RKPDFImage alloc] initWithFileWrapper:attachment.imageFile context:context];
+        RKPDFImage *pdfImage = [[RKPDFImage alloc] initWithImageAttachment:attachment context:context];
 
         if (pdfImage) {
             [converted addTextObjectAttribute:pdfImage atIndex:fixedRange.location];

@@ -20,7 +20,6 @@ extern NSString *RKImageAttachmentAttributeName;
 
 /*!
  @abstract The NSFileWrapper containing the actual image file.
- @discussion Must reference a PNG file for RTF export.
  */
 @property(nonatomic, readonly) NSFileWrapper *imageFile;
 
