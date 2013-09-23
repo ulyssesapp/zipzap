@@ -33,7 +33,7 @@
 
 - (void)testPictureAttachmentsEmbedded
 {
-    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margins:NSEdgeInsetsMake(0, 0, 0, 0)];
+    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margins:NSEdgeInsetsMake(10, 20, 30, 40)];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", RKAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -52,7 +52,7 @@
     STAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", RKAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
     
     // Picture tag is properly inserted
-    NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\pngblip\n";
+    NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\piccropt-200\\piccropl-400\\piccropb-600\\piccropr-800\\picwgoal560\\pichgoal420\\pngblip\n";
     NSString *expectedSuffix = @"\n}--";
     
     STAssertTrue([flattened hasPrefix: expectedPrefix],
@@ -75,7 +75,7 @@
     STAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
-- (void)testPictureAttachmentsUnsupportedFileType
+- (void)testPictureAttachmentsNotNativeFileType
 {
     RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"jpg" margins:NSEdgeInsetsMake(0, 0, 0, 0)];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", RKAttachmentCharacter]];
@@ -96,7 +96,7 @@
     STAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", RKAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
     
     // Picture tag is properly inserted
-    NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\pngblip\n";
+    NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\piccropt0\\piccropl0\\piccropb0\\piccropr0\\picwgoal560\\pichgoal420\\pngblip\n";
     NSString *expectedSuffix = @"\n}--";
     
     STAssertTrue([flattened hasPrefix: expectedPrefix],
@@ -150,6 +150,27 @@
     
     STAssertEqualObjects(registeredFile.preferredFilename, @"0-image.png", @"Invalid file name");
     STAssertEqualObjects(registeredFile.regularFileContents, [[picture imageFile] regularFileContents], @"File contents differ");
+}
+
+- (void)testWordImagesAreCompatibleWithManualReferenceTest
+{
+	RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margins:NSEdgeInsetsMake(10, 20, 30, 40)];
+    
+    // Text with an inline footnote
+	NSString *loremString = [@"" stringByPaddingToLength:80 withString:@"lorem " startingAtIndex:0];
+    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\na%Cbc\n%@", loremString, RKAttachmentCharacter, loremString]];
+    
+	[original addAttribute:RKImageAttachmentAttributeName value:picture range:NSMakeRange(loremString.length + 2, 1)];
+	
+    // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.
+    RKDocument *document = [RKDocument documentWithAttributedString:original];
+	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+	document.footnoteAreaDividerSpacingBefore = 60;
+	document.footnoteAreaDividerSpacingAfter = 60;
+	
+    NSData *converted = [document wordRTF];
+    
+    [self assertRTF: converted withTestDocument: @"image-word"];
 }
 
 #if !TARGET_OS_IPHONE
