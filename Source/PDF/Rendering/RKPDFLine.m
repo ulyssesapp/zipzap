@@ -50,6 +50,8 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	[lineContent.mutableString replaceOccurrencesOfString:@"\f" withString:@"\n" options:0 range:NSMakeRange(0, lineContent.length)];
 	
 	// Instantiate all text objects
+	__block CGFloat maximumPreferredObjectHeight = 0;
+	
 	[lineContent enumerateAttribute:RKTextObjectAttributeName inRange:NSMakeRange(0, lineContent.length) options:0 usingBlock:^(RKPDFTextObject *textObject, NSRange range, BOOL *stop) {
 		if (!textObject)
 			return;
@@ -65,6 +67,9 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		// Record offset displacement from this position
 		instantiationExtension += (replacementString.length - range.length);
 		[lineContent addAttribute:RKPDFLineInstantiationOffsetAttributeName value:@(instantiationExtension) range:NSMakeRange(range.location, lineContent.length - range.location)];
+		
+		// Is there are preferred height?
+		maximumPreferredObjectHeight = MAX(maximumPreferredObjectHeight, [textObject preferredHeightForMaximumSize: CGSizeMake(width, maximumHeight)]);
 	}];
 	
 	// Estimate space for line wrap
@@ -145,7 +150,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	CGFloat leading;
 	
 	_size.width = CTLineGetTypographicBounds(ctLine, &ascent, &descent, &leading);
-	_ascent = ascent;
+	_ascent = MAX(ascent, maximumPreferredObjectHeight);
 	_descent = descent;
 	_leading = leading;
 	_size.height = _ascent + _descent + _leading;
@@ -203,8 +208,12 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		CTRunDraw(run, pdfContext, CFRangeMake(0, 0));
 
 		// Render, if text object
-		if (textObject)
-			[textObject renderUsingContext:self.context rect:boundingBox];
+		if (textObject) {
+			CGRect objectRect = boundingBox;
+			objectRect.origin.y = boundingBox.origin.y + _descent;
+			
+			[textObject renderUsingContext:self.context rect:objectRect];
+		}
 
 		// Apply post-renderer
 		if (textRenderer)

@@ -34,6 +34,12 @@ typedef enum : NSUInteger {
 @property (nonatomic) RKTextObjectEnumerationPolicy enumerationPolicy;
 
 /*!
+ @abstract (Abstract) The preferred height of an image depending on the maximum size of a frame.
+ @discussion The preferred height will be used to determine the height of a line depending on its text objects. Will be ignored and determined from the returned replacement string if 0 is returned. Defaults to 0.
+ */
+- (CGFloat)preferredHeightForMaximumSize:(CGSize)frameSize;
+
+/*!
  @abstract (Semi-Abstract) Re-Renders the actual object using a rendering context
  @discussion If not overriden, this method just does nothing.
  */

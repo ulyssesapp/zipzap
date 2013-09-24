@@ -79,7 +79,7 @@
 
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
 {
-    CGSize actualSize = [self scaledSizeForMaximumSize: rect.size];
+    CGSize actualSize = [self scaledSizeForMaximumSize: CGSizeMake(rect.size.width, _imageSize.height)];
     NSEdgeInsets margins = self.imageAttachment.margins;
 	
     CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x + margins.left, rect.origin.y + margins.bottom, actualSize.width, actualSize.height), _image);
@@ -90,7 +90,7 @@
     CGSize actualSize = [self scaledSizeForMaximumSize: frameSize];
     NSEdgeInsets margins = self.imageAttachment.margins;
 	
-    return [NSAttributedString spacingWithHeight:(actualSize.height + margins.top + margins.bottom) width:(actualSize.width + margins.left + margins.right)];
+    return [NSAttributedString stringWithSpacingForWidth:(actualSize.width + margins.left + margins.right)];
 }
 
 - (CGSize)scaledSizeForMaximumSize:(CGSize)frameSize
@@ -109,6 +109,11 @@
         scale = frameSize.height / _imageSize.height;
 
     return CGSizeMake(_imageSize.width * scale, _imageSize.height * scale);
+}
+
+- (CGFloat)preferredHeightForMaximumSize:(CGSize)frameSize
+{
+	return [self scaledSizeForMaximumSize: frameSize].height;
 }
 
 @end

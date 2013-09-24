@@ -10,6 +10,11 @@
 
 @implementation RKPDFTextObject
 
+- (CGFloat)preferredHeightForMaximumSize:(CGSize)frameSize
+{
+	return 0;
+}
+
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
 {
     return;

@@ -100,15 +100,15 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     return noteList;
 }
 
-+ (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width
++ (NSAttributedString *)stringWithSpacingForWidth:(CGFloat)width
 {
     static NSCharacterSet *spacingCharacterSet;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		spacingCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"\u202f"];
 	});
-    
-    CTFontRef baseFont = CTFontCreateWithName(CFSTR("Helvetica"), height, NULL);
+
+    CTFontRef baseFont = CTFontCreateWithName(CFSTR("Helvetica"), 12, NULL);
 
     NSDictionary *fontAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithFloat: width], kCTFontFixedAdvanceAttribute,
@@ -119,7 +119,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)fontAttributes);
     CTFontRef fixedFont = CTFontCreateCopyWithAttributes(baseFont, 0.0, NULL, fontDescriptor);
     
-    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@"\u202f" attributes:[NSDictionary dictionaryWithObjectsAndKeys: (__bridge id)fixedFont, (__bridge id)kCTFontAttributeName, nil]];
+    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@"\u202f" attributes:@{NSFontAttributeName: (__bridge id)fixedFont}];
     
     CFRelease(fontDescriptor);
     CFRelease(fixedFont);
