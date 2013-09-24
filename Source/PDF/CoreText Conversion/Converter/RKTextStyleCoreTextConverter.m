@@ -61,16 +61,13 @@
             font = RKGetDefaultFont();
 
 		// Adapt font to 2/3 of its original size
-		CGFloat fontSize = CTFontGetSize(font);
 		CGFloat adaptedFontSize = CTFontGetSize(font) * 0.66;
         CTFontRef adaptedFont = CTFontCreateCopyWithAttributes(font, adaptedFontSize, NULL, NULL);
 		
 		[converted addAttribute:RKFontAttributeName value:(__bridge id)adaptedFont range:range];
 
 		// Apply baseline offset for super / subscript
-		CGFloat ascenderPos = CTFontGetAscent(font);
-		CGFloat descenderPos = CTFontGetDescent(font);
-		CGFloat baselineOffset = (modeObject.integerValue > 0) ? (ascenderPos - (fontSize - adaptedFontSize)) : (-descenderPos);
+		CGFloat baselineOffset = (modeObject.integerValue > 0) ? (CTFontGetAscent(font) - CTFontGetAscent(adaptedFont)) : (- CTFontGetDescent(font));
 		
         [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: baselineOffset] range:range];
         [converted removeAttribute:RKSuperscriptAttributeName range:range];
