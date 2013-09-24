@@ -69,7 +69,6 @@
 		790AD8F915BAD3EB0011E40E /* RKPDFTextObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF86F15A5B4E400D98438 /* RKPDFTextObject.h */; };
 		790AD8FA15BAD3EB0011E40E /* RKPDFTextObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF87015A5B4E400D98438 /* RKPDFTextObject.m */; };
 		790AD8FB15BAD3EB0011E40E /* RKPDFImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF87B15A5B96200D98438 /* RKPDFImage.h */; };
-		790AD8FC15BAD3EB0011E40E /* RKPDFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF87C15A5B96200D98438 /* RKPDFImage.m */; };
 		790AD8FD15BAD3EB0011E40E /* RKPDFFootnote.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF88315A5B9D700D98438 /* RKPDFFootnote.h */; };
 		790AD8FE15BAD3EB0011E40E /* RKPDFFootnote.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF88415A5B9D700D98438 /* RKPDFFootnote.m */; };
 		790AD8FF15BAD3EB0011E40E /* RKPDFPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF88715A5BA5300D98438 /* RKPDFPlaceholder.h */; };
@@ -79,7 +78,6 @@
 		790AD90315BAD3EB0011E40E /* RKSection+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8CD15A5CCB700D98438 /* RKSection+PDFUtilities.h */; };
 		790AD90415BAD3EB0011E40E /* RKSection+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */; };
 		790AD90515BAD3EB0011E40E /* NSAttributedString+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */; };
-		790AD90615BAD3EB0011E40E /* NSAttributedString+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */; };
 		790AD90715BAD3EB0011E40E /* RKPDFWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF84415A5A72C00D98438 /* RKPDFWriter.h */; };
 		790AD90815BAD3EB0011E40E /* RKPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF84515A5A72C00D98438 /* RKPDFWriter.m */; };
 		790AD90C15BAD62E0011E40E /* RKRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD90A15BAD62E0011E40E /* RKRect.h */; };
@@ -2067,12 +2065,10 @@
 				790AD8F115BAD3EB0011E40E /* RKAnchorRenderer.m in Sources */,
 				790AD8F315BAD3EB0011E40E /* RKAnchorLinkRenderer.m in Sources */,
 				790AD8FA15BAD3EB0011E40E /* RKPDFTextObject.m in Sources */,
-				790AD8FC15BAD3EB0011E40E /* RKPDFImage.m in Sources */,
 				790AD8FE15BAD3EB0011E40E /* RKPDFFootnote.m in Sources */,
 				790AD90015BAD3EB0011E40E /* RKPDFPlaceholder.m in Sources */,
 				790AD90215BAD3EB0011E40E /* RKDocument+PDFUtilities.m in Sources */,
 				790AD90415BAD3EB0011E40E /* RKSection+PDFUtilities.m in Sources */,
-				790AD90615BAD3EB0011E40E /* NSAttributedString+PDFUtilities.m in Sources */,
 				790AD90815BAD3EB0011E40E /* RKPDFWriter.m in Sources */,
 				790AD90E15BADD520011E40E /* RKRect.m in Sources */,
 				790AD91115BADE4A0011E40E /* RKDocument+RKPersistence.m in Sources */,
