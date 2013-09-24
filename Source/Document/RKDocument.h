@@ -109,19 +109,19 @@
 
 /*!
  @abstract The horizontal position of the footnote divider
- @discussion Currently on NSLeftTextAlignment and NSRightTextAlignment are supported.
+ @discussion Currently only NSLeftTextAlignment and NSRightTextAlignment are supported.
  */
 @property(nonatomic) NSTextAlignment footnoteAreaDividerPosition;
 
 /*!
  @abstract The length of the footnote divider
- @discussion PDF-only.
+ @discussion Only available in PDF export.
  */
 @property(nonatomic) CGFloat footnoteAreaDividerLength;
 
 /*!
  @abstract The width of the footnote divider
- @discussion PDF-only.
+ @discussion Only available in PDF export.
  */
 @property(nonatomic) CGFloat footnoteAreaDividerWidth;
 
@@ -142,11 +142,12 @@
 
 /*!
  @abstract The inset of the anchor in the footnote area.
+ @discussion See -footnoteAreaAnchorAlignment to make the anchor left or right aligned.
  */
 @property(nonatomic) CGFloat footnoteAreaAnchorInset;
 
 /*!
- @abstract The inset of the footnote anchor
+ @abstract The inset of the content of the footnote area.
  */
 @property(nonatomic) CGFloat footnoteAreaContentInset;
 
