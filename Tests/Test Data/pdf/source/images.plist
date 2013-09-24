@@ -50,7 +50,7 @@
 						<key>attributeRange</key>
 						<dict>
 							<key>location</key>
-							<integer>77</integer>
+							<integer>79</integer>
 							<key>length</key>
 							<integer>1</integer>
 						</dict>
@@ -67,7 +67,7 @@
 						<key>attributeRange</key>
 						<dict>
 							<key>location</key>
-							<integer>78</integer>
+							<integer>76</integer>
 							<key>length</key>
 							<integer>1</integer>
 						</dict>
@@ -104,7 +104,7 @@
 						<key>attributeRange</key>
 						<dict>
 							<key>location</key>
-							<integer>170</integer>
+							<integer>171</integer>
 							<key>length</key>
 							<integer>1</integer>
 						</dict>
@@ -128,7 +128,7 @@
 				</array>
 				<key>string</key>
 				<string>Text   with image inline.
-The following image is cropped to the column width:   
+The following image is cropped to the column width :  
 This paragraph is a long paragraph that spans multiple lines and also contains an image   with nice beautiful and auto-scaled margins. Isn&apos;t this a great feature for everyone seriously using images? Margis are (20,60,50,40) for (l,t,r,b).</string>
 			</dict>
 		</dict>

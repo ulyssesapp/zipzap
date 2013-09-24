@@ -113,7 +113,8 @@
 
 - (CGFloat)preferredHeightForMaximumSize:(CGSize)frameSize
 {
-	return [self scaledSizeForMaximumSize: frameSize].height;
+	NSEdgeInsets margins = self.imageAttachment.margins;
+	return [self scaledSizeForMaximumSize: frameSize].height + margins.top + margins.bottom;
 }
 
 @end

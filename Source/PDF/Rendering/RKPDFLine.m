@@ -50,8 +50,6 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	[lineContent.mutableString replaceOccurrencesOfString:@"\f" withString:@"\n" options:0 range:NSMakeRange(0, lineContent.length)];
 	
 	// Instantiate all text objects
-	__block CGFloat maximumPreferredObjectHeight = 0;
-	
 	[lineContent enumerateAttribute:RKTextObjectAttributeName inRange:NSMakeRange(0, lineContent.length) options:0 usingBlock:^(RKPDFTextObject *textObject, NSRange range, BOOL *stop) {
 		if (!textObject)
 			return;
@@ -67,9 +65,6 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		// Record offset displacement from this position
 		instantiationExtension += (replacementString.length - range.length);
 		[lineContent addAttribute:RKPDFLineInstantiationOffsetAttributeName value:@(instantiationExtension) range:NSMakeRange(range.location, lineContent.length - range.location)];
-		
-		// Is there are preferred height?
-		maximumPreferredObjectHeight = MAX(maximumPreferredObjectHeight, [textObject preferredHeightForMaximumSize: CGSizeMake(width, maximumHeight)]);
 	}];
 	
 	// Estimate space for line wrap
@@ -135,6 +130,14 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 			NSLog(@"Cannot justify line for string: %@ on page %lu. Use unjustified variant.", lineContent.string, _context.currentPageNumber);
 	}
 
+	// Determine preferred line height
+	__block CGFloat maximumPreferredObjectHeight = 0;
+	
+	[lineContent enumerateAttribute:RKTextObjectAttributeName inRange:NSMakeRange(0, suggestedBreak) options:0 usingBlock:^(RKPDFTextObject *textObject, NSRange range, BOOL *stop) {
+		if (textObject)
+			maximumPreferredObjectHeight = MAX(maximumPreferredObjectHeight, [textObject preferredHeightForMaximumSize: CGSizeMake(width, maximumHeight)]);
+	}];
+	
 	// Get position displacement
 	NSInteger displacement = [[lineContent attribute:RKPDFLineInstantiationOffsetAttributeName atIndex:(suggestedBreak - 1) effectiveRange:NULL] unsignedIntegerValue];
 	
