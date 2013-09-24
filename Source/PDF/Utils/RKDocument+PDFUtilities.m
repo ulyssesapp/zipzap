@@ -116,14 +116,6 @@
 
 #pragma mark - Footnote handling
 
-- (CGRect)boundingBoxForFootnotesFromColumnRect:(CGRect)columnRect height:(CGFloat)height
-{
-    CGRect footnoteRect = columnRect;
-    footnoteRect.size.height = height - self.footnoteSpacingBefore;
-    
-    return footnoteRect;
-}
-
 - (void)drawFootnoteSeparatorForBoundingBox:(CGRect)boundingBox toContext:(RKPDFRenderingContext *)context
 {
     CGContextRef pdfContext = context.pdfContext;
@@ -133,12 +125,15 @@
     CGContextSaveGState(pdfContext);
     
     CGContextSetStrokeColorWithColor(pdfContext, black);
-    CGContextSetLineWidth(pdfContext, 1.0f);
+    CGContextSetLineWidth(pdfContext, self.footnoteAreaDividerWidth);
     
-    CGFloat separatorWidth = (boundingBox.size.width > 100) ? 100 : (boundingBox.size.width / 5);
-    
-    CGPoint startPoint = CGPointMake(boundingBox.origin.x, boundingBox.origin.y + boundingBox.size.height + 2);
-    CGPoint endPoint = CGPointMake(startPoint.x + separatorWidth, startPoint.y);
+    CGFloat separatorLength = (boundingBox.size.width < self.footnoteAreaDividerLength) ? boundingBox.size.width : self.footnoteAreaDividerLength;
+
+	CGFloat separatorX = (self.footnoteAreaDividerPosition == NSLeftTextAlignment) ? boundingBox.origin.x : NSMaxX(boundingBox) - self.footnoteAreaDividerLength;
+	CGFloat separatorY = boundingBox.origin.y + boundingBox.size.height + self.footnoteAreaDividerWidth + self.footnoteAreaDividerSpacingAfter;
+	
+    CGPoint startPoint = CGPointMake(separatorX, separatorY);
+    CGPoint endPoint = CGPointMake(startPoint.x + separatorLength, separatorY);
     
     CGContextStrokeLineSegments(pdfContext, (CGPoint[]){startPoint, endPoint}, 2);
     CGContextRestoreGState(pdfContext);

@@ -53,14 +53,23 @@
     
     // Emulate superscript / subscript
     [attributedString enumerateAttribute:RKSuperscriptAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
-        if (!modeObject)
+        if (!modeObject.floatValue)
             return;
 
         CTFontRef font = (__bridge CTFontRef)[attributedString attribute:NSFontAttributeName atIndex:range.location effectiveRange:NULL];
         if (!font)
             font = RKGetDefaultFont();
-        
-        [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: (CTFontGetSize(font) / 1.5f) * modeObject.floatValue] range:range];
+
+		// Adapt font to 2/3 of its original size
+		CGFloat adaptedFontSize = CTFontGetSize(font) * 0.66;
+        CTFontRef adaptedFont = CTFontCreateCopyWithAttributes(font, adaptedFontSize, NULL, NULL);
+		
+		[converted addAttribute:RKFontAttributeName value:(__bridge id)adaptedFont range:range];
+
+		// Apply baseline offset for super / subscript
+		CGFloat baselineOffset = (modeObject.integerValue > 0) ? (CTFontGetAscent(font) - CTFontGetAscent(adaptedFont)) : (- CTFontGetDescent(font));
+		
+        [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: baselineOffset] range:range];
         [converted removeAttribute:RKSuperscriptAttributeName range:range];
     }];
     

@@ -163,6 +163,7 @@ typedef enum : NSUInteger {
  */
 - (NSString *)newFootnoteAnchor;
 
+
 #pragma mark - List rendering
 
 /*!

@@ -53,8 +53,15 @@
 		_footerSpacingBefore = 10;
         _footerSpacingAfter = 36;
 		
-		_footnoteSpacingBefore = 15;
-	
+		_footnoteAreaAnchorAttributes = @{NSSuperscriptAttributeName: @1};
+		_footnoteAreaDividerSpacingBefore = 15;
+		_footnoteAreaDividerSpacingAfter = 15;
+		_footnoteAreaDividerLength = 100;
+		_footnoteAreaDividerWidth = 1;
+		_footnoteAreaAnchorInset = 0;
+		_footnoteAreaContentInset = 20;
+		_footnoteAreaAnchorAlignment = NSLeftTextAlignment;
+
 		_pageBinding = RKPageBindingLeft;
     }
     
@@ -86,6 +93,16 @@
     copy.sectionNumberingStyle = _sectionNumberingStyle;
 	copy.pageBinding = _pageBinding;
 	copy.twoSided = _twoSided;
+	copy.footnoteAreaAnchorAttributes = [_footnoteAreaAnchorAttributes copy];
+
+	copy.footnoteAreaDividerSpacingBefore = _footnoteAreaDividerSpacingBefore;
+	copy.footnoteAreaDividerSpacingAfter = _footnoteAreaDividerSpacingAfter;
+	copy.footnoteAreaDividerPosition = _footnoteAreaDividerPosition;
+	copy.footnoteAreaDividerLength = _footnoteAreaDividerLength;
+	copy.footnoteAreaDividerWidth = _footnoteAreaDividerWidth;
+	copy.footnoteAreaAnchorInset = _footnoteAreaAnchorInset;
+	copy.footnoteAreaContentInset = _footnoteAreaContentInset;
+	copy.footnoteAreaAnchorAlignment = _footnoteAreaAnchorAlignment;
     
     copy.paragraphStyles = [_paragraphStyles copy];
     copy.characterStyles = [_characterStyles copy];
@@ -123,6 +140,15 @@
             &&  (self.footerSpacingAfter == object.footerSpacingAfter)
 			&&  (self.pageBinding == object.pageBinding)
 			&&  (self.twoSided == object.twoSided)
+			&&  ([self.footnoteAreaAnchorAttributes isEqual: object.footnoteAreaAnchorAttributes])
+			&&  (self.footnoteAreaDividerSpacingBefore == object.footnoteAreaDividerSpacingBefore)
+			&&  (self.footnoteAreaDividerSpacingAfter == object.footnoteAreaDividerSpacingAfter)
+			&&  (self.footnoteAreaDividerPosition == object.footnoteAreaDividerPosition)
+			&&  (self.footnoteAreaDividerLength == object.footnoteAreaDividerLength)
+			&&  (self.footnoteAreaDividerWidth == object.footnoteAreaDividerWidth)
+			&&  (self.footnoteAreaAnchorInset == object.footnoteAreaAnchorInset)
+			&&  (self.footnoteAreaContentInset == object.footnoteAreaContentInset)
+			&&  (self.footnoteAreaAnchorAlignment == object.footnoteAreaAnchorAlignment)
     ;
 }
 

@@ -92,15 +92,30 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
 {
-    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n%@\n%@\n%@\n",
-            [RKHeaderWriter fontTableFromResourceManager:resources],
-            [RKHeaderWriter colorTableFromResourceManager:resources],
-            [RKHeaderWriter styleSheetsFromResourceManager:resources],
-            [RKHeaderWriter listTableFromResourceManager:resources],
-            [RKHeaderWriter listOverrideTableFromResourceManager:resources],
-            [RKHeaderWriter documentMetaDataFromDocument:document],
-            [RKHeaderWriter documentFormatFromDocument:document]
+    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n%@\n%@\n%@%@",
+            [RKHeaderWriter fontTableFromResourceManager: resources],
+            [RKHeaderWriter colorTableFromResourceManager: resources],
+            [RKHeaderWriter styleSheetsFromResourceManager: resources],
+            [RKHeaderWriter listTableFromResourceManager: resources],
+            [RKHeaderWriter listOverrideTableFromResourceManager: resources],
+            [RKHeaderWriter documentMetaDataFromDocument: document],
+            [RKHeaderWriter documentFormatFromDocument: document],
+			[RKHeaderWriter footnoteStyleFromResourceManager: resources]
            ];
+}
+
++ (NSString *)footnoteStyleFromResourceManager:(RKResourcePool *)resources
+{
+	if (!resources.containsFootnotes)
+		return @"\n";
+	
+	NSString *alignmentCommand = resources.document.footnoteAreaDividerPosition == NSLeftTextAlignment ? @"\\ql" : @"\\qr";
+	
+	// Setup line height and paragraph spacing after to control footnote area spacing
+	NSString *separatorStyle = [NSString stringWithFormat: @"\\pard %@ \\sa%li \\sl%li\\slmult0 ", alignmentCommand, (NSInteger)RKPointsToTwips(resources.document.footnoteAreaDividerSpacingAfter), (NSInteger)RKPointsToTwips(resources.document.footnoteAreaDividerSpacingBefore)];
+	
+	// 'ftnsep' etc. are RTF control words to style the separator area. 'chftnsep' will be replaced by the footnote separator line.
+	return [NSString stringWithFormat: @"\n{\\ftnsep %@ \\chftnsep \\par}{\\ftnsepc %@ \\chftnsepc \\par}{\\aftnsep %@ \\chftnsep \\par}{\\aftnsepc %@ \\chftnsepc \\par}\n", separatorStyle, separatorStyle, separatorStyle, separatorStyle];
 }
 
 + (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources

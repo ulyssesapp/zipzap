@@ -56,19 +56,13 @@ extern NSString *RKPDFAnchorLinkAttributeName;
  @abstract Creates a new attributed string from the current string by applying the footnote style using a footnote index.
  @discussion  The generated attributed string is in core text representation.
  */
-+ (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString;
++ (NSAttributedString *)attributedStringWithNote:(RKPDFFootnote *)note enumerationString:(NSString *)enumerationString context:(RKPDFRenderingContext *)context;
 
 /*!
  @abstract Creates an attributed string containing the given footnotes or endnotes. The generated attributed string is in core text representation.
  @discussion The notes are stored as an array of footnote descriptors (NSDictionary) containing the footnote content (RKFootnoteContentKey) as NSAttributedString in core text representation and the enumeration string of the footnote (RKFootenoteEnumerationStringKey).
  */
-+ (NSAttributedString *)noteListFromNotes:(NSArray *)notes;
-
-/*!
- @abstract Creates a styled footnote enumerator using a string. The generated attributed string is in core text representation.
- @discussion The styling of the enumerator is based on the given font.
- */
-+ (NSAttributedString *)footnoteEnumeratorFromString:(NSString *)enumeratorString usingFont:(CTFontRef)font enumeratorFactor:(CGFloat)enumeratorFactor attributes:(NSDictionary *)attributes;
++ (NSAttributedString *)noteListFromNotes:(NSArray *)notes context:(RKPDFRenderingContext *)context;
 
 /*!
  @abstract Provides an attributed string with a fixed-width and fixed-height spacing

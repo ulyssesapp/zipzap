@@ -36,11 +36,6 @@
 - (CGRect)boundingBoxForColumn:(NSUInteger)column pageNumber:(NSUInteger)pageNumber section:(RKSection *)section withHeader:(CGRect)header footer:(CGRect)footer;
 
 /*!
- @abstract Provides a bounding box for footnotes based on the bounding box of a certain column limited by a given height
- */
-- (CGRect)boundingBoxForFootnotesFromColumnRect:(CGRect)columnRect height:(CGFloat)height;
-
-/*!
  @abstract Provides a bounding box for the header of a section page
  */
 - (CGRect)boundingBoxForPageHeaderOfSection:(RKSection *)section pageNumber:(NSUInteger)pageNumber;

@@ -55,6 +55,13 @@
 
 
 /*!
+ @abstract Specifies that the exported document will contain footnotes or endnotes.
+ */
+@property (nonatomic, readwrite) BOOL containsFootnotes;
+
+
+
+/*!
  @abstract Returns the collected font families sorted by their indices
  @discussion Elements are NSString
  */
