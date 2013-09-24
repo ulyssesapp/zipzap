@@ -128,8 +128,8 @@
     CGContextSetLineWidth(pdfContext, self.footnoteAreaDividerWidth);
     
     CGFloat separatorLength = (boundingBox.size.width < self.footnoteAreaDividerLength) ? boundingBox.size.width : self.footnoteAreaDividerLength;
-    
-	CGFloat separatorX = (self.footnoteAreaDividerPosition == NSLeftTextAlignment) ? boundingBox.origin.x : boundingBox.origin.x + boundingBox.size.width - self.footnoteAreaDividerLength;
+
+	CGFloat separatorX = (self.footnoteAreaDividerPosition == NSLeftTextAlignment) ? boundingBox.origin.x : NSMaxX(boundingBox) - self.footnoteAreaDividerLength;
 	CGFloat separatorY = boundingBox.origin.y + boundingBox.size.height + self.footnoteAreaDividerWidth + self.footnoteAreaDividerSpacingAfter;
 	
     CGPoint startPoint = CGPointMake(separatorX, separatorY);

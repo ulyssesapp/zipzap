@@ -21,6 +21,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -38,6 +40,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -55,6 +59,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -72,6 +78,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -89,6 +97,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -123,6 +133,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -157,6 +169,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -191,6 +205,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
@@ -208,6 +224,8 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>NSSuperScript</key>
+							<string>superscript</string>
 							<key>RKFootnote</key>
 							<dict>
 								<key>string</key>
