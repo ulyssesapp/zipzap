@@ -38,9 +38,9 @@ NSString *RKImageAttachmentMarginRightKey				= @"marginRight";
     if (fileIndexObject)
         file = [context fileWrapperForIndex: [fileIndexObject unsignedIntegerValue]];
     
-	NSEdgeInsets margins = NSEdgeInsetsMake([propertyList[RKImageAttachmentMarginTopKey] doubleValue], [propertyList[RKImageAttachmentMarginLeftKey] doubleValue], [propertyList[RKImageAttachmentMarginBottomKey] doubleValue], [propertyList[RKImageAttachmentMarginRightKey] doubleValue]);
+	NSEdgeInsets margin = NSEdgeInsetsMake([propertyList[RKImageAttachmentMarginTopKey] doubleValue], [propertyList[RKImageAttachmentMarginLeftKey] doubleValue], [propertyList[RKImageAttachmentMarginBottomKey] doubleValue], [propertyList[RKImageAttachmentMarginRightKey] doubleValue]);
 	
-    return [[RKImageAttachment alloc] initWithFile:file margins:margins];
+    return [[RKImageAttachment alloc] initWithFile:file margin:margin];
 }
 
 + (id)propertyListForAttribute:(NSString *)attributeName value:(RKImageAttachment *)imageAttachment context:(RKPersistenceContext *)context
@@ -50,10 +50,10 @@ NSString *RKImageAttachmentMarginRightKey				= @"marginRight";
     if (imageAttachment.imageFile)
         propertyList[RKImageAttachmentFileIndexPersistenceKey] = [NSNumber numberWithUnsignedInteger: [context indexForFileWrapper: imageAttachment.imageFile]];
 	
-	propertyList[RKImageAttachmentMarginTopKey] = @(imageAttachment.margins.top);
-	propertyList[RKImageAttachmentMarginLeftKey] = @(imageAttachment.margins.left);
-	propertyList[RKImageAttachmentMarginBottomKey] = @(imageAttachment.margins.bottom);
-	propertyList[RKImageAttachmentMarginRightKey] = @(imageAttachment.margins.right);
+	propertyList[RKImageAttachmentMarginTopKey] = @(imageAttachment.margin.top);
+	propertyList[RKImageAttachmentMarginLeftKey] = @(imageAttachment.margin.left);
+	propertyList[RKImageAttachmentMarginBottomKey] = @(imageAttachment.margin.bottom);
+	propertyList[RKImageAttachmentMarginRightKey] = @(imageAttachment.margin.right);
 	
 	return propertyList;
 }

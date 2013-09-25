@@ -20,7 +20,7 @@
 	// The size of the image as loaded from disk
     CGSize _imageSize;
 	
-	// The full size of the image (including its margins)
+	// The full size of the image (including its margin)
 	CGSize _fullSize;
 	
 	// The image loaded from disk
@@ -61,10 +61,10 @@
         #endif
 
         if (_image) {
-			NSEdgeInsets margins = self.imageAttachment.margins;
+			NSEdgeInsets margin = self.imageAttachment.margin;
 			
             _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
-			_fullSize = CGSizeMake(_imageSize.width + margins.left + margins.right, _imageSize.height + margins.top + margins.bottom);
+			_fullSize = CGSizeMake(_imageSize.width + margin.left + margin.right, _imageSize.height + margin.top + margin.bottom);
 		}
     }
     
@@ -80,27 +80,27 @@
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
 {
     CGSize actualSize = [self scaledSizeForMaximumSize: CGSizeMake(rect.size.width, _imageSize.height)];
-    NSEdgeInsets margins = self.imageAttachment.margins;
+    NSEdgeInsets margin = self.imageAttachment.margin;
 	
-    CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x + margins.left, rect.origin.y + margins.bottom, actualSize.width, actualSize.height), _image);
+    CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x + margin.left, rect.origin.y + margin.bottom, actualSize.width, actualSize.height), _image);
 }
 
 - (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex frameSize:(CGSize)frameSize
 {
     CGSize actualSize = [self scaledSizeForMaximumSize: frameSize];
-    NSEdgeInsets margins = self.imageAttachment.margins;
+    NSEdgeInsets margin = self.imageAttachment.margin;
 	
-    return [NSAttributedString stringWithSpacingForWidth:(actualSize.width + margins.left + margins.right)];
+    return [NSAttributedString stringWithSpacingForWidth:(actualSize.width + margin.left + margin.right)];
 }
 
 - (CGSize)scaledSizeForMaximumSize:(CGSize)frameSize
 {
     CGFloat scale = 1;
     
-	// Scale without margins
-	NSEdgeInsets margins = self.imageAttachment.margins;
-	frameSize.width = (frameSize.width - margins.left - margins.right) ?: 0;
-	frameSize.height = (frameSize.height - margins.top - margins.bottom) ?: 0;
+	// Scale without margin
+	NSEdgeInsets margin = self.imageAttachment.margin;
+	frameSize.width = (frameSize.width - margin.left - margin.right) ?: 0;
+	frameSize.height = (frameSize.height - margin.top - margin.bottom) ?: 0;
 	
     if (_imageSize.width > frameSize.width)
         scale = frameSize.width / _imageSize.width;
@@ -113,8 +113,8 @@
 
 - (CGFloat)preferredHeightForMaximumSize:(CGSize)frameSize
 {
-	NSEdgeInsets margins = self.imageAttachment.margins;
-	return [self scaledSizeForMaximumSize: frameSize].height + margins.top + margins.bottom;
+	NSEdgeInsets margin = self.imageAttachment.margin;
+	return [self scaledSizeForMaximumSize: frameSize].height + margin.top + margin.bottom;
 }
 
 @end

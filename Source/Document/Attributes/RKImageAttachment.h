@@ -14,9 +14,9 @@ extern NSString *RKImageAttachmentAttributeName;
 @interface RKImageAttachment : NSObject
 
 /*!
- @abstract Initializes an init attachment with the given file and margins.
+ @abstract Initializes an init attachment with the given file and margin.
  */
-- (id)initWithFile:(NSFileWrapper *)file margins:(NSEdgeInsets)margins;
+- (id)initWithFile:(NSFileWrapper *)file margin:(NSEdgeInsets)margin;
 
 /*!
  @abstract The NSFileWrapper containing the actual image file.
@@ -24,9 +24,9 @@ extern NSString *RKImageAttachmentAttributeName;
 @property(nonatomic, readonly) NSFileWrapper *imageFile;
 
 /*!
- @abstract The margins of the image.
+ @abstract The margin of the image.
  @discussion Defaults to 0. Will be ignored on RTF export.
  */
-@property(nonatomic, readonly) NSEdgeInsets margins;
+@property(nonatomic, readonly) NSEdgeInsets margin;
 
 @end

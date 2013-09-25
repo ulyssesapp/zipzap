@@ -26,9 +26,9 @@
     return wrapper;
 }
 
-- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margins:(NSEdgeInsets)margins
+- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margin:(NSEdgeInsets)margin
 {
-	return [[RKImageAttachment alloc] initWithFile:[self testFileWithName:name withExtension:extension] margins:margins];
+	return [[RKImageAttachment alloc] initWithFile:[self testFileWithName:name withExtension:extension] margin:margin];
 }
 
 @end

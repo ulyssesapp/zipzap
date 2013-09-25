@@ -79,7 +79,7 @@
         return;
     
     // Add prefix with crop values (negative values mean: margin; height/width required for cropping)
-	NSString *imageTag = [NSString stringWithFormat: @"{\\pict\\picscalex100\\picscaley100\\piccropt%li\\piccropl%li\\piccropb%li\\piccropr%li\\picwgoal%lu\\pichgoal%lu\\pngblip\n", (NSInteger)RKPointsToTwips(-attachment.margins.top), (NSInteger)RKPointsToTwips(-attachment.margins.left), (NSInteger)RKPointsToTwips(-attachment.margins.bottom), (NSInteger)RKPointsToTwips(-attachment.margins.right), (NSUInteger)RKPointsToTwips(imageSize.width), (NSUInteger)RKPointsToTwips(imageSize.height)];
+	NSString *imageTag = [NSString stringWithFormat: @"{\\pict\\picscalex100\\picscaley100\\piccropt%li\\piccropl%li\\piccropb%li\\piccropr%li\\picwgoal%lu\\pichgoal%lu\\pngblip\n", (NSInteger)RKPointsToTwips(-attachment.margin.top), (NSInteger)RKPointsToTwips(-attachment.margin.left), (NSInteger)RKPointsToTwips(-attachment.margin.bottom), (NSInteger)RKPointsToTwips(-attachment.margin.right), (NSUInteger)RKPointsToTwips(imageSize.width), (NSUInteger)RKPointsToTwips(imageSize.height)];
     [taggedString registerTag:imageTag forPosition:range.location];
     
     // Add content

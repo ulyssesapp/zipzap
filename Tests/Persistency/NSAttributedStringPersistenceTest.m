@@ -155,7 +155,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
 
-    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margins:NSEdgeInsetsMake(1, 2, 3, 4)];
+    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:NSEdgeInsetsMake(1, 2, 3, 4)];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
     [original addAttribute:RKImageAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];
@@ -173,7 +173,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     
     STAssertEqualObjects(reparsedFile.filename, file.filename, @"Filenames should be equal");
     STAssertEqualObjects(reparsedFile.regularFileContents, file.regularFileContents, @"File contents should be equal");
-	STAssertEquals(reparsedAttachment.margins, attachment.margins, @"Margins should be equal.");
+	STAssertEquals(reparsedAttachment.margin, attachment.margin, @"Margins should be equal.");
 }
 
 - (void)testLinks
@@ -225,7 +225,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
     
-    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margins:NSEdgeInsetsMake(1, 2, 3, 4)];
+    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:NSEdgeInsetsMake(1, 2, 3, 4)];
     
     NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
     [footnote addAttribute:RKImageAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];
@@ -248,7 +248,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     
     STAssertEqualObjects(reparsedFile.filename, file.filename, @"Filenames should be equal");
     STAssertEqualObjects(reparsedFile.regularFileContents, file.regularFileContents, @"File contents should be equal");
-	STAssertEquals(reparsedAttachment.margins, attachment.margins, @"Margins should be equal.");
+	STAssertEquals(reparsedAttachment.margin, attachment.margin, @"Margins should be equal.");
 }
 
 - (void)testListStyles

@@ -18,6 +18,6 @@
 /*!
  @abstract Reads a test file
  */
-- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margins:(NSEdgeInsets)margins;
+- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margin:(NSEdgeInsets)margin;
 
 @end
