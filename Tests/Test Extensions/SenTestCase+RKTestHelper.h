@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+@class RKImageAttachment;
+
 @interface SenTestCase (RKTestHelper)
 
 /*!
@@ -16,6 +18,6 @@
 /*!
  @abstract Reads a test file
  */
-- (id)textAttachmentWithName:(NSString *)name withExtension:(NSString *)extension;
+- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margin:(NSEdgeInsets)margin;
 
 @end

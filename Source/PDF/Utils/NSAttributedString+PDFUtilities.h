@@ -65,10 +65,10 @@ extern NSString *RKPDFAnchorLinkAttributeName;
 + (NSAttributedString *)noteListFromNotes:(NSArray *)notes context:(RKPDFRenderingContext *)context;
 
 /*!
- @abstract Provides an attributed string with a fixed-width and fixed-height spacing
+ @abstract Provides an attributed string with a fixed-width spacing
  @discussion  The generated attributed string is in core text representation.
  */
-+ (NSAttributedString *)spacingWithHeight:(CGFloat)height width:(CGFloat)width;
++ (NSAttributedString *)stringWithSpacingForWidth:(CGFloat)width;
 
 @end
 

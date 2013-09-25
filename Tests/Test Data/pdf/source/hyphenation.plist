@@ -37,7 +37,7 @@
 						</dict>
 						<key>attributeValues</key>
 						<dict>
-							<key>NSAttachment</key>
+							<key>RKImageAttachment</key>
 							<dict>
 								<key>fileIdentifier</key>
 								<integer>0</integer>

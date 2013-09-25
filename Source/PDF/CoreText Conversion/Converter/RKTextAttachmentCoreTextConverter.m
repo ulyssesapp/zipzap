@@ -9,10 +9,10 @@
 #import "RKTextAttachmentCoreTextConverter.h"
 
 #import "RKPDFImage.h"
+#import "RKImageAttachment.h"
 
 #import "NSAttributedString+PDFCoreTextConversion.h"
 #import "NSAttributedString+PDFUtilities.h"
-#import "RKTextAttachment.h"
 
 @implementation RKTextAttachmentCoreTextConverter
 
@@ -29,14 +29,14 @@
     
     __block NSUInteger offset = 0;
     
-    [attributedString enumerateAttribute:RKAttachmentAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(RKTextAttachment *attachment, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:RKImageAttachmentAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(RKImageAttachment *attachment, NSRange range, BOOL *stop) {
         NSRange fixedRange = NSMakeRange(range.location + offset, range.length);
 
         if (!attachment)
             return;
 
         // Create image
-        RKPDFImage *pdfImage = [[RKPDFImage alloc] initWithFileWrapper:attachment.fileWrapper context:context];
+        RKPDFImage *pdfImage = [[RKPDFImage alloc] initWithImageAttachment:attachment context:context];
 
         if (pdfImage) {
             [converted addTextObjectAttribute:pdfImage atIndex:fixedRange.location];

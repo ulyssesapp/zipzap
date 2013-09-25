@@ -130,6 +130,14 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 			NSLog(@"Cannot justify line for string: %@ on page %lu. Use unjustified variant.", lineContent.string, _context.currentPageNumber);
 	}
 
+	// Determine preferred line height
+	__block CGFloat maximumPreferredObjectHeight = 0;
+	
+	[lineContent enumerateAttribute:RKTextObjectAttributeName inRange:NSMakeRange(0, suggestedBreak) options:0 usingBlock:^(RKPDFTextObject *textObject, NSRange range, BOOL *stop) {
+		if (textObject)
+			maximumPreferredObjectHeight = MAX(maximumPreferredObjectHeight, [textObject preferredHeightForMaximumSize: CGSizeMake(width, maximumHeight)]);
+	}];
+	
 	// Get position displacement
 	NSInteger displacement = [[lineContent attribute:RKPDFLineInstantiationOffsetAttributeName atIndex:(suggestedBreak - 1) effectiveRange:NULL] unsignedIntegerValue];
 	
@@ -145,7 +153,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	CGFloat leading;
 	
 	_size.width = CTLineGetTypographicBounds(ctLine, &ascent, &descent, &leading);
-	_ascent = ascent;
+	_ascent = MAX(ascent, maximumPreferredObjectHeight);
 	_descent = descent;
 	_leading = leading;
 	_size.height = _ascent + _descent + _leading;
@@ -203,8 +211,12 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		CTRunDraw(run, pdfContext, CFRangeMake(0, 0));
 
 		// Render, if text object
-		if (textObject)
-			[textObject renderUsingContext:self.context rect:boundingBox];
+		if (textObject) {
+			CGRect objectRect = boundingBox;
+			objectRect.origin.y = boundingBox.origin.y + _descent;
+			
+			[textObject renderUsingContext:self.context rect:objectRect];
+		}
 
 		// Apply post-renderer
 		if (textRenderer)

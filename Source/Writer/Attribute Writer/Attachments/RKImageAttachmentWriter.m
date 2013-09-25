@@ -1,5 +1,5 @@
 //
-//  RKTextAttachmentWriter.m
+//  RKImageAttachmentWriter.m
 //  RTFKit
 //
 //  Created by Friedrich Gräter on 27.01.12.
@@ -7,44 +7,24 @@
 //
 
 #import "RKAttributedStringWriter.h"
-#import "RKTextAttachmentWriter.h"
+#import "RKImageAttachmentWriter.h"
+#import "RKImageAttachment.h"
 #import "RKTaggedString.h"
 #import "RKResourcePool.h"
 #import "RKWriter.h"
 #import "RKConversion.h"
 
-@interface RKTextAttachmentWriter ()
-/*!
- @abstract Generates the tags for an embedded picture file
- @discussion If the image file is not a PNG, it will be converted if possible
- */
-+ (void)addTagsForEmbeddedFile:(NSFileWrapper *)fileWrapper
-                toTaggedString:(RKTaggedString *)taggedString 
-                       inRange:(NSRange)range
-                     resources:(RKResourcePool *)resources;
-
-/*!
- @abstract Generates the tags for an referenced file
- @discussion The reference file will not be converted. It is possible to reference arbitrary files.
- */
-+ (void)addTagsForReferencedFile:(NSFileWrapper *)fileWrapper
-                  toTaggedString:(RKTaggedString *)taggedString 
-                         inRange:(NSRange)range
-                       resources:(RKResourcePool *)resources;
-
-@end
-
-@implementation RKTextAttachmentWriter
+@implementation RKImageAttachmentWriter
 
 + (void)load
 {
     @autoreleasepool {
-        [RKAttributedStringWriter registerWriter:self forAttribute:RKAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKImageAttachmentAttributeName priority:RKAttributedStringWriterPriorityTextAttachmentLevel];
     }
 }
 
 + (void)addTagsForAttribute:(NSString *)attributeName
-                      value:(id)textAttachment
+                      value:(RKImageAttachment *)textAttachment
              effectiveRange:(NSRange)range 
                    toString:(RKTaggedString *)taggedString 
              originalString:(NSAttributedString *)attributedString 
@@ -52,22 +32,18 @@
                   resources:(RKResourcePool *)resources
 {
     if (textAttachment) {
-        #if !TARGET_OS_IPHONE
-            NSAssert([textAttachment isKindOfClass: NSTextAttachment.class], @"Expecting NSTextAttachment");
-        #else
-            NSAssert([textAttachment isKindOfClass: RKTextAttachment.class], @"Expecting NSTextAttachment");
-        #endif        
-        
+        NSAssert([textAttachment isKindOfClass: RKImageAttachment.class], @"Expecting NSTextAttachment");
+		
         // Convert images only, if allowed
 		if (conversionPolicy & RKConversionPolicyConvertAttachments) {
-			NSFileWrapper *fileWrapper = [textAttachment fileWrapper];
+			NSFileWrapper *fileWrapper = [textAttachment imageFile];
 			
 			if (conversionPolicy & RKConversionPolicyReferenceAttachments)
 				// Convert reference attachments for RTFD
 				 [self addTagsForReferencedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
 			else
 				// Create inline attachments for Word-RTF
-				[self addTagsForEmbeddedFile:fileWrapper toTaggedString:taggedString inRange:range resources:resources];
+				[self addTagsForEmbeddedAttachment:textAttachment toTaggedString:taggedString inRange:range resources:resources];
 		}
         
         // Select attachment charracter for removal in any case
@@ -75,31 +51,36 @@
     }
 }
 
-+ (void)addTagsForEmbeddedFile:(NSFileWrapper *)fileWrapper
-                toTaggedString:(RKTaggedString *)taggedString 
-                       inRange:(NSRange)range
-                     resources:(RKResourcePool *)resources
++ (void)addTagsForEmbeddedAttachment:(RKImageAttachment *)attachment
+					  toTaggedString:(RKTaggedString *)taggedString
+							 inRange:(NSRange)range
+						   resources:(RKResourcePool *)resources
 {
     // Convert content only, if it is a regular file
-    if (!fileWrapper.isRegularFile)
+    if (!attachment.imageFile.isRegularFile)
         return;
 
     // Encode image
-    NSData *originalImage = [fileWrapper regularFileContents];
+    NSData *originalImage = [attachment.imageFile regularFileContents];
+	CGSize imageSize = NSMakeSize(0, 0);
     
 #if !TARGET_OS_IPHONE
-    NSData *convertedImage = [[NSBitmapImageRep imageRepWithData: originalImage] representationUsingType:NSPNGFileType properties:nil ];
+	NSBitmapImageRep *representation = [NSBitmapImageRep imageRepWithData: originalImage];
+    NSData *convertedImage = [representation representationUsingType:NSPNGFileType properties:nil ];
+	imageSize = representation.size;
 #else
     UIImage *image = [UIImage imageWithData: originalImage];
     NSData *convertedImage = UIImagePNGRepresentation(image);
+	imageSize = image.size;
 #endif
     
     NSString *encodedImage = [convertedImage stringWithRTFHexEncoding];
     if (!encodedImage)
         return;
     
-    // Add prefix
-    [taggedString registerTag:@"{\\pict\\picscalex100\\picscaley100\\pngblip\n" forPosition:range.location];
+    // Add prefix with crop values (negative values mean: margin; height/width required for cropping)
+	NSString *imageTag = [NSString stringWithFormat: @"{\\pict\\picscalex100\\picscaley100\\piccropt%li\\piccropl%li\\piccropb%li\\piccropr%li\\picwgoal%lu\\pichgoal%lu\\pngblip\n", (NSInteger)RKPointsToTwips(-attachment.margin.top), (NSInteger)RKPointsToTwips(-attachment.margin.left), (NSInteger)RKPointsToTwips(-attachment.margin.bottom), (NSInteger)RKPointsToTwips(-attachment.margin.right), (NSUInteger)RKPointsToTwips(imageSize.width), (NSUInteger)RKPointsToTwips(imageSize.height)];
+    [taggedString registerTag:imageTag forPosition:range.location];
     
     // Add content
     [taggedString registerTag:encodedImage forPosition:range.location];
