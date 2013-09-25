@@ -68,34 +68,34 @@
 
 #pragma mark - Fonts
 
-- (NSString *)postscriptNameWithoutBoldAndItalicTraits:(CTFontRef)font
+- (NSString *)postscriptNameWithoutBoldAndItalicTraits:(CTFontRef)baseFont
 {
     // Generate a font name without Italic and Bold traits
     NSString *postscriptName;
     CTFontSymbolicTraits traitMask = 0;
 
     // Is it a font with bold traits? If yes, remove them
-    if (CTFontGetSymbolicTraits(font) & kCTFontBoldTrait) {
+    if (CTFontGetSymbolicTraits(baseFont) & kCTFontBoldTrait) {
         traitMask |= kCTFontBoldTrait;
     }
 
-    if (CTFontGetSymbolicTraits(font) & kCTFontItalicTrait) {
+    if (CTFontGetSymbolicTraits(baseFont) & kCTFontItalicTrait) {
         traitMask |= kCTFontItalicTrait;
     }
 
     if (traitMask) {
         // We have to remove traits
-        CTFontRef traitlessFont = CTFontCreateCopyWithSymbolicTraits(font, 0, NULL, 0, traitMask);
+        CTFontRef traitlessFont = CTFontCreateCopyWithSymbolicTraits(baseFont, 0, NULL, 0, traitMask);
+		if (traitlessFont) {
+			postscriptName = (__bridge_transfer NSString *)CTFontCopyPostScriptName(traitlessFont);
+			CFRelease(traitlessFont);
+			
+			return postscriptName;
+		}
+	}
 
-        postscriptName = (__bridge_transfer NSString *)CTFontCopyPostScriptName(traitlessFont);
-        CFRelease(traitlessFont);
-    }
-    else {
-        // Not traits to remove, just use the plain postscript name
-        postscriptName = (__bridge_transfer NSString *)CTFontCopyPostScriptName(font);
-    }
-    
-    return postscriptName;
+	// Not traits to remove, just use the plain postscript name
+    return (__bridge_transfer NSString *)CTFontCopyPostScriptName(baseFont);
 }
 
 - (NSUInteger)indexOfFont:(CTFontRef)font
