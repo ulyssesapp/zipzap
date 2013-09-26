@@ -158,7 +158,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	_leading = leading;
 	_size.height = _ascent + _descent + _leading;
 	
-	NSAssert(NSMaxRange(_visibleRange) <= attributedString.length, @"Invalid visible line range calculated: (%lu, %lu) from suggested line break: %lu, displacement: %lu for string: %@", _visibleRange.location, _visibleRange.length, suggestedBreak, displacement, attributedString);
+	NSAssert((_visibleRange.length < attributedString.length) && (NSMaxRange(_visibleRange) < attributedString.length), @"Invalid visible line range calculated: (%lu, %lu) from suggested line break: %lu, displacement: %lu for string: %@", _visibleRange.location, _visibleRange.length, suggestedBreak, displacement, attributedString);
 }
 
 + (NSUInteger)suggestLineBreakForAttributedString:(NSAttributedString *)attributedString usingWidth:(CGFloat)width
