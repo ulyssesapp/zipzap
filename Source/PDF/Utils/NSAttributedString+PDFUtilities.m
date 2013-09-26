@@ -100,7 +100,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     return noteList;
 }
 
-+ (NSAttributedString *)stringWithSpacingForWidth:(CGFloat)width
++ (NSAttributedString *)stringWithSpacingForWidth:(CGFloat)width attributes:(NSDictionary *)attributes
 {
     static NSCharacterSet *spacingCharacterSet;
 	static dispatch_once_t onceToken;
@@ -119,7 +119,10 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
     CTFontDescriptorRef fontDescriptor = CTFontDescriptorCreateWithAttributes((__bridge CFDictionaryRef)fontAttributes);
     CTFontRef fixedFont = CTFontCreateCopyWithAttributes(baseFont, 0.0, NULL, fontDescriptor);
     
-    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@"\u202f" attributes:@{NSFontAttributeName: (__bridge id)fixedFont}];
+	NSMutableDictionary *spacerAttributes = [attributes mutableCopy];
+	spacerAttributes[NSFontAttributeName] = (__bridge id)fixedFont;
+	
+    NSAttributedString *spacer = [[NSAttributedString alloc] initWithString:@"\u202f" attributes:spacerAttributes];
     
     CFRelease(fontDescriptor);
     CFRelease(fixedFont);

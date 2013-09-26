@@ -85,12 +85,12 @@
     CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x + margin.left, rect.origin.y + margin.bottom, actualSize.width, actualSize.height), _image);
 }
 
-- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)atIndex frameSize:(CGSize)frameSize
+- (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)index frameSize:(CGSize)frameSize
 {
     CGSize actualSize = [self scaledSizeForMaximumSize: frameSize];
     NSEdgeInsets margin = self.imageAttachment.margin;
 	
-    return [NSAttributedString stringWithSpacingForWidth:(actualSize.width + margin.left + margin.right)];
+    return [NSAttributedString stringWithSpacingForWidth:(actualSize.width + margin.left + margin.right) attributes:[attributedString attributesAtIndex:index effectiveRange:NULL]];
 }
 
 - (CGSize)scaledSizeForMaximumSize:(CGSize)frameSize

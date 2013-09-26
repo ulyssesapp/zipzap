@@ -68,7 +68,7 @@ extern NSString *RKPDFAnchorLinkAttributeName;
  @abstract Provides an attributed string with a fixed-width spacing
  @discussion  The generated attributed string is in core text representation.
  */
-+ (NSAttributedString *)stringWithSpacingForWidth:(CGFloat)width;
++ (NSAttributedString *)stringWithSpacingForWidth:(CGFloat)width attributes:(NSDictionary *)attributes;
 
 @end
 
