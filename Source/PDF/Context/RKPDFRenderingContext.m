@@ -185,6 +185,9 @@
     
     // Start new page
     CGRect mediaBox = _document.pdfMediaBox;
+	NSParameterAssert(mediaBox.size.height > 1);
+	NSParameterAssert(mediaBox.size.width > 1);
+	
     NSDictionary *pageDictionary = @{(__bridge id)kCGPDFContextMediaBox: [NSData dataWithBytes:(uint8_t *)&mediaBox length:sizeof(CGRect)]};
     
     CGPDFContextBeginPage(_pdfContext, (__bridge CFDictionaryRef)pageDictionary);
