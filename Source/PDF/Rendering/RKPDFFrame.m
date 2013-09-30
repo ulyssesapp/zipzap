@@ -90,6 +90,7 @@
 				
 		// Render paragraphs
 		while (remainingParagraphRange.length > 0) {
+			BOOL isFirstInFrame = (_lines.count == 0) && (range.location != 0);			
 			BOOL isFirstLineOfParagraph = !lineOfParagraph;
 
 			// Suggested width
@@ -110,7 +111,7 @@
 			
 			// Determine line placement
 			CGFloat yOffset = 0;
-			CGRect lineRect = [self rectForLine:line isFirstInParagraph:isFirstLineOfParagraph isLastInParagraph:isLastLineOfParagraph yOffset:&yOffset];
+			CGRect lineRect = [self rectForLine:line isFirstInParagraph:isFirstLineOfParagraph isLastInParagraph:isLastLineOfParagraph isFirstInFrame:isFirstInFrame yOffset:&yOffset];
 
 			// Stop, if there is not enough place for this line (if it is the first line of the frame, we accept it anyway, to prevent endless loops)
 			if (((lineRect.size.height + _visibleBoundingBox.size.height) > _maximumHeight) && (_visibleBoundingBox.size.height > 0)) {
@@ -174,7 +175,7 @@
 	}
 }
 
-- (CGRect)rectForLine:(RKPDFLine *)line isFirstInParagraph:(BOOL)isFirstInParagraph isLastInParagraph:(BOOL)isLastInParagraph yOffset:(CGFloat *)yOffsetOut
+- (CGRect)rectForLine:(RKPDFLine *)line isFirstInParagraph:(BOOL)isFirstInParagraph isLastInParagraph:(BOOL)isLastInParagraph isFirstInFrame:(BOOL)isFirstInFrame yOffset:(CGFloat *)yOffsetOut
 {
 	RKParagraphStyleWrapper *paragraphStyle = line.paragraphStyle;
 	RKAdditionalParagraphStyle *additionalParagraphStyle = line.additionalParagraphStyle;
@@ -243,8 +244,8 @@
 		lineRect.size.height = additionalParagraphStyle.baselineDistance;
 	}
 	
-	// Apply paragraph spacing
-	if (isFirstInParagraph) {
+	// Apply paragraph spacing to all paragraphs that are not the first on a page
+	if (isFirstInParagraph && !isFirstInFrame) {
 		CGFloat spacingBefore = paragraphStyle.paragraphSpacingBefore;
 		
 		lineRect.origin.y -= spacingBefore;
