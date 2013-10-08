@@ -125,7 +125,7 @@
 			return;
 		}
 		
-		// Do not put a break before a "kept with following" if it has not a succeeding paragraph
+		// Do not put a column break before a "kept with following" if it has not a succeeding paragraph
 		if (NSMaxRange(line.visibleRange) >= NSMaxRange(range)) {
 			*stop = YES;
 			return;
