@@ -62,18 +62,14 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     }
 	
     // Set stroke width
-    CGFloat strokeWidth = font ? CTFontGetUnderlineThickness(font) : 1.0f;
+    CGFloat strokeWidth = font ? (round(CTFontGetUnderlineThickness(font) * 2.0f) / 2.0f)  : 1.0f;
     if (style & RKUnderlineStyleThick)
 		strokeWidth *= 2;
-
-	// Round stroke width and yOffset to prevent scaling issues in PDF
-	strokeWidth = round(strokeWidth * 2.0) / 2.0;
-	yOffset = round(yOffset * 2.0) / 2.0;
 	
     CGContextSetLineWidth(context.pdfContext, strokeWidth);
-	
+    
 	// Paint stroke
-	CGPoint start = CGPointMake(runRect.origin.x, yOffset);
+	CGPoint start = CGPointMake(runRect.origin.x, (round(yOffset * 2.0f) / 2.0f));
 	CGPoint end = CGPointMake(runRect.origin.x + runRect.size.width, yOffset);
 	
 	CGContextStrokeLineSegments(pdfContext, (CGPoint[]){start, end}, 2);
