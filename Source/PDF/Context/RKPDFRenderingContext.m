@@ -271,26 +271,31 @@
 
 - (void)unregisterNote:(RKPDFFootnote *)note
 {
-	if (note.isEndnote) {
+	if (note.isEndnote)
 		_endnoteCounter --;
-	}
-	else {
+	else
 		_footnoteCounter --;
-	}
 	
 	// Update footnote index
     RKNoteIndexType noteIndexType = (note.isEndnote) ? [self indexTypeForEndnotes] : [self indexTypeForFootnotes];
     NSMutableArray *noteIndex = [self noteIndexForType: noteIndexType];
+	__block NSInteger itemIndex = NSNotFound;
 	
 	[noteIndex enumerateObjectsUsingBlock:^(NSDictionary *descriptor, NSUInteger idx, BOOL *stop) {
-		if (descriptor[RKFootnoteObjectKey] == note)
-			[noteIndex removeObject: descriptor];
+		if (descriptor[RKFootnoteObjectKey] == note) {
+			itemIndex = idx;
+			*stop = YES;
+		}
 	}];
+	
+	if (itemIndex != NSNotFound) {
+		[noteIndex removeObjectAtIndex: itemIndex];
+	}
 }
 
-- (void)unregisterNotesInAttributedString:(NSAttributedString *)stringWithNotes
+- (void)unregisterNotesInAttributedString:(NSAttributedString *)stringWithNotes range:(NSRange)range
 {
-	[stringWithNotes enumerateAttribute:RKTextObjectAttributeName inRange:NSMakeRange(0, stringWithNotes.length) options:0 usingBlock:^(RKPDFFootnote *note, NSRange range, BOOL *stop) {
+	[stringWithNotes enumerateAttribute:RKTextObjectAttributeName inRange:range options:0 usingBlock:^(RKPDFFootnote *note, NSRange range, BOOL *stop) {
 		if ([note isKindOfClass: RKPDFFootnote.class])
 			[self unregisterNote: note];
 	}];

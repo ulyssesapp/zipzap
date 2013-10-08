@@ -74,6 +74,9 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	if (suggestedBreak < lineContent.length) {
 		NSMutableString *lineContentString = lineContent.mutableString;
 
+		// Unregister footnotes in truncated string
+		[_context unregisterNotesInAttributedString:lineContent range:NSMakeRange(suggestedBreak, lineContentString.length - suggestedBreak)];
+		
 		// Truncate the line
 		[lineContentString replaceCharactersInRange:NSMakeRange(suggestedBreak, lineContentString.length - suggestedBreak) withString:@""];
 		

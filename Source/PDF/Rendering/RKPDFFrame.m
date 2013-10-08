@@ -105,7 +105,7 @@
 			
 			if (isLastLineOfParagraph || ([attributedString.string rangeOfString:@"\u2028" options:0 range:lineRange].length)) {
 				// De-register unused footnotes
-				[_context unregisterNotesInAttributedString: line.content];
+				[_context unregisterNotesInAttributedString:line.content range:NSMakeRange(0, line.content.length)];
 				
 				// If our line is the last in a paragraph or has enforces a line break: do not justify it
 				line = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:remainingParagraphRange usingWidth:suggestedWidth maximumHeight:_boundingBox.size.height justificationAllowed:NO context:_context];
@@ -116,10 +116,11 @@
 			CGFloat yOffset = 0;
 			CGRect lineRect = [self rectForLine:line isFirstInParagraph:isFirstLineOfParagraph isLastInParagraph:isLastLineOfParagraph isFirstInFrame:isFirstInFrame yOffset:&yOffset];
 
-			// Stop, if there is not enough place for this line (if it is the first line of the frame, we accept it anyway, to prevent endless loops)
-			if (((lineRect.size.height + _visibleBoundingBox.size.height) > _maximumHeight) && (_visibleBoundingBox.size.height > 0)) {
+			// Stop, if there is not enough place for this line
+			if (![self canAppendLineWithHeight: lineRect.size.height]) {
 				// De-register unused footnotes
-				[_context unregisterNotesInAttributedString: line.content];
+				[_context unregisterNotesInAttributedString:line.content range:NSMakeRange(0, line.content.length)];
+				
 				*stop = YES;
 				return;
 			}
@@ -139,7 +140,7 @@
 				widowFollows = NSMaxRange(succeedingLine.visibleRange) == NSMaxRange(remainingParagraphRange);
 				
 				// Unregister all footnotes from line
-				[_context unregisterNotesInAttributedString: succeedingLine.content];
+				[_context unregisterNotesInAttributedString:succeedingLine.content range:NSMakeRange(0, succeedingLine.content.length)];
 			}
 			
 			// The block must be executed last, since it is allowed to remove lines within
@@ -344,7 +345,8 @@
 
 - (BOOL)canAppendLineWithHeight:(CGFloat)expectedLineHeight
 {
-	return (expectedLineHeight + _visibleBoundingBox.size.height) <= self.maximumHeight;
+	// Can we append a further line with the expected height?
+	return ((expectedLineHeight + _visibleBoundingBox.size.height) < self.maximumHeight);
 }
 
 - (void)moveLinesByPoints:(CGFloat)points

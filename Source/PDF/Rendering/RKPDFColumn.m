@@ -95,10 +95,6 @@
 		if (lineOfParagraph && lineFailed) {
 			[self removeLinesFromEnd: 1];
 			
-			// We don't like to create an orphan, when removing a widow
-			if (widowFollows && (lineOfParagraph == 1))
-				[self removeLinesFromEnd: 1];
-			
 			*stop = YES;
 			return;
 		}
@@ -184,7 +180,7 @@
 		_footnotesFrame.maximumHeight += line.size.height;
 		
 		// Unregister all footnotes of the line from context
-		[_context unregisterNotesInAttributedString: line.content];
+		[_context unregisterNotesInAttributedString:line.content range:NSMakeRange(0, line.content.length)];
 		
 		// Remove the line from the visible portion
 		[_contentFrame removeLinesFromEnd: 1];

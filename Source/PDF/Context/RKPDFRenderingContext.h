@@ -166,7 +166,7 @@ typedef enum : NSUInteger {
 /*!
  @abstract Unregisters a footnote from the current index.
  */
-- (void)unregisterNotesInAttributedString:(NSAttributedString *)stringWithNotes;
+- (void)unregisterNotesInAttributedString:(NSAttributedString *)stringWithNotes range:(NSRange)range;
 
 
 #pragma mark - List rendering
