@@ -268,6 +268,13 @@
 		lineRect.size.height += spacingAfter;
 	}
 	
+	// Round coordinates to allow proper PDF scaling
+	lineRect.origin.x = round(lineRect.origin.x / 0.5) * 0.5;
+	lineRect.origin.y = round(lineRect.origin.y / 0.5) * 0.5;
+	lineRect.size.height = round(lineRect.size.height / 0.5) * 0.5;
+	lineRect.size.width = round(lineRect.size.width / 0.5) * 0.5;
+	yOffset = round(yOffset / 0.5) * 0.5;
+	
 	// Determine offset within line
 	if (yOffsetOut)
 		*yOffsetOut = yOffset;
