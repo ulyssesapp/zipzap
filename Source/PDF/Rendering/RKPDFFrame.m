@@ -134,8 +134,11 @@
 			BOOL widowFollows = NO;
 			
 			if (widowWidth && succeedingLineRange.length && (succeedingLineRange.location < NSMaxRange(remainingParagraphRange))) {
+				// Determine height of succeeding line for widow controlling
 				RKPDFLine *succeedingLine = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:succeedingLineRange usingWidth:widowWidth maximumHeight:_maximumHeight justificationAllowed:YES context:_context];
-				nextLineHeight = lineRect.size.height;
+				BOOL isSuccessorLastLineOfParagraph = NSMaxRange(succeedingLineRange) == NSMaxRange([attributedString.string paragraphRangeForRange: succeedingLineRange]);
+				
+				nextLineHeight = [self rectForLine:succeedingLine isFirstInParagraph:isLastLineOfParagraph isLastInParagraph:isSuccessorLastLineOfParagraph isFirstInFrame:NO yOffset:NULL].size.height;
 				
 				widowFollows = NSMaxRange(succeedingLine.visibleRange) == NSMaxRange(remainingParagraphRange);
 				

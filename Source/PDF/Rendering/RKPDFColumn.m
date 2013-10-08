@@ -58,8 +58,11 @@
 {
 	__block BOOL lineFailed = NO;
 	__block BOOL pageBreak = NO;
-
+	
 	[_contentFrame appendAttributedString:contentString inRange:range usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
+		// To prevent infinite loops: disable widow control for first line of a column if also no footnotes have been appended.
+		BOOL atLeastOneLine = (_footnotesFrame.lines.count > 1) || (_contentFrame.lines.count > 1);
+		
 		// Reduce possible space for footnotes
 		_footnotesFrame.maximumHeight = _boundingBox.size.height - _contentFrame.visibleBoundingBox.size.height -  self.footnoteAreaSpacing;
 		
@@ -89,7 +92,7 @@
 		}];
 
 		// If adding this line and its footnotes will result in a orphan or a widow: remove it and stop.
-		lineFailed = lineFailed | (widowFollows && ![_contentFrame canAppendLineWithHeight: nextLineHeight]);
+		lineFailed = lineFailed | (atLeastOneLine && widowFollows && ![_contentFrame canAppendLineWithHeight: nextLineHeight]);
 		
 		// Line failed: remove it from the end and stop (if it is the first line of the column, ignore it to prevent endless loops).
 		if (lineOfParagraph && lineFailed) {
@@ -115,8 +118,11 @@
 	__block NSUInteger orphanedParagraphsUntilLine = NSUIntegerMax;
 	
 	[_contentFrame.lines enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(RKPDFLine *line, NSUInteger lineIndex, BOOL *stop) {
-		if (!line.additionalParagraphStyle.keepWithFollowingParagraph) {
-			// Orphaned paragraphs are only interesting, when scanning from the end of the string
+		NSRange paragraphRange = [contentString.string paragraphRangeForRange: line.visibleRange];
+		BOOL isOrphan = (line == _contentFrame.lastLine) && (line.visibleRange.location == paragraphRange.location) && (NSMaxRange(paragraphRange) > NSMaxRange(line.visibleRange));
+
+		// Stop if neither an orphan nor an "keepWithFollowingParagraph" would remain on the column's end
+		if (!line.additionalParagraphStyle.keepWithFollowingParagraph && !isOrphan) {
 			*stop = YES;
 			return;
 		}
@@ -130,7 +136,7 @@
 		orphanedParagraphsUntilLine = lineIndex;
 	}];
 
-	if (orphanedParagraphsUntilLine && (orphanedParagraphsUntilLine < _contentFrame.lines.count)) {
+	if ((orphanedParagraphsUntilLine > 0) && (orphanedParagraphsUntilLine < _contentFrame.lines.count)) {
 		// We have to remove some orphaned headlines (however, we do this only, if they are not the first of the page to prevent infinite loops)
 		[self removeLinesFromEnd: _contentFrame.lines.count - orphanedParagraphsUntilLine];
 	}
@@ -189,7 +195,7 @@
 
 - (void)removeFootnoteLinesFromEnd:(NSUInteger)lineCount
 {
-	// We have a widow: remove the footnote from the end and
+	// We have a widow: remove the footnote from the end
 	NSNumber *correspondingContentLine = [_contentLineForFootnoteLine objectForKey: @(_footnotesFrame.lines.count - 1)];
 	
 	// We have to erase the content upto the corresponding content line
