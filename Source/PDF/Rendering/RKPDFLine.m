@@ -154,8 +154,12 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	
 	_size.width = CTLineGetTypographicBounds(ctLine, &ascent, &descent, &leading);
 	_ascent = MAX(ascent, maximumPreferredObjectHeight);
-	_descent = descent;
-	_leading = leading;
+
+	// Round offsets to prevent scaling issues
+	_ascent = round(_ascent / 0.5) * 0.5;
+	_descent = round(descent / 0.5) * 0.5;
+	_leading = round(leading / 0.5) * 0.5;
+	
 	_size.height = _ascent + _descent + _leading;
 	
 	NSAssert((_visibleRange.length <= attributedString.length) && (NSMaxRange(_visibleRange) <= attributedString.length), @"Invalid visible line range calculated: (%lu, %lu) from suggested line break: %lu, displacement: %lu for string: %@", _visibleRange.location, _visibleRange.length, suggestedBreak, displacement, attributedString);
