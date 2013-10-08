@@ -125,6 +125,12 @@
 			return;
 		}
 		
+		// Do not put a break before a "kept with following" if it has not a succeeding paragraph
+		if (NSMaxRange(line.visibleRange) >= NSMaxRange(range)) {
+			*stop = YES;
+			return;
+		}
+			
 		orphanedParagraphsUntilLine = lineIndex;
 	}];
 
