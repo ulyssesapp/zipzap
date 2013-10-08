@@ -36,8 +36,8 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     // Get underline style, color and position
     NSUInteger underlineStyle = [[attributedString attribute:(__bridge id)kCTUnderlineStyleAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
 	CGColorRef underlineColor = (__bridge CGColorRef)[attributedString attribute:(__bridge id)kCTUnderlineColorAttributeName atIndex:range.location effectiveRange:NULL];
-
-    CGFloat underlineOffset = CTFontGetUnderlinePosition(font) - (CTFontGetUnderlineThickness(font) / 2.0f);
+    CGFloat underlineOffset = CTFontGetUnderlinePosition(font);
+	
 	if (!underlineOffset)
 		underlineOffset = -line.descent / 2.0f;
 	
@@ -62,17 +62,64 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     }
 	
     // Set stroke width
-    CGFloat strokeWidth = font ? (round(CTFontGetUnderlineThickness(font) * 2.0f) / 2.0f)  : 1.0f;
+    CGFloat strokeWidth = font ? CTFontGetUnderlineThickness(font)  : 1.0f;
+	
     if (style & RKUnderlineStyleThick)
 		strokeWidth *= 2;
 	
     CGContextSetLineWidth(context.pdfContext, strokeWidth);
     
-	// Paint stroke
-	CGPoint start = CGPointMake(runRect.origin.x, (round(yOffset * 2.0f) / 2.0f));
-	CGPoint end = CGPointMake(runRect.origin.x + runRect.size.width, yOffset);
+	// Paint stroke glyph-by-glyph
+	CFIndex glyphCount = CTRunGetGlyphCount(run);
+	const CGPoint *glyphPositions = CTRunGetPositionsPtr(run);
+	const CGSize *glyphAdvances = CTRunGetAdvancesPtr(run);
+	const CGGlyph *glyphs = CTRunGetGlyphsPtr(run);
+	CGRect glyphBounds[glyphCount];
 	
-	CGContextStrokeLineSegments(pdfContext, (CGPoint[]){start, end}, 2);
+	if (glyphs && glyphCount) {
+		CTFontGetBoundingRectsForGlyphs(font, kCTFontDefaultOrientation, glyphs, glyphBounds, glyphCount);
+		
+		CGContextBeginPath(pdfContext);
+		
+		while (glyphCount --) {
+			CGPoint glyphPosition = glyphPositions[glyphCount];
+			CGSize glyphAdvance = glyphAdvances[glyphCount];
+			CGRect glyphBound = glyphBounds[glyphCount];
+		
+			// If word-wise stroking is requested, ignore empty glyphs
+			BOOL closePath = ((style & RKUnderlineByWordMask) && (glyphBound.size.width == 0));
+
+			// Do we need to close the current path?
+			if (closePath) {
+				if (!CGContextIsPathEmpty(pdfContext)) {
+					CGContextClosePath(pdfContext);
+					CGContextStrokePath(pdfContext);
+					CGContextBeginPath(pdfContext);
+				}
+				
+				continue;
+			}
+			
+			// Get stroke position
+			CGPoint startPoint = glyphPosition;
+			startPoint.y += yOffset;
+			
+			CGPoint endPoint = startPoint;
+			endPoint.x += glyphAdvance.width + 0.5f;
+
+			if (CGContextIsPathEmpty(pdfContext))
+				CGContextMoveToPoint(pdfContext, startPoint.x, startPoint.y);
+			else
+				CGContextAddLineToPoint(pdfContext, startPoint.x, startPoint.y);
+			
+			CGContextAddLineToPoint(pdfContext, endPoint.x, endPoint.y);
+		}
+
+		if (!CGContextIsPathEmpty(pdfContext)) {
+			CGContextClosePath(pdfContext);
+			CGContextStrokePath(pdfContext);
+		}
+	}
 		
     // Restore graphics state
     CGContextRestoreGState(pdfContext);
