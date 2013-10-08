@@ -104,6 +104,9 @@
 			BOOL isLastLineOfParagraph = (remainingParagraphRange.location + lineRange.length) == NSMaxRange(paragraphRange);
 			
 			if (isLastLineOfParagraph || ([attributedString.string rangeOfString:@"\u2028" options:0 range:lineRange].length)) {
+				// De-register unused footnotes
+				[_context unregisterNotesInAttributedString: line.content];
+				
 				// If our line is the last in a paragraph or has enforces a line break: do not justify it
 				line = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:remainingParagraphRange usingWidth:suggestedWidth maximumHeight:_boundingBox.size.height justificationAllowed:NO context:_context];
 				NSAssert(lineRange.length == line.visibleRange.length, @"Line range should not change after unjustifying a line");
@@ -115,6 +118,8 @@
 
 			// Stop, if there is not enough place for this line (if it is the first line of the frame, we accept it anyway, to prevent endless loops)
 			if (((lineRect.size.height + _visibleBoundingBox.size.height) > _maximumHeight) && (_visibleBoundingBox.size.height > 0)) {
+				// De-register unused footnotes
+				[_context unregisterNotesInAttributedString: line.content];
 				*stop = YES;
 				return;
 			}
@@ -132,6 +137,9 @@
 				nextLineHeight = lineRect.size.height;
 				
 				widowFollows = NSMaxRange(succeedingLine.visibleRange) == NSMaxRange(remainingParagraphRange);
+				
+				// Unregister all footnotes from line
+				[_context unregisterNotesInAttributedString: succeedingLine.content];
 			}
 			
 			// The block must be executed last, since it is allowed to remove lines within

@@ -183,6 +183,9 @@
 		RKPDFLine *line = [_contentFrame lastLine];
 		_footnotesFrame.maximumHeight += line.size.height;
 		
+		// Unregister all footnotes of the line from context
+		[_context unregisterNotesInAttributedString: line.content];
+		
 		// Remove the line from the visible portion
 		[_contentFrame removeLinesFromEnd: 1];
 	}
