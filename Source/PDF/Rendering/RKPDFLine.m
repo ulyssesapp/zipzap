@@ -156,9 +156,9 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	_ascent = MAX(ascent, maximumPreferredObjectHeight);
 
 	// Round offsets to prevent scaling issues
-	_ascent = round(_ascent * 2.0f) / 2.0f;
-	_descent = round(descent * 2.0f) / 2.0f;
-	_leading = round(leading * 2.0f) / 2.0f;
+	_ascent = round(_ascent / 0.5) * 0.5;
+	_descent = round(descent / 0.5) * 0.5;
+	_leading = round(leading / 0.5) * 0.5;
 	
 	_size.height = _ascent + _descent + _leading;
 	

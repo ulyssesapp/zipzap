@@ -28,7 +28,7 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     // Get strikethrough style, color and position
     NSUInteger strikethroughStyle = [[attributedString attribute:RKStrikethroughStyleAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
 	CGColorRef strikethroughColor = (__bridge CGColorRef)[attributedString attribute:RKPDFStrikethroughColorAttributeName atIndex:range.location effectiveRange:NULL];
-    CGFloat strikethroughOffset = (runRect.size.height / 2.0f) - line.descent;
+    CGFloat strikethroughOffset = (runRect.size.height / 2.0) - line.descent;
 
 	if (strikethroughStyle)
 		[self renderStyle:strikethroughStyle color:strikethroughColor font:font withYOffset:strikethroughOffset keepDescents:NO usingContext:context run:run boundingBox:runRect];
@@ -37,9 +37,9 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     NSUInteger underlineStyle = [[attributedString attribute:(__bridge id)kCTUnderlineStyleAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
 	CGColorRef underlineColor = (__bridge CGColorRef)[attributedString attribute:(__bridge id)kCTUnderlineColorAttributeName atIndex:range.location effectiveRange:NULL];
 
-    CGFloat underlineOffset = CTFontGetUnderlinePosition(font) - (CTFontGetUnderlineThickness(font) / 2.0f);
+    CGFloat underlineOffset = CTFontGetUnderlinePosition(font) - (CTFontGetUnderlineThickness(font) / 2.0);
 	if (!underlineOffset)
-		underlineOffset = -line.descent / 2.0f;
+		underlineOffset = -line.descent / 2.0;
 	
 	if (underlineStyle)
 		[self renderStyle:underlineStyle color:underlineColor font:font withYOffset:underlineOffset keepDescents:YES usingContext:context run:run boundingBox:runRect];
@@ -67,8 +67,8 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
 		strokeWidth *= 2;
 
 	// Round stroke width and yOffset to prevent scaling issues in PDF
-	strokeWidth = round(strokeWidth * 2.0) / 2.0;
-	yOffset = round(yOffset * 2.0) / 2.0;
+	strokeWidth = round(strokeWidth / 0.5) * 0.5;
+	yOffset = round(yOffset / 0.5) * 0.5;
 	
     CGContextSetLineWidth(context.pdfContext, strokeWidth);
 	
