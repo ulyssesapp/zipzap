@@ -44,12 +44,25 @@
         // Insert marker string (include a tab behave the same as the cocoa text engine)
         NSString *markerString = [NSString stringWithFormat:@"\t%@\t", [context.listCounter markerForListItem: listItem]];
         NSAttributedString *styledMarkerString = [[NSAttributedString alloc] initWithString:markerString attributes:listMarkerAttributes];
+		__block NSRange fixRange = NSMakeRange(range.location + insertionOffset, range.length + markerString.length);
         
         [converted insertAttributedString:styledMarkerString atIndex:range.location + insertionOffset];
         insertionOffset += markerString.length;
-        
+
+		// Indent all nested paragraphs and lines
+		NSMutableString *convertedString = converted.mutableString;
+		[convertedString enumerateSubstringsInRange:fixRange options:NSStringEnumerationByParagraphs|NSStringEnumerationByLines|NSStringEnumerationSubstringNotRequired usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+			// Do not indent first line
+			if (enclosingRange.location == fixRange.location)
+				return;
+			
+			[convertedString insertString:@"\t\t" atIndex:enclosingRange.location];
+			insertionOffset += 2;
+			fixRange.length += 2;
+		}];
+		
         // Remove text list item attribute
-        [converted removeAttribute:RKTextListItemAttributeName range:range];
+        [converted removeAttribute:RKTextListItemAttributeName range:fixRange];
     }];
     
     return converted;

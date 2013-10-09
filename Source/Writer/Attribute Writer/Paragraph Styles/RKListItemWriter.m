@@ -40,11 +40,15 @@
 	NSDictionary *markerStyle = [listStyle markerStyleForLevel: listItem.indentationLevel];
 	CGFloat enumeratorLocation = [markerStyle[RKListStyleMarkerLocationKey] floatValue];
 	CGFloat textLocation = [markerStyle[RKListStyleMarkerWidthKey] floatValue] + enumeratorLocation;
+	__block NSUInteger paragraphIndex = 0;
+	
+	enumeratorLocation = round(enumeratorLocation * 0.5) / 0.5;
+	textLocation = round(textLocation * 0.5) / 0.5;
 	
 	// Update paragraph style, so tabulators will be used for enumerator positioning (TextEdit)
 	[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange paragraphRange, RKParagraphStyleWrapper *paragraphStyle) {
-		// Update Indentation
-		paragraphStyle.firstLineHeadIndent = (policy & RKAttributePreprocessorListMarkerPositionsUsingIndent) ? enumeratorLocation : 0;
+		// Set indentation (word export needs additional head indent)
+		paragraphStyle.firstLineHeadIndent =  (policy & RKAttributePreprocessorListMarkerPositionsUsingIndent) ? enumeratorLocation : 0;
 		paragraphStyle.headIndent = textLocation;
 			
 		// Setup new NSTextTabs instances for the given tabs stops
@@ -59,10 +63,15 @@
 		}
 				
 		paragraphStyle.tabStops = newTabStops;
+		
+		paragraphIndex ++;
 	}];
 	
-	// Inside of an RKListItem, nested paragraphs must use line breaks but not paragraph breaks.
-	if (range.length >= 1) {
+	if (range.length == 0)
+		return;
+	
+	if (policy & RKAttributePreprocessorInnerListParagraphsUsingLineBreak) {
+		// Pages-RTF requires that nested paragraphs are actually nested lines...
 		RKParagraphStyleWrapper *lastParagraphStyle = [preprocessedString wrappedParagraphStyleAtIndex: NSMaxRange(range)-1];
 		
 		// Exchange paragraph breaks by newlines (required by RTF)
