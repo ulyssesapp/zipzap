@@ -34,7 +34,6 @@
 
 		// Adjust tabulators
 		NSMutableAttributedString *fixedFootnote = [footnote mutableCopy];
-		[fixedFootnote.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, fixedFootnote.length)];
 		
 		NSTextAlignment anchorAlignment = resources.document.footnoteAreaAnchorAlignment;
 		CGFloat anchorInset = resources.document.footnoteAreaAnchorInset;
@@ -43,6 +42,10 @@
 		[fixedFootnote enumerateAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, fixedFootnote.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSParagraphStyle *currentParagraphStyle, NSRange range, BOOL *stop) {
 			NSMutableParagraphStyle *mutableParagraphStyle = [currentParagraphStyle mutableCopy] ?: [NSMutableParagraphStyle new];
 			mutableParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:anchorAlignment location:anchorInset options:nil], [[NSTextTab alloc] initWithTextAlignment:NSNaturalTextAlignment location:contentInset options:nil]];
+			mutableParagraphStyle.headIndent += resources.document.footnoteAreaContentInset;
+
+			if (range.location > 0)
+				mutableParagraphStyle.firstLineHeadIndent += resources.document.footnoteAreaContentInset;
 			
 			[fixedFootnote addAttribute:NSParagraphStyleAttributeName value:mutableParagraphStyle range:range];
 		}];
