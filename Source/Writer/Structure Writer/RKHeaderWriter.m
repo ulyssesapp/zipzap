@@ -44,7 +44,7 @@ enum {
 /*!
  @abstract Generate a list level using a resource manager
  */
-+ (NSString *)entryForLevel:(NSUInteger)level inList:(RKListStyle*)list listIndex:(NSUInteger)listIndex;
++ (NSString *)entryForLevel:(NSUInteger)level inList:(RKListStyle*)list listIndex:(NSUInteger)listIndex resources:(RKResourcePool *)resources;
 
 /*!
  @abstract Generate the list table using a resource manager
@@ -181,7 +181,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
         NSMutableString *listLevelsString = [NSMutableString new];
         
         for (NSUInteger levelIndex = 0; levelIndex < listStyle.numberOfLevels; levelIndex ++)  {
-            [listLevelsString appendString: [self entryForLevel:levelIndex inList:listStyle listIndex:listIndex.unsignedIntegerValue]];
+            [listLevelsString appendString: [self entryForLevel:levelIndex inList:listStyle listIndex:listIndex.unsignedIntegerValue resources:resources]];
         }
                 
         [listTable appendFormat:@"{\\list\\listtemplateid%@\\listhybrid%@\\listid%@{\\listname list%@}}",
@@ -197,7 +197,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
     return listTable;
 }
 
-+ (NSString *)entryForLevel:(NSUInteger)level inList:(RKListStyle*)list listIndex:(NSUInteger)listIndex
++ (NSString *)entryForLevel:(NSUInteger)level inList:(RKListStyle*)list listIndex:(NSUInteger)listIndex resources:(RKResourcePool *)resources
 {
     NSArray *placeholderPositions;
     NSString *rtfFormatString = [NSString stringWithFormat:@"{\\leveltext\\leveltemplateid%lu %@;}", 
@@ -221,16 +221,20 @@ NSArray *RKHeaderWriterMetadataDescriptions;
     NSUInteger formatCode = [list formatCodeOfLevel:level];
     NSUInteger startNumber = [list startNumberForLevel:level];
     
+	NSDictionary *markerStyle = [list markerStyleForLevel: level] ;
+	NSString *markerStyleString = markerStyle ? [RKAttributedStringWriter stylesheetTagsFromAttributes:markerStyle resources:resources] : @"";
+	
     // Generate level description
     return [NSString stringWithFormat:@"{\\listlevel\\levelstartat%lu\\levelnfc%lu"
                                         "\\leveljc0\\levelold0\\levelprev0\\levelprevspace0\\levelindent0\\levelspace0"
-                                        "%@%@%@"
+                                        "%@%@%@%@"
                                         "\\levelfollow0\\levellegal0\\levelnorestart0}",
             startNumber,
             formatCode,
             textSystemFormatString,
             rtfFormatString,
-            rtfPlaceholderPostions
+            rtfPlaceholderPostions,
+			markerStyleString
             ];
 }
 
