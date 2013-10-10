@@ -271,6 +271,7 @@
 
 - (void)unregisterNote:(RKPDFFootnote *)note
 {
+	// Restore counters
 	if (note.isEndnote)
 		_endnoteCounter --;
 	else
