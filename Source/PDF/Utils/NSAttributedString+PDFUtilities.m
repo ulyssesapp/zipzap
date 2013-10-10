@@ -64,11 +64,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 	if (additionalParagraphStyle)
 		[noteString addAttribute:RKAdditionalParagraphStyleAttributeName value:additionalParagraphStyle range:firstParagraphRange];
 	
-    // Indent newlines to be aligned to the footnote content
-    NSMutableString *content = [noteString mutableString];
-	[content replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, content.length)];
-
-    // Fix tabulator positions in paragraph style
+    // Fix tabulator positions and indents in paragraph style
 	[noteString enumerateAttribute:RKParagraphStyleAttributeName inRange:NSMakeRange(0, noteString.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(id ctParagraphStyle, NSRange range, BOOL *stop) {
 		RKParagraphStyleWrapper *paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: (__bridge CTParagraphStyleRef)ctParagraphStyle];
 		NSMutableArray *tabStops = [paragraphStyle.tabStops mutableCopy] ?: [NSMutableArray new];
@@ -77,6 +73,10 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaContentInset ?: 1) alignment:NSNaturalTextAlignment] atIndex:1];
 		
 		paragraphStyle.tabStops = tabStops;
+		paragraphStyle.headIndent += context.document.footnoteAreaContentInset;
+		
+		if (range.location > 0)
+			paragraphStyle.firstLineHeadIndent += context.document.footnoteAreaContentInset;
 		
         [noteString addAttribute:RKParagraphStyleAttributeName value:(__bridge id)paragraphStyle.newCTParagraphStyle range:range];
 	}];

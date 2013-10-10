@@ -100,11 +100,13 @@
 			RKPDFLine *line = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:remainingParagraphRange usingWidth:suggestedWidth maximumHeight:_boundingBox.size.height justificationAllowed:YES context:_context];
 			NSRange lineRange = line.visibleRange;
 			
-			// Determine line position in paragraph
 			BOOL isLastLineOfParagraph = (remainingParagraphRange.location + lineRange.length) == NSMaxRange(paragraphRange);
-			
-			if (isLastLineOfParagraph || ([attributedString.string rangeOfString:@"\u2028" options:0 range:lineRange].length)) {
-				// If our line is the last in a paragraph or has enforces a line break: do not justify it
+
+			// If our line is the last in a paragraph: do not justify it
+			if (isLastLineOfParagraph) {
+				// De-register unused footnotes
+				[_context unregisterNotesInAttributedString:line.content range:NSMakeRange(0, line.content.length)];
+				
 				line = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:remainingParagraphRange usingWidth:suggestedWidth maximumHeight:_boundingBox.size.height justificationAllowed:NO context:_context];
 				NSAssert(lineRange.length == line.visibleRange.length, @"Line range should not change after unjustifying a line");
 			}
@@ -113,8 +115,11 @@
 			CGFloat yOffset = 0;
 			CGRect lineRect = [self rectForLine:line isFirstInParagraph:isFirstLineOfParagraph isLastInParagraph:isLastLineOfParagraph isFirstInFrame:isFirstInFrame yOffset:&yOffset];
 
-			// Stop, if there is not enough place for this line (if it is the first line of the frame, we accept it anyway, to prevent endless loops)
-			if (((lineRect.size.height + _visibleBoundingBox.size.height) > _maximumHeight) && (_visibleBoundingBox.size.height > 0)) {
+			// Stop, if there is not enough place for this line
+			if (![self canAppendLineWithHeight: lineRect.size.height]) {
+				// De-register unused footnotes
+				[_context unregisterNotesInAttributedString:line.content range:NSMakeRange(0, line.content.length)];
+				
 				*stop = YES;
 				return;
 			}
@@ -128,10 +133,16 @@
 			BOOL widowFollows = NO;
 			
 			if (widowWidth && succeedingLineRange.length && (succeedingLineRange.location < NSMaxRange(remainingParagraphRange))) {
+				// Determine height of succeeding line for widow controlling
 				RKPDFLine *succeedingLine = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:succeedingLineRange usingWidth:widowWidth maximumHeight:_maximumHeight justificationAllowed:YES context:_context];
-				nextLineHeight = lineRect.size.height;
+				BOOL isSuccessorLastLineOfParagraph = NSMaxRange(succeedingLineRange) == NSMaxRange([attributedString.string paragraphRangeForRange: succeedingLineRange]);
+				
+				nextLineHeight = [self rectForLine:succeedingLine isFirstInParagraph:isLastLineOfParagraph isLastInParagraph:isSuccessorLastLineOfParagraph isFirstInFrame:NO yOffset:NULL].size.height;
 				
 				widowFollows = NSMaxRange(succeedingLine.visibleRange) == NSMaxRange(remainingParagraphRange);
+				
+				// Unregister all footnotes from line
+				[_context unregisterNotesInAttributedString:succeedingLine.content range:NSMakeRange(0, succeedingLine.content.length)];
 			}
 			
 			// The block must be executed last, since it is allowed to remove lines within
@@ -336,7 +347,8 @@
 
 - (BOOL)canAppendLineWithHeight:(CGFloat)expectedLineHeight
 {
-	return (expectedLineHeight + _visibleBoundingBox.size.height) <= self.maximumHeight;
+	// Can we append a further line with the expected height?
+	return ((expectedLineHeight + _visibleBoundingBox.size.height) < self.maximumHeight);
 }
 
 - (void)moveLinesByPoints:(CGFloat)points

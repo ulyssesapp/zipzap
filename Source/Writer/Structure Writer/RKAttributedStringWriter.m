@@ -74,8 +74,11 @@ NSMutableArray *RKAttributedStringWriterHandlers;
 
 + (NSString *)RTFFromAttributedString:(NSAttributedString *)attributedString withConversionPolicy:(RKConversionPolicy)conversionPolicy resources:(RKResourcePool *)resources
 {
+	// Setup adjustment policy from conversion policy
 	RKAttributePreprocessingPolicy adjustmentPolicy = (conversionPolicy & RKConversionPolicyPositionListMarkerUsingIndent) ? RKAttributePreprocessorListMarkerPositionsUsingIndent : 0;
+	adjustmentPolicy |= (conversionPolicy & RKConversionPolicyInnerListParagraphsUsingLineBreak) ? RKAttributePreprocessorInnerListParagraphsUsingLineBreak : 0;
 	
+	// Preprocess string
     NSAttributedString *preprocessedString = [self attributedStringByAdjustingStyles:attributedString usingPreprocessingPolicy:adjustmentPolicy];
     
     NSString *baseString = preprocessedString.string;

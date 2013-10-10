@@ -26,12 +26,12 @@
 
 + (NSData *)wordRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyConvertAttachments|RKConversionPolicyPositionListMarkerUsingIndent resources:NULL];
+    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyConvertAttachments|RKConversionPolicyPositionListMarkerUsingIndent|RKConversionPolicyInnerListParagraphsUsingLineBreak resources:NULL];
 }
 
 + (NSData *)systemRTFfromDocument:(RKDocument *)document
 {
-    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyAddLineBreaksOnSectionBreaks resources:NULL];
+    return [self RTFDataFromDocument:document withConversionPolicy:RKConversionPolicyAddLineBreaksOnSectionBreaks|RKConversionPolicyInnerListParagraphsUsingLineBreak resources:NULL];
 }
 
 + (NSFileWrapper *)RTFDfromDocument:(RKDocument *)document
@@ -39,7 +39,7 @@
     RKResourcePool *resources;
     
     // Generate RTF document
-    NSData *rtfContent = [self RTFDataFromDocument:document withConversionPolicy:(RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments|RKConversionPolicyAddLineBreaksOnSectionBreaks) resources:&resources];
+    NSData *rtfContent = [self RTFDataFromDocument:document withConversionPolicy:(RKConversionPolicyConvertAttachments|RKConversionPolicyReferenceAttachments|RKConversionPolicyAddLineBreaksOnSectionBreaks|RKConversionPolicyInnerListParagraphsUsingLineBreak) resources:&resources];
     NSFileWrapper *rtfFile = [[NSFileWrapper alloc] initRegularFileWithContents:rtfContent];
 
     // Pacakge image files

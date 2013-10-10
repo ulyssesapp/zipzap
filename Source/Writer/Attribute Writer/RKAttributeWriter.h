@@ -15,9 +15,11 @@
  @abstract A policy that should be applied during the preprocessing of an attributed string.
  
  @const RKAttributePreprocessorListMarkerPositionsUsingIndent				Specifies that a list marker should be positioned using the first line indent, rather than by tabs. This is required for MS Word export.
+ @const RKAttributePreprocessorInnerListParagraphsByLineBreak				Specifies that paragraph breaks inside text list items should be converted to line breaks. Required for any RTF export.
  */
 typedef enum : NSUInteger {
-	RKAttributePreprocessorListMarkerPositionsUsingIndent		= (1 << 0)
+	RKAttributePreprocessorListMarkerPositionsUsingIndent		= (1 << 0),
+	RKAttributePreprocessorInnerListParagraphsUsingLineBreak	= (1 << 1)
 }RKAttributePreprocessingPolicy;
 
 /*!

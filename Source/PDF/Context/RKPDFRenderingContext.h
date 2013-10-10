@@ -163,6 +163,12 @@ typedef enum : NSUInteger {
  */
 - (NSString *)newFootnoteAnchor;
 
+/*!
+ @abstract Unregisters all footnote text objects (RKPDFFootnote) occuring in the given from the current index.
+ @discussion Used for reverting all footnote counters generated for a certain line, if a line is discarded by the layout rules. This method expects that footnotes are only discarded immediately after adding them to the index. If further lines were generated in meanwhile, the index might get corrupted.
+ */
+- (void)unregisterNotesInAttributedString:(NSAttributedString *)stringWithNotes range:(NSRange)range;
+
 
 #pragma mark - List rendering
 
