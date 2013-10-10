@@ -47,8 +47,16 @@
 	
 	// Update paragraph style, so tabulators will be used for enumerator positioning (TextEdit)
 	[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange paragraphRange, RKParagraphStyleWrapper *paragraphStyle) {
-		// Set indentation (word export needs additional head indent)
-		paragraphStyle.firstLineHeadIndent =  (policy & RKAttributePreprocessorListMarkerPositionsUsingIndent) ? enumeratorLocation : 0;
+		// Set indentation (word export needs additional head indent set to the enumerator's position)
+		if (policy & RKAttributePreprocessorListMarkerPositionsUsingIndent)
+			paragraphStyle.firstLineHeadIndent = enumeratorLocation;
+		else if (paragraphIndex)
+			// Set first line head indent for nested items (PDF + System-RTF)
+			paragraphStyle.firstLineHeadIndent = textLocation;
+		else
+			// Skip first line head indent on paragraph carrying an enumerator (PDF + System-RTF)
+			paragraphStyle.firstLineHeadIndent = 0;
+		
 		paragraphStyle.headIndent = textLocation;
 			
 		// Setup new NSTextTabs instances for the given tabs stops

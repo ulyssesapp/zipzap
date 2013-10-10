@@ -11,6 +11,7 @@
 #import "RKListStyle+WriterAdditions.h"
 #import "RKListCounter.h"
 #import "RKPDFRenderingContext.h"
+#import "RKParagraphStyleWrapper.h"
 
 #import "NSAttributedString+PDFCoreTextConversion.h"
 
@@ -47,19 +48,8 @@
 		__block NSRange fixRange = NSMakeRange(range.location + insertionOffset, range.length + markerString.length);
         
         [converted insertAttributedString:styledMarkerString atIndex:range.location + insertionOffset];
+		[converted fixAttributesInRange: NSMakeRange(range.location, range.length + markerString.length)];
         insertionOffset += markerString.length;
-
-		// Indent all nested paragraphs and lines
-		NSMutableString *convertedString = converted.mutableString;
-		[convertedString enumerateSubstringsInRange:fixRange options:NSStringEnumerationByParagraphs|NSStringEnumerationByLines|NSStringEnumerationSubstringNotRequired usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-			// Do not indent first line
-			if (enclosingRange.location == fixRange.location)
-				return;
-			
-			[convertedString insertString:@"\t\t" atIndex:enclosingRange.location];
-			insertionOffset += 2;
-			fixRange.length += 2;
-		}];
 		
         // Remove text list item attribute
         [converted removeAttribute:RKTextListItemAttributeName range:fixRange];
