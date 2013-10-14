@@ -30,9 +30,9 @@ typedef enum : NSUInteger {
 
 /*!
  @abstract Appends all lines of the given attributed string (in core text representation)
- @discussion After layouting a line, the given block is called with the string range of the line. If a widowWidth (the width of the first line in a succeeding frame) is given, the block gets informed if the next line of a paragraph will result to a widow if the column would terminate after the current line. The block is allowed to remove lines during its execution. All text objects in the attributed string will be instantiated by the method.
+ @discussion After layouting a line, the given block is called with the string range of the line. If a widowWidth (the width of the first line in a succeeding frame) is given, the block gets informed if the next line of a paragraph will result to a widow if the column would terminate after the current line. The block is allowed to remove lines during its execution. All text objects in the attributed string will be instantiated by the method. If specified, the first line of the frame will be layed out even though it has not enough space. This should be done on first lines of a column, if no other contents have been layed out to prevent infinite loops. 
  */
-- (void)appendAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidowWidth:(CGFloat)widowWidth block:(void(^)(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop))block;
+- (void)appendAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range enforceFirstLine:(BOOL)enforceFirstLine usingWidowWidth:(CGFloat)widowWidth block:(void(^)(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop))block;
 
 /*!
  @abstract Removes one or multiple lines from the end of the frame
