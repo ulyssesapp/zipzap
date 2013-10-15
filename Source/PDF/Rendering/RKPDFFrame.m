@@ -77,7 +77,7 @@
 
 #pragma mark - Line managment
 
-- (void)appendAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidowWidth:(CGFloat)widowWidth block:(void(^)(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop))block;
+- (void)appendAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range enforceFirstLine:(BOOL)enforceFirstLine usingWidowWidth:(CGFloat)widowWidth block:(void(^)(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop))block;
 {
 	[attributedString.string enumerateSubstringsInRange:range options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange paragraphRange, BOOL *stop) {
 		__block NSUInteger lineOfParagraph = 0;
@@ -115,8 +115,8 @@
 			CGFloat yOffset = 0;
 			CGRect lineRect = [self rectForLine:line isFirstInParagraph:isFirstLineOfParagraph isLastInParagraph:isLastLineOfParagraph isFirstInFrame:isFirstInFrame yOffset:&yOffset];
 
-			// Stop, if there is not enough place for this line
-			if (![self canAppendLineWithHeight: lineRect.size.height]) {
+			// Stop, if there is not enough place for this line (and it is not the only line in this frame)
+			if (![self canAppendLineWithHeight: lineRect.size.height] && ((_lines.count > 0) || !enforceFirstLine)) {
 				// De-register unused footnotes
 				[_context unregisterNotesInAttributedString:line.content range:NSMakeRange(0, line.content.length)];
 				

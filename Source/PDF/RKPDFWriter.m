@@ -95,7 +95,7 @@
             
             // Layout header and calculate exact position
             RKPDFFrame *headerFrame = [[RKPDFFrame alloc] initWithRect:headerConstraints growingDirection:NO context:context];
-			[headerFrame appendAttributedString:headerString inRange:NSMakeRange(0, headerString.length) usingWidowWidth:0 block:nil];
+			[headerFrame appendAttributedString:headerString inRange:NSMakeRange(0, headerString.length) enforceFirstLine:YES usingWidowWidth:0 block:nil];
             headerConstraints = headerFrame.visibleBoundingBox;
             
             // Render header
@@ -112,7 +112,7 @@
             
             // Layout header and calculate exact position
             RKPDFFrame *footerFrame = [[RKPDFFrame alloc] initWithRect:footerConstraints growingDirection:YES context:context];
-			[footerFrame appendAttributedString:footerString inRange:NSMakeRange(0, footerString.length) usingWidowWidth:0 block:nil];
+			[footerFrame appendAttributedString:footerString inRange:NSMakeRange(0, footerString.length) enforceFirstLine:YES usingWidowWidth:0 block:nil];
             footerConstraints = footerFrame.visibleBoundingBox;
 
             // Render footer

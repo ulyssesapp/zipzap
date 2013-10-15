@@ -49,6 +49,8 @@
 		
 		_contentFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingDownwards context:context];
 		_footnotesFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingUpwards context:context];
+		
+		_footnotesFrame.maximumHeight = _boundingBox.size.height - self.footnoteAreaSpacing;
 	}
 	
 	return self;
@@ -59,7 +61,10 @@
 	__block BOOL lineFailed = NO;
 	__block BOOL pageBreak = NO;
 	
-	[_contentFrame appendAttributedString:contentString inRange:range usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
+	// We enforce the layout of the first line of a column, if no other content was layed out. Required for preventing infinite loops.
+	BOOL enforceFirstLine = (_footnotesFrame.lines.count == 0);
+	
+	[_contentFrame appendAttributedString:contentString inRange:range enforceFirstLine:enforceFirstLine usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
 		// To prevent infinite loops: disable widow control for first line of a column if also no footnotes have been appended.
 		BOOL atLeastOneLine = (_footnotesFrame.lines.count > 1) || (_contentFrame.lines.count > 1);
 		
@@ -146,7 +151,7 @@
 {
 	[_footnotes appendAttributedString: footnoteString];
 	
-	[_footnotesFrame appendAttributedString:footnoteString inRange:NSMakeRange(0, footnoteString.length) usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
+	[_footnotesFrame appendAttributedString:footnoteString inRange:NSMakeRange(0, footnoteString.length) enforceFirstLine:YES usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
 
 		if (!(widowFollows || !lineOfParagraph) || [_footnotesFrame canAppendLineWithHeight: lineHeight]) {
 			return;
