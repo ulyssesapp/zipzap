@@ -110,11 +110,11 @@
                             [NSNumber numberWithUnsignedInteger:7],
                             nil
                            ];
-    RKListStyle *prependingList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.-{%%∮\\}", nil ] styles:nil];
+    RKListStyle *prependingList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%d.", @"%*%r.", @"%*%R.", @"%*%a.", @"%*%A.-{%%∮\\}%\\*", nil ] styles:nil];
     
     NSString *string = [[prependingList markerForItemNumbers: itemNumbers] RTFEscapedString];
     
-    STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750 \\\\\\}", @"Invalid marker string generated");
+    STAssertEqualObjects(string, @"3.iv.V.f.G.-\\{%\\u8750 \\\\\\}%\\\\*", @"Invalid marker string generated");
 }
 
 @end

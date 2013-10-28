@@ -73,9 +73,10 @@
                  else if ([token hasPrefix: @"%"]) {
                     insertToken = [self.class formatCodeFromEnumerationPlaceholder: token];
                 }
-                 else {
+				
+				// No matching token: just use the plain string as fallback
+                if (!insertToken)
                      insertToken = token;
-                }
                 
                 // Store token and the level to which it belongs
                 [tokens insertObject:insertToken atIndex:insertAt];
