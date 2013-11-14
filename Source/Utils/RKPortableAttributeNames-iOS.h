@@ -58,7 +58,7 @@ extern NSString *RKCategoryDocumentAttribute;
  @abstract Foreground color
  @discussion See kCTForegroundCollorAttributeName
  */
-#define RKForegroundColorAttributeName          (__bridge NSString *)kCTForegroundColorAttributeName
+#define RKForegroundColorAttributeName          NSForegroundColorAttributeName
 
 /*!
  @abstract Underline style
