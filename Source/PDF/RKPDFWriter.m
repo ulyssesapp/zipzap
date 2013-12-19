@@ -76,11 +76,10 @@
 	}
 		
     // Render pages as long we have text or footnotes
-    NSAttributedString *footnotesForLastColumn = nil;
-	NSRange remainingFootnotesRange = NSMakeRange(0, 0);
+	NSAttributedString *footnotesForLastColumn = nil;
 	BOOL endnotesAppended = NO;
 	
-    while (remainingContentRange.length || remainingFootnotesRange.length) {
+    while (remainingContentRange.length || footnotesForLastColumn.length) {
         [context startNewPage];
         
         RKPageSelectionMask pageSelector = [section pageSelectorForContext: context];
@@ -131,8 +130,8 @@
 			RKPDFColumn *column = [[RKPDFColumn alloc] initWithRect:columnBox widowWidth:nextColumnBox.size.width context:context];
 			
 			// Add remaining footnotes from last columns
-			if (remainingFootnotesRange.length)
-				[column appendFootnotes: footnotesForLastColumn];
+			if (footnotesForLastColumn.length)
+				[column appendFootnote: footnotesForLastColumn];
 			
 			// Add content
 			if (remainingContentRange.length)
@@ -151,7 +150,7 @@
 				
 				// Generate endnote string and append it to the column
 				endnotes = [NSAttributedString noteListFromNotes:endnoteStrings context:context];
-				[column appendFootnotes:endnotes];
+				[column appendFootnote: endnotes];
 				
 				[context flushSectionNotes];
 				
@@ -167,12 +166,9 @@
 				remainingContentRange.length = contentString.length - remainingContentRange.location;
 			}
 			
-			// Get the actual remaining footnotes
-			if (column.footnotesFrame.lines.count) {
-				remainingFootnotesRange.location = column.visibleFootnotesLength;
-				remainingFootnotesRange.length = column.footnotes.length - remainingFootnotesRange.location;
-				footnotesForLastColumn = [column.footnotes attributedSubstringFromRange: remainingFootnotesRange];
-			}
+			// Keep all footnotes that did not fit into the current column
+			if (column.footnotesFrame.lines.count)
+				footnotesForLastColumn = column.remainingFootnotes;
         }
     }
 }
