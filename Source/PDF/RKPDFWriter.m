@@ -167,8 +167,7 @@
 			}
 			
 			// Keep all footnotes that did not fit into the current column
-			if (column.footnotesFrame.lines.count)
-				footnotesForLastColumn = column.remainingFootnotes;
+			footnotesForLastColumn = column.remainingFootnotes;
         }
     }
 }

@@ -154,7 +154,7 @@
 {
 	__block NSUInteger appendedLength = 0;
 	
-	[_footnotesFrame appendAttributedString:footnoteString inRange:NSMakeRange(0, footnoteString.length) enforceFirstLine:YES usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
+	[_footnotesFrame appendAttributedString:footnoteString inRange:NSMakeRange(0, footnoteString.length) enforceFirstLine:NO usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
 		// This line of the footnote would create a widow, so just skip it completely.
 		if (widowFollows && (lineOfParagraph > 0) && ![_footnotesFrame canAppendLineWithHeight: nextLineHeight]) {
 			[self removeFootnoteLinesFromEnd: 1];
