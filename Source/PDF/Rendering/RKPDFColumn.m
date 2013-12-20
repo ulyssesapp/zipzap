@@ -26,8 +26,8 @@
 	// Specifies which content line belongs to which footnote line
 	NSMutableDictionary *_contentLineForFootnoteLine;
 	
-	// The buffer for storing all footnotes that have been appended to the column (might also contain content that is not shown)
-	NSMutableAttributedString *_footnotes;
+	// Contains all footnotes (or parts of it) that couldn't be appended to the current column
+	NSMutableAttributedString *_remainingFootnotes;
 }
 
 @end
@@ -45,7 +45,7 @@
 		
 		_contentLineForFootnoteLine = [NSMutableDictionary new];
 		
-		_footnotes = [NSMutableAttributedString new];
+		_remainingFootnotes = [NSMutableAttributedString new];
 		
 		_contentFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingDownwards context:context];
 		_footnotesFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingUpwards context:context];
@@ -75,8 +75,6 @@
 		NSArray *registeredFootnotes = [_context registeredPageNotesInAttributedString:contentString range:lineRange];
 		
 		[registeredFootnotes enumerateObjectsUsingBlock:^(NSDictionary *noteDescriptor, NSUInteger footnoteIndex, BOOL *stop) {
-			NSUInteger lastVisibleFootnote = _footnotes.length + 1;
-			
 			// Instantiate and append footnote
 			NSMutableAttributedString *footnoteString = [[NSAttributedString attributedStringWithNote:noteDescriptor[RKFootnoteObjectKey] enumerationString:noteDescriptor[RKFootnoteEnumerationStringKey] context:_context] mutableCopy];
 			
@@ -85,11 +83,11 @@
 			if (footnoteIndex < registeredFootnotes.count)
 				[footnoteString.mutableString appendString:@"\n"];
 
-			// Append footnote
-			[self appendFootnotes:footnoteString forContentLine:(_contentFrame.lines.count-1)];
+			// Append footnote. If there isn't enough space, keep remainder of footnote in remainingFootnoteContents. Only if there isn't even space for the first footnote, skip it entirely.
+			NSUInteger appendedFootnoteLength = [self appendFootnote:footnoteString forContentLine:_contentFrame.lines.count isFirstFootnoteOfLine:(footnoteIndex == 0)];
 			
-			if (!footnoteIndex && self.visibleFootnotesLength < lastVisibleFootnote) {
-				// We could not even add the beginning of the first footnote of the line: revert the current content line and stop
+			// Stop if we even failed to add the first footnote of a line...
+			if ((footnoteIndex == 0) && !appendedFootnoteLength) {
 				lineFailed = YES;
 				*stop = YES;
 				return;
@@ -147,35 +145,38 @@
 	}
 }
 
-- (void)appendFootnotes:(NSAttributedString *)footnoteString
+- (void)appendFootnote:(NSAttributedString *)attributedString
 {
-	[_footnotes appendAttributedString: footnoteString];
-	
-	[_footnotesFrame appendAttributedString:footnoteString inRange:NSMakeRange(0, footnoteString.length) enforceFirstLine:YES usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
+	[self appendFootnote:attributedString forContentLine:NSNotFound isFirstFootnoteOfLine:NO];
+}
 
-		if (!(widowFollows || !lineOfParagraph) || [_footnotesFrame canAppendLineWithHeight: lineHeight]) {
+- (NSUInteger)appendFootnote:(NSAttributedString *)footnoteString forContentLine:(NSUInteger)contentLine isFirstFootnoteOfLine:(BOOL)isFirstFootnoteOfLine
+{
+	__block NSUInteger appendedLength = 0;
+	
+	[_footnotesFrame appendAttributedString:footnoteString inRange:NSMakeRange(0, footnoteString.length) enforceFirstLine:NO usingWidowWidth:_widowWidth block:^(NSRange lineRange, CGFloat lineHeight, CGFloat nextLineHeight, NSUInteger lineOfParagraph, BOOL widowFollows, BOOL *stop) {
+		// This line of the footnote would create a widow, so just skip it completely.
+		if (widowFollows && (lineOfParagraph > 0) && ![_footnotesFrame canAppendLineWithHeight: nextLineHeight]) {
+			[self removeFootnoteLinesFromEnd: 1];
+			*stop = YES;
+			
 			return;
 		}
 		
-		[self removeFootnoteLinesFromEnd: 1];
-		
-		// No further lines added, since we had a widow
-		*stop = YES;
+		// Associate this footnote line to the given content line, to allow later removal...
+		[_contentLineForFootnoteLine setObject:@(contentLine) forKey:@(_footnotesFrame.lines.count - 1)];
+		appendedLength += lineRange.length;
 	}];
+	
 	
 	// Constrain content frame, so it does not overlap our footnotes
 	_contentFrame.maximumHeight = self.maximumContentHeight;
-}
-
-- (void)appendFootnotes:(NSAttributedString *)footnoteString forContentLine:(NSUInteger)contentLine
-{
-	NSUInteger firstFootnoteLine = _footnotesFrame.lines.count;
 	
-	[self appendFootnotes: footnoteString];
+	// Register footnote
+	if (appendedLength || !isFirstFootnoteOfLine)
+		[_remainingFootnotes appendAttributedString: [footnoteString attributedSubstringFromRange: NSMakeRange(appendedLength, footnoteString.length - appendedLength)]];
 	
-	for (NSUInteger footnoteLineIndex = firstFootnoteLine; footnoteLineIndex < _footnotesFrame.lines.count; footnoteLineIndex ++) {
-		[_contentLineForFootnoteLine setObject:@(contentLine) forKey:@(footnoteLineIndex)];
-	}
+	return appendedLength;
 }
 
 - (void)removeLinesFromEnd:(NSUInteger)lineCount
@@ -183,6 +184,8 @@
 	while (lineCount --) {
 		// Remove all footnotes for the line (we expect that 'removeLinesFormEnd' is only called, if footnotes are continuously added to the column)
 		NSArray *footnoteLines = [_contentLineForFootnoteLine allKeysForObject: @(_contentFrame.lines.count - 1)];
+
+		// Remove lines from rendered footnotes buffer
 		[_footnotesFrame removeLinesFromEnd: footnoteLines.count];
 		[_contentLineForFootnoteLine removeObjectsForKeys: footnoteLines];
 		
@@ -213,11 +216,6 @@
 	_contentFrame.maximumHeight = self.maximumContentHeight;
 }
 
-- (NSUInteger)visibleFootnotesLength
-{
-	return _footnotesFrame.visibleStringLength;
-}
-
 - (CGFloat)maximumContentHeight
 {
 	return _boundingBox.size.height - _footnotesFrame.visibleBoundingBox.size.height - ((_footnotesFrame.lines.count > 0) ? self.footnoteAreaSpacing  : 0);
@@ -243,7 +241,7 @@
 	[self.footnotesFrame renderUsingOptions:frameOptions];
 	
 	// Draw footnote separator, if any
-	if (self.visibleFootnotesLength) {
+	if (self.footnotesFrame.lines.count) {
 		[_context.document drawFootnoteSeparatorForBoundingBox:self.footnotesFrame.visibleBoundingBox toContext:_context];
 	}
 }

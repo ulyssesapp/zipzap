@@ -348,7 +348,7 @@
 - (BOOL)canAppendLineWithHeight:(CGFloat)expectedLineHeight
 {
 	// Can we append a further line with the expected height?
-	return ((expectedLineHeight + _visibleBoundingBox.size.height) < self.maximumHeight);
+	return ((expectedLineHeight + _visibleBoundingBox.size.height) < self.maximumHeight) && (self.maximumHeight >= 0);
 }
 
 - (void)moveLinesByPoints:(CGFloat)points

@@ -440,7 +440,7 @@
                                 ];
 
     document.characterStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
-                                [self generateCharacterStyle], @"CStyle",
+                                [self generateCharacterStyle], @"CStyle ÄÖ",
                                 nil
                                 ];
     
@@ -476,7 +476,7 @@
             "\\super "
             "\\uldb\\ulstyle9 "
             "\\sqformat\\sbasedon0 "
-            "CStyle;"
+            "CStyle \\u196 \\u214 ;"
             "}"    
         "}";
     

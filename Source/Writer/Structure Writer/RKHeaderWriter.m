@@ -92,7 +92,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
 {
-    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\n%@\n%@\n%@\n%@\n%@\n%@\n%@%@",
+    return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\\uc0\n%@\n%@\n%@\n%@\n%@\n%@\n%@%@",
             [RKHeaderWriter fontTableFromResourceManager: resources],
             [RKHeaderWriter colorTableFromResourceManager: resources],
             [RKHeaderWriter styleSheetsFromResourceManager: resources],
@@ -153,7 +153,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
          styleIndex,
          (isParagraphStyle) ? @"" : @"\\additive",
          [RKAttributedStringWriter stylesheetTagsFromAttributes:styleDefinition resources:resources],
-         styleName
+         [styleName RTFEscapedString]
          ];
     }];    
     
