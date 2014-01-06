@@ -84,7 +84,7 @@
 				[footnoteString.mutableString appendString:@"\n"];
 
 			// Append footnote. If there isn't enough space, keep remainder of footnote in remainingFootnoteContents. Only if there isn't even space for the first footnote, skip it entirely.
-			NSUInteger appendedFootnoteLength = [self appendFootnote:footnoteString forContentLine:_contentFrame.lines.count isFirstFootnoteOfLine:(footnoteIndex == 0)];
+			NSUInteger appendedFootnoteLength = [self appendFootnote:footnoteString forContentLine:_contentFrame.lines.count-1 isFirstFootnoteOfLine:(footnoteIndex == 0)];
 			
 			// Stop if we even failed to add the first footnote of a line...
 			if ((footnoteIndex == 0) && !appendedFootnoteLength) {
