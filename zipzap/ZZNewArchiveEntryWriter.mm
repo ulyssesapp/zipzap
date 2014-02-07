@@ -10,6 +10,7 @@
 
 #import "ZZChannelOutput.h"
 #import "ZZDeflateOutputStream.h"
+#import "ZZScopeGuard.h"
 #import "ZZNewArchiveEntryWriter.h"
 #import "ZZStoreOutputStream.h"
 #import "ZZHeaders.h"
@@ -72,36 +73,36 @@ namespace ZZDataConsumer
 		centralFileHeader->versionNeededToExtract = localFileHeader->versionNeededToExtract = 0x000a;
 		
 		// general purpose flag = approximate compression level + use of data descriptor (bit 3) + language encoding flag (EFS, bit 11)
-		uint32_t compressionFlag;
+		ZZGeneralPurposeBitFlag compressionFlag;
 		switch (compressionLevel)
 		{
 			case -1:
 			default:
-				compressionFlag = 0x0;
+				compressionFlag = ZZGeneralPurposeBitFlag::normalCompression;
 				break;
 			case 1:
 			case 2:
 				// super fast (-es)
-				compressionFlag = 0x3;
+				compressionFlag = ZZGeneralPurposeBitFlag::superFastCompression;
 				break;
 			case 3:
 			case 4:
 				// fast (-ef)
-				compressionFlag = 0x2;
+				compressionFlag = ZZGeneralPurposeBitFlag::fastCompression;
 				break;
 			case 5:
 			case 6:
 			case 7:
 				// normal (-en)
-				compressionFlag = 0x0;
+				compressionFlag = ZZGeneralPurposeBitFlag::normalCompression;
 				break;
 			case 8:
 			case 9:
 				// maximum (-ex)
-				compressionFlag = 0x1;
+				compressionFlag = ZZGeneralPurposeBitFlag::maximumCompression;
 				break;
 		}
-		centralFileHeader->generalPurposeBitFlag = localFileHeader->generalPurposeBitFlag = compressionFlag | (1 << 3) | (1 << 11);
+		centralFileHeader->generalPurposeBitFlag = localFileHeader->generalPurposeBitFlag = compressionFlag | ZZGeneralPurposeBitFlag::sizeInDataDescriptor | ZZGeneralPurposeBitFlag::fileNameUTF8Encoded;
 
 		centralFileHeader->compressionMethod = localFileHeader->compressionMethod = compressionLevel ? ZZCompressionMethod::deflated : ZZCompressionMethod::stored;
 		
@@ -173,7 +174,7 @@ namespace ZZDataConsumer
 
 - (BOOL)writeLocalFileToChannelOutput:(id<ZZChannelOutput>)channelOutput
 					  withInitialSkip:(uint32_t)initialSkip
-								error:(NSError**)error
+								error:(out NSError**)error
 {
 	ZZCentralFileHeader* centralFileHeader = [self centralFileHeader];
 	
@@ -191,9 +192,10 @@ namespace ZZDataConsumer
 		// use of one the blocks to write to a stream that deflates directly to the output file handle
 		ZZDeflateOutputStream* outputStream = [[ZZDeflateOutputStream alloc] initWithChannelOutput:channelOutput
 																				  compressionLevel:_compressionLevel];
-		[outputStream open];
-		@try
 		{
+			[outputStream open];
+			ZZScopeGuard outputStreamCloser(^{[outputStream close];});
+			
 			if (_dataBlock)
 			{
 				NSError* err = nil;
@@ -229,20 +231,11 @@ namespace ZZDataConsumer
 			else if (_dataConsumerBlock)
 			{
 				CGDataConsumerRef dataConsumer = CGDataConsumerCreate((__bridge void*)outputStream, &ZZDataConsumer::callbacks);
-				@try
-				{
-					if (!_dataConsumerBlock(dataConsumer, error))
-						return NO;
-				}
-				@finally
-				{
-					CGDataConsumerRelease(dataConsumer);
-				}
+				ZZScopeGuard dataConsumerReleaser(^{CGDataConsumerRelease(dataConsumer);});
+
+				if (!_dataConsumerBlock(dataConsumer, error))
+					return NO;
 			}
-		}
-		@finally
-		{
-			[outputStream close];
 		}
 		
 		dataDescriptor.crc32 = outputStream.crc32;
@@ -277,10 +270,11 @@ namespace ZZDataConsumer
 		{
 			// if stream block, data consumer block or no block, use to write to a stream that just outputs to the output file handle
 			ZZStoreOutputStream* outputStream = [[ZZStoreOutputStream alloc] initWithChannelOutput:channelOutput];
-			[outputStream open];
 			
-			@try
 			{
+				[outputStream open];
+				ZZScopeGuard outputStreamCloser(^{[outputStream close];});
+				
 				if (_streamBlock)
 				{
 					if (!_streamBlock(outputStream, error))
@@ -289,20 +283,11 @@ namespace ZZDataConsumer
 				else if (_dataConsumerBlock)
 				{
 					CGDataConsumerRef dataConsumer = CGDataConsumerCreate((__bridge void*)outputStream, &ZZDataConsumer::callbacks);
-					@try
-					{
-						if (!_dataConsumerBlock(dataConsumer, error))
-							return NO;
-					}
-					@finally
-					{
-						CGDataConsumerRelease(dataConsumer);
-					}
+					ZZScopeGuard dataConsumerReleaser(^{CGDataConsumerRelease(dataConsumer);});
+					
+					if (!_dataConsumerBlock(dataConsumer, error))
+						return NO;
 				}
-			}
-			@finally
-			{
-				[outputStream close];
 			}
 			
 			dataDescriptor.crc32 = outputStream.crc32;
@@ -324,7 +309,7 @@ namespace ZZDataConsumer
 }
 
 - (BOOL)writeCentralFileHeaderToChannelOutput:(id<ZZChannelOutput>)channelOutput
-										error:(NSError**)error
+										error:(out NSError**)error
 
 {
 	return [channelOutput writeData:_centralFileHeader

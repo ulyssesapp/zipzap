@@ -38,7 +38,7 @@ Reading an existing zip file:
 	ZZArchive* oldArchive = [ZZArchive archiveWithContentsOfURL:[NSURL fileURLWithPath:@"/tmp/old.zip"]];
 	ZZArchiveEntry* firstArchiveEntry = oldArchive.entries[0];
 	NSLog(@"The first entry's uncompressed size is %lu bytes.", firstArchiveEntry.uncompressedSize);
-	NSLog(@"The first entry's data is: %@.", firstArchiveEntry.data);
+	NSLog(@"The first entry's data is: %@.", [firstArchiveEntry newData]);
 	
 Writing a new zip file:
 
@@ -67,7 +67,9 @@ Updating an existing zip file:
 										   }]]
 						error:nil];
 
-Advanced uses can be found at [Recipes](https://github.com/pixelglow/zipzap/wiki/Recipes).
+Advanced uses: [Recipes](https://github.com/pixelglow/zipzap/wiki/Recipes)
+
+API references: [References](http://pixelglow.github.io/zipzap/api/index.html)
 
 Require
 -------
@@ -76,9 +78,8 @@ Require
 * **Link**: Only system libraries; no third-party libraries needed.
   * *ApplicationServices.framework* (Mac OS X) or *ImageIO.framework* (iOS)
   * *Foundation.framework*
-  * *libc++.dylib* if your project doesn't already use C++ or Objective-C++.
   * *libz.dylib*
-* **Run**: Mac OS X 10.7 (Lion) or iOS 4.0 and later.
+* **Run**: Mac OS X 10.7 (Lion) or iOS 5.0 and later.
 
 Support
 -------
@@ -90,3 +91,8 @@ License
 -------
 
 *zipzap* is licensed with the BSD license.
+
+Donate
+------
+
+Bitcoin: 1HUFjghYhvrpCWKAYD4x1ihE3fM4VqNL5H

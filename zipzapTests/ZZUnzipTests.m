@@ -62,7 +62,7 @@
 		ZZArchiveEntry* nextEntry = _zipFile.entries[index];
 		NSString* nextEntryFilePath = _entryFilePaths[index];
 		
-		NSInputStream* stream = [nextEntry stream];
+		NSInputStream* stream = [nextEntry newStreamWithError:nil];
 		
 		[stream open];
 		
@@ -83,10 +83,10 @@
 		
 		[stream close];
 		
-		STAssertEqualObjects(streamData,
+		XCTAssertEqualObjects(streamData,
 							 [self dataAtFilePath:nextEntryFilePath],
-							 @"[zipFile.entries[%d] stream] streamed data must match the original file data.",
-							 index);
+							 @"[zipFile.entries[%lu] stream] streamed data must match the original file data.",
+							 (unsigned long)index);
 	}
 	
 }
@@ -95,7 +95,7 @@
 {
 	NSArray* zipInfo = [ZZTasks zipInfoAtPath:_zipFileURL.path];
 	
-	STAssertEquals(_zipFile.entries.count,
+	XCTAssertEqual(_zipFile.entries.count,
 				   zipInfo.count,
 				   @"zipFile.entries.count must match the actual zip entry count.");
 	
@@ -104,65 +104,67 @@
 		ZZArchiveEntry* nextEntry = _zipFile.entries[index];
 		NSArray* nextInfo = zipInfo[index];
 		
-		STAssertTrue([nextEntry check:nil], @"zipFile.entries[%d] should check correctly.", index);
+		XCTAssertTrue([nextEntry check:nil], @"zipFile.entries[%lu] should check correctly.", (unsigned long)index);
 		
 		NSDateComponents* dateComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]
 											components: NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
 											| NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit
 											fromDate:nextEntry.lastModified];
-		STAssertEquals(dateComponents.year,
+		XCTAssertEqual(dateComponents.year,
 					   [[nextInfo[7] substringWithRange:NSMakeRange(0, 4)] integerValue],
-					   @"zipFile.entries[%d].lastModified year must match the actual zip entry last modified year.",
-					   index);
-		STAssertEquals(dateComponents.month,
+					   @"zipFile.entries[%lu].lastModified year must match the actual zip entry last modified year.",
+					   (unsigned long)index);
+		XCTAssertEqual(dateComponents.month,
 					   [[nextInfo[7] substringWithRange:NSMakeRange(4, 2)] integerValue],
-					   @"zipFile.entries[%d].lastModified month must match the actual zip entry last modified month.",
-					   index);
-		STAssertEquals(dateComponents.day,
+					   @"zipFile.entries[%lu].lastModified month must match the actual zip entry last modified month.",
+					   (unsigned long)index);
+		XCTAssertEqual(dateComponents.day,
 					   [[nextInfo[7] substringWithRange:NSMakeRange(6, 2)] integerValue],
-					   @"zipFile.entries[%d].lastModified day must match the actual zip entry last modified day.",
-					   index);
-		STAssertEquals(dateComponents.hour,
+					   @"zipFile.entries[%lu].lastModified day must match the actual zip entry last modified day.",
+					   (unsigned long)index);
+		XCTAssertEqual(dateComponents.hour,
 					   [[nextInfo[7] substringWithRange:NSMakeRange(9, 2)] integerValue],
-					   @"zipFile.entries[%d].lastModified hour must match the actual zip entry last modified hour.",
-					   index);
-		STAssertEquals(dateComponents.minute,
+					   @"zipFile.entries[%lu].lastModified hour must match the actual zip entry last modified hour.",
+					   (unsigned long)index);
+		XCTAssertEqual(dateComponents.minute,
 					   [[nextInfo[7] substringWithRange:NSMakeRange(11, 2)] integerValue],
-					   @"zipFile.entries[%d].lastModified minute must match the actual zip entry last modified minute.",
-					   index);
-		STAssertEqualsWithAccuracy(dateComponents.second,
+					   @"zipFile.entries[%lu].lastModified minute must match the actual zip entry last modified minute.",
+					   (unsigned long)index);
+		XCTAssertEqualWithAccuracy(dateComponents.second,
 								   [[nextInfo[7] substringWithRange:NSMakeRange(13, 2)] integerValue],
 								   1,
-								   @"zipFile.entries[%d].lastModified second must match the actual zip entry last modified second.",
-								   index);
+								   @"zipFile.entries[%lu].lastModified second must match the actual zip entry last modified second.",
+								   (unsigned long)index);
 				
 		char nextModeString[12];
 		strmode(nextEntry.fileMode, nextModeString);
 		nextModeString[10] = '\0';	// only want the first 10 chars of the parsed mode
-		STAssertEqualObjects([NSString stringWithUTF8String:nextModeString],
+		XCTAssertEqualObjects([NSString stringWithUTF8String:nextModeString],
 							 nextInfo[0],
-							 @"zipFile.entries[%d].fileMode must match the actual zip entry file mode.",
-							 index);
+							 @"zipFile.entries[%lu].fileMode must match the actual zip entry file mode.",
+							 (unsigned long)index);
 		
-		STAssertEquals(nextEntry.uncompressedSize,
+		XCTAssertEqual(nextEntry.uncompressedSize,
 					   (NSUInteger)[nextInfo[3] integerValue],
-					   @"zipFile.entries[%d].uncompressedSize must match the actual zip entry uncompressed size.");
+					   @"zipFile.entries[%lu].uncompressedSize must match the actual zip entry uncompressed size.",
+					   (unsigned long)index);
 		
-		STAssertEquals(nextEntry.compressedSize,
+		XCTAssertEqual(nextEntry.compressedSize,
 					   (NSUInteger)[nextInfo[5] integerValue],
-					   @"zipFile.entries[%d].compressedSize must match the actual zip entry compressed size.");
+					   @"zipFile.entries[%lu].compressedSize must match the actual zip entry compressed size.",
+					   (unsigned long)index);
 		
-		STAssertEqualObjects(nextEntry.fileName,
+		XCTAssertEqualObjects(nextEntry.fileName,
 							 nextInfo[8],
-							 @"zipFile.entries[%d].fileName must match the actual zip entry file name.",
-							 index);
+							 @"zipFile.entries[%lu].fileName must match the actual zip entry file name.",
+							 (unsigned long)index);
 	}
 
 }
 
 - (void)testZipEntryConsistentWithOriginalFile
 {
-	STAssertEquals(_zipFile.entries.count,
+	XCTAssertEqual(_zipFile.entries.count,
 				   _entryFilePaths.count,
 				   @"zipFile.entries.count must match the original file count.");
 	
@@ -171,21 +173,21 @@
 		ZZArchiveEntry* nextEntry = _zipFile.entries[index];
 		NSString* nextEntryFilePath = _entryFilePaths[index];
 		
-		STAssertEqualObjects(nextEntry.fileName,
+		XCTAssertEqualObjects(nextEntry.fileName,
 							 nextEntryFilePath,
-							 @"zipFile.entries[%d].fileName must match the original file name.",
-							 index);
+							 @"zipFile.entries[%lu].fileName must match the original file name.",
+							 (unsigned long)index);
 		
 		NSData* fileData = [self dataAtFilePath:nextEntryFilePath];
-		STAssertEquals(nextEntry.crc32,
+		XCTAssertEqual(nextEntry.crc32,
 					   crc32(0, (const Bytef*)fileData.bytes, (uInt)fileData.length),
-					   @"zipFile.entries[%d].crc32 must match the original file crc.",
-					   index);
+					   @"zipFile.entries[%lu].crc32 must match the original file crc.",
+					   (unsigned long) (unsigned long)index);
 		
-		STAssertEquals(nextEntry.uncompressedSize,
+		XCTAssertEqual(nextEntry.uncompressedSize,
 					   fileData.length,
-					   @"zipFile.entries[%d].uncompressedSize must match the original file size.",
-					   index);
+					   @"zipFile.entries[%lu].uncompressedSize must match the original file size.",
+					   (unsigned long) (unsigned long)index);
 	}
 
 }
@@ -195,7 +197,7 @@
 	NSData* rawData = [NSData dataWithContentsOfURL:_zipFileURL];
 	ZZArchive* zipFileFromData = [[ZZArchive alloc] initWithData:rawData encoding:NSUTF8StringEncoding];
     
-	STAssertEquals(_zipFile.entries.count,
+	XCTAssertEqual(_zipFile.entries.count,
 				   zipFileFromData.entries.count,
 				   @"zipFileFromData.entries.count must match the original file count.");
 	
@@ -204,19 +206,19 @@
 		ZZArchiveEntry* zipEntry = _zipFile.entries[index];
 		ZZArchiveEntry* zipFromDataEntry = zipFileFromData.entries[index];
 
-		STAssertEquals(zipEntry.compressed, zipFromDataEntry.compressed, @"zipFromDataEntry.entries[%s].compressed must match the reference entry.", index);
+		XCTAssertEqual(zipEntry.compressed, zipFromDataEntry.compressed, @"zipFromDataEntry.entries[%lu].compressed must match the reference entry.", (unsigned long)index);
 
-		STAssertEquals(zipEntry.crc32, zipFromDataEntry.crc32, @"zipFromDataEntry.entries[%s].crc32 must match the reference entry.", index);
+		XCTAssertEqual(zipEntry.crc32, zipFromDataEntry.crc32, @"zipFromDataEntry.entries[%lu].crc32 must match the reference entry.", (unsigned long)index);
 
-		STAssertEqualObjects(zipEntry.data, zipFromDataEntry.data, @"zipFromDataEntry.entries[%s].data must match the reference entry.", index);
+		XCTAssertEqualObjects([zipEntry newDataWithError:nil], [zipFromDataEntry newDataWithError:nil], @"zipFromDataEntry.entries[%lu].data must match the reference entry.", (unsigned long)index);
 
-		STAssertEquals(zipEntry.fileMode, zipFromDataEntry.fileMode, @"zipFromDataEntry.entries[%s].fileMode must match the reference entry.", index);
+		XCTAssertEqual(zipEntry.fileMode, zipFromDataEntry.fileMode, @"zipFromDataEntry.entries[%lu].fileMode must match the reference entry.", (unsigned long)index);
 
-		STAssertEqualObjects(zipEntry.fileName, zipFromDataEntry.fileName, @"zipFromDataEntry.entries[%s].fileName must match the reference entry.", index);
+		XCTAssertEqualObjects(zipEntry.fileName, zipFromDataEntry.fileName, @"zipFromDataEntry.entries[%lu].fileName must match the reference entry.", (unsigned long)index);
 
-		STAssertEquals(zipEntry.compressedSize, zipFromDataEntry.compressedSize, @"zipFromDataEntry.entries[%s].compressedSize must match the reference entry.", index);
+		XCTAssertEqual(zipEntry.compressedSize, zipFromDataEntry.compressedSize, @"zipFromDataEntry.entries[%lu].compressedSize must match the reference entry.", (unsigned long)index);
 
-		STAssertEquals(zipEntry.uncompressedSize, zipFromDataEntry.uncompressedSize, @"zipFromDataEntry.entries[%s].uncompressedSize must match the reference entry.", index);
+		XCTAssertEqual(zipEntry.uncompressedSize, zipFromDataEntry.uncompressedSize, @"zipFromDataEntry.entries[%lu].uncompressedSize must match the reference entry.", (unsigned long)index);
 	}
 }
 
@@ -227,10 +229,10 @@
 		ZZArchiveEntry* nextEntry = _zipFile.entries[index];
 		NSString* nextEntryFilePath = _entryFilePaths[index];
 		
-		STAssertEqualObjects(nextEntry.data,
+		XCTAssertEqualObjects([nextEntry newDataWithError:nil],
 							 [self dataAtFilePath:nextEntryFilePath],
-							 @"zipFile.entries[%d].data must match the original file data.",
-							 index);
+							 @"zipFile.entries[%lu].data must match the original file data.",
+							 (unsigned long)index);
 	}
 }
 
@@ -251,12 +253,12 @@
 		ZZArchiveEntry* nextEntry = _zipFile.entries[index];
 		NSString* nextEntryFilePath = _entryFilePaths[index];
 		
-		CGDataProviderRef dataProvider = [nextEntry newDataProvider];
+		CGDataProviderRef dataProvider = [nextEntry newDataProviderWithError:nil];
 		CFDataRef providerData = CGDataProviderCopyData(dataProvider);
-		STAssertEqualObjects((__bridge NSData*)providerData,
+		XCTAssertEqualObjects((__bridge NSData*)providerData,
 							 [self dataAtFilePath:nextEntryFilePath],
-							 @"[zipFile.entries[%d] newDataProvider] provided data must match the original file data.",
-							 index);
+							 @"[zipFile.entries[%lu] newDataProvider] provided data must match the original file data.",
+							 (unsigned long)index);
 		if (providerData)
 			CFRelease(providerData);
 		CGDataProviderRelease(dataProvider);
@@ -273,7 +275,7 @@
 		
 		if ([nextEntryPathExtension isEqualToString:@"png"] || [nextEntryPathExtension isEqualToString:@"jpg"])
 		{
-			CGDataProviderRef dataProvider = [nextEntry newDataProvider];
+			CGDataProviderRef dataProvider = [nextEntry newDataProviderWithError:nil];
 			CGImageSourceRef dataProviderImageSource = CGImageSourceCreateWithDataProvider(dataProvider, NULL);
 			CGImageRef dataProviderImage = CGImageSourceCreateImageAtIndex(dataProviderImageSource, 0, NULL);
 			
@@ -282,10 +284,10 @@
 																		  NULL);
 			CGImageRef fileImage = CGImageSourceCreateImageAtIndex(fileImageSource, 0, NULL);
 			
-			STAssertEqualObjects((__bridge_transfer NSData*)CGDataProviderCopyData(CGImageGetDataProvider(dataProviderImage)),
+			XCTAssertEqualObjects((__bridge_transfer NSData*)CGDataProviderCopyData(CGImageGetDataProvider(dataProviderImage)),
 								 (__bridge_transfer NSData*)CGDataProviderCopyData(CGImageGetDataProvider(fileImage)),
-								 @"[zipFile.entries[%d] newDataProvider] image data must match the original image data.",
-								 index);
+								 @"[zipFile.entries[%lu] newDataProvider] image data must match the original image data.",
+								 (unsigned long)index);
 		
 			CGImageRelease(fileImage);
 			if (fileImageSource)
@@ -295,6 +297,200 @@
 				CFRelease(dataProviderImageSource);
 			CGDataProviderRelease(dataProvider);
 		}
+	}
+}
+
+#pragma mark - Standard Decryption Tests
+
+- (void)testExtractingAndStandardDecryptingSmallZipEntryData
+{ // This file was small to begin with, encrypted with Standard and Store compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"small-test-encrypted-standard" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890abcdefghijklmnopqrstuvwxyz";
+	
+	XCTAssertEqualObjects([fileEntry newDataWithPassword:@"1234567890" error:nil], [testString dataUsingEncoding:NSUTF8StringEncoding], @"[fileEntry newDataWithPassword:...] must match the original data.");
+}
+
+- (void)testExtractingAndStandardDecryptingLargeZipEntryData
+{ // This file was large to begin with, encrypted with Standard and Deflate compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"large-test-encrypted-standard" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890abcdefghijklmnopqrstuvwxyz";
+	
+	NSInputStream *stream = [fileEntry newStreamWithPassword:@"qwertyuiop" error:nil];
+	if (!stream) XCTFail(@"[fileEntry newStreamWithPassword:...] must return a non-nil stream.");
+	
+	if (stream)
+	{
+		NSUInteger bufferLength = [testString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+		uint8_t *buffer = (uint8_t*)malloc(bufferLength);
+		const char *originalData = testString.UTF8String;
+		
+		[stream open];
+		NSInteger read, totalRead = 0;
+		while ((read = [stream read:buffer maxLength:bufferLength]) > 0)
+		{
+			totalRead += read;
+			if (strncmp((char*)buffer, originalData, bufferLength) != 0)
+			{
+				XCTFail(@"[fileEntry newStreamWithPassword:...] stream must match the original data.");
+			}
+		}
+		if (totalRead != fileEntry.uncompressedSize)
+		{
+			XCTFail(@"[fileEntry newStreamWithPassword:...] must read {uncompressedSize} amount of data.");
+		}
+		[stream close];
+		
+		free(buffer);
+	}
+}
+
+- (void)testExtractingAndAes128DecryptingSmallZipEntryData
+{ // This file was small to begin with, encrypted with AES and Store compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"small-test-encrypted-aes128" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~";
+	
+	XCTAssertEqualObjects([fileEntry newDataWithPassword:@"12345678" error:nil], [testString dataUsingEncoding:NSUTF8StringEncoding], @"[fileEntry newDataWithPassword:...] must match the original data.");
+}
+
+- (void)testExtractingAndAes128DecryptingLargeZipEntryData
+{ // This file was large to begin with, encrypted with AES and Deflate compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"large-test-encrypted-aes128" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~";
+	
+	NSInputStream *stream = [fileEntry newStreamWithPassword:@"12345678" error:nil];
+	if (!stream) XCTFail(@"[fileEntry newStreamWithPassword:...] must return a non-nil stream.");
+	
+	if (stream)
+	{
+		NSUInteger bufferLength = [testString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+		uint8_t *buffer = (uint8_t*)malloc(bufferLength);
+		const char *originalData = testString.UTF8String;
+		
+		[stream open];
+		NSInteger read, totalRead = 0;
+		while ((read = [stream read:buffer maxLength:bufferLength]) > 0)
+		{
+			totalRead += read;
+			if (strncmp((char*)buffer, originalData, bufferLength) != 0)
+			{
+				XCTFail(@"[fileEntry newStreamWithPassword:...] stream must match the original data.");
+			}
+		}
+		if (totalRead != fileEntry.uncompressedSize)
+		{
+			XCTFail(@"[fileEntry newStreamWithPassword:...] must read {uncompressedSize} amount of data.");
+		}
+		[stream close];
+		
+		free(buffer);
+	}
+}
+
+- (void)testExtractingAndAes192DecryptingSmallZipEntryData
+{ // This file was small to begin with, encrypted with AES and Store compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"small-test-encrypted-aes192" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~";
+	
+	XCTAssertEqualObjects([fileEntry newDataWithPassword:@"12345678" error:nil], [testString dataUsingEncoding:NSUTF8StringEncoding], @"[fileEntry newDataWithPassword:...] must match the original data.");
+}
+
+- (void)testExtractingAndAes192DecryptingLargeZipEntryData
+{ // This file was large to begin with, encrypted with AES and Deflate compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"large-test-encrypted-aes192" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~";
+	
+	NSInputStream *stream = [fileEntry newStreamWithPassword:@"12345678" error:nil];
+	if (!stream) XCTFail(@"[fileEntry newStreamWithPassword:...] must return a non-nil stream.");
+	
+	if (stream)
+	{
+		NSUInteger bufferLength = [testString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+		uint8_t *buffer = (uint8_t*)malloc(bufferLength);
+		const char *originalData = testString.UTF8String;
+		
+		[stream open];
+		NSInteger read, totalRead = 0;
+		while ((read = [stream read:buffer maxLength:bufferLength]) > 0)
+		{
+			totalRead += read;
+			if (strncmp((char*)buffer, originalData, bufferLength) != 0)
+			{
+				XCTFail(@"[fileEntry newStreamWithPassword:...] stream must match the original data.");
+			}
+		}
+		if (totalRead != fileEntry.uncompressedSize)
+		{
+			XCTFail(@"[fileEntry newStreamWithPassword:...] must read {uncompressedSize} amount of data.");
+		}
+		[stream close];
+		
+		free(buffer);
+	}
+}
+
+- (void)testExtractingAndAes256DecryptingSmallZipEntryData
+{ // This file was small to begin with, encrypted with AES and Store compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"small-test-encrypted-aes256" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~";
+	
+	XCTAssertEqualObjects([fileEntry newDataWithPassword:@"12345678" error:nil], [testString dataUsingEncoding:NSUTF8StringEncoding], @"[fileEntry newDataWithPassword:...] must match the original data.");
+}
+
+- (void)testExtractingAndAes256DecryptingLargeZipEntryData
+{ // This file was large to begin with, encrypted with AES and Deflate compression mode
+	ZZArchive* zipFile = [ZZArchive archiveWithContentsOfURL:[[NSBundle bundleForClass:ZZUnzipTests.class] URLForResource:@"large-test-encrypted-aes256" withExtension:@"zip"]];
+	
+	ZZArchiveEntry *fileEntry = zipFile.entries[0];
+	
+	static NSString *testString = @"1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~1234567890-=qwertyuiop[]asdfghjkl;’\\zxcvbnm,./±!@#$%^&*()_+{}:|<>?`~";
+	
+	NSInputStream *stream = [fileEntry newStreamWithPassword:@"12345678" error:nil];
+	if (!stream) XCTFail(@"[fileEntry newStreamWithPassword:...] must return a non-nil stream.");
+	
+	if (stream)
+	{
+		NSUInteger bufferLength = [testString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+		uint8_t *buffer = (uint8_t*)malloc(bufferLength);
+		const char *originalData = testString.UTF8String;
+		
+		[stream open];
+		NSInteger read, totalRead = 0;
+		while ((read = [stream read:buffer maxLength:bufferLength]) > 0)
+		{
+			totalRead += read;
+			if (strncmp((char*)buffer, originalData, bufferLength) != 0)
+			{
+				XCTFail(@"[fileEntry newStreamWithPassword:...] stream must match the original data.");
+			}
+		}
+		if (totalRead != fileEntry.uncompressedSize)
+		{
+			XCTFail(@"[fileEntry newStreamWithPassword:...] must read {uncompressedSize} amount of data.");
+		}
+		[stream close];
+		
+		free(buffer);
 	}
 }
 

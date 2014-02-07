@@ -6,9 +6,9 @@
 //
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface ZZUnzipTests : SenTestCase
+@interface ZZUnzipTests : XCTestCase
 
 - (void)setUp;
 - (void)tearDown;
@@ -22,5 +22,15 @@
 - (void)testExtractingZipEntryStreamInLargeChunks;
 - (void)testExtractingZipEntryDataProvider;
 - (void)testExtractingZipEntryDataProviderImage;
+
+// Decryptions
+- (void)testExtractingAndStandardDecryptingSmallZipEntryData;
+- (void)testExtractingAndStandardDecryptingLargeZipEntryData;
+- (void)testExtractingAndAes128DecryptingSmallZipEntryData;
+- (void)testExtractingAndAes128DecryptingLargeZipEntryData;
+- (void)testExtractingAndAes192DecryptingSmallZipEntryData;
+- (void)testExtractingAndAes192DecryptingLargeZipEntryData;
+- (void)testExtractingAndAes256DecryptingSmallZipEntryData;
+- (void)testExtractingAndAes256DecryptingLargeZipEntryData;
 
 @end

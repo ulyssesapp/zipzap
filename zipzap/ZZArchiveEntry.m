@@ -85,6 +85,11 @@
 	return NO;
 }
 
+- (BOOL)encrypted
+{
+	return NO;
+}
+
 - (NSDate*)lastModified
 {
 	return nil;
@@ -115,24 +120,39 @@
 	return nil;
 }
 
-- (NSInputStream*)stream
+- (NSInputStream*)newStreamWithError:(NSError**)error
+{
+	return [self newStreamWithPassword:nil error:error];
+}
+
+- (NSInputStream*)newStreamWithPassword:(NSString*)password error:(NSError**)error
 {
 	return nil;
 }
 
-- (BOOL)check:(NSError **)error
+- (BOOL)check:(NSError**)error
 {
 	return YES;
 }
 
-- (NSData*)data
+- (NSData*)newDataWithError:(NSError**)error
+{
+	return [self newDataWithPassword:nil error:error];
+}
+
+- (NSData*)newDataWithPassword:(NSString*)password error:(NSError**)error
 {
 	return nil;
 }
 
-- (CGDataProviderRef)newDataProvider
+- (CGDataProviderRef)newDataProviderWithError:(NSError**)error
 {
-	return NULL;
+	return [self newDataProviderWithPassword:nil error:error];
+}
+
+- (CGDataProviderRef)newDataProviderWithPassword:(NSString*)password error:(NSError**)error
+{
+	return nil;
 }
 
 - (id<ZZArchiveEntryWriter>)newWriterCanSkipLocalFile:(BOOL)canSkipLocalFile
