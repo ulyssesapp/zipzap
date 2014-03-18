@@ -27,7 +27,7 @@
     [RKAdditionalParagraphStyleWriter addTagsForAttribute:RKAdditionalParagraphStyleAttributeName value:paragraphStyle effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:nil];
     
     // Test with default settings
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @"\\keepn "
                          "a",
                          @"Invalid translation"
@@ -53,7 +53,7 @@
 	
 	
     // Test with default settings
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @"\\pard \\pardeftab0\\tx560\\tx1120\\tx1680\\tx2240\\tx2800\\tx3360\\tx3920\\tx4480\\tx5040\\tx5600\\tx6160\\tx6720 \\sl200\\slmult0"
                          "a",
                          @"Invalid translation"

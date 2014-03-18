@@ -132,7 +132,7 @@
         NSURL *verificationURL = [self writeVerificationDataForFilename:originalFilename usingPDFData:generatedPDFData pngData:generatedPNGData expectedPngData:expectedPNGData];
 				
         // Compare both files
-        STAssertTrue([generatedPNGData isEqualToData: expectedPNGData], @"Expected and generated bitmap data differ: %@. See generated data at %@.", originalFilename, verificationURL);
+        XCTAssertTrue([generatedPNGData isEqualToData: expectedPNGData], @"Expected and generated bitmap data differ: %@. See generated data at %@.", originalFilename, verificationURL);
     }];
 }
 

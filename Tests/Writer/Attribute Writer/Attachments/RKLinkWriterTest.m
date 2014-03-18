@@ -34,7 +34,7 @@
                             resources:nil
      ];      
     
-    STAssertEqualObjects([taggedString flattenedRTFString], 
+    XCTAssertEqualObjects([taggedString flattenedRTFString], 
                          @"a"
                           "{\\field{\\*\\fldinst{HYPERLINK \"http://the-soulmen.com/\"}}{\\fldrslt b}}"
                           "{\\field{\\*\\fldinst{HYPERLINK \"http://example.com/\"}}{\\fldrslt c}}"

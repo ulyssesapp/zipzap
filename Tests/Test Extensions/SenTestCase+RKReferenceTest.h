@@ -12,7 +12,7 @@
  with RTF files in the TestData/ directory. These RTF files are in turn used to manually verify
  the compaitiblity of several features with other RTF readers such as MS Word, Nissus, Mellel, OpenOffice.org
  */ 
-@interface SenTestCase (RKReferenceTest)
+@interface XCTestCase (RKReferenceTest)
 
 /*!
  @abstract Loads a document from the test bundle

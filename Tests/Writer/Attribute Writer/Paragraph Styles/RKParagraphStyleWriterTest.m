@@ -49,7 +49,7 @@
     [attributedString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyle targetSpecificRepresentation] range:NSMakeRange(0,1)];    
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle targetSpecificRepresentation] ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle targetSpecificRepresentation] ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -84,7 +84,7 @@
     [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificParagraphStyle range:NSMakeRange(0,1)];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -95,7 +95,7 @@
     paragraphStyle.alignment = RKLeftTextAlignment;    
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\ql\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -106,7 +106,7 @@
     paragraphStyle.alignment = RKCenterTextAlignment;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qc\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -117,7 +117,7 @@
     paragraphStyle.alignment = RKRightTextAlignment;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qr\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -128,7 +128,7 @@
     paragraphStyle.alignment = RKJustifiedTextAlignment;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];    
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qj\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -163,7 +163,7 @@
     [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificParagraphStyle range:NSMakeRange(0,3)];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -174,7 +174,7 @@
     paragraphStyle.lineHeightMultiple = 3.0f;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\sl720\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -189,7 +189,7 @@
     [attributedString addAttribute:RKFontAttributeName value:[self.class targetSpecificFontWithName:@"Helvetica" size:30] range:NSMakeRange(1, 1)];
     [attributedString addAttribute:RKFontAttributeName value:[self.class targetSpecificFontWithName:@"Helvetica" size:40] range:NSMakeRange(2, 1)];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\sl2400\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -231,7 +231,7 @@
     RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
     // Test with default settings
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -243,7 +243,7 @@
     paragraphStyle.tailIndent = 3.0f;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\ri19940\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -255,7 +255,7 @@
     paragraphStyle.baseWritingDirection = kCTWritingDirectionLeftToRight;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\ri60\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -267,7 +267,7 @@
     paragraphStyle.tailIndent = 3.0f;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\rtlpar\\ri19940\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -279,7 +279,7 @@
     paragraphStyle.baseWritingDirection = kCTWritingDirectionRightToLeft;
     targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
     
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\rtlpar\\ri60\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -332,7 +332,7 @@
     RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
     // Right alligned
-    STAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:resources],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:resources],
                          @"\\rtlpar"
                          "\\qr"
                          "\\fi-20"
@@ -395,7 +395,7 @@
                                       resources:nil
      ];
 
-    STAssertEqualObjects([taggedString flattenedRTFString], 
+    XCTAssertEqualObjects([taggedString flattenedRTFString], 
                          @"\\pard \\qc\\pardeftab0 "
                           "aaa"
                           "\\par\n"

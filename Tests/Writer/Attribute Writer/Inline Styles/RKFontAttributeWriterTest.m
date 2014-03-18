@@ -23,7 +23,7 @@
     // Tagging default font
     [RKFontAttributeWriter addTagsForAttribute:RKFontAttributeName value:nil effectiveRange:NSMakeRange(3,1) toString:string originalString:nil conversionPolicy:0 resources:resources];
     
-    STAssertEqualObjects([string flattenedRTFString],
+    XCTAssertEqualObjects([string flattenedRTFString],
                          @"a"
                          // Defined font
                          "\\f0 "
@@ -42,9 +42,9 @@
     
     // Test resource manager
     NSArray *fontFamilies = [resources fontFamilyNames];
-    STAssertEquals([fontFamilies count], (NSUInteger)2, @"Invalid font family count");
-    STAssertEqualObjects([fontFamilies objectAtIndex:0], @"Verdana", @"Invalid font family");
-    STAssertEqualObjects([fontFamilies objectAtIndex:1], @"Helvetica", @"Invalid font family");  
+    XCTAssertEqual([fontFamilies count], (NSUInteger)2, @"Invalid font family count");
+    XCTAssertEqualObjects([fontFamilies objectAtIndex:0], @"Verdana", @"Invalid font family");
+    XCTAssertEqualObjects([fontFamilies objectAtIndex:1], @"Helvetica", @"Invalid font family");  
 }
 
 #if !TARGET_OS_IPHONE

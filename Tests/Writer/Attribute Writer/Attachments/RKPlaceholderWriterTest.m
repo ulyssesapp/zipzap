@@ -19,7 +19,7 @@
     [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:nil];
     
     // Valid string tagging
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @">\\chpgn<",
                          @"Invalid placeholder generated"
                          );
@@ -33,7 +33,7 @@
     [RKPlaceholderWriter addTagsForAttribute:RKPlaceholderAttributeName value:placeholder effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:nil];
     
     // Valid string tagging
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @">\\sectnum<",
                          @"Invalid placeholder generated"
                          );

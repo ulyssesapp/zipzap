@@ -121,16 +121,16 @@
     // Text List properly registered
     NSDictionary *textLists = [resourcePool.listCounter listStyles];
 
-    STAssertEquals(textLists.count, (NSUInteger)1, @"Invalid text list count");
-    STAssertEquals([textLists.allValues objectAtIndex: 0], textListItem.listStyle, @"Invalid text list registered");
+    XCTAssertEqual(textLists.count, (NSUInteger)1, @"Invalid text list count");
+    XCTAssertEqual([textLists.allValues objectAtIndex: 0], textListItem.listStyle, @"Invalid text list registered");
 
     // Item counts properly incremented
     NSArray *itemNumbers = [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle];    
 
-    STAssertEquals(itemNumbers.count, (NSUInteger)3, @"Invalid text list count");
-    STAssertEquals([[itemNumbers objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)1, @"Invalid text list registered");    
-    STAssertEquals([[itemNumbers objectAtIndex: 1] unsignedIntegerValue], (NSUInteger)1, @"Invalid text list registered");    
-    STAssertEquals([[itemNumbers objectAtIndex: 2] unsignedIntegerValue], (NSUInteger)4, @"Invalid text list registered");        
+    XCTAssertEqual(itemNumbers.count, (NSUInteger)3, @"Invalid text list count");
+    XCTAssertEqual([[itemNumbers objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)1, @"Invalid text list registered");    
+    XCTAssertEqual([[itemNumbers objectAtIndex: 1] unsignedIntegerValue], (NSUInteger)1, @"Invalid text list registered");    
+    XCTAssertEqual([[itemNumbers objectAtIndex: 2] unsignedIntegerValue], (NSUInteger)4, @"Invalid text list registered");        
 }
 
 - (void)testGenerateListTags
@@ -151,7 +151,7 @@
     // Generate item number (will increment to 2.1.4)
     [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
     
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @"\\ls1\\ilvl2 "
                           "{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\listtext\t2.i.d.\t}a\\par\\pardaa",
                          @"Invalid list tagging"
@@ -182,18 +182,18 @@
     NSParagraphStyle *paragraphStyle = [attributedString attribute:NSParagraphStyleAttributeName atIndex:paragraphRange.location effectiveRange:nil];
 
     NSArray *textLists = paragraphStyle.textLists;
-    STAssertNotNil(textLists, @"No text lists found");
+    XCTAssertNotNil(textLists, @"No text lists found");
     
-    STAssertEquals(textLists.count - 1, indentation, @"Wrong indentation level");
+    XCTAssertEqual(textLists.count - 1, indentation, @"Wrong indentation level");
 
     [textLists enumerateObjectsUsingBlock:^(NSTextList *textList, NSUInteger index, BOOL *stop) {
-        STAssertEqualObjects(textList.markerFormat, [markers objectAtIndex:index], @"Invalid marker format");
+        XCTAssertEqualObjects(textList.markerFormat, [markers objectAtIndex:index], @"Invalid marker format");
 
-        STAssertEquals((textList.listOptions & NSTextListPrependEnclosingMarker) == NSTextListPrependEnclosingMarker, 
+        XCTAssertEqual((textList.listOptions & NSTextListPrependEnclosingMarker) == NSTextListPrependEnclosingMarker, 
                        (int)[[prependSettings objectAtIndex:index] unsignedIntegerValue], 
                        @"Invalid prepend setting");
 
-        STAssertEquals(textList.startingItemNumber, 
+        XCTAssertEqual(textList.startingItemNumber, 
                        [[startingItemNumber objectAtIndex:index] integerValue],
                        @"Invalid item start number"
                        );
@@ -231,7 +231,7 @@
      ];        
     
     // Test acceptance of replacement strings
-    STAssertEqualObjects([converted string],
+    XCTAssertEqualObjects([converted string],
                          @"\t1.\tA\u2028"
 						  "B\n"
                          "\t1.iii.\tAA\n"

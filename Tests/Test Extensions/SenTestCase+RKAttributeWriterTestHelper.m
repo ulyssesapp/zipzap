@@ -11,7 +11,7 @@
 #import "RKConversion.h"
 #import "RKDocument.h"
 
-@implementation SenTestCase (RKAttributeWriterTestHelper)
+@implementation XCTestCase (RKAttributeWriterTestHelper)
 
 + (void)load
 {
@@ -26,7 +26,7 @@
     
     [writer addTagsForAttribute:styleName value:style effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:attributedString conversionPolicy:0 resources:nil];
     
-    STAssertEqualObjects([taggedString flattenedRTFString], expectedTranslation, @"Invalid style");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], expectedTranslation, @"Invalid style");
     
 }
 

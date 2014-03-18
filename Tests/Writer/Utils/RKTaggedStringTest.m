@@ -35,8 +35,8 @@
     RKTaggedString *taggedString = [self sampleStringWithTags];
     
     // Exception when leaving the string boundaries
-    STAssertThrows([taggedString registerTag:@"8-1" forPosition:8], @"Placement beyond boundaries possible");    
-    STAssertThrows([taggedString registerTag:@"1000-1" forPosition:1000], @"Placement beyond boundaries possible");    
+    XCTAssertThrows([taggedString registerTag:@"8-1" forPosition:8], @"Placement beyond boundaries possible");    
+    XCTAssertThrows([taggedString registerTag:@"1000-1" forPosition:1000], @"Placement beyond boundaries possible");    
 }
 
 - (void)testAssociateTags
@@ -52,31 +52,31 @@
     // Verifying index table
     NSDictionary *tagPlacement = [taggedString _getTagPositions];
     
-    STAssertEquals(tagPlacement.count, (NSUInteger)5, @"Invalid elements count");
+    XCTAssertEqual(tagPlacement.count, (NSUInteger)5, @"Invalid elements count");
     
     // Verify indices
     NSArray *positionZero = [tagPlacement objectForKey:[NSNumber numberWithUnsignedInt:0]];
-    STAssertEquals(positionZero.count, (NSUInteger)1, @"Invalid tag count");
-    STAssertEqualObjects([positionZero objectAtIndex:0], @"0-1", @"Invalid tag");
+    XCTAssertEqual(positionZero.count, (NSUInteger)1, @"Invalid tag count");
+    XCTAssertEqualObjects([positionZero objectAtIndex:0], @"0-1", @"Invalid tag");
     
     NSArray *positionOne = [tagPlacement objectForKey:[NSNumber numberWithUnsignedInt:1]];
-    STAssertEquals(positionOne.count, (NSUInteger)3, @"Invalid tag count");
-    STAssertEqualObjects([positionOne objectAtIndex:0], @"1-1", @"Invalid tag");
-    STAssertEqualObjects([positionOne objectAtIndex:1], @"1-2", @"Invalid tag");
-    STAssertEqualObjects([positionOne objectAtIndex:2], @"1-3", @"Invalid tag");    
+    XCTAssertEqual(positionOne.count, (NSUInteger)3, @"Invalid tag count");
+    XCTAssertEqualObjects([positionOne objectAtIndex:0], @"1-1", @"Invalid tag");
+    XCTAssertEqualObjects([positionOne objectAtIndex:1], @"1-2", @"Invalid tag");
+    XCTAssertEqualObjects([positionOne objectAtIndex:2], @"1-3", @"Invalid tag");    
     
     NSArray *positionThree = [tagPlacement objectForKey:[NSNumber numberWithUnsignedInt:3]];
-    STAssertEquals(positionThree.count, (NSUInteger)1, @"Invalid tag count");
-    STAssertEqualObjects([positionThree objectAtIndex:0], @"3-1", @"Invalid tag");
+    XCTAssertEqual(positionThree.count, (NSUInteger)1, @"Invalid tag count");
+    XCTAssertEqualObjects([positionThree objectAtIndex:0], @"3-1", @"Invalid tag");
     
     NSArray *positionFour = [tagPlacement objectForKey:[NSNumber numberWithUnsignedInt:4]];
-    STAssertEquals(positionFour.count, (NSUInteger)2, @"Invalid tag count");
-    STAssertEqualObjects([positionFour objectAtIndex:0], @"4-1", @"Invalid tag");
-    STAssertEqualObjects([positionFour objectAtIndex:1], @"4-2", @"Invalid tag");
+    XCTAssertEqual(positionFour.count, (NSUInteger)2, @"Invalid tag count");
+    XCTAssertEqualObjects([positionFour objectAtIndex:0], @"4-1", @"Invalid tag");
+    XCTAssertEqualObjects([positionFour objectAtIndex:1], @"4-2", @"Invalid tag");
         
     NSArray *positionSeven = [tagPlacement objectForKey:[NSNumber numberWithUnsignedInt:7]];
-    STAssertEquals(positionSeven.count, (NSUInteger)1, @"Invalid tag count");
-    STAssertEqualObjects([positionSeven objectAtIndex:0], @"7-1", @"Invalid tag");
+    XCTAssertEqual(positionSeven.count, (NSUInteger)1, @"Invalid tag count");
+    XCTAssertEqualObjects([positionSeven objectAtIndex:0], @"7-1", @"Invalid tag");
 }
 
 - (void)testFlatteningWithoutFirstAndLastElement
@@ -87,7 +87,7 @@
     
     NSString *flattened = [taggedString flattenedRTFString];
     
-    STAssertEqualObjects(flattened, @"\\u228 "
+    XCTAssertEqualObjects(flattened, @"\\u228 "
                                      "1-11-21-3[tag with different length]b"
                                      "c"
                                      "3-1d"
@@ -107,7 +107,7 @@
     
     NSString *flattened = [taggedString flattenedRTFString];
     
-    STAssertEqualObjects(flattened, 
+    XCTAssertEqualObjects(flattened, 
                          @"\\u228 "
                           "1-11-21-3[tag with different length]b"
                           "c"
@@ -129,7 +129,7 @@
     
     NSString *flattened = [taggedString flattenedRTFString];
     
-    STAssertEqualObjects(flattened, 
+    XCTAssertEqualObjects(flattened, 
                          @"0-1\\u228 "
                           "1-11-21-3[tag with different length]b"
                           "c"
@@ -151,7 +151,7 @@
     
     NSString *flattened = [taggedString flattenedRTFString];
     
-    STAssertEqualObjects(flattened, 
+    XCTAssertEqualObjects(flattened, 
                          @"0-1\\u228 "
                          "1-11-21-3[tag with different length]b"
                          "c"
@@ -178,7 +178,7 @@
 
     NSString *flattened = [taggedString flattenedRTFString];
     
-    STAssertEqualObjects(flattened, 
+    XCTAssertEqualObjects(flattened, 
                          @"0-1"
                          "1-11-21-3[tag with different length]b"
                          ""

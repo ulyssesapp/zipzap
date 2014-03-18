@@ -8,6 +8,6 @@
 
 #import "RKSection.h"
 
-@interface RKSectionTest : SenTestCase
+@interface RKSectionTest : XCTestCase
 
 @end

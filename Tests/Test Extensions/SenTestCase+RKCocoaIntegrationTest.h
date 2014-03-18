@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface SenTestCase (RKCocoaIntegrationTest)
+@interface XCTestCase (RKCocoaIntegrationTest)
 
 /*!
  @abstract Converts the given document to RTF and re-reads it using Cocoa

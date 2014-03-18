@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface RKDocumentPersistenceTest : SenTestCase
+@interface RKDocumentPersistenceTest : XCTestCase
 
 @end

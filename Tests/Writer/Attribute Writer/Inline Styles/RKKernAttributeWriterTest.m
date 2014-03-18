@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 The Soulmen. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "RKKernAttributeWriter.h"
 
-@interface RKKernAttributeWriterTest : SenTestCase
+@interface RKKernAttributeWriterTest : XCTestCase
 
 @end
 

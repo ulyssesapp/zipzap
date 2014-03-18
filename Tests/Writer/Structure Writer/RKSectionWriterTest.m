@@ -27,31 +27,31 @@
     
     // Decimal page numbering
     section.pageNumberingStyle = RKPageNumberingDecimal;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgndec\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgndec\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Roman lower case
     section.pageNumberingStyle = RKPageNumberingRomanLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnlcrm\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnlcrm\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Roman upper case
     section.pageNumberingStyle = RKPageNumberingRomanUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucrm\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucrm\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Letter upper case
     section.pageNumberingStyle = RKPageNumberingAlphabeticUpperCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnstarts3\\pgnrestart\\pgnucltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
     // Letter lower case
     section.indexOfFirstPage = RKContinuousPageNumbering;    
     section.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 
 
 	// Diferent section starts
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnSamePage], @"\\titlepg\\sbknone\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnEvenPage], @"\\titlepg\\sbkeven\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
-    STAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnOddPage], @"\\titlepg\\sbkodd\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnSamePage], @"\\titlepg\\sbknone\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnNextPage], @"\\titlepg\\sbkpage\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnEvenPage], @"\\titlepg\\sbkeven\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
+    XCTAssertEqualObjects([RKSectionWriter sectionAttributesForSection:section withConversionPolicy:0 usingDocument:document firstPagePosition:RKSectionStartsOnOddPage], @"\\titlepg\\sbkodd\\cols2\\colsx720\\pgnlcltr\\sftnbj\\saftnbj\\sftnnalc\\saftnnruc\\endnhere\\sftnrestart", @"Invalid translation");
 }
 
 - (void)testGeneratingHeadersForSomePages
@@ -61,7 +61,7 @@
     
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
-    STAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
+    XCTAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\headerl \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par}\n",
                          @"Invalid header generated"
                          );
@@ -69,7 +69,7 @@
     [section setHeader:nil forPages:RKPageSelectionLeft];
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
-    STAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
+    XCTAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\headerr \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par}\n",
                          @"Invalid header generated"
                          );
@@ -77,7 +77,7 @@
     [section setHeader:nil forPages:RKPageSelectionRight];
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
-    STAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
+    XCTAssertEqualObjects([RKSectionWriter headersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\headerf \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par}\n",
                          @"Invalid header generated"
                          );    
@@ -90,7 +90,7 @@
     
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
     
-    STAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
+    XCTAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\footerl \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par}\n",
                          @"Invalid footer generated"
                          );
@@ -98,7 +98,7 @@
     [section setFooter:nil forPages:RKPageSelectionLeft];
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionRight];
     
-    STAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
+    XCTAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\footerr \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par}\n",
                          @"Invalid footer generated"
                          );
@@ -106,7 +106,7 @@
     [section setFooter:nil forPages:RKPageSelectionRight];
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionFirst];
     
-    STAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
+    XCTAssertEqualObjects([RKSectionWriter footersForSection:section withConversionPolicy:0 resources:resources],
                          @"{\\footerf \\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 Text\\par}\n",
                          @"Invalid footer generated"
                          );    

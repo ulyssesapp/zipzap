@@ -28,7 +28,7 @@
     ];
     
     // No picture should have been embedded and the attachment charracter should have been removed
-    STAssertEqualObjects([taggedString flattenedRTFString], @"----", @"Picture was not ignored");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], @"----", @"Picture was not ignored");
 }
 
 - (void)testPictureAttachmentsEmbedded
@@ -49,16 +49,16 @@
     NSString *flattened = [taggedString flattenedRTFString];
     
     // Attachment charracter was removed
-    STAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", RKAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
+    XCTAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", RKAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
     
     // Picture tag is properly inserted
     NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\piccropt-200\\piccropl-400\\piccropb-600\\piccropr-800\\picwgoal560\\pichgoal420\\pngblip\n";
     NSString *expectedSuffix = @"\n}--";
     
-    STAssertTrue([flattened hasPrefix: expectedPrefix],
+    XCTAssertTrue([flattened hasPrefix: expectedPrefix],
                  @"Invalid picture settings"
                  );
-    STAssertTrue([flattened hasSuffix: expectedSuffix],
+    XCTAssertTrue([flattened hasSuffix: expectedSuffix],
                  @"Invalid picture settings"
                  );
 
@@ -72,7 +72,7 @@
     NSString *expectedResult = [[NSString alloc] initWithData:[[[self imageAttachmentWithName:imageName withExtension:@"hex" margin:NSEdgeInsetsMake(0, 0, 0, 0)] imageFile] regularFileContents] encoding:NSASCIIStringEncoding ];
     NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
     
-    STAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
+    XCTAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
 - (void)testPictureAttachmentsNotNativeFileType
@@ -93,16 +93,16 @@
     NSString *flattened = [taggedString flattenedRTFString];
     
     // Attachment charracter was removed
-    STAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", RKAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
+    XCTAssertTrue(([flattened rangeOfString:[NSString stringWithFormat:@"%C", RKAttachmentCharacter]].location == NSNotFound), @"Attachment charracter not removed");
     
     // Picture tag is properly inserted
     NSString *expectedPrefix = @"--{\\pict\\picscalex100\\picscaley100\\piccropt0\\piccropl0\\piccropb0\\piccropr0\\picwgoal560\\pichgoal420\\pngblip\n";
     NSString *expectedSuffix = @"\n}--";
     
-    STAssertTrue([flattened hasPrefix: expectedPrefix],
+    XCTAssertTrue([flattened hasPrefix: expectedPrefix],
                  @"Invalid picture settings"
                  );
-    STAssertTrue([flattened hasSuffix: expectedSuffix],
+    XCTAssertTrue([flattened hasSuffix: expectedSuffix],
                  @"Invalid picture settings"
                  );
     
@@ -116,7 +116,7 @@
     NSString *expectedResult = [[NSString alloc] initWithData:[[[self imageAttachmentWithName:imageName withExtension:@"hex" margin:NSEdgeInsetsMake(0, 0, 0, 0)] imageFile] regularFileContents] encoding:NSASCIIStringEncoding ];
     NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
     
-    STAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
+    XCTAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
 - (void)testPictureAttachmentsReferenced
@@ -136,7 +136,7 @@
     NSString *flattened = [taggedString flattenedRTFString];
     
     // Correct tag placement
-    STAssertEqualObjects(flattened,
+    XCTAssertEqualObjects(flattened,
                          @"--"
                          "{{\\NeXTGraphic 0-image.png \\width0 \\height0}¬}"
                          "--",
@@ -144,12 +144,12 @@
                         );
     
     // Image was registered
-    STAssertEquals(resources.attachmentFileWrappers.count, (NSUInteger)1, @"Invalid count of file wrappers");
+    XCTAssertEqual(resources.attachmentFileWrappers.count, (NSUInteger)1, @"Invalid count of file wrappers");
 
     NSFileWrapper *registeredFile = [resources.attachmentFileWrappers.allValues  objectAtIndex:0];
     
-    STAssertEqualObjects(registeredFile.preferredFilename, @"0-image.png", @"Invalid file name");
-    STAssertEqualObjects(registeredFile.regularFileContents, [[picture imageFile] regularFileContents], @"File contents differ");
+    XCTAssertEqualObjects(registeredFile.preferredFilename, @"0-image.png", @"Invalid file name");
+    XCTAssertEqualObjects(registeredFile.regularFileContents, [[picture imageFile] regularFileContents], @"File contents differ");
 }
 
 - (void)testWordImagesAreCompatibleWithManualReferenceTest
@@ -186,10 +186,10 @@
     NSAttributedString *converted = [self convertAndRereadRTF:original documentAttributes:NULL];
     
     [converted enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
+        XCTAssertTrue(value == nil, @"No images should occur when reading with cocoa");
     }];
     
-    STAssertEqualObjects([converted string], @"abc", @"Invalid string content");
+    XCTAssertEqualObjects([converted string], @"abc", @"Invalid string content");
 }
 
 - (void)testPictureAttachmentCocoaIntegrationWithPlainRTF
@@ -203,10 +203,10 @@
     NSAttributedString *converted = [self convertAndRereadPlainRTF:original documentAttributes:NULL];
     
     [converted enumerateAttribute:NSAttachmentAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
+        XCTAssertTrue(value == nil, @"No images should occur when reading with cocoa");
     }];
     
-    STAssertEqualObjects([converted string], @"abc", @"Invalid string content");    
+    XCTAssertEqualObjects([converted string], @"abc", @"Invalid string content");    
 }
 
 - (void)testPictureAttachmentCocoaIntegrationWithRTFD
@@ -219,12 +219,12 @@
     
     NSAttributedString *converted = [self convertAndRereadRTFD:original documentAttributes:NULL];
 
-    STAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]), @"Invalid string content"); 
+    XCTAssertEqualObjects([converted string], ([NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]), @"Invalid string content"); 
     
     NSTextAttachment *convertedAttachment = [converted attribute:NSAttachmentAttributeName atIndex:1 effectiveRange:NULL];
     
-    STAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0-image.png", @"Invalid filename");
-    STAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, attachment.imageFile.regularFileContents, @"File contents differ");
+    XCTAssertEqualObjects(convertedAttachment.fileWrapper.preferredFilename, @"0-image.png", @"Invalid filename");
+    XCTAssertEqualObjects(convertedAttachment.fileWrapper.regularFileContents, attachment.imageFile.regularFileContents, @"File contents differ");
 }
 
 #endif

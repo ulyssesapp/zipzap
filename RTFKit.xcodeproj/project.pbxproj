@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		50317D3B14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
-		50317D4D14C494C800F23C04 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D4C14C494C800F23C04 /* SenTestingKit.framework */; };
 		50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
@@ -324,7 +323,6 @@
 		79DE038815F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DE038615F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.m */; };
 		79DE038A15F8A8C5001AE98F /* RKAdditionalParagraphStyleSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79DE038615F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.m */; };
 		79E76BE4151752330073153D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E76BE3151752330073153D /* Foundation.framework */; };
-		79E76BF1151752330073153D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D4C14C494C800F23C04 /* SenTestingKit.framework */; };
 		79E76BF4151752330073153D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E76BE3151752330073153D /* Foundation.framework */; };
 		79E76BFD151752340073153D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79E76BFB151752340073153D /* InfoPlist.strings */; };
 		79E76C0E151757EB0073153D /* RKListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935616714DC016F00FC0C1C /* RKListItem.m */; };
@@ -467,8 +465,7 @@
 		50317D3D14C494C800F23C04 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		50317D3E14C494C800F23C04 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		50317D3F14C494C800F23C04 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		50317D4B14C494C800F23C04 /* RTFKitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTFKitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50317D4C14C494C800F23C04 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		50317D4B14C494C800F23C04 /* RTFKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RTFKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTFKit-Prefix.pch"; sourceTree = "<group>"; };
 		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
 		50317D7014C4953800F23C04 /* RTFKitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RTFKitTests-Info.plist"; sourceTree = "<group>"; };
@@ -789,7 +786,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50317D4D14C494C800F23C04 /* SenTestingKit.framework in Frameworks */,
 				50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */,
 				50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */,
 			);
@@ -814,7 +810,6 @@
 				790AD8CD15BAD0890011E40E /* CoreGraphics.framework in Frameworks */,
 				790AD8CE15BAD0890011E40E /* CoreText.framework in Frameworks */,
 				799512181518AFD500D82511 /* libRTFKit.a in Frameworks */,
-				79E76BF1151752330073153D /* SenTestingKit.framework in Frameworks */,
 				79E76BF4151752330073153D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -836,7 +831,7 @@
 			isa = PBXGroup;
 			children = (
 				50317D3714C494C800F23C04 /* RTFKit.dylib */,
-				50317D4B14C494C800F23C04 /* RTFKitTests.octest */,
+				50317D4B14C494C800F23C04 /* RTFKitTests.xctest */,
 				79E76BE2151752330073153D /* libRTFKit.a */,
 				79E76BF0151752330073153D /* RTFKit-iOSTests.octest */,
 			);
@@ -849,7 +844,6 @@
 				7970958815A71E6000CE9DFA /* iOS */,
 				7970958715A71E5A00CE9DFA /* MacOS */,
 				50317D3A14C494C800F23C04 /* Cocoa.framework */,
-				50317D4C14C494C800F23C04 /* SenTestingKit.framework */,
 				79E76BE3151752330073153D /* Foundation.framework */,
 				50317D3C14C494C800F23C04 /* Other Frameworks */,
 			);
@@ -1730,8 +1724,8 @@
 			);
 			name = RTFKitTests;
 			productName = RTFKitTests;
-			productReference = 50317D4B14C494C800F23C04 /* RTFKitTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 50317D4B14C494C800F23C04 /* RTFKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		79E76BE1151752330073153D /* RTFKit-iOS */ = {
 			isa = PBXNativeTarget;
@@ -1775,6 +1769,7 @@
 		50317D2E14C494C800F23C04 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "The Soulmen";
 				TargetAttributes = {
@@ -2202,6 +2197,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -2232,6 +2228,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
@@ -2268,12 +2265,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/RTFKitTests-Prefix.pch";
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -2281,12 +2277,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/RTFKitTests-Prefix.pch";
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

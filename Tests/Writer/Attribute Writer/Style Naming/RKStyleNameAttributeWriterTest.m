@@ -128,7 +128,7 @@
                                           resources:resources
      ];
     
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid paragraph stylesheet used");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid paragraph stylesheet used");
     
 }
 
@@ -145,7 +145,7 @@
                                    conversionPolicy:0 
                                           resources:resources
      ];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid paragraph stylesheet used");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid paragraph stylesheet used");
 }
 
 - (void)testDefinedParagraphStyle
@@ -161,7 +161,7 @@
                                    conversionPolicy:0 
                                           resources:resources
     ];
-    STAssertEqualObjects([taggedString flattenedRTFString], 
+    XCTAssertEqualObjects([taggedString flattenedRTFString], 
                          ([NSString stringWithFormat:
                          @"a"
                          "\\s%lu "
@@ -187,7 +187,7 @@
                                           resources:resources
     ];
 
-    STAssertEqualObjects([taggedString flattenedRTFString], 
+    XCTAssertEqualObjects([taggedString flattenedRTFString], 
                          ([NSString stringWithFormat: @"a"
                          "\\s%lu "
                          "b"
@@ -211,7 +211,7 @@
                                    conversionPolicy:0 
                                           resources:resources
      ];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
 }
 
 - (void)testUndefinedCharacterStyle
@@ -227,7 +227,7 @@
                                    conversionPolicy:0 
                                           resources:resources
      ];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid character stylesheet used");
 }    
     
 - (void)testDefinedCharacterStyle
@@ -244,7 +244,7 @@
                                           resources:resources
      ];
     
-    STAssertEqualObjects([taggedString flattenedRTFString], 
+    XCTAssertEqualObjects([taggedString flattenedRTFString], 
                          ([NSString stringWithFormat:
                          @"a"
                          "{\\cs%lu "

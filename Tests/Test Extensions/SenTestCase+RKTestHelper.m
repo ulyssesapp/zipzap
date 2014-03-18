@@ -10,18 +10,18 @@
 
 #import "RKImageAttachment.h"
 
-@implementation SenTestCase (RKTestHelper)
+@implementation XCTestCase (RKTestHelper)
 
 - (NSFileWrapper *)testFileWithName:(NSString *)name withExtension:(NSString *)extension
 {
 	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:extension subdirectory:@"Test Data/resources"];
     NSFileWrapper *wrapper;
     
-    STAssertNotNil(url, @"Cannot build URL");
+    XCTAssertNotNil(url, @"Cannot build URL");
     
     NSError *error;
     wrapper = [[NSFileWrapper alloc] initWithURL:url options:NSFileWrapperReadingImmediate error:&error];
-    STAssertNotNil(wrapper, @"Load failed with error: %@", error);
+    XCTAssertNotNil(wrapper, @"Load failed with error: %@", error);
     
     return wrapper;
 }

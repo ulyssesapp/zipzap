@@ -80,10 +80,10 @@
     NSError *error;
     RKDocument *deserializedDocument = [[RKDocument alloc] initWithRTFKitPropertyListRepresentation:serializedDocument error:&error];
     
-    STAssertNil(error, @"An error occured");
-    STAssertNotNil(deserializedDocument, @"Document should not be nil");
+    XCTAssertNil(error, @"An error occured");
+    XCTAssertNotNil(deserializedDocument, @"Document should not be nil");
     
-    STAssertEqualObjects(testDocument, deserializedDocument, @"Documents not equal");
+    XCTAssertEqualObjects(testDocument, deserializedDocument, @"Documents not equal");
 }
 
 @end

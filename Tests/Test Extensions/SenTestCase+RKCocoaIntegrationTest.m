@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface SenTestCase (RKCocoaIntegrationTestPrivateMethods)
+@interface XCTestCase (RKCocoaIntegrationTestPrivateMethods)
 
 /*!
  @abstract Collects all attributes of an attributed string with a certain name and passes it to a dictionary
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation SenTestCase (RKCocoaIntegrationTest)
+@implementation XCTestCase (RKCocoaIntegrationTest)
 
 - (NSAttributedString *)convertAndRereadSingleSectionDocument:(RKDocument *)document
 {
@@ -68,19 +68,19 @@
     NSDictionary *convertedAttributesMap = [self collectAttribute:attributeName fromAttributedString:convertedAttributedString inRange:range];    
     
     // Ranges of attributes must be equal
-    STAssertEqualObjects([originalAttributesMap allKeys], [convertedAttributesMap allKeys], @"Attribute ranges differ");
+    XCTAssertEqualObjects([originalAttributesMap allKeys], [convertedAttributesMap allKeys], @"Attribute ranges differ");
     
     // Compare attributes
     [originalAttributesMap enumerateKeysAndObjectsUsingBlock:^(NSDictionary *key, id originalAttributeValue, BOOL *stop) {
         id convertedAttributeValue = [convertedAttributesMap objectForKey: key];
         
-        STAssertNotNil(convertedAttributeValue, @"Missing attribute");
+        XCTAssertNotNil(convertedAttributeValue, @"Missing attribute");
         
         if ([convertedAttributeValue isKindOfClass: [NSColor class]] && [originalAttributeValue isKindOfClass: [NSColor class]]) {
             NSColor *convertedColor = [NSColor rtfColorFromColor: convertedAttributeValue];
             NSColor *originalColor = [NSColor rtfColorFromColor: originalAttributeValue];
             
-            STAssertEqualObjects(convertedColor, originalColor, @"Attributes differ");
+            XCTAssertEqualObjects(convertedColor, originalColor, @"Attributes differ");
         }
         else if ([convertedAttributeValue isKindOfClass: [NSShadow class]] && [originalAttributeValue isKindOfClass: [NSShadow class]]) {
             NSShadow *convertedShadow = convertedAttributeValue;
@@ -89,16 +89,16 @@
             // The text system adds an alpha value to shadows
             convertedShadow.shadowColor = [NSColor rtfColorFromColor:convertedShadow.shadowColor];
             
-            STAssertEqualObjects(originalShadow, convertedShadow, @"Attributes differ");
+            XCTAssertEqualObjects(originalShadow, convertedShadow, @"Attributes differ");
         }
         else if ([convertedAttributeValue isKindOfClass: [NSParagraphStyle class]] && [originalAttributeValue isKindOfClass: [NSParagraphStyle class]]) {
             NSParagraphStyle *convertedStyle = convertedAttributeValue;
             NSParagraphStyle *originalStyle = originalAttributeValue;
             
-            STAssertEqualObjects([convertedStyle description], [originalStyle description], @"Attributes differ");
+            XCTAssertEqualObjects([convertedStyle description], [originalStyle description], @"Attributes differ");
         }
         else if (originalAttributeValue != nil) {        
-            STAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
+            XCTAssertEqualObjects(originalAttributeValue, convertedAttributeValue, @"Attributes differ");
         }
     }];
 }

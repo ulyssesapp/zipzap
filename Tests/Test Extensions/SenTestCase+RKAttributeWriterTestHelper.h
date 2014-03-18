@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface SenTestCase (RKAttributeWriterTestHelper)
+@interface XCTestCase (RKAttributeWriterTestHelper)
 
 /*!
  @abstract Asserts whether a certain style will be translated correctly

@@ -6,6 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@interface RKSectionWriterTest : SenTestCase
+@interface RKSectionWriterTest : XCTestCase
 
 @end

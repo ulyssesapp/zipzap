@@ -24,14 +24,14 @@
     [RKFootnoteWriter addTagsForAttribute:RKFootnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
     
     // Valid string tagging
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @">{\\chftn }{\\footnote \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\fi-400\\li400\\pardeftab0\\tx0\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                          );
     
     // Font was collected
-    STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)2, @"Invalid count of fonts");
-    STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:1], @"GillSans", @"Missing font");
+    XCTAssertEqual(resources.fontFamilyNames.count, (NSUInteger)2, @"Invalid count of fonts");
+    XCTAssertEqualObjects([resources.fontFamilyNames objectAtIndex:1], @"GillSans", @"Missing font");
 }
 
 - (void)testGenerateEndnote
@@ -47,14 +47,14 @@
     [RKFootnoteWriter addTagsForAttribute:RKEndnoteAttributeName value:footnote effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
     
     // Valid string tagging
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @">{\\chftn }{\\footnote\\ftnalt \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\fi-400\\li400\\pardeftab0\\tx0\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                           );
     
     // Font was collected
-    STAssertEquals(resources.fontFamilyNames.count, (NSUInteger)2, @"Invalid count of fonts");
-    STAssertEqualObjects([resources.fontFamilyNames objectAtIndex:1], @"GillSans", @"Missing font");
+    XCTAssertEqual(resources.fontFamilyNames.count, (NSUInteger)2, @"Invalid count of fonts");
+    XCTAssertEqualObjects([resources.fontFamilyNames objectAtIndex:1], @"GillSans", @"Missing font");
 }
 
 #if !TARGET_OS_IPHONE
@@ -70,10 +70,10 @@
     
     // Footnotes are just ignored
     [converted enumerateAttribute:RKFootnoteAttributeName inRange:NSMakeRange(0, [converted length]) options:0 usingBlock:^(id value, NSRange range, BOOL *stop) {
-        STAssertTrue(value == nil, @"No images should occur when reading with cocoa");
+        XCTAssertTrue(value == nil, @"No images should occur when reading with cocoa");
     }];
     
-    STAssertEqualObjects([converted string], @"abc", @"Invalid string content");    
+    XCTAssertEqualObjects([converted string], @"abc", @"Invalid string content");    
 }
 #endif
 

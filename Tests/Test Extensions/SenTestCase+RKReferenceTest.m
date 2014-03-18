@@ -6,18 +6,18 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@implementation SenTestCase (RKReferenceTest)
+@implementation XCTestCase (RKReferenceTest)
 
 -(NSString *)loadTestDocument:(NSString *)name
 {
 	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:@"rtf" subdirectory:@"Test Data"];
     NSString *content;
     
-    STAssertNotNil(url, @"Cannot build URL");
+    XCTAssertNotNil(url, @"Cannot build URL");
     
 	NSError *error;
     content = [NSString stringWithContentsOfURL:url usedEncoding:NULL error:&error];
-	STAssertNotNil(content, @"Load failed with error: %@", error);
+	XCTAssertNotNil(content, @"Load failed with error: %@", error);
     
     return content;
 }
@@ -37,7 +37,7 @@
     NSString *normalizedGenerated = [self normalizeRTFString: generated];
     NSString *normalizedExpected = [self normalizeRTFString: expected];
     
-    STAssertTrue([normalizedGenerated isEqualToString: normalizedExpected], @"Unexpected RTF conversion.", normalizedGenerated, normalizedExpected);
+    XCTAssertTrue([normalizedGenerated isEqualToString: normalizedExpected], @"Unexpected RTF conversion.");
 	if (![normalizedGenerated isEqualToString: normalizedExpected]) {
 		NSURL *temporaryDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSCachesDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
 		temporaryDirectoryURL = [temporaryDirectoryURL URLByAppendingPathComponent: @"rtfkit-rtf-test-verification"];

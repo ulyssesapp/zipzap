@@ -48,29 +48,29 @@
     
     RKListCounter *enumerator = [RKListCounter new];
     
-    STAssertEqualObjects([enumerator markerForListItem: listAItemA], @"1.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemA], @"1.", @"Invalid marker");    
+    XCTAssertEqualObjects([enumerator markerForListItem: listAItemA], @"1.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemA], @"1.", @"Invalid marker");    
 
-    STAssertEqualObjects([enumerator markerForListItem: listAItemAA], @"1.1.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemAA], @"1.1.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listAItemAA], @"1.1.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemAA], @"1.1.", @"Invalid marker");
 
-    STAssertEqualObjects([enumerator markerForListItem: listAItemAB], @"1.2.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemAB], @"1.2.", @"Invalid marker");    
+    XCTAssertEqualObjects([enumerator markerForListItem: listAItemAB], @"1.2.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemAB], @"1.2.", @"Invalid marker");    
 
-    STAssertEqualObjects([enumerator markerForListItem: listAItemABA], @"1.2.1.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemABA], @"1.2.1.", @"Invalid marker");  
+    XCTAssertEqualObjects([enumerator markerForListItem: listAItemABA], @"1.2.1.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemABA], @"1.2.1.", @"Invalid marker");  
 
-    STAssertEqualObjects([enumerator markerForListItem: listAItemABAA], @"1.2.1.1.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemABAA], @"1.2.1.12.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemABAA], @"1.2.1.13.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listAItemABAA], @"1.2.1.1.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemABAA], @"1.2.1.12.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemABAA], @"1.2.1.13.", @"Invalid marker");
     
-    STAssertEqualObjects([enumerator markerForListItem: listAItemB], @"2.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemB], @"2.", @"Invalid marker");  
+    XCTAssertEqualObjects([enumerator markerForListItem: listAItemB], @"2.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemB], @"2.", @"Invalid marker");  
 
     [enumerator resetCounterOfList: listStyleA];
 
-    STAssertEqualObjects([enumerator markerForListItem: listAItemB], @"1.", @"Invalid marker");
-    STAssertEqualObjects([enumerator markerForListItem: listBItemB], @"3.", @"Invalid marker");  
+    XCTAssertEqualObjects([enumerator markerForListItem: listAItemB], @"1.", @"Invalid marker");
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemB], @"3.", @"Invalid marker");  
 }
 
 @end

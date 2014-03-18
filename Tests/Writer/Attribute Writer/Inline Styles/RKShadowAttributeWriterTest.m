@@ -32,17 +32,17 @@
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
 
     [RKShadowAttributeWriter addTagsForAttribute:RKShadowAttributeName value:nil effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], @"abc", @"Invalid stroke width");
     
     // Setting a shadow
     taggedString = [RKTaggedString taggedStringWithString:@"abc"];    
 
     [RKShadowAttributeWriter addTagsForAttribute:RKShadowAttributeName value:shadow effectiveRange:NSMakeRange(1,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
-    STAssertEqualObjects([taggedString flattenedRTFString], @"a\\shad\\shadx40\\shady60\\shadr80\\shadc2 b\\shad0 c", @"Invalid shadow");
+    XCTAssertEqualObjects([taggedString flattenedRTFString], @"a\\shad\\shadx40\\shady60\\shadr80\\shadc2 b\\shad0 c", @"Invalid shadow");
     
     // Test resource manager
     NSArray *colors = [resources colors];
-    STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
+    XCTAssertEqual([colors count], (NSUInteger)3, @"Invalid colors count");
 }
 
 #if !TARGET_OS_IPHONE

@@ -13,18 +13,18 @@
 
 - (void)testConvertToRTFString
 {
-    STAssertEqualObjects([@"abc \\ def" RTFEscapedString], @"abc \\\\ def", @"Invalid backslash conversion");
-    STAssertEqualObjects([@"abc { def" RTFEscapedString], @"abc \\{ def", @"Invalid conversion of {");
-    STAssertEqualObjects([@"abc } def" RTFEscapedString], @"abc \\} def", @"Invalid conversion of }");
-    STAssertEqualObjects([@"abc \n def" RTFEscapedString], @"abc \\par\n def", @"Invalid conversion of }");
-    STAssertEqualObjects([@"abc \t def" RTFEscapedString], @"abc \\tab  def", @"Invalid conversion of }");
-    STAssertEqualObjects([@"abc \f def" RTFEscapedString], @"abc \\page\n def", @"Invalid conversion of }");    
+    XCTAssertEqualObjects([@"abc \\ def" RTFEscapedString], @"abc \\\\ def", @"Invalid backslash conversion");
+    XCTAssertEqualObjects([@"abc { def" RTFEscapedString], @"abc \\{ def", @"Invalid conversion of {");
+    XCTAssertEqualObjects([@"abc } def" RTFEscapedString], @"abc \\} def", @"Invalid conversion of }");
+    XCTAssertEqualObjects([@"abc \n def" RTFEscapedString], @"abc \\par\n def", @"Invalid conversion of }");
+    XCTAssertEqualObjects([@"abc \t def" RTFEscapedString], @"abc \\tab  def", @"Invalid conversion of }");
+    XCTAssertEqualObjects([@"abc \f def" RTFEscapedString], @"abc \\page\n def", @"Invalid conversion of }");    
 
     // Converting also characters in CP1252 to unicode
-    STAssertEqualObjects([@"abc ä def" RTFEscapedString], @"abc \\u228  def", @"Invalid unicode conversion");
+    XCTAssertEqualObjects([@"abc ä def" RTFEscapedString], @"abc \\u228  def", @"Invalid unicode conversion");
     
     // Converting a pure unicode charracter
-    STAssertEqualObjects([@"abc ∮ def" RTFEscapedString], @"abc \\u8750  def", @"Invalid unicode conversion");
+    XCTAssertEqualObjects([@"abc ∮ def" RTFEscapedString], @"abc \\u8750  def", @"Invalid unicode conversion");
 }
 
 - (void)testConvertToRTFDate
@@ -41,7 +41,7 @@
     
     NSDate *customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
     
-    STAssertEqualObjects([customDate RTFDate],
+    XCTAssertEqualObjects([customDate RTFDate],
                          @"\\yr2001 \\mo12 \\dy13 \\hr14 \\min15 \\sec16",
                          @"Invalid date conversion"
                          );
@@ -56,7 +56,7 @@
     
    customDate = [[NSCalendar currentCalendar] dateFromComponents:customComponents];
     
-    STAssertEqualObjects([customDate RTFDate],
+    XCTAssertEqualObjects([customDate RTFDate],
                          @"\\yr2001 \\mo2 \\dy3 \\hr4 \\min5 \\sec6",
                          @"Invalid date conversion"
                          );    
@@ -78,7 +78,7 @@
     NSData *data = [NSData dataWithBytes:testData length:9*16];
     NSString *conversion = [data stringWithRTFHexEncoding];
     
-    STAssertEqualObjects(conversion, 
+    XCTAssertEqualObjects(conversion, 
                          @"000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f\n"
                           "000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f000102030405060708090a0b0c0d0e0f\n"
                           "000102030405060708090a0b0c0d0e0f",
@@ -90,10 +90,10 @@
 
 - (void)testSanitizeFilenameForRTFD
 {
-    STAssertEqualObjects(@"foauoaus", [@"föäüóàûß" sanitizedFilenameForRTFD], @"Invalid sanitization of diacritic characters");
-    STAssertEqualObjects(@"x___x", [@"x\\{}x" sanitizedFilenameForRTFD], @"Invalid sanitization of RTF characters");
-    STAssertEqualObjects(@"x___x", [@"x?*/x" sanitizedFilenameForRTFD], @"Invalid sanitization of non-filename characters");
-    STAssertEqualObjects(@"_-", [@"∮-" sanitizedFilenameForRTFD], @"Invalid sanitization of UTF-8 characters");
+    XCTAssertEqualObjects(@"foauoaus", [@"föäüóàûß" sanitizedFilenameForRTFD], @"Invalid sanitization of diacritic characters");
+    XCTAssertEqualObjects(@"x___x", [@"x\\{}x" sanitizedFilenameForRTFD], @"Invalid sanitization of RTF characters");
+    XCTAssertEqualObjects(@"x___x", [@"x?*/x" sanitizedFilenameForRTFD], @"Invalid sanitization of non-filename characters");
+    XCTAssertEqualObjects(@"_-", [@"∮-" sanitizedFilenameForRTFD], @"Invalid sanitization of UTF-8 characters");
 }
 
 @end

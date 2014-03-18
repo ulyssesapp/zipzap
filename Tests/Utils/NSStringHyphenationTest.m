@@ -17,10 +17,10 @@
 	NSLocale *testLocaleDe = [[NSLocale alloc] initWithLocaleIdentifier:@"de_DE"];
 	
 	NSString *enString = @"Our featureset supports hyphenation!";
-	STAssertEqualObjects([enString stringByHyphenatingWithCharacter:@"-" locale:testLocaleEn inRange:NSMakeRange(0, enString.length) ], @"Our fea-ture-set sup-ports hy-phen-ation!", @"Invalid hyphenation applied");
+	XCTAssertEqualObjects([enString stringByHyphenatingWithCharacter:@"-" locale:testLocaleEn inRange:NSMakeRange(0, enString.length) ], @"Our fea-ture-set sup-ports hy-phen-ation!", @"Invalid hyphenation applied");
 
 	NSString *deString = @"Großartig, unser Programm unterstützt Silbentrennung!";
-	STAssertEqualObjects([deString stringByHyphenatingWithCharacter:@"-" locale:testLocaleDe inRange:NSMakeRange(0, deString.length) ], @"Groß-ar-tig, un-ser Pro-gramm un-ter-stützt Sil-ben-tren-nung!", @"Invalid hyphenation applied");
+	XCTAssertEqualObjects([deString stringByHyphenatingWithCharacter:@"-" locale:testLocaleDe inRange:NSMakeRange(0, deString.length) ], @"Groß-ar-tig, un-ser Pro-gramm un-ter-stützt Sil-ben-tren-nung!", @"Invalid hyphenation applied");
 }
 
 @end

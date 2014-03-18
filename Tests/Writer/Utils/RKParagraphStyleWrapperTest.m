@@ -18,7 +18,7 @@
     NSParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle];
     RKParagraphStyleWrapper *wrapped = [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: paragraphStyle];
     
-    STAssertEqualObjects(paragraphStyle, wrapped.newNSParagraphStyle, @"Styles not equal");
+    XCTAssertEqualObjects(paragraphStyle, wrapped.newNSParagraphStyle, @"Styles not equal");
 }
 #endif
 
@@ -81,24 +81,24 @@
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierBaseWritingDirection, sizeof(CTWritingDirection), &baseWritingDirection);
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &tabStops);
 
-    STAssertEquals(textAlignment, kCTJustifiedTextAlignment, @"Invalid value converted");
-    STAssertEquals(firstLineHeadIndent, (CGFloat)1, @"Invalid value converted");
-    STAssertEquals(headIndent, (CGFloat)2, @"Invalid value converted");
-    STAssertEquals(tailIndent, (CGFloat)3, @"Invalid value converted");
-    STAssertEquals(lineBreakMode, kCTLineBreakByTruncatingHead, @"Invalid value converted");
-    STAssertEquals(lineHeightMultiple, (CGFloat)4, @"Invalid value converted");
-    STAssertEquals(maximumLineHeight, (CGFloat)5, @"Invalid value converted");
-    STAssertEquals(minimumLineHeight, (CGFloat)6, @"Invalid value converted");
-    STAssertEquals(lineSpacing, (CGFloat)7, @"Invalid value converted");
-    STAssertEquals(paragraphSpacing, (CGFloat)8, @"Invalid value converted");
-    STAssertEquals(paragraphSpacingBefore, (CGFloat)9, @"Invalid value converted");
-    STAssertEquals(baseWritingDirection, kCTWritingDirectionRightToLeft, @"Invalid value converted");
-    STAssertEquals(defaultTabInterval, (CGFloat)10, @"Invalid value converted");
+    XCTAssertEqual(textAlignment, kCTJustifiedTextAlignment, @"Invalid value converted");
+    XCTAssertEqual(firstLineHeadIndent, (CGFloat)1, @"Invalid value converted");
+    XCTAssertEqual(headIndent, (CGFloat)2, @"Invalid value converted");
+    XCTAssertEqual(tailIndent, (CGFloat)3, @"Invalid value converted");
+    XCTAssertEqual(lineBreakMode, kCTLineBreakByTruncatingHead, @"Invalid value converted");
+    XCTAssertEqual(lineHeightMultiple, (CGFloat)4, @"Invalid value converted");
+    XCTAssertEqual(maximumLineHeight, (CGFloat)5, @"Invalid value converted");
+    XCTAssertEqual(minimumLineHeight, (CGFloat)6, @"Invalid value converted");
+    XCTAssertEqual(lineSpacing, (CGFloat)7, @"Invalid value converted");
+    XCTAssertEqual(paragraphSpacing, (CGFloat)8, @"Invalid value converted");
+    XCTAssertEqual(paragraphSpacingBefore, (CGFloat)9, @"Invalid value converted");
+    XCTAssertEqual(baseWritingDirection, kCTWritingDirectionRightToLeft, @"Invalid value converted");
+    XCTAssertEqual(defaultTabInterval, (CGFloat)10, @"Invalid value converted");
 
-    STAssertEquals(CFArrayGetCount(tabStops), (CFIndex)1, @"Invalid tab stops count");
+    XCTAssertEqual(CFArrayGetCount(tabStops), (CFIndex)1, @"Invalid tab stops count");
     CTTextTabRef textTab = CFArrayGetValueAtIndex(tabStops, 0);
-    STAssertEquals(CTTextTabGetAlignment(textTab), kCTTextAlignmentRight, @"Invalid value converted");
-    STAssertEquals(CTTextTabGetLocation(textTab), (double)42, @"Invalid value converted");
+    XCTAssertEqual(CTTextTabGetAlignment(textTab), kCTTextAlignmentRight, @"Invalid value converted");
+    XCTAssertEqual(CTTextTabGetLocation(textTab), (double)42, @"Invalid value converted");
     
     CFRelease(paragraphStyle);
     CFRelease(reconvertedStyle);

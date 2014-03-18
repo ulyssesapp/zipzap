@@ -51,15 +51,15 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
 
     NSDictionary *plist = [unstyled RTFKitPropertyListRepresentation];
     
-    STAssertEqualObjects(plist[RKPersistenceStringContentKey], @"This is a String!", @"String not properly serialized");
-    STAssertEquals([plist[RKPersistenceAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
+    XCTAssertEqualObjects(plist[RKPersistenceStringContentKey], @"This is a String!", @"String not properly serialized");
+    XCTAssertEqual([plist[RKPersistenceAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
 
-    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextFileWrappersPersistenceKey] count], 0UL, @"No context data expected");
-    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextListStylesPersistenceKey] count], 0UL, @"No context data expected");
+    XCTAssertEqual([plist[RKPersistenceContextKey][RKPersistenceContextFileWrappersPersistenceKey] count], 0UL, @"No context data expected");
+    XCTAssertEqual([plist[RKPersistenceContextKey][RKPersistenceContextListStylesPersistenceKey] count], 0UL, @"No context data expected");
 
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     
-    STAssertEqualObjects(unstyled, reparsed, @"Error in serialization");
+    XCTAssertEqualObjects(unstyled, reparsed, @"Error in serialization");
 }
 
 - (void)testPersistingSimpleStyles
@@ -102,7 +102,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     
-    STAssertEqualObjects(original, reparsed, @"Error in serialization");
+    XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 
 - (void)testPersistingEmptyParagraphStyles
@@ -111,15 +111,15 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     
-    STAssertEqualObjects(plist[RKPersistenceStringContentKey], @"Paragraph A\nParagraph B\nParagraph C\n", @"String not properly serialized");
-    STAssertEquals([plist[RKPersistenceAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
+    XCTAssertEqualObjects(plist[RKPersistenceStringContentKey], @"Paragraph A\nParagraph B\nParagraph C\n", @"String not properly serialized");
+    XCTAssertEqual([plist[RKPersistenceAttributeRangesKey] count], 0UL, @"No attribute ranges expected");
     
-    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextFileWrappersPersistenceKey] count], 0UL, @"No context data expected");
-    STAssertEquals([plist[RKPersistenceContextKey][RKPersistenceContextListStylesPersistenceKey] count], 0UL, @"No context data expected");
+    XCTAssertEqual([plist[RKPersistenceContextKey][RKPersistenceContextFileWrappersPersistenceKey] count], 0UL, @"No context data expected");
+    XCTAssertEqual([plist[RKPersistenceContextKey][RKPersistenceContextListStylesPersistenceKey] count], 0UL, @"No context data expected");
     
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     
-    STAssertEqualObjects(original, reparsed, @"Error in serialization");
+    XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 
 #if !TARGET_OS_IPHONE
@@ -133,7 +133,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     // Test re-reading
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    STAssertEqualObjects(original, reparsed, @"Error in serialization");
+    XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 #else
 - (void)testPersistingSimpleParagraphStyles
@@ -146,7 +146,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     // Test re-reading
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    STAssertEqualObjects(original, reparsed, @"Error in serialization");
+    XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 #endif
 
@@ -163,17 +163,17 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     // Test re-reading (an immediate comparison is not possible, since attachments cannot be compared directly)
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    STAssertEqualObjects(original.string, reparsed.string, @"Error in serialization");
+    XCTAssertEqualObjects(original.string, reparsed.string, @"Error in serialization");
     
     RKImageAttachment *reparsedAttachment = [reparsed attribute:RKImageAttachmentAttributeName atIndex:0 effectiveRange:NULL];
     NSFileWrapper *reparsedFile = reparsedAttachment.imageFile;
     
-    STAssertFalse(attachment == reparsedAttachment, @"Attachment should not be equal!");
-    STAssertFalse(file == reparsedFile, @"Attachment should not be equal!");
+    XCTAssertFalse(attachment == reparsedAttachment, @"Attachment should not be equal!");
+    XCTAssertFalse(file == reparsedFile, @"Attachment should not be equal!");
     
-    STAssertEqualObjects(reparsedFile.filename, file.filename, @"Filenames should be equal");
-    STAssertEqualObjects(reparsedFile.regularFileContents, file.regularFileContents, @"File contents should be equal");
-	STAssertEquals(reparsedAttachment.margin, attachment.margin, @"Margins should be equal.");
+    XCTAssertEqualObjects(reparsedFile.filename, file.filename, @"Filenames should be equal");
+    XCTAssertEqualObjects(reparsedFile.regularFileContents, file.regularFileContents, @"File contents should be equal");
+	ULAssertEqualStructs(reparsedAttachment.margin, attachment.margin, @"Margins should be equal.");
 }
 
 - (void)testLinks
@@ -193,8 +193,8 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSURL *firstURL = [reparsed attribute:RKLinkAttributeName atIndex:1 effectiveRange:NULL];
     NSURL *secondURL = [reparsed attribute:RKLinkAttributeName atIndex:3 effectiveRange:NULL];
     
-    STAssertEqualObjects(firstURL.absoluteString, @"http://the-soulmen.com/", @"Link not correctly converted");
-    STAssertEqualObjects(secondURL.absoluteString, @"http://www.the-soulmen.com/", @"Link not correctly converted");
+    XCTAssertEqualObjects(firstURL.absoluteString, @"http://the-soulmen.com/", @"Link not correctly converted");
+    XCTAssertEqualObjects(secondURL.absoluteString, @"http://www.the-soulmen.com/", @"Link not correctly converted");
 }
 
 - (void)testFootnotes
@@ -205,7 +205,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     // Test re-reading
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    STAssertEqualObjects(original, reparsed, @"Error in serialization");
+    XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 
 - (void)testEndnotes
@@ -216,7 +216,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     // Test re-reading
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    STAssertEqualObjects(original, reparsed, @"Error in serialization");
+    XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 
 - (void)testFootnotesWithAttachment
@@ -236,19 +236,19 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     // Test re-reading (an immediate comparison is not possible, since attachments cannot be compared directly)
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    STAssertEqualObjects(original.string, reparsed.string, @"Error in serialization");
+    XCTAssertEqualObjects(original.string, reparsed.string, @"Error in serialization");
     
     NSAttributedString *reparsedFootnote = [reparsed attribute:RKFootnoteAttributeName atIndex:0 effectiveRange:NULL];
     
     RKImageAttachment *reparsedAttachment = [reparsedFootnote attribute:RKImageAttachmentAttributeName atIndex:0 effectiveRange:NULL];
     NSFileWrapper *reparsedFile = reparsedAttachment.imageFile;
     
-    STAssertFalse(attachment == reparsedAttachment, @"Attachment should not be equal!");
-    STAssertFalse(file == reparsedFile, @"Attachment should not be equal!");
+    XCTAssertFalse(attachment == reparsedAttachment, @"Attachment should not be equal!");
+    XCTAssertFalse(file == reparsedFile, @"Attachment should not be equal!");
     
-    STAssertEqualObjects(reparsedFile.filename, file.filename, @"Filenames should be equal");
-    STAssertEqualObjects(reparsedFile.regularFileContents, file.regularFileContents, @"File contents should be equal");
-	STAssertEquals(reparsedAttachment.margin, attachment.margin, @"Margins should be equal.");
+    XCTAssertEqualObjects(reparsedFile.filename, file.filename, @"Filenames should be equal");
+    XCTAssertEqualObjects(reparsedFile.regularFileContents, file.regularFileContents, @"File contents should be equal");
+	ULAssertEqualStructs(reparsedAttachment.margin, attachment.margin, @"Margins should be equal.");
 }
 
 - (void)testListStyles
@@ -278,9 +278,9 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     RKListItem *originalItem = [originalString attribute:RKTextListItemAttributeName atIndex:0 effectiveRange:NULL];
     RKListItem *reparsedItem = [reparsed attribute:RKTextListItemAttributeName atIndex:0 effectiveRange:NULL];
     
-    STAssertFalse(originalItem == reparsedItem, @"Items must not be identical");
+    XCTAssertFalse(originalItem == reparsedItem, @"Items must not be identical");
     
-    STAssertTrue([originalItem isEqualToListItem: reparsedItem], @"Items must be equal");
+    XCTAssertTrue([originalItem isEqualToListItem: reparsedItem], @"Items must be equal");
 }
 
 - (void)testAdditionalParagraphStyles
@@ -294,7 +294,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
 	NSAttributedString *reparsedString = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
 	
 	RKAdditionalParagraphStyle *reparsedStyle = [reparsedString attribute:RKAdditionalParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
-	STAssertEqualObjects(paragraphStyle, reparsedStyle, @"Invalid deserialization.");
+	XCTAssertEqualObjects(paragraphStyle, reparsedStyle, @"Invalid deserialization.");
 }
 
 @end

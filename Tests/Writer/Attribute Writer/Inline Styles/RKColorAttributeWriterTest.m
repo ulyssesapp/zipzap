@@ -39,7 +39,7 @@
     // Tagging default color
     [RKColorAttributeWriter addTagsForAttribute:colorStyleName value:nil effectiveRange:NSMakeRange(3,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resources];
     
-    STAssertEqualObjects([taggedString flattenedRTFString],
+    XCTAssertEqualObjects([taggedString flattenedRTFString],
                          ([NSString stringWithFormat:
                             @"a"
                             // Defined color
@@ -56,7 +56,7 @@
     
     // Test resource manager
     NSArray *colors = [resources colors];
-    STAssertEquals([colors count], (NSUInteger)3, @"Invalid colors count");
+    XCTAssertEqual([colors count], (NSUInteger)3, @"Invalid colors count");
 }
 
 - (void)testColorStyles

@@ -104,7 +104,7 @@
     [resources indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Courier" size:8]];    
     
     // Generate the header
-    STAssertEqualObjects([RKHeaderWriter fontTableFromResourceManager:resources], 
+    XCTAssertEqualObjects([RKHeaderWriter fontTableFromResourceManager:resources], 
                          @"{\\fonttbl"
                           "\\f0\\fnil\\fcharset0 GillSans;"
                           "\\f1\\fnil\\fcharset0 Helvetica;"
@@ -125,7 +125,7 @@
     [resources indexOfColor: [self.class cgRGBColorWithRed:0.3 green:0.5 blue:0.1]];
     
     // Generate the header
-    STAssertEqualObjects([RKHeaderWriter colorTableFromResourceManager:resources], 
+    XCTAssertEqualObjects([RKHeaderWriter colorTableFromResourceManager:resources], 
                          @"{\\colortbl;"
                          "\\red255\\green255\\blue255;"
                          "\\red0\\green255\\blue127;"
@@ -157,7 +157,7 @@
 
     [document setMetadata: metaData];
     
-    STAssertEqualObjects([RKHeaderWriter documentMetaDataFromDocument:document],
+    XCTAssertEqualObjects([RKHeaderWriter documentMetaDataFromDocument:document],
                           @"{\\info"
                                 "{\\title Title \\{\\} \\\\ }"
                                 "{\\*\\company Company}"
@@ -198,7 +198,7 @@
 	[document setTwoSided: NO];
 	[document setPageBinding: RKPageBindingLeft];
 	
-    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+    XCTAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
                           "\\ftnbj\\aftnbj\\aendnotes"
                           "\\ftnrestart\\aftnrstcont"
@@ -216,7 +216,7 @@
 	// Test setting: right-binding, non-double sided
 	[document setTwoSided: NO];
 	[document setPageBinding: RKPageBindingRight];
-    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+    XCTAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
 						 "\\ftnbj\\aftnbj\\aendnotes"
 						 "\\ftnrestart\\aftnrstcont"
@@ -235,7 +235,7 @@
 	// Test setting: left-binding, double sided
 	[document setTwoSided: YES];
 	[document setPageBinding: RKPageBindingLeft];
-    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+    XCTAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
 						 "\\ftnbj\\aftnbj\\aendnotes"
 						 "\\ftnrestart\\aftnrstcont"
@@ -254,7 +254,7 @@
 	// Test setting: right-binding, double sided
 	[document setTwoSided: YES];
 	[document setPageBinding: RKPageBindingRight];
-    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+    XCTAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet2"
 						 "\\ftnbj\\aftnbj\\aendnotes"
 						 "\\ftnrestart\\aftnrstcont"
@@ -279,7 +279,7 @@
     [document setEndnotePlacement:RKEndnotePlacementDocumentEnd];
     [document setPageOrientation:RKPageOrientationLandscape];
     
-    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+    XCTAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet1\\enddoc"
 						 "\\ftnbj\\aftnbj\\aenddoc"
 						 "\\ftnrestart\\aftnrstcont"
@@ -299,7 +299,7 @@
     [document setFootnotePlacement:RKFootnotePlacementSectionEnd];
     [document setPageOrientation:RKPageOrientationLandscape];
     
-    STAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
+    XCTAssertEqualObjects([RKHeaderWriter documentFormatFromDocument:document],
                          @"\\fet1\\endnotes"
 						 "\\ftnbj\\aftnbj\\aenddoc"
 						 "\\ftnrestart\\aftnrstcont"
@@ -403,7 +403,7 @@
             "}"
         "}\n";
     
-    STAssertEqualObjects(listTable, expectedListTable, @"Invalid list table generated");
+    XCTAssertEqualObjects(listTable, expectedListTable, @"Invalid list table generated");
 }
 
 - (void)testGenerateListOverrideTable
@@ -426,7 +426,7 @@
            "{\\listoverride\\listid2\\listoverridecount0\\ls2}"  
          "}\n";
     
-    STAssertEqualObjects(listTable, expectedListTable, @"Invalid llist override table generated");
+    XCTAssertEqualObjects(listTable, expectedListTable, @"Invalid llist override table generated");
 }
 
 - (void)testGeneratingStylesheetTable
@@ -482,7 +482,7 @@
     
     NSString *stylesheets = [RKHeaderWriter styleSheetsFromResourceManager: resources];
     
-    STAssertEqualObjects(stylesheets, expectedStyleSheet, @"Invalid style sheet table generated");
+    XCTAssertEqualObjects(stylesheets, expectedStyleSheet, @"Invalid style sheet table generated");
     
     return;   
 }
@@ -566,14 +566,14 @@
     NSData *rtf = [document wordRTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
-    STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
+    XCTAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
     
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSPaperSizeDocumentAttribute] sizeValue], document.pageSize, @"Invalid paper size");
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSLeftMarginDocumentAttribute] floatValue], (float)document.pageInsets.inner, @"Invalid margin");
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSRightMarginDocumentAttribute] floatValue], (float)document.pageInsets.outer, @"Invalid margin");
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSTopMarginDocumentAttribute] floatValue], (float)document.pageInsets.top, @"Invalid margin");
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSBottomMarginDocumentAttribute] floatValue], (float)document.pageInsets.bottom, @"Invalid margin");    
-    STAssertEquals([[rereadDocumentProperties objectForKey:NSHyphenationFactorDocumentAttribute] floatValue], 0.9f, @"Invalid hyphenation setting");    
+    ULAssertEqualSize([[rereadDocumentProperties objectForKey:NSPaperSizeDocumentAttribute] sizeValue], document.pageSize, @"Invalid paper size");
+    XCTAssertEqual([[rereadDocumentProperties objectForKey:NSLeftMarginDocumentAttribute] floatValue], (float)document.pageInsets.inner, @"Invalid margin");
+    XCTAssertEqual([[rereadDocumentProperties objectForKey:NSRightMarginDocumentAttribute] floatValue], (float)document.pageInsets.outer, @"Invalid margin");
+    XCTAssertEqual([[rereadDocumentProperties objectForKey:NSTopMarginDocumentAttribute] floatValue], (float)document.pageInsets.top, @"Invalid margin");
+    XCTAssertEqual([[rereadDocumentProperties objectForKey:NSBottomMarginDocumentAttribute] floatValue], (float)document.pageInsets.bottom, @"Invalid margin");    
+    XCTAssertEqual([[rereadDocumentProperties objectForKey:NSHyphenationFactorDocumentAttribute] floatValue], 0.9f, @"Invalid hyphenation setting");    
 }
 
 - (void)testRereadingMetaDataSettingsWithCocoa
@@ -601,19 +601,19 @@
     NSData *rtf = [document wordRTF];
     NSAttributedString *rereadString = [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:&rereadDocumentProperties];
     
-    STAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
+    XCTAssertEqualObjects([rereadString string], @"abc", @"Invalid content");
     
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSTitleDocumentAttribute], @"Title", @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCompanyDocumentAttribute], @"Company", @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCopyrightDocumentAttribute], @"Copyright", @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSSubjectDocumentAttribute], @"Subject", @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSAuthorDocumentAttribute], @"Author", @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSKeywordsDocumentAttribute], ([NSArray arrayWithObjects: @"Keyword 1", @"Keyword 2", nil]), @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCommentDocumentAttribute], @"Comment", @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSManagerDocumentAttribute], @"Manager", @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSCreationTimeDocumentAttribute], 
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSTitleDocumentAttribute], @"Title", @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSCompanyDocumentAttribute], @"Company", @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSCopyrightDocumentAttribute], @"Copyright", @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSSubjectDocumentAttribute], @"Subject", @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSAuthorDocumentAttribute], @"Author", @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSKeywordsDocumentAttribute], ([NSArray arrayWithObjects: @"Keyword 1", @"Keyword 2", nil]), @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSCommentDocumentAttribute], @"Comment", @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSManagerDocumentAttribute], @"Manager", @"Invalid meta data");
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSCreationTimeDocumentAttribute], 
                          [self customDateWithYear:2001 month:2 day:3 hour:4 minute:5 second:6], @"Invalid meta data");
-    STAssertEqualObjects([rereadDocumentProperties objectForKey:NSModificationTimeDocumentAttribute], 
+    XCTAssertEqualObjects([rereadDocumentProperties objectForKey:NSModificationTimeDocumentAttribute], 
                          [self customDateWithYear:2006 month:5 day:4 hour:3 minute:2 second:1], @"Invalid meta data");
 }
 
