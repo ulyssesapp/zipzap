@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "50317D4A14C494C800F23C04"
-               BuildableName = "RTFKitTests.octest"
+               BuildableName = "RTFKitTests.xctest"
                BlueprintName = "RTFKitTests"
                ReferencedContainer = "container:RTFKit.xcodeproj">
             </BuildableReference>
