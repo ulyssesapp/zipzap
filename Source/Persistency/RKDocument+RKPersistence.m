@@ -87,7 +87,9 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
                                              [[propertyList objectForKey: RKPersistencyPageInsetsOuterKey] floatValue],
                                              [[propertyList objectForKey: RKPersistencyPageInsetsBottomKey] floatValue]
                                             );
-        
+        else if (![propertyList objectForKey: RKPersistencyPageInsetsTopKey] && ![propertyList objectForKey: RKPersistencyPageInsetsBottomKey] && ![propertyList objectForKey: RKPersistencyPageInsetsInnerKey] && ![propertyList objectForKey: RKPersistencyPageInsetsOuterKey])
+			self.pageInsets = RKPageInsetsMake(90, 72, 72, 90);
+		
         if ([propertyList objectForKey: RKPersistencyPageOrientationKey])
             self.pageOrientation = [[self.class serializationTableForPageOrientation] unsignedEnumValueFromString:[propertyList objectForKey: RKPersistencyPageOrientationKey] error:NULL];
         
