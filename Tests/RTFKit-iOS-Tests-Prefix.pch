@@ -4,8 +4,7 @@
 
 #ifdef __OBJC__
     #import "RTFKit-iOS-Prefix.pch"
-
-    #import <SenTestingKit/SenTestingKit.h>
+    #import <XCTest/XCTest.h>
 
     #import "RTFKit.h"
     #import "RKResourcePool.h"
