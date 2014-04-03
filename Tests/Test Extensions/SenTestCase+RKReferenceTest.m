@@ -45,8 +45,7 @@
 		[NSFileManager.defaultManager createDirectoryAtURL:temporaryDirectoryURL withIntermediateDirectories:YES attributes:nil error:NULL];
 		
 		[generated writeToURL:[[temporaryDirectoryURL URLByAppendingPathComponent: filename] URLByAppendingPathExtension: @"rtf"] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
-		
-		NSLog(@"\n\n%@\n\nShould be:\n\n%@\n\n", generated, expected);
+		[expected writeToURL:[[temporaryDirectoryURL URLByAppendingPathComponent: [filename stringByAppendingString: @"-expected"]] URLByAppendingPathExtension: @"rtf"] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
 	}
 	
     if (![normalizedGenerated isEqual: normalizedExpected])
