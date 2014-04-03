@@ -14,6 +14,12 @@ extern NSString *RKAdditionalParagraphStyleAttributeName;
 @interface RKAdditionalParagraphStyle : NSObject
 
 /*!
+ @abstract Specifies whether widow / orphan control should be skipped.
+ @discussion Default: NO. Ignored in RTF.
+ */
+@property (nonatomic) BOOL skipOrphanControl;
+
+/*!
  @abstract Specifies, whether the paragraph should be kept together with the following paragraph
  @discussion Default: NO
  */

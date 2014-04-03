@@ -113,7 +113,7 @@
 		}
 	}];
 	
-	// Control for orphaned paragraphs is not needed if we have a page break
+	// Control for orphaned paragraphs is not needed if we have a page break or orphan control was disabled
 	if (pageBreak)
 		return;
 	
@@ -122,7 +122,7 @@
 	
 	[_contentFrame.lines enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(RKPDFLine *line, NSUInteger lineIndex, BOOL *stop) {
 		NSRange paragraphRange = [contentString.string paragraphRangeForRange: line.visibleRange];
-		BOOL isOrphan = (line == _contentFrame.lastLine) && (line.visibleRange.location == paragraphRange.location) && (NSMaxRange(paragraphRange) > NSMaxRange(line.visibleRange));
+		BOOL isOrphan = (line == _contentFrame.lastLine) && (line.visibleRange.location == paragraphRange.location) && (NSMaxRange(paragraphRange) > NSMaxRange(line.visibleRange)) && (!line.additionalParagraphStyle.skipOrphanControl);
 
 		// Stop if neither an orphan nor an "keepWithFollowingParagraph" would remain on the column's end
 		if (!line.additionalParagraphStyle.keepWithFollowingParagraph && !isOrphan) {
