@@ -39,9 +39,9 @@
     
     [self convertColorAttributeWithName:NSForegroundColorAttributeName inAttributedString:converted toCoreTextAttribute:(__bridge id)kCTForegroundColorAttributeName usingRenderer:nil];
     [self convertColorAttributeWithName:NSBackgroundColorAttributeName inAttributedString:converted toCoreTextAttribute:RKPDFBackgroundColorAttributeName usingRenderer:RKPDFBackgroundColorRenderer.class];
-    [self convertColorAttributeWithName:RKUnderlineColorAttributeName inAttributedString:converted toCoreTextAttribute:(__bridge id)kCTUnderlineColorAttributeName usingRenderer:nil];
+    [self convertColorAttributeWithName:RKUnderlineColorAttributeName inAttributedString:converted toCoreTextAttribute:RKPDFRendererUnderlineColorAttributeName usingRenderer:nil];
     [self convertColorAttributeWithName:NSStrokeColorAttributeName inAttributedString:converted toCoreTextAttribute:(__bridge id)kCTStrokeColorAttributeName usingRenderer:nil];
-    [self convertColorAttributeWithName:RKStrikethroughColorAttributeName inAttributedString:converted toCoreTextAttribute:RKPDFStrikethroughColorAttributeName usingRenderer:nil];
+    [self convertColorAttributeWithName:RKStrikethroughColorAttributeName inAttributedString:converted toCoreTextAttribute:RKPDFRendererStrikethroughColorAttributeName usingRenderer:nil];
 
     return converted;
 }

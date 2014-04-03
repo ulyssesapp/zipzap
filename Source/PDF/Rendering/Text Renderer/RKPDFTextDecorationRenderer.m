@@ -11,7 +11,11 @@
 #import "RKPDFLine.h"
 #import "RKPDFRenderingContext.h"
 
-NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
+NSString *RKPDFRendererUnderlineAttributeName			= @"RKPDFRendererUnderlineAttributeName";
+NSString *RKPDFRendererUnderlineColorAttributeName		= @"RKPDFRendererStrikethroughColorAttributeName";
+
+NSString *RKPDFRendererStrikethroughAttributeName		=	@"RKPDFRendererStrikethroughAttributeName";
+NSString *RKPDFRendererStrikethroughColorAttributeName	= @"RKPDFRendererStrikethroughColorAttributeName";
 
 @implementation RKPDFTextDecorationRenderer
 
@@ -26,16 +30,16 @@ NSString *RKPDFStrikethroughColorAttributeName = @"RKPDFStrikethroughColor";
     CTFontRef font = (__bridge CTFontRef)[attributedString attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
 	
     // Get strikethrough style, color and position
-    NSUInteger strikethroughStyle = [[attributedString attribute:RKStrikethroughStyleAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
-	CGColorRef strikethroughColor = (__bridge CGColorRef)[attributedString attribute:RKPDFStrikethroughColorAttributeName atIndex:range.location effectiveRange:NULL];
+    NSUInteger strikethroughStyle = [[attributedString attribute:RKPDFRendererStrikethroughAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
+	CGColorRef strikethroughColor = (__bridge CGColorRef)[attributedString attribute:RKPDFRendererStrikethroughColorAttributeName atIndex:range.location effectiveRange:NULL];
     CGFloat strikethroughOffset = (runRect.size.height / 2.0) - line.descent;
 
 	if (strikethroughStyle)
 		[self renderStyle:strikethroughStyle color:strikethroughColor font:font withYOffset:strikethroughOffset keepDescents:NO usingContext:context run:run boundingBox:runRect];
 
     // Get underline style, color and position
-    NSUInteger underlineStyle = [[attributedString attribute:(__bridge id)kCTUnderlineStyleAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
-	CGColorRef underlineColor = (__bridge CGColorRef)[attributedString attribute:(__bridge id)kCTUnderlineColorAttributeName atIndex:range.location effectiveRange:NULL];
+    NSUInteger underlineStyle = [[attributedString attribute:RKPDFRendererUnderlineAttributeName atIndex:range.location effectiveRange:NULL] unsignedIntegerValue];
+	CGColorRef underlineColor = (__bridge CGColorRef)[attributedString attribute:RKPDFRendererUnderlineColorAttributeName atIndex:range.location effectiveRange:NULL];
 
     CGFloat underlineOffset = CTFontGetUnderlinePosition(font) - (CTFontGetUnderlineThickness(font) / 2.0);
 	if (!underlineOffset)

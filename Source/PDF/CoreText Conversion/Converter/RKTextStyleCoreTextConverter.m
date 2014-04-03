@@ -41,6 +41,9 @@
             return;
         
         [converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:range];
+		[converted addAttribute:RKPDFRendererStrikethroughAttributeName value:modeObject range:range];
+		
+		[converted removeAttribute:RKStrikethroughStyleAttributeName range:range];
     }];
 
     // Emulate underline
@@ -49,6 +52,9 @@
             return;
         
         [converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:range];
+		[converted addAttribute:RKPDFRendererUnderlineAttributeName value:modeObject range:range];
+		
+		[converted removeAttribute:(id)kCTUnderlineStyleAttributeName range:range];
     }];
     
     // Emulate superscript / subscript
