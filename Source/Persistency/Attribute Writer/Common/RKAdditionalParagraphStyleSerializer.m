@@ -11,6 +11,7 @@
 
 NSString *RKAdditionalParagraphStyleKeepWithFollowingParagraphKey = @"keepWithFollowingParagraph";
 NSString *RKAdditionalParagraphStyleHyphenationEnabledKey = @"hyphenationEnabled";
+NSString *RKAdditionalParagraphStyleSkipOrphanControlKey = @"skipOrphanControl";
 NSString *RKAdditionalParagraphStyleBaselineDistanceKey = @"baselineDistance";
 NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"overrideLineHeightAndSpacing";
 
@@ -35,6 +36,7 @@ NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"override
 	paragraphStyle.hyphenationEnabled = [[propertyList objectForKey: RKAdditionalParagraphStyleHyphenationEnabledKey] boolValue];
 	paragraphStyle.baselineDistance = [propertyList[RKAdditionalParagraphStyleBaselineDistanceKey] doubleValue];
 	paragraphStyle.overrideLineHeightAndSpacing = [propertyList[RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey] boolValue];
+	paragraphStyle.skipOrphanControl = [[propertyList objectForKey: RKAdditionalParagraphStyleSkipOrphanControlKey] boolValue];
 	
 	return paragraphStyle;
 }
@@ -46,6 +48,7 @@ NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"override
 				[NSNumber numberWithBool: attributeValue.hyphenationEnabled], RKAdditionalParagraphStyleHyphenationEnabledKey,
 				[NSNumber numberWithFloat: attributeValue.baselineDistance], RKAdditionalParagraphStyleBaselineDistanceKey,
 				[NSNumber numberWithBool: attributeValue.overrideLineHeightAndSpacing], RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey,
+				[NSNumber numberWithBool: attributeValue.skipOrphanControl], RKAdditionalParagraphStyleSkipOrphanControlKey,
 			nil];
 }
 

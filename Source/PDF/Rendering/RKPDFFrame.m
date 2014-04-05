@@ -145,6 +145,9 @@
 				[_context unregisterNotesInAttributedString:succeedingLine.content range:NSMakeRange(0, succeedingLine.content.length)];
 			}
 			
+			// Ignore widow control entirely, if needed
+			widowFollows = widowFollows && !line.additionalParagraphStyle.skipOrphanControl;
+			
 			// The block must be executed last, since it is allowed to remove lines within
 			if (block)
 				block(lineRange, line.size.height, nextLineHeight, lineOfParagraph, widowFollows, stop);

@@ -21,6 +21,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 		_hyphenationEnabled = NO;
 		_overrideLineHeightAndSpacing = NO;
 		_baselineDistance = 0;
+		_skipOrphanControl = NO;
 	}
 	
 	return self;
@@ -28,7 +29,12 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 
 - (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
 {
-	return [object isKindOfClass: RKAdditionalParagraphStyle.class] && (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph) && (self.hyphenationEnabled == object.hyphenationEnabled) && (self.baselineDistance == object.baselineDistance) && (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
+	return	   [object isKindOfClass: RKAdditionalParagraphStyle.class]
+			&& (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph)
+			&& (self.skipOrphanControl == object.skipOrphanControl)
+			&& (self.hyphenationEnabled == object.hyphenationEnabled)
+			&& (self.baselineDistance == object.baselineDistance)
+			&& (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -36,6 +42,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];
 	newStyle.keepWithFollowingParagraph = self.keepWithFollowingParagraph;
 	newStyle.hyphenationEnabled = self.hyphenationEnabled;
+	newStyle.skipOrphanControl = self.skipOrphanControl;
 	newStyle.baselineDistance = self.baselineDistance;
 	newStyle.overrideLineHeightAndSpacing = self.overrideLineHeightAndSpacing;
 	
@@ -49,11 +56,13 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 											"hyphenationEnabled:			%u, "
 											"baselineDistance:				%f, "
 										    "overrideLineHeightAndSpacing:	%d, "
+											"skipOrphanControl:				%u"
 										")",
 			self.keepWithFollowingParagraph,
 			self.hyphenationEnabled,
 			self.baselineDistance,
-			self.overrideLineHeightAndSpacing
+			self.overrideLineHeightAndSpacing,
+			self.skipOrphanControl
 			];
 }
 
