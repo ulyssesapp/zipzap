@@ -33,7 +33,8 @@
     runRect = CGRectApplyAffineTransform(runRect, CGContextGetCTM(context.pdfContext));
     
     // Place link
-    CGPDFContextSetURLForRect(context.pdfContext, (__bridge CFURLRef)URL, runRect);
+	if (URL)
+		CGPDFContextSetURLForRect(context.pdfContext, (__bridge CFURLRef)URL, runRect);
 }
 
 @end
