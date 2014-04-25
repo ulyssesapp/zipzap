@@ -2983,10 +2983,10 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
-							<key>RKImageAttachment</key>
-							<dict/>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
+							<key>RKImageAttachment</key>
+							<dict/>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -3133,10 +3133,10 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
-							<key>RKImageAttachment</key>
-							<dict/>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
+							<key>RKImageAttachment</key>
+							<dict/>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -3283,10 +3283,10 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
-							<key>RKImageAttachment</key>
-							<dict/>
 							<key>RKCharacterStyleName</key>
 							<string>Standard</string>
+							<key>RKImageAttachment</key>
+							<dict/>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -3433,13 +3433,13 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKCharacterStyleName</key>
+							<string>Standard</string>
 							<key>RKImageAttachment</key>
 							<dict>
 								<key>fileIdentifier</key>
 								<integer>1</integer>
 							</dict>
-							<key>RKCharacterStyleName</key>
-							<string>Standard</string>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -3586,13 +3586,13 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKCharacterStyleName</key>
+							<string>Standard</string>
 							<key>RKImageAttachment</key>
 							<dict>
 								<key>fileIdentifier</key>
 								<integer>1</integer>
 							</dict>
-							<key>RKCharacterStyleName</key>
-							<string>Standard</string>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -3739,13 +3739,13 @@ Video with file
 						</dict>
 						<key>attributeValues</key>
 						<dict>
+							<key>RKCharacterStyleName</key>
+							<string>Standard</string>
 							<key>RKImageAttachment</key>
 							<dict>
 								<key>fileIdentifier</key>
 								<integer>2</integer>
 							</dict>
-							<key>RKCharacterStyleName</key>
-							<string>Standard</string>
 							<key>NSParagraphStyle</key>
 							<dict>
 								<key>paragraphSpacing</key>
@@ -4691,6 +4691,10 @@ Video with file
 			</dict>
 			<key>numberOfColumns</key>
 			<integer>2</integer>
+			<key>pageNumberingStyle</key>
+			<string>decimal</string>
+			<key>indexOfFirstPage</key>
+			<integer>9223372036854775807</integer>
 			<key>headerAll</key>
 			<dict>
 				<key>string</key>
@@ -4716,10 +4720,6 @@ Video with file
 					</dict>
 				</array>
 			</dict>
-			<key>indexOfFirstPage</key>
-			<integer>9223372036854775807</integer>
-			<key>pageNumberingStyle</key>
-			<string>decimal</string>
 		</dict>
 	</array>
 	<key>pageInsetsOuter</key>
@@ -4734,7 +4734,7 @@ Video with file
 	<string>decimal</string>
 	<key>characterStyles</key>
 	<dict/>
-	<key>headerSpacing</key>
+	<key>headerSpacingAfter</key>
 	<real>36</real>
 	<key>footnoteEnumerationPolicy</key>
 	<string>perPage</string>
@@ -4742,7 +4742,7 @@ Video with file
 	<string>landscape</string>
 	<key>footnotePlacement</key>
 	<string>samePage</string>
-	<key>footerSpacing</key>
+	<key>footerSpacingBefore</key>
 	<real>36</real>
 	<key>pageInsetsBottom</key>
 	<real>90</real>

@@ -72,13 +72,15 @@
     CGRect pageBounds = [self contentBoundingBoxForPageNumber: pageNumber];
 
     // Shrink page for footer, if needed
-    if ((footer.origin.y + footer.size.height) > (pageBounds.origin.y - self.footerSpacingBefore)) {
-        pageBounds.origin.y = footer.origin.y + footer.size.height + self.footerSpacingBefore;
-        pageBounds.size.height -= (footer.origin.y + footer.size.height - pageBounds.origin.y + self.footerSpacingAfter);
+    if ((footer.size.height) && (pageBounds.origin.y < (footer.origin.y + footer.size.height + self.footerSpacingBefore))) {
+		CGFloat newY = footer.origin.y + footer.size.height + self.footerSpacingBefore;
+		
+		pageBounds.size.height -= (newY - pageBounds.origin.y);
+		pageBounds.origin.y = newY;
     }
-    
+
     // Shrink page for header, if needed
-    if (((pageBounds.origin.y + pageBounds.size.height) > (header.origin.y - self.headerSpacingAfter)) && (header.size.height)) {
+    if ((header.size.height) && ((pageBounds.origin.y + pageBounds.size.height) > (header.origin.y - self.headerSpacingAfter))) {
         pageBounds.size.height -= (pageBounds.origin.y + pageBounds.size.height) - (header.origin.y - self.headerSpacingAfter);
     }
 
