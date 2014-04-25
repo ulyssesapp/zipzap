@@ -2,22 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>pageInsetsTop</key>
+	<key>headerSpacingBefore</key>
+	<integer>72</integer>
+	<key>headerSpacingAfter</key>
 	<integer>10</integer>
-	<key>pageInsetsBottom</key>
-	<integer>10</integer>
+	<key>footerSpacingBefore</key>
+	<integer>1</integer>
+	<key>footerSpacingAfter</key>
+	<integer>1</integer>
+	<key>pageWidth</key>
+	<integer>595</integer>
 	<key>pageInsetsOuter</key>
 	<integer>10</integer>
 	<key>pageInsetsInner</key>
 	<integer>10</integer>
-	<key>headerSpacingBefore</key>
+	<key>pageInsetsTop</key>
 	<integer>10</integer>
-	<key>headerSpacingAfter</key>
-	<integer>20</integer>
-	<key>footerSpacingBefore</key>
-	<integer>30</integer>
-	<key>footerSpacingAfter</key>
-	<integer>25</integer>
+	<key>pageInsetsBottom</key>
+	<integer>10</integer>
+	<key>pageHeight</key>
+	<integer>841</integer>
 	<key>twoSided</key>
 	<true/>
 	<key>pageBinding</key>
@@ -25,7 +29,7 @@
 	<key>sections</key>
 	<array>
 		<dict>
-			<key>footerLeft</key>
+			<key>headerLeft</key>
 			<dict>
 				<key>attributeRanges</key>
 				<array>
@@ -47,9 +51,7 @@
 				<key>string</key>
 				<string>-   - Left Page</string>
 			</dict>
-			<key>numberOfColumns</key>
-			<integer>2</integer>
-			<key>headerLeft</key>
+			<key>headerRight</key>
 			<dict>
 				<key>attributeRanges</key>
 				<array>
@@ -64,21 +66,43 @@
 						<key>attributeValues</key>
 						<dict>
 							<key>RKPlaceholder</key>
-							<string>pageNumber</string>
+							<string>sectionNumber</string>
 						</dict>
 					</dict>
 				</array>
 				<key>string</key>
-				<string>-   - Page</string>
+				<string>-   - Right Page</string>
+			</dict>
+			<key>numberOfColumns</key>
+			<integer>2</integer>
+			<key>headerFirst</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>2</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKPlaceholder</key>
+							<string>sectionNumber</string>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>-   - First Page</string>
 			</dict>
 			<key>content</key>
 			<dict>
 				<key>attributeRanges</key>
 				<array/>
 				<key>string</key>
-				<string>Header should have a preceding space of 10pt, a succeeding space of 20pt. Footer should have a preceeding space of 30pt, a succeeding space of 25pt. Page inset top / bottom is 10pt. Should be overridden on pages with headers and footers.
-Headers and footers are not visible on first page. Should use page insets instead (10pt).
-
+				<string>Footer should be not visible. Header should be a preceedings space of 72pt, a succeedings space of 10pt. Page insets should be 10pt.
 
 
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 

@@ -21,8 +21,10 @@ NSString *RKPersistencyHyphenationEnabledKey            = @"hyphenationEnabled";
 NSString *RKPersistencyDocumentLocaleKey				= @"locale";
 NSString *RKPersistencyPageWidthKey                     = @"pageWidth";
 NSString *RKPersistencyPageHeightKey                    = @"pageHeight";
-NSString *RKPersistencyHeaderSpacingKey                 = @"headerSpacing";
-NSString *RKPersistencyFooterSpacingKey                 = @"footerSpacing";
+NSString *RKPersistencyHeaderSpacingBeforeKey           = @"headerSpacingBefore";
+NSString *RKPersistencyHeaderSpacingAfterKey            = @"headerSpacingAfter";
+NSString *RKPersistencyFooterSpacingBeforeKey           = @"footerSpacingBefore";
+NSString *RKPersistencyFooterSpacingAfterKey            = @"footerSpacingAfter";
 NSString *RKPersistencyPageInsetsTopKey                 = @"pageInsetsTop";
 NSString *RKPersistencyPageInsetsBottomKey              = @"pageInsetsBottom";
 NSString *RKPersistencyPageInsetsInnerKey               = @"pageInsetsInner";
@@ -74,12 +76,18 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 		
         if ([propertyList objectForKey: RKPersistencyPageWidthKey])
             self.pageSize = CGSizeMake([[propertyList objectForKey: RKPersistencyPageWidthKey] floatValue], [[propertyList objectForKey: RKPersistencyPageHeightKey] floatValue]);
-        
-        if ([propertyList objectForKey: RKPersistencyHeaderSpacingKey])
-            self.headerSpacingBefore = [[propertyList objectForKey: RKPersistencyHeaderSpacingKey] floatValue];
-        
-        if ([propertyList objectForKey: RKPersistencyFooterSpacingKey])
-            self.footerSpacingAfter = [[propertyList objectForKey: RKPersistencyFooterSpacingKey] floatValue];
+
+        if ([propertyList objectForKey: RKPersistencyHeaderSpacingBeforeKey])
+            self.headerSpacingBefore = [[propertyList objectForKey: RKPersistencyHeaderSpacingBeforeKey] floatValue];
+		      
+        if ([propertyList objectForKey: RKPersistencyHeaderSpacingAfterKey])
+            self.headerSpacingAfter = [[propertyList objectForKey: RKPersistencyHeaderSpacingAfterKey] floatValue];
+		
+        if ([propertyList objectForKey: RKPersistencyFooterSpacingBeforeKey])
+            self.footerSpacingBefore = [[propertyList objectForKey: RKPersistencyFooterSpacingBeforeKey] floatValue];
+		      
+        if ([propertyList objectForKey: RKPersistencyFooterSpacingAfterKey])
+            self.footerSpacingAfter = [[propertyList objectForKey: RKPersistencyFooterSpacingAfterKey] floatValue];
 
         if ([propertyList objectForKey: RKPersistencyPageInsetsTopKey])
             self.pageInsets = RKPageInsetsMake([[propertyList objectForKey: RKPersistencyPageInsetsTopKey] floatValue],
@@ -199,8 +207,8 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 	propertyList[RKPersistencyDocumentLocaleKey] = self.locale.localeIdentifier;
     propertyList[RKPersistencyPageWidthKey] = [NSNumber numberWithFloat: self.pageSize.width];
     propertyList[RKPersistencyPageHeightKey] = [NSNumber numberWithFloat: self.pageSize.height];
-    propertyList[RKPersistencyHeaderSpacingKey] = [NSNumber numberWithFloat: self.headerSpacingBefore];
-    propertyList[RKPersistencyFooterSpacingKey] = [NSNumber numberWithFloat: self.footerSpacingAfter];
+    propertyList[RKPersistencyHeaderSpacingBeforeKey] = [NSNumber numberWithFloat: self.headerSpacingBefore];
+    propertyList[RKPersistencyFooterSpacingAfterKey] = [NSNumber numberWithFloat: self.footerSpacingAfter];
     propertyList[RKPersistencyPageInsetsTopKey] = [NSNumber numberWithFloat: self.pageInsets.top];
     propertyList[RKPersistencyPageInsetsBottomKey] = [NSNumber numberWithFloat: self.pageInsets.bottom];
     propertyList[RKPersistencyPageInsetsInnerKey] = [NSNumber numberWithFloat: self.pageInsets.inner];

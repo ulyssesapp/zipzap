@@ -7,9 +7,21 @@
 	<key>pageHeight</key>
 	<integer>80</integer>
 	<key>pageInsetsTop</key>
-	<real>1</real>
+	<integer>30</integer>
 	<key>pageInsetsBottom</key>
-	<real>1</real>
+	<integer>30</integer>
+	<key>pageInsetsLeft</key>
+	<integer>1</integer>
+	<key>pageInsetsRight</key>
+	<integer>1</integer>
+	<key>footerSpacingAfter</key>
+	<integer>0</integer>
+	<key>footerSpacingBefore</key>
+	<integer>0</integer>
+	<key>headerSpacingAfter</key>
+	<integer>0</integer>
+	<key>headerSpacingBefore</key>
+	<integer>0</integer>
 	<key>sections</key>
 	<array>
 		<dict>
