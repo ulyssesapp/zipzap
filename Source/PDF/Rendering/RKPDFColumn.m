@@ -28,6 +28,9 @@
 	
 	// Contains all footnotes (or parts of it) that couldn't be appended to the current column
 	NSMutableAttributedString *_remainingFootnotes;
+	
+	// The lowest index inside remainingFootnotes that belongs to a certain content line
+	NSMutableDictionary *_remainingFootnoteForContentLine;
 }
 
 @end
@@ -46,6 +49,7 @@
 		_contentLineForFootnoteLine = [NSMutableDictionary new];
 		
 		_remainingFootnotes = [NSMutableAttributedString new];
+		_remainingFootnoteForContentLine = [NSMutableDictionary new];
 		
 		_contentFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingDownwards context:context];
 		_footnotesFrame = [[RKPDFFrame alloc] initWithRect:boundingBox growingDirection:RKPDFFrameGrowingUpwards context:context];
@@ -173,8 +177,14 @@
 	_contentFrame.maximumHeight = self.maximumContentHeight;
 	
 	// Register footnote
-	if (appendedLength || !isFirstFootnoteOfLine)
+	if (appendedLength || !isFirstFootnoteOfLine) {
+		NSNumber *lineHandle = @(contentLine);
+		
+		if (!_remainingFootnoteForContentLine[lineHandle])
+			_remainingFootnoteForContentLine[lineHandle] = @(_remainingFootnotes.length);
+
 		[_remainingFootnotes appendAttributedString: [footnoteString attributedSubstringFromRange: NSMakeRange(appendedLength, footnoteString.length - appendedLength)]];
+	}
 	
 	return appendedLength;
 }
@@ -182,12 +192,22 @@
 - (void)removeLinesFromEnd:(NSUInteger)lineCount
 {
 	while (lineCount --) {
+		NSNumber *lineHandle = @(_contentFrame.lines.count - 1);
+		
 		// Remove all footnotes for the line (we expect that 'removeLinesFormEnd' is only called, if footnotes are continuously added to the column)
-		NSArray *footnoteLines = [_contentLineForFootnoteLine allKeysForObject: @(_contentFrame.lines.count - 1)];
+		NSArray *footnoteLines = [_contentLineForFootnoteLine allKeysForObject: lineHandle];
 
 		// Remove lines from rendered footnotes buffer
 		[_footnotesFrame removeLinesFromEnd: footnoteLines.count];
 		[_contentLineForFootnoteLine removeObjectsForKeys: footnoteLines];
+		
+		// Remove all footnote remainders associated with this line
+		if (_remainingFootnoteForContentLine[lineHandle] != nil) {
+			NSUInteger remainderPosition = [_remainingFootnoteForContentLine[lineHandle] unsignedIntegerValue];
+			[_remainingFootnotes deleteCharactersInRange: NSMakeRange(remainderPosition, _remainingFootnotes.length - remainderPosition)];
+			
+			[_remainingFootnoteForContentLine removeObjectForKey: lineHandle];
+		}
 		
 		// Provide more space for footnotes again
 		RKPDFLine *line = [_contentFrame lastLine];

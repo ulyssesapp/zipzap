@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>pageHeight</key>
+	<integer>400</integer>
+	<key>pageWidth</key>
+	<integer>595</integer>
+	<key>footnoteEnumerationPolicy</key>
+	<string>perSection</string>
+	<key>endnoteEnumerationStyle</key>
+	<string>alphabeticUpperCase</string>
+	<key>sections</key>
+	<array>
+		<dict>
+			<key>numberOfColumns</key>
+			<integer>1</integer>
+			<key>content</key>
+			<dict>
+				<key>attributeRanges</key>
+				<array>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>0</integer>
+							<key>length</key>
+							<real>1398</real>
+						</dict>
+					</dict>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>739</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKFootnote</key>
+							<dict>
+								<key>string</key>
+								<string>This footnote is on the first page.</string>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>913</integer>
+							<key>length</key>
+							<integer>1</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKFootnote</key>
+							<dict>
+								<key>attributeRanges</key>
+								<array>
+									<dict>
+										<key>attributeRange</key>
+										<dict>
+											<key>location</key>
+											<integer>0</integer>
+											<key>length</key>
+											<integer>3</integer>
+										</dict>
+									</dict>
+								</array>
+								<key>string</key>
+								<string>Should occur one time on page two. Neither duplicated nor on page one.
+a - should not be duplicated
+b - should not be duplicated
+c - should not be duplicated
+d - should not be duplicated
+e - should not be duplicated
+f - should not be duplicated
+g - should not be duplicated
+h - should not be duplicated
+i - should not be duplicated
+j - should not be duplicated
+k - should not be duplicated
+l - should not be duplicated
+m - should not be duplicated
+n - should not be duplicated
+o - should not be duplicated
+p - should not be duplicated
+q - should not be duplicated
+r - should not be duplicated
+s - should not be duplicated
+t - should not be duplicated
+u - should not be duplicated
+v - should not be duplicated
+w - should not be duplicated
+x - should not be duplicated
+y - should not be duplicated
+z - should not be duplicated
+a1 - should not be duplicated
+a2 - should not be duplicated
+a3 - should not be duplicated
+								</string>
+							</dict>
+						</dict>
+					</dict>
+				</array>
+				<key>string</key>
+				<string>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+Orphan control will move  this paragraph to a new page and thus move the footnote. sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore  magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. </string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
