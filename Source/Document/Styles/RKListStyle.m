@@ -31,10 +31,6 @@ NSString *RKListStyleMarkerWidthKey			= @"RKListStyleMarkerWidth";
     self = [self init];
     
     if (self) {
-        if (_levelFormats.count >= RKListMaxiumLevelCount) {
-            [NSException raise:NSRangeException format:@"Level nesting is limited to %u.", RKListMaxiumLevelCount];
-        }    
-
         _levelFormats = initialLevelFormats;
 		_levelStyles = levelStyles;
         _startNumbers = startNumbers;
@@ -45,8 +41,6 @@ NSString *RKListStyleMarkerWidthKey			= @"RKListStyleMarkerWidth";
 
 - (NSString *)formatForLevel:(NSUInteger)levelIndex
 {
-    NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
-    
     if (levelIndex >= self.levelFormats.count)
         return @"";
     
@@ -55,8 +49,6 @@ NSString *RKListStyleMarkerWidthKey			= @"RKListStyleMarkerWidth";
 
 - (NSDictionary *)markerStyleForLevel:(NSUInteger)levelIndex
 {
-    NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
-    
     if (levelIndex >= self.levelStyles.count)
         return @{};
     
@@ -65,8 +57,6 @@ NSString *RKListStyleMarkerWidthKey			= @"RKListStyleMarkerWidth";
 
 -(NSUInteger)startNumberForLevel:(NSUInteger)levelIndex
 {
-    NSAssert(levelIndex < RKListMaxiumLevelCount, @"Invalid level index");
-    
     NSNumber *startItemNumber = self.startNumbers[levelIndex];
     
     if (startItemNumber == nil)
