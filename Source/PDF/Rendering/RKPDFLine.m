@@ -41,6 +41,12 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	return self;
 }
 
+- (void)dealloc
+{
+	if (_line)
+		CFRelease(_line);
+}
+
 - (void)setupWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight justificationAllowed:(BOOL)justificationAllowed
 {
 	NSMutableAttributedString *lineContent = [[attributedString attributedSubstringFromRange: range] mutableCopy];
@@ -67,56 +73,14 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		[lineContent addAttribute:RKPDFLineInstantiationOffsetAttributeName value:@(instantiationExtension) range:NSMakeRange(range.location, lineContent.length - range.location)];
 	}];
 	
-	// Estimate space for line wrap
-	NSUInteger suggestedBreak = [self.class suggestLineBreakForAttributedString:lineContent usingWidth:width];
+	// Apply hyphenation
+	CTTypesetterRef typesetter = NULL;
+	NSUInteger suggestedBreak = [self suggestLineBreakForAttributedString:lineContent width:(CGFloat)width usingTypesetter:&typesetter];
 	
-	// Should the line be wrapped?
-	if (suggestedBreak < lineContent.length) {
-		NSMutableString *lineContentString = lineContent.mutableString;
-
-		// Unregister footnotes in truncated string
-		[_context unregisterNotesInAttributedString:lineContent range:NSMakeRange(suggestedBreak, lineContentString.length - suggestedBreak)];
-		
-		// Truncate the line
-		[lineContentString replaceCharactersInRange:NSMakeRange(suggestedBreak, lineContentString.length - suggestedBreak) withString:@""];
-		
-		// If we truncated the line at a soft hyphen, try to add the hyphenation character. If this fails, use a shorter cut
-		NSUInteger hyphenPosition = suggestedBreak - 1;
-		
-		if ([lineContentString characterAtIndex: hyphenPosition] == RKSoftHyphenCharacter) {
-			// Add hyphenation character
-			NSString *hyphenationString = [lineContent attribute:RKHyphenationCharacterAttributeName atIndex:hyphenPosition effectiveRange:NULL];
-			if (!hyphenationString)
-				hyphenationString = @"-";
-			
-			[lineContentString replaceCharactersInRange:NSMakeRange(hyphenPosition, 1) withString:hyphenationString];
-			
-			// Try to layout the line again
-			suggestedBreak = [self.class suggestLineBreakForAttributedString:lineContent usingWidth:width];
-			hyphenPosition = suggestedBreak - 1;
-			
-			// Should we shorten the line after adding hyphenation?
-			if (suggestedBreak < lineContent.length) {
-				// Truncate the line again
-				if (suggestedBreak < lineContent.length)
-					[lineContentString replaceCharactersInRange:NSMakeRange(suggestedBreak, lineContentString.length - suggestedBreak) withString:@""];
-
-				// Place hyphenation sign, if requested
-				if ([lineContentString characterAtIndex: hyphenPosition] == RKSoftHyphenCharacter) {
-					hyphenationString = [lineContent attribute:RKHyphenationCharacterAttributeName atIndex:hyphenPosition effectiveRange:NULL];
-					if (!hyphenationString)
-						hyphenationString = @"-";
-					
-					[lineContentString replaceCharactersInRange:NSMakeRange(hyphenPosition, 1) withString:hyphenationString];
-				}
-			}
-		}
-	}
-
 	// Layout the line
-	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((__bridge CFAttributedStringRef)lineContent);
 	CTLineRef ctLine = CTTypesetterCreateLine(typesetter, CFRangeMake(0, suggestedBreak));
-
+	CFRelease(typesetter);
+	
 	// Get paragraph style
 	CTParagraphStyleRef ctParagraphStyle = (__bridge CTParagraphStyleRef)[lineContent attribute:(__bridge NSString *)kCTParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
 	_paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: ctParagraphStyle];
@@ -168,21 +132,43 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	NSAssert((_visibleRange.length <= attributedString.length) && (NSMaxRange(_visibleRange) <= attributedString.length), @"Invalid visible line range calculated: (%lu, %lu) from suggested line break: %lu, displacement: %lu for string: %@", _visibleRange.location, _visibleRange.length, suggestedBreak, displacement, attributedString);
 }
 
-+ (NSUInteger)suggestLineBreakForAttributedString:(NSAttributedString *)attributedString usingWidth:(CGFloat)width
+- (NSUInteger)suggestLineBreakForAttributedString:(NSMutableAttributedString *)lineContent width:(CGFloat)width usingTypesetter:(CTTypesetterRef *)outTypesetter
 {
-	CTTypesetterRef typesetter = CTTypesetterCreateWithAttributedString((__bridge CFAttributedStringRef)attributedString);
-	CFIndex suggestedBreak = CTTypesetterSuggestLineBreak(typesetter, 0, width);
+	CTTypesetterRef currentTypesetter = CTTypesetterCreateWithAttributedString((__bridge CFAttributedStringRef)lineContent);
+	NSUInteger suggestedBreak = CTTypesetterSuggestLineBreak(currentTypesetter, 0, width);
+
+	// No line break needed
+	if (suggestedBreak >= lineContent.length) {
+		if (outTypesetter) *outTypesetter = currentTypesetter;
+		return suggestedBreak;
+	}
 	
-	CFRelease(typesetter);
+	// Unregister footnotes in truncated string
+	[_context unregisterNotesInAttributedString:lineContent range:NSMakeRange(suggestedBreak, lineContent.length - suggestedBreak)];
 	
+	// Truncate the line
+	NSMutableString *lineContentString = lineContent.mutableString;
+	[lineContentString deleteCharactersInRange: NSMakeRange(suggestedBreak, lineContentString.length - suggestedBreak)];
+		
+	// If we truncated the line at a soft hyphen, try to add the hyphenation character. If this fails, try again with a shorter cut.
+	NSUInteger hyphenPosition = suggestedBreak - 1;
+		
+	if ([lineContentString characterAtIndex: hyphenPosition] == RKSoftHyphenCharacter) {
+		// Add hyphenation character
+		NSString *hyphenationString = [lineContent attribute:RKHyphenationCharacterAttributeName atIndex:hyphenPosition effectiveRange:NULL];
+		if (!hyphenationString)
+			hyphenationString = @"-";
+			
+		[lineContentString replaceCharactersInRange:NSMakeRange(hyphenPosition, 1) withString:hyphenationString];
+			
+		CFRelease(currentTypesetter);
+		return [self suggestLineBreakForAttributedString:lineContent width:width usingTypesetter:outTypesetter];
+	}
+	
+	if (outTypesetter) *outTypesetter = currentTypesetter;
 	return suggestedBreak;
 }
 
-- (void)dealloc
-{
-	if (_line)
-		CFRelease(_line);
-}
 
 - (void)renderUsingOrigin:(CGPoint)origin
 {
@@ -266,5 +252,6 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	
     return runRect;
 }
+
 
 @end
