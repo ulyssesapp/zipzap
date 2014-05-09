@@ -75,7 +75,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	
 	// Apply hyphenation
 	CTTypesetterRef typesetter = NULL;
-	NSUInteger suggestedBreak = [self suggestLineBreakForAttributedString:lineContent width:(CGFloat)width usingTypesetter:&typesetter];
+	NSUInteger suggestedBreak = [self applyLineBreakToStringIfNeeded:lineContent width:(CGFloat)width usingTypesetter:&typesetter];
 	
 	// Layout the line
 	CTLineRef ctLine = CTTypesetterCreateLine(typesetter, CFRangeMake(0, suggestedBreak));
@@ -132,7 +132,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	NSAssert((_visibleRange.length <= attributedString.length) && (NSMaxRange(_visibleRange) <= attributedString.length), @"Invalid visible line range calculated: (%lu, %lu) from suggested line break: %lu, displacement: %lu for string: %@", _visibleRange.location, _visibleRange.length, suggestedBreak, displacement, attributedString);
 }
 
-- (NSUInteger)suggestLineBreakForAttributedString:(NSMutableAttributedString *)lineContent width:(CGFloat)width usingTypesetter:(CTTypesetterRef *)outTypesetter
+- (NSUInteger)applyLineBreakToStringIfNeeded:(NSMutableAttributedString *)lineContent width:(CGFloat)width usingTypesetter:(CTTypesetterRef *)outTypesetter
 {
 	CTTypesetterRef currentTypesetter = CTTypesetterCreateWithAttributedString((__bridge CFAttributedStringRef)lineContent);
 	NSUInteger suggestedBreak = CTTypesetterSuggestLineBreak(currentTypesetter, 0, width);
@@ -162,7 +162,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		[lineContentString replaceCharactersInRange:NSMakeRange(hyphenPosition, 1) withString:hyphenationString];
 			
 		CFRelease(currentTypesetter);
-		return [self suggestLineBreakForAttributedString:lineContent width:width usingTypesetter:outTypesetter];
+		return [self applyLineBreakToStringIfNeeded:lineContent width:width usingTypesetter:outTypesetter];
 	}
 	
 	if (outTypesetter) *outTypesetter = currentTypesetter;
