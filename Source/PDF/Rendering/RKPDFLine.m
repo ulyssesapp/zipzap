@@ -196,7 +196,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		
 		// Calculate bounding box, if required
 		if (textObject || textRenderer)
-			boundingBox = [self boundingBoxForRun:run insideLine:_line withBoundingBox:CGRectMake(0, -_descent, _size.width, _size.height)];
+			boundingBox = [self boundingBoxForRun:run range:runRange insideLine:_line withBoundingBox:CGRectMake(0, -_descent, _size.width, _size.height)];
 		
 		// Apply pre-renderer
 		if (textRenderer)
@@ -238,9 +238,11 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	}
 }
 
-- (CGRect)boundingBoxForRun:(CTRunRef)run insideLine:(CTLineRef)line withBoundingBox:(CGRect)lineRect
+- (CGRect)boundingBoxForRun:(CTRunRef)run range:(CFRange)range insideLine:(CTLineRef)line withBoundingBox:(CGRect)lineRect
 {
-    const CGSize *glyphAdvances = CTRunGetAdvancesPtr(run);
+    CGSize glyphAdvances[range.length];
+	CTRunGetAdvances(run, range, glyphAdvances);
+	
     CGFloat runWidth = 0;
     NSUInteger glyphCount = CTRunGetGlyphCount(run);
 	
