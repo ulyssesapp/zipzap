@@ -12,6 +12,7 @@
 #import "RKPDFTextRenderer.h"
 #import "RKPDFTextObject.h"
 #import "RKParagraphStyleWrapper.h"
+#import "RKPDFImage.h"
 
 #import "NSAttributedString+PDFUtilities.h"
 
@@ -238,21 +239,17 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	}
 }
 
-- (CGRect)boundingBoxForRun:(CTRunRef)run range:(CFRange)range insideLine:(CTLineRef)line withBoundingBox:(CGRect)lineRect
+- (CGRect)boundingBoxForRun:(CTRunRef)run range:(CFRange)runRange insideLine:(CTLineRef)line withBoundingBox:(CGRect)lineRect
 {
-    CGSize glyphAdvances[range.length];
-	CTRunGetAdvances(run, range, glyphAdvances);
-	
-    CGFloat runWidth = 0;
     NSUInteger glyphCount = CTRunGetGlyphCount(run);
+    CGSize glyphAdvances[glyphCount];
+	CTRunGetAdvances(run, CFRangeMake(0, 0), glyphAdvances);
 	
+	CGFloat runWidth = 0;
     while (glyphCount --)
         runWidth += glyphAdvances[glyphCount].width;
 	
-    CFRange runRange = CTRunGetStringRange(run);
-    CGRect runRect = CGRectMake(lineRect.origin.x + CTLineGetOffsetForStringIndex(line, runRange.location, NULL), lineRect.origin.y, runWidth, lineRect.size.height);
-	
-    return runRect;
+    return CGRectMake(lineRect.origin.x + CTLineGetOffsetForStringIndex(line, runRange.location, NULL), lineRect.origin.y, runWidth, lineRect.size.height);
 }
 
 
