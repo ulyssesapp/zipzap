@@ -152,8 +152,8 @@
 
     // Generate basic paragraph style settings
     [rtf appendString:  
-     [self styleTagWithWritingDirection:paragraphStyle.baseWritingDirection 
-                          textAlignment:paragraphStyle.alignment 
+     [self styleTagWithWritingDirection:(CTWritingDirection)paragraphStyle.baseWritingDirection
+                          textAlignment:(CTTextAlignment)paragraphStyle.alignment
                              headIndent:paragraphStyle.headIndent 
                     firstLineHeadIndent:paragraphStyle.firstLineHeadIndent 
                              tailIndent:paragraphStyle.tailIndent 
@@ -188,7 +188,9 @@
 {
     if (!paragraphStyleObject)
         return @"";
-    
+	
+	RKAdditionalParagraphStyle *additionalStyle = [attributedString attribute:RKAdditionalParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL];
+	
     // Load values from paragraph style
     BOOL success;
     CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)paragraphStyleObject;
@@ -249,7 +251,7 @@
     NSMutableString *rtf = [NSMutableString new];
     
     [rtf appendString:
-     [self styleTagWithWritingDirection:baseWritingDirection 
+     [self styleTagWithWritingDirection:baseWritingDirection
                          textAlignment:textAlignment 
                             headIndent:headIndent 
                    firstLineHeadIndent:firstLineHeadIndent 
@@ -262,7 +264,8 @@
                  paragraphSpacingAfter:paragraphSpacing 
                     defaultTabInterval:defaultTabInterval 
                     ofAttributedString:attributedString 
-                        paragraphRange:range 
+                        paragraphRange:range
+			ignoreLineHeightAndSpacing:additionalStyle.overrideLineHeightAndSpacing
                              resources:resources
       ]];
      
@@ -448,6 +451,9 @@
     NSMutableString *rtf = [NSMutableString new];    
 
     switch (tabType) {
+		case NSLeftTabStopType:
+			break;
+			
         case NSCenterTabStopType:
             [rtf appendString:@"\\tqc"];
             break;

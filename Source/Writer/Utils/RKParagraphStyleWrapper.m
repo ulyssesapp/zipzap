@@ -75,7 +75,7 @@
 		if (!paragraphStyle)
 			return [RKParagraphStyleWrapper newDefaultParagraphStyle];
 		
-        textAlignment = paragraphStyle.alignment;
+        textAlignment = (CTTextAlignment)paragraphStyle.alignment;
         firstLineHeadIndent = paragraphStyle.firstLineHeadIndent;
         headIndent = paragraphStyle.headIndent;
         tailIndent = paragraphStyle.tailIndent;
@@ -84,14 +84,14 @@
             defaultTabInterval = paragraphStyle.defaultTabInterval;
         #endif
         
-        lineBreakMode = paragraphStyle.lineBreakMode;
+        lineBreakMode = (CTLineBreakMode)paragraphStyle.lineBreakMode;
         lineHeightMultiple = paragraphStyle.lineHeightMultiple;
         maximumLineHeight = paragraphStyle.maximumLineHeight;
         minimumLineHeight = paragraphStyle.minimumLineHeight;
         lineSpacing = paragraphStyle.lineSpacing;
         paragraphSpacing = paragraphStyle.paragraphSpacing;
         paragraphSpacingBefore = paragraphStyle.paragraphSpacingBefore;
-        baseWritingDirection = paragraphStyle.baseWritingDirection;
+        baseWritingDirection = (CTWritingDirection)paragraphStyle.baseWritingDirection;
         hyphenationFactor = paragraphStyle.hyphenationFactor;
      
         NSMutableArray *rkTabStops = [NSMutableArray new];
@@ -141,18 +141,18 @@
 {
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     
-    paragraphStyle.alignment = self.textAlignment;
+    paragraphStyle.alignment = (NSTextAlignment)self.textAlignment;
     paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent;
     paragraphStyle.headIndent = self.headIndent;
     paragraphStyle.tailIndent = self.tailIndent;
-    paragraphStyle.lineBreakMode = self.lineBreakMode;
+    paragraphStyle.lineBreakMode = (NSLineBreakMode)self.lineBreakMode;
     paragraphStyle.lineHeightMultiple = self.lineHeightMultiple;
     paragraphStyle.maximumLineHeight = self.maximumLineHeight;
     paragraphStyle.minimumLineHeight = self.minimumLineHeight;
     paragraphStyle.lineSpacing = self.lineSpacing;
     paragraphStyle.paragraphSpacing = self.paragraphSpacing;
     paragraphStyle.paragraphSpacingBefore = self.paragraphSpacingBefore;
-    paragraphStyle.baseWritingDirection = self.baseWritingDirection;
+    paragraphStyle.baseWritingDirection = (NSWritingDirection)self.baseWritingDirection;
     paragraphStyle.defaultTabInterval = self.defaultTabInterval;
     paragraphStyle.hyphenationFactor = self.hyphenationFactor;
     
