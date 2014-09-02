@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		50906AD118A4F6C300DFCB7A /* ZZConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; };
-		50906AD218A4F6E600DFCB7A /* ZZConstants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; };
 		5B503930187069E4002B2B12 /* ZZStandardCryptoEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B50392E187069E4002B2B12 /* ZZStandardCryptoEngine.cpp */; };
 		5B503931187069E4002B2B12 /* ZZStandardCryptoEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50392F187069E4002B2B12 /* ZZStandardCryptoEngine.h */; };
 		5B50393418707C37002B2B12 /* ZZStandardDecryptInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50393218707C36002B2B12 /* ZZStandardDecryptInputStream.h */; };
@@ -37,7 +36,6 @@
 		D84A44CF16A0F8B400CF00A9 /* ZZDataChannelOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = D84A44CD16A0F8B400CF00A9 /* ZZDataChannelOutput.h */; };
 		D84A44D016A0F8B400CF00A9 /* ZZDataChannelOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = D84A44CE16A0F8B400CF00A9 /* ZZDataChannelOutput.m */; };
 		D84A44D116A0F8B400CF00A9 /* ZZDataChannelOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = D84A44CE16A0F8B400CF00A9 /* ZZDataChannelOutput.m */; };
-		D86B400C18A8A0BA00017A91 /* ZZConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D86B400D18A8A0DA00017A91 /* ZZConstants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; };
 		D86B400E18A8A0FF00017A91 /* ZZError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = D8366ACC16B1F8B400BC012E /* ZZError.h */; };
 		D88E8DFF16375C66002207B3 /* dog.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D88E8DFD16375C66002207B3 /* dog.jpg */; };
@@ -455,7 +453,7 @@
 			name = zipzapTests;
 			productName = zipzapTests;
 			productReference = D899CF96162C5EC100112F49 /* zipzapTests.xctest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		D899CFAF162C5EEB00112F49 /* zipzap (iOS) */ = {
 			isa = PBXNativeTarget;
@@ -480,7 +478,7 @@
 		D899CF77162C5E8400112F49 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = D899CF7A162C5E8400112F49 /* Build configuration list for PBXProject "zipzap" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -653,6 +651,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -697,6 +696,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
