@@ -1,0 +1,18 @@
+//
+//  RTFKit-iOS-Prefix.pch
+//  RTFKit
+//
+//  Created by Friedrich Gräter on 19.03.12.
+//  Copyright (c) 2012 The Soulmen. All rights reserved.
+//
+
+#ifdef __OBJC__
+#define NS_BUILD_32_LIKE_64 TRUE
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <CoreText/CoreText.h>
+
+#import "RTFKit.h"
+
+#endif
