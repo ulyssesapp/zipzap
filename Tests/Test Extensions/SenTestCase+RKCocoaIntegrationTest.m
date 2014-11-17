@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#import "SenTestCase+RKTestHelper.h"
-
 @interface XCTestCase (RKCocoaIntegrationTestPrivateMethods)
 
 /*!
@@ -24,59 +22,40 @@
 {
     NSData *rtf = [document wordRTF];
 
-#if TARGET_OS_IPHONE
-	return [[NSAttributedString alloc] initWithData:rtf options:nil documentAttributes:NULL error:NULL];
-#else
     return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:nil];
-#endif
 }
 
 - (NSAttributedString *)convertAndRereadPlainRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
-    document.pageSize = CGSizeMake(1100, 1100);
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:attributedString];
+    document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);   
     
     NSData *rtf = [document systemRTF];
     
-#if TARGET_OS_IPHONE
-	return [[NSAttributedString alloc] initWithData:rtf options:nil documentAttributes:documentAttributes error:NULL];
-#else
-	return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
-#endif
+    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
 }
 
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
-    document.pageSize = CGSizeMake(1100, 1100);
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:attributedString];
+    document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
     
     NSData *rtf = [document wordRTF];
 
-#if TARGET_OS_IPHONE
-	return [[NSAttributedString alloc] initWithData:rtf options:nil documentAttributes:documentAttributes error:NULL];
-#else
-	return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
-#endif
+    return [[NSAttributedString alloc] initWithRTF:rtf documentAttributes:documentAttributes];
 }
 
 - (NSAttributedString *)convertAndRereadRTFD:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
-    document.pageSize = CGSizeMake(1100, 1100);
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:attributedString];
+    document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
     
     NSFileWrapper *rtf = [document RTFD];
-
-#if TARGET_OS_IPHONE
-	NSURL *URL = [[self newTemporarySubdirectory] URLByAppendingPathComponent: @"test.rtfd"];
-	[rtf writeToURL:URL options:0 originalContentsURL:nil error:NULL];
-	return [[NSAttributedString alloc] initWithFileURL:URL options:nil documentAttributes:documentAttributes error:NULL];
-	
-#else
-	return [[NSAttributedString alloc] initWithRTFDFileWrapper:rtf documentAttributes:documentAttributes];
-#endif
+    
+    return [[NSAttributedString alloc] initWithRTFDFileWrapper:rtf documentAttributes:documentAttributes];
 }
 
 - (void)assertEqualOnAttribute:(NSString *)attributeName 
@@ -96,29 +75,19 @@
         id convertedAttributeValue = [convertedAttributesMap objectForKey: key];
         
         XCTAssertNotNil(convertedAttributeValue, @"Missing attribute");
-		
-#if TARGET_OS_IPHONE
-		if ([convertedAttributeValue isKindOfClass: [UIColor class]] && [originalAttributeValue isKindOfClass: [UIColor class]]) {
-			XCTAssertEqualObjects(convertedAttributeValue, originalAttributeValue, @"Attributes differ");
-		}
-#else
+        
         if ([convertedAttributeValue isKindOfClass: [NSColor class]] && [originalAttributeValue isKindOfClass: [NSColor class]]) {
             NSColor *convertedColor = [NSColor rtfColorFromColor: convertedAttributeValue];
             NSColor *originalColor = [NSColor rtfColorFromColor: originalAttributeValue];
             
             XCTAssertEqualObjects(convertedColor, originalColor, @"Attributes differ");
         }
-#endif
         else if ([convertedAttributeValue isKindOfClass: [NSShadow class]] && [originalAttributeValue isKindOfClass: [NSShadow class]]) {
-            RKShadow *convertedShadow = convertedAttributeValue;
-            RKShadow *originalShadow = originalAttributeValue;
+            NSShadow *convertedShadow = convertedAttributeValue;
+            NSShadow *originalShadow = originalAttributeValue;
             
             // The text system adds an alpha value to shadows
-#if TARGET_OS_IPHONE
-			convertedShadow.shadowColor = convertedShadow.shadowColor;
-#else
-			convertedShadow.shadowColor = [NSColor rtfColorFromColor:convertedShadow.shadowColor];
-#endif
+            convertedShadow.shadowColor = [NSColor rtfColorFromColor:convertedShadow.shadowColor];
             
             XCTAssertEqualObjects(originalShadow, convertedShadow, @"Attributes differ");
         }
@@ -172,7 +141,7 @@
     NSMutableDictionary *attributesMap = [NSMutableDictionary new];
     
     [attributedString enumerateAttribute:attributeName inRange:range options:0 usingBlock:^(id attributeValue, NSRange range, BOOL *stop) {
-        NSString *rangeDictionaryKey = [NSString stringWithFormat:@"%lu-%lu", (unsigned long)range.location, (unsigned long)range.length];
+        NSString *rangeDictionaryKey = [NSString stringWithFormat:@"%lu-%lu", range.location, range.length];
         
         if (attributeValue)        
             [attributesMap setObject:attributeValue forKey:rangeDictionaryKey];
