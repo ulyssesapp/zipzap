@@ -8,10 +8,10 @@
 
 #if !TARGET_OS_IPHONE
 
-#define RKLeftTextAlignment             NSLeftTextAlignment
-#define RKCenterTextAlignment           NSCenterTextAlignment
-#define RKRightTextAlignment            NSRightTextAlignment
-#define RKJustifiedTextAlignment        NSJustifiedTextAlignment
+#define RKLeftTextAlignment             RKTextAlignmentLeft
+#define RKCenterTextAlignment           RKTextAlignmentCenter
+#define RKRightTextAlignment            RKTextAlignmentRight
+#define RKJustifiedTextAlignment        RKTextAlignmentJustified
 #define RKNaturalTextAlignment          NSNaturalTextAlignment
 
 #define RKWritingDirectionNatural       NSWritingDirectionNatural

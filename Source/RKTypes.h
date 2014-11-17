@@ -113,3 +113,14 @@ typedef enum : NSUInteger {
  @abstract The character used to indicate hyphenation
 */
 #define RKSoftHyphenCharacter			((unichar)0xAD)
+
+/*!
+ @abstract Platform-agnostic version of NSEdgeInsets
+ */
+#if TARGET_OS_IPHONE
+	#define RKEdgeInsets		UIEdgeInsets
+	#define RKEdgeInsetsMake	UIEdgeInsetsMake
+#else
+	#define RKEdgeInsets		NSEdgeInsets
+	#define RKEdgeInsetsMake	NSEdgeInsetsMake
+#endif

@@ -49,7 +49,7 @@
 		
             CFRetain(_image);
         #else
-            UIImage *image = [[UIImage alloc] initWithData:self.fileWrapper.regularFileContents];
+            UIImage *image = [[UIImage alloc] initWithData:_imageAttachment.imageFile.regularFileContents];
             if (!image || CGSizeEqualToSize(image.size, CGSizeZero))
                 return nil;
         
@@ -61,7 +61,7 @@
         #endif
 
         if (_image) {
-			NSEdgeInsets margin = self.imageAttachment.margin;
+			RKEdgeInsets margin = self.imageAttachment.margin;
 			
             _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
 			_fullSize = CGSizeMake(_imageSize.width + margin.left + margin.right, _imageSize.height + margin.top + margin.bottom);
@@ -80,7 +80,7 @@
 - (void)renderUsingContext:(RKPDFRenderingContext *)context rect:(CGRect)rect
 {
     CGSize actualSize = [self scaledSizeForMaximumSize: CGSizeMake(rect.size.width, _imageSize.height)];
-    NSEdgeInsets margin = self.imageAttachment.margin;
+    RKEdgeInsets margin = self.imageAttachment.margin;
 	
     CGContextDrawImage(context.pdfContext, CGRectMake(rect.origin.x + margin.left, rect.origin.y + margin.bottom, actualSize.width, actualSize.height), _image);
 }
@@ -88,7 +88,7 @@
 - (NSAttributedString *)replacementStringUsingContext:(RKPDFRenderingContext *)context attributedString:(NSAttributedString *)attributedString atIndex:(NSUInteger)index frameSize:(CGSize)frameSize
 {
     CGSize actualSize = [self scaledSizeForMaximumSize: frameSize];
-    NSEdgeInsets margin = self.imageAttachment.margin;
+    RKEdgeInsets margin = self.imageAttachment.margin;
 	
     return [NSAttributedString stringWithSpacingForWidth:(actualSize.width + margin.left + margin.right) attributes:[attributedString attributesAtIndex:index effectiveRange:NULL]];
 }
@@ -98,7 +98,7 @@
     CGFloat scale = 1;
     
 	// Scale without margin
-	NSEdgeInsets margin = self.imageAttachment.margin;
+	RKEdgeInsets margin = self.imageAttachment.margin;
 	frameSize.width = (frameSize.width - margin.left - margin.right) ?: 0;
 	frameSize.height = (frameSize.height - margin.top - margin.bottom) ?: 0;
 	
@@ -113,7 +113,7 @@
 
 - (CGFloat)preferredHeightForMaximumSize:(CGSize)frameSize
 {
-	NSEdgeInsets margin = self.imageAttachment.margin;
+	RKEdgeInsets margin = self.imageAttachment.margin;
 	return [self scaledSizeForMaximumSize: frameSize].height + margin.top + margin.bottom;
 }
 

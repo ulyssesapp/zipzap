@@ -167,7 +167,7 @@
                          "\\s%lu "
                          "b"
                          "c",
-                          [resources indexOfParagraphStyle:@"PStyle"]
+						 (unsigned long)[resources indexOfParagraphStyle:@"PStyle"]
                          ]),
                          @"Invalid paragraph stylesheet used"
                         );
@@ -192,7 +192,7 @@
                          "\\s%lu "
                          "b"
                          "c",
-                          [resources indexOfParagraphStyle: @"CStyle"]
+						 (unsigned long)[resources indexOfParagraphStyle: @"CStyle"]
                          ]), 
                          @"Invalid paragraph stylesheet used"
                          );    
@@ -251,7 +251,7 @@
                          "b"
                          "}"
                          "c", 
-                          [resources indexOfCharacterStyle: @"CStyle"]
+                         (unsigned long)[resources indexOfCharacterStyle: @"CStyle"]
                          ]),
                          @"Invalid character stylesheet used"
                          );    

@@ -426,8 +426,8 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 	dispatch_once(&onceToken, ^{
 		serializationTable =
 		[NSDictionary dictionaryWithObjectsAndKeys:
-		 [NSNumber numberWithUnsignedInteger: NSLeftTextAlignment],					@"left",
-		 [NSNumber numberWithUnsignedInteger: NSRightTextAlignment],				@"right",
+		 [NSNumber numberWithUnsignedInteger: RKTextAlignmentLeft],					@"left",
+		 [NSNumber numberWithUnsignedInteger: RKTextAlignmentRight],				@"right",
 		 nil
 		 ];
 	});
@@ -442,8 +442,8 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 	dispatch_once(&onceToken, ^{
 		serializationTable =
 		[NSDictionary dictionaryWithObjectsAndKeys:
-		 [NSNumber numberWithUnsignedInteger: NSLeftTextAlignment],				@"left",
-		 [NSNumber numberWithUnsignedInteger: NSRightTextAlignment],			@"right",
+		 [NSNumber numberWithUnsignedInteger: RKTextAlignmentLeft],				@"left",
+		 [NSNumber numberWithUnsignedInteger: RKTextAlignmentRight],			@"right",
 		 nil
 		 ];
 	});

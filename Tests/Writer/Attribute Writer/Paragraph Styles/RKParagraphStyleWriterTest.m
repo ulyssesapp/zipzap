@@ -413,9 +413,9 @@
     RKParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
     
     // The only default-value we have to override is "alignment", since the natural alignment will be processed by Cocoa
-    paragraphStyleDefault.alignment = NSLeftTextAlignment;
+    paragraphStyleDefault.alignment = RKTextAlignmentLeft;
     
-    paragraphStyleNonDefault.alignment = NSRightTextAlignment;
+    paragraphStyleNonDefault.alignment = RKTextAlignmentRight;
 
     paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
     paragraphStyleNonDefault.headIndent = 3.0f;    
@@ -456,9 +456,9 @@
     RKParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
     
     // The only default-value we have to override is "alignment", since the natural alignment will be processed by Cocoa
-    paragraphStyleDefault.alignment = NSLeftTextAlignment;
+    paragraphStyleDefault.alignment = RKTextAlignmentLeft;
     
-    paragraphStyleNonDefault.alignment = NSRightTextAlignment;
+    paragraphStyleNonDefault.alignment = RKTextAlignmentRight;
     
     paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
     paragraphStyleNonDefault.headIndent = 3.0f;    

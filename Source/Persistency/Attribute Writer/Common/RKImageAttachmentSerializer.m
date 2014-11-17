@@ -38,7 +38,7 @@ NSString *RKImageAttachmentMarginRightKey				= @"marginRight";
     if (fileIndexObject)
         file = [context fileWrapperForIndex: [fileIndexObject unsignedIntegerValue]];
     
-	NSEdgeInsets margin = NSEdgeInsetsMake([propertyList[RKImageAttachmentMarginTopKey] doubleValue], [propertyList[RKImageAttachmentMarginLeftKey] doubleValue], [propertyList[RKImageAttachmentMarginBottomKey] doubleValue], [propertyList[RKImageAttachmentMarginRightKey] doubleValue]);
+	RKEdgeInsets margin = RKEdgeInsetsMake([propertyList[RKImageAttachmentMarginTopKey] doubleValue], [propertyList[RKImageAttachmentMarginLeftKey] doubleValue], [propertyList[RKImageAttachmentMarginBottomKey] doubleValue], [propertyList[RKImageAttachmentMarginRightKey] doubleValue]);
 	
     return [[RKImageAttachment alloc] initWithFile:file margin:margin];
 }

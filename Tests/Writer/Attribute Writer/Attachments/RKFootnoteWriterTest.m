@@ -91,7 +91,7 @@
 
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
-	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
 	document.footnoteAreaDividerSpacingBefore = 60;
 	document.footnoteAreaDividerSpacingAfter = 60;
 	
@@ -114,7 +114,7 @@
     
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
     RKDocument *document = [RKDocument documentWithAttributedString:original];
-	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
 	document.footnoteAreaDividerSpacingBefore = 60;
 	document.footnoteAreaDividerSpacingAfter = 60;
 	

@@ -41,7 +41,7 @@
 				
 		[fixedFootnote enumerateAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, fixedFootnote.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSParagraphStyle *currentParagraphStyle, NSRange range, BOOL *stop) {
 			NSMutableParagraphStyle *mutableParagraphStyle = [currentParagraphStyle mutableCopy] ?: [NSMutableParagraphStyle new];
-			mutableParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:anchorAlignment location:anchorInset options:nil], [[NSTextTab alloc] initWithTextAlignment:NSNaturalTextAlignment location:contentInset options:nil]];
+			mutableParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:anchorAlignment location:anchorInset options:nil], [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentNatural location:contentInset options:nil]];
 			mutableParagraphStyle.headIndent += resources.document.footnoteAreaContentInset;
 
 			if (range.location > 0)

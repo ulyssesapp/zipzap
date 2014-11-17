@@ -53,14 +53,14 @@
 		_footerSpacingBefore = 10;
         _footerSpacingAfter = 36;
 		
-		_footnoteAreaAnchorAttributes = @{NSSuperscriptAttributeName: @1};
+		_footnoteAreaAnchorAttributes = @{RKSuperscriptAttributeName: @1};
 		_footnoteAreaDividerSpacingBefore = 15;
 		_footnoteAreaDividerSpacingAfter = 15;
 		_footnoteAreaDividerLength = 100;
 		_footnoteAreaDividerWidth = 1;
 		_footnoteAreaAnchorInset = 0;
 		_footnoteAreaContentInset = 20;
-		_footnoteAreaAnchorAlignment = NSLeftTextAlignment;
+		_footnoteAreaAnchorAlignment = RKTextAlignmentLeft;
 
 		_pageBinding = RKPageBindingLeft;
     }

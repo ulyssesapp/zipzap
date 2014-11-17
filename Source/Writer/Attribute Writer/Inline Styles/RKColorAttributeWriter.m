@@ -66,25 +66,25 @@
 
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(id)colorObject resources:(RKResourcePool *)resources
 {
-    NSUInteger colorIndex = NSNotFound;
-    
-    if (colorObject) {
-        CGColorRef color;
-        
-        #if !TARGET_OS_IPHONE
-            color = [colorObject newCGColorUsingGenericRGBColorSpace];
-        #else
-            color = [colorObject CGColor];
-        #endif
-
-        colorIndex = [resources indexOfColor: color];
-        
-        #if !TARGET_OS_IPHONE
-            CGColorRelease(color);
-        #endif
-    }
-    
-    return [self.class openingTagsForAttribute:attributeName colorIndex:colorIndex];
+	NSUInteger colorIndex = NSNotFound;
+	
+	if (colorObject) {
+		CGColorRef color;
+		
+#if !TARGET_OS_IPHONE
+		color = [colorObject newCGColorUsingGenericRGBColorSpace];
+#else
+		color = [colorObject CGColor];
+#endif
+		
+		colorIndex = [resources indexOfColor: color];
+		
+#if !TARGET_OS_IPHONE
+		CGColorRelease(color);
+#endif
+	}
+	
+	return [self.class openingTagsForAttribute:attributeName colorIndex:colorIndex];
 }
 
 + (NSString *)closingTagsForAttribute:(NSString *)attributeName value:(id)value resources:(RKResourcePool *)resources

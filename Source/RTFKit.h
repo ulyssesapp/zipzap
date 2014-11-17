@@ -21,7 +21,6 @@
 
 #if TARGET_OS_IPHONE
     #import "RKShadow.h"
-    #import "RKTextAttachment.h"
 #endif
 
 #import "RKPersistenceContext.h"

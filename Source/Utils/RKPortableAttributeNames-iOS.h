@@ -8,8 +8,6 @@
 
 #if TARGET_OS_IPHONE
 
-#import "RKTextAttachment.h"
-
 /*!
  @abstract Pre-initialized attribute names
  @discussion Internally used, please use the RK*AttributeName macros instead.
@@ -181,5 +179,14 @@ extern NSString *RKCategoryDocumentAttribute;
  @abstract Character used to denote newlines (not paragraph breaks)
  */
 #define RKLineSeparatorCharacter                ((unichar)0x2028)
+
+/*!
+ @abstract Text alignment settings.
+ */
+#define RKTextAlignmentLeft						NSTextAlignmentLeft
+#define RKTextAlignmentRight					NSTextAlignmentRight
+#define RKTextAlignmentNatural					NSTextAlignmentNatural
+#define RKTextAlignmentCenter					NSTextAlignmentCenter
+#define RKTextAlignmentJustified				NSTextAlignmentJustified
 
 #endif

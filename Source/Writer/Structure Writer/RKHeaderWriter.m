@@ -109,7 +109,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 	if (!resources.containsFootnotes)
 		return @"\n";
 	
-	NSString *alignmentCommand = resources.document.footnoteAreaDividerPosition == NSLeftTextAlignment ? @"\\ql" : @"\\qr";
+	NSString *alignmentCommand = resources.document.footnoteAreaDividerPosition == RKTextAlignmentLeft ? @"\\ql" : @"\\qr";
 	
 	// Setup line height and paragraph spacing after to control footnote area spacing
 	NSString *separatorStyle = [NSString stringWithFormat: @"\\pard %@ \\sa%li \\sl%li\\slmult0 ", alignmentCommand, (NSInteger)RKPointsToTwips(resources.document.footnoteAreaDividerSpacingAfter), (NSInteger)RKPointsToTwips(resources.document.footnoteAreaDividerSpacingBefore)];

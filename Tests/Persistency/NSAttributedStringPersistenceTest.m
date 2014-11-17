@@ -155,7 +155,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
 
-    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:NSEdgeInsetsMake(1, 2, 3, 4)];
+    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:RKEdgeInsetsMake(1, 2, 3, 4)];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
     [original addAttribute:RKImageAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];
@@ -225,7 +225,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
     
-    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:NSEdgeInsetsMake(1, 2, 3, 4)];
+    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:RKEdgeInsetsMake(1, 2, 3, 4)];
     
     NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
     [footnote addAttribute:RKImageAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];

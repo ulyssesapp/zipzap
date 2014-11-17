@@ -18,7 +18,12 @@
 /*!
  @abstract Reads a test file
  */
-- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margin:(NSEdgeInsets)margin;
+- (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margin:(RKEdgeInsets)margin;
+
+/*!
+ @abstract Creates a unique temporary folder.
+ */
+- (NSURL *)newTemporarySubdirectory;
 
 @end
 
@@ -46,8 +51,8 @@
 	}
 
 #define ULAssertEqualEdgeInsets(__insetsA, __insetsB, __description, __other...)		{\
-		NSEdgeInsets __safeValueA = (__insetsA);\
-		NSEdgeInsets __safeValueB = (__insetsB);\
+		RKEdgeInsets __safeValueA = (__insetsA);\
+		RKEdgeInsets __safeValueB = (__insetsB);\
 		\
 		XCTAssertTrue((__safeValueA.top == __safeValueB.top && __safeValueA.left == __safeValueB.left && __safeValueA.right == __safeValueB.right && __safeValueA.bottom == __safeValueB.bottom), __description, ##__other);\
 	}

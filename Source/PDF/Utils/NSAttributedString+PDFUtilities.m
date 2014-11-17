@@ -70,7 +70,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 		NSMutableArray *tabStops = [paragraphStyle.tabStops mutableCopy] ?: [NSMutableArray new];
 		
 		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaAnchorInset ?: 1) alignment:(CTTextAlignment)context.document.footnoteAreaAnchorAlignment] atIndex:0];
-		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaContentInset ?: 1) alignment:(CTTextAlignment)NSNaturalTextAlignment] atIndex:1];
+		[tabStops insertObject:[[RKTextTabWrapper alloc] initWithLocation:(context.document.footnoteAreaContentInset ?: 1) alignment:(CTTextAlignment)RKTextAlignmentNatural] atIndex:1];
 		
 		paragraphStyle.tabStops = tabStops;
 		paragraphStyle.headIndent += context.document.footnoteAreaContentInset;
