@@ -8,7 +8,6 @@
 
 #import "RKStyleNameAttributeWriter.h"
 #import "RKStyleNameAttributeWriterTest.h"
-#import "RKParagraphStyle.h"
 
 @interface RKStyleNameAttributeWriterTest (PrivateMethods)
 
@@ -62,9 +61,9 @@
 
 - (NSMutableDictionary *)generateParagraphStyle
 {
-    RKParagraphStyle *paragraphStyle = [RKParagraphStyle new];    
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 
-    paragraphStyle.alignment = RKCenterTextAlignment;
+    paragraphStyle.alignment = RKTextAlignmentCenter;
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
     paragraphStyle.tailIndent = .0f;
@@ -78,10 +77,10 @@
     paragraphStyle.paragraphSpacing = .0f;
     
     paragraphStyle.tabStops = [NSArray new];
-    paragraphStyle.baseWritingDirection = RKWritingDirectionLeftToRight;
+    paragraphStyle.baseWritingDirection = NSWritingDirectionLeftToRight;
     
     NSMutableDictionary *dictionary = [self generateCharacterStyle];
-    [dictionary setObject:[paragraphStyle targetSpecificRepresentation] forKey:RKParagraphStyleAttributeName];
+    [dictionary setObject:paragraphStyle forKey:RKParagraphStyleAttributeName];
 
     return dictionary;
 }
@@ -167,7 +166,7 @@
                          "\\s%lu "
                          "b"
                          "c",
-						 (unsigned long)[resources indexOfParagraphStyle:@"PStyle"]
+                          (unsigned long)[resources indexOfParagraphStyle:@"PStyle"]
                          ]),
                          @"Invalid paragraph stylesheet used"
                         );
@@ -192,7 +191,7 @@
                          "\\s%lu "
                          "b"
                          "c",
-						 (unsigned long)[resources indexOfParagraphStyle: @"CStyle"]
+                          (unsigned long)[resources indexOfParagraphStyle: @"CStyle"]
                          ]), 
                          @"Invalid paragraph stylesheet used"
                          );    
@@ -251,7 +250,7 @@
                          "b"
                          "}"
                          "c", 
-                         (unsigned long)[resources indexOfCharacterStyle: @"CStyle"]
+                          (unsigned long)[resources indexOfCharacterStyle: @"CStyle"]
                          ]),
                          @"Invalid character stylesheet used"
                          );    
@@ -263,7 +262,7 @@
 {
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"aa\nbb\n" ];
     
-    RKDocument *document = [RKDocument documentWithAttributedString: content];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString: content];
     
     document.paragraphStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
                                 [self generateCharacterStyle], @"CStyle",
@@ -298,7 +297,7 @@
 {
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"ab" ];
     
-    RKDocument *document = [RKDocument documentWithAttributedString: content];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString: content];
     
     document.characterStyles = [NSDictionary dictionaryWithObjectsAndKeys: 
                                 [self generateCharacterStyle], @"CStyle",
@@ -327,7 +326,7 @@
 {
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"cstyle default-cstyle\npstyle\npstyle cstyle pstyle\n" ];
     
-    RKDocument *document = [RKDocument documentWithAttributedString: content];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString: content];
     
     document.characterStyles = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
                                 [self generateCharacterStyle], @"CStyle",
@@ -347,11 +346,7 @@
     [content applyPredefinedParagraphStyleAttribute:@"PStyle" document:document range:NSMakeRange(29, 21)];    
     [content applyPredefinedCharacterStyleAttribute:@"CStyle" document:document range:NSMakeRange(36, 6)];
     
-    #if !TARGET_OS_IPHONE
-        [self assertRTF:[document wordRTF] withTestDocument:@"stylesheet"];
-    #else
-        [self assertRTF:[document wordRTF] withTestDocument:@"stylesheet-ios"];
-    #endif
+    [self assertRTF:[document wordRTF] withTestDocument:@"stylesheet"];
 }
 
 @end

@@ -11,7 +11,6 @@
 #import "RKHeaderWriter.h"
 #import "RKHeaderWriter+TestExtensions.h"
 #import "RKConversion.h"
-#import "RKParagraphStyle.h"
 
 @implementation RKHeaderWriterTest
 
@@ -55,9 +54,9 @@
 
 - (NSDictionary *)generateParagraphStyle
 {
-    RKParagraphStyle *paragraphStyle = [RKParagraphStyle new];    
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];    
     
-    paragraphStyle.alignment = RKCenterTextAlignment;
+    paragraphStyle.alignment = RKTextAlignmentCenter;
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
     paragraphStyle.tailIndent = .0f;
@@ -74,7 +73,7 @@
     
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [self generateCharacterStyle]];
     
-    [dictionary setObject:[paragraphStyle targetSpecificRepresentation] forKey:RKParagraphStyleAttributeName];
+    [dictionary setObject:paragraphStyle forKey:RKParagraphStyleAttributeName];
     
     return dictionary;
 }
@@ -104,7 +103,7 @@
     [resources indexOfFont: (__bridge CTFontRef)[self.class targetSpecificFontWithName:@"Courier" size:8]];    
     
     // Generate the header
-    XCTAssertEqualObjects([RKHeaderWriter fontTableFromResourceManager:resources], 
+    XCTAssertEqualObjects([RKHeaderWriter fontTableFromResourcePool:resources], 
                          @"{\\fonttbl"
                           "\\f0\\fnil\\fcharset0 GillSans;"
                           "\\f1\\fnil\\fcharset0 Helvetica;"
@@ -125,7 +124,7 @@
     [resources indexOfColor: [self.class cgRGBColorWithRed:0.3 green:0.5 blue:0.1]];
     
     // Generate the header
-    XCTAssertEqualObjects([RKHeaderWriter colorTableFromResourceManager:resources], 
+    XCTAssertEqualObjects([RKHeaderWriter colorTableFromResourcePool:resources], 
                          @"{\\colortbl;"
                          "\\red255\\green255\\blue255;"
                          "\\red0\\green255\\blue127;"
@@ -339,7 +338,7 @@
     [resources.listCounter indexOfListStyle: secondList];
     
     // Generate header
-    NSString *listTable = [RKHeaderWriter listTableFromResourceManager:resources];
+    NSString *listTable = [RKHeaderWriter listTableFromResourcePool:resources];
     
     NSString *expectedListTable = 
         @"{\\*\\listtable "
@@ -418,7 +417,7 @@
     [resources.listCounter indexOfListStyle: secondList];
     
     // Generate header
-    NSString *listTable = [RKHeaderWriter listOverrideTableFromResourceManager:resources];
+    NSString *listTable = [RKHeaderWriter listOverrideTableFromResourcePool:resources];
 
     NSString *expectedListTable = 
         @"{\\*\\listoverridetable"
@@ -480,7 +479,7 @@
             "}"    
         "}";
     
-    NSString *stylesheets = [RKHeaderWriter styleSheetsFromResourceManager: resources];
+    NSString *stylesheets = [RKHeaderWriter styleSheetsFromResourcePool: resources];
     
     XCTAssertEqualObjects(stylesheets, expectedStyleSheet, @"Invalid style sheet table generated");
     
@@ -498,7 +497,7 @@
 {
 	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Left Binding. Not double Sided."]];
 	
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingLeft;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
 	document.twoSided = NO;
@@ -512,7 +511,7 @@
 {
 	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Right Binding. Not double Sided."]];
 	
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingRight;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
 	document.twoSided = NO;
@@ -526,7 +525,7 @@
 {
 	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Left Binding. Double Sided."]];
 	
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingLeft;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
 	document.twoSided = YES;
@@ -540,7 +539,7 @@
 {
 	RKSection *section = [[RKSection alloc] initWithContent: [self.class dummyStringWithNotice: @"Right Binding. Double Sided."]];
 	
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:section, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:section, nil]];
 	document.pageBinding = RKPageBindingRight;
 	document.pageInsets = RKPageInsetsMake(10, 200, 100, 10);
 	document.twoSided = YES;
@@ -555,7 +554,7 @@
 
 - (void)testRereadingPageSettingsWithCocoa
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:[[NSAttributedString alloc] initWithString:@"abc"]];
     
     document.pageSize = NSMakeSize(300, 400);
     document.pageInsets = RKPageInsetsMake(10, 20, 30, 40);
@@ -578,7 +577,7 @@
 
 - (void)testRereadingMetaDataSettingsWithCocoa
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:[[NSAttributedString alloc] initWithString:@"abc"]];
     NSDictionary *metaData = [NSDictionary dictionaryWithObjectsAndKeys:
                               @"Title",          NSTitleDocumentAttribute,
                               @"Company",        NSCompanyDocumentAttribute,

@@ -114,9 +114,9 @@
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:@"aaa"];
     RKResourcePool *resourcePool = [RKResourcePool new];
     
-    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
-    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
-    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
 
     // Text List properly registered
     NSDictionary *textLists = [resourcePool.listCounter listStyles];
@@ -149,7 +149,7 @@
     [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle];
         
     // Generate item number (will increment to 2.1.4)
-    [RKListItemWriter addTagsForAttribute:RKTextListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
+    [RKListItemWriter addTagsForAttribute:RKListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];
     
     XCTAssertEqualObjects([taggedString flattenedRTFString],
                          @"\\ls1\\ilvl2 "
@@ -270,7 +270,7 @@
     NSAttributedString *testString = [self generateComplexList];
    
     // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
-    RKDocument *document = [RKDocument documentWithAttributedString: testString];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString: testString];
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"list-word"];
@@ -281,7 +281,7 @@
     NSAttributedString *testString = [self generateComplexList];
 	
     // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.
-    RKDocument *document = [RKDocument documentWithAttributedString: testString];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString: testString];
     NSData *converted = [document systemRTF];
     
     [self assertRTF: converted withTestDocument: @"list-system"];

@@ -45,8 +45,8 @@
 #if !TARGET_OS_IPHONE
 - (void)testLinkAttachmentCocoaIntegration
 {
-    NSString *linkA = [NSURL URLWithString: @"http://google.de"];
-    NSString *linkB = [NSURL URLWithString: @"http://the-soulmen.com"];
+    NSURL *linkA = [NSURL URLWithString: @"http://google.de"];
+    NSURL *linkB = [NSURL URLWithString: @"http://the-soulmen.com"];
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"abc"];
     

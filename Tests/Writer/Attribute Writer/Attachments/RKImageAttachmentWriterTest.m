@@ -61,18 +61,6 @@
     XCTAssertTrue([flattened hasSuffix: expectedSuffix],
                  @"Invalid picture settings"
                  );
-
-    // Picture was properly converted
-    #if !TARGET_OS_IPHONE
-        NSString *imageName = @"image-png";
-    #else
-        NSString *imageName = @"image-png-ios";
-    #endif
-    
-    NSString *expectedResult = [[NSString alloc] initWithData:[[[self imageAttachmentWithName:imageName withExtension:@"hex" margin:RKEdgeInsetsMake(0, 0, 0, 0)] imageFile] regularFileContents] encoding:NSASCIIStringEncoding ];
-    NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
-    
-    XCTAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
 - (void)testPictureAttachmentsNotNativeFileType
@@ -105,18 +93,6 @@
     XCTAssertTrue([flattened hasSuffix: expectedSuffix],
                  @"Invalid picture settings"
                  );
-    
-    // Picture was properly converted
-    #if !TARGET_OS_IPHONE
-        NSString *imageName = @"image-jpg";
-    #else
-        NSString *imageName = @"image-jpg-ios";
-    #endif    
-    
-    NSString *expectedResult = [[NSString alloc] initWithData:[[[self imageAttachmentWithName:imageName withExtension:@"hex" margin:RKEdgeInsetsMake(0, 0, 0, 0)] imageFile] regularFileContents] encoding:NSASCIIStringEncoding ];
-    NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
-    
-    XCTAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
 - (void)testPictureAttachmentsReferenced
@@ -163,14 +139,18 @@
 	[original addAttribute:RKImageAttachmentAttributeName value:picture range:NSMakeRange(loremString.length + 2, 1)];
 	
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.
-    RKDocument *document = [RKDocument documentWithAttributedString:original];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:original];
 	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
 	document.footnoteAreaDividerSpacingBefore = 60;
 	document.footnoteAreaDividerSpacingAfter = 60;
 	
     NSData *converted = [document wordRTF];
-    
-    [self assertRTF: converted withTestDocument: @"image-word"];
+	
+#if !TARGET_OS_IPHONE
+    [self assertRTF:converted withTestDocument: @"image-word"];
+#else
+    [self assertRTF:converted withTestDocument: @"image-word-ios"];
+#endif
 }
 
 #if !TARGET_OS_IPHONE

@@ -19,7 +19,7 @@
 	document.endnoteEnumerationStyle = RKFootnoteEnumerationRomanUpperCase;
 	document.endnotePlacement = RKEndnotePlacementSectionEnd;
 	
-    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@""]];
+    RKSection *section = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@""]];
 
     // Settings used in all tests
     section.numberOfColumns = 2;
@@ -56,7 +56,7 @@
 
 - (void)testGeneratingHeadersForSomePages
 {
-    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKSection *section = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
     RKResourcePool *resources = [RKResourcePool new];
     
     [section setHeader:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
@@ -85,7 +85,7 @@
 
 - (void)testGeneratingFootersForSomePages
 {
-    RKSection *section = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
+    RKSection *section = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"abc"]];
     RKResourcePool *resources = [RKResourcePool new];
     
     [section setFooter:[[NSAttributedString alloc] initWithString:@"Text"] forPages:RKPageSelectionLeft];
@@ -115,11 +115,11 @@
 - (void)testSectionsAreCompatibleToManualReferenceTest
 {
     // Two Sections with different contents
-    RKSection *sectionA = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Section"]];
-    RKSection *sectionB = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"Second Section"]];
+    RKSection *sectionA = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"First Section"]];
+    RKSection *sectionB = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"Second Section"]];
    
     // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"section"];
@@ -128,12 +128,12 @@
 - (void)testMulticolumnSectionsAreCompatibleToManualReferenceTest
 {
     // Two Sections with different contents
-    RKSection *sectionA = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Section"]];
-    RKSection *sectionB = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"Second Section"]];
+    RKSection *sectionA = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"First Section uses two columns.\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\nFirst Section\n"]];
+    RKSection *sectionB = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"Second Section uses single column.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section.\nSecond Section."]];
     
     sectionA.numberOfColumns = 2;
         
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"multicolumn"];
@@ -142,8 +142,8 @@
 - (void)testHeadersAndFootersAreCompatibleToManualReferenceTest
 {
     // Two Sections with different contents
-    RKSection *sectionAll = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
-    RKSection *sectionSwitch = [RKSection sectionWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
+    RKSection *sectionAll = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
+    RKSection *sectionSwitch = [[RKSection alloc] initWithContent:[[NSAttributedString alloc] initWithString:@"First Page\fLeft Page\fRight Page\fLeft Page 2"]];
 
     [sectionAll setHeader:[[NSAttributedString alloc] initWithString:@"Header for all pages"] forPages:RKPageSelectorAll];
     [sectionAll setFooter:[[NSAttributedString alloc] initWithString:@"Footer for all pages"] forPages:RKPageSelectorAll];
@@ -157,7 +157,7 @@
     [sectionSwitch setHeader:[[NSAttributedString alloc] initWithString:@"Header for right pages"] forPages:RKPageSelectionRight];
     [sectionSwitch setFooter:[[NSAttributedString alloc] initWithString:@"Footer for right pages"] forPages:RKPageSelectionRight];
     
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionAll, sectionSwitch, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:sectionAll, sectionSwitch, nil]];
 	document.pageBinding = RKPageBindingLeft;
 	document.pageInsets = RKPageInsetsMake(100, 200, 100, 100);
 	document.twoSided = YES;
@@ -185,11 +185,11 @@
     [content addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderPageNumber] range:NSMakeRange(4, 1)];    
     
     // Two Sections with different contents
-    RKSection *sectionDecimal = [RKSection sectionWithContent:content];
-    RKSection *sectionRomanLower = [RKSection sectionWithContent:content];
-    RKSection *sectionRomanUpper = [RKSection sectionWithContent:content];
-    RKSection *sectionAlphabeticLower = [RKSection sectionWithContent:content];
-    RKSection *sectionAlphabeticUpper = [RKSection sectionWithContent:content];
+    RKSection *sectionDecimal = [[RKSection alloc] initWithContent:content];
+    RKSection *sectionRomanLower = [[RKSection alloc] initWithContent:content];
+    RKSection *sectionRomanUpper = [[RKSection alloc] initWithContent:content];
+    RKSection *sectionAlphabeticLower = [[RKSection alloc] initWithContent:content];
+    RKSection *sectionAlphabeticUpper = [[RKSection alloc] initWithContent:content];
     
     sectionDecimal.pageNumberingStyle = RKPageNumberingDecimal;
     sectionDecimal.indexOfFirstPage = 10;
@@ -198,7 +198,7 @@
     sectionAlphabeticLower.pageNumberingStyle = RKPageNumberingAlphabeticLowerCase;
     sectionAlphabeticUpper.pageNumberingStyle = RKPageNumberingAlphabeticUpperCase;
     
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionDecimal, sectionRomanLower, sectionRomanUpper, sectionAlphabeticLower, sectionAlphabeticUpper, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections:[NSArray arrayWithObjects:sectionDecimal, sectionRomanLower, sectionRomanUpper, sectionAlphabeticLower, sectionAlphabeticUpper, nil]];
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"pagenumbering"];
