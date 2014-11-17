@@ -6,10 +6,14 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-extern NSString *RKTextListItemAttributeName;
+/*!
+ @abstract The attribute name used for referencing list items within an attributed string.
+ */
+extern NSString *RKListItemAttributeName;
 
 /*!
  @abstract Represents an item inside a text list
+ @discussion References by a RKListItemAttributeName inside the attributed string.
  */
 @interface RKListItem : NSObject
 

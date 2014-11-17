@@ -8,7 +8,7 @@
 
 #import "RKListItem.h"
 
-NSString *RKTextListItemAttributeName = @"RKTextListItem";
+NSString *RKListItemAttributeName = @"RKTextListItem";
 
 @implementation RKListItem
 
@@ -55,7 +55,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     if (![attributedString.string hasSuffix:@"\n"])
         [attributedString replaceCharactersInRange:NSMakeRange(attributedString.length, 0) withString:@"\n" ];
     
-    [attributedString addAttribute:RKTextListItemAttributeName value:listItem range:NSMakeRange(0, attributedString.length)];
+    [attributedString addAttribute:RKListItemAttributeName value:listItem range:NSMakeRange(0, attributedString.length)];
         
     return attributedString;
 }
