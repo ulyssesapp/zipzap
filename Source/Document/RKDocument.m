@@ -15,30 +15,13 @@
 
 @implementation RKDocument
 
-+ (RKDocument *)documentWithSections:(NSArray *)initialSections
-{
-    return [[RKDocument alloc] initWithSections: initialSections];
-}
-
-+ (RKDocument *)documentWithAttributedString:(NSAttributedString *)string
-{
-    return [[RKDocument alloc] initWithAttributedString: string];
-}
-
 - (id)init
 {
     self = [super init];
     
     if (self) {
-        #if !TARGET_OS_IPHONE
-            NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
-
-            _pageSize = printInfo.paperSize;
-            _pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
-        #elif TARGET_OS_IPHONE
-            _pageSize = CGSizeMake(595, 842);
-            _pageInsets = RKPageInsetsMake(90, 72, 72, 90);
-        #endif
+		_pageSize = CGSizeMake(595, 842);
+		_pageInsets = RKPageInsetsMake(90, 72, 72, 90);
 
         _pageOrientation = RKPageOrientationPortrait;
         _hyphenationEnabled = NO;
@@ -66,6 +49,24 @@
     }
     
     return self;
+}
+
+- (instancetype)initWithSections:(NSArray *)initialSections
+{
+	self = [self init];
+	
+	if (self) {
+		_sections = initialSections;
+	}
+	
+	return self;
+}
+
+- (instancetype)initWithAttributedString:(NSAttributedString *)string
+{
+	NSAssert(string != nil, @"Initialization string must not be nil");
+	
+	return [self initWithSections: @[[[RKSection alloc] initWithContent: string]]];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -150,24 +151,6 @@
 			&&  (self.footnoteAreaContentInset == object.footnoteAreaContentInset)
 			&&  (self.footnoteAreaAnchorAlignment == object.footnoteAreaAnchorAlignment)
     ;
-}
-
-- (id)initWithSections:(NSArray *)initialSections
-{
-    self = [self init];
-    
-    if (self) {
-        _sections = initialSections;
-    }
-    
-    return self;
-}
-
-- (id)initWithAttributedString:(NSAttributedString *)string
-{
-    NSAssert(string != nil, @"Initialization string must not be nil");
-    
-    return [self initWithSections: @[[RKSection sectionWithContent: string]]];
 }
 
 + (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle

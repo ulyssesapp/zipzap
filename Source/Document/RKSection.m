@@ -47,11 +47,6 @@
 
 @implementation RKSection
 
-+ (id)sectionWithContent:(NSAttributedString *)content
-{
-    return [[RKSection alloc] initWithContent:content];
-}
-
 - (id)init
 {
     self = [super init];
@@ -67,6 +62,19 @@
     }
     
     return self;
+}
+
+- (id)initWithContent:(NSAttributedString *)initialContent
+{
+	NSAssert(initialContent != nil, @"Initial content string must not be nil");
+	
+	self = [self init];
+	
+	if (self) {
+		_content = initialContent;
+	}
+	
+	return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -133,18 +141,6 @@
     ;
 }
 
-- (id)initWithContent:(NSAttributedString *)initialContent
-{
-     NSAssert(initialContent != nil, @"Initial content string must not be nil");
-    
-    self = [self init];
-    
-    if (self) {
-        _content = initialContent;
-    }
-    
-    return self;
-}
 
 #pragma mark - Header and Footer
 
