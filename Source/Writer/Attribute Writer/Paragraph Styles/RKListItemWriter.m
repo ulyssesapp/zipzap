@@ -11,17 +11,15 @@
 #import "RKListItem.h"
 #import "RKListStyle+WriterAdditions.h"
 #import "RKConversion.h"
-#import "RKParagraphStyleWrapper.h"
-#import "RKTextTabWrapper.h"
 
-#import "NSMutableAttributedString+ParagraphStyleWrapper.h"
+#import "NSMutableAttributedString+ParagraphStyleFixing.h"
 
 @implementation RKListItemWriter
 
 + (void)load
 {
     @autoreleasepool {
-        [RKAttributedStringWriter registerWriter:self forAttribute:RKTextListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel];
     }
 }
 
@@ -46,7 +44,7 @@
 	textLocation = round(textLocation * 0.5) / 0.5;
 	
 	// Update paragraph style, so tabulators will be used for enumerator positioning (TextEdit)
-	[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange paragraphRange, RKParagraphStyleWrapper *paragraphStyle) {
+	[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange paragraphRange, NSMutableParagraphStyle *paragraphStyle) {
 		// Set indentation (word export needs additional head indent set to the enumerator's position)
 		if (policy & RKAttributePreprocessorListMarkerPositionsUsingIndent)
 			paragraphStyle.firstLineHeadIndent = enumeratorLocation;
@@ -61,8 +59,8 @@
 			
 		// Setup new NSTextTabs instances for the given tabs stops
 		NSMutableArray *newTabStops = [NSMutableArray new];
-		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:enumeratorLocation alignment:kCTTextAlignmentLeft]];
-		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:textLocation alignment:kCTTextAlignmentLeft]];
+		[newTabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:enumeratorLocation options:0]];
+		[newTabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:textLocation options:0]];
 
 		// If there are already tab stops, take only tab stops at a higher location than the first text
 		for (NSTextTab *tab in paragraphStyle.tabStops) {
@@ -80,13 +78,13 @@
 	
 	if (policy & RKAttributePreprocessorInnerListParagraphsUsingLineBreak) {
 		// Pages-RTF requires that nested paragraphs are actually nested lines...
-		RKParagraphStyleWrapper *lastParagraphStyle = [preprocessedString wrappedParagraphStyleAtIndex: NSMaxRange(range)-1];
+		NSParagraphStyle *lastParagraphStyle = [preprocessedString attribute:NSParagraphStyleAttributeName atIndex:NSMaxRange(range)-1 effectiveRange:NULL] ?: [NSParagraphStyle defaultParagraphStyle];
 		
 		// Exchange paragraph breaks by newlines (required by RTF)
 		[preprocessedString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\u2028" options:0 range:NSMakeRange(range.location, range.length - 1)];
 
 		// We need to unify the last and the first paragraph style, since we've exchanged paragraph breaks by newlines.
-		[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange range, RKParagraphStyleWrapper *paragraphStyle) {
+		[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange range, NSMutableParagraphStyle *paragraphStyle) {
 			paragraphStyle.paragraphSpacing = lastParagraphStyle.paragraphSpacing;
 		}];
 	}

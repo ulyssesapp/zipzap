@@ -29,19 +29,14 @@
 #endif
 
 /*!
- @abstract Generates the required tags for styling a paragraph
- */
-+ (NSString *)styleTagWithWritingDirection:(CTWritingDirection)baseWritingDirection textAlignment:(CTTextAlignment)textAlignment headIndent:(CGFloat)headIndent firstLineHeadIndent:(CGFloat)firstLineHeadIndent tailIndent:(CGFloat)tailIndent lineSpacing:(CGFloat)lineSpacing lineHeightMultiple:(CGFloat)lineHeightMultiple minimumLineHeight:(CGFloat)minimumLineHeight maximumLineHeight:(CGFloat)maximumLineHeight paragraphSpacingBefore:(CGFloat)paragraphSpacingBefore paragraphSpacingAfter:(CGFloat)paragraphSpacing defaultTabInterval:(CGFloat)defaultTabInterval ofAttributedString:(NSAttributedString *)attributedString paragraphRange:(NSRange)range ignoreLineHeightAndSpacing:(BOOL)ignoreLineHeightAndSpacing resources:(RKResourcePool *)resources;
-
-/*!
  @abstract Generates the style tags required to describe the writing direction of a paragraph
  */
-+ (NSString *)styleTagsForWritingDirection:(CTWritingDirection)writingDirection;
++ (NSString *)styleTagsForWritingDirection:(NSWritingDirection)writingDirection;
 
 /*!
  @abstract Generates the style tags required to describe the text alignment of a paragraph
  */
-+ (NSString *)styleTagsForTextAlignment:(CTTextAlignment)textAlignment;
++ (NSString *)styleTagsForTextAlignment:(NSTextAlignment)textAlignment;
 
 /*!
  @abstract Generates the style tags required to describe the indenting of a paragraph
@@ -73,20 +68,10 @@
  */
 + (NSString *)styleTagsForDefaultTabInterval:(CGFloat)defaultTabInterval;
 
-#if !TARGET_OS_IPHONE
 /*!
  @abstract Generates the style tags required to describe a single tab stop of a paragraph
  */
-+ (NSString *)styleTagsForTabStopType:(NSTextTabType)tabType location:(CGFloat)location;
-
-#else
-
-/*!
- @abstract Generates the style tags required to describe a single tab stop of a paragraph
- */
-+ (NSString *)styleTagsForTabAlignment:(CTTextAlignment)tabType location:(CGFloat)location;
-
-#endif
++ (NSString *)styleTagsForTabAlignment:(NSTextAlignment)alignment location:(CGFloat)location;
 
 @end
 
@@ -136,12 +121,6 @@
     return [self styleTagFromParagraphStyle:paragraphStyle ofAttributedString:simulatedParagraph range:NSMakeRange(0, 2) resources:resources];
 }
 
-
-
-
-#pragma mark - Plattform-dependend styling
-
-#if !TARGET_OS_IPHONE
 + (NSString *)styleTagFromParagraphStyle:(NSParagraphStyle *)paragraphStyle ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range resources:(RKResourcePool *)resources
 {
     if (!paragraphStyle)
@@ -150,30 +129,27 @@
 	RKAdditionalParagraphStyle *additionalStyle = [attributedString attribute:RKAdditionalParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL];
     NSMutableString *rtf = [NSMutableString new];
 
-    // Generate basic paragraph style settings
-    [rtf appendString:  
-     [self styleTagWithWritingDirection:(CTWritingDirection)paragraphStyle.baseWritingDirection
-                          textAlignment:(CTTextAlignment)paragraphStyle.alignment
-                             headIndent:paragraphStyle.headIndent 
-                    firstLineHeadIndent:paragraphStyle.firstLineHeadIndent 
-                             tailIndent:paragraphStyle.tailIndent 
-                            lineSpacing:paragraphStyle.lineSpacing 
-                     lineHeightMultiple:paragraphStyle.lineHeightMultiple 
-                      minimumLineHeight:paragraphStyle.minimumLineHeight 
-                      maximumLineHeight:paragraphStyle.maximumLineHeight 
-                 paragraphSpacingBefore:paragraphStyle.paragraphSpacingBefore 
-                  paragraphSpacingAfter:paragraphStyle.paragraphSpacing 
-                     defaultTabInterval:paragraphStyle.defaultTabInterval 
-                     ofAttributedString:attributedString 
-                         paragraphRange:range
-			 ignoreLineHeightAndSpacing:additionalStyle.overrideLineHeightAndSpacing
-                              resources:resources
-      ]
-     ];
-    
+	// Generate basic paragraph style settings
+	// For compatibility reason, this must be executed in the given order
+	[rtf appendString: [self styleTagsForWritingDirection: paragraphStyle.baseWritingDirection]];
+	[rtf appendString: [self styleTagsForTextAlignment: paragraphStyle.alignment]];
+	[rtf appendString: [self styleTagsForHeadIndent:paragraphStyle.headIndent firstLineHeadIndent:paragraphStyle.firstLineHeadIndent tailIndent:paragraphStyle.tailIndent resources:resources]];
+	[rtf appendString: [self styleTagsForParagraphSpacingBefore:paragraphStyle.paragraphSpacingBefore after:paragraphStyle.paragraphSpacing]];
+	
+	// Ignore line height and line spacing if it is specified by an RKAdditionalParagraphStyle
+	if (!additionalStyle.overrideLineHeightAndSpacing) {
+		[rtf appendString: [self styleTagsForLineSpacing: paragraphStyle.lineSpacing]];
+		[rtf appendString: [self styleTagsForLineHeightMultiple:paragraphStyle.lineHeightMultiple attributedString:attributedString paragraphRange:range]];
+		[rtf appendString: [self styleTagsForMinimumLineHeight:paragraphStyle.minimumLineHeight maximumLineHeight:paragraphStyle.maximumLineHeight]];
+	}
+	
+	// Default tab interval
+	// (While the Cocoa reference says this defaults to "0", it seems to default to "36" - so we will be explicit here)
+	[rtf appendString: [self styleTagsForDefaultTabInterval: paragraphStyle.defaultTabInterval]];
+	
     // Translation of tab stops    
     for (NSTextTab *tabStop in paragraphStyle.tabStops) {
-        [rtf appendString: [self styleTagsForTabStopType:tabStop.tabStopType location:tabStop.location]];
+        [rtf appendString: [self styleTagsForTabAlignment:tabStop.alignment location:tabStop.location]];
     }
     
     // Just to separate from succeeding text or tags
@@ -182,161 +158,30 @@
     return rtf;
 }
 
-#else
-
-+ (NSString *)styleTagFromParagraphStyle:(id)paragraphStyleObject ofAttributedString:(NSAttributedString *)attributedString range:(NSRange)range resources:(RKResourcePool *)resources
-{
-    if (!paragraphStyleObject)
-        return @"";
-	
-	RKAdditionalParagraphStyle *additionalStyle = [attributedString attribute:RKAdditionalParagraphStyleAttributeName atIndex:range.location effectiveRange:NULL];
-	
-    // Load values from paragraph style
-    BOOL success;
-    CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)paragraphStyleObject;
-    
-    CTWritingDirection baseWritingDirection;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierBaseWritingDirection, sizeof(CTWritingDirection), &baseWritingDirection);
-    NSAssert(success, @"Can't load style value");
-
-    CTTextAlignment textAlignment;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &textAlignment);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat headIndent;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierHeadIndent, sizeof(CGFloat), &headIndent);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat firstLineHeadIndent;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(CGFloat), &firstLineHeadIndent);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat tailIndent;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierTailIndent, sizeof(CGFloat), &tailIndent);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat lineSpacing;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &lineSpacing);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat lineHeightMultiple;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(CGFloat), &lineHeightMultiple);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat maximumLineHeight;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(CGFloat), &maximumLineHeight);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat minimumLineHeight;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), &minimumLineHeight);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat paragraphSpacingBefore;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierParagraphSpacingBefore, sizeof(CGFloat), &paragraphSpacingBefore);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat paragraphSpacing;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierParagraphSpacing, sizeof(CGFloat), &paragraphSpacing);
-    NSAssert(success, @"Can't load style value");
-    
-    CGFloat defaultTabInterval;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierDefaultTabInterval, sizeof(CGFloat), &defaultTabInterval);
-    NSAssert(success, @"Can't load style value");
-    
-    CFArrayRef tabStops;
-    success = CTParagraphStyleGetValueForSpecifier(paragraphStyle, kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &tabStops);
-    NSAssert(success, @"Can't load style value");
-    
-    // Generate basic paragraph style
-    NSMutableString *rtf = [NSMutableString new];
-    
-    [rtf appendString:
-     [self styleTagWithWritingDirection:baseWritingDirection
-                         textAlignment:textAlignment 
-                            headIndent:headIndent 
-                   firstLineHeadIndent:firstLineHeadIndent 
-                            tailIndent:tailIndent 
-                           lineSpacing:lineSpacing 
-                    lineHeightMultiple:lineHeightMultiple 
-                     minimumLineHeight:minimumLineHeight 
-                     maximumLineHeight:maximumLineHeight 
-                paragraphSpacingBefore:paragraphSpacingBefore 
-                 paragraphSpacingAfter:paragraphSpacing 
-                    defaultTabInterval:defaultTabInterval 
-                    ofAttributedString:attributedString 
-                        paragraphRange:range
-			ignoreLineHeightAndSpacing:additionalStyle.overrideLineHeightAndSpacing
-                             resources:resources
-      ]];
-     
-    // Generate tab stops
-    for (id tabStopObject in (__bridge NSArray *)tabStops) {
-        CTTextTabRef tabStop = (__bridge CTTextTabRef)tabStopObject;
-        
-        [rtf appendString: [self styleTagsForTabAlignment:CTTextTabGetAlignment(tabStop) location:CTTextTabGetLocation(tabStop)]];
-    }
-    
-    // To prevent conflicts with succeeding text, we add a space
-    [rtf appendString:@" "];
-    
-    return rtf;
-}
-#endif
-
-
-
-
-#pragma mark - Plattform-independend styling method
-
-+ (NSString *)styleTagWithWritingDirection:(CTWritingDirection)baseWritingDirection textAlignment:(CTTextAlignment)textAlignment headIndent:(CGFloat)headIndent firstLineHeadIndent:(CGFloat)firstLineHeadIndent tailIndent:(CGFloat)tailIndent lineSpacing:(CGFloat)lineSpacing lineHeightMultiple:(CGFloat)lineHeightMultiple minimumLineHeight:(CGFloat)minimumLineHeight maximumLineHeight:(CGFloat)maximumLineHeight paragraphSpacingBefore:(CGFloat)paragraphSpacingBefore paragraphSpacingAfter:(CGFloat)paragraphSpacing defaultTabInterval:(CGFloat)defaultTabInterval ofAttributedString:(NSAttributedString *)attributedString paragraphRange:(NSRange)range ignoreLineHeightAndSpacing:(BOOL)ignoreLineHeightAndSpacing resources:(RKResourcePool *)resources
-{
-    NSMutableString *rtf = [NSMutableString new];
-    
-    // For compatibility reason, this must be executed in the given order    
-    [rtf appendString: [self styleTagsForWritingDirection: baseWritingDirection]];
-    [rtf appendString: [self styleTagsForTextAlignment: textAlignment]];    
-    [rtf appendString: [self styleTagsForHeadIndent:headIndent firstLineHeadIndent:firstLineHeadIndent tailIndent:tailIndent resources:resources]];
-	[rtf appendString: [self styleTagsForParagraphSpacingBefore:paragraphSpacingBefore after:paragraphSpacing]];
-	
-	// Ignore line height and line spacing if it is specified by an RKAdditionalParagraphStyle
-	if (!ignoreLineHeightAndSpacing) {
-		[rtf appendString: [self styleTagsForLineSpacing: lineSpacing]];
-		[rtf appendString: [self styleTagsForLineHeightMultiple:lineHeightMultiple attributedString:attributedString paragraphRange:range]];
-		[rtf appendString: [self styleTagsForMinimumLineHeight:minimumLineHeight maximumLineHeight:maximumLineHeight]];
-	}
-    
-    // Default tab interval
-    // (While the Cocoa reference says this defaults to "0", it seems to default to "36" - so we will be explicit here)
-    [rtf appendString: [self styleTagsForDefaultTabInterval:defaultTabInterval]];    
-    
-    return rtf;
-}
-
-
 
 #pragma mark - Paragraph styling tags
 
-+ (NSString *)styleTagsForWritingDirection:(CTWritingDirection)baseWritingDirection
++ (NSString *)styleTagsForWritingDirection:(NSWritingDirection)baseWritingDirection
 {
-    if (baseWritingDirection == kCTWritingDirectionRightToLeft)
+    if (baseWritingDirection == NSWritingDirectionRightToLeft)
         return @"\\rtlpar";    
     
     return @"";
 }
 
-+ (NSString *)styleTagsForTextAlignment:(CTTextAlignment)textAlignment
++ (NSString *)styleTagsForTextAlignment:(NSTextAlignment)textAlignment
 {
     switch (textAlignment) {
-        case kCTLeftTextAlignment:
+        case RKTextAlignmentLeft:
             return @"\\ql";
             
-        case kCTRightTextAlignment:
+        case RKTextAlignmentRight:
             return @"\\qr";
             
-        case kCTCenterTextAlignment:
+        case RKTextAlignmentCenter:
             return @"\\qc";
             
-        case kCTJustifiedTextAlignment:
+        case RKTextAlignmentJustified:
             return @"\\qj";
 			
 		default:
@@ -440,30 +285,24 @@
 }
 
 
-
-
 #pragma mark - Styling of TAB definitions
 
-#if !TARGET_OS_IPHONE
-
-+ (NSString *)styleTagsForTabStopType:(NSTextTabType)tabType location:(CGFloat)location
++ (NSString *)styleTagsForTabAlignment:(NSTextAlignment)alignment location:(CGFloat)location
 {
     NSMutableString *rtf = [NSMutableString new];    
 
-    switch (tabType) {
-		case NSLeftTabStopType:
+    switch (alignment) {
+		case RKTextAlignmentLeft:
+		case RKTextAlignmentNatural:
+		case RKTextAlignmentJustified:
 			break;
 			
-        case NSCenterTabStopType:
+        case RKTextAlignmentCenter:
             [rtf appendString:@"\\tqc"];
             break;
             
-        case NSRightTabStopType:
+        case RKTextAlignmentRight:
             [rtf appendString:@"\\tqr"];
-            break;
-            
-        case NSDecimalTabStopType:
-            [rtf appendString:@"\\tqdec"];
             break;
     }
     
@@ -471,32 +310,5 @@
     
     return rtf;
 }
-
-#else
-
-+ (NSString *)styleTagsForTabAlignment:(CTTextAlignment)tabType location:(CGFloat)location
-{
-    NSMutableString *rtf = [NSMutableString new];    
-
-    // On CoreText decimal-point tabs are not available
-    switch (tabType) {
-        case kCTCenterTextAlignment:
-            [rtf appendString:@"\\tqc"];
-            break;
-            
-        case kCTRightTextAlignment:
-            [rtf appendString:@"\\tqr"];
-            break;
-            
-        default:
-            break;
-    }
-    
-    [rtf appendFormat:@"\\tx%lu", (NSUInteger)RKPointsToTwips(location)];
-    
-    return rtf;
-}
-
-#endif
 
 @end
