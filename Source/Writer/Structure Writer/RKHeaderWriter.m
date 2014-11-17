@@ -24,12 +24,12 @@ enum {
 /*!
  @abstract Generates the font table using a resource manager
  */
-+ (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)fontTableFromResourcePool:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the color table using a resource manager
  */
-+ (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)colorTableFromResourcePool:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates a style sheet setting from a dictionary containing style definitions
@@ -39,7 +39,7 @@ enum {
 /*!
  @abstract Generates the style sheet settings using a resource manager
  */
-+ (NSString *)styleSheetsFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)styleSheetsFromResourcePool:(RKResourcePool *)resources;
 
 /*!
  @abstract Generate a list level using a resource manager
@@ -49,12 +49,12 @@ enum {
 /*!
  @abstract Generate the list table using a resource manager
  */
-+ (NSString *)listTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)listTableFromResourcePool:(RKResourcePool *)resources;
 
 /*!
  @abstract Generate the list override table using a resource manger
  */
-+ (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)listOverrideTableFromResourcePool:(RKResourcePool *)resources;
 
 /*!
  @abstract Generates the document informations from a document
@@ -93,18 +93,18 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 + (NSString *)RTFHeaderFromDocument:(RKDocument *)document withResources:(RKResourcePool *)resources
 {
     return [NSString stringWithFormat:@"\\rtf1\\ansi\\ansicpg1252\\uc0\n%@\n%@\n%@\n%@\n%@\n%@\n%@%@",
-            [RKHeaderWriter fontTableFromResourceManager: resources],
-            [RKHeaderWriter colorTableFromResourceManager: resources],
-            [RKHeaderWriter styleSheetsFromResourceManager: resources],
-            [RKHeaderWriter listTableFromResourceManager: resources],
-            [RKHeaderWriter listOverrideTableFromResourceManager: resources],
+            [RKHeaderWriter fontTableFromResourcePool: resources],
+            [RKHeaderWriter colorTableFromResourcePool: resources],
+            [RKHeaderWriter styleSheetsFromResourcePool: resources],
+            [RKHeaderWriter listTableFromResourcePool: resources],
+            [RKHeaderWriter listOverrideTableFromResourcePool: resources],
             [RKHeaderWriter documentMetaDataFromDocument: document],
             [RKHeaderWriter documentFormatFromDocument: document],
-			[RKHeaderWriter footnoteStyleFromResourceManager: resources]
+			[RKHeaderWriter footnoteStyleFromResourcePool: resources]
            ];
 }
 
-+ (NSString *)footnoteStyleFromResourceManager:(RKResourcePool *)resources
++ (NSString *)footnoteStyleFromResourcePool:(RKResourcePool *)resources
 {
 	if (!resources.containsFootnotes)
 		return @"\n";
@@ -118,7 +118,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
 	return [NSString stringWithFormat: @"\n{\\ftnsep %@ \\chftnsep \\par}{\\ftnsepc %@ \\chftnsepc \\par}{\\aftnsep %@ \\chftnsep \\par}{\\aftnsepc %@ \\chftnsepc \\par}\n", separatorStyle, separatorStyle, separatorStyle, separatorStyle];
 }
 
-+ (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources
++ (NSString *)fontTableFromResourcePool:(RKResourcePool *)resources
 {
     NSMutableString *fontTable = [NSMutableString stringWithString:@"{\\fonttbl"];
     
@@ -131,7 +131,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
     return fontTable;
 }
 
-+ (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources
++ (NSString *)colorTableFromResourcePool:(RKResourcePool *)resources
 {
     NSArray *colors = resources.colors;
     colors = [colors subarrayWithRange:NSMakeRange(1, colors.count - 1)];
@@ -160,7 +160,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
     return collectedStyleSheets;
 }
 
-+ (NSString *)styleSheetsFromResourceManager:(RKResourcePool *)resources
++ (NSString *)styleSheetsFromResourcePool:(RKResourcePool *)resources
 {
     return [NSString stringWithFormat:@"{\\stylesheet %@%@}",
             [self styleSheetsFromStyleDefinitions:resources.document.paragraphStyles paragraphStyle:YES resources:resources],
@@ -168,7 +168,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
            ];
 }
 
-+ (NSString *)listTableFromResourceManager:(RKResourcePool *)resources
++ (NSString *)listTableFromResourcePool:(RKResourcePool *)resources
 {
     NSDictionary *listStyles = resources.listCounter.listStyles;
     
@@ -238,7 +238,7 @@ NSArray *RKHeaderWriterMetadataDescriptions;
             ];
 }
 
-+ (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources
++ (NSString *)listOverrideTableFromResourcePool:(RKResourcePool *)resources
 {
     NSDictionary *listStyles = resources.listCounter.listStyles;
     
