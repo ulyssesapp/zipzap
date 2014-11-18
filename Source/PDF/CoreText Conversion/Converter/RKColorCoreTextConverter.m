@@ -52,14 +52,19 @@
         if (!color)
             return;
                 
-        #if !TARGET_OS_IPHONE
         // Set color attribute
+#if !TARGET_OS_IPHONE
         CGColorRef convertedColor = [color newCGColorUsingGenericRGBColorSpace];
+#else
+		CGColorRef convertedColor = [color CGColor];
+#endif
         [attributedString addAttribute:newAttributeName value:(__bridge id)convertedColor range:range];
-        
-        CFRelease(convertedColor);
-        #endif
-        
+
+#if !TARGET_OS_IPHONE
+		// Only required on Mac, since CGColor returns an autoreleased object
+		CGColorRelease(color);
+#endif
+		
         // Use a renderer, if given
         if (renderer)
             [attributedString addTextRenderer:renderer forRange:range];

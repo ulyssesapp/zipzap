@@ -48,11 +48,11 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
 {
     @autoreleasepool {
         RKParagraphStyleAlignmentEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    [NSNumber numberWithUnsignedInteger: kCTLeftTextAlignment],          @"left",
-                                                    [NSNumber numberWithUnsignedInteger: kCTRightTextAlignment],         @"right",
-                                                    [NSNumber numberWithUnsignedInteger: kCTCenterTextAlignment],        @"center",
-                                                    [NSNumber numberWithUnsignedInteger: kCTJustifiedTextAlignment],     @"justified",
-                                                    [NSNumber numberWithUnsignedInteger: kCTNaturalTextAlignment],       @"natural",
+                                                    [NSNumber numberWithUnsignedInteger: kCTLeftTextAlignment],         @"left",
+                                                    [NSNumber numberWithUnsignedInteger: kCTRightTextAlignment],        @"right",
+                                                    [NSNumber numberWithUnsignedInteger: kCTCenterTextAlignment],       @"center",
+                                                    [NSNumber numberWithUnsignedInteger: kCTJustifiedTextAlignment],	@"justified",
+                                                    [NSNumber numberWithUnsignedInteger: kCTNaturalTextAlignment],		@"natural",
                                                     nil];
         
         RKParagraphStyleLineBreakModeEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:

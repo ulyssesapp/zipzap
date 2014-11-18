@@ -67,6 +67,11 @@ NSString *RKColorAlphaComponentPersistenceKey = @"alpha";
                                      [NSNumber numberWithDouble: components[3]], RKColorAlphaComponentPersistenceKey,
                                      nil];
 
+#if !TARGET_OS_IPHONE
+	// Only required on Mac, since CGColor returns an autoreleased object
+	CGColorRelease(color);
+#endif
+	
     return serializedColor;
 }
 

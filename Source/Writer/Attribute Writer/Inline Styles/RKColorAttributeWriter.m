@@ -80,6 +80,7 @@
         colorIndex = [resources indexOfColor: color];
         
         #if !TARGET_OS_IPHONE
+			// Only required on Mac, since CGColor returns an autoreleased object
             CGColorRelease(color);
         #endif
     }

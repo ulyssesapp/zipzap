@@ -66,7 +66,7 @@
 		if (!paragraphStyle)
 			return [RKParagraphStyleWrapper newDefaultParagraphStyle];
 		
-        textAlignment = (CTTextAlignment)paragraphStyle.alignment;
+        textAlignment = NSTextAlignmentToCTTextAlignment(paragraphStyle.alignment);
         firstLineHeadIndent = paragraphStyle.firstLineHeadIndent;
         headIndent = paragraphStyle.headIndent;
         tailIndent = paragraphStyle.tailIndent;
@@ -130,7 +130,7 @@
 {
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     
-    paragraphStyle.alignment = (NSTextAlignment)self.textAlignment;
+    paragraphStyle.alignment = NSTextAlignmentFromCTTextAlignment(self.textAlignment);
     paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent;
     paragraphStyle.headIndent = self.headIndent;
     paragraphStyle.tailIndent = self.tailIndent;
