@@ -11,8 +11,10 @@
 #import "RKListItem.h"
 #import "RKListStyle+WriterAdditions.h"
 #import "RKConversion.h"
+#import "RKParagraphStyleWrapper.h"
+#import "RKTextTabWrapper.h"
 
-#import "NSMutableAttributedString+ParagraphStyleFixing.h"
+#import "NSMutableAttributedString+ParagraphStyleWrapper.h"
 
 @implementation RKListItemWriter
 
@@ -44,7 +46,7 @@
 	textLocation = round(textLocation * 0.5) / 0.5;
 	
 	// Update paragraph style, so tabulators will be used for enumerator positioning (TextEdit)
-	[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange paragraphRange, NSMutableParagraphStyle *paragraphStyle) {
+	[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange paragraphRange, RKParagraphStyleWrapper *paragraphStyle) {
 		// Set indentation (word export needs additional head indent set to the enumerator's position)
 		if (policy & RKAttributePreprocessorListMarkerPositionsUsingIndent)
 			paragraphStyle.firstLineHeadIndent = enumeratorLocation;
@@ -59,8 +61,8 @@
 			
 		// Setup new NSTextTabs instances for the given tabs stops
 		NSMutableArray *newTabStops = [NSMutableArray new];
-		[newTabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:enumeratorLocation options:0]];
-		[newTabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:textLocation options:0]];
+		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:enumeratorLocation alignment:kCTTextAlignmentLeft]];
+		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:textLocation alignment:kCTTextAlignmentLeft]];
 
 		// If there are already tab stops, take only tab stops at a higher location than the first text
 		for (NSTextTab *tab in paragraphStyle.tabStops) {
@@ -78,13 +80,13 @@
 	
 	if (policy & RKAttributePreprocessorInnerListParagraphsUsingLineBreak) {
 		// Pages-RTF requires that nested paragraphs are actually nested lines...
-		NSParagraphStyle *lastParagraphStyle = [preprocessedString attribute:NSParagraphStyleAttributeName atIndex:NSMaxRange(range)-1 effectiveRange:NULL] ?: [NSParagraphStyle defaultParagraphStyle];
+		RKParagraphStyleWrapper *lastParagraphStyle = [preprocessedString wrappedParagraphStyleAtIndex: NSMaxRange(range)-1];
 		
 		// Exchange paragraph breaks by newlines (required by RTF)
 		[preprocessedString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\u2028" options:0 range:NSMakeRange(range.location, range.length - 1)];
 
 		// We need to unify the last and the first paragraph style, since we've exchanged paragraph breaks by newlines.
-		[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange range, NSMutableParagraphStyle *paragraphStyle) {
+		[preprocessedString updateParagraphStylesInRange:range usingBlock:^(NSRange range, RKParagraphStyleWrapper *paragraphStyle) {
 			paragraphStyle.paragraphSpacing = lastParagraphStyle.paragraphSpacing;
 		}];
 	}

@@ -12,9 +12,6 @@
 #import "RKDocument.h"
 #import "RKDocument+RKPersistence.h"
 
-#import <ImageIO/ImageIO.h>
-#import <MobileCoreServices/UTCoreTypes.h>
-
 @implementation RKPDFWriterTest
 
 - (NSData *)pngDataForPDFData:(NSData *)pdfData

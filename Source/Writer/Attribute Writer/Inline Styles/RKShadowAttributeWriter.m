@@ -34,7 +34,7 @@
         NSAssert([shadowObject isKindOfClass: RKShadow.class], @"Expecting shadow attribute");
     
         RKShadow *shadow = shadowObject;
-        CGColorRef color = [shadow shadowColor];
+        CGColorRef color = [[shadow shadowColor] CGColor];
     #endif
     
     NSUInteger colorIndex = [resources indexOfColor: color];

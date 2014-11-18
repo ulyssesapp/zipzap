@@ -32,8 +32,8 @@
     shadow.shadowColor = [NSColor rtfColorWithRed:1.0 green:1.0 blue:0.0];
 #else
     RKShadow *shadow = [RKShadow new];
-    shadow.shadowColor = [self.class cgRGBColorWithRed:1.0 green:1.0 blue:0.0];
-#endif    
+	shadow.shadowColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.0 alpha:1];
+#endif
     shadow.shadowBlurRadius = 2.0f;
 
     return [NSDictionary dictionaryWithObjectsAndKeys: 

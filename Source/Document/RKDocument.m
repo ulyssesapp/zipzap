@@ -153,6 +153,11 @@
     ;
 }
 
+- (NSUInteger)hash
+{
+	return 1;
+}
+
 + (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle
 {
     switch (enumerationStyle) {
@@ -198,12 +203,7 @@
 
 - (NSData *)PDF
 {
-#if !TARGET_OS_IPHONE
     return [RKPDFWriter PDFFromDocument:self options:0];
-#else
-	NSAssert(NO, @"PDF not implemented on iOS.");
-	return nil;
-#endif
 }
 
 @end

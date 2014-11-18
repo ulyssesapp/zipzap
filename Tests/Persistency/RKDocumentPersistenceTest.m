@@ -57,14 +57,7 @@
 	testDocument.pageBinding = RKPageBindingRight;
 	testDocument.twoSided = YES;
 	
-    #if !TARGET_OS_IPHONE
-        NSDictionary *paragraphStyle = [NSDictionary dictionaryWithObject:[NSParagraphStyle defaultParagraphStyle] forKey:NSParagraphStyleAttributeName];
-    #else
-        CTParagraphStyleRef sourceStyle = CTParagraphStyleCreate(NULL, 0);
-        NSDictionary *paragraphStyle = [NSDictionary dictionaryWithObject:(__bridge id)sourceStyle forKey:RKParagraphStyleAttributeName];
-        CFRelease(sourceStyle);
-    #endif
-
+	NSDictionary *paragraphStyle = [NSDictionary dictionaryWithObject:[NSParagraphStyle defaultParagraphStyle] forKey:NSParagraphStyleAttributeName];
     testDocument.paragraphStyles = [NSDictionary dictionaryWithObject:paragraphStyle forKey:@"My Paragraph"];
 
     CTFontRef font = CTFontCreateWithName(CFSTR("Helvetica-Bold"), 22, NULL);

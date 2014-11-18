@@ -35,19 +35,15 @@ NSString *RKColorAlphaComponentPersistenceKey = @"alpha";
         return nil;
     }
     
-    CGFloat red = [[propertyList objectForKey: RKColorRedComponentPersistenceKey] floatValue];
-    CGFloat green = [[propertyList objectForKey: RKColorGreenComponentPersistenceKey] floatValue];
-    CGFloat blue = [[propertyList objectForKey: RKColorBlueComponentPersistenceKey] floatValue];
-    CGFloat alpha = [[propertyList objectForKey: RKColorAlphaComponentPersistenceKey] floatValue];
+    CGFloat red = [[propertyList objectForKey: RKColorRedComponentPersistenceKey] doubleValue];
+    CGFloat green = [[propertyList objectForKey: RKColorGreenComponentPersistenceKey] doubleValue];
+    CGFloat blue = [[propertyList objectForKey: RKColorBlueComponentPersistenceKey] doubleValue];
+    CGFloat alpha = [[propertyList objectForKey: RKColorAlphaComponentPersistenceKey] doubleValue];
     
     #if !TARGET_OS_IPHONE
         return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
     #else
-        CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-        CGColorRef color = CGColorCreate(colorspace, (CGFloat[]){red, green, blue, alpha});
-        CFRelease(colorspace);
-    
-        return (__bridge id)color;
+		return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
     #endif
 
 }
@@ -59,22 +55,18 @@ NSString *RKColorAlphaComponentPersistenceKey = @"alpha";
     #if !TARGET_OS_IPHONE
         color = [((NSColor *)attributeValue) newCGColorUsingGenericRGBAColorSpace];
     #else
-        color = (__bridge CGColorRef)attributeValue;
+        color = [(UIColor *)attributeValue CGColor];
     #endif
     
     const CGFloat *components = CGColorGetComponents(color);
     
     NSDictionary *serializedColor = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     [NSNumber numberWithFloat: components[0]], RKColorRedComponentPersistenceKey,
-                                     [NSNumber numberWithFloat: components[1]], RKColorGreenComponentPersistenceKey,
-                                     [NSNumber numberWithFloat: components[2]], RKColorBlueComponentPersistenceKey,
-                                     [NSNumber numberWithFloat: components[3]], RKColorAlphaComponentPersistenceKey,
+                                     [NSNumber numberWithDouble: components[0]], RKColorRedComponentPersistenceKey,
+                                     [NSNumber numberWithDouble: components[1]], RKColorGreenComponentPersistenceKey,
+                                     [NSNumber numberWithDouble: components[2]], RKColorBlueComponentPersistenceKey,
+                                     [NSNumber numberWithDouble: components[3]], RKColorAlphaComponentPersistenceKey,
                                      nil];
 
-    #if !TARGET_OS_IPHONE
-        CFRelease(color);
-    #endif
-    
     return serializedColor;
 }
 

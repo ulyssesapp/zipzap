@@ -60,10 +60,10 @@
 /*!
  @abstract Text alignment settings.
  */
-#define RKTextAlignmentLeft			RKTextAlignmentLeft
-#define RKTextAlignmentRight		RKTextAlignmentRight
+#define RKTextAlignmentLeft			NSLeftTextAlignment
+#define RKTextAlignmentRight		NSRightTextAlignment
 #define RKTextAlignmentNatural		NSNaturalTextAlignment
-#define RKTextAlignmentCenter		RKTextAlignmentCenter
-#define RKTextAlignmentJustified	RKTextAlignmentJustified
+#define RKTextAlignmentCenter		NSCenterTextAlignment
+#define RKTextAlignmentJustified	NSJustifiedTextAlignment
 
 #endif

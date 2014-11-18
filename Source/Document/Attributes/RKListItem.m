@@ -37,6 +37,11 @@ NSString *RKListItemAttributeName = @"RKTextListItem";
     return [self.listStyle isEqual: other.listStyle] && (self.indentationLevel == other.indentationLevel);
 }
 
+- (NSUInteger)hash
+{
+	return 1;
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"(RKTextListItem list:%@ indentationLevel:%lu)", [self.listStyle description], self.indentationLevel];

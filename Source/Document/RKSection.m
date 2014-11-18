@@ -141,6 +141,11 @@
     ;
 }
 
+- (NSUInteger)hash
+{
+	return 1;
+}
+
 
 #pragma mark - Header and Footer
 

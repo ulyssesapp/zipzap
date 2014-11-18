@@ -15,4 +15,7 @@
 
 #import "RTFKit.h"
 
+#import <ImageIO/ImageIO.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+
 #endif
