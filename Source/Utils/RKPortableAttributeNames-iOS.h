@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
+#import <CoreText/CoreText.h>
+
 #if TARGET_OS_IPHONE
 
 /*!
