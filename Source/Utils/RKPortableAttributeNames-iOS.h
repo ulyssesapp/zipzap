@@ -191,4 +191,10 @@ extern NSString *RKCategoryDocumentAttribute;
 #define RKTextAlignmentCenter					NSTextAlignmentCenter
 #define RKTextAlignmentJustified				NSTextAlignmentJustified
 
+/*!
+ @abstract Alignment conversion
+ */
+#define RKTextAlignmentToCTTextAlignment(__nsAlignment)		NSTextAlignmentToCTTextAlignment(__nsAlignment)
+#define RKTextAlignmentFromCTTextAlignment(__ctAlignment)	NSTextAlignmentFromCTTextAlignment(__ctAlignment)
+
 #endif

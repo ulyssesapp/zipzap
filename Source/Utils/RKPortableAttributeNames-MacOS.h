@@ -66,4 +66,10 @@
 #define RKTextAlignmentCenter		NSCenterTextAlignment
 #define RKTextAlignmentJustified	NSJustifiedTextAlignment
 
+/*!
+ @abstract Alignment conversion
+ */
+#define RKTextAlignmentToCTTextAlignment(__nsAlignment)		(__nsAlignment)
+#define RKTextAlignmentFromCTTextAlignment(__ctAlignment)	(__ctAlignment)
+
 #endif

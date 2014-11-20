@@ -62,7 +62,7 @@
 
 #if !TARGET_OS_IPHONE
 		// Only required on Mac, since CGColor returns an autoreleased object
-		CGColorRelease(color);
+		CGColorRelease(convertedColor);
 #endif
 		
         // Use a renderer, if given
