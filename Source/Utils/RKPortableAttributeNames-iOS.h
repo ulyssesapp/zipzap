@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
+#import <CoreText/CoreText.h>
 
-#import "RKTextAttachment.h"
+#if TARGET_OS_IPHONE
 
 /*!
  @abstract Pre-initialized attribute names
@@ -44,116 +44,116 @@ extern NSString *RKCategoryDocumentAttribute;
 
 /*!
  @abstract Name of a font attribute
- @discussion See kCTFontAttributeName
+ @discussion See NSFontAttributeName
  */
-#define RKFontAttributeName                     (__bridge NSString *)kCTFontAttributeName
+#define RKFontAttributeName						NSFontAttributeName
 
 /*!
  @abstract Background color
- @discussion Uses a CGColor object as value
+ @discussion See NSBackgroundColorAttributeName
  */
-#define RKBackgroundColorAttributeName          __RKBackgroundColorAttributeName
+#define RKBackgroundColorAttributeName			NSBackgroundColorAttributeName
 
 /*!
  @abstract Foreground color
- @discussion See kCTForegroundCollorAttributeName
+ @discussion See NSForegroundColorAttributeName
  */
-#define RKForegroundColorAttributeName          NSForegroundColorAttributeName
+#define RKForegroundColorAttributeName			NSForegroundColorAttributeName
 
 /*!
  @abstract Underline style
  @discussion See kCTUnderlineStyleAttributeName
  */
-#define RKUnderlineStyleAttributeName           (__bridge NSString *)kCTUnderlineStyleAttributeName
+#define RKUnderlineStyleAttributeName			NSUnderlineStyleAttributeName
 
 /*!
  @abstract Underline color
- @discussion See kCTUnderlineStyleAttributeName
+ @discussion See NSUnderlineColorAttributeName
  */
-#define RKUnderlineColorAttributeName           (__bridge NSString *)kCTUnderlineColorAttributeName
+#define RKUnderlineColorAttributeName			NSUnderlineColorAttributeName
 
 /*!
  @abstract Strikethrough style
  @discussion Uses a NSNumber as value that may use the RKUnderlineStyle flags.
  */
-#define RKStrikethroughStyleAttributeName       __RKStrikethroughStyleAttributeName
+#define RKStrikethroughStyleAttributeName		NSStrikethroughStyleAttributeName
 
 /*!
  @abstract Strikethrough color
- @discussion Uses a CGColor value.
+ @discussion See NSStrikethroughColorAttributeName.
  */
-#define RKStrikethroughColorAttributeName       __RKStrikethroughColorAttributeName
+#define RKStrikethroughColorAttributeName		NSStrikethroughColorAttributeName
 
 /*!
  @abstract Stroke color
- @discussion See kCTStrokeColorAttributeName
+ @discussion See NSStrokeColorAttributeName
  */
-#define RKStrokeColorAttributeName              (__bridge NSString *)kCTStrokeColorAttributeName
+#define RKStrokeColorAttributeName				NSStrokeColorAttributeName
 
 /*!
  @abstract Stroke width
  @discussion See kCTStrokeWidthAttributeName
  */
-#define RKStrokeWidthAttributeName              (__bridge NSString *)kCTStrokeWidthAttributeName
+#define RKStrokeWidthAttributeName				NSStrokeWidthAttributeName
 
 /*!
  @abstract Link attribute
  @discussion The value must be either a NSString or NSURL object
  */
-#define RKLinkAttributeName                     __RKLinkAttributeName
+#define RKLinkAttributeName						NSLinkAttributeName
 
 /*!
  @abstract Text attachment attribute
  @discussion The value must be an RKTextAttachment object
  */
-#define RKAttachmentAttributeName               __RKAttachmentAttributeName
+#define RKAttachmentAttributeName				NSAttachmentAttributeName
 
 /*!
  @abstract Superscript attribute
  @discussion See kCTSuperscriptAttributeName
  */
-#define RKSuperscriptAttributeName              (__bridge NSString *)kCTSuperscriptAttributeName
+#define RKSuperscriptAttributeName				((NSString *)kCTSuperscriptAttributeName)
 
 /*!
  @abstract Paragraph style attribute
- @discussion See kCTParagraphStyleAttributeName
+ @discussion See NSParagraphStyleAttributeName
  */
-#define RKParagraphStyleAttributeName           (__bridge NSString *)kCTParagraphStyleAttributeName
+#define RKParagraphStyleAttributeName			NSParagraphStyleAttributeName
 
 /*!
  @abstract Shadow attribute
  @discussion Requires a RKShadow value.
  */
-#define RKShadowAttributeName                   __RKShadowAttributeName
+#define RKShadowAttributeName					__RKShadowAttributeName
 
 /*!
  @abstract Baseline attribute
  @discussion Number with float containing the baseline offset
  */
-#define RKBaselineOffsetAttributeName           __RKBaselineOffsetAttributeName
+#define RKBaselineOffsetAttributeName			NSBaselineOffsetAttributeName
 
 /*!
  @abstract Ligatur attribute
  */
-#define RKLigatureAttributeName                 __RKLigatureAttributeName
+#define RKLigatureAttributeName					NSLigatureAttributeName
 
 /*!
  @abstract Kerning attribute
  @discussion Number with float containing the kerning offset
  */
-#define RKKernAttributeName                     __RKKernAttributeName
+#define RKKernAttributeName						NSKernAttributeName
 
 /*!
  @abstract Obliqueness attribute
  */
-#define RKObliquenessAttributeName              __RKObliquenessAttributeName
+#define RKObliquenessAttributeName				NSObliquenessAttributeName
 
 /*!
  @abstract Underlining styles
  @discussion See kCTUnderlineStyle constants
  */
 #define RKUnderlineStyleNone                    kCTUnderlineStyleNone
-#define RKUnderlineStyleSingle                  kCTUnderlineStyleSingle
+#define RKUnderlineStyleSingle					kCTUnderlineStyleSingle
 #define RKUnderlineStyleDouble                  kCTUnderlineStyleDouble
 #define RKUnderlineStyleThick                   kCTUnderlineStyleThick
 
@@ -181,5 +181,20 @@ extern NSString *RKCategoryDocumentAttribute;
  @abstract Character used to denote newlines (not paragraph breaks)
  */
 #define RKLineSeparatorCharacter                ((unichar)0x2028)
+
+/*!
+ @abstract Text alignment settings.
+ */
+#define RKTextAlignmentLeft						NSTextAlignmentLeft
+#define RKTextAlignmentRight					NSTextAlignmentRight
+#define RKTextAlignmentNatural					NSTextAlignmentNatural
+#define RKTextAlignmentCenter					NSTextAlignmentCenter
+#define RKTextAlignmentJustified				NSTextAlignmentJustified
+
+/*!
+ @abstract Alignment conversion
+ */
+#define RKTextAlignmentToCTTextAlignment(__nsAlignment)		NSTextAlignmentToCTTextAlignment(__nsAlignment)
+#define RKTextAlignmentFromCTTextAlignment(__ctAlignment)	NSTextAlignmentFromCTTextAlignment(__ctAlignment)
 
 #endif

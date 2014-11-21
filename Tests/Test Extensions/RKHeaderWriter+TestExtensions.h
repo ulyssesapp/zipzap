@@ -8,11 +8,11 @@
 
 @interface RKHeaderWriter (TestExtensions)
 
-+ (NSString *)fontTableFromResourceManager:(RKResourcePool *)resources;
-+ (NSString *)colorTableFromResourceManager:(RKResourcePool *)resources;
-+ (NSString *)styleSheetsFromResourceManager:(RKResourcePool *)resources;
-+ (NSString *)listTableFromResourceManager:(RKResourcePool *)resources;
-+ (NSString *)listOverrideTableFromResourceManager:(RKResourcePool *)resources;
++ (NSString *)fontTableFromResourcePool:(RKResourcePool *)resources;
++ (NSString *)colorTableFromResourcePool:(RKResourcePool *)resources;
++ (NSString *)styleSheetsFromResourcePool:(RKResourcePool *)resources;
++ (NSString *)listTableFromResourcePool:(RKResourcePool *)resources;
++ (NSString *)listOverrideTableFromResourcePool:(RKResourcePool *)resources;
 
 + (NSString *)documentMetaDataFromDocument:(RKDocument *)document;
 + (NSString *)documentFormatFromDocument:(RKDocument *)document;

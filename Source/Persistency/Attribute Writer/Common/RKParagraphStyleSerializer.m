@@ -48,11 +48,11 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
 {
     @autoreleasepool {
         RKParagraphStyleAlignmentEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    [NSNumber numberWithUnsignedInteger: kCTLeftTextAlignment],          @"left",
-                                                    [NSNumber numberWithUnsignedInteger: kCTRightTextAlignment],         @"right",
-                                                    [NSNumber numberWithUnsignedInteger: kCTCenterTextAlignment],        @"center",
-                                                    [NSNumber numberWithUnsignedInteger: kCTJustifiedTextAlignment],     @"justified",
-                                                    [NSNumber numberWithUnsignedInteger: kCTNaturalTextAlignment],       @"natural",
+                                                    [NSNumber numberWithUnsignedInteger: kCTLeftTextAlignment],         @"left",
+                                                    [NSNumber numberWithUnsignedInteger: kCTRightTextAlignment],        @"right",
+                                                    [NSNumber numberWithUnsignedInteger: kCTCenterTextAlignment],       @"center",
+                                                    [NSNumber numberWithUnsignedInteger: kCTJustifiedTextAlignment],	@"justified",
+                                                    [NSNumber numberWithUnsignedInteger: kCTNaturalTextAlignment],		@"natural",
                                                     nil];
         
         RKParagraphStyleLineBreakModeEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -149,23 +149,15 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
     
     paragraphStyle.tabStops = deserializedTabStops;
     
-    #if !TARGET_OS_IPHONE
-        return paragraphStyle.newNSParagraphStyle;
-    #else
-        return (__bridge id)paragraphStyle.newCTParagraphStyle;
-    #endif
+	return paragraphStyle.newNSParagraphStyle;
 }
 
 + (id)propertyListForAttribute:(NSString *)attributeName value:(id)attributeValue context:(RKPersistenceContext *)context
 {
     RKParagraphStyleWrapper *paragraphStyle;
     
-    #if !TARGET_OS_IPHONE
-        paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: attributeValue];
-    #else
-        paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: (__bridge CTParagraphStyleRef)attributeValue];
-    #endif
-    
+    paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: attributeValue];
+	
     // Serialize tab stops
     NSMutableArray *serializedTabStops = [NSMutableArray new];
     

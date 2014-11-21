@@ -44,7 +44,7 @@ NSString *RKShadowColorPersistenceKey           = @"shadowColor";
     #if !TARGET_OS_IPHONE
         shadow.shadowColor = [RKColorSerializer attributeValueForPropertyList:[propertyList objectForKey: RKShadowColorPersistenceKey] attributeName:NSShadowAttributeName context:context error:error];
     #else
-        shadow.shadowColor = (__bridge CGColorRef)[RKColorSerializer attributeValueForPropertyList:[propertyList objectForKey: RKShadowColorPersistenceKey] attributeName:RKShadowAttributeName context:context error:error];
+        shadow.shadowColor = [RKColorSerializer attributeValueForPropertyList:[propertyList objectForKey: RKShadowColorPersistenceKey] attributeName:RKShadowAttributeName context:context error:error];
     #endif
     
     return shadow;
@@ -57,7 +57,7 @@ NSString *RKShadowColorPersistenceKey           = @"shadowColor";
         NSDictionary *serializedColor = [RKColorSerializer propertyListForAttribute:RKShadowColorPersistenceKey value:shadow.shadowColor context:context];
     #else
         RKShadow *shadow = attributeValue;
-        NSDictionary *serializedColor = [RKColorSerializer propertyListForAttribute:RKShadowColorPersistenceKey value:(__bridge id)shadow.shadowColor context:context];
+        NSDictionary *serializedColor = [RKColorSerializer propertyListForAttribute:RKShadowColorPersistenceKey value:shadow.shadowColor context:context];
     #endif
     
     return [NSDictionary dictionaryWithObjectsAndKeys:

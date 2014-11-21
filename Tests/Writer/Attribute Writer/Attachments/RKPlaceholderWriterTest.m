@@ -68,11 +68,11 @@
     [contentB addAttribute:RKPlaceholderAttributeName value:[NSNumber numberWithInt:RKPlaceholderPageNumber] range:NSMakeRange(44 + 42, 1)];
         
     // Two Sections with different contents
-    RKSection *sectionA = [RKSection sectionWithContent:contentA];
-    RKSection *sectionB = [RKSection sectionWithContent:contentB];
+    RKSection *sectionA = [[RKSection alloc] initWithContent:contentA];
+    RKSection *sectionB = [[RKSection alloc] initWithContent:contentB];
     
     // This testcase should verify that we can use "Test Data/section.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
-    RKDocument *document = [RKDocument documentWithSections:[NSArray arrayWithObjects:sectionA, sectionB, nil]];
+    RKDocument *document = [[RKDocument alloc] initWithSections: [NSArray arrayWithObjects:sectionA, sectionB, nil]];
     NSData *converted = [document wordRTF];
     
     [self assertRTF: converted withTestDocument: @"placeholder"];

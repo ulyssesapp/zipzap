@@ -9,17 +9,15 @@
 #import "RKParagraphStyleWriterTest.h"
 #import "RKParagraphStyleWriter.h"
 #import "RKParagraphStyleWriter+TestExtensions.h"
-#import "RKParagraphStyle.h"
-#import "RKTextTab.h"
 
 @implementation RKParagraphStyleWriterTest
 
-- (RKParagraphStyle *)defaultParagraphStyle
+- (NSMutableParagraphStyle *)defaultParagraphStyle
 {
-    RKParagraphStyle *paragraphStyle = [RKParagraphStyle new];    
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKNaturalTextAlignment;
+    paragraphStyle.alignment = RKTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -36,20 +34,20 @@
     paragraphStyle.tabStops = [NSArray new];
     
     paragraphStyle.defaultTabInterval = .0f;
-    paragraphStyle.baseWritingDirection = RKWritingDirectionLeftToRight;
+    paragraphStyle.baseWritingDirection = NSWritingDirectionLeftToRight;
     
     return paragraphStyle;
 }
 
 - (void)testTranslateDefaultParagraphStyle
 {
-    RKParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
+    NSParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"a"];
 
-    [attributedString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyle targetSpecificRepresentation] range:NSMakeRange(0,1)];    
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];
     
     // Test with default settings
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle targetSpecificRepresentation] ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -59,11 +57,11 @@
 
 - (void)testTranslateAlignmentStyles
 {
-    RKParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"a"];
     
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKNaturalTextAlignment;
+    paragraphStyle.alignment = RKTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -78,13 +76,11 @@
     paragraphStyle.paragraphSpacing = .0f;
     
     paragraphStyle.tabStops = [NSArray new];
-    
-    id targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificParagraphStyle range:NSMakeRange(0,1)];
+	
+    [attributedString addAttribute:RKParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0,1)];
     
     // Test with default settings
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -92,10 +88,8 @@
                          );     
     
     // Left alignment
-    paragraphStyle.alignment = RKLeftTextAlignment;    
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    paragraphStyle.alignment = RKTextAlignmentLeft;
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\ql\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -103,10 +97,8 @@
                          ); 
     
     // Center alignment
-    paragraphStyle.alignment = RKCenterTextAlignment;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    paragraphStyle.alignment = RKTextAlignmentCenter;
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qc\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -114,10 +106,8 @@
                          ); 
     
     // Right alignment
-    paragraphStyle.alignment = RKRightTextAlignment;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    paragraphStyle.alignment = RKTextAlignmentRight;
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qr\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -125,10 +115,8 @@
                          );    
     
     // Right alignment
-    paragraphStyle.alignment = RKJustifiedTextAlignment;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];    
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
+    paragraphStyle.alignment = RKTextAlignmentJustified;
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qj\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -138,11 +126,11 @@
 
 - (void)testCalculatingLineHeight
 {
-    RKParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKNaturalTextAlignment;
+    paragraphStyle.alignment = RKTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -157,13 +145,11 @@
     paragraphStyle.paragraphSpacing = .0f;
     
     paragraphStyle.tabStops = [NSArray new];
-    
-    id targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificParagraphStyle range:NSMakeRange(0,3)];
+	
+    [attributedString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyle copy] range:NSMakeRange(0,3)];
     
     // Test with default settings
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -171,10 +157,9 @@
                          );     
     
     // Line height multiple of default font
-    paragraphStyle.lineHeightMultiple = 3.0f;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
+	paragraphStyle.lineHeightMultiple = 3.0f;
+	
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\sl720\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -183,13 +168,12 @@
 
     // Line height multiple of largest font
     paragraphStyle.lineHeightMultiple = 3.0f;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];    
-    
+	
     [attributedString addAttribute:RKFontAttributeName value:[self.class targetSpecificFontWithName:@"Helvetica" size:20] range:NSMakeRange(0, 1)];
     [attributedString addAttribute:RKFontAttributeName value:[self.class targetSpecificFontWithName:@"Helvetica" size:30] range:NSMakeRange(1, 1)];
     [attributedString addAttribute:RKFontAttributeName value:[self.class targetSpecificFontWithName:@"Helvetica" size:40] range:NSMakeRange(2, 1)];
     
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:nil],
                          @"\\sl2400\\slmult1\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -199,11 +183,11 @@
 
 - (void)testCalculatingTailIndent
 {
-    RKParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKNaturalTextAlignment;
+    paragraphStyle.alignment = RKTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -219,9 +203,7 @@
     
     paragraphStyle.tabStops = [NSArray new];
     
-    id targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificParagraphStyle range:NSMakeRange(0,3)];
+    [attributedString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyle copy] range:NSMakeRange(0,3)];
     
     // This test requires a resource manager with a paper format, we use 1100 as page width and 50 as legt/right margins here
     RKDocument *document = [RKDocument new];
@@ -231,7 +213,7 @@
     RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
     // Test with default settings
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -241,9 +223,8 @@
     // Positive tail indent in left direction: must be inverted
     paragraphStyle.baseWritingDirection = kCTWritingDirectionLeftToRight;
     paragraphStyle.tailIndent = 3.0f;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+	
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\ri19940\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -253,9 +234,8 @@
     // Negative tail indent in right direction: absolute value
     paragraphStyle.tailIndent = -3.0f;
     paragraphStyle.baseWritingDirection = kCTWritingDirectionLeftToRight;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+	
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\ri60\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -265,9 +245,8 @@
     // Positive tail indent in left direction: must be inverted
     paragraphStyle.baseWritingDirection = kCTWritingDirectionRightToLeft;
     paragraphStyle.tailIndent = 3.0f;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+	
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\rtlpar\\ri19940\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -277,9 +256,8 @@
     // Negative tail indent in right direction: absolute value
     paragraphStyle.tailIndent = -3.0f;
     paragraphStyle.baseWritingDirection = kCTWritingDirectionRightToLeft;
-    targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
+	
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle mutableCopy] ofAttributedString:attributedString range:NSMakeRange(0, 3) resources:resources],
                          @"\\rtlpar\\ri60\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
                          " ",
@@ -289,10 +267,10 @@
 
 - (void)testTranslateNonDefaultParagraphStyle
 {
-    RKParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"a"];
         
-    paragraphStyle.alignment = RKRightTextAlignment;
+    paragraphStyle.alignment = RKTextAlignmentRight;
     
     paragraphStyle.firstLineHeadIndent = 1.0f;
     paragraphStyle.headIndent = 2.0f;
@@ -306,23 +284,18 @@
     paragraphStyle.paragraphSpacingBefore = 8.0f;
     paragraphStyle.paragraphSpacing = 9.0f;
     
-    paragraphStyle.baseWritingDirection = RKWritingDirectionRightToLeft;
+    paragraphStyle.baseWritingDirection = NSWritingDirectionRightToLeft;
     
     paragraphStyle.defaultTabInterval = 11.0f;
     
     paragraphStyle.tabStops = [NSArray arrayWithObjects: 
-                               [[RKTextTab alloc] initWithTabStopType:RKLeftTabStopType location:10.0f],
-                               [[RKTextTab alloc] initWithTabStopType:RKCenterTabStopType location:20.0f],
-                               [[RKTextTab alloc] initWithTabStopType:RKRightTabStopType location:30.0f],
-                               #if !TARGET_OS_IPHONE
-                                [[RKTextTab alloc] initWithTabStopType:RKDecimalTabStopType location:40.0f],
-                               #endif
+                               [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10.0f options:nil],
+                               [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:20.0f options:nil],
+                               [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:30.0f options:nil],
                                nil
                                ];
-
-    id targetSpecificParagraphStyle = [paragraphStyle targetSpecificRepresentation];
-    
-    [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificParagraphStyle range:NSMakeRange(0,1)];  
+	
+    [attributedString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyle copy] range:NSMakeRange(0,1)];
     
     // This test requires a resource manager with a paper format, we use 1100 as page width and 50 as legt/right margins here
     RKDocument *document = [RKDocument new];
@@ -331,8 +304,8 @@
     
     RKResourcePool *resources = [[RKResourcePool alloc] initWithDocument: document];
     
-    // Right alligned
-    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:targetSpecificParagraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:resources],
+    // Right aligned
+    XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:[paragraphStyle copy] ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:resources],
                          @"\\rtlpar"
                          "\\qr"
                          "\\fi-20"
@@ -350,10 +323,8 @@
                          "\\tx200"
                          "\\tqc\\tx400"
                          "\\tqr\\tx600"
-                #if !TARGET_OS_IPHONE
-                         "\\tqdec\\tx800"
-                #endif
-                         // Space required to prevent problems with succeeding commands
+
+						  // Space required to prevent problems with succeeding commands
                          " ",
                          @"Invalid translation"
                          ); 
@@ -361,24 +332,21 @@
 
 - (void)testParagraphTagging
 {
-    RKParagraphStyle *paragraphStyleA = [self defaultParagraphStyle];
-    RKParagraphStyle *paragraphStyleB = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleA = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleB = [self defaultParagraphStyle];
     
-    paragraphStyleA.alignment = kCTCenterTextAlignment;
-    paragraphStyleB.alignment = kCTRightTextAlignment;
+    paragraphStyleA.alignment = RKTextAlignmentCenter;
+    paragraphStyleB.alignment = RKTextAlignmentRight;
 
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa\nbbb"];
     
-    id targetSpecificStyleA = [paragraphStyleA targetSpecificRepresentation];
-    id targetSpecificStyleB = [paragraphStyleB targetSpecificRepresentation];
-    
-    [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificStyleA range:NSMakeRange(0,1)];
-    [attributedString addAttribute:RKParagraphStyleAttributeName value:targetSpecificStyleB range:NSMakeRange(1,1)];
+    [attributedString addAttribute:RKParagraphStyleAttributeName value:paragraphStyleA range:NSMakeRange(0,1)];
+    [attributedString addAttribute:RKParagraphStyleAttributeName value:paragraphStyleB range:NSMakeRange(1,1)];
     
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString: @"aaa\nbbb"];
     
     [RKParagraphStyleWriter addTagsForAttribute:RKParagraphStyleAttributeName 
-                                          value:targetSpecificStyleA 
+                                          value:paragraphStyleA
                                  effectiveRange:NSMakeRange(0,3) 
                                        toString:taggedString 
                                  originalString:attributedString 
@@ -387,7 +355,7 @@
     ];
 
     [RKParagraphStyleWriter addTagsForAttribute:RKParagraphStyleAttributeName 
-                                          value:targetSpecificStyleB 
+                                          value:paragraphStyleB
                                  effectiveRange:NSMakeRange(4,3)
                                        toString:taggedString 
                                  originalString:attributedString 
@@ -409,13 +377,13 @@
 
 - (void)testCocoaIntegrationRTLParagraph
 {
-    RKParagraphStyle *paragraphStyleDefault = [self defaultParagraphStyle];
-    RKParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleDefault = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
     
     // The only default-value we have to override is "alignment", since the natural alignment will be processed by Cocoa
-    paragraphStyleDefault.alignment = NSLeftTextAlignment;
+    paragraphStyleDefault.alignment = RKTextAlignmentLeft;
     
-    paragraphStyleNonDefault.alignment = NSRightTextAlignment;
+    paragraphStyleNonDefault.alignment = RKTextAlignmentRight;
 
     paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
     paragraphStyleNonDefault.headIndent = 3.0f;    
@@ -438,27 +406,26 @@
                                [[NSTextTab alloc] initWithType:NSLeftTabStopType location:10.0f],
                                [[NSTextTab alloc] initWithType:NSCenterTabStopType location:20.0f],
                                [[NSTextTab alloc] initWithType:NSRightTabStopType location:30.0f],
-                               [[NSTextTab alloc] initWithType:NSDecimalTabStopType location:40.0f],
                                nil
                                ];
  
     NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@"A\nB\n"];
     
-    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleNonDefault targetSpecificRepresentation] range:NSMakeRange(0, 2)];
-    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleDefault targetSpecificRepresentation] range:NSMakeRange(2, 2)];
+    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleNonDefault copy] range:NSMakeRange(0, 2)];
+    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleDefault copy] range:NSMakeRange(2, 2)];
     
     [self assertReadingOfAttributedString:testString onAttribute:RKParagraphStyleAttributeName inRange:NSMakeRange(0, 3)];
 }
 
 - (void)testCocoaIntegrationLTRParagraph
 {
-    RKParagraphStyle *paragraphStyleDefault = [self defaultParagraphStyle];
-    RKParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleDefault = [self defaultParagraphStyle];
+    NSMutableParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
     
     // The only default-value we have to override is "alignment", since the natural alignment will be processed by Cocoa
-    paragraphStyleDefault.alignment = NSLeftTextAlignment;
+    paragraphStyleDefault.alignment = RKTextAlignmentLeft;
     
-    paragraphStyleNonDefault.alignment = NSRightTextAlignment;
+    paragraphStyleNonDefault.alignment = RKTextAlignmentRight;
     
     paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
     paragraphStyleNonDefault.headIndent = 3.0f;    
@@ -481,14 +448,13 @@
                                          [[NSTextTab alloc] initWithType:NSLeftTabStopType location:10.0f],
                                          [[NSTextTab alloc] initWithType:NSCenterTabStopType location:20.0f],
                                          [[NSTextTab alloc] initWithType:NSRightTabStopType location:30.0f],
-                                         [[NSTextTab alloc] initWithType:NSDecimalTabStopType location:40.0f],
                                          nil
                                          ];
     
     NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@"A\nB\n"];
     
-    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleNonDefault targetSpecificRepresentation] range:NSMakeRange(0, 2)];
-    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleDefault targetSpecificRepresentation] range:NSMakeRange(2, 2)];
+    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleNonDefault copy] range:NSMakeRange(0, 2)];
+    [testString addAttribute:RKParagraphStyleAttributeName value:[paragraphStyleDefault copy] range:NSMakeRange(2, 2)];
     
     [self assertReadingOfAttributedString:testString onAttribute:RKParagraphStyleAttributeName inRange:NSMakeRange(0, 3)];
 }

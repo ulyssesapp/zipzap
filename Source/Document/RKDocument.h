@@ -17,28 +17,24 @@
 @interface RKDocument : NSObject <NSCopying>
 
 /*!
- @abstract Creates a document based on an array of sections
+ @abstract Initializes a document without sections using default values for document format settings.
+ @discussion Designated initializer.
  */
-+ (RKDocument *)documentWithSections:(NSArray *)sections;
+- (instancetype)init;
 
 /*!
- @abstract Creates a document based on an attributed string. 
+ @abstract Initializes a document based on the passed array of RKSections.
+ */
+- (instancetype)initWithSections:(NSArray *)sections;
+
+/*!
+ @abstract Initializes a document based on an attributed string. 
  @discussion The section containing the string will be automatically created.
  */
-+ (RKDocument *)documentWithAttributedString:(NSAttributedString *)string;
+- (instancetype)initWithAttributedString:(NSAttributedString *)string;
 
 /*!
- @abstract Initializes a document with a single attributed string representing its content
- */
-- (id)initWithAttributedString:(NSAttributedString *)string;
-
-/*!
- @abstract Initializes a document with an array of sections
- */
-- (id)initWithSections:(NSArray *)array;
-
-/*!
- @abstract The sections a document consists of.
+ @abstract The RKSections a document consists of.
  */
 @property(nonatomic, strong) NSArray *sections;
 
@@ -76,11 +72,13 @@
 
 /*!
  @abstract Page size in points
+ @discussion Defaults to A4.
  */
 @property(nonatomic) CGSize pageSize;
 
 /*!
  @abstract The distance from the top page border to the header in points
+ @discussion Defaults to 36 pt.
  */
 @property(nonatomic) CGFloat headerSpacingBefore;
 
@@ -98,6 +96,7 @@
 
 /*!
  @abstract The distance from the bottom page border to the footer in points
+ @discussion Defaults to 36 pt.
  */
 @property(nonatomic) CGFloat footerSpacingAfter;
 
@@ -114,6 +113,7 @@
 @property(nonatomic) NSTextAlignment footnoteAreaDividerPosition;
 
 /*!
+ @abstract The distance from the content text to the divider of the footnotes area.
  @abstract The length of the footnote divider
  @discussion Only available in PDF export.
  */
@@ -126,38 +126,43 @@
 @property(nonatomic) CGFloat footnoteAreaDividerWidth;
 
 /*!
- @abstract The distance from the content text to the divider of the footnotes area
+ @discussion Defaults to 15pt.
  */
 @property(nonatomic) CGFloat footnoteAreaDividerSpacingBefore;
 
 /*!
  @abstract The distance from the divider of the footnote are to its content
+ @discussion Defaults to 15pt. 
  */
 @property(nonatomic) CGFloat footnoteAreaDividerSpacingAfter;
 
 /*!
  @abstract The alignment of the footnote anchor.
+ @discussion Defaults to left alignment.
  */
 @property(nonatomic) NSTextAlignment footnoteAreaAnchorAlignment;
 
 /*!
  @abstract The inset of the anchor in the footnote area.
- @discussion See -footnoteAreaAnchorAlignment to make the anchor left or right aligned.
+ @discussion See -footnoteAreaAnchorAlignment to make the anchor left or right aligned. Defaults to 0. RTF: Anchor and content insets should not be overlapping, since they are implemented using tabulators.
  */
 @property(nonatomic) CGFloat footnoteAreaAnchorInset;
 
 /*!
  @abstract The inset of the content of the footnote area.
+ @discussion Defaults to 20pt. RTF: Anchor and content insets should not be overlapping, since they are implemented using tabulators.
  */
 @property(nonatomic) CGFloat footnoteAreaContentInset;
 
 /*!
  @abstract Page insets in points
+ @discussion Defaults to RKPageInsetsMake(90, 72, 72, 90)
  */
 @property(nonatomic) RKPageInsets pageInsets;
 
 /*!
  @abstract Page orientation
+ @discussion Defaults to portrait.
  */
 @property(nonatomic) RKPageOrientation pageOrientation;
 
@@ -211,7 +216,7 @@
 
 /*!
  @abstract Page binding option
- @discussion Will influence the placement of the inner and outer margin on single-sided printing. On double-sided printing, this option will determine the placement of the first page of the document and each section.
+ @discussion Will influence the placement of the inner and outer margin on single-sided printing. On double-sided printing, this option will determine the placement of the first page of the document and each section. Defaults to left-binding.
  */
 @property(nonatomic) RKPageBindingPosition pageBinding;
 
@@ -226,11 +231,12 @@
 
 /*!
  @abstract Generates a footnote marker for the given index according to the style setting.
- @discussion Convenience method that may be used to guarantee compatibility with formats not supporting footnotes.
+ @discussion Convenience method that may be used to guarantee compatibility with RTF formats not supporting footnotes.
  */
 + (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle;
 
 @end
+
 
 /*!
  @abstract Methods for exporting RTFs
@@ -244,13 +250,13 @@
 
 /*!
  @abstract Exports the document as RTF without pictures, optimized for the Cocoa text system.
+ @discussion Several features are not available for System RTF (e.g. embedded images, footnotes, several page format settings).
  */
 - (NSData *)systemRTF;
 
 /*!
  @abstract Exports the document as RTFD 
- @discussion Creates a file wrapper containing the RTF and all referenced pictures
- This method will modify the preferredFilename of any NSFileWrapper used as text attachment.
+ @discussion Creates a file wrapper containing the RTF and all referenced pictures. This method will modify the preferredFilename of any NSFileWrapper passed as text attachment. Several features are not available for System RTFD (e.g. footnotes, several page format settings).
  */
 - (NSFileWrapper *)RTFD;
 
@@ -269,7 +275,7 @@
 
 /*!
  @abstract Changes the usage of random list identifiers in RKDocument exports
- @discussion Normally, RTFKit has to create random list identifiers for compatibility with Microsoft Word. To improve testing, this can be switched off here.
+ @discussion Normally, RTFKit needs to create random list identifiers for compatibility with Microsoft Word. To improve testing, this can be switched off here.
  */
 + (void)useRandomListIdentifiers:(BOOL)useRandomListIdentifier;
 

@@ -21,7 +21,7 @@
 + (void)load
 {
     @autoreleasepool {
-        [RKAttributedStringWriter registerWriter:self forAttribute:RKTextListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel];
+        [RKAttributedStringWriter registerWriter:self forAttribute:RKListItemAttributeName priority:RKAttributedStringWriterPriorityParagraphAdditionalStylingLevel];
     }
 }
 

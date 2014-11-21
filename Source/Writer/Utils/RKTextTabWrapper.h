@@ -16,24 +16,20 @@
  */
 - (id)initWithCTTextTab:(CTTextTabRef)textTab;
 
-#if !TARGET_OS_IPHONE
 /*!
  @abstract Initializes the wrapper with the given paragraph style
  */
 - (id)initWithNSTextTab:(NSTextTab *)textTab;
-#endif
 
 /*!
  @abstract Creates a new paragraph style based on the settings of the wrapper
  */
 - (CTTextTabRef)newCTTextTab;
 
-#if !TARGET_OS_IPHONE
 /*!
  @abstract Creates a new paragraph style based on the settings of the wrapper
  */
 - (NSTextTab *)newNSTextTab;
-#endif
 
 /*!
  @abstract Designated initializer.

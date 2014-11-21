@@ -11,6 +11,10 @@
 #import "RKParagraphStyleWrapper.h"
 #import "RKImageAttachment.h"
 
+#if TARGET_OS_IPHONE
+#import "RKShadow.h"
+#endif
+
 extern NSString *RKPersistenceStringContentKey;
 extern NSString *RKPersistenceAttributeRangesKey;
 extern NSString *RKPersistenceContextKey;
@@ -30,17 +34,14 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
 
 + (id)plattformColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
-    return [NSColor colorWithCalibratedRed:0.1 green:0.3 blue:0.2 alpha:0.1];
+    return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
 }
 
 #else
 
 + (id)plattformColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGColorRef color = CGColorCreate(colorSpace, (CGFloat[]){red, green, blue, alpha});
-    CFRelease (colorSpace);
-    return (__bridge id)color;
+	return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
 #endif
@@ -90,7 +91,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
         shadow.shadowColor = [self.class plattformColorWithRed:0.6 green:0.3 blue:0.2 alpha:0.1];
     #else
         RKShadow *shadow = [RKShadow new];
-        shadow.shadowColor = (__bridge CGColorRef)[self.class plattformColorWithRed:0.6 green:0.3 blue:0.2 alpha:0.1];
+        shadow.shadowColor = [self.class plattformColorWithRed:0.6 green:0.3 blue:0.2 alpha:0.1];
     #endif
 
     shadow.shadowBlurRadius = 4.0f;
@@ -101,7 +102,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     // Test re-reading
     NSDictionary *plist = [original RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    
+	
     XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 
@@ -122,7 +123,6 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
 
-#if !TARGET_OS_IPHONE
 - (void)testPersistingSimpleParagraphStyles
 {
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"A\nB\nC\n"];
@@ -135,27 +135,13 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
     XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
 }
-#else
-- (void)testPersistingSimpleParagraphStyles
-{
-    NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString: @"A\nB\nC\n"];
-    
-    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(NULL, 0);
-    [original addAttribute:RKParagraphStyleAttributeName value:(__bridge id)paragraphStyle range:NSMakeRange(2,4)];
-    
-    // Test re-reading
-    NSDictionary *plist = [original RTFKitPropertyListRepresentation];
-    NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
-    XCTAssertEqualObjects(original, reparsed, @"Error in serialization");
-}
-#endif
 
 - (void)testAttachments
 {
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
 
-    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:NSEdgeInsetsMake(1, 2, 3, 4)];
+    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:RKEdgeInsetsMake(1, 2, 3, 4)];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
     [original addAttribute:RKImageAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];
@@ -225,7 +211,7 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSFileWrapper *file = [[NSFileWrapper alloc] initRegularFileWithContents: [@"abc" dataUsingEncoding: NSUTF8StringEncoding]];
     file.filename = @"someFile";
     
-    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:NSEdgeInsetsMake(1, 2, 3, 4)];
+    RKImageAttachment *attachment = [[RKImageAttachment alloc] initWithFile:file margin:RKEdgeInsetsMake(1, 2, 3, 4)];
     
     NSMutableAttributedString *footnote = [[NSMutableAttributedString alloc] initWithString:@"\ufffc"];
     [footnote addAttribute:RKImageAttachmentAttributeName value:attachment range:NSMakeRange(0, 1)];
@@ -275,8 +261,8 @@ extern NSString *RKPersistenceContextListStylesPersistenceKey;
     NSDictionary *plist = [originalString RTFKitPropertyListRepresentation];
     NSAttributedString *reparsed = [[NSAttributedString alloc] initWithRTFKitPropertyListRepresentation:plist error:NULL];
 
-    RKListItem *originalItem = [originalString attribute:RKTextListItemAttributeName atIndex:0 effectiveRange:NULL];
-    RKListItem *reparsedItem = [reparsed attribute:RKTextListItemAttributeName atIndex:0 effectiveRange:NULL];
+    RKListItem *originalItem = [originalString attribute:RKListItemAttributeName atIndex:0 effectiveRange:NULL];
+    RKListItem *reparsedItem = [reparsed attribute:RKListItemAttributeName atIndex:0 effectiveRange:NULL];
     
     XCTAssertFalse(originalItem == reparsedItem, @"Items must not be identical");
     

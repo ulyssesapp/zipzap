@@ -22,7 +22,7 @@
 - (void)testSectionWithContent
 {
     NSAttributedString *someString = [[NSAttributedString alloc] initWithString:@"Some String"];
-    RKSection *section = [RKSection sectionWithContent:someString];
+    RKSection *section = [[RKSection alloc] initWithContent:someString];
     
     XCTAssertEqual(section.content, someString, @"Content not properly initialized");
     
@@ -31,7 +31,7 @@
     XCTAssertEqual(section.pageNumberingStyle, RKPageNumberingDecimal, @"Page numbering style is not set to decimals by default");
 
     // Testing assertion
-    XCTAssertThrows([RKSection sectionWithContent:nil], @"No assertion on empty content string");
+    XCTAssertThrows([[RKSection alloc] initWithContent:nil], @"No assertion on empty content string");
 }
 
 - (void)testFrameTextForAllPages

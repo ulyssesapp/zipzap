@@ -62,7 +62,7 @@
 
     // Encode image
     NSData *originalImage = [attachment.imageFile regularFileContents];
-	CGSize imageSize = NSMakeSize(0, 0);
+	CGSize imageSize = CGSizeMake(0, 0);
     
 #if !TARGET_OS_IPHONE
 	NSBitmapImageRep *representation = [NSBitmapImageRep imageRepWithData: originalImage];

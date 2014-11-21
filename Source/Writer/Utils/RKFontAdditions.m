@@ -20,6 +20,7 @@ CTFontRef RKGetDefaultFont(void)
 }
 
 #if !TARGET_OS_IPHONE
+
 @implementation NSFont (RTFFontAdditions)
 
 + (NSFont *)RTFDefaultFont
@@ -28,4 +29,16 @@ CTFontRef RKGetDefaultFont(void)
 }
 
 @end
+
+#else
+
+@implementation UIFont (RTFFontAdditions)
+
++ (UIFont *)RTFDefaultFont
+{
+	return [UIFont fontWithName:@"Helvetica" size:12];
+}
+
+@end
+
 #endif

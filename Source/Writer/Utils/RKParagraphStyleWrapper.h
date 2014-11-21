@@ -26,7 +26,6 @@
  */
 - (CTParagraphStyleRef)newCTParagraphStyle;
 
-#if !TARGET_OS_IPHONE
 /*!
  @abstract Initializes the wrapper with the given paragraph style
  */
@@ -36,7 +35,6 @@
  @abstract Creates a new paragraph style based on the settings of the wrapper
  */
 - (NSParagraphStyle *)newNSParagraphStyle;
-#endif
 
 /*!
  @abstract The alignment setting
