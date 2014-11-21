@@ -67,19 +67,20 @@
 + (NSString *)openingTagsForAttribute:(NSString *)attributeName value:(id)colorObject resources:(RKResourcePool *)resources
 {
     NSUInteger colorIndex = NSNotFound;
-    
+	
     if (colorObject) {
         CGColorRef color;
         
         #if !TARGET_OS_IPHONE
             color = [colorObject newCGColorUsingGenericRGBColorSpace];
         #else
-            color = [colorObject CGColor];
+			color = [colorObject CGColor];
         #endif
 
         colorIndex = [resources indexOfColor: color];
         
         #if !TARGET_OS_IPHONE
+			// Only required on Mac, since CGColor returns an autoreleased object
             CGColorRelease(color);
         #endif
     }

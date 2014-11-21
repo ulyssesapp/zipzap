@@ -49,14 +49,14 @@
 
 #else
 
-+ (id)targetSpecificColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
-{
-    return (__bridge id)CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){red, green, blue, 1.0f});
-}
-
 + (id)targetSpecificColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
-    return (__bridge id)CGColorCreate(CGColorSpaceCreateDeviceRGB(), (CGFloat[]){red, green, blue, alpha});
+	return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
++ (id)targetSpecificColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue
+{
+	return [UIColor colorWithRed:red green:green blue:blue alpha:1];
 }
 
 + (id)targetSpecificFontWithName:(NSString *)name size:(CGFloat)pointSize

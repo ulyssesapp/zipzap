@@ -16,15 +16,7 @@
 
 + (RKParagraphStyleWrapper *)newDefaultParagraphStyle
 {
-    #if !TARGET_OS_IPHONE
-        return [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: [NSParagraphStyle defaultParagraphStyle]];
-    #else
-        CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(NULL, 0);
-        RKParagraphStyleWrapper *wrapper = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: paragraphStyle];
-        CFRelease(paragraphStyle);
-    
-        return wrapper;
-    #endif
+	return [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: [NSParagraphStyle defaultParagraphStyle]];
 }
 
 - (id)initWithCTParagraphStyle:(CTParagraphStyleRef)paragraphStyle
@@ -66,7 +58,6 @@
     return self;
 }
 
-#if !TARGET_OS_IPHONE
 - (id)initWithNSParagraphStyle:(NSParagraphStyle *)paragraphStyle
 {
     self = [self init];
@@ -75,7 +66,7 @@
 		if (!paragraphStyle)
 			return [RKParagraphStyleWrapper newDefaultParagraphStyle];
 		
-        textAlignment = (CTTextAlignment)paragraphStyle.alignment;
+        textAlignment = RKTextAlignmentToCTTextAlignment(paragraphStyle.alignment);
         firstLineHeadIndent = paragraphStyle.firstLineHeadIndent;
         headIndent = paragraphStyle.headIndent;
         tailIndent = paragraphStyle.tailIndent;
@@ -105,7 +96,6 @@
     
     return self;
 }
-#endif
 
 - (CTParagraphStyleRef)newCTParagraphStyle
 {
@@ -136,12 +126,11 @@
     return paragraphStyle;
 }
 
-#if !TARGET_OS_IPHONE
 - (NSParagraphStyle *)newNSParagraphStyle
 {
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     
-    paragraphStyle.alignment = (NSTextAlignment)self.textAlignment;
+    paragraphStyle.alignment = RKTextAlignmentFromCTTextAlignment(self.textAlignment);
     paragraphStyle.firstLineHeadIndent = self.firstLineHeadIndent;
     paragraphStyle.headIndent = self.headIndent;
     paragraphStyle.tailIndent = self.tailIndent;
@@ -166,6 +155,13 @@
     
     return paragraphStyle;
 }
-#endif
+
+- (void)setTabStops:(NSArray *)someTabStops
+{
+	tabStops = someTabStops;
+	for (id x in tabStops)
+		NSParameterAssert([x isKindOfClass: RKTextTabWrapper.class]);
+	
+}
 
 @end

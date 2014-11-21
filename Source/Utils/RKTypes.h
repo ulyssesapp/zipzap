@@ -5,6 +5,7 @@
 //  Created by Friedrich Gräter on 19.01.12.
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
+
 /*!
  @abstract Specifies the usage of footnotes and endnotes
  */
@@ -124,3 +125,5 @@ typedef enum : NSUInteger {
 	#define RKEdgeInsets		NSEdgeInsets
 	#define RKEdgeInsetsMake	NSEdgeInsetsMake
 #endif
+
+

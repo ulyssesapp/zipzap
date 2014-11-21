@@ -23,4 +23,15 @@ CTFontRef RKGetDefaultFont(void);
 + (NSFont *)RTFDefaultFont;
 
 @end
+
+#else
+
+@interface UIFont (RTFFontAdditions)
+/*!
+ @abstract Provides the default for RTF documents (see RKGetDefaultFont)
+ */
++ (UIFont *)RTFDefaultFont;
+
+@end
+
 #endif

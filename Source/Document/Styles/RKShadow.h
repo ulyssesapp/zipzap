@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-#if TARGET_OS_IPHONE
 /*!
  @abstract Represents a text shadow
  @discussion Only available on iOS
@@ -26,7 +25,6 @@
 /*!
  @abstract The color of the shadow
  */
-@property (nonatomic, strong) __attribute__((NSObject)) CGColorRef shadowColor;
+@property (nonatomic, strong) UIColor *shadowColor;
 
 @end
-#endif

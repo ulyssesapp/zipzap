@@ -32,13 +32,22 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "79E76BEF151752330073153D"
-               BuildableName = "RTFKit-iOSTests.octest"
-               BlueprintName = "RTFKit-iOSTests"
+               BlueprintIdentifier = "79A62D741A1A2F60004C83F9"
+               BuildableName = "RTFKit-iOS Tests.xctest"
+               BlueprintName = "RTFKit-iOS Tests"
                ReferencedContainer = "container:RTFKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "79E76BE1151752330073153D"
+            BuildableName = "libRTFKit.a"
+            BlueprintName = "RTFKit-iOS"
+            ReferencedContainer = "container:RTFKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -67,6 +76,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "79E76BE1151752330073153D"
+            BuildableName = "libRTFKit.a"
+            BlueprintName = "RTFKit-iOS"
+            ReferencedContainer = "container:RTFKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

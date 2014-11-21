@@ -18,14 +18,12 @@
 @interface RKSection : NSObject <NSCopying>
 
 /*!
- @abstract Creates a new section based on a given content string
- */
-+ (id)sectionWithContent:(NSAttributedString *)content;
-
-/*!
- @abstract Initializes a section with a given content
+ @abstract Initializes a section with a given content string.
  */
 - (id)initWithContent:(NSAttributedString *)content;
+
+
+#pragma mark - Section header
 
 /*!
  @abstract Retruns the headline for a given page type
@@ -48,6 +46,9 @@
  */
 - (void)enumerateHeadersUsingBlock:(void(^)(RKPageSelectionMask pageSelector, NSAttributedString *header))block;
 
+
+#pragma mark - Section footer
+
 /*!
  @abstract Retruns the footer for a single or multiple page types
  @discussion The page mask may be either a left or right selector. Additionally the first-page selector may be set. If no first page header is given, the left or right page will be used according to the mask. 
@@ -68,6 +69,9 @@
  @abstract Enumerates all headers that have been set by their page mask
  */
 - (void)enumerateFootersUsingBlock:(void(^)(RKPageSelectionMask pageSelector, NSAttributedString *footer))block;
+
+
+#pragma mark - Content and styling
 
 /*!
  @abstract Content of the section

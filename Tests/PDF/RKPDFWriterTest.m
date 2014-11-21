@@ -12,7 +12,6 @@
 #import "RKDocument.h"
 #import "RKDocument+RKPersistence.h"
 
-
 @implementation RKPDFWriterTest
 
 - (NSData *)pngDataForPDFData:(NSData *)pdfData
@@ -33,11 +32,11 @@
     }
     
     // Render PDF to bitmap
-    CGContextRef bitmapContext = CGBitmapContextCreate(NULL, bitmapSize.width, bitmapSize.height, 8, 4 * bitmapSize.width, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB), (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
+    CGContextRef bitmapContext = CGBitmapContextCreate(NULL, bitmapSize.width, bitmapSize.height, 8, 4 * bitmapSize.width, CGColorSpaceCreateDeviceRGB(), (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
     CGFloat currentBitmapPos = 0;
     
-    CGColorRef whiteColor = CGColorCreateGenericGray(1, 1);
-    
+	CGColorRef whiteColor = CGColorCreate(CGColorSpaceCreateDeviceGray(), (CGFloat[]){1, 1});
+	
     for (NSUInteger pageIndex = 0; pageIndex < pageCount; pageIndex ++) {
         CGPDFPageRef pdfPage = CGPDFDocumentGetPage(pdfDocument, pageIndex + 1);
         CGRect pageBox = CGPDFPageGetBoxRect(pdfPage, kCGPDFMediaBox);

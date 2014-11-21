@@ -8,7 +8,7 @@
 
 #import "RKListItem.h"
 
-NSString *RKTextListItemAttributeName = @"RKTextListItem";
+NSString *RKListItemAttributeName = @"RKTextListItem";
 
 @implementation RKListItem
 
@@ -37,6 +37,11 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     return [self.listStyle isEqual: other.listStyle] && (self.indentationLevel == other.indentationLevel);
 }
 
+- (NSUInteger)hash
+{
+	return 1;
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"(RKTextListItem list:%@ indentationLevel:%lu)", [self.listStyle description], self.indentationLevel];
@@ -55,7 +60,7 @@ NSString *RKTextListItemAttributeName = @"RKTextListItem";
     if (![attributedString.string hasSuffix:@"\n"])
         [attributedString replaceCharactersInRange:NSMakeRange(attributedString.length, 0) withString:@"\n" ];
     
-    [attributedString addAttribute:RKTextListItemAttributeName value:listItem range:NSMakeRange(0, attributedString.length)];
+    [attributedString addAttribute:RKListItemAttributeName value:listItem range:NSMakeRange(0, attributedString.length)];
         
     return attributedString;
 }

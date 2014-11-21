@@ -27,7 +27,7 @@
 
 - (NSAttributedString *)convertAndRereadPlainRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:attributedString];
     document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);   
     
@@ -38,7 +38,7 @@
 
 - (NSAttributedString *)convertAndRereadRTF:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:attributedString];
     document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
     
@@ -49,7 +49,7 @@
 
 - (NSAttributedString *)convertAndRereadRTFD:(NSAttributedString *)attributedString documentAttributes:(NSDictionary **)documentAttributes
 {
-    RKDocument *document = [RKDocument documentWithAttributedString:attributedString];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:attributedString];
     document.pageSize = NSMakeSize(1100, 1100);
     document.pageInsets = RKPageInsetsMake(50, 50, 50, 50);
     

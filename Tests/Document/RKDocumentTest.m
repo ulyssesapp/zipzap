@@ -12,7 +12,7 @@
 - (void)testSimpleDocumentWithSection
 {
     NSArray *someArray = [NSArray new];
-    RKDocument *document = [RKDocument documentWithSections:someArray];
+    RKDocument *document = [[RKDocument alloc] initWithSections:someArray];
 
     XCTAssertEqualObjects(document.sections, someArray, @"Initialization failure");
 }
@@ -20,7 +20,7 @@
 - (void)testSimpleDocumentWithAttributedString
 {
     NSAttributedString *someString = [[NSAttributedString alloc] initWithString:@"Some String"];
-    RKDocument *document = [RKDocument documentWithAttributedString:someString];
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:someString];
     RKSection *section = [document.sections objectAtIndex: 0];
 
     XCTAssertEqual([document.sections count], (NSUInteger)1, @"Invalid section count after initialization with a single string");
@@ -28,7 +28,7 @@
     XCTAssertEqualObjects(section.content, someString, @"Invalid string used for section initialization");
 
     // Test assertion on invalid input
-    XCTAssertThrows([RKDocument documentWithAttributedString:nil], @"Expecting exception");
+    XCTAssertThrows([[RKDocument alloc] initWithAttributedString:nil], @"Expecting exception");
 }
 
 @end

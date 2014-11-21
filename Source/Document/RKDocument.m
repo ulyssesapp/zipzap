@@ -15,30 +15,13 @@
 
 @implementation RKDocument
 
-+ (RKDocument *)documentWithSections:(NSArray *)initialSections
-{
-    return [[RKDocument alloc] initWithSections: initialSections];
-}
-
-+ (RKDocument *)documentWithAttributedString:(NSAttributedString *)string
-{
-    return [[RKDocument alloc] initWithAttributedString: string];
-}
-
 - (id)init
 {
     self = [super init];
     
     if (self) {
-        #if !TARGET_OS_IPHONE
-            NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
-
-            _pageSize = printInfo.paperSize;
-            _pageInsets = RKPageInsetsMake(printInfo.topMargin, printInfo.leftMargin, printInfo.rightMargin, printInfo.bottomMargin);
-        #elif TARGET_OS_IPHONE
-            _pageSize = CGSizeMake(595, 842);
-            _pageInsets = RKPageInsetsMake(90, 72, 72, 90);
-        #endif
+		_pageSize = CGSizeMake(595, 842);
+		_pageInsets = RKPageInsetsMake(90, 72, 72, 90);
 
         _pageOrientation = RKPageOrientationPortrait;
         _hyphenationEnabled = NO;
@@ -53,19 +36,37 @@
 		_footerSpacingBefore = 10;
         _footerSpacingAfter = 36;
 		
-		_footnoteAreaAnchorAttributes = @{NSSuperscriptAttributeName: @1};
+		_footnoteAreaAnchorAttributes = @{RKSuperscriptAttributeName: @1};
 		_footnoteAreaDividerSpacingBefore = 15;
 		_footnoteAreaDividerSpacingAfter = 15;
 		_footnoteAreaDividerLength = 100;
 		_footnoteAreaDividerWidth = 1;
 		_footnoteAreaAnchorInset = 0;
 		_footnoteAreaContentInset = 20;
-		_footnoteAreaAnchorAlignment = NSLeftTextAlignment;
+		_footnoteAreaAnchorAlignment = RKTextAlignmentLeft;
 
 		_pageBinding = RKPageBindingLeft;
     }
     
     return self;
+}
+
+- (instancetype)initWithSections:(NSArray *)initialSections
+{
+	self = [self init];
+	
+	if (self) {
+		_sections = initialSections;
+	}
+	
+	return self;
+}
+
+- (instancetype)initWithAttributedString:(NSAttributedString *)string
+{
+	NSAssert(string != nil, @"Initialization string must not be nil");
+	
+	return [self initWithSections: @[[[RKSection alloc] initWithContent: string]]];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -152,22 +153,9 @@
     ;
 }
 
-- (id)initWithSections:(NSArray *)initialSections
+- (NSUInteger)hash
 {
-    self = [self init];
-    
-    if (self) {
-        _sections = initialSections;
-    }
-    
-    return self;
-}
-
-- (id)initWithAttributedString:(NSAttributedString *)string
-{
-    NSAssert(string != nil, @"Initialization string must not be nil");
-    
-    return [self initWithSections: @[[RKSection sectionWithContent: string]]];
+	return 1;
 }
 
 + (NSString *)footnoteMarkerForIndex:(NSUInteger)index usingEnumerationStyle:(RKFootnoteEnumerationStyle)enumerationStyle
@@ -215,12 +203,7 @@
 
 - (NSData *)PDF
 {
-#if !TARGET_OS_IPHONE
     return [RKPDFWriter PDFFromDocument:self options:0];
-#else
-	NSAssert(NO, @"PDF not implemented on iOS.");
-	return nil;
-#endif
 }
 
 @end

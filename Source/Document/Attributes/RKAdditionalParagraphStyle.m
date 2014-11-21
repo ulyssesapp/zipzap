@@ -37,6 +37,11 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 			&& (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
 }
 
+- (NSUInteger)hash
+{
+	return 1;
+}
+
 - (id)copyWithZone:(NSZone *)zone
 {
 	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];

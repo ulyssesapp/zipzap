@@ -8,7 +8,6 @@
 
 #import "RKShadow.h"
 
-#if TARGET_OS_IPHONE
 @implementation RKShadow
 
 @synthesize shadowBlurRadius, shadowOffset, shadowColor;
@@ -18,8 +17,12 @@
     if (![other isKindOfClass: RKShadow.class])
         return NO;
     
-    return (self.shadowBlurRadius == other.shadowBlurRadius) && (self.shadowOffset.width == other.shadowOffset.width) && (self.shadowOffset.height == other.shadowOffset.height) && (CGColorEqualToColor(self.shadowColor, other.shadowColor));
+	return (self.shadowBlurRadius == other.shadowBlurRadius) && (self.shadowOffset.width == other.shadowOffset.width) && (self.shadowOffset.height == other.shadowOffset.height) && [self.shadowColor isEqual: other.shadowColor];
+}
+
+- (NSUInteger)hash
+{
+	return 1;
 }
 
 @end
-#endif

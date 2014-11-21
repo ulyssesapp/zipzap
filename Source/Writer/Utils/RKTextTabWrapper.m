@@ -22,19 +22,15 @@
     return CTTextTabCreate(_tabAlignment, _location, NULL);
 }
 
-#if !TARGET_OS_IPHONE
-
 - (id)initWithNSTextTab:(NSTextTab *)textTab
 {
-    return [self initWithLocation:textTab.location alignment:(CTTextAlignment)textTab.alignment];
+    return [self initWithLocation:textTab.location alignment:RKTextAlignmentToCTTextAlignment(textTab.alignment)];
 }
 
 - (NSTextTab *)newNSTextTab
 {
-    return [[NSTextTab alloc] initWithTextAlignment:(NSTextAlignment)_tabAlignment location:_location options:NULL];
+    return [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentFromCTTextAlignment(_tabAlignment) location:_location options:NULL];
 }
-
-#endif
 
 - (id)initWithLocation:(CGFloat)location alignment:(CTTextAlignment)alignment
 {

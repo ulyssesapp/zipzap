@@ -18,7 +18,7 @@ NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
 + (void)load
 {
     @autoreleasepool {
-        [NSAttributedString registerAttributeSerializer:self forAttribute:RKTextListItemAttributeName];
+        [NSAttributedString registerAttributeSerializer:self forAttribute:RKListItemAttributeName];
     }
 }
 

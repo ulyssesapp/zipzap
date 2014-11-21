@@ -29,7 +29,7 @@
     NSMutableAttributedString *converted = [attributedString mutableCopy];
     __block NSUInteger insertionOffset = 0;
     
-    [attributedString enumerateAttribute:RKTextListItemAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(RKListItem *listItem, NSRange range, BOOL *stop) {
+    [attributedString enumerateAttribute:RKListItemAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(RKListItem *listItem, NSRange range, BOOL *stop) {
         if (!listItem)
             return;
        
@@ -52,7 +52,7 @@
         insertionOffset += markerString.length;
 		
         // Remove text list item attribute
-        [converted removeAttribute:RKTextListItemAttributeName range:fixRange];
+        [converted removeAttribute:RKListItemAttributeName range:fixRange];
     }];
     
     return converted;

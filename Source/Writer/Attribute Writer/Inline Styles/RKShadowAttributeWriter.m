@@ -34,15 +34,16 @@
         NSAssert([shadowObject isKindOfClass: RKShadow.class], @"Expecting shadow attribute");
     
         RKShadow *shadow = shadowObject;
-        CGColorRef color = [shadow shadowColor];
+        CGColorRef color = [[shadow shadowColor] CGColor];
     #endif
     
     NSUInteger colorIndex = [resources indexOfColor: color];
     
-    #if !TARGET_OS_IPHONE
-        CFRelease(color);
-    #endif
-    
+#if !TARGET_OS_IPHONE
+	// Only required on Mac, since CGColor returns an autoreleased object
+	CGColorRelease(color);
+#endif
+	
     return [NSString stringWithFormat:@"\\shad\\shadx%lu\\shady%lu\\shadr%lu\\shadc%lu ",
                    (NSUInteger)RKPointsToTwips([shadow shadowOffset].width),
                    (NSUInteger)RKPointsToTwips([shadow shadowOffset].height),

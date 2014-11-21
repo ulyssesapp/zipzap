@@ -36,12 +36,13 @@
 		NSMutableAttributedString *fixedFootnote = [footnote mutableCopy];
 		
 		NSTextAlignment anchorAlignment = resources.document.footnoteAreaAnchorAlignment;
-		CGFloat anchorInset = resources.document.footnoteAreaAnchorInset;
-		CGFloat contentInset = resources.document.footnoteAreaContentInset;
+		CGFloat anchorInset = resources.document.footnoteAreaAnchorInset ?: 0.05;
+		CGFloat contentInset = resources.document.footnoteAreaContentInset ?: 0.05;
 				
 		[fixedFootnote enumerateAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, fixedFootnote.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSParagraphStyle *currentParagraphStyle, NSRange range, BOOL *stop) {
+			// Setup indentation for the first tabulators of a footnote to match footnote anchor and content inset
 			NSMutableParagraphStyle *mutableParagraphStyle = [currentParagraphStyle mutableCopy] ?: [NSMutableParagraphStyle new];
-			mutableParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:anchorAlignment location:anchorInset options:nil], [[NSTextTab alloc] initWithTextAlignment:NSNaturalTextAlignment location:contentInset options:nil]];
+			mutableParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:anchorAlignment location:anchorInset options:nil], [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentNatural location:contentInset options:nil]];
 			mutableParagraphStyle.headIndent += resources.document.footnoteAreaContentInset;
 
 			if (range.location > 0)

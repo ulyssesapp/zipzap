@@ -25,7 +25,7 @@
     
     // Valid string tagging
     XCTAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\chftn }{\\footnote \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\fi-400\\li400\\pardeftab0\\tx0\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
+                         @">{\\chftn }{\\footnote \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\fi-400\\li400\\pardeftab0\\tx1\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                          );
     
@@ -48,7 +48,7 @@
     
     // Valid string tagging
     XCTAssertEqualObjects([taggedString flattenedRTFString],
-                         @">{\\chftn }{\\footnote\\ftnalt \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\fi-400\\li400\\pardeftab0\\tx0\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
+                         @">{\\chftn }{\\footnote\\ftnalt \\tab{\\cb1 \\cf0 \\strikec0 \\strokec0 \\f0 \\fs24\\fsmilli12000 \\super \\chftn }\\tab \\pard \\fi-400\\li400\\pardeftab0\\tx1\\tx400 \\cb1 \\cf0 \\strikec0 \\strokec0 \\f1 \\fs32\\fsmilli16000 aaa}<",
                          @"Invalid footnote generated"
                           );
     
@@ -90,14 +90,14 @@
 	[original addAttribute:RKSuperscriptAttributeName value:@1 range:NSMakeRange(1, 1)];
 
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
-    RKDocument *document = [RKDocument documentWithAttributedString:original];
-	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:original];
+	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
 	document.footnoteAreaDividerSpacingBefore = 60;
 	document.footnoteAreaDividerSpacingAfter = 60;
 	
     NSData *converted = [document wordRTF];
     
-    [self assertRTF: converted withTestDocument: @"footnote"];
+    [self assertRTF:converted withTestDocument: @"footnote"];
 }
 
 - (void)testEndnotesAreCompatibleToManualReferenceTest
@@ -113,8 +113,8 @@
 	[original addAttribute:RKSuperscriptAttributeName value:@1 range:NSMakeRange(1, 1)];
     
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.    
-    RKDocument *document = [RKDocument documentWithAttributedString:original];
-	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:original];
+	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
 	document.footnoteAreaDividerSpacingBefore = 60;
 	document.footnoteAreaDividerSpacingAfter = 60;
 	

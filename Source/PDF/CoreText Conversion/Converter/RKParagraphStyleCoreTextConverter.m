@@ -28,14 +28,8 @@
             return;
         
         // Convert paragraph style to wrapper style
-        RKParagraphStyleWrapper *paragraphStyle;
-
-        #if TARGET_OS_IPHONE
-            paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: (__bridge CTParagraphStyleRef)unwrappedParagraphStyle];
-        #else
-            paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: unwrappedParagraphStyle];
-        #endif
-        
+        RKParagraphStyleWrapper *paragraphStyle = [[RKParagraphStyleWrapper alloc] initWithNSParagraphStyle: unwrappedParagraphStyle];
+		
         // Convert style settings
         CTParagraphStyleRef convertedStyle = paragraphStyle.newCTParagraphStyle;
         

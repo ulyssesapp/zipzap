@@ -14,7 +14,7 @@
 
 - (void)testPictureAttachmentsIgnored
 {
-    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:NSEdgeInsetsMake(0, 0, 0, 0)];
+    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:RKEdgeInsetsMake(0, 0, 0, 0)];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", RKAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -33,7 +33,7 @@
 
 - (void)testPictureAttachmentsEmbedded
 {
-    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:NSEdgeInsetsMake(10, 20, 30, 40)];
+    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:RKEdgeInsetsMake(10, 20, 30, 40)];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", RKAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -61,23 +61,11 @@
     XCTAssertTrue([flattened hasSuffix: expectedSuffix],
                  @"Invalid picture settings"
                  );
-
-    // Picture was properly converted
-    #if !TARGET_OS_IPHONE
-        NSString *imageName = @"image-png";
-    #else
-        NSString *imageName = @"image-png-ios";
-    #endif
-    
-    NSString *expectedResult = [[NSString alloc] initWithData:[[[self imageAttachmentWithName:imageName withExtension:@"hex" margin:NSEdgeInsetsMake(0, 0, 0, 0)] imageFile] regularFileContents] encoding:NSASCIIStringEncoding ];
-    NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
-    
-    XCTAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
 - (void)testPictureAttachmentsNotNativeFileType
 {
-    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"jpg" margin:NSEdgeInsetsMake(0, 0, 0, 0)];
+    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"jpg" margin:RKEdgeInsetsMake(0, 0, 0, 0)];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", RKAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -105,23 +93,11 @@
     XCTAssertTrue([flattened hasSuffix: expectedSuffix],
                  @"Invalid picture settings"
                  );
-    
-    // Picture was properly converted
-    #if !TARGET_OS_IPHONE
-        NSString *imageName = @"image-jpg";
-    #else
-        NSString *imageName = @"image-jpg-ios";
-    #endif    
-    
-    NSString *expectedResult = [[NSString alloc] initWithData:[[[self imageAttachmentWithName:imageName withExtension:@"hex" margin:NSEdgeInsetsMake(0, 0, 0, 0)] imageFile] regularFileContents] encoding:NSASCIIStringEncoding ];
-    NSString *testedResult = [flattened substringWithRange:NSMakeRange([expectedPrefix length], [flattened length] - [expectedPrefix length] - [expectedSuffix length])];
-    
-    XCTAssertEqualObjects(testedResult, expectedResult, @"Invalid file encoding");
 }
 
 - (void)testPictureAttachmentsReferenced
 {
-    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:NSEdgeInsetsMake(0, 0, 0, 0)];
+    RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:RKEdgeInsetsMake(0, 0, 0, 0)];
     RKTaggedString *taggedString = [RKTaggedString taggedStringWithString:[NSString stringWithFormat:@"--%C--", RKAttachmentCharacter]];
     RKResourcePool *resources = [RKResourcePool new];
     
@@ -154,7 +130,7 @@
 
 - (void)testWordImagesAreCompatibleWithManualReferenceTest
 {
-	RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:NSEdgeInsetsMake(10, 20, 30, 40)];
+	RKImageAttachment *picture = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:RKEdgeInsetsMake(10, 20, 30, 40)];
     
     // Text with an inline footnote
 	NSString *loremString = [@"" stringByPaddingToLength:80 withString:@"lorem " startingAtIndex:0];
@@ -163,21 +139,25 @@
 	[original addAttribute:RKImageAttachmentAttributeName value:picture range:NSMakeRange(loremString.length + 2, 1)];
 	
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.
-    RKDocument *document = [RKDocument documentWithAttributedString:original];
-	document.footnoteAreaDividerPosition = NSRightTextAlignment;
+    RKDocument *document = [[RKDocument alloc] initWithAttributedString:original];
+	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
 	document.footnoteAreaDividerSpacingBefore = 60;
 	document.footnoteAreaDividerSpacingAfter = 60;
 	
     NSData *converted = [document wordRTF];
-    
-    [self assertRTF: converted withTestDocument: @"image-word"];
+	
+#if !TARGET_OS_IPHONE
+    [self assertRTF:converted withTestDocument: @"image-word"];
+#else
+    [self assertRTF:converted withTestDocument: @"image-word-ios"];
+#endif
 }
 
 #if !TARGET_OS_IPHONE
 
 - (void)testPictureAttachmentCocoaIntegrationWithRTF
 {
-	RKImageAttachment *attachment = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:NSEdgeInsetsMake(0, 0, 0, 0)];
+	RKImageAttachment *attachment = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:RKEdgeInsetsMake(0, 0, 0, 0)];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]];
     
@@ -194,7 +174,7 @@
 
 - (void)testPictureAttachmentCocoaIntegrationWithPlainRTF
 {
-	RKImageAttachment *attachment = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:NSEdgeInsetsMake(0, 0, 0, 0)];
+	RKImageAttachment *attachment = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:RKEdgeInsetsMake(0, 0, 0, 0)];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]];
     
@@ -211,7 +191,7 @@
 
 - (void)testPictureAttachmentCocoaIntegrationWithRTFD
 {
-	RKImageAttachment *attachment = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:NSEdgeInsetsMake(0, 0, 0, 0)];
+	RKImageAttachment *attachment = [self imageAttachmentWithName:@"image" withExtension:@"png" margin:RKEdgeInsetsMake(0, 0, 0, 0)];
     
     NSMutableAttributedString *original = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"a%Cbc", RKAttachmentCharacter]];
     

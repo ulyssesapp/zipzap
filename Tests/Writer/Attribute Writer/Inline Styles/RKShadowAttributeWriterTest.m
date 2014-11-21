@@ -22,7 +22,7 @@
     [shadow setShadowOffset: NSMakeSize(2.0, 3.0)];
 #else
     RKShadow *shadow = [RKShadow new];
-    [shadow setShadowColor: [self.class cgRGBColorWithRed:1.0 green:0 blue:0]];
+	[shadow setShadowColor: [UIColor colorWithRed:1.0 green:0 blue:0 alpha:1]];
     [shadow setShadowOffset: CGSizeMake(2.0, 3.0)];
 #endif    
 
