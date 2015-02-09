@@ -8,11 +8,12 @@
 
 #import "RKPDFFrame.h"
 
-#import "RKRect.h"
+#import "RKDocument+PDFUtilities.h"
+#import "RKOperationHandle.h"
+#import "RKParagraphStyleWrapper.h"
 #import "RKPDFLine.h"
 #import "RKPDFRenderingContext.h"
-#import "RKDocument+PDFUtilities.h"
-#import "RKParagraphStyleWrapper.h"
+#import "RKRect.h"
 
 @interface RKPDFFrame ()
 {
@@ -93,6 +94,12 @@
 			BOOL isFirstInFrame = (_lines.count == 0) && (range.location != 0);			
 			BOOL isFirstLineOfParagraph = !lineOfParagraph;
 
+			// Abort rendering if needed
+			if (_context.operationHandle.isCancelled) {
+				*stop = YES;
+				return;
+			}
+			
 			// Suggested width
 			CGFloat suggestedWidth = [self maximumWidthForAttributedString:attributedString inRange:remainingParagraphRange isFirstInParagraph:isFirstLineOfParagraph];
 			

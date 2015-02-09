@@ -8,7 +8,7 @@
 
 #include "RKPDFWriterTypes.h"
 
-@class RKDocument;
+@class RKDocument, RKOperationHandle;
 
 /*!
  @abstract Encapsulates all PDF writing capabilities
@@ -18,6 +18,6 @@
 /*!
  @abstract Generates a PDF file from an RKDocument
  */
-+ (NSData *)PDFFromDocument:(RKDocument *)document options:(RKPDFWriterRenderingOptions)options;
++ (NSData *)PDFFromDocument:(RKDocument *)document withOperationHandle:(RKOperationHandle *)operationHandle options:(RKPDFWriterRenderingOptions)options;
 
 @end

@@ -9,6 +9,7 @@
 #import "RKTypes.h"
 #import "RKSection.h"
 #import "RKDocument.h"
+#import "RKOperationHandle.h"
 
 #import "RKImageAttachment.h"
 #import "RKListStyle.h"

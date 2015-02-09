@@ -201,9 +201,9 @@
     return [RKWriter RTFDfromDocument: self];    
 }
 
-- (NSData *)PDF
+- (NSData *)PDFWithOperationHandle:(RKOperationHandle *)handle
 {
-    return [RKPDFWriter PDFFromDocument:self options:0];
+	return [RKPDFWriter PDFFromDocument:self withOperationHandle:handle options:0];
 }
 
 @end
