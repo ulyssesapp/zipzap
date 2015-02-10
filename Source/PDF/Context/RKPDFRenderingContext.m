@@ -112,6 +112,9 @@
     CGPDFContextClose(_pdfContext);
     CFRelease(_pdfContext);
 
+	if (self.operationHandle.isCancelled)
+		return nil;
+	
     return _pdfData;
 }
 

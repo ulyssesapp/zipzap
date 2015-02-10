@@ -117,6 +117,10 @@
 		}
 	}];
 	
+	// Operation was aborted
+	if (_context.operationHandle.isCancelled)
+		return;
+	
 	// Control for orphaned paragraphs is not needed if we have a page break or orphan control was disabled
 	if (pageBreak)
 		return;

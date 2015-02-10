@@ -46,6 +46,11 @@
     
     // Apply rendering per section
     [context.sections enumerateObjectsUsingBlock:^(RKSection *section, NSUInteger sectionIndex, BOOL *stop) {
+		if (context.operationHandle.isCancelled) {
+			*stop = YES;
+			return;
+		}
+		
         [context nextSection];
         [self renderSection:section usingContext:context isLastSection:(sectionIndex == (context.sections.count - 1)) options:options];
     }];
@@ -138,6 +143,9 @@
 			if (remainingContentRange.length)
 				[column appendContent:contentString inRange:remainingContentRange];
 
+			if (context.operationHandle.isCancelled)
+				return;
+			
 			// Append endnotes, if required
 			BOOL isLastPartOfSection = ((remainingContentRange.location + column.contentFrame.visibleStringLength) >= contentString.length);
 			if (!endnotesAppended && isLastPartOfSection) {
