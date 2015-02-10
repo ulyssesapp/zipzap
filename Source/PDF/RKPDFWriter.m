@@ -10,6 +10,7 @@
 
 #import "RKPDFRenderingContext.h"
 #import "RKDocument.h"
+#import "RKOperationHandle.h"
 #import "RKPDFFrame.h"
 #import "RKPDFColumn.h"
 #import "RKPDFLine.h"
@@ -32,9 +33,9 @@
 
 @implementation RKPDFWriter
 
-+ (NSData *)PDFFromDocument:(RKDocument *)document options:(RKPDFWriterRenderingOptions)options
++ (NSData *)PDFFromDocument:(RKDocument *)document withOperationHandle:(RKOperationHandle *)operationHandle options:(RKPDFWriterRenderingOptions)options
 {
-    RKPDFRenderingContext *context = [[RKPDFRenderingContext alloc] initWithDocument: document];
+    RKPDFRenderingContext *context = [[RKPDFRenderingContext alloc] initWithDocument:document operationHandle:operationHandle];
     
     // Convert all sections to core text representation
     for (RKSection *section in document.sections) {
@@ -45,6 +46,11 @@
     
     // Apply rendering per section
     [context.sections enumerateObjectsUsingBlock:^(RKSection *section, NSUInteger sectionIndex, BOOL *stop) {
+		if (context.operationHandle.isCancelled) {
+			*stop = YES;
+			return;
+		}
+		
         [context nextSection];
         [self renderSection:section usingContext:context isLastSection:(sectionIndex == (context.sections.count - 1)) options:options];
     }];
@@ -79,7 +85,7 @@
 	NSAttributedString *footnotesForLastColumn = nil;
 	BOOL endnotesAppended = NO;
 	
-    while (remainingContentRange.length || footnotesForLastColumn.length) {
+    while ((remainingContentRange.length || footnotesForLastColumn.length) && !context.operationHandle.isCancelled) {
         [context startNewPage];
         
         RKPageSelectionMask pageSelector = [section pageSelectorForContext: context];
@@ -137,6 +143,9 @@
 			if (remainingContentRange.length)
 				[column appendContent:contentString inRange:remainingContentRange];
 
+			if (context.operationHandle.isCancelled)
+				return;
+			
 			// Append endnotes, if required
 			BOOL isLastPartOfSection = ((remainingContentRange.location + column.contentFrame.visibleStringLength) >= contentString.length);
 			if (!endnotesAppended && isLastPartOfSection) {

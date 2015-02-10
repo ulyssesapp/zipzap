@@ -8,7 +8,7 @@
 
 #import "RKTypes.h"
 
-@class RKSection;
+@class RKOperationHandle, RKSection;
 
 /*
  @abstract Representation of an RTF document
@@ -262,8 +262,9 @@
 
 /*!
  @abstract Exports the document as PDF
+ @discussion The passed operation handle may be used to asynchronously abort a running PDF rendering.
  */
-- (NSData *)PDF;
+- (NSData *)PDFWithOperationHandle:(RKOperationHandle *)handle;
 
 @end
 

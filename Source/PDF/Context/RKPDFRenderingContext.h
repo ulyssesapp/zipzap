@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 The Soulmen. All rights reserved.
 //
 
-@class RKDocument, RKPDFTextObject, RKPDFFootnote, RKSection, RKListCounter;
+@class RKDocument, RKOperationHandle, RKPDFTextObject, RKPDFFootnote, RKSection, RKListCounter;
 
 typedef enum : NSUInteger {
     RKNoteIndexForDocument          = 0,
@@ -24,7 +24,7 @@ typedef enum : NSUInteger {
  @abstract Initializes a new PDF context using a RTF document
  @discussion Creates a PDF context for the given document using the document meta data. The sections of the document are initially not added to the context.
  */
-- (id)initWithDocument:(RKDocument *)document;
+- (id)initWithDocument:(RKDocument *)document operationHandle:(RKOperationHandle *)operationHandle;
 
 /*!
  @abstract Closes the context and provides the PDF data object
@@ -34,6 +34,11 @@ typedef enum : NSUInteger {
 
 
 #pragma mark - Context properties
+
+/*!
+ @abstract The operation handle of the running rendering operation.
+ */
+@property (nonatomic, strong, readonly) RKOperationHandle *operationHandle;
 
 /*!
  @abstract The document that is associated with this context

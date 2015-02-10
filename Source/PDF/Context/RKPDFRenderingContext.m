@@ -42,10 +42,13 @@
     
     // The graphics context
     CGContextRef _pdfContext;
-    
+	
     #if !TARGET_OS_IPHONE
         NSGraphicsContext *nsPdfContext;
     #endif
+	
+	// The operation handle used for cancellation
+	RKOperationHandle *_operationHandle;
 }
 
 @end
@@ -59,7 +62,7 @@
 @synthesize nsPdfContext=_nsPdfContext;
 #endif
 
-- (id)initWithDocument:(RKDocument *)document
+- (id)initWithDocument:(RKDocument *)document operationHandle:(RKOperationHandle *)operationHandle
 {
     self = [self init];
     if (!self)
@@ -94,6 +97,7 @@
     _listCounter = [RKListCounter new];
 
 	_savedStates = [NSMutableArray new];
+	_operationHandle = operationHandle;
 	
     CFRelease(dataConsumer);
     
@@ -108,6 +112,9 @@
     CGPDFContextClose(_pdfContext);
     CFRelease(_pdfContext);
 
+	if (self.operationHandle.isCancelled)
+		return nil;
+	
     return _pdfData;
 }
 
