@@ -89,8 +89,8 @@ typedef enum : NSUInteger {
 /*!
  @abstract Possible page pinding types.
  
- @const RKPageBindingLeft			Page binding on the left side. On single-sided printing, the inner margin will be on the right side. On double-sided printing, the first pages are placed on the right side.
- @const RKPageBindingRight			Page binding on the right side. On single-sided printing, the inner margin will be on the left side. On double-sided printing, the first pages are placed on the left side.
+ @const RKPageBindingLeft			Page binding on the left side. On single-sided printing, the inner margin will be on the left side. On double-sided printing, the first pages are placed on the right side.
+ @const RKPageBindingRight			Page binding on the right side. On single-sided printing, the inner margin will be on the right side. On double-sided printing, the first pages are placed on the left side.
  */
 typedef enum : NSUInteger {
 	RKPageBindingLeft = 0,
