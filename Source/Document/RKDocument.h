@@ -261,6 +261,12 @@
 - (NSFileWrapper *)RTFD;
 
 /*!
+ @abstract Exports the document as DOCX
+ @discussion Exports a zip file containing the XML files and all referenced pictures of the DOCX.
+ */
+- (NSData *)DOCX;
+
+/*!
  @abstract Exports the document as PDF
  @discussion The passed operation handle may be used to asynchronously abort a running PDF rendering.
  */

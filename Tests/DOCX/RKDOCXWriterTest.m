@@ -12,7 +12,7 @@
 
 - (void)testGeneratingEmptyDOCXDocument
 {
-	//RKDocument *document = [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @""]];
+//	RKDocument *document = [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @""]];
 	NSData *converted = [@"1234" dataUsingEncoding: NSUTF8StringEncoding];
 	
 	[self assertDOCX:converted withTestDocument:@"empty"];
