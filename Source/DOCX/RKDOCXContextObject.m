@@ -11,7 +11,7 @@
 
 @interface RKDOCXContextObject ()
 {
-	ZZMutableArchive *_archive;
+	NSMutableDictionary *_files;
 }
 @end
 
@@ -22,17 +22,49 @@
 	self = [super init];
 	
 	if (self) {
-		_archive = [[ZZMutableArchive alloc] initWithData:[NSMutableData new] encoding:NSUTF8StringEncoding];
+		_files = [NSMutableDictionary new];
+		_documentRelationships = [NSDictionary new];
 	}
 	
 	return self;
 }
 
+- (id)initWithDocument:(RKDocument *)initialDocument
+{
+	self = [self init];
+	
+	if (self)
+		_document = initialDocument;
+	
+	return self;
+}
+
+- (NSData *)docxRepresentation
+{
+	ZZMutableArchive *archive = [[ZZMutableArchive alloc] initWithData:[NSMutableData new] encoding:NSUTF8StringEncoding];
+	NSMutableArray *entries = [NSMutableArray new];
+	
+	for (NSString* filename in _files) {
+		[entries addObject: [ZZArchiveEntry archiveEntryWithFileName:filename compress:YES dataBlock:^(NSError** error) {
+			return [_files objectForKey: filename];
+		}]];
+	}
+	
+	[archive updateEntries:entries error:nil];
+	
+	return [archive contents];
+}
+
 - (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename
 {
-	[_archive updateEntries:@[[ZZArchiveEntry archiveEntryWithFileName:filename compress:YES dataBlock:^(NSError** error) {
-		return part;
-	}]] error:nil];
+	[_files addEntriesFromDictionary: @{filename: part}];
+}
+
+- (void)addDocumentRelationshipWithTarget:(NSString *)target forRId:(NSString *)RId
+{
+	NSMutableDictionary *newRelationships = [_documentRelationships mutableCopy];
+	[newRelationships addEntriesFromDictionary: @{target: RId}];
+	_documentRelationships = newRelationships;
 }
 
 @end

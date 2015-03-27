@@ -7,12 +7,24 @@
 //
 
 #import "RKDOCXWriter.h"
+#import "RKDOCXContextObject.h"
+#import "RKDOCXAssetsWriter.h"
 
 @implementation RKDOCXWriter
 
 + (NSData *)DOCXfromDocument:(RKDocument *)document
 {
-	return nil;
+	RKDOCXContextObject *context = [[RKDOCXContextObject alloc] initWithDocument: document];
+	
+	[RKDOCXAssetsWriter buildPackageRelationshipsUsingContext: context];
+	[RKDOCXAssetsWriter buildContentTypesUsingContext: context];
+	[RKDOCXAssetsWriter buildCorePropertiesUsingContext: context];
+	[RKDOCXAssetsWriter buildExtendedPropertiesUsingContext: context];
+	[RKDOCXAssetsWriter buildDocumentRelationshipsUsingContext: context];
+	[RKDOCXAssetsWriter buildSettingsUsingContext: context];
+	[RKDOCXAssetsWriter buildDocumentUsingContext: context];
+	
+	return [context docxRepresentation];
 }
 
 @end

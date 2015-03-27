@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>FC85A853-EB0A-4949-809E-795129F3F0EA</string>
+	<string>4828704F-3590-4785-810F-CB4567FD7185</string>
 	<key>IDESourceControlProjectName</key>
 	<string>RTFKit</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,11 +14,11 @@
 		<string>ssh://stash.the-soulmen.com:7999/lib/rtfkit.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>RTFKit.xcodeproj</string>
+	<string>RTFKit.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>8F3D90BABDDB705A12E69FE3C5E1BDCDBBF7E94B</key>
-		<string>../..</string>
+		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://stash.the-soulmen.com:7999/lib/rtfkit.git</string>

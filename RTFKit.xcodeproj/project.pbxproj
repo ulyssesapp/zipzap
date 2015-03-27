@@ -452,6 +452,10 @@
 		79FCF8D015A5CCB700D98438 /* RKSection+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */; };
 		79FCF8D315A5CEE100D98438 /* NSAttributedString+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */; };
 		79FCF8D415A5CEE100D98438 /* NSAttributedString+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */; };
+		A0076DBD1AC5900D0049C15F /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0076DBC1AC5900D0049C15F /* libzipzap.a */; };
+		A0076DBF1AC590210049C15F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE691AC449CF008B3DED /* ApplicationServices.framework */; };
+		A0076DC01AC590260049C15F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
+		A0076DC11AC59F540049C15F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
 		A074BE461AC30CC9008B3DED /* RKDOCXWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE451AC30CC9008B3DED /* RKDOCXWriterTest.m */; };
 		A074BE471AC30CC9008B3DED /* RKDOCXWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE451AC30CC9008B3DED /* RKDOCXWriterTest.m */; };
 		A074BE4E1AC42BFC008B3DED /* RKDOCXWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE4C1AC42BE6008B3DED /* RKDOCXWriter.m */; };
@@ -797,6 +801,7 @@
 		79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RKSection+PDFUtilities.m"; path = "PDF/Utils/RKSection+PDFUtilities.m"; sourceTree = "<group>"; };
 		79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+PDFUtilities.h"; path = "PDF/Utils/NSAttributedString+PDFUtilities.h"; sourceTree = "<group>"; };
 		79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+PDFUtilities.m"; path = "PDF/Utils/NSAttributedString+PDFUtilities.m"; sourceTree = "<group>"; };
+		A0076DBC1AC5900D0049C15F /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../Library/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug/libzipzap.a"; sourceTree = "<group>"; };
 		A074BE451AC30CC9008B3DED /* RKDOCXWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXWriterTest.m; sourceTree = "<group>"; };
 		A074BE481AC30CFD008B3DED /* RKDOCXWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXWriterTest.h; sourceTree = "<group>"; };
 		A074BE4B1AC42BE6008B3DED /* RKDOCXWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXWriter.h; path = DOCX/RKDOCXWriter.h; sourceTree = "<group>"; };
@@ -834,6 +839,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0076DC11AC59F540049C15F /* libz.dylib in Frameworks */,
+				A0076DC01AC590260049C15F /* Foundation.framework in Frameworks */,
+				A0076DBF1AC590210049C15F /* ApplicationServices.framework in Frameworks */,
+				A0076DBD1AC5900D0049C15F /* libzipzap.a in Frameworks */,
 				50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */,
 				50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */,
 			);
@@ -887,6 +896,7 @@
 		50317D3914C494C800F23C04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0076DBC1AC5900D0049C15F /* libzipzap.a */,
 				A074BE6C1AC44A88008B3DED /* libz.dylib */,
 				A074BE691AC449CF008B3DED /* ApplicationServices.framework */,
 				A074BE671AC44980008B3DED /* libzipzap.a */,
@@ -2376,7 +2386,16 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/RTFKitTests-Prefix-Mac.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"zipzap/**",
+				);
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info-Mac.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2389,7 +2408,16 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/RTFKitTests-Prefix-Mac.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"zipzap/**",
+				);
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info-Mac.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -16,8 +16,29 @@
 /*!
  @abstract The DOCX archive containing the XML files of a DOCX
  */
-@property (readonly) NSData *docx;
+@property (nonatomic, readonly) NSData *docxRepresentation;
+
+/*!
+ @abstract Initializes the context object with a certain document.
+ */
+- (id)initWithDocument:(RKDocument *)initialDocument;
+
+/*!
+ @abstract The document a context object belongs to.
+ */
+@property (nonatomic, readonly) RKDocument *document;
+
+/*!
+ @abstract NSDictionary containing the relationship target as key and the Id as value.
+ */
+@property (nonatomic, readonly) NSDictionary *documentRelationships;
+// TODO: Make sure there are no duplicates in relationships.
 
 - (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename;
+
+/*!
+ @abstract Adds a new relationship to the dictionary.
+ */
+- (void)addDocumentRelationshipWithTarget:(NSString *)target forRId:(NSString *)RId;
 
 @end

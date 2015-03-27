@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:">
+      location = "group:RTFKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../zipzap/zipzap.xcodeproj">
+      location = "group:zipzap/zipzap.xcodeproj">
    </FileRef>
 </Workspace>
