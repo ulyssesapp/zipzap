@@ -292,7 +292,6 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 	[paragraph addChild: run];
 	
 	NSString *textContent = [[[[[context document] sections] firstObject] content] string];
-	NSLog(@"%@", textContent);
 	
 	NSXMLElement *text = [NSXMLElement elementWithName:RKDOCXDocumentTextElementName stringValue:textContent];
 	[text addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
