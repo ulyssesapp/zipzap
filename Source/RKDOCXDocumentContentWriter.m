@@ -21,8 +21,6 @@ NSString *RKDOCXDocumentTextElementName = @"w:t";
 
 + (void)buildDocumentUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXDocumentRootElementName];
-	
 	// Namespace attributes
 	NSDictionary *namespaces = @{
 								 @"xmlns:wpc": @"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
@@ -45,8 +43,8 @@ NSString *RKDOCXDocumentTextElementName = @"w:t";
 								 @"xmlns:wps": @"http://schemas.microsoft.com/office/word/2010/wordprocessingShape",
 								 @"mc:Ignorable": @"w14 w15 wp14"
 								 };
-	for (NSString *key in namespaces)
-		[document.rootElement addAttribute: [NSXMLElement attributeWithName:key stringValue:namespaces[key]]];
+	
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXDocumentRootElementName namespaces:namespaces];
 	
 	// Document content
 	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentBodyElementName];

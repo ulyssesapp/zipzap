@@ -16,8 +16,6 @@ NSString *RKDOCXExtendedPropertiesRootElementName = @"Properties";
 
 + (void)buildCorePropertiesUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXCorePropertiesRootElementName];
-	
 	// Namespace attributes
 	NSDictionary *namespaces = @{
 								 @"xmlns:cp": @"http://schemas.openxmlformats.org/package/2006/metadata/core-properties",
@@ -26,28 +24,21 @@ NSString *RKDOCXExtendedPropertiesRootElementName = @"Properties";
 								 @"xmlns:dcmitype": @"http://purl.org/dc/dcmitype/",
 								 @"xmlns:xsi": @"http://www.w3.org/2001/XMLSchema-instance"
 								 };
-	for (NSString *namespace in namespaces)
-		[document.rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:namespaces[namespace]]];
+	
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXCorePropertiesRootElementName namespaces:namespaces];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXCorePropertiesFilename];
 }
 
 + (void)buildExtendedPropertiesUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXExtendedPropertiesRootElementName];
-	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
-	
-	document.version = @"1.0";
-	document.characterEncoding = @"UTF-8";
-	document.standalone = YES;
-	
 	// Namespace attributes
 	NSDictionary *namespaces = @{
 								 @"xmlns": @"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties",
 								 @"xmlns:vt": @"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
 								 };
-	for (NSString *namespace in namespaces)
-		[document.rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:namespaces[namespace]]];
+	
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXExtendedPropertiesRootElementName namespaces:namespaces];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXExtendedPropertiesFilename];
 }

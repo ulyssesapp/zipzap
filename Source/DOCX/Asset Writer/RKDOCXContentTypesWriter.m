@@ -29,10 +29,7 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 
 + (void)buildContentTypesUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXContentTypesRootElementName];
-	
-	// Namespace attribute
-	[document.rootElement addAttribute: [NSXMLElement attributeWithName:@"xmlns" stringValue:@"http://schemas.openxmlformats.org/package/2006/content-types"]];
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXContentTypesRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/content-types"}];
 	
 	// Default Content Types
 	[self addContentType:RKDOCXDefaultXMLContentType forExtension:RKDOCXDefaultXMLExtension toXMLElement:document.rootElement];

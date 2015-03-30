@@ -15,9 +15,7 @@ NSString *RKDOCXSettingsRootElementName = @"w:settings";
 
 + (void)buildSettingsUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXSettingsRootElementName];
-	
-	// Namespace attributes
+	// Namespaces
 	NSDictionary *namespaces = @{
 								 @"xmlns:mc": @"http://schemas.openxmlformats.org/markup-compatibility/2006",
 								 @"xmlns:o": @"urn:schemas-microsoft-com:office:office",
@@ -31,8 +29,8 @@ NSString *RKDOCXSettingsRootElementName = @"w:settings";
 								 @"xmlns:sl": @"http://schemas.openxmlformats.org/schemaLibrary/2006/main",
 								 @"mc:Ignorable": @"w14 w15"
 								 };
-	for (NSString *namespace in namespaces)
-		[document.rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:namespaces[namespace]]];
+	
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXSettingsRootElementName namespaces:namespaces];
 	
 	// Settings
 	// Complex type font compatibility settings

@@ -20,7 +20,7 @@ NSString *RKDOCXSettingsFilename = @"word/settings.xml";
 
 @implementation RKDOCXPartWriter
 
-+ (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root
++ (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root namespaces:(NSDictionary *)namespaces
 {
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: root];
 	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
@@ -28,6 +28,11 @@ NSString *RKDOCXSettingsFilename = @"word/settings.xml";
 	document.version = @"1.0";
 	document.characterEncoding = @"UTF-8";
 	document.standalone = YES;
+	
+	// Namespaces
+	for (NSString *namespace in namespaces) {
+		[rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:namespaces[namespace]]];
+	}
 	
 	return document;
 }

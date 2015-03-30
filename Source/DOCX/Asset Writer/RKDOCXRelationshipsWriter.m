@@ -28,7 +28,7 @@ NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
 
 + (void)buildPackageRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocument];
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
 	
 	// Relationships
 	NSUInteger relationshipCounter = 0;
@@ -45,7 +45,7 @@ NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocument];
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
 	
 	// Relationships
 	
@@ -53,14 +53,6 @@ NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
 	[self addRelationshipWithTarget:RKDOCXSettingsRelationshipTarget type:RKDOCXSettingsRelationshipType id:[NSString stringWithFormat:@"rId%ld", [context indexForRelationshipWithTarget:RKDOCXSettingsRelationshipTarget]] toXMLElement:document.rootElement];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentRelationshipsFilename];
-}
-
-+ (NSXMLDocument *)basicXMLDocument
-{
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXRelationshipsRootElementName];
-	[document.rootElement addAttribute: [NSXMLElement attributeWithName:@"xmlns" stringValue:@"http://schemas.openxmlformats.org/package/2006/relationships"]];
-	
-	return document;
 }
 
 + (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement

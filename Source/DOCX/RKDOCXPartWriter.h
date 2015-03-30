@@ -22,6 +22,6 @@ extern NSString *RKDOCXSettingsFilename;
 /*!
  @abstract Returns an XML document with XML processing instruction and rootelement.
  */
-+ (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root;
++ (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root namespaces:(NSDictionary *)namespaces;
 
 @end
