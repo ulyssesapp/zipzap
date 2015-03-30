@@ -7,8 +7,6 @@
 //
 
 #import "RKDOCXWriter.h"
-#import "RKDOCXConversionContext.h"
-#import "RKDOCXAssetsWriter.h"
 
 @implementation RKDOCXWriter
 
@@ -16,13 +14,13 @@
 {
 	RKDOCXConversionContext *context = [[RKDOCXConversionContext alloc] initWithDocument: document];
 	
-	[RKDOCXAssetsWriter buildPackageRelationshipsUsingContext: context];
-	[RKDOCXAssetsWriter buildContentTypesUsingContext: context];
-	[RKDOCXAssetsWriter buildCorePropertiesUsingContext: context];
-	[RKDOCXAssetsWriter buildExtendedPropertiesUsingContext: context];
-	[RKDOCXAssetsWriter buildDocumentRelationshipsUsingContext: context];
-	[RKDOCXAssetsWriter buildSettingsUsingContext: context];
-	[RKDOCXAssetsWriter buildDocumentUsingContext: context];
+	[RKDOCXRelationshipsWriter buildPackageRelationshipsUsingContext: context];
+	[RKDOCXContentTypesWriter buildContentTypesUsingContext: context];
+	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
+	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];
+	[RKDOCXRelationshipsWriter buildDocumentRelationshipsUsingContext: context];
+	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
+	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
 	
 	return [context docxRepresentation];
 }

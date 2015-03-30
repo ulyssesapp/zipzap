@@ -6,6 +6,14 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+#import "RKDOCXConversionContext.h"
+#import "RKDOCXPartWriter.h"
+#import "RKDOCXRelationshipsWriter.h"
+#import "RKDOCXContentTypesWriter.h"
+#import "RKDOCXDocumentPropertiesWriter.h"
+#import "RKDOCXSettingsWriter.h"
+#import "RKDOCXDocumentContentWriter.h"
+
 @class RKDocument;
 
 /*!
