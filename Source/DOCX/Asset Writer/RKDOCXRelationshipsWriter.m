@@ -13,14 +13,14 @@ NSString *RKDOCXRelationshipsRootElementName = @"Relationships";
 NSString *RKDOCXRelationshipElementName = @"Relationship";
 
 // Relationship types and targets
-NSString *RKDOCXRelationshipDocumentType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
-NSString *RKDOCXRelationshipDocumentTarget = @"word/document.xml";
-NSString *RKDOCXRelationshipCorePropertiesType = @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
-NSString *RKDOCXRelationshipCorePropertiesTarget = @"docProps/core.xml";
-NSString *RKDOCXRelationshipExtendedPropertiesType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
-NSString *RKDOCXRelationshipExtendedPropertiesTarget = @"docProps/app.xml";
-NSString *RKDOCXRelationshipSettingsType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
-NSString *RKDOCXRelationshipSettingsTarget = @"settings.xml";
+NSString *RKDOCXDocumentRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+NSString *RKDOCXDocumentRelationshipTarget = @"word/document.xml";
+NSString *RKDOCXCorePropertiesRelationshipType = @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
+NSString *RKDOCXCorePropertiesRelationshipTarget = @"docProps/core.xml";
+NSString *RKDOCXExtendedPropertiesRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
+NSString *RKDOCXExtendedPropertiesRelationshipTarget = @"docProps/app.xml";
+NSString *RKDOCXSettingsRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
+NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
 
 #import "RKDOCXRelationshipsWriter.h"
 
@@ -28,51 +28,48 @@ NSString *RKDOCXRelationshipSettingsTarget = @"settings.xml";
 
 + (void)buildPackageRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXRelationshipsRootElementName];
-	
-	// Namespace attribute
-	[document.rootElement addAttribute: [NSXMLElement attributeWithName:@"xmlns" stringValue:@"http://schemas.openxmlformats.org/package/2006/relationships"]];
+	NSXMLDocument *document = [self basicXMLDocument];
 	
 	// Relationships
 	NSUInteger relationshipCounter = 0;
-	NSDictionary *relationships = @{
-									RKDOCXRelationshipDocumentType: RKDOCXRelationshipDocumentTarget,
-									RKDOCXRelationshipCorePropertiesType: RKDOCXRelationshipCorePropertiesTarget,
-									RKDOCXRelationshipExtendedPropertiesType: RKDOCXRelationshipExtendedPropertiesTarget
-									};
 	
-	for (NSString *type in relationships) {
-		NSXMLElement *relationshipElement = [NSXMLElement elementWithName: RKDOCXRelationshipElementName];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Id" stringValue:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter]]];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Type" stringValue:type]];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:relationships[type]]];
-		[document.rootElement addChild: relationshipElement];
-	}
+	// document.xml
+	[self addRelationshipWithTarget:RKDOCXDocumentRelationshipTarget type:RKDOCXDocumentRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
+	// app.xml
+	[self addRelationshipWithTarget:RKDOCXExtendedPropertiesRelationshipTarget type:RKDOCXExtendedPropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
+	// core.xml
+	[self addRelationshipWithTarget:RKDOCXCorePropertiesRelationshipTarget type:RKDOCXCorePropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXPackageRelationshipsFilename];
 }
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXRelationshipsRootElementName];
-	
-	// Namespace attribute
-	[document.rootElement addAttribute: [NSXMLElement attributeWithName:@"xmlns" stringValue:@"http://schemas.openxmlformats.org/package/2006/relationships"]];
+	NSXMLDocument *document = [self basicXMLDocument];
 	
 	// Relationships
-	NSDictionary *relationships = @{
-									RKDOCXRelationshipSettingsType: RKDOCXRelationshipSettingsTarget
-									};
 	
-	for (NSString *type in relationships) {
-		NSXMLElement *relationshipElement = [NSXMLElement elementWithName: RKDOCXRelationshipElementName];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Id" stringValue:[NSString stringWithFormat: @"rId%ld", [context indexForRelationshipWithTarget: relationships[type]]]]];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Type" stringValue:type]];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:relationships[type]]];
-		[document.rootElement addChild: relationshipElement];
-	}
+	// settings.xml
+	[self addRelationshipWithTarget:RKDOCXSettingsRelationshipTarget type:RKDOCXSettingsRelationshipType id:[NSString stringWithFormat:@"rId%ld", [context indexForRelationshipWithTarget:RKDOCXSettingsRelationshipTarget]] toXMLElement:document.rootElement];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentRelationshipsFilename];
+}
+
++ (NSXMLDocument *)basicXMLDocument
+{
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName: RKDOCXRelationshipsRootElementName];
+	[document.rootElement addAttribute: [NSXMLElement attributeWithName:@"xmlns" stringValue:@"http://schemas.openxmlformats.org/package/2006/relationships"]];
+	
+	return document;
+}
+
++ (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement
+{
+	NSXMLElement *relationshipElement = [NSXMLElement elementWithName: RKDOCXRelationshipElementName];
+	[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Id" stringValue:identifier]];
+	[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Type" stringValue:type]];
+	[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:target]];
+	[rootElement addChild: relationshipElement];
 }
 
 @end

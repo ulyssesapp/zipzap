@@ -35,32 +35,32 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 	[document.rootElement addAttribute: [NSXMLElement attributeWithName:@"xmlns" stringValue:@"http://schemas.openxmlformats.org/package/2006/content-types"]];
 	
 	// Default Content Types
-	NSDictionary *defaultContentTypes = @{
-										  RKDOCXDefaultXMLExtension: RKDOCXDefaultXMLContentType,
-										  RKDOCXDefaultRelationshipExtension: RKDOCXDefaultRelationshipContentType
-										  };
-	for (NSString *extension in defaultContentTypes) {
-		NSXMLElement *defaultElement = [NSXMLElement elementWithName: RKDOCXDefaultContentTypeElementName];
-		[defaultElement addAttribute: [NSXMLElement attributeWithName:@"Extension" stringValue:extension]];
-		[defaultElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:defaultContentTypes[extension]]];
-		[document.rootElement addChild: defaultElement];
-	}
+	[self addContentType:RKDOCXDefaultXMLContentType forExtension:RKDOCXDefaultXMLExtension toXMLElement:document.rootElement];
+	[self addContentType:RKDOCXDefaultRelationshipContentType forExtension:RKDOCXDefaultRelationshipExtension toXMLElement:document.rootElement];
 	
 	// Override Content Types
-	NSDictionary *overrideContentTypes = @{
-										   [@"/" stringByAppendingString: RKDOCXDocumentFilename]: RKDOCXDocumentContentType,
-										   [@"/" stringByAppendingString: RKDOCXSettingsFilename]: RKDOCXSettingsContentType,
-										   [@"/" stringByAppendingString: RKDOCXCorePropertiesFilename]: RKDOCXCorePropertiesContentType,
-										   [@"/" stringByAppendingString: RKDOCXExtendedPropertiesFilename]: RKDOCXExtendedPropertiesContentType
-										   };
-	for (NSString *partName in overrideContentTypes) {
-		NSXMLElement *overrideElement = [NSXMLElement elementWithName: RKDOCXOverrideContentTypeElementName];
-		[overrideElement addAttribute: [NSXMLElement attributeWithName:@"PartName" stringValue:partName]];
-		[overrideElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:overrideContentTypes[partName]]];
-		[document.rootElement addChild: overrideElement];
-	}
+	[self addContentType:RKDOCXDocumentContentType forFilename:RKDOCXDocumentFilename toXMLElement:document.rootElement];
+	[self addContentType:RKDOCXSettingsContentType forFilename:RKDOCXSettingsFilename toXMLElement:document.rootElement];
+	[self addContentType:RKDOCXCorePropertiesContentType forFilename:RKDOCXCorePropertiesFilename toXMLElement:document.rootElement];
+	[self addContentType:RKDOCXExtendedPropertiesContentType forFilename:RKDOCXExtendedPropertiesFilename toXMLElement:document.rootElement];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXContentTypesFilename];
+}
+
++ (void)addContentType:(NSString *)contentType forExtension:(NSString *)extension toXMLElement:(NSXMLElement *)rootElement
+{
+	NSXMLElement *defaultElement = [NSXMLElement elementWithName: RKDOCXDefaultContentTypeElementName];
+	[defaultElement addAttribute: [NSXMLElement attributeWithName:@"Extension" stringValue:extension]];
+	[defaultElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:contentType]];
+	[rootElement addChild: defaultElement];
+}
+
++ (void)addContentType:(NSString *)contentType forFilename:(NSString *)filename toXMLElement:(NSXMLElement *)rootElement
+{
+	NSXMLElement *overrideElement = [NSXMLElement elementWithName: RKDOCXOverrideContentTypeElementName];
+	[overrideElement addAttribute: [NSXMLElement attributeWithName:@"PartName" stringValue:[@"/" stringByAppendingString: filename]]];
+	[overrideElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:contentType]];
+	[rootElement addChild: overrideElement];
 }
 
 @end
