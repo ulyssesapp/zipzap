@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+extern NSString *RKDOCXConversionContextRelationshipTypeName;
+extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
+
 /*!
  @abstract Collects state generated during the conversion process that is shared between conversion steps.
  @discussion This includes the final DOCX output, as well as any intermediate state shared between different conversion passes.
@@ -44,6 +47,6 @@
  @abstract Returns the relationship identifier of a target.
  @discussion Also creates a new identifier if needed.
  */
-- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target;
+- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type;
 
 @end

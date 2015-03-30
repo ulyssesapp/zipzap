@@ -11,6 +11,10 @@
 // Root element name
 NSString *RKDOCXSettingsRootElementName = @"w:settings";
 
+// Relationship type and target
+NSString *RKDOCXSettingsRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
+NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
+
 @implementation RKDOCXSettingsWriter
 
 + (void)buildSettingsUsingContext:(RKDOCXConversionContext *)context
@@ -46,6 +50,7 @@ NSString *RKDOCXSettingsRootElementName = @"w:settings";
 	
 	[document.rootElement addChild: compat];
 	
+	[context indexForRelationshipWithTarget:RKDOCXSettingsRelationshipTarget andType:RKDOCXSettingsRelationshipType];
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXSettingsFilename];
 }
 

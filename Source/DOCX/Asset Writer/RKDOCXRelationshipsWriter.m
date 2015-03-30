@@ -12,15 +12,13 @@ NSString *RKDOCXRelationshipsRootElementName = @"Relationships";
 // Element name
 NSString *RKDOCXRelationshipElementName = @"Relationship";
 
-// Relationship types and targets
+// Package relationship types and targets
 NSString *RKDOCXDocumentRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
 NSString *RKDOCXDocumentRelationshipTarget = @"word/document.xml";
 NSString *RKDOCXCorePropertiesRelationshipType = @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
 NSString *RKDOCXCorePropertiesRelationshipTarget = @"docProps/core.xml";
 NSString *RKDOCXExtendedPropertiesRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
 NSString *RKDOCXExtendedPropertiesRelationshipTarget = @"docProps/app.xml";
-NSString *RKDOCXSettingsRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
-NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
 
 #import "RKDOCXRelationshipsWriter.h"
 
@@ -48,9 +46,9 @@ NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
 	
 	// Relationships
-	
-	// settings.xml
-	[self addRelationshipWithTarget:RKDOCXSettingsRelationshipTarget type:RKDOCXSettingsRelationshipType id:[NSString stringWithFormat:@"rId%ld", [context indexForRelationshipWithTarget:RKDOCXSettingsRelationshipTarget]] toXMLElement:document.rootElement];
+	for (NSString *target in context.documentRelationships) {
+		[self addRelationshipWithTarget:target type:context.documentRelationships[target][RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat:@"rId%@", context.documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
+	}
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentRelationshipsFilename];
 }

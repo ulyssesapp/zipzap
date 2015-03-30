@@ -9,6 +9,9 @@
 #import "RKDOCXConversionContext.h"
 #import <zipzap/zipzap.h>
 
+NSString *RKDOCXConversionContextRelationshipTypeName = @"Type";
+NSString *RKDOCXConversionContextRelationshipIdentifierName = @"ID";
+
 @interface RKDOCXConversionContext ()
 {
 	NSMutableDictionary *_files;
@@ -51,7 +54,7 @@
 //	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 }
 
-- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target
+- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
 {
 	NSUInteger index = 0;
 	
@@ -64,7 +67,12 @@
 	// Create new relationship
 	index = _documentRelationships.count + 1;
 	NSMutableDictionary *newRelationships = [_documentRelationships mutableCopy];
-	[newRelationships addEntriesFromDictionary: @{target: [NSNumber numberWithInteger: index]}];
+	[newRelationships addEntriesFromDictionary: @{
+												  target: @{
+														  RKDOCXConversionContextRelationshipTypeName: type,
+														  RKDOCXConversionContextRelationshipIdentifierName: [NSNumber numberWithInteger: index]
+														  }
+												  }];
 	_documentRelationships = newRelationships;
 	
 	return index;

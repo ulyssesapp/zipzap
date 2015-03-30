@@ -16,11 +16,11 @@
 	
 	[RKDOCXRelationshipsWriter buildPackageRelationshipsUsingContext: context];
 	[RKDOCXContentTypesWriter buildContentTypesUsingContext: context];
+	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
+	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];
 	[RKDOCXRelationshipsWriter buildDocumentRelationshipsUsingContext: context];
-	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
-	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
 	
 	return [context docxRepresentation];
 }
