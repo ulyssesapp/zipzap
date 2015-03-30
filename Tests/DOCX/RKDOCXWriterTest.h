@@ -6,10 +6,8 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+#import "XCTestCase+DOCX.h"
+
 @interface RKDOCXWriterTest : XCTestCase
-
-- (void)assertDOCX:(NSData *)docx withTestDocument:(NSString *)name;
-
-- (void)assertGeneratedDOCXData:(NSData *)generated withExpectedData:(NSData *)expected filename:(NSString *)filename;
 
 @end

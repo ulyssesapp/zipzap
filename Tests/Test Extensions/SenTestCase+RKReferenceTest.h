@@ -11,13 +11,13 @@
  @discussion External reference tests should verify whether the generated output is compatible 
  with RTF files in the TestData/ directory. These RTF files are in turn used to manually verify
  the compaitiblity of several features with other RTF readers such as MS Word, Nissus, Mellel, OpenOffice.org
- */ 
+ */
 @interface XCTestCase (RKReferenceTest)
 
 /*!
  @abstract Loads a document from the test bundle
  */
--(NSString *)loadTestDocument:(NSString *)name;
+- (NSString *)loadTestDocument:(NSString *)name;
 
 /*!
  @abstract Creates a variant of a string that is free of newlines and tabs

@@ -7,7 +7,7 @@
 //
 
 #import "RKDOCXAssetsWriter.h"
-#import "RKDOCXContextObject.h"
+#import "RKDOCXConversionContext.h"
 
 // Filenames
 NSString *RKDOCXPackageRelationshipsFilename = @"_rels/.rels";
@@ -57,7 +57,7 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 
 @implementation RKDOCXAssetsWriter
 
-+ (void)buildPackageRelationshipsUsingContext:(RKDOCXContextObject *)context
++ (void)buildPackageRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
 	NSUInteger relationshipCounter = 0;
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXRelationshipsRootElementName];
@@ -81,14 +81,14 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 		NSXMLElement *relationshipElement = [NSXMLElement elementWithName: RKDOCXRelationshipElementName];
 		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Id" stringValue:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter]]];
 		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Type" stringValue:type]];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:[relationships objectForKey: type]]];
+		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:relationships[type]]];
 		[rootElement addChild: relationshipElement];
 	}
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXPackageRelationshipsFilename];
 }
 
-+ (void)buildContentTypesUsingContext:(RKDOCXContextObject *)context
++ (void)buildContentTypesUsingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXContentTypesRootElementName];
 	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
@@ -108,7 +108,7 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 	for (NSString *extension in defaultContentTypes) {
 		NSXMLElement *defaultElement = [NSXMLElement elementWithName: RKDOCXDefaultContentTypeElementName];
 		[defaultElement addAttribute: [NSXMLElement attributeWithName:@"Extension" stringValue:extension]];
-		[defaultElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:[defaultContentTypes objectForKey: extension]]];
+		[defaultElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:defaultContentTypes[extension]]];
 		[rootElement addChild: defaultElement];
 	}
 	
@@ -122,14 +122,14 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 	for (NSString *partName in overrideContentTypes) {
 		NSXMLElement *overrideElement = [NSXMLElement elementWithName: RKDOCXOverrideContentTypeElementName];
 		[overrideElement addAttribute: [NSXMLElement attributeWithName:@"PartName" stringValue:partName]];
-		[overrideElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:[overrideContentTypes objectForKey: partName]]];
+		[overrideElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:overrideContentTypes[partName]]];
 		[rootElement addChild: overrideElement];
 	}
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXContentTypesFilename];
 }
 
-+ (void)buildCorePropertiesUsingContext:(RKDOCXContextObject *)context
++ (void)buildCorePropertiesUsingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXCorePropertiesRootElementName];
 	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
@@ -147,12 +147,12 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 								 @"xmlns:xsi": @"http://www.w3.org/2001/XMLSchema-instance"
 								 };
 	for (NSString *namespace in namespaces)
-		[rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:[namespaces objectForKey: namespace]]];
+		[rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:namespaces[namespace]]];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXCorePropertiesFilename];
 }
 
-+ (void)buildExtendedPropertiesUsingContext:(RKDOCXContextObject *)context
++ (void)buildExtendedPropertiesUsingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXExtendedPropertiesRootElementName];
 	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
@@ -167,12 +167,12 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 								 @"xmlns:vt": @"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
 								 };
 	for (NSString *namespace in namespaces)
-		[rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:[namespaces objectForKey: namespace]]];
+		[rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:namespaces[namespace]]];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXExtendedPropertiesFilename];
 }
 
-+ (void)buildDocumentRelationshipsUsingContext:(RKDOCXContextObject *)context
++ (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
 	NSUInteger relationshipCounter = 0;
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXRelationshipsRootElementName];
@@ -191,20 +191,17 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 									};
 	
 	for (NSString *type in relationships) {
-		NSString *rId = [NSString stringWithFormat:@"rId%ld", ++relationshipCounter];
 		NSXMLElement *relationshipElement = [NSXMLElement elementWithName: RKDOCXRelationshipElementName];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Id" stringValue:rId]];
+		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Id" stringValue:[NSString stringWithFormat: @"rId%ld", [context indexForRelationshipWithTarget: relationships[type]]]]];
 		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Type" stringValue:type]];
-		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:[relationships objectForKey: type]]];
+		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:relationships[type]]];
 		[rootElement addChild: relationshipElement];
-		
-		[context addDocumentRelationshipWithTarget:[relationships objectForKey: type] forRId:rId];
 	}
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentRelationshipsFilename];
 }
 
-+ (void)buildSettingsUsingContext:(RKDOCXContextObject *)context
++ (void)buildSettingsUsingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXSettingsRootElementName];
 	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
@@ -228,7 +225,7 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 								 @"mc:Ignorable": @"w14 w15"
 								 };
 	for (NSString *namespace in namespaces)
-		[rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:[namespaces objectForKey: namespace]]];
+		[rootElement addAttribute: [NSXMLElement attributeWithName:namespace stringValue:namespaces[namespace]]];
 	
 	// Settings
 	// Complex type font compatibility settings
@@ -247,7 +244,7 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXSettingsFilename];
 }
 
-+ (void)buildDocumentUsingContext:(RKDOCXContextObject *)context
++ (void)buildDocumentUsingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: RKDOCXDocumentRootElementName];
 	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
@@ -279,7 +276,7 @@ NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats
 								 @"mc:Ignorable": @"w14 w15 wp14"
 								 };
 	for (NSString *key in namespaces)
-		[rootElement addAttribute: [NSXMLElement attributeWithName:key stringValue:[namespaces objectForKey: key]]];
+		[rootElement addAttribute: [NSXMLElement attributeWithName:key stringValue:namespaces[key]]];
 	
 	// Document content
 	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentBodyElementName];

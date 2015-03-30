@@ -7,14 +7,14 @@
 //
 
 #import "RKDOCXWriter.h"
-#import "RKDOCXContextObject.h"
+#import "RKDOCXConversionContext.h"
 #import "RKDOCXAssetsWriter.h"
 
 @implementation RKDOCXWriter
 
 + (NSData *)DOCXfromDocument:(RKDocument *)document
 {
-	RKDOCXContextObject *context = [[RKDOCXContextObject alloc] initWithDocument: document];
+	RKDOCXConversionContext *context = [[RKDOCXConversionContext alloc] initWithDocument: document];
 	
 	[RKDOCXAssetsWriter buildPackageRelationshipsUsingContext: context];
 	[RKDOCXAssetsWriter buildContentTypesUsingContext: context];

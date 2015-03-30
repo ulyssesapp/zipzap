@@ -463,14 +463,15 @@
 		A074BE501AC42C13008B3DED /* RKDOCXWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE4C1AC42BE6008B3DED /* RKDOCXWriter.m */; };
 		A074BE571AC44229008B3DED /* RKDOCXAssetsWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A074BE551AC44229008B3DED /* RKDOCXAssetsWriter.h */; };
 		A074BE581AC44229008B3DED /* RKDOCXAssetsWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE561AC44229008B3DED /* RKDOCXAssetsWriter.m */; };
-		A074BE5B1AC4423C008B3DED /* RKDOCXContextObject.h in Headers */ = {isa = PBXBuildFile; fileRef = A074BE591AC4423C008B3DED /* RKDOCXContextObject.h */; };
-		A074BE5C1AC4423C008B3DED /* RKDOCXContextObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE5A1AC4423C008B3DED /* RKDOCXContextObject.m */; };
+		A074BE5B1AC4423C008B3DED /* RKDOCXConversionContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A074BE591AC4423C008B3DED /* RKDOCXConversionContext.h */; };
+		A074BE5C1AC4423C008B3DED /* RKDOCXConversionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE5A1AC4423C008B3DED /* RKDOCXConversionContext.m */; };
 		A074BE5D1AC44246008B3DED /* RKDOCXAssetsWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE561AC44229008B3DED /* RKDOCXAssetsWriter.m */; };
-		A074BE5E1AC4424B008B3DED /* RKDOCXContextObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE5A1AC4423C008B3DED /* RKDOCXContextObject.m */; };
+		A074BE5E1AC4424B008B3DED /* RKDOCXConversionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE5A1AC4423C008B3DED /* RKDOCXConversionContext.m */; };
 		A074BE681AC44980008B3DED /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE671AC44980008B3DED /* libzipzap.a */; };
 		A074BE6A1AC449CF008B3DED /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE691AC449CF008B3DED /* ApplicationServices.framework */; };
 		A074BE6B1AC449DC008B3DED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
 		A074BE6D1AC44A88008B3DED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
+		A0E33E4E1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */; };
 		CF576D0016CBA01C00EADC01 /* RKListStyle+WriterAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935615614DB3C5B00FC0C1C /* RKListStyle+WriterAdditionsTest.m */; };
 		CF576D0316CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = CF576D0216CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m */; };
 /* End PBXBuildFile section */
@@ -808,14 +809,16 @@
 		A074BE4C1AC42BE6008B3DED /* RKDOCXWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXWriter.m; path = DOCX/RKDOCXWriter.m; sourceTree = "<group>"; };
 		A074BE551AC44229008B3DED /* RKDOCXAssetsWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXAssetsWriter.h; path = DOCX/RKDOCXAssetsWriter.h; sourceTree = "<group>"; };
 		A074BE561AC44229008B3DED /* RKDOCXAssetsWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXAssetsWriter.m; path = DOCX/RKDOCXAssetsWriter.m; sourceTree = "<group>"; };
-		A074BE591AC4423C008B3DED /* RKDOCXContextObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXContextObject.h; path = DOCX/RKDOCXContextObject.h; sourceTree = "<group>"; };
-		A074BE5A1AC4423C008B3DED /* RKDOCXContextObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXContextObject.m; path = DOCX/RKDOCXContextObject.m; sourceTree = "<group>"; };
+		A074BE591AC4423C008B3DED /* RKDOCXConversionContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXConversionContext.h; path = DOCX/RKDOCXConversionContext.h; sourceTree = "<group>"; };
+		A074BE5A1AC4423C008B3DED /* RKDOCXConversionContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXConversionContext.m; path = DOCX/RKDOCXConversionContext.m; sourceTree = "<group>"; };
 		A074BE611AC446FA008B3DED /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = zipzap/build/Debug/libzipzap.a; sourceTree = "<group>"; };
 		A074BE621AC446FA008B3DED /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "zipzap/build/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
 		A074BE651AC44703008B3DED /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = zipzap/build/Debug/libzipzap.a; sourceTree = "<group>"; };
 		A074BE671AC44980008B3DED /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../Library/Developer/Xcode/DerivedData/RTFKit-fwuzrwnetuzloademwuvoudkbkzy/Build/Products/Debug/libzipzap.a"; sourceTree = "<group>"; };
 		A074BE691AC449CF008B3DED /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		A074BE6C1AC44A88008B3DED /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestCase+DOCX.m"; path = "Test Extensions/XCTestCase+DOCX.m"; sourceTree = "<group>"; };
+		A0E33E4F1AC95BBF00EEF4E4 /* XCTestCase+DOCX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestCase+DOCX.h"; path = "Test Extensions/XCTestCase+DOCX.h"; sourceTree = "<group>"; };
 		CF576D0116CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SenTestCase+RKCocoaIntegrationTest.h"; path = "Test Extensions/SenTestCase+RKCocoaIntegrationTest.h"; sourceTree = "<group>"; };
 		CF576D0216CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SenTestCase+RKCocoaIntegrationTest.m"; path = "Test Extensions/SenTestCase+RKCocoaIntegrationTest.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1119,6 +1122,8 @@
 				79A67E6F15FA2D66005609B3 /* SenTestCase+RKReferenceTest.m */,
 				79A67E7015FA2D66005609B3 /* SenTestCase+RKTestHelper.h */,
 				79A67E7115FA2D66005609B3 /* SenTestCase+RKTestHelper.m */,
+				A0E33E4F1AC95BBF00EEF4E4 /* XCTestCase+DOCX.h */,
+				A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */,
 			);
 			name = "Test Extensions";
 			sourceTree = "<group>";
@@ -1599,8 +1604,8 @@
 				A074BE4C1AC42BE6008B3DED /* RKDOCXWriter.m */,
 				A074BE551AC44229008B3DED /* RKDOCXAssetsWriter.h */,
 				A074BE561AC44229008B3DED /* RKDOCXAssetsWriter.m */,
-				A074BE591AC4423C008B3DED /* RKDOCXContextObject.h */,
-				A074BE5A1AC4423C008B3DED /* RKDOCXContextObject.m */,
+				A074BE591AC4423C008B3DED /* RKDOCXConversionContext.h */,
+				A074BE5A1AC4423C008B3DED /* RKDOCXConversionContext.m */,
 			);
 			name = DOCX;
 			sourceTree = "<group>";
@@ -1678,7 +1683,7 @@
 				79FCF8B715A5C54300D98438 /* RKLinkCoreTextConverter.h in Headers */,
 				79FCF8BB15A5C55C00D98438 /* RKTextAttachmentCoreTextConverter.h in Headers */,
 				79FCF8BF15A5C5A100D98438 /* RKFootnoteCoreTextConverter.h in Headers */,
-				A074BE5B1AC4423C008B3DED /* RKDOCXContextObject.h in Headers */,
+				A074BE5B1AC4423C008B3DED /* RKDOCXConversionContext.h in Headers */,
 				79FCF8C315A5C5B500D98438 /* RKListItemCoreTextConverter.h in Headers */,
 				7945F86B1A1A509C00640386 /* NSMutableAttributedString+ParagraphStyleFixing.h in Headers */,
 				79FCF8C715A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.h in Headers */,
@@ -2015,7 +2020,7 @@
 				7935C5E515B49B6C007281D6 /* RKDocument+RKPersistence.m in Sources */,
 				7927539A15B4B34B00E97B35 /* NSDictionary+FlagSerialization.m in Sources */,
 				790AD8BC15BABD940011E40E /* RKTextTabWrapper.m in Sources */,
-				A074BE5C1AC4423C008B3DED /* RKDOCXContextObject.m in Sources */,
+				A074BE5C1AC4423C008B3DED /* RKDOCXConversionContext.m in Sources */,
 				790AD8BD15BAC1020011E40E /* RKParagraphStyleWrapper.m in Sources */,
 				79D4D27E17F090E200EC5504 /* RKImageAttachmentSerializer.m in Sources */,
 				790AD90D15BAD62E0011E40E /* RKRect.m in Sources */,
@@ -2055,6 +2060,7 @@
 				796EAC3A14D9485B001E8401 /* RKStrokeWidthAttributeWriterTest.m in Sources */,
 				796EAC3B14D9485B001E8401 /* RKSuperscriptAttributeWriterTest.m in Sources */,
 				796EAC3D14D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.m in Sources */,
+				A0E33E4E1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m in Sources */,
 				796EAC4314D9486F001E8401 /* RKWriterTest.m in Sources */,
 				796EAC4B14D9488B001E8401 /* RKHeaderWriterTest.m in Sources */,
 				796EAC4C14D9488B001E8401 /* RKSectionWriterTest.m in Sources */,
@@ -2227,7 +2233,7 @@
 				7971428B15BC15050082A67B /* RKStyleAttributeSerializer.m in Sources */,
 				7971428D15BC15050082A67B /* RKStyleNamingAttributeSerializer.m in Sources */,
 				7971428F15BC15050082A67B /* RKParagraphStyleSerializer.m in Sources */,
-				A074BE5E1AC4424B008B3DED /* RKDOCXContextObject.m in Sources */,
+				A074BE5E1AC4424B008B3DED /* RKDOCXConversionContext.m in Sources */,
 				7945F8621A1A3AA100640386 /* RKAdditionalParagraphStyleWriter.m in Sources */,
 				79118CB517BD112300D5E346 /* RKListItemWriter.m in Sources */,
 				7971429115BC15050082A67B /* RKListStyleSerializer.m in Sources */,
