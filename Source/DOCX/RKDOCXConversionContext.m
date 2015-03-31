@@ -24,10 +24,11 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName = @"ID";
 {
 	self = [self init];
 	
-	if (self)
+	if (self) {
 		_files = [NSMutableDictionary new];
 		_documentRelationships = [NSDictionary new];
 		_document = document;
+	}
 	
 	return self;
 }

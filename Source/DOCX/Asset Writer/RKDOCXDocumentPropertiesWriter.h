@@ -9,6 +9,10 @@
 #import "RKDOCXPartWriter.h"
 #import "RKDOCXConversionContext.h"
 
+/*!
+ @abstract Collects the core properties and app-specific extended properties used by the given context and adds it to the output document.
+ @discussion See standard chapter §11.1 (Part 2). The collected properties will be stored inside the app.xml and core.xml files inside the output document.
+ */
 @interface RKDOCXDocumentPropertiesWriter : RKDOCXPartWriter
 
 /*!

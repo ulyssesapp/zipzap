@@ -262,7 +262,7 @@
 
 /*!
  @abstract Exports the document as DOCX
- @discussion Returns a data object containing a DOCX file including all referenced pictures of the DOCX.
+ @discussion Returns a data object representing a DOCX file.
  */
 - (NSData *)DOCX;
 

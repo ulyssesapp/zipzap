@@ -25,6 +25,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 @property (nonatomic, readonly) RKDocument *document;
 
+
 #pragma mark - Output context
 
 /*!
@@ -32,6 +33,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @discussion Should be used only after performing all required conversion steps.
  */
 @property (nonatomic, readonly) NSData *docxRepresentation;
+
 
 #pragma mark - Document relationships
 

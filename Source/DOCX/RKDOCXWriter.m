@@ -15,12 +15,12 @@
 	RKDOCXConversionContext *context = [[RKDOCXConversionContext alloc] initWithDocument: document];
 	
 	[RKDOCXRelationshipsWriter buildPackageRelationshipsUsingContext: context];
-	[RKDOCXContentTypesWriter buildContentTypesUsingContext: context];
 	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];
 	[RKDOCXRelationshipsWriter buildDocumentRelationshipsUsingContext: context];
+	[RKDOCXContentTypesWriter buildContentTypesUsingContext: context];
 	
 	return [context docxRepresentation];
 }

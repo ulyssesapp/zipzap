@@ -17,6 +17,9 @@ extern NSString *RKDOCXDocumentRelationshipsFilename;
 extern NSString *RKDOCXDocumentFilename;
 extern NSString *RKDOCXSettingsFilename;
 
+/*!
+ @abstract Abstract superclass used by all writers creating XML document parts.
+ */
 @interface RKDOCXPartWriter : NSObject
 
 /*!
