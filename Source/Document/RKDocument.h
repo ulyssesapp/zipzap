@@ -261,6 +261,12 @@
 - (NSFileWrapper *)RTFD;
 
 /*!
+ @abstract Exports the document as DOCX
+ @discussion Returns a data object representing a DOCX file.
+ */
+- (NSData *)DOCX;
+
+/*!
  @abstract Exports the document as PDF
  @discussion The passed operation handle may be used to asynchronously abort a running PDF rendering.
  */

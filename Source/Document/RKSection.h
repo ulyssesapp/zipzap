@@ -26,7 +26,7 @@
 #pragma mark - Section header
 
 /*!
- @abstract Retruns the headline for a given page type
+ @abstract Returns the headline for a given page type
  @discussion The page mask may be either a left or right selector. Additionally the first-page selector may be set. If no first page header is given, the left or right page will be used according to the mask.
  */
 - (NSAttributedString *)headerForPage:(RKPageSelectionMask)pageMask;
@@ -85,7 +85,7 @@
 
 /*!
  @abstract Starting page number
- @discussion Continuos page numbering if NSNotFound is set
+ @discussion Continuous page numbering if NSNotFound is set
  */
 @property(nonatomic) NSUInteger indexOfFirstPage;
 

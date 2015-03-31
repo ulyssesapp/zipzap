@@ -10,6 +10,7 @@
 #import "RKSection.h"
 #import "RKWriter.h"
 #import "RKPDFWriter.h"
+#import "RKDOCXWriter.h"
 
 #import "NSString+RKNumberFormatting.h"
 
@@ -199,6 +200,11 @@
 - (NSFileWrapper *)RTFD
 {
     return [RKWriter RTFDfromDocument: self];    
+}
+
+- (NSData *)DOCX
+{
+	return [RKDOCXWriter DOCXfromDocument: self];
 }
 
 - (NSData *)PDFWithOperationHandle:(RKOperationHandle *)handle

@@ -135,7 +135,7 @@ NSDictionary *RSectionWriterFootnoteStyleNames;
     [attributes appendString:@"\\sftnbj\\saftnbj"];
 
 	
-    // Footnote syling
+    // Footnote styling
     NSString *footnoteStyle = RSectionWriterFootnoteStyleNames[[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
     
     if (footnoteStyle != nil)

@@ -37,6 +37,104 @@
                BlueprintName = "RTFKitTests"
                ReferencedContainer = "container:RTFKit.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "NSAttributedStringPersistenceTest">
+               </Test>
+               <Test
+                  Identifier = "NSStringHyphenationTest">
+               </Test>
+               <Test
+                  Identifier = "RKAdditionalParagraphStyleWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKColorAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKConversionTest">
+               </Test>
+               <Test
+                  Identifier = "RKDocumentPersistenceTest">
+               </Test>
+               <Test
+                  Identifier = "RKDocumentTest">
+               </Test>
+               <Test
+                  Identifier = "RKFontAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKFootnoteWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKHeaderWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKImageAttachmentWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKKernAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKLinkWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKListEnumeratorTest">
+               </Test>
+               <Test
+                  Identifier = "RKListItemWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKListStyleWriterAdditionsTest">
+               </Test>
+               <Test
+                  Identifier = "RKNumberFormattingTest">
+               </Test>
+               <Test
+                  Identifier = "RKPDFWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKParagraphStyleWrapperTest">
+               </Test>
+               <Test
+                  Identifier = "RKParagraphStyleWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKPlaceholderWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKResourcePoolTest">
+               </Test>
+               <Test
+                  Identifier = "RKSectionTest">
+               </Test>
+               <Test
+                  Identifier = "RKSectionWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKShadowAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKStrikethroughStyleAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKStrokeWidthAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKStyleNameAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKSuperscriptAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKTaggedStringTest">
+               </Test>
+               <Test
+                  Identifier = "RKUnderlineStyleAttributeWriterTest">
+               </Test>
+               <Test
+                  Identifier = "RKWriterTest">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <EnvironmentVariables>
@@ -99,6 +197,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "50317D3614C494C800F23C04"
+            BuildableName = "RTFKit.dylib"
+            BlueprintName = "RTFKit"
+            ReferencedContainer = "container:RTFKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
