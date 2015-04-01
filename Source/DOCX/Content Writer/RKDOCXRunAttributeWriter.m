@@ -10,10 +10,11 @@
 
 #import "RKDOCXFontAttributeWriter.h"
 
+
 // Element names
-NSString *RKDOCXDocumentRunElementName = @"w:r";
-NSString *RKDOCXDocumentRunPropertiesElementName = @"w:rPr";
-NSString *RKDOCXDocumentTextElementName = @"w:t";
+NSString *RKDOCXRunAttributeRunElementName = @"w:r";
+NSString *RKDOCXRunAttributeRunPropertiesElementName = @"w:rPr";
+NSString *RKDOCXRunAttributeTextElementName = @"w:t";
 
 @implementation RKDOCXRunAttributeWriter
 
@@ -25,7 +26,7 @@ NSString *RKDOCXDocumentTextElementName = @"w:t";
 	[properties addObjectsFromArray: [RKDOCXFontAttributeWriter runPropertiesForAttributes: attributes]];
 	// ...
 	
-	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXDocumentRunPropertiesElementName children:properties attributes:nil];
+	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunAttributeRunPropertiesElementName children:properties attributes:nil];
 	
 	return nil;
 }

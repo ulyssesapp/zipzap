@@ -7,8 +7,9 @@
 //
 
 #import "RKDOCXPartWriter.h"
-#import "RKDOCXConversionContext.h"
-#import "RKDOCXAttributedStringWriter.h"
+
+@class RKDOCXConversionContext;
+
 
 /*!
  @abstract Generates the main document used by the given context and adds it to the output document.

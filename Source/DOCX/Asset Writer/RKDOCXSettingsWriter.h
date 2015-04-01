@@ -9,6 +9,7 @@
 #import "RKDOCXPartWriter.h"
 #import "RKDOCXConversionContext.h"
 
+
 /*!
  @abstract Generates the settings file with all document-wide settings used by the given context and adds it to the output document.
  @discussion See standard chapter §17.15. The settings will be stored inside the settings.xml file inside the output document. Should be called before the main document translation.

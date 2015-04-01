@@ -10,6 +10,7 @@
 
 #import "RKDOCXRunAttributeWriter.h"
 
+
 @implementation RKDOCXAttributedStringWriter
 
 + (NSArray *)processAttributedString:(NSAttributedString *)attributedString

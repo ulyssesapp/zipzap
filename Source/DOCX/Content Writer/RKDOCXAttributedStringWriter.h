@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXConversionContext.h"
-
 /*!
  @abstract Generates a paragraph containing the paragraph's properties and its child runs.
  */

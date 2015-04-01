@@ -8,14 +8,17 @@
 
 #import "RKDOCXDocumentContentWriter.h"
 
+#import "RKDOCXConversionContext.h"
+
+
 // Root element name
 NSString *RKDOCXDocumentRootElementName = @"w:document";
 
 // Element names
-NSString *RKDOCXDocumentBodyElementName = @"w:body";
-NSString *RKDOCXDocumentParagraphElementName = @"w:p";
-NSString *RKDOCXDocumentRunElementName = @"w:r";
-NSString *RKDOCXDocumentTextElementName = @"w:t";
+NSString *RKDOCXDocumentContentBodyElementName = @"w:body";
+NSString *RKDOCXDocumentContentParagraphElementName = @"w:p";
+NSString *RKDOCXDocumentContentRunElementName = @"w:r";
+NSString *RKDOCXDocumentContentTextElementName = @"w:t";
 
 @implementation RKDOCXDocumentContentWriter
 
@@ -47,18 +50,18 @@ NSString *RKDOCXDocumentTextElementName = @"w:t";
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXDocumentRootElementName namespaces:namespaces];
 	
 	// Document content
-	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentBodyElementName];
+	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentContentBodyElementName];
 	[document.rootElement addChild: body];
 	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXDocumentParagraphElementName];
+	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXDocumentContentParagraphElementName];
 	[body addChild: paragraph];
 	
-	NSXMLElement *run = [NSXMLElement elementWithName: RKDOCXDocumentRunElementName];
+	NSXMLElement *run = [NSXMLElement elementWithName: RKDOCXDocumentContentRunElementName];
 	[paragraph addChild: run];
 	
 	NSString *textContent = [[[[[context document] sections] firstObject] content] string];
 	
-	NSXMLElement *text = [NSXMLElement elementWithName:RKDOCXDocumentTextElementName stringValue:textContent];
+	NSXMLElement *text = [NSXMLElement elementWithName:RKDOCXDocumentContentTextElementName stringValue:textContent];
 	[text addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
 	[run addChild: text];
 	
