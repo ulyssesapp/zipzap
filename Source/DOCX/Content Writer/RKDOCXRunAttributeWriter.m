@@ -20,14 +20,17 @@ NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 
 + (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range
 {
-	NSMutableArray *properties = [NSMutableArray new];
+	// Check for invalid range
+	NSParameterAssert(NSMaxRange(range) <= attributedString.length);
 	
-	// Collect all matching attributes
-	[properties addObjectsFromArray: [RKDOCXFontAttributeWriter runPropertiesForAttributes: attributes]];
-	// ...
-	
-	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunAttributeRunPropertiesElementName children:properties attributes:nil];
-	
+//	NSMutableArray *properties = [NSMutableArray new];
+//	
+//	// Collect all matching attributes
+//	[properties addObjectsFromArray: [RKDOCXFontAttributeWriter runPropertiesForAttributes: attributes]];
+//	// ...
+//	
+//	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunAttributeRunPropertiesElementName children:properties attributes:nil];
+//	
 	return nil;
 }
 
