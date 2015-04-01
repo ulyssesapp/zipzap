@@ -8,6 +8,10 @@
 
 #import "RKDOCXRunAttributeWriter.h"
 
+/*!
+ @abstract Generates XML elements for the given attributes of an attributed string.
+ @discussion See standard chapters §17.3.2.1, §17.3.2.16, §17.3.2.26 and §17.3.2.38.
+ */
 @interface RKDOCXFontAttributeWriter : RKDOCXRunAttributeWriter
 
 @end

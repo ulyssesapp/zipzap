@@ -14,7 +14,13 @@
 @interface RKDOCXAttributedStringWriter : NSObject
 
 /*!
+ @abstract Returns an array of XML elements representing the paragraphs of the attributed string.
+ */
++ (NSArray *)iterateOverAttributedString:(NSAttributedString *)attributedString;
+
+/*!
  @abstract Returns an XML element representing a paragraph including properties and runs.
+ @discussion (Later moved to RKDOCXParagraphAttributeWriter.)
  */
 + (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)properties runElements:(NSArray *)runElements;
 

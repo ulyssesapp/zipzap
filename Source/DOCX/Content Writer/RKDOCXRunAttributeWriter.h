@@ -14,7 +14,10 @@
  */
 @interface RKDOCXRunAttributeWriter : RKDOCXAttributedStringWriter
 
-+ (NSXMLElement *)XMLRunElementWithRunProperties:(NSXMLElement *)runProperties runContentFromString:(NSString *)content;
+/*!
+ @abstract Returns an XML element representing a run with the given attributes.
+ */
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes;
 
 @end
 
