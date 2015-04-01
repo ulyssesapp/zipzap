@@ -12,13 +12,13 @@
 
 
 // Filenames
-NSString *RKDOCXPackageRelationshipsFilename = @"_rels/.rels";
-NSString *RKDOCXContentTypesFilename = @"[Content_Types].xml";
-NSString *RKDOCXCorePropertiesFilename = @"docProps/core.xml";
-NSString *RKDOCXExtendedPropertiesFilename = @"docProps/app.xml";
-NSString *RKDOCXDocumentRelationshipsFilename = @"word/_rels/document.xml.rels";
-NSString *RKDOCXDocumentFilename = @"word/document.xml";
-NSString *RKDOCXSettingsFilename = @"word/settings.xml";
+NSString *RKDOCXPackageRelationshipsFilename	= @"_rels/.rels";
+NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
+NSString *RKDOCXCorePropertiesFilename			= @"docProps/core.xml";
+NSString *RKDOCXExtendedPropertiesFilename		= @"docProps/app.xml";
+NSString *RKDOCXDocumentRelationshipsFilename	= @"word/_rels/document.xml.rels";
+NSString *RKDOCXDocumentFilename				= @"word/document.xml";
+NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
 
 @implementation RKDOCXPartWriter
 

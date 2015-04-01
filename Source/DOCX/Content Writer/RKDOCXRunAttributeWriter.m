@@ -12,9 +12,9 @@
 
 
 // Element names
-NSString *RKDOCXRunAttributeRunElementName = @"w:r";
-NSString *RKDOCXRunAttributeRunPropertiesElementName = @"w:rPr";
-NSString *RKDOCXRunAttributeTextElementName = @"w:t";
+NSString *RKDOCXRunAttributeRunElementName				= @"w:r";
+NSString *RKDOCXRunAttributeRunPropertiesElementName	= @"w:rPr";
+NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 
 @implementation RKDOCXRunAttributeWriter
 

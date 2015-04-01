@@ -12,13 +12,13 @@
 
 
 // Root element name
-NSString *RKDOCXDocumentRootElementName = @"w:document";
+NSString *RKDOCXDocumentRootElementName				= @"w:document";
 
 // Element names
-NSString *RKDOCXDocumentContentBodyElementName = @"w:body";
-NSString *RKDOCXDocumentContentParagraphElementName = @"w:p";
-NSString *RKDOCXDocumentContentRunElementName = @"w:r";
-NSString *RKDOCXDocumentContentTextElementName = @"w:t";
+NSString *RKDOCXDocumentContentBodyElementName		= @"w:body";
+NSString *RKDOCXDocumentContentParagraphElementName	= @"w:p";
+NSString *RKDOCXDocumentContentRunElementName		= @"w:r";
+NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 
 @implementation RKDOCXDocumentContentWriter
 

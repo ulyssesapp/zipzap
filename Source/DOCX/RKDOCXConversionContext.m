@@ -11,8 +11,8 @@
 #import <zipzap/zipzap.h>
 
 
-NSString *RKDOCXConversionContextRelationshipTypeName = @"Type";
-NSString *RKDOCXConversionContextRelationshipIdentifierName = @"ID";
+NSString *RKDOCXConversionContextRelationshipTypeName		= @"Type";
+NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 @interface RKDOCXConversionContext ()
 {
