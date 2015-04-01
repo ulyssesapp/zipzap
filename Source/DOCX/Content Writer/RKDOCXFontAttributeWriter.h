@@ -14,4 +14,6 @@
  */
 @interface RKDOCXFontAttributeWriter : RKDOCXRunAttributeWriter
 
++ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes;
+
 @end

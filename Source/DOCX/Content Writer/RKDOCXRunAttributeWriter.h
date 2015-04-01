@@ -15,9 +15,10 @@
 @interface RKDOCXRunAttributeWriter : RKDOCXAttributedStringWriter
 
 /*!
- @abstract Returns an XML element representing a run with the given attributes.
+ @abstract Returns an XML element representing a run with the given attributes and the corresponding text.
+ @discussion The text is built using the attributed string and the range.
  */
-+ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes;
++ (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range;
 
 @end
 

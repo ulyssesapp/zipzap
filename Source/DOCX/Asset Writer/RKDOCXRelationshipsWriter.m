@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+#import "RKDOCXRelationshipsWriter.h"
+
 // Root element name
 NSString *RKDOCXRelationshipsRootElementName = @"Relationships";
 
@@ -19,8 +21,6 @@ NSString *RKDOCXCorePropertiesRelationshipType = @"http://schemas.openxmlformats
 NSString *RKDOCXCorePropertiesRelationshipTarget = @"docProps/core.xml";
 NSString *RKDOCXExtendedPropertiesRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
 NSString *RKDOCXExtendedPropertiesRelationshipTarget = @"docProps/app.xml";
-
-#import "RKDOCXRelationshipsWriter.h"
 
 @implementation RKDOCXRelationshipsWriter
 

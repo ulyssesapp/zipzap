@@ -16,7 +16,7 @@
 /*!
  @abstract Returns an array of XML elements representing the paragraphs of the attributed string.
  */
-+ (NSArray *)iterateOverAttributedString:(NSAttributedString *)attributedString;
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString;
 
 /*!
  @abstract Returns an XML element representing a paragraph including properties and runs.

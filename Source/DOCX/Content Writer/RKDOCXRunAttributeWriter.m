@@ -8,6 +8,26 @@
 
 #import "RKDOCXRunAttributeWriter.h"
 
+#import "RKDOCXFontAttributeWriter.h"
+
+// Element names
+NSString *RKDOCXDocumentRunElementName = @"w:r";
+NSString *RKDOCXDocumentRunPropertiesElementName = @"w:rPr";
+NSString *RKDOCXDocumentTextElementName = @"w:t";
+
 @implementation RKDOCXRunAttributeWriter
+
++ (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range
+{
+	NSMutableArray *properties = [NSMutableArray new];
+	
+	// Collect all matching attributes
+	[properties addObjectsFromArray: [RKDOCXFontAttributeWriter runPropertiesForAttributes: attributes]];
+	// ...
+	
+	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXDocumentRunPropertiesElementName children:properties attributes:nil];
+	
+	return nil;
+}
 
 @end
