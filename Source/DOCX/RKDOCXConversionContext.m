@@ -53,8 +53,8 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename
 {
+	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 	[_files addEntriesFromDictionary: @{filename: part}];
-//	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 }
 
 - (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
