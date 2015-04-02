@@ -21,25 +21,38 @@ NSString *RKDOCXFontAttributeFontSizePropertyName				= @"w:sz";
 
 + (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes
 {
-	if (!attributes[RKFontAttributeName])
+	NSFont *fontAttribute = attributes[RKFontAttributeName];
+	if (!fontAttribute)
 		return nil;
+	
+	NSMutableArray *properties = [NSMutableArray new];
+	
+	NSFontTraitMask traits = [NSFontManager.sharedFontManager traitsOfFont: fontAttribute];
+	
+	if (traits & NSItalicFontMask)
+		[properties addObject: [NSXMLElement elementWithName: @"w:i"]];
+	
+	if (traits & NSBoldFontMask)
+		[properties addObject: [NSXMLElement elementWithName: @"w:b"]];
 	
 	NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontPropertyName
 													 children:nil
 												   attributes:@[
-																[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontName stringValue:[attributes[RKFontAttributeName] familyName]],
-																[NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontName stringValue:[attributes[RKFontAttributeName] familyName]],
-																[NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontName stringValue:[attributes[RKFontAttributeName] familyName]],
-																[NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontName stringValue:[attributes[RKFontAttributeName] familyName]]
+																[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontName stringValue:[fontAttribute familyName]],
+																[NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontName stringValue:[fontAttribute familyName]],
+																[NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontName stringValue:[fontAttribute familyName]],
+																[NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontName stringValue:[fontAttribute familyName]]
 																]];
 	
-	NSUInteger wordFontSize = [self wordFontSizeFromPointSize: [attributes[RKFontAttributeName] pointSize]];
+	NSUInteger wordFontSize = [self wordFontSizeFromPointSize: [fontAttribute pointSize]];
 	NSString *fontSize = [@(wordFontSize) stringValue];
 	
 	NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue: fontSize]]];
 	NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue: fontSize]]];
 	
-	return @[fontElement, sizeElement, complexSizeElement];
+	[properties addObjectsFromArray: @[fontElement, sizeElement, complexSizeElement]];
+	
+	return properties;
 }
 
 + (NSUInteger)wordFontSizeFromPointSize:(CGFloat)pointSize
