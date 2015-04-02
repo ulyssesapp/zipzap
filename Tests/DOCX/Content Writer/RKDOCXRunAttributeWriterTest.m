@@ -47,7 +47,7 @@
 	NSDictionary *attributes = @{NSFontAttributeName: font};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Hello World" attributes:attributes];
 	NSXMLElement *generated = [RKDOCXRunAttributeWriter runElementForAttributedString:attributedString attributes:attributes range:NSMakeRange(0, attributedString.length)];
-	NSXMLElement *expected = [self.class expectedXMLElementWithFontTrait:0 string:@"Hello World" runProperties:@[[NSXMLElement elementWithName:@"w:rFonts" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:ascii" stringValue:@"Helvetica"], [NSXMLElement attributeWithName:@"w:cs" stringValue:@"Helvetica"], [NSXMLElement attributeWithName:@"w:eastAsia" stringValue:@"Helvetica"], [NSXMLElement attributeWithName:@"w:hAnsi" stringValue:@"Helvetica"]]], [NSXMLElement elementWithName:@"w:sz" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"84"]]], [NSXMLElement elementWithName:@"w:szCs" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"84"]]]]];
+	NSXMLElement *expected = [self.class expectedXMLElementWithString:@"Hello World" runProperties:@[[NSXMLElement elementWithName:@"w:rFonts" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:ascii" stringValue:@"Helvetica"], [NSXMLElement attributeWithName:@"w:cs" stringValue:@"Helvetica"], [NSXMLElement attributeWithName:@"w:eastAsia" stringValue:@"Helvetica"], [NSXMLElement attributeWithName:@"w:hAnsi" stringValue:@"Helvetica"]]], [NSXMLElement elementWithName:@"w:sz" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"84"]]], [NSXMLElement elementWithName:@"w:szCs" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"84"]]]]];
 	
 	XCTAssertEqualObjects(generated, expected, @"Generated XML element does not match.");
 }
@@ -58,17 +58,17 @@
 	NSDictionary *attributes = @{NSFontAttributeName: font};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Hello World" attributes:attributes];
 	NSXMLElement *generated = [RKDOCXRunAttributeWriter runElementForAttributedString:attributedString attributes:attributes range:NSMakeRange(0, attributedString.length)];
-	NSXMLElement *expected = [self.class expectedXMLElementWithFontTrait:0 string:@"Hello World" runProperties:@[[NSXMLElement elementWithName:@"w:rFonts" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:ascii" stringValue:@"Papyrus"], [NSXMLElement attributeWithName:@"w:cs" stringValue:@"Papyrus"], [NSXMLElement attributeWithName:@"w:eastAsia" stringValue:@"Papyrus"], [NSXMLElement attributeWithName:@"w:hAnsi" stringValue:@"Papyrus"]]], [NSXMLElement elementWithName:@"w:sz" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]], [NSXMLElement elementWithName:@"w:szCs" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]]]];
+	NSXMLElement *expected = [self.class expectedXMLElementWithString:@"Hello World" runProperties:@[[NSXMLElement elementWithName:@"w:rFonts" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:ascii" stringValue:@"Papyrus"], [NSXMLElement attributeWithName:@"w:cs" stringValue:@"Papyrus"], [NSXMLElement attributeWithName:@"w:eastAsia" stringValue:@"Papyrus"], [NSXMLElement attributeWithName:@"w:hAnsi" stringValue:@"Papyrus"]]], [NSXMLElement elementWithName:@"w:sz" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]], [NSXMLElement elementWithName:@"w:szCs" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]]]];
 	XCTAssertEqualObjects(generated, expected, @"Generated XML element does not match.");
 }
 
-- (void)testRunElementWithBoldFontNameAttribute
+- (void)testRunElementWithBoldItalicFontNameAttribute
 {
-	NSFont *font = [NSFontManager.sharedFontManager fontWithFamily:@"Arial" traits:NSBoldFontMask weight:0 size:12];
+	NSFont *font = [NSFontManager.sharedFontManager fontWithFamily:@"Arial" traits:(NSBoldFontMask | NSItalicFontMask) weight:0 size:12];
 	NSDictionary *attributes = @{NSFontAttributeName: font};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Hello World" attributes:attributes];
 	NSXMLElement *generated = [RKDOCXRunAttributeWriter runElementForAttributedString:attributedString attributes:attributes range:NSMakeRange(0, attributedString.length)];
-	NSXMLElement *expected = [self.class expectedXMLElementWithFontTrait:NSBoldFontMask string:@"Hello World" runProperties:@[[NSXMLElement elementWithName:@"w:rFonts" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:ascii" stringValue:@"Arial"], [NSXMLElement attributeWithName:@"w:cs" stringValue:@"Arial"], [NSXMLElement attributeWithName:@"w:eastAsia" stringValue:@"Arial"], [NSXMLElement attributeWithName:@"w:hAnsi" stringValue:@"Arial"]]], [NSXMLElement elementWithName:@"w:sz" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]], [NSXMLElement elementWithName:@"w:szCs" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]]]];
+	NSXMLElement *expected = [self.class expectedXMLElementWithString:@"Hello World" runProperties:@[[NSXMLElement elementWithName: @"w:i"], [NSXMLElement elementWithName: @"w:b"], [NSXMLElement elementWithName:@"w:rFonts" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:ascii" stringValue:@"Arial"], [NSXMLElement attributeWithName:@"w:cs" stringValue:@"Arial"], [NSXMLElement attributeWithName:@"w:eastAsia" stringValue:@"Arial"], [NSXMLElement attributeWithName:@"w:hAnsi" stringValue:@"Arial"]]], [NSXMLElement elementWithName:@"w:sz" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]], [NSXMLElement elementWithName:@"w:szCs" children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue:@"24"]]]]];
 	
 	XCTAssertEqualObjects(generated, expected, @"Generated XML element does not match.");
 }
@@ -83,7 +83,7 @@
 	return runElement;
 }
 
-+ (NSXMLElement *)expectedXMLElementWithFontTrait:(NSFontTraitMask)traitMask string:(NSString *)string runProperties:(NSArray *)runProperties
++ (NSXMLElement *)expectedXMLElementWithString:(NSString *)string runProperties:(NSArray *)runProperties
 {
 	
 	NSXMLElement *runElement = [NSXMLElement elementWithName: @"w:r"];
