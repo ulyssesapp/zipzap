@@ -9,6 +9,7 @@
 #import "RKDOCXDocumentContentWriter.h"
 
 #import "RKDOCXConversionContext.h"
+#import "RKDOCXAttributedStringWriter.h"
 
 
 // Root element name
@@ -53,17 +54,9 @@ NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentContentBodyElementName];
 	[document.rootElement addChild: body];
 	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXDocumentContentParagraphElementName];
-	[body addChild: paragraph];
-	
-	NSXMLElement *run = [NSXMLElement elementWithName: RKDOCXDocumentContentRunElementName];
-	[paragraph addChild: run];
-	
-	NSString *textContent = [[[[[context document] sections] firstObject] content] string];
-	
-	NSXMLElement *text = [NSXMLElement elementWithName:RKDOCXDocumentContentTextElementName stringValue:textContent];
-	[text addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
-	[run addChild: text];
+	for (NSXMLElement *paragraph in [RKDOCXAttributedStringWriter processAttributedString:[[[[context document] sections] firstObject] content]]) {
+		[body addChild: paragraph];
+	}
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentFilename];
 }

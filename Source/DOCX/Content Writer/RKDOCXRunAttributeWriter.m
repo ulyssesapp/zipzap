@@ -24,16 +24,12 @@ NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 	if (!range.length)
 		return nil;
 	
-	// Check for invalid range
-	NSParameterAssert(NSMaxRange(range) <= attributedString.length);
-	
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Collect all matching attributes
 	NSArray *propertyElements = [RKDOCXFontAttributeWriter runPropertiesForAttributes: attributes];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
-	// ...
 	
 	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunAttributeRunElementName];
 	

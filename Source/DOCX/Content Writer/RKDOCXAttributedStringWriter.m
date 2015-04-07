@@ -10,21 +10,36 @@
 
 #import "RKDOCXRunAttributeWriter.h"
 
+NSString *RKDOCXAttributeWriterParagraphElementName	= @"w:p";
+
 
 @implementation RKDOCXAttributedStringWriter
 
 + (NSArray *)processAttributedString:(NSAttributedString *)attributedString
 {
+	NSMutableArray *paragraphs = [NSMutableArray new];
+	
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		// [self runElementsFromAttributedString:attributedString inRange:substringRange];
+		[paragraphs addObject: [self paragraphWithProperties:nil runElements:[self runElementsFromAttributedString:attributedString inRange:substringRange]]];
 	}];
 	
-	return nil;
+	return paragraphs;
 }
 
 + (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)properties runElements:(NSArray *)runElements
 {
-	return nil;
+	NSXMLElement *paragraph;
+	
+	if (!runElements.count)
+		return nil;
+	
+	if (!properties) {
+		paragraph = [NSXMLElement elementWithName:RKDOCXAttributeWriterParagraphElementName children:runElements attributes:nil];
+	} else {
+		paragraph = [NSXMLElement elementWithName:RKDOCXAttributeWriterParagraphElementName children:[@[properties] arrayByAddingObjectsFromArray: runElements] attributes:nil];
+	}
+	
+	return paragraph;
 }
 
 + (NSArray *)runElementsFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange

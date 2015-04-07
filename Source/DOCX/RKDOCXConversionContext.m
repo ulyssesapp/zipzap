@@ -73,7 +73,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	[newRelationships addEntriesFromDictionary: @{
 												  target: @{
 														  RKDOCXConversionContextRelationshipTypeName: type,
-														  RKDOCXConversionContextRelationshipIdentifierName: [NSNumber numberWithInteger: index]
+														  RKDOCXConversionContextRelationshipIdentifierName: @(index)
 														  }
 												  }];
 	_documentRelationships = newRelationships;

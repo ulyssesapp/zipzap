@@ -38,13 +38,13 @@ NSString *RKDOCXFontAttributeFontSizePropertyName				= @"w:sz";
 	NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontPropertyName
 													 children:nil
 												   attributes:@[
-																[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontName stringValue:[fontAttribute familyName]],
+																[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontName stringValue:fontAttribute.familyName],
 																[NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontName stringValue:[fontAttribute familyName]],
-																[NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontName stringValue:[fontAttribute familyName]],
-																[NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontName stringValue:[fontAttribute familyName]]
+																[NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontName stringValue:fontAttribute.familyName],
+																[NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontName stringValue:fontAttribute.familyName]
 																]];
 	
-	NSUInteger wordFontSize = [self wordFontSizeFromPointSize: [fontAttribute pointSize]];
+	NSUInteger wordFontSize = [self wordFontSizeFromPointSize: fontAttribute.pointSize];
 	NSString *fontSize = [@(wordFontSize) stringValue];
 	
 	NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:@"w:val" stringValue: fontSize]]];
