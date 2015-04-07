@@ -12,7 +12,7 @@
 
 /*!
  @abstract Generates the settings file with all document-wide settings used by the given context and adds it to the output document.
- @discussion See standard chapter §17.15. The settings will be stored inside the settings.xml file inside the output document. Should be called before the main document translation.
+ @discussion See ISO 29500-1:2012: §17.15 (Settings). The settings will be stored inside the settings.xml file inside the output document. Should be called before the main document translation.
  */
 @interface RKDOCXSettingsWriter : RKDOCXPartWriter
 

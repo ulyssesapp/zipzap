@@ -26,18 +26,16 @@ NSString *RKDOCXAttributeWriterParagraphElementName	= @"w:p";
 	return paragraphs;
 }
 
-+ (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)properties runElements:(NSArray *)runElements
++ (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements
 {
-	NSXMLElement *paragraph;
+	NSParameterAssert(runElements.count);
 	
-	if (!runElements.count)
-		return nil;
+	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXAttributeWriterParagraphElementName];
 	
-	if (!properties) {
-		paragraph = [NSXMLElement elementWithName:RKDOCXAttributeWriterParagraphElementName children:runElements attributes:nil];
-	} else {
-		paragraph = [NSXMLElement elementWithName:RKDOCXAttributeWriterParagraphElementName children:[@[properties] arrayByAddingObjectsFromArray: runElements] attributes:nil];
-	}
+	if (propertiesElement)
+		[paragraph addChild: propertiesElement];
+	
+	[paragraph insertChildren:runElements atIndex:paragraph.children.count];
 	
 	return paragraph;
 }

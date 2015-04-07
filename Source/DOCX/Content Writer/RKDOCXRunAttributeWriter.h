@@ -11,7 +11,7 @@
 
 /*!
  @abstract Generates a run element "<w:r>" to be added to the parent paragraph.
- @discussion See standard chapters §17.3.2 and §17.3.3.
+ @discussion See ISO 29500-1:2012: §17.3.2 (Run) and §17.3.3 (Run Content).
  */
 @interface RKDOCXRunAttributeWriter : RKDOCXAttributedStringWriter
 

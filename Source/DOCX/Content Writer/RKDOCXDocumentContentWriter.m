@@ -54,9 +54,7 @@ NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentContentBodyElementName];
 	[document.rootElement addChild: body];
 	
-	for (NSXMLElement *paragraph in [RKDOCXAttributedStringWriter processAttributedString:[[[[context document] sections] firstObject] content]]) {
-		[body addChild: paragraph];
-	}
+	body.children = [RKDOCXAttributedStringWriter processAttributedString: [context.document.sections.firstObject content]];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentFilename];
 }
