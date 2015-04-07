@@ -500,6 +500,8 @@
 		A074BE6D1AC44A88008B3DED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
 		A0A754751AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A754731AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.h */; };
 		A0A754761AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A754731AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.h */; };
+		A0A754771AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A754741AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m */; };
+		A0A754781AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A754741AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m */; };
 		A0D244D91ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */; };
 		A0D244DA1ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */; };
 		A0E33E4E1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */; };
@@ -865,6 +867,7 @@
 		A074BE691AC449CF008B3DED /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		A074BE6C1AC44A88008B3DED /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A0A754731AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXTextEffectsWriter.h; sourceTree = "<group>"; };
+		A0A754741AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXTextEffectsWriter.m; sourceTree = "<group>"; };
 		A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXRunAttributeWriterTest.m; path = "Content Writer/RKDOCXRunAttributeWriterTest.m"; sourceTree = "<group>"; };
 		A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestCase+DOCX.m"; path = "Test Extensions/XCTestCase+DOCX.m"; sourceTree = "<group>"; };
 		A0E33E4F1AC95BBF00EEF4E4 /* XCTestCase+DOCX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestCase+DOCX.h"; path = "Test Extensions/XCTestCase+DOCX.h"; sourceTree = "<group>"; };
@@ -1656,6 +1659,7 @@
 				A044943E1ACAD9DD006FB62D /* RKDOCXFontAttributeWriter.h */,
 				A044943F1ACAD9DD006FB62D /* RKDOCXFontAttributeWriter.m */,
 				A0A754731AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.h */,
+				A0A754741AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m */,
 			);
 			name = "Content Writer";
 			path = "DOCX/Content Writer";
@@ -2099,6 +2103,7 @@
 				7935619C14DC6E1600FC0C1C /* RKFootnoteWriter.m in Sources */,
 				79AD204114E140AC00F5616C /* NSAttributedString+RKCalculationAdditions.m in Sources */,
 				79AD204714E1430100F5616C /* RKFontAdditions.m in Sources */,
+				A0A754771AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m in Sources */,
 				79AD205614E1939900F5616C /* RKPlaceholder.m in Sources */,
 				79AD205C14E194EE00F5616C /* RKPlaceholderWriter.m in Sources */,
 				79C4BED814E5360A00FD91B2 /* NSAttributedString+RKAttachmentConvenience.m in Sources */,
@@ -2322,6 +2327,7 @@
 				A04494311ACAD1A3006FB62D /* RKDOCXRelationshipsWriter.m in Sources */,
 				79E76C34151758250073153D /* NSAttributedString+RKAttachmentConvenience.m in Sources */,
 				799511EB15189F1500D82511 /* RKPortableAttributeNames-iOS.m in Sources */,
+				A0A754781AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.m in Sources */,
 				79717A31151A036C0016FB3E /* RKShadow.m in Sources */,
 				79717A32151A03960016FB3E /* RKShadowAttributeWriter.m in Sources */,
 				79B1489F151A118100F14200 /* RKImageAttachmentWriter.m in Sources */,

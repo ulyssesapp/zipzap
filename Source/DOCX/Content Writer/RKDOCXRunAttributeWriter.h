@@ -8,6 +8,8 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
+extern NSString *RKDOCXRunAttributePropertyValueName;
+
 
 /*!
  @abstract Generates a run element "<w:r>" to be added to the parent paragraph.
