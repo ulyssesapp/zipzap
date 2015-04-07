@@ -20,9 +20,6 @@ NSString *RKDOCXTextEffectsSuperscriptPropertyName			= @"w:vertAlign";
 NSString *RKDOCXTextEffectsUnderlineColorName				= @"w:color";
 NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 
-NSInteger RKUnderlineStyleMask		= 0x0F;
-NSInteger RKUnderlinePatternMask	= 0x0F00;
-
 
 @implementation RKDOCXTextEffectsWriter
 
