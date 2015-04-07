@@ -8,14 +8,18 @@
 
 #import "RKDOCXDocumentContentWriter.h"
 
+#import "RKDOCXConversionContext.h"
+#import "RKDOCXAttributedStringWriter.h"
+
+
 // Root element name
-NSString *RKDOCXDocumentRootElementName = @"w:document";
+NSString *RKDOCXDocumentRootElementName				= @"w:document";
 
 // Element names
-NSString *RKDOCXDocumentBodyElementName = @"w:body";
-NSString *RKDOCXDocumentParagraphElementName = @"w:p";
-NSString *RKDOCXDocumentRunElementName = @"w:r";
-NSString *RKDOCXDocumentTextElementName = @"w:t";
+NSString *RKDOCXDocumentContentBodyElementName		= @"w:body";
+NSString *RKDOCXDocumentContentParagraphElementName	= @"w:p";
+NSString *RKDOCXDocumentContentRunElementName		= @"w:r";
+NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 
 @implementation RKDOCXDocumentContentWriter
 
@@ -47,20 +51,10 @@ NSString *RKDOCXDocumentTextElementName = @"w:t";
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXDocumentRootElementName namespaces:namespaces];
 	
 	// Document content
-	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentBodyElementName];
+	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentContentBodyElementName];
 	[document.rootElement addChild: body];
 	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXDocumentParagraphElementName];
-	[body addChild: paragraph];
-	
-	NSXMLElement *run = [NSXMLElement elementWithName: RKDOCXDocumentRunElementName];
-	[paragraph addChild: run];
-	
-	NSString *textContent = [[[[[context document] sections] firstObject] content] string];
-	
-	NSXMLElement *text = [NSXMLElement elementWithName:RKDOCXDocumentTextElementName stringValue:textContent];
-	[text addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
-	[run addChild: text];
+	body.children = [RKDOCXAttributedStringWriter processAttributedString: [context.document.sections.firstObject content]];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentFilename];
 }

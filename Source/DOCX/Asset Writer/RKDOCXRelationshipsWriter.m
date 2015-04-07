@@ -6,21 +6,22 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+#import "RKDOCXRelationshipsWriter.h"
+
+
 // Root element name
-NSString *RKDOCXRelationshipsRootElementName = @"Relationships";
+NSString *RKDOCXRelationshipsRootElementName			= @"Relationships";
 
 // Element name
-NSString *RKDOCXRelationshipElementName = @"Relationship";
+NSString *RKDOCXRelationshipElementName					= @"Relationship";
 
 // Package relationship types and targets
-NSString *RKDOCXDocumentRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
-NSString *RKDOCXDocumentRelationshipTarget = @"word/document.xml";
-NSString *RKDOCXCorePropertiesRelationshipType = @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
-NSString *RKDOCXCorePropertiesRelationshipTarget = @"docProps/core.xml";
-NSString *RKDOCXExtendedPropertiesRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
-NSString *RKDOCXExtendedPropertiesRelationshipTarget = @"docProps/app.xml";
-
-#import "RKDOCXRelationshipsWriter.h"
+NSString *RKDOCXCorePropertiesRelationshipType			= @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
+NSString *RKDOCXCorePropertiesRelationshipTarget		= @"docProps/core.xml";
+NSString *RKDOCXDocumentRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+NSString *RKDOCXDocumentRelationshipTarget				= @"word/document.xml";
+NSString *RKDOCXExtendedPropertiesRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
+NSString *RKDOCXExtendedPropertiesRelationshipTarget	= @"docProps/app.xml";
 
 @implementation RKDOCXRelationshipsWriter
 

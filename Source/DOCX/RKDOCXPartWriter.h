@@ -8,13 +8,14 @@
 
 @class RKDOCXConversionContext;
 
+
 // Filenames
-extern NSString *RKDOCXPackageRelationshipsFilename;
 extern NSString *RKDOCXContentTypesFilename;
 extern NSString *RKDOCXCorePropertiesFilename;
-extern NSString *RKDOCXExtendedPropertiesFilename;
-extern NSString *RKDOCXDocumentRelationshipsFilename;
 extern NSString *RKDOCXDocumentFilename;
+extern NSString *RKDOCXDocumentRelationshipsFilename;
+extern NSString *RKDOCXExtendedPropertiesFilename;
+extern NSString *RKDOCXPackageRelationshipsFilename;
 extern NSString *RKDOCXSettingsFilename;
 
 /*!

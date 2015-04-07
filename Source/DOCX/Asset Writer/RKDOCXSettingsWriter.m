@@ -8,12 +8,13 @@
 
 #import "RKDOCXSettingsWriter.h"
 
+
 // Root element name
-NSString *RKDOCXSettingsRootElementName = @"w:settings";
+NSString *RKDOCXSettingsRootElementName		= @"w:settings";
 
 // Relationship type and target
-NSString *RKDOCXSettingsRelationshipType = @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
-NSString *RKDOCXSettingsRelationshipTarget = @"settings.xml";
+NSString *RKDOCXSettingsRelationshipType	= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
+NSString *RKDOCXSettingsRelationshipTarget	= @"settings.xml";
 
 @implementation RKDOCXSettingsWriter
 

@@ -8,22 +8,23 @@
 
 #import "RKDOCXContentTypesWriter.h"
 
+
 // Root element name
-NSString *RKDOCXContentTypesRootElementName = @"Types";
+NSString *RKDOCXContentTypesRootElementName		= @"Types";
 
 // Element names
-NSString *RKDOCXDefaultContentTypeElementName = @"Default";
-NSString *RKDOCXOverrideContentTypeElementName = @"Override";
+NSString *RKDOCXDefaultContentTypeElementName	= @"Default";
+NSString *RKDOCXOverrideContentTypeElementName	= @"Override";
 
 // Content Types
-NSString *RKDOCXDefaultXMLExtension = @"xml";
-NSString *RKDOCXDefaultXMLContentType = @"application/xml";
-NSString *RKDOCXDefaultRelationshipExtension = @"rels";
-NSString *RKDOCXDefaultRelationshipContentType = @"application/vnd.openxmlformats-package.relationships+xml";
-NSString *RKDOCXDocumentContentType = @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
-NSString *RKDOCXSettingsContentType = @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
-NSString *RKDOCXCorePropertiesContentType = @"application/vnd.openxmlformats-package.core-properties+xml";
-NSString *RKDOCXExtendedPropertiesContentType = @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
+NSString *RKDOCXDefaultXMLExtension				= @"xml";
+NSString *RKDOCXDefaultXMLContentType			= @"application/xml";
+NSString *RKDOCXDefaultRelationshipExtension	= @"rels";
+NSString *RKDOCXDefaultRelationshipContentType	= @"application/vnd.openxmlformats-package.relationships+xml";
+NSString *RKDOCXDocumentContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
+NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
+NSString *RKDOCXCorePropertiesContentType		= @"application/vnd.openxmlformats-package.core-properties+xml";
+NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
 
 @implementation RKDOCXContentTypesWriter
 

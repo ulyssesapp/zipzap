@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXPartWriter.h"
 #import "RKDOCXConversionContext.h"
+#import "RKDOCXPartWriter.h"
+
 
 @interface RKDOCXContentTypesWriter : RKDOCXPartWriter
 
