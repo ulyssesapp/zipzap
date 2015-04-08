@@ -11,6 +11,6 @@
 /*!
  @abstract Returns the hexadecimal value of the color.
  */
-- (NSString *)hexRepresentation;
+@property(nonatomic, readonly) NSString *hexRepresentation;
 
 @end

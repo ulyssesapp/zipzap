@@ -30,82 +30,98 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Font color
-	[self checkForFontColorInAttributes:attributes addToProperties:properties];
+	NSXMLElement *foregroundColorProperty = [self foregroundColorPropertyForAttributes: attributes];
+	if (foregroundColorProperty)
+		[properties addObject: foregroundColorProperty];
 	
 	// Outline
-	[self checkForOutlineInAttributes:attributes addToProperties:properties];
+	NSXMLElement *strokeWidthProperty = [self strokeWidthPropertyForAttributes: attributes];
+	if (strokeWidthProperty)
+		[properties addObject: strokeWidthProperty];
 	
 	// Shadow
-	[self checkForShadowInAttributes:attributes addToProperties:properties];
+	NSXMLElement *shadowProperty = [self shadowPropertyForAttributes: attributes];
+	if (shadowProperty)
+		[properties addObject: shadowProperty];
 	
 	// Strikethrough
-	[self checkForStrikethroughInAttributes:attributes addToProperties:properties];
+	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes: attributes];
+	if (strikethroughProperty)
+		[properties addObject: strikethroughProperty];
 	
 	// Underline
-	[self checkForUnderlineInAttributes:attributes addToProperties:properties];
+	NSXMLElement *underlineProperty = [self underlinePropertyForAttributes: attributes];
+	if (underlineProperty)
+		[properties addObject: underlineProperty];
 	
 	// Subscript/Superscript
-	[self checkForSuperscriptInAttributes:attributes addToProperties:properties];
+	NSXMLElement *superscriptProperty = [self superscriptPropertyForAttributes: attributes];
+	if (superscriptProperty)
+		[properties addObject: superscriptProperty];
 	
 	return properties;
 }
 
-+ (void)checkForFontColorInAttributes:(NSDictionary *)attributes addToProperties:(NSMutableArray *)properties
++ (NSXMLElement *)foregroundColorPropertyForAttributes:(NSDictionary *)attributes
 {
 	RKColor *fontColorAttribute = attributes[RKForegroundColorAttributeName];
-	if (fontColorAttribute) {
-		NSString *fontColor = [fontColorAttribute hexRepresentation];
-		NSXMLElement *fontColorElement = [NSXMLElement elementWithName:RKDOCXTextEffectsColorPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:fontColor]]];
-		[properties addObject: fontColorElement];
-	}
+	if (!fontColorAttribute)
+		return nil;
+	
+	return [NSXMLElement elementWithName:RKDOCXTextEffectsColorPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:fontColorAttribute.hexRepresentation]]];
 }
 
-+ (void)checkForOutlineInAttributes:(NSDictionary *)attributes addToProperties:(NSMutableArray *)properties
++ (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes
 {
 	if ([attributes[RKStrokeWidthAttributeName] integerValue] > 0) {
-		NSXMLElement *outlineElement = [NSXMLElement elementWithName: RKDOCXTextEffectsOutlinePropertyName];
-		[properties addObject: outlineElement];
+		return [NSXMLElement elementWithName: RKDOCXTextEffectsOutlinePropertyName];
 	}
+	
+	return nil;
 }
 
-+ (void)checkForShadowInAttributes:(NSDictionary *)attributes addToProperties:(NSMutableArray *)properties
++ (NSXMLElement *)shadowPropertyForAttributes:(NSDictionary *)attributes
 {
-	if (attributes[RKShadowAttributeName]) {
-		NSXMLElement *shadowElement = [NSXMLElement elementWithName: RKDOCXTextEffectsShadowPropertyName];
-		[properties addObject: shadowElement];
-	}
+	if (!attributes[RKShadowAttributeName])
+		return nil;
+	
+	return [NSXMLElement elementWithName: RKDOCXTextEffectsShadowPropertyName];
 }
 
-+ (void)checkForStrikethroughInAttributes:(NSDictionary *)attributes addToProperties:(NSMutableArray *)properties
++ (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes
 {
 	NSNumber *strikethroughAttribute = attributes[RKStrikethroughStyleAttributeName];
-	if (strikethroughAttribute) {
-		NSXMLElement *strikethroughElement = [NSXMLElement elementWithName:RKDOCXTextEffectsSingleStrikethroughPropertyName];
-		[properties addObject: strikethroughElement];
-	}
+	if (!strikethroughAttribute)
+		return nil;
+	
+	return [NSXMLElement elementWithName:RKDOCXTextEffectsSingleStrikethroughPropertyName];
 }
 
-+ (void)checkForUnderlineInAttributes:(NSDictionary *)attributes addToProperties:(NSMutableArray *)properties
++ (NSXMLElement *)underlinePropertyForAttributes:(NSDictionary *)attributes
 {
 	NSNumber *underlineAttribute = attributes[RKUnderlineStyleAttributeName];
-	if (underlineAttribute) {
-		NSXMLElement *underlineElement = [NSXMLElement elementWithName:RKDOCXTextEffectsUnderlinePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:RKDOCXTextEffectsSingleUnderlineName]]];
-		RKColor *underlineColorAttribute = attributes[RKUnderlineColorAttributeName];
-		if (underlineColorAttribute) {
-			[underlineElement addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorName stringValue:[attributes[RKUnderlineColorAttributeName] hexRepresentation]]];
-		}
-		[properties addObject: underlineElement];
+	if (!underlineAttribute)
+		return nil;
+	
+	NSXMLElement *underlineElement = [NSXMLElement elementWithName:RKDOCXTextEffectsUnderlinePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:RKDOCXTextEffectsSingleUnderlineName]]];
+	RKColor *underlineColorAttribute = attributes[RKUnderlineColorAttributeName];
+	if (underlineColorAttribute) {
+		[underlineElement addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorName stringValue:[attributes[RKUnderlineColorAttributeName] hexRepresentation]]];
 	}
+	
+	return underlineElement;
 }
 
-+ (void)checkForSuperscriptInAttributes:(NSDictionary *)attributes addToProperties:(NSMutableArray *)properties
++ (NSXMLElement *)superscriptPropertyForAttributes:(NSDictionary *)attributes
 {
 	NSInteger superscriptAttribute = [attributes[RKSuperscriptAttributeName] integerValue];
 	if ([attributes[RKSuperscriptAttributeName] integerValue] != 0) {
 		NSString *superscriptValue = (superscriptAttribute < 0) ? RKDOCXTextEffectsSubscriptName : RKDOCXTextEffectsSuperscriptName;
-		NSXMLElement *superscriptElement = [NSXMLElement elementWithName:RKDOCXTextEffectsSuperscriptPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:superscriptValue]]];
-		[properties addObject: superscriptElement];
+
+		return [NSXMLElement elementWithName:RKDOCXTextEffectsSuperscriptPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:superscriptValue]]];
 	}
+	
+	return nil;
 }
 
 @end

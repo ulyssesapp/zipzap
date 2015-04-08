@@ -31,6 +31,9 @@ NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
 	document.version = @"1.0";
 	document.characterEncoding = @"UTF-8";
 	document.standalone = YES;
+#else
+	// Adaption required for test stability. See ULYSSES-4867.
+	xmlTreeIndentString = "    ";
 #endif
 	
 	// Namespaces

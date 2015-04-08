@@ -110,6 +110,7 @@
 	unsigned char version[] = "1.0";
 	xmlDocPtr doc = xmlNewDoc(version);
 	
+	// Adaptions required for DOCX compatibility. See ULYSSES-4866.
 	// NSXMLDocument always includes the standalone attribute, so DDXMLDocument needs to include it as well.
 	doc->standalone = 1;
 	
