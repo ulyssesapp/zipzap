@@ -9,8 +9,7 @@
 #import "RKDOCXAttributedStringWriter.h"
 
 #import "RKDOCXRunAttributeWriter.h"
-
-NSString *RKDOCXAttributeWriterParagraphElementName	= @"w:p";
+#import "RKDOCXParagraphAttributeWriter.h"
 
 
 @implementation RKDOCXAttributedStringWriter
@@ -20,26 +19,10 @@ NSString *RKDOCXAttributeWriterParagraphElementName	= @"w:p";
 	NSMutableArray *paragraphs = [NSMutableArray new];
 	
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		[paragraphs addObject: [self paragraphWithProperties:nil runElements:[self runElementsFromAttributedString:attributedString inRange:substringRange]]];
+		[paragraphs addObject: [RKDOCXParagraphAttributeWriter paragraphElementWithProperties:nil runElements:[self runElementsFromAttributedString:attributedString inRange:substringRange]]];
 	}];
 	
 	return paragraphs;
-}
-
-+ (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements
-{
-	NSParameterAssert(runElements.count);
-	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXAttributeWriterParagraphElementName];
-	
-	if (propertiesElement)
-		[paragraph addChild: propertiesElement];
-	
-	for (NSXMLElement *runElement in runElements) {
-		[paragraph addChild: runElement];
-	}
-	
-	return paragraph;
 }
 
 + (NSArray *)runElementsFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange

@@ -16,10 +16,4 @@
  */
 + (NSArray *)processAttributedString:(NSAttributedString *)attributedString;
 
-/*!
- @abstract Returns an XML element representing a paragraph including properties and runs.
- @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs).
- */
-+ (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)properties runElements:(NSArray *)runElements;
-
 @end

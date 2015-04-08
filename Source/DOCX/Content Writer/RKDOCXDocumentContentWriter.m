@@ -11,7 +11,6 @@
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXAttributedStringWriter.h"
 
-
 // Root element name
 NSString *RKDOCXDocumentRootElementName				= @"w:document";
 
