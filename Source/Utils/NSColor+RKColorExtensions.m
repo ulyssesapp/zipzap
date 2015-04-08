@@ -10,7 +10,7 @@
 
 @implementation NSColor (RKColorExtensions)
 
-- (NSString *)hexRepresention
+- (NSString *)hexRepresentation
 {
 	CGFloat redComponent, greenComponent, blueComponent;
 	

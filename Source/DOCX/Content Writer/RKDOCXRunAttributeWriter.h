@@ -8,6 +8,7 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
+// Commonly used attribute name
 extern NSString *RKDOCXRunAttributePropertyValueName;
 
 

@@ -54,7 +54,7 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 {
 	RKColor *fontColorAttribute = attributes[RKForegroundColorAttributeName];
 	if (fontColorAttribute) {
-		NSString *fontColor = [fontColorAttribute hexRepresention];
+		NSString *fontColor = [fontColorAttribute hexRepresentation];
 		NSXMLElement *fontColorElement = [NSXMLElement elementWithName:RKDOCXTextEffectsColorPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:fontColor]]];
 		[properties addObject: fontColorElement];
 	}
@@ -92,8 +92,7 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 		NSXMLElement *underlineElement = [NSXMLElement elementWithName:RKDOCXTextEffectsUnderlinePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:RKDOCXTextEffectsSingleUnderlineName]]];
 		NSColor *underlineColorAttribute = attributes[RKUnderlineColorAttributeName];
 		if (underlineColorAttribute) {
-			NSString *underlineColor = [attributes[RKUnderlineColorAttributeName] hexRepresention];
-			[underlineElement addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorName stringValue:underlineColor]];
+			[underlineElement addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorName stringValue:[attributes[RKUnderlineColorAttributeName] hexRepresention]]];
 		}
 		[properties addObject: underlineElement];
 	}
