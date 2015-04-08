@@ -96,20 +96,9 @@
 	[self assertDOCX:converted withTestDocument:@"strike"];
 }
 
-- (void)testRunElementWithDoubleStrikethrough
-{
-	NSDictionary *attributes = @{RKStrikethroughStyleAttributeName: @(RKUnderlineStyleDouble)};
-	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Double Strikethrough Test" attributes:attributes];
-	
-	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
-	
-	[self assertDOCX:converted withTestDocument:@"dstrike"];
-}
-
 - (void)testRunElementWithUnsupportedStrikethrough
 {
-	// RKUnderlineStyleThick should fall back to RKUnderlineStyleSingle
+	// All underline styles should fall back to RKUnderlineStyleSingle
 	NSDictionary *attributes = @{RKStrikethroughStyleAttributeName: @(RKUnderlineStyleThick)};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Single Strikethrough Test" attributes:attributes];
 	
