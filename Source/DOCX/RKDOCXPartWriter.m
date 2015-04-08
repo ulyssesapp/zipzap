@@ -25,11 +25,12 @@ NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
 + (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root namespaces:(NSDictionary *)namespaces
 {
 	NSXMLElement *rootElement = [NSXMLElement elementWithName: root];
-	NSXMLDocument *document = [NSXMLDocument documentWithRootElement: rootElement];
+	NSXMLDocument *document = [[NSXMLDocument alloc] initWithRootElement: rootElement];
 	
+#if !TARGET_OS_IPHONE
 	document.version = @"1.0";
 	document.characterEncoding = @"UTF-8";
-	document.standalone = YES;
+#endif
 	
 	// Namespaces
 	for (NSString *namespace in namespaces) {

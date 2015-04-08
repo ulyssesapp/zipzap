@@ -8,6 +8,13 @@
 
 #import "RKDOCXRunAttributeWriter.h"
 #import "XCTestCase+DOCX.h"
+#import "RKColor.h"
+
+#if TARGET_OS_IPHONE
+	#define RKFont UIFont
+#else
+	#define RKFont NSFont
+#endif
 
 
 @interface RKDOCXRunAttributeWriterTest : XCTestCase
@@ -18,8 +25,8 @@
 
 - (void)testRunElementWithFontSizeAttribute
 {
-	NSFont *font = [NSFontManager.sharedFontManager fontWithFamily:@"Helvetica" traits:0 weight:0 size:42];
-	NSDictionary *attributes = @{NSFontAttributeName: font};
+	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 42, NULL);
+	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)font};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Font Size Test (42)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -30,8 +37,8 @@
 
 - (void)testRunElementWithFontNameAttribute
 {
-	NSFont *font = [NSFont fontWithName:@"Papyrus" size:12];
-	NSDictionary *attributes = @{RKFontAttributeName: font};
+	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"Papyrus", 12, NULL);
+	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)font};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Font Name Test (Papyrus)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -42,8 +49,8 @@
 
 - (void)testRunElementWithBoldItalicFontNameAttribute
 {
-	NSFont *font = [NSFontManager.sharedFontManager fontWithFamily:@"Arial" traits:(NSBoldFontMask | NSItalicFontMask) weight:0 size:12];
-	NSDictionary *attributes = @{RKFontAttributeName: font};
+	CTFontRef font = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
+	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)font};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Bold Italic Font Name Test (Arial)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -54,7 +61,7 @@
 
 - (void)testRunElementWithFontColor
 {
-	NSDictionary *attributes = @{RKForegroundColorAttributeName: [NSColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
+	NSDictionary *attributes = @{RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Font Color Test (#0080FF)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -110,7 +117,7 @@
 
 - (void)testRunElementWithUnderline
 {
-	NSDictionary *attributes = @{RKUnderlineStyleAttributeName: @(RKUnderlineStyleSingle), RKUnderlineColorAttributeName: [NSColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
+	NSDictionary *attributes = @{RKUnderlineStyleAttributeName: @(RKUnderlineStyleSingle), RKUnderlineColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Underline Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];

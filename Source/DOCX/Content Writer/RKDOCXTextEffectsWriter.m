@@ -90,9 +90,9 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 	NSNumber *underlineAttribute = attributes[RKUnderlineStyleAttributeName];
 	if (underlineAttribute) {
 		NSXMLElement *underlineElement = [NSXMLElement elementWithName:RKDOCXTextEffectsUnderlinePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:RKDOCXTextEffectsSingleUnderlineName]]];
-		NSColor *underlineColorAttribute = attributes[RKUnderlineColorAttributeName];
+		RKColor *underlineColorAttribute = attributes[RKUnderlineColorAttributeName];
 		if (underlineColorAttribute) {
-			[underlineElement addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorName stringValue:[attributes[RKUnderlineColorAttributeName] hexRepresention]]];
+			[underlineElement addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorName stringValue:[attributes[RKUnderlineColorAttributeName] hexRepresentation]]];
 		}
 		[properties addObject: underlineElement];
 	}
