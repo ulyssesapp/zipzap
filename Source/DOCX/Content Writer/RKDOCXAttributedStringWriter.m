@@ -35,7 +35,9 @@ NSString *RKDOCXAttributeWriterParagraphElementName	= @"w:p";
 	if (propertiesElement)
 		[paragraph addChild: propertiesElement];
 	
-	[paragraph insertChildren:runElements atIndex:paragraph.children.count];
+	for (NSXMLElement *runElement in runElements) {
+		[paragraph addChild: runElement];
+	}
 	
 	return paragraph;
 }

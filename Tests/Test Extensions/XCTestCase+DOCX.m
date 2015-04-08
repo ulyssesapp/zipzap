@@ -44,7 +44,9 @@
 	[expected writeToURL:[[temporaryDirectoryURL URLByAppendingPathComponent: [filename stringByAppendingString: @"-expected"]] URLByAppendingPathExtension: @"docx"] atomically:YES];
 	
 	NSLog(@"\n\n-----------------\n\nTest failed. Output written to:\n%@\n\n", temporaryDirectoryURL.path);
+#if !TARGET_OS_IPHONE
 	[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[temporaryDirectoryURL]];
+#endif
 }
 
 - (void)assertDOCX:(NSData *)docx withTestDocument:(NSString *)name

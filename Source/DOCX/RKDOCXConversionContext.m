@@ -35,6 +35,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return self;
 }
 
+
+#pragma mark - Output context
+
 - (NSData *)docxRepresentation
 {
 	ZZMutableArchive *archive = [[ZZMutableArchive alloc] initWithData:[NSMutableData new] encoding:NSUTF8StringEncoding];
@@ -56,6 +59,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 	[_files addEntriesFromDictionary: @{filename: part}];
 }
+
+
+#pragma mark - Document relationships
 
 - (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
 {

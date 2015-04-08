@@ -35,6 +35,12 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 @property (nonatomic, readonly) NSData *docxRepresentation;
 
+/*!
+ @abstract Adds the given document part to the context object.
+ @discussion Throws an exception when adding duplicate files.
+ */
+- (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename;
+
 
 #pragma mark - Document relationships
 
@@ -42,9 +48,6 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @abstract Mapping from relationship targets (NSString) to relationship identifiers (NSNumber).
  */
 @property (nonatomic, readonly) NSDictionary *documentRelationships;
-#warning Make sure there are no duplicates in relationships.
-
-- (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename;
 
 /*!
  @abstract Returns the relationship identifier of a target.

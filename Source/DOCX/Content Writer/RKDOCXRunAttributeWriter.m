@@ -9,12 +9,17 @@
 #import "RKDOCXRunAttributeWriter.h"
 
 #import "RKDOCXFontAttributeWriter.h"
+#import "RKDOCXTextEffectsWriter.h"
 
 
 // Element names
 NSString *RKDOCXRunAttributeRunElementName				= @"w:r";
 NSString *RKDOCXRunAttributeRunPropertiesElementName	= @"w:rPr";
 NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
+
+// Common attribute name
+NSString *RKDOCXRunAttributePropertyValueName			= @"w:val";
+
 
 @implementation RKDOCXRunAttributeWriter
 
@@ -28,6 +33,10 @@ NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 	
 	// Collect all matching attributes
 	NSArray *propertyElements = [RKDOCXFontAttributeWriter runPropertiesForAttributes: attributes];
+	if (propertyElements)
+		[properties addObjectsFromArray: propertyElements];
+	
+	propertyElements = [RKDOCXTextEffectsWriter runPropertiesForAttributes: attributes];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
