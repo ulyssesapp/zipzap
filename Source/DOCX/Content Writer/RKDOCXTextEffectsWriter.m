@@ -90,7 +90,7 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 + (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes
 {
 	NSNumber *strikethroughAttribute = attributes[RKStrikethroughStyleAttributeName];
-	if (!strikethroughAttribute.integerValue)
+	if (!strikethroughAttribute || (strikethroughAttribute.integerValue == NSUnderlineStyleNone))
 		return nil;
 	
 	return [NSXMLElement elementWithName:RKDOCXTextEffectsSingleStrikethroughPropertyName];
@@ -99,7 +99,7 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 + (NSXMLElement *)underlinePropertyForAttributes:(NSDictionary *)attributes
 {
 	NSNumber *underlineAttribute = attributes[RKUnderlineStyleAttributeName];
-	if (underlineAttribute.integerValue & RKUnderlineStyleNone)
+	if (!underlineAttribute || (underlineAttribute.integerValue == RKUnderlineStyleNone))
 		return nil;
 	
 	NSXMLElement *underlineElement = [NSXMLElement elementWithName:RKDOCXTextEffectsUnderlinePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:RKDOCXTextEffectsSingleUnderlineName]]];
