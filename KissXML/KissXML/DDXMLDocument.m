@@ -107,8 +107,9 @@
 
 - (id)initWithRootElement:(DDXMLElement *)element
 {
-	unsigned char verison[] = "1.0";
-	xmlDocPtr doc = xmlNewDoc(verison);
+	unsigned char version[] = "1.0";
+	xmlDocPtr doc = xmlNewDoc(version);
+	doc->standalone = 1;
 	
 	self = [self initWithDocPrimitive:doc owner:nil];
 	if (self) {

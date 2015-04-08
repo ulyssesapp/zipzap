@@ -1145,7 +1145,7 @@ static void MarkDeath(void *xmlPtr, DDXMLNode *wrapper);
 	
 	// xmlSaveNoEmptyTags:
 	// Global setting, asking the serializer to not output empty tags
-	// as <empty/> but <empty></empty>. those two forms are undistinguishable
+	// as <empty/> but <empty></empty>. Those two forms are undistinguishable
 	// once parsed.
 	// Disabled by default
 	

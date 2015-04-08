@@ -30,6 +30,7 @@ NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
 #if !TARGET_OS_IPHONE
 	document.version = @"1.0";
 	document.characterEncoding = @"UTF-8";
+	document.standalone = YES;
 #endif
 	
 	// Namespaces
