@@ -109,6 +109,8 @@
 {
 	unsigned char version[] = "1.0";
 	xmlDocPtr doc = xmlNewDoc(version);
+	
+	// NSXMLDocument always includes the standalone attribute, so DDXMLDocument needs to include it as well.
 	doc->standalone = 1;
 	
 	self = [self initWithDocPrimitive:doc owner:nil];
