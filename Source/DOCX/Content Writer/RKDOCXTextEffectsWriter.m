@@ -73,11 +73,10 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 
 + (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes
 {
-	if ([attributes[RKStrokeWidthAttributeName] integerValue] > 0) {
-		return [NSXMLElement elementWithName: RKDOCXTextEffectsOutlinePropertyName];
-	}
+	if ([attributes[RKStrokeWidthAttributeName] integerValue] <= 0)
+		return nil;
 	
-	return nil;
+	return [NSXMLElement elementWithName: RKDOCXTextEffectsOutlinePropertyName];
 }
 
 + (NSXMLElement *)shadowPropertyForAttributes:(NSDictionary *)attributes
@@ -91,7 +90,7 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 + (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes
 {
 	NSNumber *strikethroughAttribute = attributes[RKStrikethroughStyleAttributeName];
-	if (!strikethroughAttribute)
+	if (!strikethroughAttribute.integerValue)
 		return nil;
 	
 	return [NSXMLElement elementWithName:RKDOCXTextEffectsSingleStrikethroughPropertyName];
@@ -100,7 +99,7 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 + (NSXMLElement *)underlinePropertyForAttributes:(NSDictionary *)attributes
 {
 	NSNumber *underlineAttribute = attributes[RKUnderlineStyleAttributeName];
-	if (!underlineAttribute)
+	if (underlineAttribute.integerValue & RKUnderlineStyleNone)
 		return nil;
 	
 	NSXMLElement *underlineElement = [NSXMLElement elementWithName:RKDOCXTextEffectsUnderlinePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:RKDOCXTextEffectsSingleUnderlineName]]];
@@ -115,13 +114,11 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 + (NSXMLElement *)superscriptPropertyForAttributes:(NSDictionary *)attributes
 {
 	NSInteger superscriptAttribute = [attributes[RKSuperscriptAttributeName] integerValue];
-	if ([attributes[RKSuperscriptAttributeName] integerValue] != 0) {
-		NSString *superscriptValue = (superscriptAttribute < 0) ? RKDOCXTextEffectsSubscriptName : RKDOCXTextEffectsSuperscriptName;
-
-		return [NSXMLElement elementWithName:RKDOCXTextEffectsSuperscriptPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:superscriptValue]]];
-	}
+	if (superscriptAttribute == 0)
+		return nil;
 	
-	return nil;
+	NSString *superscriptValue = (superscriptAttribute < 0) ? RKDOCXTextEffectsSubscriptName : RKDOCXTextEffectsSuperscriptName;
+	return [NSXMLElement elementWithName:RKDOCXTextEffectsSuperscriptPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue:superscriptValue]]];
 }
 
 @end
