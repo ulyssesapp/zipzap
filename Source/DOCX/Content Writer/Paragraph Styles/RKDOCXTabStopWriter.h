@@ -10,8 +10,8 @@
 
 
 /*!
- @abstract Generates XML elements to translate the custom tab stop settings of an attributed string.
- @discussion See ISO 29500-1:2012: §17.3.1.38 (Set of Custom Tab Stops).
+ @abstract Generates XML elements to translate the custom tab stop settings and the default tab interval of an attributed string.
+ @discussion See ISO 29500-1:2012: §17.3.1.38 (Set of Custom Tab Stops) and §17.15.1.25 (Distance Between Automatic Stops).
  */
 @interface RKDOCXTabStopWriter : RKDOCXParagraphAttributeWriter
 

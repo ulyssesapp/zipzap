@@ -8,12 +8,13 @@
 
 #import "RKDOCXTabStopWriter.h"
 
-NSString *RKDOCXTabStopCenterAlignmentName		= @"center";
-NSString *RKDOCXTabStopLeftAlignmentName		= @"start";
-NSString *RKDOCXTabStopRightAlignmentName		= @"end";
-NSString *RKDOCXTabStopTabSetPropertyName		= @"w:tabs";
-NSString *RKDOCXTabStopTabPropertyName			= @"w:tab";
-NSString *RKDOCXTabStopTabPositionAttributeName	= @"w:pos";
+NSString *RKDOCXTabStopCenterAlignmentName			= @"center";
+NSString *RKDOCXTabStopDefaultTabStopPropertyName	= @"w:defaultTabStop";
+NSString *RKDOCXTabStopLeftAlignmentName			= @"start";
+NSString *RKDOCXTabStopRightAlignmentName			= @"end";
+NSString *RKDOCXTabStopTabSetPropertyName			= @"w:tabs";
+NSString *RKDOCXTabStopTabPropertyName				= @"w:tab";
+NSString *RKDOCXTabStopTabPositionAttributeName		= @"w:pos";
 
 
 @implementation RKDOCXTabStopWriter
@@ -21,9 +22,22 @@ NSString *RKDOCXTabStopTabPositionAttributeName	= @"w:pos";
 + (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes
 {
 	NSArray *tabStops = [attributes[RKParagraphStyleAttributeName] tabStops];
+	CGFloat defaultTabInterval = [attributes[RKParagraphStyleAttributeName] defaultTabInterval];
+	NSParagraphStyle *defaultStyle = [NSParagraphStyle defaultParagraphStyle];
 	
-	if (!tabStops || tabStops.count == 0 || [tabStops isEqual: [[NSParagraphStyle defaultParagraphStyle] tabStops]])
-		return nil;
+	NSMutableArray *properties;
+	
+	// Default tab stop interval set?
+	if (defaultTabInterval && defaultTabInterval != defaultStyle.defaultTabInterval)
+		properties = [[NSMutableArray alloc] initWithArray:@[[NSXMLElement elementWithName:RKDOCXTabStopDefaultTabStopPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@(RKPointsToTwips(defaultTabInterval)).stringValue]]]]];
+	
+	// Custom tab stops set? If not, either return defaultTabInterval or nil in case no interval has been set.
+	if (!tabStops || tabStops.count == 0 || [tabStops isEqual: defaultStyle.tabStops])
+		return properties;
+	
+	// Initialize array if no default tap stop interval has been set.
+	if (!properties)
+		properties = [NSMutableArray new];
 	
 	NSXMLElement *tabSetProperty = [NSXMLElement elementWithName:RKDOCXTabStopTabSetPropertyName];
 	
@@ -52,7 +66,9 @@ NSString *RKDOCXTabStopTabPositionAttributeName	= @"w:pos";
 		[tabSetProperty addChild: tabProperty];
 	}
 	
-	return @[tabSetProperty];
+	[properties addObject: tabSetProperty];
+	
+	return properties;
 }
 
 @end
