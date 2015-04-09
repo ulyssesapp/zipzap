@@ -8,11 +8,16 @@
 
 #import "RKDOCXParagraphStyleWriter.h"
 
+NSString *RKDOCXParagraphStyleAlignmentPropertyName				= @"w:jc";
 NSString *RKDOCXParagraphStyleBaseWritingDirectionPropertyName	= @"w:bidi";
+NSString *RKDOCXParagraphStyleCenterAlignmentName				= @"center";
 NSString *RKDOCXParagraphStyleFirstLineIndentationAttributeName	= @"w:firstLine";
 NSString *RKDOCXParagraphStyleHangingIndentationAttributeName	= @"w:hanging";
 NSString *RKDOCXParagraphStyleHeadIndentationAttributeName		= @"w:start";
 NSString *RKDOCXParagraphStyleIndentationPropertyName			= @"w:ind";
+NSString *RKDOCXParagraphStyleJustifiedAlignmentName			= @"both";
+NSString *RKDOCXParagraphStyleLeftAlignmentName					= @"start";
+NSString *RKDOCXParagraphStyleRightAlignmentName				= @"end";
 NSString *RKDOCXParagraphStyleTailIndentationAttributeName		= @"w:end";
 
 
@@ -37,6 +42,11 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName		= @"w:end";
 	NSXMLElement *indentationProperty = [self indentationPropertyForParagraphStyle: paragraphStyleAttribute];
 	if (indentationProperty)
 		[properties addObject: indentationProperty];
+	
+	// Alignment
+	NSXMLElement *alignmentProperty = [self alignmentPropertyForParagraphStyle: paragraphStyleAttribute];
+	if (alignmentProperty)
+		[properties addObject: alignmentProperty];
 	
 	return properties;
 }
@@ -64,6 +74,32 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName		= @"w:end";
 	}
 	
 	return indentationProperty;
+}
+
++ (NSXMLElement *)alignmentPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle
+{
+	NSXMLElement *alignmentProperty;
+	
+	switch (paragraphStyle.alignment) {
+		case NSLeftTextAlignment:
+			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleLeftAlignmentName]]];
+			return alignmentProperty;
+			
+		case NSCenterTextAlignment:
+			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleCenterAlignmentName]]];
+			return alignmentProperty;
+			
+		case NSRightTextAlignment:
+			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleRightAlignmentName]]];
+			return alignmentProperty;
+			
+		case NSJustifiedTextAlignment:
+			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleJustifiedAlignmentName]]];
+			return alignmentProperty;
+			
+		default:
+			return nil;
+	}
 }
 
 @end
