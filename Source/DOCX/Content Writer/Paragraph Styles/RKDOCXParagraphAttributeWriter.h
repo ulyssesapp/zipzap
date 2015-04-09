@@ -10,16 +10,15 @@
 
 
 /*!
- @abstract Generates a paragraph element "<w:p>" to be added to the parent document.
- @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs).
+ @abstract Generates a paragraph properties element "<w:pPr>" to be added to the parent document.
+ @discussion See ISO 29500-1:2012: §17.3.1.26 (Paragraph Properties).
  */
 @interface RKDOCXParagraphAttributeWriter : RKDOCXAttributedStringWriter
 
 /*!
- @abstract Returns an XML element representing a paragraph including properties and runs.
- @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs).
- */
-+ (NSXMLElement *)paragraphElementWithProperties:(NSXMLElement *)properties runElements:(NSArray *)runElements;
+@abstract Returns an XML element representing the paragraph properties of a given attributed string.
+*/
++ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange;
 
 @end
 

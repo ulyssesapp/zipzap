@@ -8,25 +8,22 @@
 
 #import "RKDOCXParagraphAttributeWriter.h"
 
-NSString *RKDOCXAttributeWriterParagraphElementName	= @"w:p";
+#import "RKDOCXParagraphStyleWriter.h"
+
+NSString *RKDOCXParagraphAttributeParagraphPropertiesElementName = @"w:pPr";
 
 
 @implementation RKDOCXParagraphAttributeWriter
 
-+ (NSXMLElement *)paragraphElementWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements
++ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange
 {
-	NSParameterAssert(runElements.count);
+	NSMutableArray *properties = [NSMutableArray new];
 	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXAttributeWriterParagraphElementName];
+	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter paragraphPropertiesForAttributes: attrs]];
+	}];
 	
-	if (propertiesElement)
-		[paragraph addChild: propertiesElement];
-	
-	for (NSXMLElement *runElement in runElements) {
-		[paragraph addChild: runElement];
-	}
-	
-	return paragraph;
+	return [NSXMLElement elementWithName:RKDOCXParagraphAttributeParagraphPropertiesElementName children:properties attributes:nil];
 }
 
 @end

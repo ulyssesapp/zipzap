@@ -8,12 +8,27 @@
 
 #import "RKDOCXParagraphStyleWriter.h"
 
+NSString *RKDOCXParagraphStyleBaseWritingDirectionPropertyName = @"w:bidi";
+
 
 @implementation RKDOCXParagraphStyleWriter
 
 + (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes
 {
-	return nil;
+	NSParagraphStyle *paragraphStyleAttribute = attributes[RKParagraphStyleAttributeName];
+	
+	if (!paragraphStyleAttribute)
+		return nil;
+	
+	NSMutableArray *properties = [NSMutableArray new];
+	
+	// Base Writing Direction
+	if (paragraphStyleAttribute.baseWritingDirection == NSWritingDirectionRightToLeft) {
+		NSXMLElement *baseWritingDirectionProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleBaseWritingDirectionPropertyName];
+		[properties addObject: baseWritingDirectionProperty];
+	}
+	
+	return properties;
 }
 
 @end
