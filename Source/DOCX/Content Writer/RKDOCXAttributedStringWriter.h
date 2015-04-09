@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+// Commonly used attribute name
+extern NSString *RKDOCXAttributeWriterValueAttributeName;
+
+
 /*!
  @abstract Generates a paragraph containing the paragraph's properties and its child runs.
  */

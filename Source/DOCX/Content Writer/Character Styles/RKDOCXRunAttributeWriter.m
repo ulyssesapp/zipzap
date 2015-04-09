@@ -17,9 +17,6 @@ NSString *RKDOCXRunAttributeRunElementName				= @"w:r";
 NSString *RKDOCXRunAttributeRunPropertiesElementName	= @"w:rPr";
 NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 
-// Common attribute name
-NSString *RKDOCXRunAttributePropertyValueName			= @"w:val";
-
 
 @implementation RKDOCXRunAttributeWriter
 

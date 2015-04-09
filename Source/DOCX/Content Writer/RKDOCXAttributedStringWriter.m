@@ -13,6 +13,9 @@
 
 NSString *RKDOCXAttributeWriterParagraphElementName = @"w:p";
 
+// Common attribute name
+NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
+
 @implementation RKDOCXAttributedStringWriter
 
 + (NSArray *)processAttributedString:(NSAttributedString *)attributedString
