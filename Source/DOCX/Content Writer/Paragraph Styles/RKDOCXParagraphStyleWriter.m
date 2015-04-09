@@ -8,17 +8,23 @@
 
 #import "RKDOCXParagraphStyleWriter.h"
 
-NSString *RKDOCXParagraphStyleAlignmentPropertyName				= @"w:jc";
-NSString *RKDOCXParagraphStyleBaseWritingDirectionPropertyName	= @"w:bidi";
-NSString *RKDOCXParagraphStyleCenterAlignmentName				= @"center";
-NSString *RKDOCXParagraphStyleFirstLineIndentationAttributeName	= @"w:firstLine";
-NSString *RKDOCXParagraphStyleHangingIndentationAttributeName	= @"w:hanging";
-NSString *RKDOCXParagraphStyleHeadIndentationAttributeName		= @"w:start";
-NSString *RKDOCXParagraphStyleIndentationPropertyName			= @"w:ind";
-NSString *RKDOCXParagraphStyleJustifiedAlignmentName			= @"both";
-NSString *RKDOCXParagraphStyleLeftAlignmentName					= @"start";
-NSString *RKDOCXParagraphStyleRightAlignmentName				= @"end";
-NSString *RKDOCXParagraphStyleTailIndentationAttributeName		= @"w:end";
+NSString *RKDOCXParagraphStyleAlignmentPropertyName					= @"w:jc";
+NSString *RKDOCXParagraphStyleBaseWritingDirectionPropertyName		= @"w:bidi";
+NSString *RKDOCXParagraphStyleCenterAlignmentName					= @"center";
+NSString *RKDOCXParagraphStyleFirstLineIndentationAttributeName		= @"w:firstLine";
+NSString *RKDOCXParagraphStyleHangingIndentationAttributeName		= @"w:hanging";
+NSString *RKDOCXParagraphStyleHeadIndentationAttributeName			= @"w:start";
+NSString *RKDOCXParagraphStyleIndentationPropertyName				= @"w:ind";
+NSString *RKDOCXParagraphStyleJustifiedAlignmentName				= @"both";
+NSString *RKDOCXParagraphStyleLeftAlignmentName						= @"start";
+NSString *RKDOCXParagraphStyleLineSpacingAttributeName				= @"w:line";
+NSString *RKDOCXParagraphStyleLineSpacingRuleAttributeName			= @"w:lineRule";
+NSString *RKDOCXParagraphStyleLineSpacingRuleName					= @"exactly";	// Alternatively: @"atLeast"
+NSString *RKDOCXParagraphStyleParagraphSpacingAfterAttributeName	= @"w:after";
+NSString *RKDOCXParagraphStyleParagraphSpacingBeforeAttributeName	= @"w:before";
+NSString *RKDOCXParagraphStyleRightAlignmentName					= @"end";
+NSString *RKDOCXParagraphStyleSpacingPropertyName					= @"w:spacing";
+NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 
 
 @implementation RKDOCXParagraphStyleWriter
@@ -47,6 +53,11 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName		= @"w:end";
 	NSXMLElement *alignmentProperty = [self alignmentPropertyForParagraphStyle: paragraphStyleAttribute];
 	if (alignmentProperty)
 		[properties addObject: alignmentProperty];
+	
+	// Spacing
+	NSXMLElement *spacingProperty = [self spacingPropertyForParagraphStyle: paragraphStyleAttribute];
+	if (spacingProperty)
+		[properties addObject: spacingProperty];
 	
 	return properties;
 }
@@ -100,6 +111,31 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName		= @"w:end";
 		default:
 			return nil;
 	}
+}
+
++ (NSXMLElement *)spacingPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle
+{
+	if (paragraphStyle.lineSpacing == 0 && paragraphStyle.paragraphSpacingBefore == 0 && paragraphStyle.paragraphSpacing == 0)
+		return nil;
+	
+	NSXMLElement *spacingProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleSpacingPropertyName];
+	
+	if (paragraphStyle.lineSpacing != 0) {
+		NSXMLElement *lineAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleLineSpacingAttributeName stringValue:@(RKPointsToTwips(paragraphStyle.lineSpacing)).stringValue];
+		NSXMLElement *lineRuleAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleLineSpacingRuleAttributeName stringValue:RKDOCXParagraphStyleLineSpacingRuleName];
+		[spacingProperty addAttribute: lineAttribute];
+		[spacingProperty addAttribute: lineRuleAttribute];
+	}
+	if (paragraphStyle.paragraphSpacingBefore) {
+		NSXMLElement *beforeAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingBeforeAttributeName stringValue:@(RKPointsToTwips(paragraphStyle.paragraphSpacingBefore)).stringValue];
+		[spacingProperty addAttribute: beforeAttribute];
+	}
+	if (paragraphStyle.paragraphSpacing) {
+		NSXMLElement *beforeAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingAfterAttributeName stringValue:@(RKPointsToTwips(paragraphStyle.paragraphSpacing)).stringValue];
+		[spacingProperty addAttribute: beforeAttribute];
+	}
+	
+	return spacingProperty;
 }
 
 @end
