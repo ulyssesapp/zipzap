@@ -9,6 +9,7 @@
 #import "RKDOCXParagraphAttributeWriter.h"
 
 #import "RKDOCXParagraphStyleWriter.h"
+#import "RKDOCXTabStopWriter.h"
 
 NSString *RKDOCXParagraphAttributeParagraphPropertiesElementName = @"w:pPr";
 
@@ -21,6 +22,7 @@ NSString *RKDOCXParagraphAttributeParagraphPropertiesElementName = @"w:pPr";
 	
 	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
 		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter paragraphPropertiesForAttributes: attrs]];
+		[properties addObjectsFromArray: [RKDOCXTabStopWriter paragraphPropertiesForAttributes: attrs]];
 	}];
 	
 	if (properties.count > 0)
