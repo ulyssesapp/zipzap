@@ -1778,8 +1778,8 @@
 		A0D244DB1ACBF6620096D5D3 /* Content Writer */ = {
 			isa = PBXGroup;
 			children = (
-				A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */,
 				A092D9071AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m */,
+				A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */,
 			);
 			name = "Content Writer";
 			sourceTree = "<group>";

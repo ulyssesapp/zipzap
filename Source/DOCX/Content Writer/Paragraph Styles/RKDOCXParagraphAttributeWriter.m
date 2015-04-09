@@ -23,7 +23,10 @@ NSString *RKDOCXParagraphAttributeParagraphPropertiesElementName = @"w:pPr";
 		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter paragraphPropertiesForAttributes: attrs]];
 	}];
 	
-	return [NSXMLElement elementWithName:RKDOCXParagraphAttributeParagraphPropertiesElementName children:properties attributes:nil];
+	if (properties.count > 0)
+		return [NSXMLElement elementWithName:RKDOCXParagraphAttributeParagraphPropertiesElementName children:properties attributes:nil];
+	
+	return nil;
 }
 
 @end
