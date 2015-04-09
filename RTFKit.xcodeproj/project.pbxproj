@@ -457,10 +457,9 @@
 		A0076DC11AC59F540049C15F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
 		A016E5541AD5380800C2519D /* libRTFKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E76BE2151752330073153D /* libRTFKit.a */; };
 		A016E5571AD5383600C2519D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A016E5561AD5383600C2519D /* Foundation.framework */; };
-		A016E55B1AD54C6F00C2519D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C751AD4342F00D51CF5 /* libxml2.dylib */; };
-		A016E55D1AD54CA600C2519D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C751AD4342F00D51CF5 /* libxml2.dylib */; };
-		A016E55E1AD54CCD00C2519D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C711AD4326E00D51CF5 /* libz.dylib */; };
 		A016E5611AD550A700C2519D /* XCTestCase+DOCX.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */; };
+		A02631361AD6B6BE00FFE40D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631351AD6B6BE00FFE40D /* libxml2.dylib */; };
+		A02631381AD6B6C400FFE40D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631371AD6B6C400FFE40D /* libz.dylib */; };
 		A04494231ACACE14006FB62D /* RKDOCXDocumentContentWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A04494211ACACE14006FB62D /* RKDOCXDocumentContentWriter.h */; };
 		A04494241ACACE14006FB62D /* RKDOCXDocumentContentWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A04494211ACACE14006FB62D /* RKDOCXDocumentContentWriter.h */; };
 		A04494251ACACE14006FB62D /* RKDOCXDocumentContentWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A04494221ACACE14006FB62D /* RKDOCXDocumentContentWriter.m */; };
@@ -504,7 +503,6 @@
 		A074BE6B1AC449DC008B3DED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
 		A074BE6D1AC44A88008B3DED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
 		A0920C6E1AD4324A00D51CF5 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0076DBC1AC5900D0049C15F /* libzipzap.a */; };
-		A0920C721AD4326E00D51CF5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C711AD4326E00D51CF5 /* libz.dylib */; };
 		A0920C7A1AD4345800D51CF5 /* libKissXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C791AD4345800D51CF5 /* libKissXML.a */; };
 		A092D8FB1AD57EC400417A8D /* RKDOCXParagraphAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A092D8F91AD57EC400417A8D /* RKDOCXParagraphAttributeWriter.h */; };
 		A092D8FC1AD57EC400417A8D /* RKDOCXParagraphAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A092D8F91AD57EC400417A8D /* RKDOCXParagraphAttributeWriter.h */; };
@@ -870,6 +868,8 @@
 		A0076DBC1AC5900D0049C15F /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../Library/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug/libzipzap.a"; sourceTree = "<group>"; };
 		A016E5561AD5383600C2519D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		A016E5591AD5387000C2519D /* libKissXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKissXML.a; path = "KissXML/build/Debug-iphoneos/libKissXML.a"; sourceTree = "<group>"; };
+		A02631351AD6B6BE00FFE40D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libxml2.dylib; sourceTree = DEVELOPER_DIR; };
+		A02631371AD6B6C400FFE40D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		A04494211ACACE14006FB62D /* RKDOCXDocumentContentWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXDocumentContentWriter.h; sourceTree = "<group>"; };
 		A04494221ACACE14006FB62D /* RKDOCXDocumentContentWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXDocumentContentWriter.m; sourceTree = "<group>"; };
 		A04494271ACAD170006FB62D /* RKDOCXAttributedStringWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXAttributedStringWriter.h; sourceTree = "<group>"; };
@@ -958,8 +958,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A016E55E1AD54CCD00C2519D /* libz.dylib in Frameworks */,
-				A016E55D1AD54CA600C2519D /* libxml2.dylib in Frameworks */,
+				A02631381AD6B6C400FFE40D /* libz.dylib in Frameworks */,
+				A02631361AD6B6BE00FFE40D /* libxml2.dylib in Frameworks */,
 				A016E5571AD5383600C2519D /* Foundation.framework in Frameworks */,
 				A016E5541AD5380800C2519D /* libRTFKit.a in Frameworks */,
 				79A62DAE1A1A35C0004C83F9 /* MobileCoreServices.framework in Frameworks */,
@@ -971,9 +971,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A016E55B1AD54C6F00C2519D /* libxml2.dylib in Frameworks */,
 				A0920C7A1AD4345800D51CF5 /* libKissXML.a in Frameworks */,
-				A0920C721AD4326E00D51CF5 /* libz.dylib in Frameworks */,
 				A0920C6E1AD4324A00D51CF5 /* libzipzap.a in Frameworks */,
 				790AD8CA15BAD0290011E40E /* UIKit.framework in Frameworks */,
 				790AD8C715BAD0160011E40E /* CoreGraphics.framework in Frameworks */,
@@ -1009,6 +1007,8 @@
 		50317D3914C494C800F23C04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A02631371AD6B6C400FFE40D /* libz.dylib */,
+				A02631351AD6B6BE00FFE40D /* libxml2.dylib */,
 				A016E5591AD5387000C2519D /* libKissXML.a */,
 				A016E5561AD5383600C2519D /* Foundation.framework */,
 				A0920C791AD4345800D51CF5 /* libKissXML.a */,
@@ -2705,7 +2705,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2748,7 +2748,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info-iOS.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2784,7 +2784,7 @@
 					/usr/include/libxml2,
 				);
 				INSTALL_PATH = "@rpath";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
@@ -2812,7 +2812,7 @@
 					/usr/include/libxml2,
 				);
 				INSTALL_PATH = "@rpath";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
