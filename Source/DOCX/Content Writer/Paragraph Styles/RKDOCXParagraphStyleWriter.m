@@ -92,19 +92,19 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 	NSXMLElement *alignmentProperty;
 	
 	switch (paragraphStyle.alignment) {
-		case NSLeftTextAlignment:
+		case kCTLeftTextAlignment:
 			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleLeftAlignmentName]]];
 			return alignmentProperty;
 			
-		case NSCenterTextAlignment:
+		case kCTCenterTextAlignment:
 			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleCenterAlignmentName]]];
 			return alignmentProperty;
 			
-		case NSRightTextAlignment:
+		case kCTRightTextAlignment:
 			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleRightAlignmentName]]];
 			return alignmentProperty;
 			
-		case NSJustifiedTextAlignment:
+		case kCTJustifiedTextAlignment:
 			alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleJustifiedAlignmentName]]];
 			return alignmentProperty;
 			
