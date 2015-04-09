@@ -832,10 +832,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-fno-objc-arc-exceptions",
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = zipzap;
 				SDKROOT = iphoneos;
@@ -873,10 +869,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
-					"-fno-objc-arc-exceptions",
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = zipzap;
 				SDKROOT = iphoneos;
