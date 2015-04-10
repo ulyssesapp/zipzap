@@ -514,6 +514,10 @@
 		A092D9061AD5834C00417A8D /* RKDOCXParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A092D9021AD5834C00417A8D /* RKDOCXParagraphStyleWriter.m */; };
 		A092D9081AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A092D9071AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m */; };
 		A092D9091AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A092D9071AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m */; };
+		A09D36AA1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A09D36A81AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h */; };
+		A09D36AB1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A09D36A81AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h */; };
+		A09D36AC1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A09D36A91AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m */; };
+		A09D36AD1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A09D36A91AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m */; };
 		A0A332641AD6B86B0042F62F /* RKDOCXTabStopWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A332621AD6B86B0042F62F /* RKDOCXTabStopWriter.h */; };
 		A0A332651AD6B86B0042F62F /* RKDOCXTabStopWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A332621AD6B86B0042F62F /* RKDOCXTabStopWriter.h */; };
 		A0A332661AD6B86B0042F62F /* RKDOCXTabStopWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A332631AD6B86B0042F62F /* RKDOCXTabStopWriter.m */; };
@@ -908,6 +912,8 @@
 		A092D9011AD5834C00417A8D /* RKDOCXParagraphStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXParagraphStyleWriter.h; path = "Paragraph Styles/RKDOCXParagraphStyleWriter.h"; sourceTree = "<group>"; };
 		A092D9021AD5834C00417A8D /* RKDOCXParagraphStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXParagraphStyleWriter.m; path = "Paragraph Styles/RKDOCXParagraphStyleWriter.m"; sourceTree = "<group>"; };
 		A092D9071AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXParagraphAttributeWriterTest.m; path = "Content Writer/RKDOCXParagraphAttributeWriterTest.m"; sourceTree = "<group>"; };
+		A09D36A81AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXAdditionalParagraphStyleWriter.h; path = "Paragraph Styles/RKDOCXAdditionalParagraphStyleWriter.h"; sourceTree = "<group>"; };
+		A09D36A91AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXAdditionalParagraphStyleWriter.m; path = "Paragraph Styles/RKDOCXAdditionalParagraphStyleWriter.m"; sourceTree = "<group>"; };
 		A0A332621AD6B86B0042F62F /* RKDOCXTabStopWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXTabStopWriter.h; path = "Paragraph Styles/RKDOCXTabStopWriter.h"; sourceTree = "<group>"; };
 		A0A332631AD6B86B0042F62F /* RKDOCXTabStopWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXTabStopWriter.m; path = "Paragraph Styles/RKDOCXTabStopWriter.m"; sourceTree = "<group>"; };
 		A0A754731AD3EDAC00CF7405 /* RKDOCXTextEffectsWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXTextEffectsWriter.h; path = "Character Styles/RKDOCXTextEffectsWriter.h"; sourceTree = "<group>"; };
@@ -1779,6 +1785,8 @@
 				A092D9021AD5834C00417A8D /* RKDOCXParagraphStyleWriter.m */,
 				A0A332621AD6B86B0042F62F /* RKDOCXTabStopWriter.h */,
 				A0A332631AD6B86B0042F62F /* RKDOCXTabStopWriter.m */,
+				A09D36A81AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h */,
+				A09D36A91AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m */,
 			);
 			name = "Paragraph Styles";
 			sourceTree = "<group>";
@@ -1919,6 +1927,7 @@
 				790AD94D15BBFA9E0011E40E /* RKStyleAttributeSerializer.h in Headers */,
 				790AD95B15BBFD6E0011E40E /* RKStyleNamingAttributeSerializer.h in Headers */,
 				A092D8FB1AD57EC400417A8D /* RKDOCXParagraphAttributeWriter.h in Headers */,
+				A09D36AA1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h in Headers */,
 				790AD98B15BC03110011E40E /* RKParagraphStyleSerializer.h in Headers */,
 				790AD98F15BC09160011E40E /* RKListStyleSerializer.h in Headers */,
 				A0E438F11AC97852009EB872 /* RKDOCXSettingsWriter.h in Headers */,
@@ -1951,6 +1960,7 @@
 				790AD8C315BACF320011E40E /* RKParagraphStyleWrapper.h in Headers */,
 				A044942F1ACAD199006FB62D /* RKDOCXConversionContext.h in Headers */,
 				790AD8C415BACF350011E40E /* RKTextTabWrapper.h in Headers */,
+				A09D36AB1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h in Headers */,
 				790AD8D015BAD3EB0011E40E /* RKPDFRenderingContext.h in Headers */,
 				790AD8D215BAD3EB0011E40E /* RKCoreTextRepresentationConverter.h in Headers */,
 				790AD8D415BAD3EB0011E40E /* RKParagraphStyleCoreTextConverter.h in Headers */,
@@ -2188,6 +2198,7 @@
 				796EABE114D947D5001E8401 /* RKUnderlineStyleAttributeWriter.m in Sources */,
 				796EABF614D947EB001E8401 /* RKAttributedStringWriter.m in Sources */,
 				796EABF914D947EB001E8401 /* RKBodyWriter.m in Sources */,
+				A09D36AC1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m in Sources */,
 				796EABFC14D947EB001E8401 /* RKHeaderWriter.m in Sources */,
 				A04494251ACACE14006FB62D /* RKDOCXDocumentContentWriter.m in Sources */,
 				79118CB317BD10EA00D5E346 /* RKListItemWriter.m in Sources */,
@@ -2488,6 +2499,7 @@
 				A04494331ACAD1A9006FB62D /* RKDOCXContentTypesWriter.m in Sources */,
 				790AD9AE15BC107C0011E40E /* RKLinkSerializer.m in Sources */,
 				7971428915BC15050082A67B /* RKFootnoteSerializer.m in Sources */,
+				A09D36AD1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m in Sources */,
 				7971428B15BC15050082A67B /* RKStyleAttributeSerializer.m in Sources */,
 				7971428D15BC15050082A67B /* RKStyleNamingAttributeSerializer.m in Sources */,
 				7971428F15BC15050082A67B /* RKParagraphStyleSerializer.m in Sources */,
