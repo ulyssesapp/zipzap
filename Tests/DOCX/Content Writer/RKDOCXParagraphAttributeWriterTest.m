@@ -126,7 +126,9 @@
 - (void)testParagraphElementWithCustomTabStops
 {
 	NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:0], [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:0], [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:0]];
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:0]];
 	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Custom Tab Stop Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
@@ -147,6 +149,25 @@
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"defaulttabinterval"];
+}
+
+- (void)testParagraphElementWithKeepNextAttribute
+{
+	RKAdditionalParagraphStyle *paragraphStyle = [RKAdditionalParagraphStyle new];
+	paragraphStyle.keepWithFollowingParagraph = YES;
+	NSDictionary *attributes = @{RKAdditionalParagraphStyleAttributeName: paragraphStyle};
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @"Keep-With-Following Test:"];
+	for (NSInteger index = 0; index < 9; index++) {
+		[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString: @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]];
+	}
+	NSString *paragraph = @"\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est.";
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:paragraph attributes:attributes]];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:paragraph]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"keepwithfollowing"];
 }
 
 @end
