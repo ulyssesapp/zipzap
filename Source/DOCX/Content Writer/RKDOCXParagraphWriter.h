@@ -18,17 +18,6 @@
  @abstract Returns an XML element representing a paragraph including properties and runs.
  @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs).
  */
-+ (NSXMLElement *)paragraphElementWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements;
-
-/*!
-@abstract Returns an XML element representing the paragraph properties of a given attributed string.
-*/
-+ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context;
-
-/*!
- @abstract Returns an array with XML elements representing runs.
- @discussion See ISO 29500-1:2012: §17.3.2 (Run).
- */
-+ (NSArray *)runElementsFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context;
++ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context;
 
 @end

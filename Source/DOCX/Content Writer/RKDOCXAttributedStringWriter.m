@@ -17,7 +17,8 @@
 	NSMutableArray *paragraphs = [NSMutableArray new];
 	
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementWithProperties:[RKDOCXParagraphWriter paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:substringRange usingContext:context] runElements:[RKDOCXParagraphWriter runElementsFromAttributedString:attributedString inRange:substringRange usingContext:context]]];
+		NSXMLElement *paragraph = [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:substringRange usingContext:context];
+		[paragraphs addObject: paragraph];
 	}];
 	
 	return paragraphs;

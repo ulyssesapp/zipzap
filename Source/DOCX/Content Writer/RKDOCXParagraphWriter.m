@@ -17,20 +17,22 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 
 @implementation RKDOCXParagraphWriter
 
-+ (NSXMLElement *)paragraphElementWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements
++ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
+	NSXMLElement *propertiesElement = [self paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:paragraphRange usingContext:context];
+	NSArray *runElements = [self runElementsFromAttributedString:attributedString inRange:paragraphRange usingContext:context];
 	NSParameterAssert(runElements.count);
 	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXParagraphElementName];
+	NSXMLElement *paragraphElement = [NSXMLElement elementWithName: RKDOCXParagraphElementName];
 	
 	if (propertiesElement)
-		[paragraph addChild: propertiesElement];
+		[paragraphElement addChild: propertiesElement];
 	
 	for (NSXMLElement *runElement in runElements) {
-		[paragraph addChild: runElement];
+		[paragraphElement addChild: runElement];
 	}
 	
-	return paragraph;
+	return paragraphElement;
 }
 
 + (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
