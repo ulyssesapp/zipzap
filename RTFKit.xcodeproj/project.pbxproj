@@ -526,6 +526,8 @@
 		A0A754761AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A754731AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.h */; };
 		A0A754771AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A754741AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.m */; };
 		A0A754781AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A754741AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.m */; };
+		A0CED9001AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CED8FF1AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m */; };
+		A0CED9011AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CED8FF1AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m */; };
 		A0D244D91ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */; };
 		A0D244DA1ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */; };
 		A0E33E4E1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */; };
@@ -889,7 +891,6 @@
 		A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXAttributeWriter.h; sourceTree = "<group>"; };
 		A069F6611AD7F61E00F58E15 /* RKDOCXAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXAttributeWriter.m; sourceTree = "<group>"; };
 		A074BE451AC30CC9008B3DED /* RKDOCXWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXWriterTest.m; sourceTree = "<group>"; };
-		A074BE481AC30CFD008B3DED /* RKDOCXWriterTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXWriterTest.h; sourceTree = "<group>"; };
 		A074BE4B1AC42BE6008B3DED /* RKDOCXWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXWriter.h; path = DOCX/RKDOCXWriter.h; sourceTree = "<group>"; };
 		A074BE4C1AC42BE6008B3DED /* RKDOCXWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXWriter.m; path = DOCX/RKDOCXWriter.m; sourceTree = "<group>"; };
 		A074BE551AC44229008B3DED /* RKDOCXPartWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXPartWriter.h; path = DOCX/RKDOCXPartWriter.h; sourceTree = "<group>"; };
@@ -918,6 +919,7 @@
 		A09D36A91AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXAdditionalParagraphStyleWriter.m; path = "Paragraph Styles/RKDOCXAdditionalParagraphStyleWriter.m"; sourceTree = "<group>"; };
 		A0A754731AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXTextEffectAttributesWriter.h; path = "Character Styles/RKDOCXTextEffectAttributesWriter.h"; sourceTree = "<group>"; };
 		A0A754741AD3EDAC00CF7405 /* RKDOCXTextEffectAttributesWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXTextEffectAttributesWriter.m; path = "Character Styles/RKDOCXTextEffectAttributesWriter.m"; sourceTree = "<group>"; };
+		A0CED8FF1AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXDocumentPropertiesWriterTest.m; path = "Tests/DOCX/Asset Writer/RKDOCXDocumentPropertiesWriterTest.m"; sourceTree = SOURCE_ROOT; };
 		A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXRunAttributeWriterTest.m; path = "Content Writer/RKDOCXRunAttributeWriterTest.m"; sourceTree = "<group>"; };
 		A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestCase+DOCX.m"; path = "Test Extensions/XCTestCase+DOCX.m"; sourceTree = "<group>"; };
 		A0E33E4F1AC95BBF00EEF4E4 /* XCTestCase+DOCX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestCase+DOCX.h"; path = "Test Extensions/XCTestCase+DOCX.h"; sourceTree = "<group>"; };
@@ -1746,9 +1748,9 @@
 		A074BE411AC30BE7008B3DED /* DOCX */ = {
 			isa = PBXGroup;
 			children = (
-				A074BE481AC30CFD008B3DED /* RKDOCXWriterTest.h */,
 				A074BE451AC30CC9008B3DED /* RKDOCXWriterTest.m */,
 				A0D244DB1ACBF6620096D5D3 /* Content Writer */,
+				A0CED8FE1AD825F6009E157A /* Asset Writer */,
 			);
 			name = DOCX;
 			path = Tests/DOCX;
@@ -1789,6 +1791,14 @@
 				A09D36A91AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m */,
 			);
 			name = "Paragraph Styles";
+			sourceTree = "<group>";
+		};
+		A0CED8FE1AD825F6009E157A /* Asset Writer */ = {
+			isa = PBXGroup;
+			children = (
+				A0CED8FF1AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m */,
+			);
+			name = "Asset Writer";
 			sourceTree = "<group>";
 		};
 		A0D244DB1ACBF6620096D5D3 /* Content Writer */ = {
@@ -2325,6 +2335,7 @@
 				7935617514DC1CF500FC0C1C /* RKParagraphStyleWriterTest.m in Sources */,
 				7935618314DC22DC00FC0C1C /* RKListItemWriterTest.m in Sources */,
 				7935619814DC6DF000FC0C1C /* RKFootnoteWriterTest.m in Sources */,
+				A0CED9001AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m in Sources */,
 				79AD206014E195D700F5616C /* RKPlaceholderWriterTest.m in Sources */,
 				7934474B14F146ED00F5DEB6 /* RKStyleNameAttributeWriterTest.m in Sources */,
 				79A55278152C607B008EADAB /* RKListEnumeratorTest.m in Sources */,
@@ -2384,6 +2395,7 @@
 				79A62D9E1A1A3137004C83F9 /* NSString+RKNumberFormattingTest.m in Sources */,
 				79A62D9F1A1A3137004C83F9 /* RKParagraphStyleWrapperTest.m in Sources */,
 				79A62DA01A1A3137004C83F9 /* RKWriterTest.m in Sources */,
+				A0CED9011AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m in Sources */,
 				79A62DA11A1A3137004C83F9 /* RKPDFWriterTest.m in Sources */,
 				79A62DA31A1A3137004C83F9 /* RKTaggedString+TestExtensions.m in Sources */,
 				79A62DA41A1A3137004C83F9 /* RKTextTab.m in Sources */,
