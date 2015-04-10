@@ -8,6 +8,8 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
+@class RKDOCXConversionContext;
+
 
 /*!
  @abstract Generates a run element "<w:r>" to be added to the parent paragraph.
@@ -19,7 +21,7 @@
  @abstract Returns an XML element representing a run with the given attributes and the corresponding text.
  @discussion The text is built using the attributed string and the range.
  */
-+ (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range;
++ (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context;
 
 @end
 
@@ -31,6 +33,6 @@
 /*!
  @abstract Returns an array of XML elements containing the properties of a run.
  */
-+ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes;
++ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 @end

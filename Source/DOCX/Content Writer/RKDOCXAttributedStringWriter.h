@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+@class RKDOCXConversionContext;
+
 // Commonly used attribute name
 extern NSString *RKDOCXAttributeWriterValueAttributeName;
 
@@ -18,6 +20,6 @@ extern NSString *RKDOCXAttributeWriterValueAttributeName;
 /*!
  @abstract Returns an array of XML elements representing the paragraphs of the attributed string.
  */
-+ (NSArray *)processAttributedString:(NSAttributedString *)attributedString;
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context;
 
 @end

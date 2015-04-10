@@ -18,12 +18,12 @@ NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
 
 @implementation RKDOCXAttributedStringWriter
 
-+ (NSArray *)processAttributedString:(NSAttributedString *)attributedString
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *paragraphs = [NSMutableArray new];
 	
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		[paragraphs addObject: [self paragraphElementWithProperties:[RKDOCXParagraphAttributeWriter paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:substringRange] runElements:[self runElementsFromAttributedString:attributedString inRange:substringRange]]];
+		[paragraphs addObject: [self paragraphElementWithProperties:[RKDOCXParagraphAttributeWriter paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:substringRange usingContext:context] runElements:[self runElementsFromAttributedString:attributedString inRange:substringRange usingContext:context]]];
 	}];
 	
 	return paragraphs;
@@ -49,12 +49,12 @@ NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
 	return paragraph;
 }
 
-+ (NSArray *)runElementsFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange
++ (NSArray *)runElementsFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *runElements = [NSMutableArray new];
 	
 	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		NSXMLElement *runElement = [RKDOCXRunAttributeWriter runElementForAttributedString:attributedString attributes:attrs range:range];
+		NSXMLElement *runElement = [RKDOCXRunAttributeWriter runElementForAttributedString:attributedString attributes:attrs range:range usingContext:context];
 		[runElements addObject: runElement];
 	}];
 	

@@ -13,7 +13,7 @@ NSString *RKDOCXAdditionalParagraphStyleKeepNextPropertyName	= @"w:keepNext";
 
 @implementation RKDOCXAdditionalParagraphStyleWriter
 
-+ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes
++ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	RKAdditionalParagraphStyle *paragraphStyle = attributes[RKAdditionalParagraphStyleAttributeName];
 	

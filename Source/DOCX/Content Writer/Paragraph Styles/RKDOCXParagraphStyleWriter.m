@@ -29,7 +29,7 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 
 @implementation RKDOCXParagraphStyleWriter
 
-+ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes
++ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSParagraphStyle *paragraphStyleAttribute = attributes[RKParagraphStyleAttributeName];
 	

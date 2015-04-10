@@ -21,7 +21,7 @@ NSString *RKDOCXFontAttributeItalicPropertyName					= @"w:i";
 
 @implementation RKDOCXFontAttributeWriter
 
-+ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes
++ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	CTFontRef fontAttribute = (__bridge CTFontRef)attributes[RKFontAttributeName];
 	if (!fontAttribute)

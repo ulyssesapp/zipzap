@@ -19,7 +19,7 @@ NSString *RKDOCXTabStopTabPositionAttributeName		= @"w:pos";
 
 @implementation RKDOCXTabStopWriter
 
-+ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes
++ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSArray *tabStops = [attributes[RKParagraphStyleAttributeName] tabStops];
 	CGFloat defaultTabInterval = [attributes[RKParagraphStyleAttributeName] defaultTabInterval];

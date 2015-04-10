@@ -25,7 +25,7 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 
 @implementation RKDOCXTextEffectsWriter
 
-+ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes
++ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	

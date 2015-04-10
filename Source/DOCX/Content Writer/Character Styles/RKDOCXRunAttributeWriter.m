@@ -20,7 +20,7 @@ NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 
 @implementation RKDOCXRunAttributeWriter
 
-+ (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range
++ (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context
 {
 	// Check for empty range
 	if (!range.length)
@@ -29,11 +29,11 @@ NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Collect all matching attributes
-	NSArray *propertyElements = [RKDOCXFontAttributeWriter runPropertiesForAttributes: attributes];
+	NSArray *propertyElements = [RKDOCXFontAttributeWriter runPropertiesForAttributes:attributes usingContext:context];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
-	propertyElements = [RKDOCXTextEffectsWriter runPropertiesForAttributes: attributes];
+	propertyElements = [RKDOCXTextEffectsWriter runPropertiesForAttributes:attributes usingContext:context];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	

@@ -8,6 +8,8 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
+@class RKDOCXConversionContext;
+
 
 /*!
  @abstract Generates a paragraph properties element "<w:pPr>" to be added to the parent document.
@@ -18,7 +20,7 @@
 /*!
 @abstract Returns an XML element representing the paragraph properties of a given attributed string.
 */
-+ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange;
++ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context;
 
 @end
 
@@ -30,6 +32,6 @@
 /*!
  @abstract Returns an array of XML elements containing the properties of a paragraph.
  */
-+ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes;
++ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 @end

@@ -17,14 +17,14 @@ NSString *RKDOCXParagraphAttributeParagraphPropertiesElementName = @"w:pPr";
 
 @implementation RKDOCXParagraphAttributeWriter
 
-+ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange
++ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter paragraphPropertiesForAttributes: attrs]];
-		[properties addObjectsFromArray: [RKDOCXTabStopWriter paragraphPropertiesForAttributes: attrs]];
-		[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter paragraphPropertiesForAttributes: attrs]];
+		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter paragraphPropertiesForAttributes:attrs usingContext:context]];
+		[properties addObjectsFromArray: [RKDOCXTabStopWriter paragraphPropertiesForAttributes:attrs usingContext:context]];
+		[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter paragraphPropertiesForAttributes:attrs usingContext:context]];
 	}];
 	
 	if (properties.count > 0)
