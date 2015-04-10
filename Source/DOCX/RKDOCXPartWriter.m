@@ -10,7 +10,6 @@
 
 #import "RKDOCXConversionContext.h"
 
-
 // Filenames
 NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
 NSString *RKDOCXCorePropertiesFilename			= @"docProps/core.xml";
@@ -19,6 +18,7 @@ NSString *RKDOCXDocumentRelationshipsFilename	= @"word/_rels/document.xml.rels";
 NSString *RKDOCXExtendedPropertiesFilename		= @"docProps/app.xml";
 NSString *RKDOCXPackageRelationshipsFilename	= @"_rels/.rels";
 NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
+
 
 @implementation RKDOCXPartWriter
 

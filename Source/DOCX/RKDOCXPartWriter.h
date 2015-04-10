@@ -8,7 +8,6 @@
 
 @class RKDOCXConversionContext;
 
-
 // Filenames
 extern NSString *RKDOCXContentTypesFilename;
 extern NSString *RKDOCXCorePropertiesFilename;
@@ -17,6 +16,7 @@ extern NSString *RKDOCXDocumentRelationshipsFilename;
 extern NSString *RKDOCXExtendedPropertiesFilename;
 extern NSString *RKDOCXPackageRelationshipsFilename;
 extern NSString *RKDOCXSettingsFilename;
+
 
 /*!
  @abstract Abstract superclass used by all writers creating XML document parts.

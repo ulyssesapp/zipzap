@@ -8,7 +8,6 @@
 
 #import "RKDOCXContentTypesWriter.h"
 
-
 // Root element name
 NSString *RKDOCXContentTypesRootElementName		= @"Types";
 
@@ -25,6 +24,7 @@ NSString *RKDOCXDocumentContentType				= @"application/vnd.openxmlformats-office
 NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
 NSString *RKDOCXCorePropertiesContentType		= @"application/vnd.openxmlformats-package.core-properties+xml";
 NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
+
 
 @implementation RKDOCXContentTypesWriter
 

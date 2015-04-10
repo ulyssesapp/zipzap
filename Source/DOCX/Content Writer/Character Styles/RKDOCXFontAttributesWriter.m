@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXFontAttributeWriter.h"
+#import "RKDOCXFontAttributesWriter.h"
 
 NSString *RKDOCXFontAttributeAsciiFontName						= @"w:ascii";
 NSString *RKDOCXFontAttributeBoldPropertyName					= @"w:b";
@@ -19,9 +19,9 @@ NSString *RKDOCXFontAttributeHighAnsiFontName					= @"w:hAnsi";
 NSString *RKDOCXFontAttributeItalicPropertyName					= @"w:i";
 
 
-@implementation RKDOCXFontAttributeWriter
+@implementation RKDOCXFontAttributesWriter
 
-+ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	CTFontRef fontAttribute = (__bridge CTFontRef)attributes[RKFontAttributeName];
 	if (!fontAttribute)

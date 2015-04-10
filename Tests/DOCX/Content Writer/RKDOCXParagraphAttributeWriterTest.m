@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXParagraphAttributeWriter.h"
 #import "XCTestCase+DOCX.h"
 
 

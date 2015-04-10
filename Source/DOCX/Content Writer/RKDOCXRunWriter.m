@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXRunAttributeWriter.h"
+#import "RKDOCXRunWriter.h"
 
-#import "RKDOCXFontAttributeWriter.h"
-#import "RKDOCXTextEffectsWriter.h"
-
+#import "RKDOCXFontAttributesWriter.h"
+#import "RKDOCXTextEffectAttributesWriter.h"
 
 // Element names
 NSString *RKDOCXRunAttributeRunElementName				= @"w:r";
@@ -18,7 +17,7 @@ NSString *RKDOCXRunAttributeRunPropertiesElementName	= @"w:rPr";
 NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 
 
-@implementation RKDOCXRunAttributeWriter
+@implementation RKDOCXRunWriter
 
 + (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context
 {
@@ -29,11 +28,11 @@ NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Collect all matching attributes
-	NSArray *propertyElements = [RKDOCXFontAttributeWriter runPropertiesForAttributes:attributes usingContext:context];
+	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
-	propertyElements = [RKDOCXTextEffectsWriter runPropertiesForAttributes:attributes usingContext:context];
+	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	

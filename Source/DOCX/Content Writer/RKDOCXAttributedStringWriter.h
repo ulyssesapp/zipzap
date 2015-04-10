@@ -8,9 +8,6 @@
 
 #import "RKDOCXConversionContext.h"
 
-// Commonly used attribute name
-extern NSString *RKDOCXAttributeWriterValueAttributeName;
-
 
 /*!
  @abstract Generates a paragraph containing the paragraph's properties and its child runs.

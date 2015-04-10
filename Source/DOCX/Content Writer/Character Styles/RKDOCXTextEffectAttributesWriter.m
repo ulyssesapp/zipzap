@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXTextEffectsWriter.h"
+#import "RKDOCXTextEffectAttributesWriter.h"
 
 #import "RKColor.h"
 
@@ -23,9 +23,9 @@ NSString *RKDOCXTextEffectsUnderlineColorName				= @"w:color";
 NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 
 
-@implementation RKDOCXTextEffectsWriter
+@implementation RKDOCXTextEffectAttributesWriter
 
-+ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	

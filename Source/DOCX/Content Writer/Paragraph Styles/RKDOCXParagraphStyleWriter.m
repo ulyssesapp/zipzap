@@ -11,6 +11,7 @@
 NSString *RKDOCXParagraphStyleAlignmentPropertyName					= @"w:jc";
 NSString *RKDOCXParagraphStyleBaseWritingDirectionPropertyName		= @"w:bidi";
 NSString *RKDOCXParagraphStyleCenterAlignmentName					= @"center";
+NSString *RKDOCXParagraphStyleDefaultTabStopPropertyName			= @"w:defaultTabStop";
 NSString *RKDOCXParagraphStyleFirstLineIndentationAttributeName		= @"w:firstLine";
 NSString *RKDOCXParagraphStyleHangingIndentationAttributeName		= @"w:hanging";
 NSString *RKDOCXParagraphStyleHeadIndentationAttributeName			= @"w:start";
@@ -24,12 +25,15 @@ NSString *RKDOCXParagraphStyleParagraphSpacingAfterAttributeName	= @"w:after";
 NSString *RKDOCXParagraphStyleParagraphSpacingBeforeAttributeName	= @"w:before";
 NSString *RKDOCXParagraphStyleRightAlignmentName					= @"end";
 NSString *RKDOCXParagraphStyleSpacingPropertyName					= @"w:spacing";
+NSString *RKDOCXParagraphStyleTabSetPropertyName					= @"w:tabs";
+NSString *RKDOCXParagraphStyleTabPropertyName						= @"w:tab";
+NSString *RKDOCXParagraphStyleTabPositionAttributeName				= @"w:pos";
 NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 
 
 @implementation RKDOCXParagraphStyleWriter
 
-+ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSParagraphStyle *paragraphStyleAttribute = attributes[RKParagraphStyleAttributeName];
 	
@@ -58,6 +62,11 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 	NSXMLElement *spacingProperty = [self spacingPropertyForParagraphStyle: paragraphStyleAttribute];
 	if (spacingProperty)
 		[properties addObject: spacingProperty];
+	
+	// Tab Stop Settings
+	NSArray *tabStopProperties = [self tabStopPropertiesForParagraphStyle:paragraphStyleAttribute usingContext:context];
+	if (tabStopProperties)
+		[properties addObjectsFromArray: tabStopProperties];
 	
 	return properties;
 }
@@ -136,6 +145,56 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 	}
 	
 	return spacingProperty;
+}
+
++ (NSArray *)tabStopPropertiesForParagraphStyle:(NSParagraphStyle *)paragraphStyle usingContext:(RKDOCXConversionContext *)context
+{
+	NSParagraphStyle *defaultStyle = [NSParagraphStyle defaultParagraphStyle];
+	
+	NSMutableArray *properties;
+	
+	// Default tab stop interval set?
+	if (paragraphStyle.defaultTabInterval && paragraphStyle.defaultTabInterval != defaultStyle.defaultTabInterval)
+		properties = [[NSMutableArray alloc] initWithArray:@[[NSXMLElement elementWithName:RKDOCXParagraphStyleDefaultTabStopPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@(RKPointsToTwips(paragraphStyle.defaultTabInterval)).stringValue]]]]];
+	
+	// Custom tab stops set? If not, either return defaultTabInterval or nil in case no interval has been set.
+	if (!paragraphStyle.tabStops || paragraphStyle.tabStops.count == 0 || [paragraphStyle.tabStops isEqual: defaultStyle.tabStops])
+		return properties;
+	
+	// Initialize array if no default tap stop interval has been set.
+	if (!properties)
+		properties = [NSMutableArray new];
+	
+	NSXMLElement *tabSetProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleTabSetPropertyName];
+	
+	for (NSTextTab *tabStop in paragraphStyle.tabStops) {
+		NSXMLElement *tabProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabPropertyName];
+		
+		NSXMLElement *alignmentAttribute;
+		switch (tabStop.alignment) {
+			case RKTextAlignmentRight:
+				alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleRightAlignmentName];
+				break;
+				
+			case RKTextAlignmentCenter:
+				alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleCenterAlignmentName];
+				break;
+				
+			default:
+				alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleLeftAlignmentName];
+				break;
+		}
+		[tabProperty addAttribute: alignmentAttribute];
+		
+		NSXMLElement *positionAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleTabPositionAttributeName stringValue:@(RKPointsToTwips(tabStop.location)).stringValue];
+		[tabProperty addAttribute: positionAttribute];
+		
+		[tabSetProperty addChild: tabProperty];
+	}
+	
+	[properties addObject: tabSetProperty];
+	
+	return properties;
 }
 
 @end

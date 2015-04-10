@@ -8,13 +8,8 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
-#import "RKDOCXRunAttributeWriter.h"
-#import "RKDOCXParagraphAttributeWriter.h"
+#import "RKDOCXParagraphWriter.h"
 
-NSString *RKDOCXAttributeWriterParagraphElementName = @"w:p";
-
-// Common attribute name
-NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
 
 @implementation RKDOCXAttributedStringWriter
 
@@ -23,42 +18,10 @@ NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
 	NSMutableArray *paragraphs = [NSMutableArray new];
 	
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		[paragraphs addObject: [self paragraphElementWithProperties:[RKDOCXParagraphAttributeWriter paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:substringRange usingContext:context] runElements:[self runElementsFromAttributedString:attributedString inRange:substringRange usingContext:context]]];
+		[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementWithProperties:[RKDOCXParagraphWriter paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:substringRange usingContext:context] runElements:[RKDOCXParagraphWriter runElementsFromAttributedString:attributedString inRange:substringRange usingContext:context]]];
 	}];
 	
 	return paragraphs;
-}
-
-/*!
- @abstract Returns an XML element representing a paragraph including properties and runs.
- @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs).
- */
-+ (NSXMLElement *)paragraphElementWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements
-{
-	NSParameterAssert(runElements.count);
-	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXAttributeWriterParagraphElementName];
-	
-	if (propertiesElement)
-		[paragraph addChild: propertiesElement];
-	
-	for (NSXMLElement *runElement in runElements) {
-		[paragraph addChild: runElement];
-	}
-	
-	return paragraph;
-}
-
-+ (NSArray *)runElementsFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
-{
-	NSMutableArray *runElements = [NSMutableArray new];
-	
-	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		NSXMLElement *runElement = [RKDOCXRunAttributeWriter runElementForAttributedString:attributedString attributes:attrs range:range usingContext:context];
-		[runElements addObject: runElement];
-	}];
-	
-	return runElements;
 }
 
 @end

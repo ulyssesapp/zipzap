@@ -16,10 +16,9 @@ NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName	= @"w:su
 
 @implementation RKDOCXAdditionalParagraphStyleWriter
 
-+ (NSArray *)paragraphPropertiesForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	RKAdditionalParagraphStyle *paragraphStyle = attributes[RKAdditionalParagraphStyleAttributeName];
-	
 	if (!paragraphStyle)
 		return nil;
 	
@@ -33,11 +32,8 @@ NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName	= @"w:su
 	if (paragraphStyle.skipOrphanControl)
 		[properties addObject: [NSXMLElement elementWithName:RKDOCXAdditionalParagraphStyleOrphanControlPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAdditionalParagraphStyleOrphanControlOffName]]]];
 	
-	// Hyphenation (Needs to be the last setting!)
-	if (!context.document.hyphenationEnabled)
-		return properties;
-	
-	if (!paragraphStyle.hyphenationEnabled || paragraphStyle.hyphenationEnabled == NO)
+	// Hyphenation
+	if (context.document.hyphenationEnabled && (!paragraphStyle.hyphenationEnabled || paragraphStyle.hyphenationEnabled == NO))
 		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName]];
 	
 	return properties;
