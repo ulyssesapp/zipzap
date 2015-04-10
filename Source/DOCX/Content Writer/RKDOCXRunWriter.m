@@ -12,9 +12,9 @@
 #import "RKDOCXTextEffectAttributesWriter.h"
 
 // Element names
-NSString *RKDOCXRunAttributeRunElementName				= @"w:r";
-NSString *RKDOCXRunAttributeRunPropertiesElementName	= @"w:rPr";
-NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
+NSString *RKDOCXRunElementName				= @"w:r";
+NSString *RKDOCXRunPropertiesElementName	= @"w:rPr";
+NSString *RKDOCXRunTextElementName			= @"w:t";
 
 
 @implementation RKDOCXRunWriter
@@ -36,14 +36,14 @@ NSString *RKDOCXRunAttributeTextElementName				= @"w:t";
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
-	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunAttributeRunElementName];
+	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunElementName];
 	
 	if (properties.count) {
-		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunAttributeRunPropertiesElementName children:properties attributes:nil];
+		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
 		[runElement addChild: runPropertiesElement];
 	}
 	
-	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunAttributeTextElementName stringValue:[attributedString.string substringWithRange:range]];
+	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:[attributedString.string substringWithRange:range]];
 	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
 	[runElement addChild: textElement];
 	
