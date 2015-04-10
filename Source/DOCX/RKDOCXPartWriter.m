@@ -10,7 +10,6 @@
 
 #import "RKDOCXConversionContext.h"
 
-
 // Filenames
 NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
 NSString *RKDOCXCorePropertiesFilename			= @"docProps/core.xml";

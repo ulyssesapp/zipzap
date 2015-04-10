@@ -9,7 +9,6 @@
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXPartWriter.h"
 
-
 @interface RKDOCXContentTypesWriter : RKDOCXPartWriter
 
 /*!

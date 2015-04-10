@@ -8,7 +8,6 @@
 
 @class RKDOCXConversionContext;
 
-
 // Filenames
 extern NSString *RKDOCXContentTypesFilename;
 extern NSString *RKDOCXCorePropertiesFilename;

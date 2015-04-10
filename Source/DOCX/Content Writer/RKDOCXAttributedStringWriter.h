@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+#import "RKDOCXConversionContext.h"
+
 /*!
  @abstract Generates a paragraph containing the paragraph's properties and its child runs.
  */
@@ -14,12 +16,6 @@
 /*!
  @abstract Returns an array of XML elements representing the paragraphs of the attributed string.
  */
-+ (NSArray *)processAttributedString:(NSAttributedString *)attributedString;
-
-/*!
- @abstract Returns an XML element representing a paragraph including properties and runs.
- @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs).
- */
-+ (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)properties runElements:(NSArray *)runElements;
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context;
 
 @end

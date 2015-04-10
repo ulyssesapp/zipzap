@@ -8,7 +8,6 @@
 
 #import "RKDOCXRelationshipsWriter.h"
 
-
 // Root element name
 NSString *RKDOCXRelationshipsRootElementName			= @"Relationships";
 

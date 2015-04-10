@@ -8,7 +8,6 @@
 
 #import "RKDOCXWriter.h"
 
-
 @implementation RKDOCXWriter
 
 + (NSData *)DOCXfromDocument:(RKDocument *)document

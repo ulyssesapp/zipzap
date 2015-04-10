@@ -8,7 +8,6 @@
 
 #import "RKDOCXDocumentPropertiesWriter.h"
 
-
 // Root element names
 NSString *RKDOCXCorePropertiesRootElementName		= @"cp:coreProperties";
 NSString *RKDOCXExtendedPropertiesRootElementName	= @"Properties";

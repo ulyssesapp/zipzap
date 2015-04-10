@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXFontAttributeWriter.h"
+#import "RKDOCXFontAttributesWriter.h"
 
 NSString *RKDOCXFontAttributeAsciiFontName						= @"w:ascii";
 NSString *RKDOCXFontAttributeBoldPropertyName					= @"w:b";
@@ -18,10 +18,9 @@ NSString *RKDOCXFontAttributeFontSizePropertyName				= @"w:sz";
 NSString *RKDOCXFontAttributeHighAnsiFontName					= @"w:hAnsi";
 NSString *RKDOCXFontAttributeItalicPropertyName					= @"w:i";
 
+@implementation RKDOCXFontAttributesWriter
 
-@implementation RKDOCXFontAttributeWriter
-
-+ (NSArray *)runPropertiesForAttributes:(NSDictionary *)attributes
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	CTFontRef fontAttribute = (__bridge CTFontRef)attributes[RKFontAttributeName];
 	if (!fontAttribute)
@@ -49,8 +48,8 @@ NSString *RKDOCXFontAttributeItalicPropertyName					= @"w:i";
 	NSUInteger wordFontSize = [self wordFontSizeFromPointSize: CTFontGetSize(fontAttribute)];
 	NSString *fontSize = [@(wordFontSize) stringValue];
 	
-	NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue: fontSize]]];
-	NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXRunAttributePropertyValueName stringValue: fontSize]]];
+	NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue: fontSize]]];
+	NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizePropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue: fontSize]]];
 	
 	[properties addObjectsFromArray: @[fontElement, sizeElement, complexSizeElement]];
 	

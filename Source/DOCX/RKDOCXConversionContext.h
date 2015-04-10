@@ -9,7 +9,6 @@
 extern NSString *RKDOCXConversionContextRelationshipTypeName;
 extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 
-
 /*!
  @abstract Collects state generated during the conversion process that is shared between conversion steps.
  @discussion This includes the final DOCX output, as well as any intermediate state shared between different conversion passes.

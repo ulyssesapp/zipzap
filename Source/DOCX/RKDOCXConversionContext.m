@@ -10,7 +10,6 @@
 
 #import <zipzap/zipzap.h>
 
-
 NSString *RKDOCXConversionContextRelationshipTypeName		= @"Type";
 NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 

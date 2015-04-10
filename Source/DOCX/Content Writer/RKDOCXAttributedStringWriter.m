@@ -8,50 +8,20 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
-#import "RKDOCXRunAttributeWriter.h"
-
-NSString *RKDOCXAttributeWriterParagraphElementName	= @"w:p";
-
+#import "RKDOCXParagraphWriter.h"
 
 @implementation RKDOCXAttributedStringWriter
 
-+ (NSArray *)processAttributedString:(NSAttributedString *)attributedString
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *paragraphs = [NSMutableArray new];
 	
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		[paragraphs addObject: [self paragraphWithProperties:nil runElements:[self runElementsFromAttributedString:attributedString inRange:substringRange]]];
+		NSXMLElement *paragraph = [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:substringRange usingContext:context];
+		[paragraphs addObject: paragraph];
 	}];
 	
 	return paragraphs;
-}
-
-+ (NSXMLElement *)paragraphWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements
-{
-	NSParameterAssert(runElements.count);
-	
-	NSXMLElement *paragraph = [NSXMLElement elementWithName: RKDOCXAttributeWriterParagraphElementName];
-	
-	if (propertiesElement)
-		[paragraph addChild: propertiesElement];
-	
-	for (NSXMLElement *runElement in runElements) {
-		[paragraph addChild: runElement];
-	}
-	
-	return paragraph;
-}
-
-+ (NSArray *)runElementsFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange
-{
-	NSMutableArray *runElements = [NSMutableArray new];
-	
-	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		NSXMLElement *runElement = [RKDOCXRunAttributeWriter runElementForAttributedString:attributedString attributes:attrs range:range];
-		[runElements addObject: runElement];
-	}];
-	
-	return runElements;
 }
 
 @end
