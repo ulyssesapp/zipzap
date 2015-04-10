@@ -8,13 +8,16 @@
 
 #import "RKDOCXSettingsWriter.h"
 
-
 // Root element name
 NSString *RKDOCXSettingsRootElementName		= @"w:settings";
 
 // Relationship type and target
 NSString *RKDOCXSettingsRelationshipType	= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
 NSString *RKDOCXSettingsRelationshipTarget	= @"settings.xml";
+
+// Setting names
+NSString *RKDOCXSettingsAutoHyphenation		= @"w:autoHyphenation";
+
 
 @implementation RKDOCXSettingsWriter
 
@@ -50,6 +53,9 @@ NSString *RKDOCXSettingsRelationshipTarget	= @"settings.xml";
 	[compat addChild: compatSetting];
 	
 	[document.rootElement addChild: compat];
+	
+	if (context.document.hyphenationEnabled)
+		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsAutoHyphenation]];
 	
 	[context indexForRelationshipWithTarget:RKDOCXSettingsRelationshipTarget andType:RKDOCXSettingsRelationshipType];
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXSettingsFilename];

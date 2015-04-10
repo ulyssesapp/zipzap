@@ -8,7 +8,7 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
-@class RKDOCXConversionContext;
+#import "RKDOCXConversionContext.h"
 
 
 /*!

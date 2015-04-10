@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-@class RKDOCXConversionContext;
+#import "RKDOCXConversionContext.h"
 
 // Commonly used attribute name
 extern NSString *RKDOCXAttributeWriterValueAttributeName;

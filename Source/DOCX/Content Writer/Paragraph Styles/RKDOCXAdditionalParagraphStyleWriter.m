@@ -9,6 +9,7 @@
 #import "RKDOCXAdditionalParagraphStyleWriter.h"
 
 NSString *RKDOCXAdditionalParagraphStyleKeepNextPropertyName	= @"w:keepNext";
+NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationName	= @"w:suppressAutoHyphens";
 
 
 @implementation RKDOCXAdditionalParagraphStyleWriter
@@ -25,6 +26,13 @@ NSString *RKDOCXAdditionalParagraphStyleKeepNextPropertyName	= @"w:keepNext";
 	// Keep With following
 	if (paragraphStyle.keepWithFollowingParagraph)
 		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleKeepNextPropertyName]];
+	
+	// Hyphenation (Needs to be the last setting!)
+	if (!context.document.hyphenationEnabled)
+		return properties;
+	
+	if (!paragraphStyle.hyphenationEnabled || paragraphStyle.hyphenationEnabled == NO)
+		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationName]];
 	
 	return properties;
 }
