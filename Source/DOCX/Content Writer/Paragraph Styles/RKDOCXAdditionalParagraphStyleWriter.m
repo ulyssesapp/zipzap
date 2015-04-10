@@ -8,8 +8,10 @@
 
 #import "RKDOCXAdditionalParagraphStyleWriter.h"
 
-NSString *RKDOCXAdditionalParagraphStyleKeepNextPropertyName	= @"w:keepNext";
-NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationName	= @"w:suppressAutoHyphens";
+NSString *RKDOCXAdditionalParagraphStyleKeepNextPropertyName			= @"w:keepNext";
+NSString *RKDOCXAdditionalParagraphStyleOrphanControlPropertyName		= @"w:widowControl";
+NSString *RKDOCXAdditionalParagraphStyleOrphanControlOffName			= @"off";
+NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName	= @"w:suppressAutoHyphens";
 
 
 @implementation RKDOCXAdditionalParagraphStyleWriter
@@ -27,12 +29,16 @@ NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationName	= @"w:suppressAu
 	if (paragraphStyle.keepWithFollowingParagraph)
 		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleKeepNextPropertyName]];
 	
+	// Skip Orphan Control
+	if (paragraphStyle.skipOrphanControl)
+		[properties addObject: [NSXMLElement elementWithName:RKDOCXAdditionalParagraphStyleOrphanControlPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAdditionalParagraphStyleOrphanControlOffName]]]];
+	
 	// Hyphenation (Needs to be the last setting!)
 	if (!context.document.hyphenationEnabled)
 		return properties;
 	
 	if (!paragraphStyle.hyphenationEnabled || paragraphStyle.hyphenationEnabled == NO)
-		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationName]];
+		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName]];
 	
 	return properties;
 }
