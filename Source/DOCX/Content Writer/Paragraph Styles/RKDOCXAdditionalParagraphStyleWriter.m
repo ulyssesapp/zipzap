@@ -13,7 +13,6 @@ NSString *RKDOCXAdditionalParagraphStyleOrphanControlPropertyName		= @"w:widowCo
 NSString *RKDOCXAdditionalParagraphStyleOrphanControlOffName			= @"off";
 NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName	= @"w:suppressAutoHyphens";
 
-
 @implementation RKDOCXAdditionalParagraphStyleWriter
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context

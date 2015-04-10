@@ -8,7 +8,6 @@
 
 #import "XCTestCase+DOCX.h"
 
-
 @interface RKDOCXWriterTest : XCTestCase
 
 @end

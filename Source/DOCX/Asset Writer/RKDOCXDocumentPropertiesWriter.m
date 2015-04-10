@@ -12,7 +12,6 @@
 NSString *RKDOCXCorePropertiesRootElementName		= @"cp:coreProperties";
 NSString *RKDOCXExtendedPropertiesRootElementName	= @"Properties";
 
-
 @implementation RKDOCXDocumentPropertiesWriter
 
 + (void)buildCorePropertiesUsingContext:(RKDOCXConversionContext *)context

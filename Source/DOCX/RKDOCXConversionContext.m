@@ -13,7 +13,6 @@
 NSString *RKDOCXConversionContextRelationshipTypeName		= @"Type";
 NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
-
 @interface RKDOCXConversionContext ()
 {
 	NSMutableDictionary *_files;

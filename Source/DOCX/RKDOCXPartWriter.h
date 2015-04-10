@@ -17,7 +17,6 @@ extern NSString *RKDOCXExtendedPropertiesFilename;
 extern NSString *RKDOCXPackageRelationshipsFilename;
 extern NSString *RKDOCXSettingsFilename;
 
-
 /*!
  @abstract Abstract superclass used by all writers creating XML document parts.
  */

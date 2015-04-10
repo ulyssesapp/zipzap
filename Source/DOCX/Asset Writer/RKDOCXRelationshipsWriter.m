@@ -22,7 +22,6 @@ NSString *RKDOCXDocumentRelationshipTarget				= @"word/document.xml";
 NSString *RKDOCXExtendedPropertiesRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
 NSString *RKDOCXExtendedPropertiesRelationshipTarget	= @"docProps/app.xml";
 
-
 @implementation RKDOCXRelationshipsWriter
 
 + (void)buildPackageRelationshipsUsingContext:(RKDOCXConversionContext *)context

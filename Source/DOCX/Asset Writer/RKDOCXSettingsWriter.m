@@ -18,7 +18,6 @@ NSString *RKDOCXSettingsRelationshipTarget	= @"settings.xml";
 // Setting names
 NSString *RKDOCXSettingsAutoHyphenation		= @"w:autoHyphenation";
 
-
 @implementation RKDOCXSettingsWriter
 
 + (void)buildSettingsUsingContext:(RKDOCXConversionContext *)context

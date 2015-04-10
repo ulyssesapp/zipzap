@@ -25,7 +25,6 @@ NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-office
 NSString *RKDOCXCorePropertiesContentType		= @"application/vnd.openxmlformats-package.core-properties+xml";
 NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
 
-
 @implementation RKDOCXContentTypesWriter
 
 + (void)buildContentTypesUsingContext:(RKDOCXConversionContext *)context

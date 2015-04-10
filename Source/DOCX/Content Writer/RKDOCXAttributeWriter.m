@@ -11,7 +11,6 @@
 // Common attribute name
 NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
 
-
 @implementation RKDOCXAttributeWriter
 
 - (id)init

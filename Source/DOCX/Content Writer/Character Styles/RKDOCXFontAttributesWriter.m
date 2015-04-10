@@ -18,7 +18,6 @@ NSString *RKDOCXFontAttributeFontSizePropertyName				= @"w:sz";
 NSString *RKDOCXFontAttributeHighAnsiFontName					= @"w:hAnsi";
 NSString *RKDOCXFontAttributeItalicPropertyName					= @"w:i";
 
-
 @implementation RKDOCXFontAttributesWriter
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context

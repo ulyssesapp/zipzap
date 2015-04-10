@@ -19,7 +19,6 @@ NSString *RKDOCXExtendedPropertiesFilename		= @"docProps/app.xml";
 NSString *RKDOCXPackageRelationshipsFilename	= @"_rels/.rels";
 NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
 
-
 @implementation RKDOCXPartWriter
 
 + (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root namespaces:(NSDictionary *)namespaces

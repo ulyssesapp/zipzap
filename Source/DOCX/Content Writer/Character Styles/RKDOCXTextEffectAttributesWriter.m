@@ -22,7 +22,6 @@ NSString *RKDOCXTextEffectsSuperscriptPropertyName			= @"w:vertAlign";
 NSString *RKDOCXTextEffectsUnderlineColorName				= @"w:color";
 NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 
-
 @implementation RKDOCXTextEffectAttributesWriter
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context

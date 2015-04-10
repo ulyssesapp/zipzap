@@ -16,7 +16,6 @@ NSString *RKDOCXRunElementName				= @"w:r";
 NSString *RKDOCXRunPropertiesElementName	= @"w:rPr";
 NSString *RKDOCXRunTextElementName			= @"w:t";
 
-
 @implementation RKDOCXRunWriter
 
 + (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context

@@ -30,7 +30,6 @@ NSString *RKDOCXParagraphStyleTabPropertyName						= @"w:tab";
 NSString *RKDOCXParagraphStyleTabPositionAttributeName				= @"w:pos";
 NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 
-
 @implementation RKDOCXParagraphStyleWriter
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context

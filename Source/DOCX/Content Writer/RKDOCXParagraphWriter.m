@@ -15,7 +15,6 @@
 NSString *RKDOCXParagraphElementName			= @"w:p";
 NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 
-
 @implementation RKDOCXParagraphWriter
 
 + (NSXMLElement *)paragraphElementWithProperties:(NSXMLElement *)propertiesElement runElements:(NSArray *)runElements

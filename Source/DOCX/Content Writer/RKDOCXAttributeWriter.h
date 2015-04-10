@@ -11,7 +11,6 @@
 // Commonly used attribute name
 extern NSString *RKDOCXAttributeWriterValueAttributeName;
 
-
 @interface RKDOCXAttributeWriter : NSObject
 
 @end

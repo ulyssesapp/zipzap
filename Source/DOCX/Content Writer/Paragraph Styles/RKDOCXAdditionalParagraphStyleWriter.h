@@ -8,7 +8,6 @@
 
 #import "RKDOCXAttributeWriter.h"
 
-
 /*!
  @abstract Generates XML elements for the given attributes of an attributed string.
  @discussion See ISO 29500-1:2012: §17.3.1.15 (Keep Paragraph With Next Paragraph), §17.3.1.34 (Supress Hyphenation for Paragraph) and §17.3.1.44 (Allow First/Last Line to Display on a Separate Page).

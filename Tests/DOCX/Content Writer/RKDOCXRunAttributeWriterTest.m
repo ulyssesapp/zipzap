@@ -15,7 +15,6 @@
 	#define RKFont NSFont
 #endif
 
-
 @interface RKDOCXRunAttributeWriterTest : XCTestCase
 
 @end

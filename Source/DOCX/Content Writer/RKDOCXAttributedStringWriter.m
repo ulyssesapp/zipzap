@@ -10,7 +10,6 @@
 
 #import "RKDOCXParagraphWriter.h"
 
-
 @implementation RKDOCXAttributedStringWriter
 
 + (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context

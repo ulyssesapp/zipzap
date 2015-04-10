@@ -8,7 +8,6 @@
 
 #import "RKDOCXConversionContext.h"
 
-
 /*!
  @abstract Generates a paragraph containing the paragraph's properties and its child runs.
  */
