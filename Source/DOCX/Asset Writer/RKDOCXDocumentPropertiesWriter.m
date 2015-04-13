@@ -76,7 +76,7 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesAuthorPropertyName stringValue:metadata[NSAuthorDocumentAttribute]]];
 	
 	if (metadata[NSKeywordsDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesKeywordsPropertyName stringValue:metadata[NSKeywordsDocumentAttribute]]];
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesKeywordsPropertyName stringValue:[metadata[NSKeywordsDocumentAttribute] componentsJoinedByString: @", "]]];
 	
 	if (metadata[NSEditorDocumentAttribute])
 		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesEditorPropertyName stringValue:metadata[NSEditorDocumentAttribute]]];

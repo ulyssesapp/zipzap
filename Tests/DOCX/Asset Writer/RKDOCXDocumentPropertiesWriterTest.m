@@ -21,7 +21,7 @@
 	NSDictionary *metadata = @{NSTitleDocumentAttribute: @"Title",
 							   NSSubjectDocumentAttribute: @"Subject",
 							   NSAuthorDocumentAttribute: @"Author",
-							   NSKeywordsDocumentAttribute: @"Key, Words",
+							   NSKeywordsDocumentAttribute: @[@"Keyword1", @"Keyword2"],
 							   NSEditorDocumentAttribute: @"Editor",
 							   NSCreationTimeDocumentAttribute: date,
 							   NSModificationTimeDocumentAttribute: date,
