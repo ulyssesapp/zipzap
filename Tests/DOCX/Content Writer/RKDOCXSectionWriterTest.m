@@ -46,4 +46,16 @@
 	[self assertDOCX:converted withTestDocument:@"pagesize"];
 }
 
+- (void)testSectionPropertiesElementWithPageMargins
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This page has custom page margins. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est."]];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	document.headerSpacingBefore = 72;
+	document.footerSpacingAfter = 72;
+	document.pageInsets = RKPageInsetsMake(36, 36, 36, 36);
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"pagemargins"];
+}
+
 @end
