@@ -11,7 +11,12 @@
 NSString *RKDOCXSectionColumnPropertyName				= @"w:cols";
 NSString *RKDOCXSectionColumnCountAttributeName			= @"w:num";
 NSString *RKDOCXSectionColumeEqualWidthAttributeName	= @"w:equalWidth";
+NSString *RKDOCXSectionPageNumberFormatAttributeName	= @"w:fmt";
+NSString *RKDOCXSectionPageNumberLowerLetterName		= @"lowerLetter";
+NSString *RKDOCXSectionPageNumberLowerRomanName			= @"lowerRoman";
 NSString *RKDOCXSectionPageNumberTypePropertyName		= @"w:pgNumType";
+NSString *RKDOCXSectionPageNumberUpperLetterName		= @"upperLetter";
+NSString *RKDOCXSectionPageNumberUpperRomanName			= @"upperRoman";
 NSString *RKDOCXSectionPropertiesElementName			= @"w:sectPr";
 NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 
@@ -20,7 +25,7 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 + (NSArray *)sectionsUsingContext:(RKDOCXConversionContext *)context
 {
 	RKSection *lastSection = context.document.sections.lastObject;
-	NSMutableArray *lastSectionParagraphs = [[RKDOCXAttributedStringWriter processAttributedString:lastSection.content usingContext:context] mutableCopy];
+	NSArray *lastSectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:lastSection.content usingContext:context];
 	NSXMLElement *sectionProperties = [NSXMLElement elementWithName: RKDOCXSectionPropertiesElementName];
 	
 	// Columns
@@ -28,15 +33,15 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	if (columnProperty)
 		[sectionProperties addChild: columnProperty];
 	
-	// Index Of First Page
-	NSXMLElement *indexOfFirstPageProperty = [self indexOfFirstPagePropertyForSection: lastSection];
-	if (indexOfFirstPageProperty)
-		[sectionProperties addChild: indexOfFirstPageProperty];
+	// Page Number and Index Of First Page
+	NSXMLElement *pageNumberTypeProperty = [self pageNumberTypePropertyForSection: lastSection];
+	if (pageNumberTypeProperty)
+		[sectionProperties addChild: pageNumberTypeProperty];
 	
-	if (sectionProperties.children.count)
-		[lastSectionParagraphs addObject: sectionProperties];
+	if (sectionProperties.childCount == 0)
+		return lastSectionParagraphs;
 	
-	return lastSectionParagraphs;
+	return [lastSectionParagraphs arrayByAddingObject: sectionProperties];
 }
 
 + (NSXMLElement *)columnPropertyForSection:(RKSection *)section
@@ -51,15 +56,43 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	return columnProperty;
 }
 
-+ (NSXMLElement *)indexOfFirstPagePropertyForSection:(RKSection *)section
++ (NSXMLElement *)pageNumberTypePropertyForSection:(RKSection *)section
 {
-	if (section.indexOfFirstPage == NSNotFound)
+	if ((!section.indexOfFirstPage || section.indexOfFirstPage == NSNotFound) && (!section.pageNumberingStyle || section.pageNumberingStyle == RKPageNumberingDecimal))
 		return nil;
 	
-	NSXMLElement *startPageAttribute = [NSXMLElement attributeWithName:RKDOCXSectionStartPageAttributeName stringValue:[NSString stringWithFormat: @"%lu", section.indexOfFirstPage]];
-	NSXMLElement *indexOfFirstPageProperty = [NSXMLElement elementWithName:RKDOCXSectionPageNumberTypePropertyName children:nil attributes:@[startPageAttribute]];
+	NSXMLElement *pageNumberTypeProperty = [NSXMLElement elementWithName:RKDOCXSectionPageNumberTypePropertyName];
 	
-	return indexOfFirstPageProperty;
+	if (section.indexOfFirstPage != NSNotFound) {
+		NSXMLElement *startPageAttribute = [NSXMLElement attributeWithName:RKDOCXSectionStartPageAttributeName stringValue:[NSString stringWithFormat: @"%lu", section.indexOfFirstPage]];
+		[pageNumberTypeProperty addAttribute: startPageAttribute];
+	}
+	
+	NSXMLElement *pageNumberFormatAttribute;
+	switch (section.pageNumberingStyle) {
+		case RKPageNumberingRomanLowerCase:
+			pageNumberFormatAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageNumberFormatAttributeName stringValue:RKDOCXSectionPageNumberLowerRomanName];
+			break;
+			
+		case RKPageNumberingRomanUpperCase:
+			pageNumberFormatAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageNumberFormatAttributeName stringValue:RKDOCXSectionPageNumberUpperRomanName];
+			break;
+			
+		case RKPageNumberingAlphabeticLowerCase:
+			pageNumberFormatAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageNumberFormatAttributeName stringValue:RKDOCXSectionPageNumberLowerLetterName];
+			break;
+			
+		case RKPageNumberingAlphabeticUpperCase:
+			pageNumberFormatAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageNumberFormatAttributeName stringValue:RKDOCXSectionPageNumberUpperLetterName];
+			break;
+			
+		default:
+			break;
+	}
+	if (pageNumberFormatAttribute)
+		[pageNumberTypeProperty addAttribute: pageNumberFormatAttribute];
+	
+	return pageNumberTypeProperty;
 }
 
 @end
