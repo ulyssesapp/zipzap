@@ -18,14 +18,14 @@
 {
 	RKDocument *document = [[RKDocument alloc] init];
 	NSDate *date = [NSDate dateWithTimeIntervalSince1970: 0];
-	NSDictionary *metadata = @{NSTitleDocumentAttribute: @"Title",
-							   NSSubjectDocumentAttribute: @"Subject",
-							   NSAuthorDocumentAttribute: @"Author",
-							   NSKeywordsDocumentAttribute: @[@"Keyword1", @"Keyword2"],
-							   NSEditorDocumentAttribute: @"Editor",
-							   NSCreationTimeDocumentAttribute: date,
-							   NSModificationTimeDocumentAttribute: date,
-							   NSCategoryDocumentAttribute: @"Test Document"};
+	NSDictionary *metadata = @{RKTitleDocumentAttribute: @"Title",
+							   RKSubjectDocumentAttribute: @"Subject",
+							   RKAuthorDocumentAttribute: @"Author",
+							   RKKeywordsDocumentAttribute: @[@"Keyword1", @"Keyword2"],
+							   RKEditorDocumentAttribute: @"Editor",
+							   RKCreationTimeDocumentAttribute: date,
+							   RKModificationTimeDocumentAttribute: date,
+							   RKCategoryDocumentAttribute: @"Test Document"};
 	document.metadata = metadata;
 	NSData *converted = [document DOCX];
 	

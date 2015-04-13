@@ -66,37 +66,37 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	
 	NSMutableArray *coreProperties = [NSMutableArray new];
 	
-	if (metadata[NSTitleDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesTitlePropertyName stringValue:metadata[NSTitleDocumentAttribute]]];
+	if (metadata[RKTitleDocumentAttribute])
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesTitlePropertyName stringValue:metadata[RKTitleDocumentAttribute]]];
 	
-	if (metadata[NSSubjectDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesSubjectPropertyName stringValue:metadata[NSSubjectDocumentAttribute]]];
+	if (metadata[RKSubjectDocumentAttribute])
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesSubjectPropertyName stringValue:metadata[RKSubjectDocumentAttribute]]];
 	
-	if (metadata[NSAuthorDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesAuthorPropertyName stringValue:metadata[NSAuthorDocumentAttribute]]];
+	if (metadata[RKAuthorDocumentAttribute])
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesAuthorPropertyName stringValue:metadata[RKAuthorDocumentAttribute]]];
 	
-	if (metadata[NSKeywordsDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesKeywordsPropertyName stringValue:[metadata[NSKeywordsDocumentAttribute] componentsJoinedByString: @", "]]];
+	if (metadata[RKKeywordsDocumentAttribute])
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesKeywordsPropertyName stringValue:[metadata[RKKeywordsDocumentAttribute] componentsJoinedByString: @", "]]];
 	
-	if (metadata[NSEditorDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesEditorPropertyName stringValue:metadata[NSEditorDocumentAttribute]]];
+	if (metadata[RKEditorDocumentAttribute])
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesEditorPropertyName stringValue:metadata[RKEditorDocumentAttribute]]];
 	
 	NSXMLElement *timeAttribute = [NSXMLElement attributeWithName:RKDOCXDocumentPropertiesTimeAttributeName stringValue:RKDOCXDocumentPropertiesTimeTypeName];
 	
-	if (metadata[NSCreationTimeDocumentAttribute]) {
-		NSXMLElement *creationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCreationTimePropertyName stringValue:[self stringFromDate: metadata[NSCreationTimeDocumentAttribute]]];
+	if (metadata[RKCreationTimeDocumentAttribute]) {
+		NSXMLElement *creationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCreationTimePropertyName stringValue:[self stringFromDate: metadata[RKCreationTimeDocumentAttribute]]];
 		[creationTimeElement addAttribute: [timeAttribute copy]];
 		[coreProperties addObject: creationTimeElement];
 	}
 	
-	if (metadata[NSModificationTimeDocumentAttribute]) {
-		NSXMLElement *modificationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesModificationPropertyName stringValue:[self stringFromDate: metadata[NSModificationTimeDocumentAttribute]]];
+	if (metadata[RKModificationTimeDocumentAttribute]) {
+		NSXMLElement *modificationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesModificationPropertyName stringValue:[self stringFromDate: metadata[RKModificationTimeDocumentAttribute]]];
 		[modificationTimeElement addAttribute: [timeAttribute copy]];
 		[coreProperties addObject: modificationTimeElement];
 	}
 	
-	if (metadata[NSCategoryDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCategoryPropertyName stringValue:metadata[NSCategoryDocumentAttribute]]];
+	if (metadata[RKCategoryDocumentAttribute])
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCategoryPropertyName stringValue:metadata[RKCategoryDocumentAttribute]]];
 	
 	return coreProperties;
 }
