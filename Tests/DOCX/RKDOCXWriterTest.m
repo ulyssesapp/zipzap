@@ -6,13 +6,17 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXWriterTest.h"
+#import "XCTestCase+DOCX.h"
+
+@interface RKDOCXWriterTest : XCTestCase
+
+@end
 
 @implementation RKDOCXWriterTest
 
 - (void)testGeneratingEmptyDocument
 {
-	RKDocument *document = [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @""]];
+	RKDocument *document = [[RKDocument alloc] init];
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"empty"];
