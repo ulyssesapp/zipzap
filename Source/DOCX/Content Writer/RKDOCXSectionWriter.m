@@ -18,6 +18,12 @@ NSString *RKDOCXSectionPageNumberLowerRomanName			= @"lowerRoman";
 NSString *RKDOCXSectionPageNumberTypePropertyName		= @"w:pgNumType";
 NSString *RKDOCXSectionPageNumberUpperLetterName		= @"upperLetter";
 NSString *RKDOCXSectionPageNumberUpperRomanName			= @"upperRoman";
+NSString *RKDOCXSectionPageSizeHeightAttributeName		= @"w:h";
+NSString *RKDOCXSectionPageSizeOrientationAttributeName	= @"w:orient";
+NSString *RKDOCXSectionPageSizeOrientationLandscapeName	= @"landscape";
+NSString *RKDOCXSectionPageSizeOrientationPortraitName	= @"portrait";
+NSString *RKDOCXSectionPageSizePropertyName				= @"w:pgSz";
+NSString *RKDOCXSectionPageSizeWidthAttributeName		= @"w:w";
 NSString *RKDOCXSectionPropertiesElementName			= @"w:sectPr";
 NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 
@@ -39,6 +45,12 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	if (pageNumberTypeProperty)
 		[sectionProperties addChild: pageNumberTypeProperty];
 	
+	// Document settings repeated in each section
+	// Page Size and Page Orientation
+	NSXMLElement *pageSizeProperty = [self pageSizePropertyForDocument: context.document];
+	if (pageSizeProperty)
+		[sectionProperties addChild: pageSizeProperty];
+	
 	if (sectionProperties.childCount == 0)
 		return lastSectionParagraphs;
 	
@@ -53,9 +65,8 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	NSXMLElement *numberOfColumnsAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnCountAttributeName stringValue:[NSString stringWithFormat: @"%lu", section.numberOfColumns]];
 	NSXMLElement *equalWidthAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumeEqualWidthAttributeName stringValue:@"1"];
 	NSXMLElement *spacingAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnSpacingAttributeName stringValue:@(RKPointsToTwips(section.columnSpacing)).stringValue];
-	NSXMLElement *columnProperty = [NSXMLElement elementWithName:RKDOCXSectionColumnPropertyName children:nil attributes:@[numberOfColumnsAttribute, equalWidthAttribute, spacingAttribute]];
 	
-	return columnProperty;
+	return [NSXMLElement elementWithName:RKDOCXSectionColumnPropertyName children:nil attributes:@[numberOfColumnsAttribute, equalWidthAttribute, spacingAttribute]];
 }
 
 + (NSXMLElement *)pageNumberTypePropertyForSection:(RKSection *)section
@@ -95,6 +106,20 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 		[pageNumberTypeProperty addAttribute: pageNumberFormatAttribute];
 	
 	return pageNumberTypeProperty;
+}
+
++ (NSXMLElement *)pageSizePropertyForDocument:(RKDocument *)document
+{
+	NSXMLElement *widthAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeWidthAttributeName stringValue:@(RKPointsToTwips(document.pageSize.width)).stringValue];
+	NSXMLElement *heightAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeHeightAttributeName stringValue:@(RKPointsToTwips(document.pageSize.height)).stringValue];
+	NSXMLElement *orientationAttribute;
+	if (document.pageOrientation == RKPageOrientationLandscape) {
+		orientationAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeOrientationAttributeName stringValue:RKDOCXSectionPageSizeOrientationLandscapeName];
+	} else {
+		orientationAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeOrientationAttributeName stringValue:RKDOCXSectionPageSizeOrientationPortraitName];
+	}
+	
+	return [NSXMLElement elementWithName: RKDOCXSectionPageSizePropertyName children:nil attributes:@[widthAttribute, heightAttribute, orientationAttribute]];
 }
 
 @end
