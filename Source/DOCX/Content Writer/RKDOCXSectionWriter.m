@@ -12,6 +12,13 @@ NSString *RKDOCXSectionColumnCountAttributeName			= @"w:num";
 NSString *RKDOCXSectionColumeEqualWidthAttributeName	= @"w:equalWidth";
 NSString *RKDOCXSectionColumnPropertyName				= @"w:cols";
 NSString *RKDOCXSectionColumnSpacingAttributeName		= @"w:space";
+NSString *RKDOCXSectionPageMarginBottomAttributeName	= @"w:bottom";
+NSString *RKDOCXSectionPageMarginFooterAttributeName	= @"w:footer";
+NSString *RKDOCXSectionPageMarginHeaderAttributeName	= @"w:header";
+NSString *RKDOCXSectionPageMarginLeftAttribute			= @"w:left";
+NSString *RKDOCXSectionPageMarginPropertyName			= @"w:pgMar";
+NSString *RKDOCXSectionPageMarginRightAttributeName		= @"w:right";
+NSString *RKDOCXSectionPageMarginTopAttributeName		= @"w:top";
 NSString *RKDOCXSectionPageNumberFormatAttributeName	= @"w:fmt";
 NSString *RKDOCXSectionPageNumberLowerLetterName		= @"lowerLetter";
 NSString *RKDOCXSectionPageNumberLowerRomanName			= @"lowerRoman";
@@ -51,6 +58,11 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	if (pageSizeProperty)
 		[sectionProperties addChild: pageSizeProperty];
 	
+	// Page Margin
+	NSXMLElement *pageMarginProperty = [self pageMarginPropertyForDocument: context.document];
+	if (pageMarginProperty)
+		[sectionProperties addChild: pageMarginProperty];
+	
 	if (sectionProperties.childCount == 0)
 		return lastSectionParagraphs;
 	
@@ -62,7 +74,7 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	if (section.numberOfColumns < 2)
 		return nil;
 	
-	NSXMLElement *numberOfColumnsAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnCountAttributeName stringValue:[NSString stringWithFormat: @"%lu", section.numberOfColumns]];
+	NSXMLElement *numberOfColumnsAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnCountAttributeName stringValue:@(section.numberOfColumns).stringValue];
 	NSXMLElement *equalWidthAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumeEqualWidthAttributeName stringValue:@"1"];
 	NSXMLElement *spacingAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnSpacingAttributeName stringValue:@(RKPointsToTwips(section.columnSpacing)).stringValue];
 	
@@ -77,7 +89,7 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	NSXMLElement *pageNumberTypeProperty = [NSXMLElement elementWithName:RKDOCXSectionPageNumberTypePropertyName];
 	
 	if (section.indexOfFirstPage != NSNotFound) {
-		NSXMLElement *startPageAttribute = [NSXMLElement attributeWithName:RKDOCXSectionStartPageAttributeName stringValue:[NSString stringWithFormat: @"%lu", section.indexOfFirstPage]];
+		NSXMLElement *startPageAttribute = [NSXMLElement attributeWithName:RKDOCXSectionStartPageAttributeName stringValue:@(section.indexOfFirstPage).stringValue];
 		[pageNumberTypeProperty addAttribute: startPageAttribute];
 	}
 	
@@ -120,6 +132,32 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	}
 	
 	return [NSXMLElement elementWithName: RKDOCXSectionPageSizePropertyName children:nil attributes:@[widthAttribute, heightAttribute, orientationAttribute]];
+}
+
++ (NSXMLElement *)pageMarginPropertyForDocument:(RKDocument *)document
+{
+	NSXMLElement *headerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginHeaderAttributeName stringValue:@(RKPointsToTwips(document.headerSpacingBefore)).stringValue];
+	NSXMLElement *footerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginFooterAttributeName stringValue:@(RKPointsToTwips(document.footerSpacingAfter)).stringValue];
+	// There is no headerAfter or footerBefore margin in DOCX.
+	
+	NSXMLElement *topAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginTopAttributeName stringValue:@(RKPointsToTwips(document.pageInsets.top)).stringValue];
+	NSXMLElement *bottomAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginBottomAttributeName stringValue:@(RKPointsToTwips(document.pageInsets.bottom)).stringValue];
+	
+	NSString *innerMargin = @(RKPointsToTwips(document.pageInsets.inner)).stringValue;
+	NSString *outerMargin = @(RKPointsToTwips(document.pageInsets.outer)).stringValue;
+
+	NSXMLElement *leftAttribute;
+	NSXMLElement *rightAttribute;
+	
+	if (document.pageBinding == RKPageBindingRight) {
+		leftAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginLeftAttribute stringValue:outerMargin];
+		rightAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginRightAttributeName stringValue:innerMargin];
+	} else {
+		leftAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginLeftAttribute stringValue:innerMargin];
+		rightAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginRightAttributeName stringValue:outerMargin];
+	}
+	
+	return [NSXMLElement elementWithName:RKDOCXSectionPageMarginPropertyName children:nil attributes:@[headerAttribute, footerAttribute, topAttribute, leftAttribute, rightAttribute, bottomAttribute]];
 }
 
 @end
