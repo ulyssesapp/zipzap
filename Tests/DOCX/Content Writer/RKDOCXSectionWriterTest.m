@@ -1,0 +1,27 @@
+//
+//  RKDOCXSectionWriterTest.m
+//  RTFKit
+//
+//  Created by Lucas Hauswald on 13.04.15.
+//  Copyright (c) 2015 The Soulmen. All rights reserved.
+//
+
+#import "XCTestCase+DOCX.h"
+
+@interface RKDOCXSectionWriterTest : XCTestCase
+
+@end
+
+@implementation RKDOCXSectionWriterTest
+
+- (void)testSectionPropertiesElementWithTwoColumns
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This text is displayed in two columns. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est."]];
+	section.numberOfColumns = 2;
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"twocolumns"];
+}
+
+@end
