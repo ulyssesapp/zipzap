@@ -8,9 +8,10 @@
 
 #import "RKDOCXSectionWriter.h"
 
-NSString *RKDOCXSectionColumnPropertyName				= @"w:cols";
 NSString *RKDOCXSectionColumnCountAttributeName			= @"w:num";
 NSString *RKDOCXSectionColumeEqualWidthAttributeName	= @"w:equalWidth";
+NSString *RKDOCXSectionColumnPropertyName				= @"w:cols";
+NSString *RKDOCXSectionColumnSpacingAttributeName		= @"w:space";
 NSString *RKDOCXSectionPageNumberFormatAttributeName	= @"w:fmt";
 NSString *RKDOCXSectionPageNumberLowerLetterName		= @"lowerLetter";
 NSString *RKDOCXSectionPageNumberLowerRomanName			= @"lowerRoman";
@@ -51,7 +52,8 @@ NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 	
 	NSXMLElement *numberOfColumnsAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnCountAttributeName stringValue:[NSString stringWithFormat: @"%lu", section.numberOfColumns]];
 	NSXMLElement *equalWidthAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumeEqualWidthAttributeName stringValue:@"1"];
-	NSXMLElement *columnProperty = [NSXMLElement elementWithName:RKDOCXSectionColumnPropertyName children:nil attributes:@[numberOfColumnsAttribute, equalWidthAttribute]];
+	NSXMLElement *spacingAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnSpacingAttributeName stringValue:@(RKPointsToTwips(section.columnSpacing)).stringValue];
+	NSXMLElement *columnProperty = [NSXMLElement elementWithName:RKDOCXSectionColumnPropertyName children:nil attributes:@[numberOfColumnsAttribute, equalWidthAttribute, spacingAttribute]];
 	
 	return columnProperty;
 }
