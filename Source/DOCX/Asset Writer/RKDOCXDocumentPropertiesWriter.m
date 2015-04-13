@@ -75,6 +75,7 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	if (metadata[RKAuthorDocumentAttribute])
 		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesAuthorPropertyName stringValue:metadata[RKAuthorDocumentAttribute]]];
 	
+	// Not according to standard, because Word ignores the standard in this case.
 	if (metadata[RKKeywordsDocumentAttribute])
 		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesKeywordsPropertyName stringValue:[metadata[RKKeywordsDocumentAttribute] componentsJoinedByString: @", "]]];
 	
