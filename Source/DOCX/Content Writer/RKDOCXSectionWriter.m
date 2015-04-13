@@ -11,7 +11,9 @@
 NSString *RKDOCXSectionColumnPropertyName				= @"w:cols";
 NSString *RKDOCXSectionColumnCountAttributeName			= @"w:num";
 NSString *RKDOCXSectionColumeEqualWidthAttributeName	= @"w:equalWidth";
+NSString *RKDOCXSectionPageNumberTypePropertyName		= @"w:pgNumType";
 NSString *RKDOCXSectionPropertiesElementName			= @"w:sectPr";
+NSString *RKDOCXSectionStartPageAttributeName			= @"w:start";
 
 @implementation RKDOCXSectionWriter
 
@@ -25,6 +27,11 @@ NSString *RKDOCXSectionPropertiesElementName			= @"w:sectPr";
 	NSXMLElement *columnProperty = [self columnPropertyForSection: lastSection];
 	if (columnProperty)
 		[sectionProperties addChild: columnProperty];
+	
+	// Index Of First Page
+	NSXMLElement *indexOfFirstPageProperty = [self indexOfFirstPagePropertyForSection: lastSection];
+	if (indexOfFirstPageProperty)
+		[sectionProperties addChild: indexOfFirstPageProperty];
 	
 	if (sectionProperties.children.count)
 		[lastSectionParagraphs addObject: sectionProperties];
@@ -42,6 +49,17 @@ NSString *RKDOCXSectionPropertiesElementName			= @"w:sectPr";
 	NSXMLElement *columnProperty = [NSXMLElement elementWithName:RKDOCXSectionColumnPropertyName children:nil attributes:@[numberOfColumnsAttribute, equalWidthAttribute]];
 	
 	return columnProperty;
+}
+
++ (NSXMLElement *)indexOfFirstPagePropertyForSection:(RKSection *)section
+{
+	if (section.indexOfFirstPage == NSNotFound)
+		return nil;
+	
+	NSXMLElement *startPageAttribute = [NSXMLElement attributeWithName:RKDOCXSectionStartPageAttributeName stringValue:[NSString stringWithFormat: @"%lu", section.indexOfFirstPage]];
+	NSXMLElement *indexOfFirstPageProperty = [NSXMLElement elementWithName:RKDOCXSectionPageNumberTypePropertyName children:nil attributes:@[startPageAttribute]];
+	
+	return indexOfFirstPageProperty;
 }
 
 @end
