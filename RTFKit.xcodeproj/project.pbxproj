@@ -493,6 +493,8 @@
 		A04494411ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A044943E1ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.h */; };
 		A04494421ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A044943F1ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.m */; };
 		A04494431ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A044943F1ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.m */; };
+		A04568FB1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A04568FA1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m */; };
+		A04568FC1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A04568FA1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m */; };
 		A069F6621AD7F61E00F58E15 /* RKDOCXAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */; };
 		A069F6631AD7F61E00F58E15 /* RKDOCXAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */; };
 		A069F6641AD7F61E00F58E15 /* RKDOCXAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A069F6611AD7F61E00F58E15 /* RKDOCXAttributeWriter.m */; };
@@ -897,6 +899,7 @@
 		A04494391ACAD8FA006FB62D /* RKDOCXRunWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXRunWriter.m; sourceTree = "<group>"; };
 		A044943E1ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXFontAttributesWriter.h; path = "Character Styles/RKDOCXFontAttributesWriter.h"; sourceTree = "<group>"; };
 		A044943F1ACAD9DD006FB62D /* RKDOCXFontAttributesWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXFontAttributesWriter.m; path = "Character Styles/RKDOCXFontAttributesWriter.m"; sourceTree = "<group>"; };
+		A04568FA1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXSettingsWriterTest.m; path = "Asset Writer/RKDOCXSettingsWriterTest.m"; sourceTree = "<group>"; };
 		A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXAttributeWriter.h; sourceTree = "<group>"; };
 		A069F6611AD7F61E00F58E15 /* RKDOCXAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXAttributeWriter.m; sourceTree = "<group>"; };
 		A074BE451AC30CC9008B3DED /* RKDOCXWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXWriterTest.m; sourceTree = "<group>"; };
@@ -1808,6 +1811,7 @@
 			isa = PBXGroup;
 			children = (
 				A0CED8FF1AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m */,
+				A04568FA1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m */,
 			);
 			name = "Asset Writer";
 			sourceTree = "<group>";
@@ -2368,6 +2372,7 @@
 				79A67E7E15FA2D66005609B3 /* SenTestCase+RKReferenceTest.m in Sources */,
 				79A67E8015FA2D66005609B3 /* SenTestCase+RKTestHelper.m in Sources */,
 				CF576D0016CBA01C00EADC01 /* RKListStyle+WriterAdditionsTest.m in Sources */,
+				A04568FB1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m in Sources */,
 				CF576D0316CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2388,6 +2393,7 @@
 				A016E5611AD550A700C2519D /* XCTestCase+DOCX.m in Sources */,
 				A0D244DA1ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */,
 				79A62D8B1A1A3137004C83F9 /* RKAdditionalParagraphStyleWriterTest.m in Sources */,
+				A04568FC1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m in Sources */,
 				79A62D8C1A1A3137004C83F9 /* RKParagraphStyleWriterTest.m in Sources */,
 				79A62D8D1A1A3137004C83F9 /* RKListItemWriterTest.m in Sources */,
 				7945F8671A1A3BAC00640386 /* NSAttributedString+RKAttachmentConvenience.m in Sources */,
