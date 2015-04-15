@@ -28,32 +28,32 @@ NSString *RKDOCXTextEffectsUnderlinePropertyName			= @"w:u";
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	// Font color
+	// Font color (§17.3.2.6)
 	NSXMLElement *foregroundColorProperty = [self foregroundColorPropertyForAttributes: attributes];
 	if (foregroundColorProperty)
 		[properties addObject: foregroundColorProperty];
 	
-	// Outline
+	// Outline (§17.3.2.23)
 	NSXMLElement *strokeWidthProperty = [self strokeWidthPropertyForAttributes: attributes];
 	if (strokeWidthProperty)
 		[properties addObject: strokeWidthProperty];
 	
-	// Shadow
+	// Shadow (§17.3.2.31)
 	NSXMLElement *shadowProperty = [self shadowPropertyForAttributes: attributes];
 	if (shadowProperty)
 		[properties addObject: shadowProperty];
 	
-	// Strikethrough
+	// Strikethrough (§17.3.2.9/§17.3.2.37)
 	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes: attributes];
 	if (strikethroughProperty)
 		[properties addObject: strikethroughProperty];
 	
-	// Underline
+	// Underline (§17.3.2.40)
 	NSXMLElement *underlineProperty = [self underlinePropertyForAttributes: attributes];
 	if (underlineProperty)
 		[properties addObject: underlineProperty];
 	
-	// Subscript/Superscript
+	// Subscript/Superscript (§17.3.2.42)
 	NSXMLElement *superscriptProperty = [self superscriptPropertyForAttributes: attributes];
 	if (superscriptProperty)
 		[properties addObject: superscriptProperty];

@@ -9,7 +9,7 @@
 #import "RKDOCXDocumentContentWriter.h"
 
 #import "RKDOCXConversionContext.h"
-#import "RKDOCXAttributedStringWriter.h"
+#import "RKDOCXSectionWriter.h"
 
 // Root element name
 NSString *RKDOCXDocumentRootElementName				= @"w:document";
@@ -53,7 +53,7 @@ NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentContentBodyElementName];
 	[document.rootElement addChild: body];
 	
-	body.children = [RKDOCXAttributedStringWriter processAttributedString:[context.document.sections.firstObject content] usingContext:context];
+	body.children = [RKDOCXSectionWriter sectionElementsUsingContext: context];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentFilename];
 }
