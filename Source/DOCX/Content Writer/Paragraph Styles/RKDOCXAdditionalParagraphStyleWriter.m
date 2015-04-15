@@ -8,10 +8,10 @@
 
 #import "RKDOCXAdditionalParagraphStyleWriter.h"
 
-NSString *RKDOCXAdditionalParagraphStyleKeepNextPropertyName			= @"w:keepNext";
-NSString *RKDOCXAdditionalParagraphStyleOrphanControlPropertyName		= @"w:widowControl";
-NSString *RKDOCXAdditionalParagraphStyleOrphanControlOffName			= @"off";
-NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName	= @"w:suppressAutoHyphens";
+NSString *RKDOCXAdditionalParagraphStyleKeepNextElementName				= @"w:keepNext";
+NSString *RKDOCXAdditionalParagraphStyleOrphanControlElementName		= @"w:widowControl";
+NSString *RKDOCXAdditionalParagraphStyleOrphanControlOffAttributeValue	= @"off";
+NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationElementName	= @"w:suppressAutoHyphens";
 
 @implementation RKDOCXAdditionalParagraphStyleWriter
 
@@ -23,17 +23,17 @@ NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName	= @"w:su
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	// Keep With following
+	// Keep With following (§17.3.1.15)
 	if (paragraphStyle.keepWithFollowingParagraph)
-		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleKeepNextPropertyName]];
+		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleKeepNextElementName]];
 	
-	// Skip Orphan Control
+	// Skip Orphan Control (§17.3.1.44)
 	if (paragraphStyle.skipOrphanControl)
-		[properties addObject: [NSXMLElement elementWithName:RKDOCXAdditionalParagraphStyleOrphanControlPropertyName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAdditionalParagraphStyleOrphanControlOffName]]]];
+		[properties addObject: [NSXMLElement elementWithName:RKDOCXAdditionalParagraphStyleOrphanControlElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAdditionalParagraphStyleOrphanControlOffAttributeValue]]]];
 	
-	// Hyphenation
+	// Hyphenation (§17.3.1.34)
 	if (context.document.hyphenationEnabled && (!paragraphStyle.hyphenationEnabled || paragraphStyle.hyphenationEnabled == NO))
-		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationPropertyName]];
+		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationElementName]];
 	
 	return properties;
 }

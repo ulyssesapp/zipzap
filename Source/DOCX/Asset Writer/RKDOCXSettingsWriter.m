@@ -11,32 +11,35 @@
 #import "RKDOCXAttributeWriter.h"
 
 // Root element name
-NSString *RKDOCXSettingsRootElementName					= @"w:settings";
+NSString *RKDOCXSettingsRootElementName								= @"w:settings";
 
 // Relationship type and target
-NSString *RKDOCXSettingsRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
-NSString *RKDOCXSettingsRelationshipTarget				= @"settings.xml";
+NSString *RKDOCXSettingsRelationshipType							= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
+NSString *RKDOCXSettingsRelationshipTarget							= @"settings.xml";
 
 // Setting names
-NSString *RKDOCXSettingsAutoHyphenationPropertyName		= @"w:autoHyphenation";
-NSString *RKDOCXSettingsEndnotePropertiesName			= @"w:endnotePr";
-NSString *RKDOCXSettingsEnumerationContinuousName		= @"continuous";
-NSString *RKDOCXSettingsEnumerationFormatChicago		= @"chicago";
-NSString *RKDOCXSettingsEnumerationFormatDecimal		= @"decimal";
-NSString *RKDOCXSettingsEnumerationFormatLowerLetter	= @"lowerLetter";
-NSString *RKDOCXSettingsEnumerationFormatLowerRoman		= @"lowerRoman";
-NSString *RKDOCXSettingsEnumerationFormatPropertyName	= @"w:numFmt";
-NSString *RKDOCXSettingsEnumerationFormatUpperLetter	= @"upperLetter";
-NSString *RKDOCXSettingsEnumerationFormatUpperRoman		= @"upperRoman";
-NSString *RKDOCXSettingsEnumerationPerPageName			= @"eachPage";
-NSString *RKDOCXSettingsEnumerationPerSectionName		= @"eachSect";
-NSString *RKDOCXSettingsEnumerationRestartPropertyName	= @"w:numRestart";
-NSString *RKDOCXSettingsFootnotePropertiesName			= @"w:footnotePr";
-NSString *RKDOCXSettingsMirrorMarginsPropertyName		= @"w:mirrorMargins";
-NSString *RKDOCXSettingsPositionPropertyName			= @"w:pos";
-NSString *RKDOCXSettingsPositionSamePageName			= @"pageBottom";	// Alternatively "beneathText"
-NSString *RKDOCXSettingsPositionSectionEndName			= @"sectEnd";
-NSString *RKDOCXSettingsPositionDocumentEndName			= @"docEnd";
+// Elements
+NSString *RKDOCXSettingsAutoHyphenationElementName					= @"w:autoHyphenation";
+NSString *RKDOCXSettingsEndnotePropertiesElementName				= @"w:endnotePr";
+NSString *RKDOCXSettingsEnumerationFormatElementName				= @"w:numFmt";
+NSString *RKDOCXSettingsEnumerationRestartElementName				= @"w:numRestart";
+NSString *RKDOCXSettingsFootnotePropertiesElementName				= @"w:footnotePr";
+NSString *RKDOCXSettingsMirrorMarginsElementName					= @"w:mirrorMargins";
+NSString *RKDOCXSettingsPositionElementName							= @"w:pos";
+
+// Attribute Values
+NSString *RKDOCXSettingsEnumerationContinuousAttributeValue			= @"continuous";
+NSString *RKDOCXSettingsEnumerationFormatChicagoAttributeValue		= @"chicago";
+NSString *RKDOCXSettingsEnumerationFormatDecimalAttributeValue		= @"decimal";
+NSString *RKDOCXSettingsEnumerationFormatLowerLetterAttributeValue	= @"lowerLetter";
+NSString *RKDOCXSettingsEnumerationFormatLowerRomanAttributeValue	= @"lowerRoman";
+NSString *RKDOCXSettingsEnumerationFormatUpperLetterAttributeValue	= @"upperLetter";
+NSString *RKDOCXSettingsEnumerationFormatUpperRomanAttributeValue	= @"upperRoman";
+NSString *RKDOCXSettingsEnumerationPerPageAttributeValue			= @"eachPage";
+NSString *RKDOCXSettingsEnumerationPerSectionAttributeValue			= @"eachSect";
+NSString *RKDOCXSettingsPositionSamePageAttributeValue				= @"pageBottom";	// Alternatively "beneathText"
+NSString *RKDOCXSettingsPositionSectionEndAttributeValue			= @"sectEnd";
+NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 
 
 @implementation RKDOCXSettingsWriter
@@ -74,9 +77,9 @@ NSString *RKDOCXSettingsPositionDocumentEndName			= @"docEnd";
 	
 	[document.rootElement addChild: compat];
 	
-	// Hyphenation
+	// Hyphenation (§17.15.1.10)
 	if (context.document.hyphenationEnabled)
-		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsAutoHyphenationPropertyName]];
+		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsAutoHyphenationElementName]];
 	
 #warning Needs further testing when footnotes are supported.
 	// Footnote Properties
@@ -89,9 +92,9 @@ NSString *RKDOCXSettingsPositionDocumentEndName			= @"docEnd";
 	if (endnoteProperties)
 		[document.rootElement addChild: endnoteProperties];
 	
-	// Twosided
+	// Twosided (§17.15.1.57)
 	if (context.document.twoSided)
-		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsMirrorMarginsPropertyName]];
+		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsMirrorMarginsElementName]];
 	
 	[context indexForRelationshipWithTarget:RKDOCXSettingsRelationshipTarget andType:RKDOCXSettingsRelationshipType];
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXSettingsFilename];
@@ -102,70 +105,70 @@ NSString *RKDOCXSettingsPositionDocumentEndName			= @"docEnd";
 	if (document.footnotePlacement == RKFootnotePlacementSamePage && document.footnoteEnumerationStyle == RKFootnoteEnumerationDecimal && document.footnoteEnumerationPolicy == RKFootnoteEnumerationPerPage)
 		return nil;
 	
-	// Footnote Placement
-	NSXMLElement *positionAttribute;
+	// Footnote Placement (§17.11.21)
+	NSString *xmlPositionAttributeValue;
 	switch (document.footnotePlacement) {
 		case RKFootnotePlacementSectionEnd:
-			positionAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsPositionSectionEndName];
+			xmlPositionAttributeValue = RKDOCXSettingsPositionSectionEndAttributeValue;
 			break;
 			
 		case RKFootnotePlacementDocumentEnd:
-			positionAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsPositionDocumentEndName];
+			xmlPositionAttributeValue = RKDOCXSettingsPositionDocumentEndAttributeValue;
 			break;
 			
 		default:
-			positionAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsPositionSamePageName];
+			xmlPositionAttributeValue = RKDOCXSettingsPositionSamePageAttributeValue;
 			break;
 	}
-	NSXMLElement *positionProperty = [NSXMLElement elementWithName: RKDOCXSettingsPositionPropertyName children:nil attributes:@[positionAttribute]];
+	NSXMLElement *positionProperty = [NSXMLElement elementWithName: RKDOCXSettingsPositionElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:xmlPositionAttributeValue]]];
 	
-	// Footnote Enumeration Style
-	NSXMLElement *enumerationFormatAttribute;
+	// Footnote Enumeration Style (§17.11.18)
+	NSString *enumerationFormatAttributeValue;
 	switch (document.footnoteEnumerationStyle) {
 		case RKFootnoteEnumerationRomanLowerCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatLowerRoman];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatLowerRomanAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationRomanUpperCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatUpperRoman];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatUpperRomanAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationAlphabeticLowerCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatLowerLetter];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatLowerLetterAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationAlphabeticUpperCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatUpperLetter];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatUpperLetterAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationChicagoManual:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatChicago];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatChicagoAttributeValue;
 			break;
 			
 		default:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatDecimal];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatDecimalAttributeValue;
 			break;
 	}
-	NSXMLElement *enumerationFormatProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationFormatPropertyName children:nil attributes:@[enumerationFormatAttribute]];
+	NSXMLElement *enumerationFormatProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationFormatElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:enumerationFormatAttributeValue]]];
 	
-	// Footnote Enumeration Policy
-	NSXMLElement *enumerationRestartAttribute;
+	// Footnote Enumeration Policy (§17.11.19)
+	NSString *enumerationRestartAttributeValue;
 	switch (document.footnoteEnumerationPolicy) {
 		case RKFootnoteEnumerationPerSection:
-			enumerationRestartAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationPerSectionName];
+			enumerationRestartAttributeValue = RKDOCXSettingsEnumerationPerSectionAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationPerPage:
-			enumerationRestartAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationPerPageName];
+			enumerationRestartAttributeValue = RKDOCXSettingsEnumerationPerPageAttributeValue;
 			break;
 			
 		default:
-			enumerationRestartAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationContinuousName];
+			enumerationRestartAttributeValue = RKDOCXSettingsEnumerationContinuousAttributeValue;
 			break;
 	}
-	NSXMLElement *enumerationRestartProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationRestartPropertyName children:nil attributes:@[enumerationRestartAttribute]];
+	NSXMLElement *enumerationRestartProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationRestartElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:enumerationRestartAttributeValue]]];
 	
-	return [NSXMLElement elementWithName:RKDOCXSettingsFootnotePropertiesName children:@[positionProperty, enumerationFormatProperty, enumerationRestartProperty] attributes:nil];
+	return [NSXMLElement elementWithName:RKDOCXSettingsFootnotePropertiesElementName children:@[positionProperty, enumerationFormatProperty, enumerationRestartProperty] attributes:nil];
 }
 
 + (NSXMLElement *)endnotePropertiesFromDocument:(RKDocument *)document
@@ -173,66 +176,66 @@ NSString *RKDOCXSettingsPositionDocumentEndName			= @"docEnd";
 	if (document.endnotePlacement == RKEndnotePlacementDocumentEnd && document.endnoteEnumerationStyle == RKFootnoteEnumerationDecimal && document.endnoteEnumerationPolicy == RKFootnoteContinuousEnumeration)
 		return nil;
 	
-	// Endnote Placement
-	NSXMLElement *positionAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsPositionSectionEndName];
+	// Endnote Placement (§17.11.22)
+	NSString *xmlPositionAttributeValue;
 	switch (document.endnotePlacement) {
 		case RKEndnotePlacementSectionEnd:
-			positionAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsPositionSectionEndName];
+			xmlPositionAttributeValue = RKDOCXSettingsPositionSectionEndAttributeValue;
 			break;
 			
 		default:
-			positionAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsPositionDocumentEndName];
+			xmlPositionAttributeValue = RKDOCXSettingsPositionDocumentEndAttributeValue;
 			break;
 	}
-	NSXMLElement *positionProperty = [NSXMLElement elementWithName: RKDOCXSettingsPositionPropertyName children:nil attributes:@[positionAttribute]];
+	NSXMLElement *positionProperty = [NSXMLElement elementWithName: RKDOCXSettingsPositionElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:xmlPositionAttributeValue]]];
 	
-	// Endnote Enumeration Style
-	NSXMLElement *enumerationFormatAttribute;
+	// Endnote Enumeration Style (§17.11.17)
+	NSString *enumerationFormatAttributeValue;
 	switch (document.endnoteEnumerationStyle) {
 		case RKFootnoteEnumerationRomanLowerCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatLowerRoman];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatLowerRomanAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationRomanUpperCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatUpperRoman];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatUpperRomanAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationAlphabeticLowerCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatLowerLetter];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatLowerLetterAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationAlphabeticUpperCase:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatUpperLetter];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatUpperLetterAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationChicagoManual:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatChicago];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatChicagoAttributeValue;
 			break;
 			
 		default:
-			enumerationFormatAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationFormatDecimal];
+			enumerationFormatAttributeValue = RKDOCXSettingsEnumerationFormatDecimalAttributeValue;
 			break;
 	}
-	NSXMLElement *enumerationFormatProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationFormatPropertyName children:nil attributes:@[enumerationFormatAttribute]];
+	NSXMLElement *enumerationFormatProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationFormatElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:enumerationFormatAttributeValue]]];
 	
-	// Endnote Enumeration Policy
-	NSXMLElement *enumerationRestartAttribute;
+	// Endnote Enumeration Policy (§17.11.19)
+	NSString *enumerationRestartAttributeValue;
 	switch (document.footnoteEnumerationPolicy) {
 		case RKFootnoteEnumerationPerSection:
-			enumerationRestartAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationPerSectionName];
+			enumerationRestartAttributeValue = RKDOCXSettingsEnumerationPerSectionAttributeValue;
 			break;
 			
 		case RKFootnoteEnumerationPerPage:
-			enumerationRestartAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationPerPageName];
+			enumerationRestartAttributeValue = RKDOCXSettingsEnumerationPerPageAttributeValue;
 			break;
 			
 		default:
-			enumerationRestartAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSettingsEnumerationContinuousName];
+			enumerationRestartAttributeValue = RKDOCXSettingsEnumerationContinuousAttributeValue;
 			break;
 	}
-	NSXMLElement *enumerationRestartProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationRestartPropertyName children:nil attributes:@[enumerationRestartAttribute]];
+	NSXMLElement *enumerationRestartProperty = [NSXMLElement elementWithName:RKDOCXSettingsEnumerationRestartElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:enumerationRestartAttributeValue]]];
 	
-	return [NSXMLElement elementWithName:RKDOCXSettingsEndnotePropertiesName children:@[positionProperty, enumerationFormatProperty, enumerationRestartProperty] attributes:nil];
+	return [NSXMLElement elementWithName:RKDOCXSettingsEndnotePropertiesElementName children:@[positionProperty, enumerationFormatProperty, enumerationRestartProperty] attributes:nil];
 }
 
 @end

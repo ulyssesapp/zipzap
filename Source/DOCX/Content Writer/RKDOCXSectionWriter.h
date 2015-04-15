@@ -17,8 +17,8 @@
 
 /*!
  @abstract Returns an array of paragraphs and section properties in form of XML elements.
- @discussion Array represents the "children" array of the parent document.
+ @discussion Returns an array of NSXMLElements representing the document contents structured in sections.
  */
-+ (NSArray *)sectionsUsingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)sectionElementsUsingContext:(RKDOCXConversionContext *)context;
 
 @end

@@ -53,7 +53,7 @@ NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 	NSXMLElement *body = [NSXMLElement elementWithName: RKDOCXDocumentContentBodyElementName];
 	[document.rootElement addChild: body];
 	
-	body.children = [RKDOCXSectionWriter sectionsUsingContext: context];
+	body.children = [RKDOCXSectionWriter sectionElementsUsingContext: context];
 	
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentFilename];
 }
