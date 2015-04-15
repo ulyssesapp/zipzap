@@ -10,6 +10,7 @@
 
 #import "RKDOCXFontAttributesWriter.h"
 #import "RKDOCXTextEffectAttributesWriter.h"
+#import "RKDOCXImageWriter.h"
 
 // Element names
 NSString *RKDOCXRunElementName				= @"w:r";
@@ -41,6 +42,9 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
 		[runElement addChild: runPropertiesElement];
 	}
+	
+	if (attributes[RKImageAttachmentAttributeName])
+		return [RKDOCXImageWriter runElementWithImageAttachment:attributes[RKImageAttachmentAttributeName] inRunElement:runElement usingContext:context];
 	
 	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:[attributedString.string substringWithRange:range]];
 	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];

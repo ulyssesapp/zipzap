@@ -1,0 +1,106 @@
+//
+//  RKDOCXImageWriter.m
+//  RTFKit
+//
+//  Created by Lucas Hauswald on 15.04.15.
+//  Copyright (c) 2015 The Soulmen. All rights reserved.
+//
+
+#import "RKDOCXImageWriter.h"
+
+#import "RKImage.h"
+
+// Elements
+NSString *RKDOCXImageAdjustValueListElementName		= @"a:avLst";
+NSString *RKDOCXImageBlipElementName				= @"a:blip";
+NSString *RKDOCXImageBlipFillElementName			= @"pic:blipFill";
+NSString *RKDOCXImageDocumentPropertiesElementName	= @"wp:docPr";
+NSString *RKDOCXImageDrawingElementName				= @"w:drawing";
+NSString *RKDOCXImageExtentElementName				= @"wp:extent";
+NSString *RKDOCXImageFillRectElementName			= @"a:fillRect";
+NSString *RKDOCXImageGraphicDataElementName			= @"a:graphicData";
+NSString *RKDOCXImageGraphicElementName				= @"a:graphic";
+NSString *RKDOCXImageInlineElementName				= @"wp:inline";
+NSString *RKDOCXImageNonVisualCanvasElementName		= @"pic:cNvPr";
+NSString *RKDOCXImageNonVisualPropertiesElementName	= @"pic:nvPicPr";
+NSString *RKDOCXImagePicElementName					= @"pic:pic";
+NSString *RKDOCXImagePresetGeometryElementName		= @"a:prstGeom";
+NSString *RKDOCXImageShapePropertiesElementName		= @"pic:spPr";
+NSString *RKDOCXImageStretchElementName				= @"a:stretch";
+NSString *RKDOCXImageTransformElementName			= @"a:xfrm";
+NSString *RKDOCXImageTransformExtentElementName		= @"a:ext";
+NSString *RKDOCXImageTransformOffElementName		= @"a:off";
+
+// Attributes
+NSString *RKDOCXImageBottomMarginAttributeName		= @"distB";
+NSString *RKDOCXImageCanvasXAttributeName			= @"cx";
+NSString *RKDOCXImageCanvasYAttributeName			= @"cy";
+NSString *RKDOCXImageDescriptionAttributeName		= @"descr";
+NSString *RKDOCXImageEmbedAttributeName				= @"r:embed";
+NSString *RKDOCXImageGraphicDataAttributeName		= @"uri";
+NSString *RKDOCXImageIdentifierAttributeName		= @"id";
+NSString *RKDOCXImageLeftMarginAttributeName		= @"distL";
+NSString *RKDOCXImageMainNamespace					= @"xmlns:a";
+NSString *RKDOCXImageMainNamespaceURL				= @"http://schemas.openxmlformats.org/drawingml/2006/main";
+NSString *RKDOCXImageNameAttributeName				= @"name";
+NSString *RKDOCXImagePictureNamespace				= @"xmlns:pic";
+NSString *RKDOCXImagePictureNamespaceURL			= @"http://schemas.openxmlformats.org/drawingml/2006/picture";
+NSString *RKDOCXImagePresetGeometryAttributeName	= @"prst";
+NSString *RKDOCXImageRightMarginAttributeName		= @"distR";
+NSString *RKDOCXImageTopMarginAttributeName			= @"distT";
+
+// Other
+NSString *RKDOCXImageLocationName					= @"media/";
+NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
+
+@implementation RKDOCXImageWriter
+
++ (NSXMLElement *)runElementWithImageAttachment:(RKImageAttachment *)imageAttachment inRunElement:(NSXMLElement *)runElement usingContext:(RKDOCXConversionContext *)context
+{
+	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
+	
+	// Relationship Handling
+	NSString *filename = [RKDOCXImageLocationName stringByAppendingString: imageAttachment.imageFile.preferredFilename];
+	[context addDocumentPart:imageAttachment.imageFile.regularFileContents withFilename:[@"word/" stringByAppendingString: filename]];
+	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
+	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
+	
+	// Image Margins
+	NSArray *margins = @[[NSXMLElement attributeWithName:RKDOCXImageTopMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.top)).stringValue],
+						 [NSXMLElement attributeWithName:RKDOCXImageLeftMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.left)).stringValue],
+						 [NSXMLElement attributeWithName:RKDOCXImageRightMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.right)).stringValue],
+						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.bottom)).stringValue]];
+	
+	// Image Size
+	NSString *width = @(RKPointsToEMUs(image.size.width)).stringValue;
+	NSString *height = @(RKPointsToEMUs(image.size.height)).stringValue;
+	
+	// XML Tree
+	NSXMLElement *presetGeometryElement = [NSXMLElement elementWithName:RKDOCXImagePresetGeometryElementName children:@[[NSXMLElement elementWithName: RKDOCXImageAdjustValueListElementName]] attributes:@[[NSXMLElement attributeWithName:RKDOCXImagePresetGeometryAttributeName stringValue:@"rect"]]];
+	NSXMLElement *transformElement = [NSXMLElement elementWithName:RKDOCXImageTransformElementName children:@[[NSXMLElement elementWithName:RKDOCXImageTransformOffElementName children:nil attributes:@[[NSXMLElement attributeWithName:@"x" stringValue:@"0"],
+																																																		 [NSXMLElement attributeWithName:@"y" stringValue:@"0"]]],
+																											  [NSXMLElement elementWithName:RKDOCXImageTransformExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName stringValue:width],
+																																																			[NSXMLElement attributeWithName:RKDOCXImageCanvasYAttributeName stringValue:height]]]] attributes:nil];
+	NSXMLElement *shapePropertiesElement = [NSXMLElement elementWithName:RKDOCXImageShapePropertiesElementName children:@[transformElement, presetGeometryElement] attributes:nil];
+	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];
+	NSXMLElement *stretchElement = [NSXMLElement elementWithName:RKDOCXImageStretchElementName children:@[[NSXMLElement elementWithName: RKDOCXImageFillRectElementName]] attributes:nil];
+	NSXMLElement *blipFillElement = [NSXMLElement elementWithName:RKDOCXImageBlipFillElementName children:@[blipElement, stretchElement] attributes:nil];
+	NSXMLElement *nonVisualPropertiesElement = [NSXMLElement elementWithName:RKDOCXImageNonVisualPropertiesElementName children:@[[NSXMLElement elementWithName:RKDOCXImageNonVisualCanvasElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier],
+																																																								[NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename]]],
+																																  [NSXMLElement elementWithName: @"pic:cNvPicPr"]] attributes:nil];
+	NSXMLElement *picElement = [NSXMLElement elementWithName:RKDOCXImagePicElementName children:@[nonVisualPropertiesElement, blipFillElement, shapePropertiesElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXImagePictureNamespace stringValue:RKDOCXImagePictureNamespaceURL]]];
+	NSXMLElement *graphicDataElement = [NSXMLElement elementWithName:RKDOCXImageGraphicDataElementName children:@[picElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXImageGraphicDataAttributeName stringValue:RKDOCXImagePictureNamespaceURL]]];
+	NSXMLElement *graphicElement = [NSXMLElement elementWithName:RKDOCXImageGraphicElementName children:@[graphicDataElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXImageMainNamespace stringValue:RKDOCXImageMainNamespaceURL]]];
+	NSXMLElement *documentPropertiesElement = [NSXMLElement elementWithName:RKDOCXImageDocumentPropertiesElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier],
+																																			   [NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename],
+																																			   [NSXMLElement attributeWithName:RKDOCXImageDescriptionAttributeName stringValue:@""]]];
+	NSXMLElement *extentElement = [NSXMLElement elementWithName:RKDOCXImageExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName stringValue:width],
+																													   [NSXMLElement attributeWithName:RKDOCXImageCanvasYAttributeName stringValue:height]]];
+	NSXMLElement *inlineElement = [NSXMLElement elementWithName:RKDOCXImageInlineElementName children:@[extentElement, documentPropertiesElement, graphicElement] attributes:margins];
+	NSXMLElement *drawingElement = [NSXMLElement elementWithName:RKDOCXImageDrawingElementName children:@[inlineElement] attributes:nil];
+	
+	[runElement addChild: drawingElement];
+	return runElement;
+}
+
+@end
