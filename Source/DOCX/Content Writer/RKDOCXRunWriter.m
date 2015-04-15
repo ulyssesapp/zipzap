@@ -14,7 +14,10 @@
 
 // Element names
 NSString *RKDOCXRunElementName				= @"w:r";
+NSString *RKDOCXRunInstructionAttributeName	= @"w:instr";
+NSString *RKDOCXRunPageNumberAttributeValue	= @"PAGE";
 NSString *RKDOCXRunPropertiesElementName	= @"w:rPr";
+NSString *RKDOCXRunSimpleFieldElementName	= @"w:fldSimple";
 NSString *RKDOCXRunTextElementName			= @"w:t";
 
 @implementation RKDOCXRunWriter
@@ -24,6 +27,10 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	// Check for empty range
 	if (!range.length)
 		return nil;
+	
+	// Check for page number placeholder
+	if ([attributes[RKPlaceholderAttributeName] isEqual: @(RKPlaceholderPageNumber)])
+		return [self pageNumberPlaceHolder];
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
@@ -51,6 +58,13 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	[runElement addChild: textElement];
 	
 	return runElement;
+}
+
++ (NSXMLElement *)pageNumberPlaceHolder
+{
+	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:@"1"];
+	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunElementName children:@[textElement] attributes:nil];
+	return [NSXMLElement elementWithName:RKDOCXRunSimpleFieldElementName children:@[runElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXRunInstructionAttributeName stringValue:RKDOCXRunPageNumberAttributeValue]]];
 }
 
 @end
