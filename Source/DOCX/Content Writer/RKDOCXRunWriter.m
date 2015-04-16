@@ -30,7 +30,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	
 	// Check for page number placeholder
 	if ([attributes[RKPlaceholderAttributeName] isEqual: @(RKPlaceholderPageNumber)])
-		return [self pageNumberPlaceHolder];
+		return [self pageNumberPlaceholder];
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
@@ -60,7 +60,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	return runElement;
 }
 
-+ (NSXMLElement *)pageNumberPlaceHolder
++ (NSXMLElement *)pageNumberPlaceholder
 {
 	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:@"1"];
 	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunElementName children:@[textElement] attributes:nil];
