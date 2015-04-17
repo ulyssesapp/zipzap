@@ -9,7 +9,9 @@
 #import "RKDOCXImageWriter.h"
 
 #import "RKImage.h"
+#if TARGET_OS_IPHONE
 #import <MobileCoreServices/MobileCoreServices.h>
+#endif
 
 // Elements
 NSString *RKDOCXImageAdjustValueListElementName		= @"a:avLst";
