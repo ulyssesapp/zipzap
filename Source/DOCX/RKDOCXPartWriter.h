@@ -14,6 +14,7 @@ extern NSString *RKDOCXCorePropertiesFilename;
 extern NSString *RKDOCXDocumentFilename;
 extern NSString *RKDOCXDocumentRelationshipsFilename;
 extern NSString *RKDOCXExtendedPropertiesFilename;
+extern NSString *RKDOCXFootnotesFilename;
 extern NSString *RKDOCXPackageRelationshipsFilename;
 extern NSString *RKDOCXSettingsFilename;
 

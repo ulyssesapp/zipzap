@@ -53,6 +53,29 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 - (void)addContentType:(NSString *)mimeType forPathExtension:(NSString *)extension;
 
 
+#pragma mark - Footnotes and Endnotes
+
+/*!
+ @abstract Mapping from footnote identifiers (NSNumber) to footnote content (NSXMLElement).
+ */
+@property (nonatomic, readonly) NSDictionary *footnotes;
+
+/*!
+ @abstract Creates and returns an identifier for the given footnote content.
+ */
+- (NSUInteger)indexForFootnoteContent:(NSArray *)content;
+
+/*!
+ @abstract Mapping from endnote identifiers (NSNumber) to endnote content (NSXMLElement).
+ */
+@property (nonatomic, readonly) NSDictionary *endnotes;
+
+/*!
+ @abstract Creates and returns an identifier for the given endnote content.
+ */
+- (NSUInteger)indexForEndnoteContent:(NSArray *)content;
+
+
 #pragma mark - Document relationships
 
 /*!

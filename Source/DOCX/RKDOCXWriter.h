@@ -10,6 +10,7 @@
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXDocumentContentWriter.h"
 #import "RKDOCXDocumentPropertiesWriter.h"
+#import "RKDOCXFootnotesWriter.h"
 #import "RKDOCXPartWriter.h"
 #import "RKDOCXRelationshipsWriter.h"
 #import "RKDOCXSettingsWriter.h"
