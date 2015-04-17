@@ -507,6 +507,7 @@
 		A0472F111ADFC310004118B3 /* RKDOCXFootnotesWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0472F0E1ADFC310004118B3 /* RKDOCXFootnotesWriter.h */; };
 		A0472F121ADFC310004118B3 /* RKDOCXFootnotesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0472F0F1ADFC310004118B3 /* RKDOCXFootnotesWriter.m */; };
 		A0472F131ADFC310004118B3 /* RKDOCXFootnotesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0472F0F1ADFC310004118B3 /* RKDOCXFootnotesWriter.m */; };
+		A0587F4F1AE1558500909686 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0587F4E1AE1558500909686 /* MobileCoreServices.framework */; };
 		A069F6621AD7F61E00F58E15 /* RKDOCXAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */; };
 		A069F6631AD7F61E00F58E15 /* RKDOCXAttributeWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */; };
 		A069F6641AD7F61E00F58E15 /* RKDOCXAttributeWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A069F6611AD7F61E00F58E15 /* RKDOCXAttributeWriter.m */; };
@@ -924,6 +925,7 @@
 		A04568FA1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXSettingsWriterTest.m; path = "Asset Writer/RKDOCXSettingsWriterTest.m"; sourceTree = "<group>"; };
 		A0472F0E1ADFC310004118B3 /* RKDOCXFootnotesWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXFootnotesWriter.h; path = "DOCX/Asset Writer/RKDOCXFootnotesWriter.h"; sourceTree = "<group>"; };
 		A0472F0F1ADFC310004118B3 /* RKDOCXFootnotesWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXFootnotesWriter.m; path = "DOCX/Asset Writer/RKDOCXFootnotesWriter.m"; sourceTree = "<group>"; };
+		A0587F4E1AE1558500909686 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXAttributeWriter.h; sourceTree = "<group>"; };
 		A069F6611AD7F61E00F58E15 /* RKDOCXAttributeWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXAttributeWriter.m; sourceTree = "<group>"; };
 		A074BE451AC30CC9008B3DED /* RKDOCXWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXWriterTest.m; sourceTree = "<group>"; };
@@ -1024,6 +1026,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0587F4F1AE1558500909686 /* MobileCoreServices.framework in Frameworks */,
 				A0920C7A1AD4345800D51CF5 /* libKissXML.a in Frameworks */,
 				A0920C6E1AD4324A00D51CF5 /* libzipzap.a in Frameworks */,
 				790AD8CA15BAD0290011E40E /* UIKit.framework in Frameworks */,
@@ -1060,6 +1063,7 @@
 		50317D3914C494C800F23C04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0587F4E1AE1558500909686 /* MobileCoreServices.framework */,
 				A02631371AD6B6C400FFE40D /* libz.dylib */,
 				A02631351AD6B6BE00FFE40D /* libxml2.dylib */,
 				A016E5591AD5387000C2519D /* libKissXML.a */,
