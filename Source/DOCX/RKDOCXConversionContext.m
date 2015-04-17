@@ -67,6 +67,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	NSMutableDictionary *newContentTypes = [_imageContentTypes mutableCopy];
 	[newContentTypes addEntriesFromDictionary: @{extension: mimeType}];
+	_imageContentTypes = newContentTypes;
 }
 
 
