@@ -16,10 +16,6 @@ NSString *RKDOCXDefaultContentTypeElementName	= @"Default";
 NSString *RKDOCXOverrideContentTypeElementName	= @"Override";
 
 // Content Types
-NSString *RKDOCXDefaultJPGExtension				= @"jpg";
-NSString *RKDOCXDefaultJPGContentType			= @"image/jpg";
-NSString *RKDOCXDefaultPNGExtension				= @"png";
-NSString *RKDOCXDefaultPNGContentType			= @"image/png";
 NSString *RKDOCXDefaultRelationshipExtension	= @"rels";
 NSString *RKDOCXDefaultRelationshipContentType	= @"application/vnd.openxmlformats-package.relationships+xml";
 NSString *RKDOCXDefaultXMLExtension				= @"xml";
@@ -36,8 +32,9 @@ NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-office
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXContentTypesRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/content-types"}];
 	
 	// Default Content Types
-	[self addContentType:RKDOCXDefaultJPGContentType forExtension:RKDOCXDefaultJPGExtension toXMLElement:document.rootElement];
-	[self addContentType:RKDOCXDefaultPNGContentType forExtension:RKDOCXDefaultPNGExtension toXMLElement:document.rootElement];
+	for (NSString *extension in context.imageContentTypes) {
+		[self addContentType:context.imageContentTypes[extension] forExtension:extension toXMLElement:document.rootElement];
+	}
 	[self addContentType:RKDOCXDefaultXMLContentType forExtension:RKDOCXDefaultXMLExtension toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXDefaultRelationshipContentType forExtension:RKDOCXDefaultRelationshipExtension toXMLElement:document.rootElement];
 	
