@@ -22,6 +22,7 @@ NSString *RKDOCXDefaultXMLExtension				= @"xml";
 NSString *RKDOCXDefaultXMLContentType			= @"application/xml";
 NSString *RKDOCXCorePropertiesContentType		= @"application/vnd.openxmlformats-package.core-properties+xml";
 NSString *RKDOCXDocumentContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
+NSString *RKDOCXEndnotesContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml";
 NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
 NSString *RKDOCXFootnotesContentType			= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml";
 NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
@@ -43,6 +44,8 @@ NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-office
 	[self addContentType:RKDOCXDocumentContentType forFilename:RKDOCXDocumentFilename toXMLElement:document.rootElement];
 	if (context.footnotes.count)
 		[self addContentType:RKDOCXFootnotesContentType forFilename:RKDOCXFootnotesFilename toXMLElement:document.rootElement];
+	if (context.endnotes.count)
+		[self addContentType:RKDOCXEndnotesContentType forFilename:RKDOCXEndnotesFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXSettingsContentType forFilename:RKDOCXSettingsFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXCorePropertiesContentType forFilename:RKDOCXCorePropertiesFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXExtendedPropertiesContentType forFilename:RKDOCXExtendedPropertiesFilename toXMLElement:document.rootElement];

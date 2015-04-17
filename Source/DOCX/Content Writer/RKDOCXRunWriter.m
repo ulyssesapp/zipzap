@@ -32,9 +32,10 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	if (placeholderElement)
 		return placeholderElement;
 	
-	// Check for footnote reference mark (located in the footnote’s content)
-	if (attributes[RKDOCXFootnoteReferenceAttributeName])
-		return [RKDOCXFootnotesWriter footnoteReferenceMarkWithRunElementName:RKDOCXRunElementName runPropertiesElementName:RKDOCXRunPropertiesElementName];
+	// Check for footnote/endnote reference mark (located in the footnote’s/endnote’s content)
+	NSXMLElement *referenceMarkElement = [RKDOCXFootnotesWriter referenceMarkWithRunElementName:RKDOCXRunElementName runPropertiesElementName:RKDOCXRunPropertiesElementName referenceType:[attributes[RKDOCXReferenceTypeAttributeName] integerValue]];
+	if (referenceMarkElement)
+		return referenceMarkElement;
 	
 	// Collect all matching attributes
 	NSArray *properties = [self propertyElementsForAttributes:attributes usingContext:context];
@@ -47,9 +48,9 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		return imageRunElement;
 	
 	// Check for footnote reference
-	NSXMLElement *footnoteReferenceRunElement = [RKDOCXFootnotesWriter footnoteReferenceElementForFootnoteString:attributes[RKFootnoteAttributeName] inRunElement:runElement usingContext:context];
-	if (footnoteReferenceRunElement)
-		return footnoteReferenceRunElement;
+	NSXMLElement *referenceRunElement = [RKDOCXFootnotesWriter referenceElementForAttributes:attributes inRunElement:runElement usingContext:context];
+	if (referenceRunElement)
+		return referenceRunElement;
 	
 	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:[attributedString.string substringWithRange:range]];
 	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
@@ -70,7 +71,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	return runElement;
 }
 
-+ (NSMutableArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	

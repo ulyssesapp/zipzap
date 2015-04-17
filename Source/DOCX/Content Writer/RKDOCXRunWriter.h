@@ -20,8 +20,9 @@
  */
 + (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context;
 
-+ (NSXMLElement *)runElementWithProperties:(NSArray *)properties;
-
-+ (NSMutableArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
+/*!
+ @abstract Returns an array of all property elements of the given attributes of a run.
+ */
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 @end

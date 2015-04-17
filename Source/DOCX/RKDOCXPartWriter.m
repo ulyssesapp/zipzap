@@ -15,6 +15,7 @@ NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
 NSString *RKDOCXCorePropertiesFilename			= @"docProps/core.xml";
 NSString *RKDOCXDocumentFilename				= @"word/document.xml";
 NSString *RKDOCXDocumentRelationshipsFilename	= @"word/_rels/document.xml.rels";
+NSString *RKDOCXEndnotesFilename				= @"word/endnotes.xml";
 NSString *RKDOCXExtendedPropertiesFilename		= @"docProps/app.xml";
 NSString *RKDOCXFootnotesFilename				= @"word/footnotes.xml";
 NSString *RKDOCXPackageRelationshipsFilename	= @"_rels/.rels";

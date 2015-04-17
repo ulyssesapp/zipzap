@@ -13,6 +13,7 @@ extern NSString *RKDOCXContentTypesFilename;
 extern NSString *RKDOCXCorePropertiesFilename;
 extern NSString *RKDOCXDocumentFilename;
 extern NSString *RKDOCXDocumentRelationshipsFilename;
+extern NSString *RKDOCXEndnotesFilename;
 extern NSString *RKDOCXExtendedPropertiesFilename;
 extern NSString *RKDOCXFootnotesFilename;
 extern NSString *RKDOCXPackageRelationshipsFilename;
