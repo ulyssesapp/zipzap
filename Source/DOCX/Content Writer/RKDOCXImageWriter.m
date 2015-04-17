@@ -61,6 +61,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	
 	// Relationship Handling
 	NSString *filename = [RKDOCXImageLocationName stringByAppendingString: imageAttachment.imageFile.preferredFilename];
+	[context addMimeType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension] forExtension:imageAttachment.imageFile.preferredFilename.pathExtension];
 	[context addDocumentPart:imageAttachment.imageFile.regularFileContents withFilename:[@"word/" stringByAppendingString: filename]];
 	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
 	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
@@ -101,6 +102,15 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	
 	[runElement addChild: drawingElement];
 	return runElement;
+}
+
++ (NSString *)preferredMIMETypeForPathExtension:(NSString *)pathExtension
+{
+	// Get type identifier
+	NSString *typeIdentifier = (__bridge_transfer NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)pathExtension, NULL);
+	
+	// Get MIME type for type identifier
+	return (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)typeIdentifier, kUTTagClassMIMEType);
 }
 
 @end

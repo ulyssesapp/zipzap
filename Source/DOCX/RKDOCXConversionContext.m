@@ -27,8 +27,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	if (self) {
 		_files = [NSMutableDictionary new];
-		_documentRelationships = [NSDictionary new];
 		_document = document;
+		_imageContentTypes = [NSDictionary new];
+		_documentRelationships = [NSDictionary new];
 	}
 	
 	return self;
@@ -57,6 +58,15 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 {
 	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 	[_files addEntriesFromDictionary: @{filename: part}];
+}
+
+- (void)addMimeType:(NSString *)mimeType forExtension:(NSString *)extension
+{
+	if (_imageContentTypes[extension])
+		return;
+	
+	NSMutableDictionary *newContentTypes = [_imageContentTypes mutableCopy];
+	[newContentTypes addEntriesFromDictionary: @{extension: mimeType}];
 }
 
 
