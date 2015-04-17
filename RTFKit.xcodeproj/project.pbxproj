@@ -547,6 +547,10 @@
 		A0D244D91ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */; };
 		A0D244DA1ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */; };
 		A0E33E4E1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */; };
+		A0E41CD81AE1331500C403B3 /* RKDOCXPlaceholderWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E41CD61AE1331500C403B3 /* RKDOCXPlaceholderWriter.h */; };
+		A0E41CD91AE1331500C403B3 /* RKDOCXPlaceholderWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E41CD61AE1331500C403B3 /* RKDOCXPlaceholderWriter.h */; };
+		A0E41CDA1AE1331500C403B3 /* RKDOCXPlaceholderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E41CD71AE1331500C403B3 /* RKDOCXPlaceholderWriter.m */; };
+		A0E41CDB1AE1331500C403B3 /* RKDOCXPlaceholderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E41CD71AE1331500C403B3 /* RKDOCXPlaceholderWriter.m */; };
 		A0E438E51AC96CDF009EB872 /* RKDOCXContentTypesWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E438E31AC96CDF009EB872 /* RKDOCXContentTypesWriter.h */; };
 		A0E438E61AC96CDF009EB872 /* RKDOCXContentTypesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E438E41AC96CDF009EB872 /* RKDOCXContentTypesWriter.m */; };
 		A0E438E91AC974D3009EB872 /* RKDOCXRelationshipsWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E438E71AC974D3009EB872 /* RKDOCXRelationshipsWriter.h */; };
@@ -947,6 +951,8 @@
 		A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXRunAttributeWriterTest.m; path = "Content Writer/RKDOCXRunAttributeWriterTest.m"; sourceTree = "<group>"; };
 		A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestCase+DOCX.m"; path = "Test Extensions/XCTestCase+DOCX.m"; sourceTree = "<group>"; };
 		A0E33E4F1AC95BBF00EEF4E4 /* XCTestCase+DOCX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "XCTestCase+DOCX.h"; path = "Test Extensions/XCTestCase+DOCX.h"; sourceTree = "<group>"; };
+		A0E41CD61AE1331500C403B3 /* RKDOCXPlaceholderWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXPlaceholderWriter.h; sourceTree = "<group>"; };
+		A0E41CD71AE1331500C403B3 /* RKDOCXPlaceholderWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXPlaceholderWriter.m; sourceTree = "<group>"; };
 		A0E438E31AC96CDF009EB872 /* RKDOCXContentTypesWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXContentTypesWriter.h; path = "DOCX/Asset Writer/RKDOCXContentTypesWriter.h"; sourceTree = "<group>"; };
 		A0E438E41AC96CDF009EB872 /* RKDOCXContentTypesWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXContentTypesWriter.m; path = "DOCX/Asset Writer/RKDOCXContentTypesWriter.m"; sourceTree = "<group>"; };
 		A0E438E71AC974D3009EB872 /* RKDOCXRelationshipsWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXRelationshipsWriter.h; path = "DOCX/Asset Writer/RKDOCXRelationshipsWriter.h"; sourceTree = "<group>"; };
@@ -1767,6 +1773,8 @@
 				A069F6611AD7F61E00F58E15 /* RKDOCXAttributeWriter.m */,
 				A013B42D1ADE614000E45B4F /* RKDOCXImageWriter.h */,
 				A013B42E1ADE614000E45B4F /* RKDOCXImageWriter.m */,
+				A0E41CD61AE1331500C403B3 /* RKDOCXPlaceholderWriter.h */,
+				A0E41CD71AE1331500C403B3 /* RKDOCXPlaceholderWriter.m */,
 				A092D9001AD5822600417A8D /* Paragraph Styles */,
 				A092D8FF1AD5820600417A8D /* Character Styles */,
 			);
@@ -1985,6 +1993,7 @@
 				7962711F15FA29F0001E2BE2 /* NSString+Hyphenation.h in Headers */,
 				7946E937160138B30028EF11 /* RKPDFFrame.h in Headers */,
 				7946E93E1601DDAE0028EF11 /* RKPDFWriterTypes.h in Headers */,
+				A0E41CD81AE1331500C403B3 /* RKDOCXPlaceholderWriter.h in Headers */,
 				79A8F4671602222300A9DA63 /* RKPDFColumn.h in Headers */,
 				79A8F46C1602223700A9DA63 /* RKPDFLine.h in Headers */,
 				79118CB117BCEF2C00D5E346 /* RKConversionPolicy.h in Headers */,
@@ -2013,6 +2022,7 @@
 				790AD8D615BAD3EB0011E40E /* RKListItemCoreTextConverter.h in Headers */,
 				A013B4351ADE63FE00E45B4F /* RKImage.h in Headers */,
 				790AD8D815BAD3EB0011E40E /* RKTextStyleCoreTextConverter.h in Headers */,
+				A0E41CD91AE1331500C403B3 /* RKDOCXPlaceholderWriter.h in Headers */,
 				790AD8DA15BAD3EB0011E40E /* RKColorCoreTextConverter.h in Headers */,
 				790AD8DC15BAD3EB0011E40E /* RKLinkCoreTextConverter.h in Headers */,
 				790AD8DE15BAD3EB0011E40E /* RKTextAttachmentCoreTextConverter.h in Headers */,
@@ -2299,6 +2309,7 @@
 				79FCF8B415A5C52C00D98438 /* RKColorCoreTextConverter.m in Sources */,
 				79FCF8B815A5C54300D98438 /* RKLinkCoreTextConverter.m in Sources */,
 				79FCF8BC15A5C55C00D98438 /* RKTextAttachmentCoreTextConverter.m in Sources */,
+				A0E41CDA1AE1331500C403B3 /* RKDOCXPlaceholderWriter.m in Sources */,
 				79FCF8C015A5C5A100D98438 /* RKFootnoteCoreTextConverter.m in Sources */,
 				79FCF8C415A5C5B500D98438 /* RKListItemCoreTextConverter.m in Sources */,
 				79FCF8C815A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.m in Sources */,
@@ -2562,6 +2573,7 @@
 				A09D36AD1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.m in Sources */,
 				7971428B15BC15050082A67B /* RKStyleAttributeSerializer.m in Sources */,
 				7971428D15BC15050082A67B /* RKStyleNamingAttributeSerializer.m in Sources */,
+				A0E41CDB1AE1331500C403B3 /* RKDOCXPlaceholderWriter.m in Sources */,
 				7971428F15BC15050082A67B /* RKParagraphStyleSerializer.m in Sources */,
 				A092D9061AD5834C00417A8D /* RKDOCXParagraphStyleWriter.m in Sources */,
 				A074BE5E1AC4424B008B3DED /* RKDOCXConversionContext.m in Sources */,

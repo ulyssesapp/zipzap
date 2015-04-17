@@ -9,15 +9,13 @@
 #import "RKDOCXRunWriter.h"
 
 #import "RKDOCXFontAttributesWriter.h"
+#import "RKDOCXPlaceholderWriter.h"
 #import "RKDOCXTextEffectAttributesWriter.h"
 #import "RKDOCXImageWriter.h"
 
 // Element names
 NSString *RKDOCXRunElementName				= @"w:r";
-NSString *RKDOCXRunInstructionAttributeName	= @"w:instr";
-NSString *RKDOCXRunPageNumberAttributeValue	= @"PAGE";
 NSString *RKDOCXRunPropertiesElementName	= @"w:rPr";
-NSString *RKDOCXRunSimpleFieldElementName	= @"w:fldSimple";
 NSString *RKDOCXRunTextElementName			= @"w:t";
 
 @implementation RKDOCXRunWriter
@@ -28,30 +26,22 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	if (!range.length)
 		return nil;
 	
-	// Check for page number placeholder
-	if ([attributes[RKPlaceholderAttributeName] isEqual: @(RKPlaceholderPageNumber)])
-		return [self pageNumberPlaceholder];
+	// Check for placeholder
+	NSXMLElement *placeholderElement = [RKDOCXPlaceholderWriter	placeholder:attributes[RKPlaceholderAttributeName] withRunElementName:RKDOCXRunElementName textElementName:RKDOCXRunTextElementName];
+	if (placeholderElement)
+		return placeholderElement;
 	
-	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Collect all matching attributes
-	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
-	if (propertyElements)
-		[properties addObjectsFromArray: propertyElements];
+	NSArray *properties = [self propertyElementsForAttributes:attributes usingContext:context];
 	
-	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
-	if (propertyElements)
-		[properties addObjectsFromArray: propertyElements];
+	NSXMLElement *runElement = [self runElementWithProperties: properties];
 	
-	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunElementName];
+	// Check for image attribute
+	NSXMLElement *imageRunElement = [RKDOCXImageWriter runElementWithImageAttachment:attributes[RKImageAttachmentAttributeName] inRunElement:runElement usingContext:context];
+	if (imageRunElement)
+		return imageRunElement;
 	
-	if (properties.count) {
-		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
-		[runElement addChild: runPropertiesElement];
-	}
-	
-	if (attributes[RKImageAttachmentAttributeName])
-		return [RKDOCXImageWriter runElementWithImageAttachment:attributes[RKImageAttachmentAttributeName] inRunElement:runElement usingContext:context];
 	
 	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:[attributedString.string substringWithRange:range]];
 	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
@@ -60,11 +50,31 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	return runElement;
 }
 
-+ (NSXMLElement *)pageNumberPlaceholder
++ (NSXMLElement *)runElementWithProperties:(NSArray *)properties
 {
-	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:@"1"];
-	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunElementName children:@[textElement] attributes:nil];
-	return [NSXMLElement elementWithName:RKDOCXRunSimpleFieldElementName children:@[runElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXRunInstructionAttributeName stringValue:RKDOCXRunPageNumberAttributeValue]]];
+	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
+	
+	if (properties.count) {
+		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
+		[runElement addChild: runPropertiesElement];
+	}
+	
+	return runElement;
+}
+
++ (NSMutableArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
+{
+	NSMutableArray *properties = [NSMutableArray new];
+	
+	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
+	if (propertyElements)
+		[properties addObjectsFromArray: propertyElements];
+	
+	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
+	if (propertyElements)
+		[properties addObjectsFromArray: propertyElements];
+	
+	return properties;
 }
 
 @end

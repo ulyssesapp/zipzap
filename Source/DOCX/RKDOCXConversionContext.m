@@ -28,7 +28,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (self) {
 		_files = [NSMutableDictionary new];
 		_document = document;
-		_imageContentTypes = [NSDictionary new];
+		_usedContentTypes = [NSDictionary new];
 		_documentRelationships = [NSDictionary new];
 	}
 	
@@ -60,14 +60,14 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	[_files addEntriesFromDictionary: @{filename: part}];
 }
 
-- (void)addMimeType:(NSString *)mimeType forExtension:(NSString *)extension
+- (void)addContentType:(NSString *)mimeType forPathExtension:(NSString *)extension
 {
-	if (_imageContentTypes[extension])
+	if (_usedContentTypes[extension])
 		return;
 	
-	NSMutableDictionary *newContentTypes = [_imageContentTypes mutableCopy];
-	[newContentTypes addEntriesFromDictionary: @{extension: mimeType}];
-	_imageContentTypes = newContentTypes;
+	NSMutableDictionary *newContentTypes = [_usedContentTypes mutableCopy];
+	newContentTypes[extension] = mimeType;
+	_usedContentTypes = newContentTypes;
 }
 
 

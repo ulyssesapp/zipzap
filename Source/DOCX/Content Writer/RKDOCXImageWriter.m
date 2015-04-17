@@ -57,11 +57,14 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 
 + (NSXMLElement *)runElementWithImageAttachment:(RKImageAttachment *)imageAttachment inRunElement:(NSXMLElement *)runElement usingContext:(RKDOCXConversionContext *)context
 {
+	if (!imageAttachment)
+		return nil;
+	
 	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
 	
 	// Relationship Handling
 	NSString *filename = [RKDOCXImageLocationName stringByAppendingString: imageAttachment.imageFile.preferredFilename];
-	[context addMimeType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension] forExtension:imageAttachment.imageFile.preferredFilename.pathExtension];
+	[context addContentType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension] forPathExtension:imageAttachment.imageFile.preferredFilename.pathExtension];
 	[context addDocumentPart:imageAttachment.imageFile.regularFileContents withFilename:[@"word/" stringByAppendingString: filename]];
 	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
 	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
