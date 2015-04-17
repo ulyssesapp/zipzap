@@ -455,6 +455,14 @@
 		A0076DBF1AC590210049C15F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE691AC449CF008B3DED /* ApplicationServices.framework */; };
 		A0076DC01AC590260049C15F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
 		A0076DC11AC59F540049C15F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
+		A013B42F1ADE614000E45B4F /* RKDOCXImageWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A013B42D1ADE614000E45B4F /* RKDOCXImageWriter.h */; };
+		A013B4301ADE614000E45B4F /* RKDOCXImageWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A013B42D1ADE614000E45B4F /* RKDOCXImageWriter.h */; };
+		A013B4311ADE614000E45B4F /* RKDOCXImageWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A013B42E1ADE614000E45B4F /* RKDOCXImageWriter.m */; };
+		A013B4321ADE614000E45B4F /* RKDOCXImageWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A013B42E1ADE614000E45B4F /* RKDOCXImageWriter.m */; };
+		A013B4341ADE63FE00E45B4F /* RKImage.h in Headers */ = {isa = PBXBuildFile; fileRef = A013B4331ADE63FE00E45B4F /* RKImage.h */; };
+		A013B4351ADE63FE00E45B4F /* RKImage.h in Headers */ = {isa = PBXBuildFile; fileRef = A013B4331ADE63FE00E45B4F /* RKImage.h */; };
+		A013B4371ADE7ED500E45B4F /* RKDOCXImageWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A013B4361ADE7ED500E45B4F /* RKDOCXImageWriterTest.m */; };
+		A013B4381ADE7ED500E45B4F /* RKDOCXImageWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A013B4361ADE7ED500E45B4F /* RKDOCXImageWriterTest.m */; };
 		A016E5541AD5380800C2519D /* libRTFKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79E76BE2151752330073153D /* libRTFKit.a */; };
 		A016E5571AD5383600C2519D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A016E5561AD5383600C2519D /* Foundation.framework */; };
 		A016E5611AD550A700C2519D /* XCTestCase+DOCX.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */; };
@@ -884,6 +892,10 @@
 		79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+PDFUtilities.h"; path = "PDF/Utils/NSAttributedString+PDFUtilities.h"; sourceTree = "<group>"; };
 		79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+PDFUtilities.m"; path = "PDF/Utils/NSAttributedString+PDFUtilities.m"; sourceTree = "<group>"; };
 		A0076DBC1AC5900D0049C15F /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../Library/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug/libzipzap.a"; sourceTree = "<group>"; };
+		A013B42D1ADE614000E45B4F /* RKDOCXImageWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXImageWriter.h; sourceTree = "<group>"; };
+		A013B42E1ADE614000E45B4F /* RKDOCXImageWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXImageWriter.m; sourceTree = "<group>"; };
+		A013B4331ADE63FE00E45B4F /* RKImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKImage.h; path = Utils/RKImage.h; sourceTree = "<group>"; };
+		A013B4361ADE7ED500E45B4F /* RKDOCXImageWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXImageWriterTest.m; path = "Content Writer/RKDOCXImageWriterTest.m"; sourceTree = "<group>"; };
 		A016E5561AD5383600C2519D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		A016E5591AD5387000C2519D /* libKissXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKissXML.a; path = "KissXML/build/Debug-iphoneos/libKissXML.a"; sourceTree = "<group>"; };
 		A0196A551ADBBEEC0091CCB8 /* RKDOCXSectionWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXSectionWriter.h; sourceTree = "<group>"; };
@@ -1527,6 +1539,7 @@
 				A0E49EDE1AD51D91004E7973 /* UIColor+RKColorExtensions.m */,
 				A0E49EE31AD520C3004E7973 /* NSColor+RKColorExtensions.h */,
 				A0E49EE41AD520C3004E7973 /* NSColor+RKColorExtensions.m */,
+				A013B4331ADE63FE00E45B4F /* RKImage.h */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1752,6 +1765,8 @@
 				A04494391ACAD8FA006FB62D /* RKDOCXRunWriter.m */,
 				A069F6601AD7F61E00F58E15 /* RKDOCXAttributeWriter.h */,
 				A069F6611AD7F61E00F58E15 /* RKDOCXAttributeWriter.m */,
+				A013B42D1ADE614000E45B4F /* RKDOCXImageWriter.h */,
+				A013B42E1ADE614000E45B4F /* RKDOCXImageWriter.m */,
 				A092D9001AD5822600417A8D /* Paragraph Styles */,
 				A092D8FF1AD5820600417A8D /* Character Styles */,
 			);
@@ -1822,6 +1837,7 @@
 				A0196A5B1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m */,
 				A092D9071AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m */,
 				A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */,
+				A013B4361ADE7ED500E45B4F /* RKDOCXImageWriterTest.m */,
 			);
 			name = "Content Writer";
 			sourceTree = "<group>";
@@ -1919,6 +1935,7 @@
 				79FCF8AB15A5C4FA00D98438 /* RKParagraphStyleCoreTextConverter.h in Headers */,
 				79FCF8AF15A5C51900D98438 /* RKTextStyleCoreTextConverter.h in Headers */,
 				79FCF8B315A5C52C00D98438 /* RKColorCoreTextConverter.h in Headers */,
+				A013B4341ADE63FE00E45B4F /* RKImage.h in Headers */,
 				79FCF8B715A5C54300D98438 /* RKLinkCoreTextConverter.h in Headers */,
 				79FCF8BB15A5C55C00D98438 /* RKTextAttachmentCoreTextConverter.h in Headers */,
 				79FCF8BF15A5C5A100D98438 /* RKFootnoteCoreTextConverter.h in Headers */,
@@ -1934,6 +1951,7 @@
 				79F4E18515AAE186002B1415 /* RKPDFLinkRenderer.h in Headers */,
 				79F4E18715AAE186002B1415 /* RKPDFTextRenderer.h in Headers */,
 				796C958515AC9EEC00713471 /* RKPDFTextDecorationRenderer.h in Headers */,
+				A013B42F1ADE614000E45B4F /* RKDOCXImageWriter.h in Headers */,
 				796C958D15ACA5B200713471 /* RKAnchorRenderer.h in Headers */,
 				A092D9031AD5834C00417A8D /* RKDOCXParagraphStyleWriter.h in Headers */,
 				796C959115ACA60300713471 /* RKAnchorLinkRenderer.h in Headers */,
@@ -1993,6 +2011,7 @@
 				790AD8D215BAD3EB0011E40E /* RKCoreTextRepresentationConverter.h in Headers */,
 				790AD8D415BAD3EB0011E40E /* RKParagraphStyleCoreTextConverter.h in Headers */,
 				790AD8D615BAD3EB0011E40E /* RKListItemCoreTextConverter.h in Headers */,
+				A013B4351ADE63FE00E45B4F /* RKImage.h in Headers */,
 				790AD8D815BAD3EB0011E40E /* RKTextStyleCoreTextConverter.h in Headers */,
 				790AD8DA15BAD3EB0011E40E /* RKColorCoreTextConverter.h in Headers */,
 				790AD8DC15BAD3EB0011E40E /* RKLinkCoreTextConverter.h in Headers */,
@@ -2025,6 +2044,7 @@
 				790AD90515BAD3EB0011E40E /* NSAttributedString+PDFUtilities.h in Headers */,
 				790AD90715BAD3EB0011E40E /* RKPDFWriter.h in Headers */,
 				79F6B50D1A8902C70046B78D /* RKOperationHandle.h in Headers */,
+				A013B4301ADE614000E45B4F /* RKDOCXImageWriter.h in Headers */,
 				790AD91015BADE4A0011E40E /* RKDocument+RKPersistence.h in Headers */,
 				790AD91215BADE4A0011E40E /* RKSection+RKPersistence.h in Headers */,
 				A044942D1ACAD189006FB62D /* RKDOCXWriter.h in Headers */,
@@ -2275,6 +2295,7 @@
 				79FCF88E15A5BD5400D98438 /* NSAttributedString+PDFCoreTextConversion.m in Sources */,
 				79FCF8AC15A5C4FA00D98438 /* RKParagraphStyleCoreTextConverter.m in Sources */,
 				79FCF8B015A5C51900D98438 /* RKTextStyleCoreTextConverter.m in Sources */,
+				A013B4311ADE614000E45B4F /* RKDOCXImageWriter.m in Sources */,
 				79FCF8B415A5C52C00D98438 /* RKColorCoreTextConverter.m in Sources */,
 				79FCF8B815A5C54300D98438 /* RKLinkCoreTextConverter.m in Sources */,
 				79FCF8BC15A5C55C00D98438 /* RKTextAttachmentCoreTextConverter.m in Sources */,
@@ -2343,6 +2364,7 @@
 				796EAC3A14D9485B001E8401 /* RKStrokeWidthAttributeWriterTest.m in Sources */,
 				796EAC3B14D9485B001E8401 /* RKSuperscriptAttributeWriterTest.m in Sources */,
 				796EAC3D14D9485B001E8401 /* RKUnderlineStyleAttributeWriterTest.m in Sources */,
+				A013B4371ADE7ED500E45B4F /* RKDOCXImageWriterTest.m in Sources */,
 				A092D9081AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m in Sources */,
 				A0E33E4E1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m in Sources */,
 				796EAC4314D9486F001E8401 /* RKWriterTest.m in Sources */,
@@ -2407,6 +2429,7 @@
 				79A62D951A1A3137004C83F9 /* RKUnderlineStyleAttributeWriterTest.m in Sources */,
 				79A62D961A1A3137004C83F9 /* RKStyleNameAttributeWriterTest.m in Sources */,
 				A074BE471AC30CC9008B3DED /* RKDOCXWriterTest.m in Sources */,
+				A013B4381ADE7ED500E45B4F /* RKDOCXImageWriterTest.m in Sources */,
 				79A62D981A1A3137004C83F9 /* RKHeaderWriterTest.m in Sources */,
 				7945F8661A1A3B4800640386 /* RKConversion.m in Sources */,
 				79A62D991A1A3137004C83F9 /* RKSectionWriterTest.m in Sources */,
@@ -2495,6 +2518,7 @@
 				790AD8BE15BAC1050011E40E /* RKTextTabWrapper.m in Sources */,
 				790AD8D115BAD3EB0011E40E /* RKPDFRenderingContext.m in Sources */,
 				790AD8D315BAD3EB0011E40E /* RKCoreTextRepresentationConverter.m in Sources */,
+				A013B4321ADE614000E45B4F /* RKDOCXImageWriter.m in Sources */,
 				790AD8D515BAD3EB0011E40E /* RKParagraphStyleCoreTextConverter.m in Sources */,
 				790AD8D715BAD3EB0011E40E /* RKListItemCoreTextConverter.m in Sources */,
 				790AD8D915BAD3EB0011E40E /* RKTextStyleCoreTextConverter.m in Sources */,

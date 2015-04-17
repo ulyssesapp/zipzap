@@ -158,4 +158,16 @@
 	[self assertDOCX:converted withTestDocument:@"superscript"];
 }
 
+- (void)testPageNumberPlaceholder
+{
+	NSDictionary *attributes = @{RKPlaceholderAttributeName: @(RKPlaceholderPageNumber)};
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @"Placeholder Test "];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:attributes]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"pagenumber"];
+}
+
 @end

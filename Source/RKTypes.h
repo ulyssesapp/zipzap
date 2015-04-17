@@ -110,6 +110,12 @@ typedef enum : NSUInteger {
 #define RKTwipsToPoints(__twips)        ((__twips) / (typeof(__twips))20)
 
 /*!
+ @abstract Simple conversions from Points to EMUs
+ @discussion (1 EMU = 1 / 12700 Point = 1 / 914400 inch)
+ */
+#define RKPointsToEMUs(__points)		((__points) * (typeof(__points))12700)
+
+/*!
  @abstract The character used to indicate hyphenation
 */
 #define RKSoftHyphenCharacter			((unichar)0xAD)

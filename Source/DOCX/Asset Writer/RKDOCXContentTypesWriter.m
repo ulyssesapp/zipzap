@@ -16,14 +16,14 @@ NSString *RKDOCXDefaultContentTypeElementName	= @"Default";
 NSString *RKDOCXOverrideContentTypeElementName	= @"Override";
 
 // Content Types
-NSString *RKDOCXDefaultXMLExtension				= @"xml";
-NSString *RKDOCXDefaultXMLContentType			= @"application/xml";
 NSString *RKDOCXDefaultRelationshipExtension	= @"rels";
 NSString *RKDOCXDefaultRelationshipContentType	= @"application/vnd.openxmlformats-package.relationships+xml";
-NSString *RKDOCXDocumentContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
-NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
+NSString *RKDOCXDefaultXMLExtension				= @"xml";
+NSString *RKDOCXDefaultXMLContentType			= @"application/xml";
 NSString *RKDOCXCorePropertiesContentType		= @"application/vnd.openxmlformats-package.core-properties+xml";
+NSString *RKDOCXDocumentContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
+NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
 
 @implementation RKDOCXContentTypesWriter
 
@@ -32,6 +32,9 @@ NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXContentTypesRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/content-types"}];
 	
 	// Default Content Types
+	for (NSString *extension in context.imageContentTypes) {
+		[self addContentType:context.imageContentTypes[extension] forExtension:extension toXMLElement:document.rootElement];
+	}
 	[self addContentType:RKDOCXDefaultXMLContentType forExtension:RKDOCXDefaultXMLExtension toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXDefaultRelationshipContentType forExtension:RKDOCXDefaultRelationshipExtension toXMLElement:document.rootElement];
 	

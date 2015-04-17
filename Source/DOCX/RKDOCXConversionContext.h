@@ -40,6 +40,17 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename;
 
+/*!
+ @abstract Mapping from extensions to mime types.
+ */
+@property (nonatomic, readonly) NSDictionary *imageContentTypes;
+
+/*!
+ @abstract Adds a new extension to the mime type collection.
+ @discussion Mime types are requiered by RKDOCXContentTypesWriter.
+ */
+- (void)addMimeType:(NSString *)mimeType forExtension:(NSString *)extension;
+
 
 #pragma mark - Document relationships
 
