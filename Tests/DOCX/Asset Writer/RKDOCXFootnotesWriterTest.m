@@ -25,4 +25,27 @@
 	[self assertDOCX:converted withTestDocument:@"footnote"];
 }
 
+- (void)testAttributedStringWithEndnote
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Endnote Test"];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKEndnoteAttributeName: [[NSAttributedString alloc] initWithString:@"This is the content of the endnote."]}]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"endnote"];
+}
+
+- (void)testAttributedStringWithFootnoteAndEndnote
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Footnote\ufffc and Endnote\ufffc Test"];
+	[attributedString addAttribute:RKFootnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the footnote content."] range:NSMakeRange(8, 1)];
+	[attributedString addAttribute:RKEndnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the endnote content."] range:NSMakeRange(21, 1)];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"footnoteandendnote"];
+}
+
 @end
