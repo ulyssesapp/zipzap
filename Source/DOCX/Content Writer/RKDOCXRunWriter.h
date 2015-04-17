@@ -20,4 +20,8 @@
  */
 + (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context;
 
++ (NSXMLElement *)runElementWithProperties:(NSArray *)properties;
+
++ (NSMutableArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
+
 @end

@@ -32,8 +32,8 @@ NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-office
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXContentTypesRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/content-types"}];
 	
 	// Default Content Types
-	for (NSString *extension in context.imageContentTypes) {
-		[self addContentType:context.imageContentTypes[extension] forExtension:extension toXMLElement:document.rootElement];
+	for (NSString *extension in context.usedContentTypes) {
+		[self addContentType:context.usedContentTypes[extension] forExtension:extension toXMLElement:document.rootElement];
 	}
 	[self addContentType:RKDOCXDefaultXMLContentType forExtension:RKDOCXDefaultXMLExtension toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXDefaultRelationshipContentType forExtension:RKDOCXDefaultRelationshipExtension toXMLElement:document.rootElement];
