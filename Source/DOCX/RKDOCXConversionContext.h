@@ -41,15 +41,39 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 - (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename;
 
 /*!
- @abstract Mapping from extensions to mime types.
+ @abstract Contains all content types collected from additional asset files used inside the document.
+ @discussion Maps from path extensions to MIME types.
  */
-@property (nonatomic, readonly) NSDictionary *imageContentTypes;
+@property (nonatomic, readonly) NSDictionary *usedContentTypes;
 
 /*!
  @abstract Adds a new extension to the mime type collection.
  @discussion Mime types are requiered by RKDOCXContentTypesWriter.
  */
-- (void)addMimeType:(NSString *)mimeType forExtension:(NSString *)extension;
+- (void)addContentType:(NSString *)mimeType forPathExtension:(NSString *)extension;
+
+
+#pragma mark - Footnotes and Endnotes
+
+/*!
+ @abstract Mapping from footnote identifiers (NSNumber) to footnote content (NSXMLElement).
+ */
+@property (nonatomic, readonly) NSDictionary *footnotes;
+
+/*!
+ @abstract Creates and returns an identifier for the given footnote content.
+ */
+- (NSUInteger)indexForFootnoteContent:(NSArray *)content;
+
+/*!
+ @abstract Mapping from endnote identifiers (NSNumber) to endnote content (NSXMLElement).
+ */
+@property (nonatomic, readonly) NSDictionary *endnotes;
+
+/*!
+ @abstract Creates and returns an identifier for the given endnote content.
+ */
+- (NSUInteger)indexForEndnoteContent:(NSArray *)content;
 
 
 #pragma mark - Document relationships

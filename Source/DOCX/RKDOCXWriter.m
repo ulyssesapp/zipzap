@@ -17,6 +17,7 @@
 	[RKDOCXRelationshipsWriter buildPackageRelationshipsUsingContext: context];
 	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
+	[RKDOCXFootnotesWriter buildFootnotesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];
 	[RKDOCXRelationshipsWriter buildDocumentRelationshipsUsingContext: context];

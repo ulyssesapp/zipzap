@@ -28,7 +28,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (self) {
 		_files = [NSMutableDictionary new];
 		_document = document;
-		_imageContentTypes = [NSDictionary new];
+		_usedContentTypes = [NSDictionary new];
+		_footnotes = [NSDictionary new];
+		_endnotes = [NSDictionary new];
 		_documentRelationships = [NSDictionary new];
 	}
 	
@@ -60,14 +62,41 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	[_files addEntriesFromDictionary: @{filename: part}];
 }
 
-- (void)addMimeType:(NSString *)mimeType forExtension:(NSString *)extension
+- (void)addContentType:(NSString *)mimeType forPathExtension:(NSString *)extension
 {
-	if (_imageContentTypes[extension])
+	if (_usedContentTypes[extension])
 		return;
 	
-	NSMutableDictionary *newContentTypes = [_imageContentTypes mutableCopy];
-	[newContentTypes addEntriesFromDictionary: @{extension: mimeType}];
-	_imageContentTypes = newContentTypes;
+	NSMutableDictionary *newContentTypes = [_usedContentTypes mutableCopy];
+	newContentTypes[extension] = mimeType;
+	_usedContentTypes = newContentTypes;
+}
+
+
+#pragma mark - Footnotes and Endnotes
+
+- (NSUInteger)indexForFootnoteContent:(NSArray *)content
+{
+	// Identifiers 0 and 1 are reserved for "separator" and "continuationSeparator"
+	NSUInteger index = _footnotes.count + 2;
+	
+	NSMutableDictionary *newFootnotes = [_footnotes mutableCopy];
+	[newFootnotes addEntriesFromDictionary: @{@(index): content}];
+	_footnotes = newFootnotes;
+	
+	return index;
+}
+
+- (NSUInteger)indexForEndnoteContent:(NSArray *)content
+{
+	// Identifiers 0 and 1 are reserved for "separator" and "continuationSeparator"
+	NSUInteger index = _endnotes.count + 2;
+	
+	NSMutableDictionary *newEndnotes = [_endnotes mutableCopy];
+	[newEndnotes addEntriesFromDictionary: @{@(index): content}];
+	_endnotes = newEndnotes;
+	
+	return index;
 }
 
 

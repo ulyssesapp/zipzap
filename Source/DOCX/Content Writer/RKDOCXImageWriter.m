@@ -9,6 +9,10 @@
 #import "RKDOCXImageWriter.h"
 
 #import "RKImage.h"
+#import "RKDOCXRunWriter.h"
+#if TARGET_OS_IPHONE
+#import <MobileCoreServices/MobileCoreServices.h>
+#endif
 
 // Elements
 NSString *RKDOCXImageAdjustValueListElementName		= @"a:avLst";
@@ -55,13 +59,18 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 
 @implementation RKDOCXImageWriter
 
-+ (NSXMLElement *)runElementWithImageAttachment:(RKImageAttachment *)imageAttachment inRunElement:(NSXMLElement *)runElement usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
+	RKImageAttachment *imageAttachment = attributes[RKImageAttachmentAttributeName];
+	
+	if (!imageAttachment)
+		return nil;
+	
 	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
 	
 	// Relationship Handling
 	NSString *filename = [RKDOCXImageLocationName stringByAppendingString: imageAttachment.imageFile.preferredFilename];
-	[context addMimeType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension] forExtension:imageAttachment.imageFile.preferredFilename.pathExtension];
+	[context addContentType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension] forPathExtension:imageAttachment.imageFile.preferredFilename.pathExtension];
 	[context addDocumentPart:imageAttachment.imageFile.regularFileContents withFilename:[@"word/" stringByAppendingString: filename]];
 	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
 	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
@@ -99,9 +108,8 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	// Margins are not part of the boilerplate!
 	NSXMLElement *inlineElement = [NSXMLElement elementWithName:RKDOCXImageInlineElementName children:@[extentElement, documentPropertiesElement, graphicElement] attributes:margins];
 	NSXMLElement *drawingElement = [NSXMLElement elementWithName:RKDOCXImageDrawingElementName children:@[inlineElement] attributes:nil];
-	
-	[runElement addChild: drawingElement];
-	return runElement;
+
+	return [RKDOCXRunWriter runElementForAttributes:attributes contentElement:drawingElement usingContext:context];
 }
 
 + (NSString *)preferredMIMETypeForPathExtension:(NSString *)pathExtension
