@@ -36,6 +36,6 @@ typedef enum : NSUInteger {
 /*!
  @abstract Returns an entire run element containing the reference’s mark and content (inside the footnotes area).
  */
-+ (NSXMLElement *)referenceMarkForAttributes:(NSDictionary *)attributes;
++ (NSXMLElement *)referenceMarkForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 @end

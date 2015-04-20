@@ -28,12 +28,12 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		return nil;
 	
 	// Check for placeholder
-	NSXMLElement *placeholderElement = [RKDOCXPlaceholderWriter	runElementForAttributes:attributes];
+	NSXMLElement *placeholderElement = [RKDOCXPlaceholderWriter	placeholderElementForAttributes:attributes usingContext:context];
 	if (placeholderElement)
 		return placeholderElement;
 	
 	// Check for footnote/endnote reference mark (located in the footnote’s/endnote’s content)
-	NSXMLElement *referenceMarkElement = [RKDOCXFootnotesWriter referenceMarkForAttributes:attributes];
+	NSXMLElement *referenceMarkElement = [RKDOCXFootnotesWriter referenceMarkForAttributes:attributes usingContext:context];
 	if (referenceMarkElement)
 		return referenceMarkElement;
 	
@@ -48,16 +48,15 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		return referenceRunElement;
 	
 	// Handling of usual runs
-	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:[attributedString.string substringWithRange:range]];
-	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
-	
-	return [self runElementForAttributes:attributes contentElement:textElement usingContext:context];
+	return [self runElementForAttributes:attributes contentElement:[self textElementWithStringValue:[attributedString.string substringWithRange:range]] usingContext:context];
 }
 
 + (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes contentElement:(NSXMLElement *)contentElement usingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
-	NSArray *properties = [self propertyElementsForAttributes:attributes usingContext:context];
+	NSArray *properties;
+	if (attributes)
+		properties = [self propertyElementsForAttributes:attributes usingContext:context];
 	
 	if (properties.count) {
 		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
@@ -82,6 +81,14 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		[properties addObjectsFromArray: propertyElements];
 	
 	return properties;
+}
+
++ (NSXMLElement *)textElementWithStringValue:(NSString *)stringValue
+{
+	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:stringValue];
+	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
+	
+	return textElement;
 }
 
 @end

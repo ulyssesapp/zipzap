@@ -6,15 +6,17 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+#import "RKDOCXConversionContext.h"
+
 /*!
  @abstract Converter for placeholder run elements.
  */
 @interface RKDOCXPlaceholderWriter : NSObject
 
 /*!
- @abstract Converts the passed placeholder to an entire run element.
+ @abstract Converts the passed placeholder to a "simple field" element including a run element.
  @discussion DOCX only supports page number placeholders. See ISO 29500-1:2012: §17.16.19 (Simple Field).
  */
-+ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes;
++ (NSXMLElement *)placeholderElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 @end

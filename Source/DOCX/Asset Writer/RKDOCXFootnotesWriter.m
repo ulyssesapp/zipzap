@@ -144,7 +144,7 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	return [RKDOCXRunWriter runElementForAttributes:attributes contentElement:[NSXMLElement elementWithName:referenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:@(referenceIndex).stringValue]]] usingContext:context];
 }
 
-+ (NSXMLElement *)referenceMarkForAttributes:(NSDictionary *)attributes
++ (NSXMLElement *)referenceMarkForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSString *refElementName;
 	
@@ -161,9 +161,8 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 			return nil;
 	}
 	
-	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName: RKDOCXRunPropertiesElementName];
 	NSXMLElement *footnoteRefElement = [NSXMLElement elementWithName: refElementName];
-	return [NSXMLElement elementWithName:RKDOCXRunElementName children:@[runPropertiesElement, footnoteRefElement] attributes:nil];
+	return [RKDOCXRunWriter runElementForAttributes:attributes contentElement:footnoteRefElement usingContext:context];
 }
 
 + (NSXMLElement *)separatorElementWithName:(NSString *)separatorName identifier:(NSString *)identifier endnote:(BOOL)isEndnote
