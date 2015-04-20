@@ -28,38 +28,33 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		return nil;
 	
 	// Check for placeholder
-	NSXMLElement *placeholderElement = [RKDOCXPlaceholderWriter	placeholder:attributes[RKPlaceholderAttributeName] withRunElementName:RKDOCXRunElementName textElementName:RKDOCXRunTextElementName];
+	NSXMLElement *placeholderElement = [RKDOCXPlaceholderWriter	runElementForAttributes:attributes];
 	if (placeholderElement)
 		return placeholderElement;
 	
 	// Check for footnote/endnote reference mark (located in the footnote’s/endnote’s content)
-	NSXMLElement *referenceMarkElement = [RKDOCXFootnotesWriter referenceMarkWithRunElementName:RKDOCXRunElementName runPropertiesElementName:RKDOCXRunPropertiesElementName referenceType:[attributes[RKDOCXReferenceTypeAttributeName] integerValue]];
+	NSXMLElement *referenceMarkElement = [RKDOCXFootnotesWriter referenceMarkForAttributes:attributes];
 	if (referenceMarkElement)
 		return referenceMarkElement;
 	
-	// Collect all matching attributes
-	NSArray *properties = [self propertyElementsForAttributes:attributes usingContext:context];
-	
-	NSXMLElement *runElement = [self runElementWithProperties: properties];
-	
 	// Check for image attribute
-	NSXMLElement *imageRunElement = [RKDOCXImageWriter runElementWithImageAttachment:attributes[RKImageAttachmentAttributeName] inRunElement:runElement usingContext:context];
+	NSXMLElement *imageRunElement = [RKDOCXImageWriter runElementForAttributes:attributes usingContext:context];
 	if (imageRunElement)
 		return imageRunElement;
 	
 	// Check for footnote reference
-	NSXMLElement *referenceRunElement = [RKDOCXFootnotesWriter referenceElementForAttributes:attributes inRunElement:runElement usingContext:context];
+	NSXMLElement *referenceRunElement = [RKDOCXFootnotesWriter referenceElementForAttributes:attributes usingContext:context];
 	if (referenceRunElement)
 		return referenceRunElement;
 	
+	// Handling of usual runs
 	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:[attributedString.string substringWithRange:range]];
 	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
-	[runElement addChild: textElement];
 	
-	return runElement;
+	return [self runElementWithProperties:[self propertyElementsForAttributes:attributes usingContext:context] contentElement:textElement];
 }
 
-+ (NSXMLElement *)runElementWithProperties:(NSArray *)properties
++ (NSXMLElement *)runElementWithProperties:(NSArray *)properties contentElement:(NSXMLElement *)contentElement
 {
 	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
 	
@@ -67,6 +62,8 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
 		[runElement addChild: runPropertiesElement];
 	}
+	NSParameterAssert(contentElement);
+	[runElement addChild: contentElement];
 	
 	return runElement;
 }

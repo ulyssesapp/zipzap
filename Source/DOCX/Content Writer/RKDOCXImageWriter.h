@@ -16,6 +16,6 @@
 /*!
  @abstract Converts the passed image attachment to an entire run element.
  */
-+ (NSXMLElement *)runElementWithImageAttachment:(RKImageAttachment *)imageAttachment inRunElement:(NSXMLElement *)runElement usingContext:(RKDOCXConversionContext *)context;
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 @end

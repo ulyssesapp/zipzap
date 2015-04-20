@@ -15,6 +15,6 @@
  @abstract Converts the passed placeholder to an entire run element.
  @discussion DOCX only supports page number placeholders. See ISO 29500-1:2012: §17.16.19 (Simple Field).
  */
-+ (NSXMLElement *)placeholder:(NSNumber *)placeholder withRunElementName:(NSString *)runElementName textElementName:(NSString *)textElementName;
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes;
 
 @end

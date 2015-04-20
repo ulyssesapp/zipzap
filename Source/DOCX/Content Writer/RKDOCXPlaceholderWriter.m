@@ -12,15 +12,17 @@ NSString *RKDOCXPlaceholderSimpleFieldElementName			= @"w:fldSimple";
 
 #import "RKDOCXPlaceholderWriter.h"
 
+#import "RKDOCXRunWriter.h"
+
 @implementation RKDOCXPlaceholderWriter
 
-+ (NSXMLElement *)placeholder:(NSNumber *)placeholder withRunElementName:(NSString *)runElementName textElementName:(NSString *)textElementName
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes
 {
-	if (![placeholder isEqual: @(RKPlaceholderPageNumber)])
+	if (![attributes[RKPlaceholderAttributeName] isEqual: @(RKPlaceholderPageNumber)])
 		return nil;
 	
-	NSXMLElement *textElement = [NSXMLElement elementWithName:textElementName stringValue:@"1"];
-	NSXMLElement *runElement = [NSXMLElement elementWithName:runElementName children:@[textElement] attributes:nil];
+	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:@"1"];
+	NSXMLElement *runElement = [NSXMLElement elementWithName:RKDOCXRunElementName children:@[textElement] attributes:nil];
 	return [NSXMLElement elementWithName:RKDOCXPlaceholderSimpleFieldElementName children:@[runElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXPlaceholderInstructionAttributeName stringValue:RKDOCXPlaceholderPageNumberAttributeValue]]];
 }
 

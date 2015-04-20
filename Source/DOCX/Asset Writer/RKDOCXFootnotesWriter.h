@@ -31,11 +31,11 @@ typedef enum : NSUInteger {
 /*!
  @abstract Returns an entire run element containing the reference element (inside the document content).
  */
-+ (NSXMLElement *)referenceElementForAttributes:(NSDictionary *)attributes inRunElement:(NSXMLElement *)runElement usingContext:(RKDOCXConversionContext *)context;
++ (NSXMLElement *)referenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 /*!
- @abstract Returns an entire run element containing the reference’s mark and content.
+ @abstract Returns an entire run element containing the reference’s mark and content (inside the footnotes area).
  */
-+ (NSXMLElement *)referenceMarkWithRunElementName:(NSString *)runElementName runPropertiesElementName:(NSString *)runPropertiesElementName referenceType:(RKDOCXReferenceType)referenceType;
++ (NSXMLElement *)referenceMarkForAttributes:(NSDictionary *)attributes;
 
 @end

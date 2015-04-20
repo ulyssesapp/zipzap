@@ -8,6 +8,10 @@
 
 #import "RKDOCXConversionContext.h"
 
+extern NSString *RKDOCXRunElementName;
+extern NSString *RKDOCXRunPropertiesElementName;
+extern NSString *RKDOCXRunTextElementName;
+
 /*!
  @abstract Generates a run element "<w:r>" to be added to the parent paragraph.
  @discussion See ISO 29500-1:2012: §17.3.2 (Run) and §17.3.3 (Run Content).
@@ -19,6 +23,11 @@
  @discussion The text is built using the attributed string and the range.
  */
 + (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context;
+
+/*!
+ @abstract Returns an XML element representing a run with the given properties and content elements.
+ */
++ (NSXMLElement *)runElementWithProperties:(NSArray *)properties contentElement:(NSXMLElement *)contentElement;
 
 /*!
  @abstract Returns an array of all property elements of the given attributes of a run.

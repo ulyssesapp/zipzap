@@ -47,6 +47,29 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	if (!context.footnotes.count && !context.endnotes.count)
 		return;
 	
+	// In case of footnotes
+	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotes:context.footnotes endnoteSection:NO];
+	if (footnotesDocument) {
+		[context indexForRelationshipWithTarget:RKDOCXFootnotesRelationshipTarget andType:RKDOCXFootnotesRelationshipType];
+		[context addDocumentPart:[footnotesDocument XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXFootnotesFilename];
+	}
+	
+	// In case of endnotes
+	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotes:context.endnotes endnoteSection:YES];
+	if (endnotesDocument) {
+		[context indexForRelationshipWithTarget:RKDOCXEndnotesRelationshipTarget andType:RKDOCXEndnotesRelationshipType];
+		[context addDocumentPart:[endnotesDocument XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXEndnotesFilename];
+	}
+}
+
++ (NSXMLDocument *)buildDocumentPartForNotes:(NSDictionary *)notes endnoteSection:(BOOL)isEndnoteSection
+{
+	if (!notes.count)
+		return nil;
+	
+	NSString *rootElementName = isEndnoteSection ? RKDOCXEndnotesRootElementName : RKDOCXFootnotesRootElementName;
+	NSString *noteElementName = isEndnoteSection ? RKDOCXFootnotesEndnoteElementName : RKDOCXFootnotesFootnoteElementName;
+	
 	// Namespaces
 	NSDictionary *namespaces = @{
 								 @"xmlns:wpc": @"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
@@ -70,46 +93,23 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 								 @"mc:Ignorable": @"w14 w15 wp14"
 								 };
 	
-	// In case of footnotes
-	if (context.footnotes.count) {
-		NSXMLDocument *footnotesDocument = [self basicXMLDocumentWithRootElementName:RKDOCXFootnotesRootElementName namespaces:namespaces];
-		
-		// Separator
-		[footnotesDocument.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesSeparatorAttributeValue identifier:@"0" forEndnote:NO]];
-		
-		// Continuation Separator
-		[footnotesDocument.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesContinuationSeparatorAttributeValue identifier:@"1" forEndnote:NO]];
-		
-		// Footnotes
-		for (NSNumber *index in context.footnotes) {
-			[footnotesDocument.rootElement addChild: [NSXMLElement elementWithName:RKDOCXFootnotesFootnoteElementName children:context.footnotes[index] attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:index.stringValue]]]];
-		}
-		
-		[context indexForRelationshipWithTarget:RKDOCXFootnotesRelationshipTarget andType:RKDOCXFootnotesRelationshipType];
-		[context addDocumentPart:[footnotesDocument XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXFootnotesFilename];
+	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:rootElementName namespaces:namespaces];
+	
+	// Separator
+	[document.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesSeparatorAttributeValue identifier:@"0" endnote:isEndnoteSection]];
+	
+	// Continuation Separator
+	[document.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesContinuationSeparatorAttributeValue identifier:@"1" endnote:isEndnoteSection]];
+	
+	// Notes
+	for (NSNumber *index in notes) {
+		[document.rootElement addChild: [NSXMLElement elementWithName:noteElementName children:notes[index] attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:index.stringValue]]]];
 	}
 	
-	// In case of endnotes
-	if (context.endnotes.count) {
-		NSXMLDocument *endnotesDocument = [self basicXMLDocumentWithRootElementName:RKDOCXEndnotesRootElementName namespaces:namespaces];
-		
-		// Separator
-		[endnotesDocument.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesSeparatorAttributeValue identifier:@"0" forEndnote:YES]];
-		
-		// Continuation Separator
-		[endnotesDocument.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesSeparatorAttributeValue identifier:@"1" forEndnote:YES]];
-		
-		// Endnotes
-		for (NSNumber *index in context.endnotes) {
-			[endnotesDocument.rootElement addChild: [NSXMLElement elementWithName:RKDOCXFootnotesEndnoteElementName children:context.endnotes[index] attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:index.stringValue]]]];
-		}
-		
-		[context indexForRelationshipWithTarget:RKDOCXEndnotesRelationshipTarget andType:RKDOCXEndnotesRelationshipType];
-		[context addDocumentPart:[endnotesDocument XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXEndnotesFilename];
-	}
+	return document;
 }
 
-+ (NSXMLElement *)referenceElementForAttributes:(NSDictionary *)attributes inRunElement:(NSXMLElement *)runElement usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)referenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	RKDOCXReferenceType referenceType = RKDOCXNoReference;
 	NSString *referenceElementName;
@@ -119,18 +119,15 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 		referenceType = RKDOCXFootnoteReference;
 		referenceElementName = RKDOCXFootnotesFootnoteReferenceElementName;
 		referenceString = attributes[RKFootnoteAttributeName];
-	} else if (attributes[RKEndnoteAttributeName]) {
+	}
+	else if (attributes[RKEndnoteAttributeName]) {
 		referenceType = RKDOCXEndnoteReference;
 		referenceElementName = RKDOCXFootnotesEndnoteReferenceElementName;
 		referenceString = attributes[RKEndnoteAttributeName];
-	} else {
+	}
+	else {
 		return nil;
 	}
-	
-	NSMutableArray *referenceProperties = [NSMutableArray new];
-	[referenceString enumerateAttributesInRange:NSMakeRange(0, referenceString.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		[referenceProperties addObjectsFromArray: [RKDOCXRunWriter propertyElementsForAttributes:attrs usingContext:context]];
-	}];
 	
 	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKDOCXReferenceTypeAttributeName: @(referenceType)}];
 	[referenceStringWithReferenceMark appendAttributedString: referenceString];
@@ -144,36 +141,40 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 		referenceIndex = [context indexForEndnoteContent: referenceContent];
 	}
 	
-	[runElement addChild: [NSXMLElement elementWithName:referenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:@(referenceIndex).stringValue]]]];
-	return runElement;
+	return [RKDOCXRunWriter runElementWithProperties:[RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context] contentElement:[NSXMLElement elementWithName:referenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:@(referenceIndex).stringValue]]]];
 }
 
-+ (NSXMLElement *)referenceMarkWithRunElementName:(NSString *)runElementName runPropertiesElementName:(NSString *)runPropertiesElementName referenceType:(RKDOCXReferenceType)referenceType
++ (NSXMLElement *)referenceMarkForAttributes:(NSDictionary *)attributes
 {
-	if (!referenceType)
-		return nil;
+	NSString *refElementName;
 	
-	NSString *refElementName = RKDOCXFootnotesFootnoteRefElementName;
-	
-	if (referenceType == RKDOCXEndnoteReference) {
-		refElementName = RKDOCXFootnotesEndnoteRefElementName;
+	switch ([attributes[RKDOCXReferenceTypeAttributeName] integerValue]) {
+		case RKDOCXFootnoteReference:
+			refElementName = RKDOCXFootnotesFootnoteRefElementName;
+			break;
+			
+		case RKDOCXEndnoteReference:
+			refElementName = RKDOCXFootnotesEndnoteRefElementName;
+			break;
+			
+		default:
+			return nil;
 	}
 	
-	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName: runPropertiesElementName];
+	NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName: RKDOCXRunPropertiesElementName];
 	NSXMLElement *footnoteRefElement = [NSXMLElement elementWithName: refElementName];
-	return [NSXMLElement elementWithName:runElementName children:@[runPropertiesElement, footnoteRefElement] attributes:nil];
+	return [NSXMLElement elementWithName:RKDOCXRunElementName children:@[runPropertiesElement, footnoteRefElement] attributes:nil];
 }
 
-+ (NSXMLElement *)separatorElementWithName:(NSString *)separatorName identifier:(NSString *)identifier forEndnote:(BOOL)forEndnote
++ (NSXMLElement *)separatorElementWithName:(NSString *)separatorName identifier:(NSString *)identifier endnote:(BOOL)isEndnote
 {
 	NSXMLElement *separatorElement = [NSXMLElement elementWithName: [@"w:" stringByAppendingString: separatorName]];
 	NSXMLElement *runElement = [NSXMLElement elementWithName:@"w:r" children:@[separatorElement] attributes:nil];
 	NSXMLElement *paragraphElement = [NSXMLElement elementWithName:@"w:p" children:@[runElement] attributes:nil];
 	NSXMLElement *typeAttribute = [NSXMLElement attributeWithName:RKDOCXFootnotesTypeAttributeName stringValue:separatorName];
 	NSXMLElement *identifierAttribute = [NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:identifier];
-	NSString *elementName = RKDOCXFootnotesFootnoteElementName;
-	if (forEndnote)
-		elementName = RKDOCXFootnotesEndnoteElementName;
+	NSString *elementName = isEndnote ? RKDOCXFootnotesEndnoteElementName : RKDOCXFootnotesFootnoteElementName;
+	
 	return [NSXMLElement elementWithName:elementName children:@[paragraphElement] attributes:@[typeAttribute, identifierAttribute]];
 }
 

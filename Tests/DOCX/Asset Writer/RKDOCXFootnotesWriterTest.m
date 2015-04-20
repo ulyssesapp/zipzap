@@ -48,4 +48,16 @@
 	[self assertDOCX:converted withTestDocument:@"footnoteandendnote"];
 }
 
+- (void)testAttributedStringWithTwoFootnotes
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Test\ufffc with two footnotes\ufffc"];
+	[attributedString addAttribute:RKFootnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the first footnote content."] range:NSMakeRange(4, 1)];
+	[attributedString addAttribute:RKFootnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the second footnote content."] range:NSMakeRange(24, 1)];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"twofootnotes"];
+}
+
 @end

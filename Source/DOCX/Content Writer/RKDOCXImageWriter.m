@@ -9,6 +9,7 @@
 #import "RKDOCXImageWriter.h"
 
 #import "RKImage.h"
+#import "RKDOCXRunWriter.h"
 #if TARGET_OS_IPHONE
 #import <MobileCoreServices/MobileCoreServices.h>
 #endif
@@ -58,8 +59,10 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 
 @implementation RKDOCXImageWriter
 
-+ (NSXMLElement *)runElementWithImageAttachment:(RKImageAttachment *)imageAttachment inRunElement:(NSXMLElement *)runElement usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
+	RKImageAttachment *imageAttachment = attributes[RKImageAttachmentAttributeName];
+	
 	if (!imageAttachment)
 		return nil;
 	
@@ -105,9 +108,8 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	// Margins are not part of the boilerplate!
 	NSXMLElement *inlineElement = [NSXMLElement elementWithName:RKDOCXImageInlineElementName children:@[extentElement, documentPropertiesElement, graphicElement] attributes:margins];
 	NSXMLElement *drawingElement = [NSXMLElement elementWithName:RKDOCXImageDrawingElementName children:@[inlineElement] attributes:nil];
-	
-	[runElement addChild: drawingElement];
-	return runElement;
+
+	return [RKDOCXRunWriter runElementWithProperties:[RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context] contentElement:drawingElement];
 }
 
 + (NSString *)preferredMIMETypeForPathExtension:(NSString *)pathExtension
