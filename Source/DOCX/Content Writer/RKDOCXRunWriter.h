@@ -27,11 +27,6 @@ extern NSString *RKDOCXRunTextElementName;
 /*!
  @abstract Returns an XML element representing a run with the given properties and content elements.
  */
-+ (NSXMLElement *)runElementWithProperties:(NSArray *)properties contentElement:(NSXMLElement *)contentElement;
-
-/*!
- @abstract Returns an array of all property elements of the given attributes of a run.
- */
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes contentElement:(NSXMLElement *)contentElement usingContext:(RKDOCXConversionContext *)context;
 
 @end

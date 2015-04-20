@@ -109,7 +109,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	NSXMLElement *inlineElement = [NSXMLElement elementWithName:RKDOCXImageInlineElementName children:@[extentElement, documentPropertiesElement, graphicElement] attributes:margins];
 	NSXMLElement *drawingElement = [NSXMLElement elementWithName:RKDOCXImageDrawingElementName children:@[inlineElement] attributes:nil];
 
-	return [RKDOCXRunWriter runElementWithProperties:[RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context] contentElement:drawingElement];
+	return [RKDOCXRunWriter runElementForAttributes:attributes contentElement:drawingElement usingContext:context];
 }
 
 + (NSString *)preferredMIMETypeForPathExtension:(NSString *)pathExtension

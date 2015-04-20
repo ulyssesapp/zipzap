@@ -51,12 +51,13 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:[attributedString.string substringWithRange:range]];
 	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
 	
-	return [self runElementWithProperties:[self propertyElementsForAttributes:attributes usingContext:context] contentElement:textElement];
+	return [self runElementForAttributes:attributes contentElement:textElement usingContext:context];
 }
 
-+ (NSXMLElement *)runElementWithProperties:(NSArray *)properties contentElement:(NSXMLElement *)contentElement
++ (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes contentElement:(NSXMLElement *)contentElement usingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
+	NSArray *properties = [self propertyElementsForAttributes:attributes usingContext:context];
 	
 	if (properties.count) {
 		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];

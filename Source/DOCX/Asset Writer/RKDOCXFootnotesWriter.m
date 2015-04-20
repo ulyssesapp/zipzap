@@ -141,7 +141,7 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 		referenceIndex = [context indexForEndnoteContent: referenceContent];
 	}
 	
-	return [RKDOCXRunWriter runElementWithProperties:[RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context] contentElement:[NSXMLElement elementWithName:referenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:@(referenceIndex).stringValue]]]];
+	return [RKDOCXRunWriter runElementForAttributes:attributes contentElement:[NSXMLElement elementWithName:referenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:@(referenceIndex).stringValue]]] usingContext:context];
 }
 
 + (NSXMLElement *)referenceMarkForAttributes:(NSDictionary *)attributes
