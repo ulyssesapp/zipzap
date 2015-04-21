@@ -8,6 +8,14 @@
 
 #import "RKDOCXConversionContext.h"
 
+extern NSString *RKDOCXBreakAttributeName;
+
+typedef enum : NSUInteger {
+	RKDOCXNoBreak	= 0,
+	RKDOCXLineBreak	= 1,
+	RKDOCXPageBreak	= 2,
+} RKDOCXBreakType;
+
 /*!
  @abstract Converter for placeholder run elements.
  */
@@ -18,5 +26,10 @@
  @discussion DOCX only supports page number placeholders. See ISO 29500-1:2012: §17.16.19 (Simple Field).
  */
 + (NSXMLElement *)placeholderElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
+
+/*!
+ @abstract Returns an XML element representing a run with a break of the given type.
+ */
++ (NSXMLElement *)runElementWithBreak:(RKDOCXBreakType)type;
 
 @end

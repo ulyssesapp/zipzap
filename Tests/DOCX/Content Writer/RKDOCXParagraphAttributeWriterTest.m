@@ -211,7 +211,7 @@
 
 - (void)testParagraphElementWithPageBreaks
 {
-	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"Page Break Test:\f\fLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\fAt vero eos et accusam et justo duo dolores et ea rebum.\fStet clita kasd gubergren, no sea takimata sanctus est.\fLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\fAt vero eos et accusam et justo duo dolores et ea rebum.\fStet clita kasd gubergren, no sea takimata sanctus est.\fLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\fAt vero eos et accusam et justo duo dolores et ea rebum.\fStet clita kasd gubergren, no sea takimata sanctus est."];
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"Page Break Test:\f\fLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\fAt vero eos et accusam et justo duo dolores et ea rebum.\fStet clita kasd gubergren, no sea takimata sanctus est."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	NSData *converted = [document DOCX];

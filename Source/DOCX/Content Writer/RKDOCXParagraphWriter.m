@@ -10,6 +10,7 @@
 
 #import "RKDOCXAdditionalParagraphStyleWriter.h"
 #import "RKDOCXParagraphStyleWriter.h"
+#import "RKDOCXPlaceholderWriter.h"
 #import "RKDOCXRunWriter.h"
 
 NSString *RKDOCXParagraphElementName			= @"w:p";
@@ -59,6 +60,11 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	}];
 	
 	return runElements;
+}
+
++ (NSXMLElement *)paragraphElementWithPageBreak
+{
+	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:@[[RKDOCXRunWriter runElementForAttributes:nil contentElement:[RKDOCXPlaceholderWriter runElementWithBreak: RKDOCXPageBreak] usingContext:nil]] attributes:nil];
 }
 
 @end

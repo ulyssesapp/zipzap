@@ -55,7 +55,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 {
 	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
 	NSArray *properties;
-	if (attributes)
+	if (attributes && context)
 		properties = [self propertyElementsForAttributes:attributes usingContext:context];
 	
 	if (properties.count) {

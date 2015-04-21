@@ -6,9 +6,15 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-NSString *RKDOCXPlaceholderInstructionAttributeName			= @"w:instr";
-NSString *RKDOCXPlaceholderPageNumberAttributeValue			= @"PAGE";
-NSString *RKDOCXPlaceholderSimpleFieldElementName			= @"w:fldSimple";
+NSString *RKDOCXPlaceholderBreakAttributeName			= @"w:type";
+NSString *RKDOCXPlaceholderBreakElementName				= @"w:br";
+NSString *RKDOCXPlaceholderInstructionAttributeName		= @"w:instr";
+NSString *RKDOCXPlaceholderLineBreakAttributeValue		= @"textWrapping";
+NSString *RKDOCXPlaceholderPageBreakAttributeValue		= @"page";
+NSString *RKDOCXPlaceholderPageNumberAttributeValue		= @"PAGE";
+NSString *RKDOCXPlaceholderSimpleFieldElementName		= @"w:fldSimple";
+
+NSString *RKDOCXBreakAttributeName						= @"RKDOCXBreak";
 
 #import "RKDOCXPlaceholderWriter.h"
 
@@ -23,6 +29,26 @@ NSString *RKDOCXPlaceholderSimpleFieldElementName			= @"w:fldSimple";
 	
 	NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributes:nil contentElement:[RKDOCXRunWriter textElementWithStringValue:@"1"] usingContext:context];
 	return [NSXMLElement elementWithName:RKDOCXPlaceholderSimpleFieldElementName children:@[runElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXPlaceholderInstructionAttributeName stringValue:RKDOCXPlaceholderPageNumberAttributeValue]]];
+}
+
++ (NSXMLElement *)runElementWithBreak:(RKDOCXBreakType)type
+{
+	NSString *attributeValue;
+	switch (type) {
+		case RKDOCXPageBreak:
+			attributeValue = RKDOCXPlaceholderPageBreakAttributeValue;
+			break;
+			
+		case RKDOCXLineBreak:
+			attributeValue = RKDOCXPlaceholderLineBreakAttributeValue;
+			break;
+			
+		default:
+			return nil;
+	}
+	
+	NSXMLElement *breakElement = [NSXMLElement elementWithName:RKDOCXPlaceholderBreakElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXPlaceholderBreakAttributeName stringValue:attributeValue]]];
+	return [RKDOCXRunWriter runElementForAttributes:nil contentElement:breakElement usingContext:nil];
 }
 
 @end
