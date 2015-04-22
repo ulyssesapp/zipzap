@@ -20,8 +20,16 @@
  */
 + (void)buildSettingsUsingContext:(RKDOCXConversionContext *)context;
 
-+ (NSXMLElement *)endnotePropertiesFromDocument:(RKDocument *)document;
-
+/*!
+ @abstract Returns the document-wide footnote properties element.
+ @discussion See ISO 29500-1:2012: §17.11.21 (Footnote Placement), §17.11.18 (Footnote Enumeration Style) and §17.11.19 (Footnote Enumeration Policy)
+ */
 + (NSXMLElement *)footnotePropertiesFromDocument:(RKDocument *)document;
+
+/*!
+ @abstract Returns the document-wide endnote properties element.
+ @discussion See ISO 29500-1:2012: §17.11.22 (Endnote Placement), §17.11.17 (Endnote Enumeration Style) and §17.11.19 (Endnote Enumeration Policy)
+ */
++ (NSXMLElement *)endnotePropertiesFromDocument:(RKDocument *)document;
 
 @end
