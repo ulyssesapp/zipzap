@@ -15,10 +15,10 @@
 @interface RKDOCXRunWriter : NSObject
 
 /*!
- @abstract Returns an XML element representing a run with the given attributes and the corresponding text.
+ @abstract Returns an array of XML elements representing one or more runs with the given attributes and the corresponding text.
  @discussion The text is built using the attributed string and the range.
  */
-+ (NSXMLElement *)runElementForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)runElementsForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context;
 
 /*!
  @abstract Returns an XML element representing a run with the given properties and content elements.

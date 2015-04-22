@@ -13,6 +13,7 @@ NSString *RKDOCXPlaceholderLineBreakAttributeValue		= @"textWrapping";
 NSString *RKDOCXPlaceholderPageBreakAttributeValue		= @"page";
 NSString *RKDOCXPlaceholderPageNumberAttributeValue		= @"PAGE";
 NSString *RKDOCXPlaceholderSimpleFieldElementName		= @"w:fldSimple";
+NSString *RKDOCXPlaceholderTabStopElementName			= @"w:tab";
 
 NSString *RKDOCXBreakAttributeName						= @"RKDOCXBreak";
 
@@ -42,6 +43,9 @@ NSString *RKDOCXBreakAttributeName						= @"RKDOCXBreak";
 		case RKDOCXLineBreak:
 			attributeValue = RKDOCXPlaceholderLineBreakAttributeValue;
 			break;
+			
+		case RKDOCXTabStop:
+			return [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName: RKDOCXPlaceholderTabStopElementName] usingContext:nil];
 			
 		default:
 			return nil;

@@ -55,8 +55,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	NSMutableArray *runElements = [NSMutableArray new];
 	
 	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributedString:attributedString attributes:attrs range:range usingContext:context];
-		[runElements addObject: runElement];
+		[runElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:range usingContext:context]];
 	}];
 	
 	return runElements;
