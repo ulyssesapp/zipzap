@@ -81,7 +81,6 @@ NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 	if (context.document.hyphenationEnabled)
 		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsAutoHyphenationElementName]];
 	
-#warning Needs further testing when footnotes are supported.
 	// Footnote Properties
 	NSXMLElement *footnoteProperties = [self footnotePropertiesFromDocument: context.document];
 	if (footnoteProperties)

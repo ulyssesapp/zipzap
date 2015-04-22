@@ -20,4 +20,8 @@
  */
 + (void)buildSettingsUsingContext:(RKDOCXConversionContext *)context;
 
++ (NSXMLElement *)endnotePropertiesFromDocument:(RKDocument *)document;
+
++ (NSXMLElement *)footnotePropertiesFromDocument:(RKDocument *)document;
+
 @end

@@ -8,6 +8,8 @@
 
 #import "RKDOCXSectionWriter.h"
 
+#import "RKDOCXSettingsWriter.h"
+
 // Elements
 NSString *RKDOCXSectionColumnElementName							= @"w:cols";
 NSString *RKDOCXSectionPageMarginElementName						= @"w:pgMar";
@@ -67,6 +69,16 @@ NSString *RKDOCXSectionPageSizeOrientationPortraitAttributeValue	= @"portrait";
 	NSXMLElement *pageMarginProperty = [self pageMarginPropertyForDocument: context.document];
 	if (pageMarginProperty)
 		[sectionProperties addChild: pageMarginProperty];
+	
+	// Footnote Properties (
+	NSXMLElement *footnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument: context.document];
+	if (footnoteProperties)
+		[sectionProperties addChild: footnoteProperties];
+	
+	// Endnote Properties
+	NSXMLElement *endnoteProperties = [RKDOCXSettingsWriter endnotePropertiesFromDocument: context.document];
+	if (endnoteProperties)
+		[sectionProperties addChild: endnoteProperties];
 	
 	if (sectionProperties.childCount == 0)
 		return lastSectionParagraphs;
