@@ -8,6 +8,8 @@
 
 #import "RKDOCXContentTypesWriter.h"
 
+#import "RKDOCXHeaderFooterWriter.h"
+
 // Root element name
 NSString *RKDOCXContentTypesRootElementName		= @"Types";
 
@@ -15,16 +17,20 @@ NSString *RKDOCXContentTypesRootElementName		= @"Types";
 NSString *RKDOCXDefaultContentTypeElementName	= @"Default";
 NSString *RKDOCXOverrideContentTypeElementName	= @"Override";
 
-// Content Types
+// Default Content Types
 NSString *RKDOCXDefaultRelationshipExtension	= @"rels";
 NSString *RKDOCXDefaultRelationshipContentType	= @"application/vnd.openxmlformats-package.relationships+xml";
 NSString *RKDOCXDefaultXMLExtension				= @"xml";
 NSString *RKDOCXDefaultXMLContentType			= @"application/xml";
+
+// Override Content Types
 NSString *RKDOCXCorePropertiesContentType		= @"application/vnd.openxmlformats-package.core-properties+xml";
 NSString *RKDOCXDocumentContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 NSString *RKDOCXEndnotesContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml";
 NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
+NSString *RKDOCXFooterContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml";
 NSString *RKDOCXFootnotesContentType			= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml";
+NSString *RKDOCXHeaderContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml";
 NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
 
 @implementation RKDOCXContentTypesWriter
@@ -46,6 +52,10 @@ NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-office
 		[self addContentType:RKDOCXFootnotesContentType forFilename:RKDOCXFootnotesFilename toXMLElement:document.rootElement];
 	if (context.endnotes.count)
 		[self addContentType:RKDOCXEndnotesContentType forFilename:RKDOCXEndnotesFilename toXMLElement:document.rootElement];
+	for (NSUInteger index = 1; index <= context.headerCount; index++)
+		[self addContentType:RKDOCXHeaderContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForNumber:@(index) isHeaderFile:YES]] toXMLElement:document.rootElement];
+	for (NSUInteger index = 1; index <= context.footerCount; index++)
+		[self addContentType:RKDOCXFooterContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForNumber:@(index) isHeaderFile:NO]] toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXSettingsContentType forFilename:RKDOCXSettingsFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXCorePropertiesContentType forFilename:RKDOCXCorePropertiesFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXExtendedPropertiesContentType forFilename:RKDOCXExtendedPropertiesFilename toXMLElement:document.rootElement];

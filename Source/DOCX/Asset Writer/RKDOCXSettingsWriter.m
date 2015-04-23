@@ -23,6 +23,7 @@ NSString *RKDOCXSettingsAutoHyphenationElementName					= @"w:autoHyphenation";
 NSString *RKDOCXSettingsEndnotePropertiesElementName				= @"w:endnotePr";
 NSString *RKDOCXSettingsEnumerationFormatElementName				= @"w:numFmt";
 NSString *RKDOCXSettingsEnumerationRestartElementName				= @"w:numRestart";
+NSString *RKDOCXSettingsEvenAndOddHeadersElementName				= @"w:evenAndOddHeaders";
 NSString *RKDOCXSettingsFootnotePropertiesElementName				= @"w:footnotePr";
 NSString *RKDOCXSettingsMirrorMarginsElementName					= @"w:mirrorMargins";
 NSString *RKDOCXSettingsPositionElementName							= @"w:pos";
@@ -90,6 +91,10 @@ NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 	NSXMLElement *endnoteProperties = [self footnotePropertiesFromDocument:context.document isEndnote:YES];
 	if (endnoteProperties)
 		[document.rootElement addChild: endnoteProperties];
+	
+	// Even And Odd Headers
+	if (context.evenAndOddHeaders)
+		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsEvenAndOddHeadersElementName]];
 	
 	// Twosided (§17.15.1.57)
 	if (context.document.twoSided)
