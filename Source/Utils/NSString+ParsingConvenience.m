@@ -18,7 +18,7 @@
 	
 	do {
 		NSRange delimiterRange = [self rangeOfCharacterFromSet:set options:0 range:NSMakeRange(scanLocation, NSMaxRange(range) - scanLocation)];
-		NSRange tokenRange = (delimiterRange.length == 0) ? NSMakeRange(scanLocation, NSMaxRange(range) - scanLocation) : NSMakeRange(scanLocation, delimiterRange.location -scanLocation);
+		NSRange tokenRange = (delimiterRange.length == 0) ? NSMakeRange(scanLocation, NSMaxRange(range) - scanLocation) : NSMakeRange(scanLocation, delimiterRange.location - scanLocation);
 		
 		unichar delimiter = (delimiterRange.length == 0) ?: [self characterAtIndex: delimiterRange.location];
 		
