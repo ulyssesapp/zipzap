@@ -20,11 +20,23 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 
 @implementation RKDOCXHeaderFooterWriter
 
-+ (void)buildHeaderOrFooterWithFileNumber:(NSNumber *)fileNumber forAttributedString:(NSAttributedString *)contentString usingContext:(RKDOCXConversionContext *)context isHeaderFile:(BOOL)isHeader
++ (void)buildPageElement:(RKDOCXPageElementType)pageElement withIndex:(NSUInteger)index forAttributedString:(NSAttributedString *)contentString usingContext:(RKDOCXConversionContext *)context
 {
-	NSString *rootElementName = isHeader ? RKDOCXHeaderRootElementName : RKDOCXFooterRootElementName;
-	NSString *filename = [self filenameForNumber:fileNumber isHeaderFile:isHeader];
-	NSString *relationshipType = isHeader ? RKDOCXHeaderRelationshipType : RKDOCXFooterRelationshipType;
+	NSString *rootElementName;
+	NSString *relationshipType;
+	switch (pageElement) {
+		case RKDOCXHeader:
+			rootElementName = RKDOCXHeaderRootElementName;
+			relationshipType = RKDOCXHeaderRelationshipType;
+			break;
+			
+		case RKDOCXFooter:
+			rootElementName = RKDOCXFooterRootElementName;
+			relationshipType = RKDOCXFooterRelationshipType;
+			break;
+	}
+	
+	NSString *filename = [self filenameForPageElement:pageElement withIndex:index];
 	
 	// Namespaces
 	NSDictionary *namespaces = @{
@@ -57,9 +69,9 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:[@"word/" stringByAppendingString: filename]];
 }
 
-+ (NSString *)filenameForNumber:(NSNumber *)fileNumber isHeaderFile:(BOOL)isHeader
++ (NSString *)filenameForPageElement:(RKDOCXPageElementType)pageElement withIndex:(NSUInteger)index
 {
-	return isHeader ? [NSString stringWithFormat: @"header%@.xml", fileNumber] : [NSString stringWithFormat: @"footer%@.xml", fileNumber];
+	return (pageElement == RKDOCXHeader) ? [NSString stringWithFormat: @"header%lu.xml", index] : [NSString stringWithFormat: @"footer%lu.xml", index];
 }
 
 @end

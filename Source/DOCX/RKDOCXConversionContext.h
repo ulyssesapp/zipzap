@@ -89,7 +89,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 @property (nonatomic) NSUInteger footerCount;
 
 /*!
- @abstract Stores whether the document has a different header or footer for even and odd pages.
+ @abstract Whether the document contains any section requiring different header or footer for even/odd pages.
  @discussion Defaults to NO, set to YES by the section writer.
  */
 @property (nonatomic) BOOL evenAndOddHeaders;

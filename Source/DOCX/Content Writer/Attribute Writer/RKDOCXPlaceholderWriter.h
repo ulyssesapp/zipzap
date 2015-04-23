@@ -11,7 +11,7 @@
 extern NSString *RKDOCXBreakAttributeName;
 
 /*!
- @abstract Represents symbolic characters used for placholder conversion.
+ @abstract Represents symbolic characters used for placeholder conversion.
  
  @const RKDOCXLineBreakCharacter Represents a line break character. See See ISO 29500-1:2012: §17.3.3.1 (Break).
  @const RKDOCXPageBreakCharacter Represents a page break character. See See ISO 29500-1:2012: §17.3.3.1 (Break).

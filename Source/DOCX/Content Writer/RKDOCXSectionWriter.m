@@ -91,64 +91,20 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 		[sectionProperties addChild: endnoteProperties];
 
 	// Headers and Footers
-	// Check for different first page
+	// DOCX requires a "titlePg" element when using a different header or footer for first pages. See ISO 29500-1:2012: §17.10.6.
 	if (!(lastSection.hasSingleHeaderForAllPages && lastSection.hasSingleFooterForAllPages) && ([lastSection headerForPage: RKPageSelectionFirst] || [lastSection footerForPage: RKPageSelectionFirst]))
 		[sectionProperties addChild: [NSXMLElement elementWithName: RKDOCXSectionTitlePageElementName]];
 	
-	// Enumerate Headers
+	// Create a reference for each separate Header
 	[lastSection enumerateHeadersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
-		context.headerCount++;
-		NSXMLElement *referenceElement = [NSXMLElement elementWithName: RKDOCXSectionHeaderReferenceElementName];
-		NSString *typeAttribute;
-		switch (pageSelector) {
-			case RKPageSelectionFirst:
-				typeAttribute = RKDOCXSectionTypeFirstAttributeValue;
-				break;
-				
-			case RKPageSelectionLeft:
-				typeAttribute = RKDOCXSectionTypeEvenAttributeValue;
-				context.evenAndOddHeaders = YES;
-				break;
-				
-			case RKPageSelectionRight:
-			case RKPageSelectorAll:
-				typeAttribute = RKDOCXSectionTypeDefaultAttriuteValue;
-				break;
-		}
-		
-		[RKDOCXHeaderFooterWriter buildHeaderOrFooterWithFileNumber:@(context.headerCount) forAttributedString:header usingContext:context isHeaderFile:YES];
-		NSString *rId = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:[RKDOCXHeaderFooterWriter filenameForNumber:@(context.headerCount) isHeaderFile:YES] andType:nil]];
-		[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionIdentifierAttributeName stringValue:rId]];
-		[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionTypeAttributeName stringValue:typeAttribute]];
-		[sectionProperties addChild: referenceElement];
+		[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXHeader withIndex:++context.headerCount forAttributedString:header usingContext:context];
+		[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXHeader withAttributedString:header forPageSelector:pageSelector usingContext:context]];
 	}];
 	
-	// Enumerate Footers
+	// Create a reference for each separate Footer
 	[lastSection enumerateFootersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
-		context.footerCount++;
-		NSXMLElement *referenceElement = [NSXMLElement elementWithName: RKDOCXSectionFooterReferenceElementName];
-		NSString *typeAttribute;
-		switch (pageSelector) {
-			case RKPageSelectionFirst:
-				typeAttribute = RKDOCXSectionTypeFirstAttributeValue;
-				break;
-				
-			case RKPageSelectionLeft:
-				typeAttribute = RKDOCXSectionTypeEvenAttributeValue;
-				context.evenAndOddHeaders = YES;
-				break;
-				
-			case RKPageSelectionRight:
-			case RKPageSelectorAll:
-				typeAttribute = RKDOCXSectionTypeDefaultAttriuteValue;
-				break;
-		}
-		
-		[RKDOCXHeaderFooterWriter buildHeaderOrFooterWithFileNumber:@(context.footerCount) forAttributedString:footer usingContext:context isHeaderFile:NO];
-		NSString *rId = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:[RKDOCXHeaderFooterWriter filenameForNumber:@(context.footerCount) isHeaderFile:NO] andType:nil]];
-		[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionIdentifierAttributeName stringValue:rId]];
-		[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionTypeAttributeName stringValue:typeAttribute]];
-		[sectionProperties addChild: referenceElement];
+		[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXFooter withIndex:++context.footerCount forAttributedString:footer usingContext:context];
+		[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXFooter withAttributedString:footer forPageSelector:pageSelector usingContext:context]];
 	}];
 	
 	if (sectionProperties.childCount == 0)
@@ -246,6 +202,47 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 	}
 	
 	return [NSXMLElement elementWithName:RKDOCXSectionPageMarginElementName children:nil attributes:@[headerAttribute, footerAttribute, topAttribute, leftAttribute, rightAttribute, bottomAttribute]];
+}
+
++ (NSXMLElement *)sectionPropertyElementForPageElement:(RKDOCXPageElementType)pageElement withAttributedString:(NSAttributedString *)string forPageSelector:(RKPageSelectionMask)pageSelector usingContext:(RKDOCXConversionContext *)context
+{
+	NSString *referenceElementName;
+	NSUInteger index;
+	switch (pageElement) {
+		case RKDOCXHeader:
+			referenceElementName = RKDOCXSectionHeaderReferenceElementName;
+			index = context.headerCount;
+			break;
+			
+		case RKDOCXFooter:
+			referenceElementName = RKDOCXSectionFooterReferenceElementName;
+			index = context.footerCount;
+			break;
+	}
+	
+	NSString *typeAttribute;
+	switch (pageSelector) {
+		case RKPageSelectionFirst:
+			typeAttribute = RKDOCXSectionTypeFirstAttributeValue;
+			break;
+			
+		case RKPageSelectionLeft:
+			typeAttribute = RKDOCXSectionTypeEvenAttributeValue;
+			context.evenAndOddHeaders = YES;
+			break;
+			
+		case RKPageSelectionRight:
+		case RKPageSelectorAll:
+			typeAttribute = RKDOCXSectionTypeDefaultAttriuteValue;
+			break;
+	}
+	
+	NSXMLElement *referenceElement = [NSXMLElement elementWithName: referenceElementName];
+	NSString *rId = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:[RKDOCXHeaderFooterWriter filenameForPageElement:pageElement withIndex:index] andType:nil]];
+	[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionIdentifierAttributeName stringValue:rId]];
+	[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionTypeAttributeName stringValue:typeAttribute]];
+	
+	return referenceElement;
 }
 
 @end

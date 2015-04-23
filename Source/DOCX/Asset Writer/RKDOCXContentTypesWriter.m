@@ -53,9 +53,9 @@ NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-office
 	if (context.endnotes.count)
 		[self addContentType:RKDOCXEndnotesContentType forFilename:RKDOCXEndnotesFilename toXMLElement:document.rootElement];
 	for (NSUInteger index = 1; index <= context.headerCount; index++)
-		[self addContentType:RKDOCXHeaderContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForNumber:@(index) isHeaderFile:YES]] toXMLElement:document.rootElement];
+		[self addContentType:RKDOCXHeaderContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForPageElement:RKDOCXHeader withIndex:index]] toXMLElement:document.rootElement];
 	for (NSUInteger index = 1; index <= context.footerCount; index++)
-		[self addContentType:RKDOCXFooterContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForNumber:@(index) isHeaderFile:NO]] toXMLElement:document.rootElement];
+		[self addContentType:RKDOCXFooterContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForPageElement:RKDOCXFooter withIndex:index]] toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXSettingsContentType forFilename:RKDOCXSettingsFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXCorePropertiesContentType forFilename:RKDOCXCorePropertiesFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXExtendedPropertiesContentType forFilename:RKDOCXExtendedPropertiesFilename toXMLElement:document.rootElement];
