@@ -20,4 +20,10 @@
  */
 + (void)buildSettingsUsingContext:(RKDOCXConversionContext *)context;
 
+/*!
+ @abstract Returns the document-wide endnote/footnote properties element.
+ @discussion See ISO 29500-1:2012: §17.11.21 (Footnote Placement), §17.11.22 (Endnote Placement), §17.11.17 (Endnote Enumeration Style), §17.11.18 (Footnote Enumeration Style) and §17.11.19 (Endnote and Footnote Enumeration Policy)
+ */
++ (NSXMLElement *)footnotePropertiesFromDocument:(RKDocument *)document isEndnote:(BOOL)isEndnote;
+
 @end

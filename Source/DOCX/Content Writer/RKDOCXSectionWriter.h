@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
-#import "RKDOCXAttributedStringWriter.h"
 #import "RKDOCXConversionContext.h"
 
 /*!

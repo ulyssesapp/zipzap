@@ -16,7 +16,11 @@
 
 - (void)testSettingsWithFootnoteAndEndnotePlacement
 {
-	RKDocument *document = [[RKDocument alloc] init];
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Footnote\ufffc and Endnote\ufffc Test"];
+	[attributedString addAttribute:RKFootnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the footnote content."] range:NSMakeRange(8, 1)];
+	[attributedString addAttribute:RKEndnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the endnote content."] range:NSMakeRange(21, 1)];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.hyphenationEnabled = YES;
 	document.footnotePlacement = RKFootnotePlacementSectionEnd;
 	document.footnoteEnumerationStyle = RKFootnoteEnumerationAlphabeticLowerCase;
