@@ -32,23 +32,20 @@ NSString *RKDOCXBreakAttributeName						= @"RKDOCXBreak";
 	return [NSXMLElement elementWithName:RKDOCXPlaceholderSimpleFieldElementName children:@[runElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXPlaceholderInstructionAttributeName stringValue:RKDOCXPlaceholderPageNumberAttributeValue]]];
 }
 
-+ (NSXMLElement *)runElementWithBreak:(RKDOCXBreakType)type
++ (NSXMLElement *)runElementWithSymbolicCharacter:(RKDOCXSymbolicCharacterType)type
 {
 	NSString *attributeValue;
 	switch (type) {
-		case RKDOCXPageBreak:
+		case RKDOCXPageBreakCharacter:
 			attributeValue = RKDOCXPlaceholderPageBreakAttributeValue;
 			break;
 			
-		case RKDOCXLineBreak:
+		case RKDOCXLineBreakCharacter:
 			attributeValue = RKDOCXPlaceholderLineBreakAttributeValue;
 			break;
 			
-		case RKDOCXTabStop:
+		case RKDOCXTabStopCharacter:
 			return [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName: RKDOCXPlaceholderTabStopElementName] usingContext:nil];
-			
-		default:
-			return nil;
 	}
 	
 	NSXMLElement *breakElement = [NSXMLElement elementWithName:RKDOCXPlaceholderBreakElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXPlaceholderBreakAttributeName stringValue:attributeValue]]];

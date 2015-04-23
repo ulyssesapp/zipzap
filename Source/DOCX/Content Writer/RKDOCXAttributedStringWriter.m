@@ -8,6 +8,7 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
+#import "NSString+ParsingConvenience.h"
 #import "RKDOCXParagraphWriter.h"
 
 NSString *RKDOCXPageBreakCharacterName	= @"\f";
@@ -25,23 +26,15 @@ NSString *RKDOCXPageBreakCharacterName	= @"\f";
 	NSMutableArray *paragraphs = [NSMutableArray new];
 	
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs|NSStringEnumerationSubstringNotRequired usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-		NSUInteger scanLocation = substringRange.location;
-		
-		do {
-			NSRange nextPageBreakRange = [attributedString.string rangeOfCharacterFromSet:pageBreakCharacterSet options:0 range:NSMakeRange(scanLocation, NSMaxRange(substringRange) - scanLocation)];
+		[attributedString.string enumerateTokensWithDelimiters:pageBreakCharacterSet inRange:substringRange usingBlock:^(NSRange tokenRange, unichar delimiter) {
+			// Add paragraph, if any
+			if (tokenRange.length > 0)
+				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:tokenRange usingContext:context]];
 			
-			if (nextPageBreakRange.location == NSNotFound) {
-				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:NSMakeRange(scanLocation, NSMaxRange(substringRange) - scanLocation) usingContext:context]];
-				break;
-			}
-			
-			if (nextPageBreakRange.location > scanLocation)
-				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:NSMakeRange(scanLocation, nextPageBreakRange.location - scanLocation) usingContext:context]];
-			
-			[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementWithPageBreak]];
-			
-			scanLocation = nextPageBreakRange.location + 1;
-		} while (scanLocation < NSMaxRange(substringRange));
+			// Add page break, if any
+			if (delimiter == '\f')
+				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementWithPageBreak]];
+		}];
 	}];
 	
 	return paragraphs;

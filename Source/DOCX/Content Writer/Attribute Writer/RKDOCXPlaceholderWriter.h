@@ -10,12 +10,17 @@
 
 extern NSString *RKDOCXBreakAttributeName;
 
+/*!
+ @abstract Represents symbolic characters used for placholder conversion.
+ @const RKDOCXLineBreakCharacter Represents a line break character. See See ISO 29500-1:2012: §17.3.3.1 (Break).
+ @const RKDOCXPageBreakCharacter Represents a page break character. See See ISO 29500-1:2012: §17.3.3.1 (Break).
+ @const RKDOCXTabStopCharacter Represents a tab stop character. See ISO 29500-1:2012: §17.3.3.32 (Tab Character).
+ */
 typedef enum : NSUInteger {
-	RKDOCXNoBreak	= 0,
-	RKDOCXLineBreak	= 1,
-	RKDOCXPageBreak	= 2,
-	RKDOCXTabStop	= 3
-} RKDOCXBreakType;
+	RKDOCXLineBreakCharacter,
+	RKDOCXPageBreakCharacter,
+	RKDOCXTabStopCharacter,
+} RKDOCXSymbolicCharacterType;
 
 /*!
  @abstract Converter for placeholder run elements.
@@ -32,6 +37,6 @@ typedef enum : NSUInteger {
  @abstract Returns an XML element representing a run with a break of the given type.
  @discussion See ISO 29500-1:2012: §17.3.3.1 (Break) and §17.3.3.32 (Tab Character).
  */
-+ (NSXMLElement *)runElementWithBreak:(RKDOCXBreakType)type;
++ (NSXMLElement *)runElementWithSymbolicCharacter:(RKDOCXSymbolicCharacterType)type;
 
 @end

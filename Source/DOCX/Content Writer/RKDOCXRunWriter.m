@@ -10,6 +10,7 @@
 
 #import "RKDOCXFontAttributesWriter.h"
 #import "RKDOCXFootnotesWriter.h"
+#import "NSString+ParsingConvenience.h"
 #import "RKDOCXPlaceholderWriter.h"
 #import "RKDOCXTextEffectAttributesWriter.h"
 #import "RKDOCXImageWriter.h"
@@ -48,11 +49,6 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		return @[referenceRunElement];
 	
 	// Handling of usual runs with line breaks and tab stops
-	return [self runElementsWithBreaksFromAttributedString:attributedString attributes:attributes inRange:range usingContext:context];
-}
-
-+ (NSArray *)runElementsWithBreaksFromAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes inRange:(NSRange)range usingContext:(RKDOCXConversionContext *)context
-{
 	static NSCharacterSet *characterSet;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -60,28 +56,16 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	});
 	
 	NSMutableArray *runElements = [NSMutableArray new];
-	NSUInteger scanLocation = range.location;
-	
-	do {
-		NSRange nextCharacterRange = [attributedString.string rangeOfCharacterFromSet:characterSet options:0 range:NSMakeRange(scanLocation, NSMaxRange(range) - scanLocation)];
+	[attributedString.string enumerateTokensWithDelimiters:characterSet	inRange:range usingBlock:^(NSRange tokenRange, unichar delimiter) {
+		// Add text run, if any
+		if (tokenRange.length > 0)
+			[runElements addObject: [self runElementForAttributes:attributes contentElement:[self textElementWithStringValue: [attributedString.string substringWithRange: tokenRange]] usingContext:context]];
 		
-		if (nextCharacterRange.location == NSNotFound) {
-			[runElements addObject: [self runElementForAttributes:attributes contentElement:[self textElementWithStringValue: [attributedString.string substringWithRange: NSMakeRange(scanLocation, NSMaxRange(range) - scanLocation)]] usingContext:context]];
-			break;
-		}
-		
-		if (nextCharacterRange.location > scanLocation)
-			[runElements addObject: [self runElementForAttributes:attributes contentElement:[self textElementWithStringValue: [attributedString.string substringWithRange: NSMakeRange(scanLocation, nextCharacterRange.location - scanLocation)]] usingContext:context]];
-		
-		if ([attributedString.string characterAtIndex: nextCharacterRange.location] == '\t') {
-			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithBreak: RKDOCXTabStop]];
-		}
-		else {
-			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithBreak: RKDOCXLineBreak]];
-		}
-		
-		scanLocation = nextCharacterRange.location + 1;
-	} while (scanLocation < NSMaxRange(range));
+		if (delimiter == '\t')
+			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXTabStopCharacter]];
+		else if (delimiter == RKLineSeparatorCharacter)
+			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXLineBreakCharacter]];
+	}];
 	
 	return runElements;
 }

@@ -8,6 +8,7 @@
 
 #import "RKDOCXSectionWriter.h"
 
+#import "RKDOCXAttributedStringWriter.h"
 #import "RKDOCXSettingsWriter.h"
 
 // Elements
@@ -70,13 +71,13 @@ NSString *RKDOCXSectionPageSizeOrientationPortraitAttributeValue	= @"portrait";
 	if (pageMarginProperty)
 		[sectionProperties addChild: pageMarginProperty];
 	
-	// Footnote Properties (
-	NSXMLElement *footnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument: context.document];
+	// Footnote Properties
+	NSXMLElement *footnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:NO];
 	if (footnoteProperties)
 		[sectionProperties addChild: footnoteProperties];
 	
 	// Endnote Properties
-	NSXMLElement *endnoteProperties = [RKDOCXSettingsWriter endnotePropertiesFromDocument: context.document];
+	NSXMLElement *endnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:YES];
 	if (endnoteProperties)
 		[sectionProperties addChild: endnoteProperties];
 	
