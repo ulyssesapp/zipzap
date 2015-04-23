@@ -31,6 +31,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_usedContentTypes = [NSDictionary new];
 		_footnotes = [NSDictionary new];
 		_endnotes = [NSDictionary new];
+		_headerCount = 0;
+		_footerCount = 0;
+		_evenAndOddHeaders = NO;
 		_documentRelationships = [NSDictionary new];
 	}
 	
@@ -108,7 +111,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// Relationship exists
 	if (_documentRelationships[target]) {
-		index = [_documentRelationships[target] integerValue];
+		index = [_documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName] integerValue];
 		return index;
 	}
 	

@@ -18,12 +18,12 @@
 @class RKDocument;
 
 /*!
- @abstract The internally used DOCX writer
+ @abstract The internally used DOCX writer.
  */
 @interface RKDOCXWriter : NSObject
 
 /*!
- @abstract Builds a DOCX from an RKDocument
+ @abstract Builds a DOCX from an RKDocument.
  */
 + (NSData *)DOCXfromDocument:(RKDocument *)document;
 

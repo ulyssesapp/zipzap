@@ -15,8 +15,8 @@
 	RKDOCXConversionContext *context = [[RKDOCXConversionContext alloc] initWithDocument: document];
 	
 	[RKDOCXRelationshipsWriter buildPackageRelationshipsUsingContext: context];
-	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
+	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXFootnotesWriter buildFootnotesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];

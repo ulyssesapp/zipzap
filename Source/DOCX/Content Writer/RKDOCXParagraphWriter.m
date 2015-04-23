@@ -63,7 +63,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 
 + (NSXMLElement *)paragraphElementWithPageBreak
 {
-	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:@[[RKDOCXRunWriter runElementForAttributes:nil contentElement:[RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXPageBreakCharacter] usingContext:nil]] attributes:nil];
+	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:@[[RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXPageBreakCharacter]] attributes:nil];
 }
 
 @end
