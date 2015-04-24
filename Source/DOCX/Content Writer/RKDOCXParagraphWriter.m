@@ -68,6 +68,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 			else
 				[runElements addObjectsFromArray: innerRunElements];
 		}];
+		
 		if (linkElement) {
 			linkElement.children = linkChildren;
 			[runElements addObject: linkElement];
