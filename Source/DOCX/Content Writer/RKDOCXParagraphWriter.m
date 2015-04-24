@@ -9,6 +9,7 @@
 #import "RKDOCXParagraphWriter.h"
 
 #import "RKDOCXAdditionalParagraphStyleWriter.h"
+#import "RKDOCXLinkWriter.h"
 #import "RKDOCXParagraphStyleWriter.h"
 #import "RKDOCXPlaceholderWriter.h"
 #import "RKDOCXRunWriter.h"
@@ -54,8 +55,21 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 {
 	NSMutableArray *runElements = [NSMutableArray new];
 	
-	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		[runElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:range usingContext:context]];
+	[attributedString enumerateAttribute:RKLinkAttributeName inRange:paragraphRange options:0 usingBlock:^(id value, NSRange linkRange, BOOL *stop) {
+		NSXMLElement *linkElement = [RKDOCXLinkWriter linkElementForAttribute:value usingContext:context];
+		NSMutableArray *linkChildren = [NSMutableArray new];
+		
+		// If there is a link attribute, add the runs as children to the parent link element.
+		[attributedString enumerateAttributesInRange:linkRange options:0 usingBlock:^(NSDictionary *attrs, NSRange runRange, BOOL *stop) {
+			if (linkElement)
+				[linkChildren addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange usingContext:context]];
+			else
+				[runElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange usingContext:context]];
+		}];
+		if (linkElement) {
+			linkElement.children = linkChildren;
+			[runElements addObject: linkElement];
+		}
 	}];
 	
 	return runElements;
