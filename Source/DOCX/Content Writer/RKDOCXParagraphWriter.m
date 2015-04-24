@@ -61,10 +61,12 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 		
 		// If there is a link attribute, add the runs as children to the parent link element.
 		[attributedString enumerateAttributesInRange:linkRange options:0 usingBlock:^(NSDictionary *attrs, NSRange runRange, BOOL *stop) {
+			NSArray *innerRunElements = [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange usingContext:context];
+			
 			if (linkElement)
-				[linkChildren addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange usingContext:context]];
+				[linkChildren addObjectsFromArray: innerRunElements];
 			else
-				[runElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange usingContext:context]];
+				[runElements addObjectsFromArray: innerRunElements];
 		}];
 		if (linkElement) {
 			linkElement.children = linkChildren;
