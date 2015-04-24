@@ -9,19 +9,24 @@
 #import "RKDOCXSectionWriter.h"
 
 #import "RKDOCXAttributedStringWriter.h"
+#import "RKDOCXHeaderFooterWriter.h"
 #import "RKDOCXSettingsWriter.h"
 
 // Elements
 NSString *RKDOCXSectionColumnElementName							= @"w:cols";
+NSString *RKDOCXSectionFooterReferenceElementName					= @"w:footerReference";
+NSString *RKDOCXSectionHeaderReferenceElementName					= @"w:headerReference";
 NSString *RKDOCXSectionPageMarginElementName						= @"w:pgMar";
 NSString *RKDOCXSectionPageNumberTypeElementName					= @"w:pgNumType";
 NSString *RKDOCXSectionPageSizeElementName							= @"w:pgSz";
 NSString *RKDOCXSectionPropertiesElementName						= @"w:sectPr";
+NSString *RKDOCXSectionTitlePageElementName							= @"w:titlePg";
 
 // Attributes
 NSString *RKDOCXSectionColumnCountAttributeName						= @"w:num";
 NSString *RKDOCXSectionColumeEqualWidthAttributeName				= @"w:equalWidth";
 NSString *RKDOCXSectionColumnSpacingAttributeName					= @"w:space";
+NSString *RKDOCXSectionIdentifierAttributeName						= @"r:id";
 NSString *RKDOCXSectionPageMarginBottomAttributeName				= @"w:bottom";
 NSString *RKDOCXSectionPageMarginFooterAttributeName				= @"w:footer";
 NSString *RKDOCXSectionPageMarginHeaderAttributeName				= @"w:header";
@@ -33,6 +38,7 @@ NSString *RKDOCXSectionPageSizeHeightAttributeName					= @"w:h";
 NSString *RKDOCXSectionPageSizeOrientationAttributeName				= @"w:orient";
 NSString *RKDOCXSectionPageSizeWidthAttributeName					= @"w:w";
 NSString *RKDOCXSectionStartPageAttributeName						= @"w:start";
+NSString *RKDOCXSectionTypeAttributeName							= @"w:type";
 
 // Attribute Values
 NSString *RKDOCXSectionPageNumberLowerLetterAttributeValue			= @"lowerLetter";
@@ -41,6 +47,9 @@ NSString *RKDOCXSectionPageNumberUpperLetterAttributeValue			= @"upperLetter";
 NSString *RKDOCXSectionPageNumberUpperRomanAttributeValue			= @"upperRoman";
 NSString *RKDOCXSectionPageSizeOrientationLandscapeAttributeValue	= @"landscape";
 NSString *RKDOCXSectionPageSizeOrientationPortraitAttributeValue	= @"portrait";
+NSString *RKDOCXSectionTypeDefaultAttriuteValue						= @"default";
+NSString *RKDOCXSectionTypeEvenAttributeValue						= @"even";
+NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 
 @implementation RKDOCXSectionWriter
 
@@ -80,6 +89,23 @@ NSString *RKDOCXSectionPageSizeOrientationPortraitAttributeValue	= @"portrait";
 	NSXMLElement *endnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:YES];
 	if (endnoteProperties)
 		[sectionProperties addChild: endnoteProperties];
+
+	// Headers and Footers
+	// DOCX requires a "titlePg" element when using a different header or footer for first pages. See ISO 29500-1:2012: §17.10.6.
+	if (!(lastSection.hasSingleHeaderForAllPages && lastSection.hasSingleFooterForAllPages) && ([lastSection headerForPage: RKPageSelectionFirst] || [lastSection footerForPage: RKPageSelectionFirst]))
+		[sectionProperties addChild: [NSXMLElement elementWithName: RKDOCXSectionTitlePageElementName]];
+	
+	// Create a reference for each separate Header
+	[lastSection enumerateHeadersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
+		[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXHeader withIndex:++context.headerCount forAttributedString:header usingContext:context];
+		[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXHeader withAttributedString:header forPageSelector:pageSelector usingContext:context]];
+	}];
+	
+	// Create a reference for each separate Footer
+	[lastSection enumerateFootersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
+		[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXFooter withIndex:++context.footerCount forAttributedString:footer usingContext:context];
+		[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXFooter withAttributedString:footer forPageSelector:pageSelector usingContext:context]];
+	}];
 	
 	if (sectionProperties.childCount == 0)
 		return lastSectionParagraphs;
@@ -176,6 +202,47 @@ NSString *RKDOCXSectionPageSizeOrientationPortraitAttributeValue	= @"portrait";
 	}
 	
 	return [NSXMLElement elementWithName:RKDOCXSectionPageMarginElementName children:nil attributes:@[headerAttribute, footerAttribute, topAttribute, leftAttribute, rightAttribute, bottomAttribute]];
+}
+
++ (NSXMLElement *)sectionPropertyElementForPageElement:(RKDOCXPageElementType)pageElement withAttributedString:(NSAttributedString *)string forPageSelector:(RKPageSelectionMask)pageSelector usingContext:(RKDOCXConversionContext *)context
+{
+	NSString *referenceElementName;
+	NSUInteger index;
+	switch (pageElement) {
+		case RKDOCXHeader:
+			referenceElementName = RKDOCXSectionHeaderReferenceElementName;
+			index = context.headerCount;
+			break;
+			
+		case RKDOCXFooter:
+			referenceElementName = RKDOCXSectionFooterReferenceElementName;
+			index = context.footerCount;
+			break;
+	}
+	
+	NSString *typeAttribute;
+	switch (pageSelector) {
+		case RKPageSelectionFirst:
+			typeAttribute = RKDOCXSectionTypeFirstAttributeValue;
+			break;
+			
+		case RKPageSelectionLeft:
+			typeAttribute = RKDOCXSectionTypeEvenAttributeValue;
+			context.evenAndOddHeaders = YES;
+			break;
+			
+		case RKPageSelectionRight:
+		case RKPageSelectorAll:
+			typeAttribute = RKDOCXSectionTypeDefaultAttriuteValue;
+			break;
+	}
+	
+	NSXMLElement *referenceElement = [NSXMLElement elementWithName: referenceElementName];
+	NSString *rId = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:[RKDOCXHeaderFooterWriter filenameForPageElement:pageElement withIndex:index] andType:nil]];
+	[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionIdentifierAttributeName stringValue:rId]];
+	[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionTypeAttributeName stringValue:typeAttribute]];
+	
+	return referenceElement;
 }
 
 @end

@@ -58,4 +58,100 @@
 	[self assertDOCX:converted withTestDocument:@"pagemargins"];
 }
 
+- (void)testSectionWithSameHeader
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has one header for all pages.\f\f"]];
+	NSAttributedString *header = [[NSAttributedString alloc] initWithString: @"This is the only header."];
+	[section setHeader:header forPages:RKPageSelectorAll];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"sameheader"];
+}
+
+- (void)testSectionWithSameFooter
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has one footer for all pages.\f\f"]];
+	NSAttributedString *footer = [[NSAttributedString alloc] initWithString: @"This is the only footer."];
+	[section setFooter:footer forPages:RKPageSelectorAll];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"samefooter"];
+}
+
+- (void)testSectionWithDifferentHeaders
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has three different headers.\f\f"]];
+	NSAttributedString *firstHeader = [[NSAttributedString alloc] initWithString: @"This is the first header."];
+	NSAttributedString *leftHeader = [[NSAttributedString alloc] initWithString: @"This is the left header."];
+	NSAttributedString *rightHeader = [[NSAttributedString alloc] initWithString: @"This is the right header."];
+	[section setHeader:firstHeader forPages:RKPageSelectionFirst];
+	[section setHeader:leftHeader forPages:RKPageSelectionLeft];
+	[section setHeader:rightHeader forPages:RKPageSelectionRight];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"differentheaders"];
+}
+
+- (void)testSectionWithDifferentFooters
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has three different footers.\f\f"]];
+	NSAttributedString *firstFooter = [[NSAttributedString alloc] initWithString: @"This is the first footer."];
+	NSAttributedString *leftFooter = [[NSAttributedString alloc] initWithString: @"This is the left footer."];
+	NSAttributedString *rightFooter = [[NSAttributedString alloc] initWithString: @"This is the right footer."];
+	[section setFooter:firstFooter forPages:RKPageSelectionFirst];
+	[section setFooter:leftFooter forPages:RKPageSelectionLeft];
+	[section setFooter:rightFooter forPages:RKPageSelectionRight];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"differentfooters"];
+}
+
+- (void)testSectionWithFirstPageHeader
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has only one header for the first page.\f\f"]];
+	NSAttributedString *header = [[NSAttributedString alloc] initWithString: @"This is the only header."];
+	[section setHeader:header forPages:RKPageSelectionFirst];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"firstpageheader"];
+}
+
+- (void)testSectionWithFirstPageFooter
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has only one footer for the first page.\f\f"]];
+	NSAttributedString *footer = [[NSAttributedString alloc] initWithString: @"This is the only footer."];
+	[section setFooter:footer forPages:RKPageSelectionFirst];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"firstpagefooter"];
+}
+
+- (void)testSectionWithOddPageHeader
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has one header for odd pages.\f\f"]];
+	NSAttributedString *header = [[NSAttributedString alloc] initWithString: @"This is the odd header."];
+	[section setHeader:header forPages:RKPageSelectionLeft];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"oddpageheader"];
+}
+
+- (void)testSectionWithOddPageFooter
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has one footer for odd pages.\f\f"]];
+	NSAttributedString *footer = [[NSAttributedString alloc] initWithString: @"This is the odd footer."];
+	[section setFooter:footer forPages:RKPageSelectionLeft];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"oddpagefooter"];
+}
+
 @end

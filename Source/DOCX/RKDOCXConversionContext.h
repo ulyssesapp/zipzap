@@ -76,6 +76,25 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 - (NSUInteger)indexForEndnoteContent:(NSArray *)content;
 
 
+#pragma mark - Headers and Footers
+
+/*!
+ @abstract The number of headers used in the document.
+ */
+@property (nonatomic) NSUInteger headerCount;
+
+/*!
+ @abstract The number of headers used in the document.
+ */
+@property (nonatomic) NSUInteger footerCount;
+
+/*!
+ @abstract Whether the document contains any section requiring different header or footer for even/odd pages.
+ @discussion Defaults to NO, set to YES by the section writer.
+ */
+@property (nonatomic) BOOL evenAndOddHeaders;
+
+
 #pragma mark - Document relationships
 
 /*!
