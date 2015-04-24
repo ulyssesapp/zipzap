@@ -62,6 +62,7 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 	[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"Target" stringValue:target]];
 	if ([type isEqual: RKDOCXLinkRelationshipType])
 		[relationshipElement addAttribute: [NSXMLElement attributeWithName:@"TargetMode" stringValue:@"External"]];
+	
 	[rootElement addChild: relationshipElement];
 }
 

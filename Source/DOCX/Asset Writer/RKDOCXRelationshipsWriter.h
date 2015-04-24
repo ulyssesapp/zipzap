@@ -9,6 +9,9 @@
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXPartWriter.h"
 
+/*!
+ @abstract The relatationship type used by external hyperlinks. Required by RKDOCXLinkWriter.
+ */
 extern NSString *RKDOCXLinkRelationshipType;
 
 /*!
