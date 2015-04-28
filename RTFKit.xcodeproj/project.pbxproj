@@ -535,6 +535,8 @@
 		A074BE6A1AC449CF008B3DED /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE691AC449CF008B3DED /* ApplicationServices.framework */; };
 		A074BE6B1AC449DC008B3DED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
 		A074BE6D1AC44A88008B3DED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
+		A083A2D41AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */; };
+		A083A2D51AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */; };
 		A0920C6E1AD4324A00D51CF5 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0076DBC1AC5900D0049C15F /* libzipzap.a */; };
 		A0920C7A1AD4345800D51CF5 /* libKissXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C791AD4345800D51CF5 /* libKissXML.a */; };
 		A092D8FB1AD57EC400417A8D /* RKDOCXParagraphWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A092D8F91AD57EC400417A8D /* RKDOCXParagraphWriter.h */; };
@@ -959,6 +961,7 @@
 		A074BE671AC44980008B3DED /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../Library/Developer/Xcode/DerivedData/RTFKit-fwuzrwnetuzloademwuvoudkbkzy/Build/Products/Debug/libzipzap.a"; sourceTree = "<group>"; };
 		A074BE691AC449CF008B3DED /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		A074BE6C1AC44A88008B3DED /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXListWriterTest.m; path = "Content Writer/RKDOCXListWriterTest.m"; sourceTree = "<group>"; };
 		A0920C6C1AD4323200D51CF5 /* libKissXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKissXML.a; path = "KissXML/build/Debug-iphoneos/libKissXML.a"; sourceTree = "<group>"; };
 		A0920C6F1AD4324E00D51CF5 /* libKissXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKissXML.a; path = "KissXML/build/Debug-iphoneos/libKissXML.a"; sourceTree = "<group>"; };
 		A0920C711AD4326E00D51CF5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.2.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
@@ -1877,6 +1880,7 @@
 				A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */,
 				A013B4361ADE7ED500E45B4F /* RKDOCXImageWriterTest.m */,
 				A0BA23EF1AE946410025B23A /* RKDOCXLinkWriterTest.m */,
+				A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */,
 			);
 			name = "Content Writer";
 			sourceTree = "<group>";
@@ -2450,6 +2454,7 @@
 				796EAC5314D94894001E8401 /* RKConversionTest.m in Sources */,
 				796EAC5414D94894001E8401 /* RKResourcePoolTest.m in Sources */,
 				796EAC5514D94894001E8401 /* RKTaggedStringTest.m in Sources */,
+				A083A2D41AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */,
 				7935615A14DB3D0B00FC0C1C /* NSString+RKNumberFormattingTest.m in Sources */,
 				7935617514DC1CF500FC0C1C /* RKParagraphStyleWriterTest.m in Sources */,
 				7935618314DC22DC00FC0C1C /* RKListItemWriterTest.m in Sources */,
@@ -2483,6 +2488,7 @@
 				79A62D831A1A3137004C83F9 /* NSAttributedStringPersistenceTest.m in Sources */,
 				79A62D841A1A3137004C83F9 /* RKDocumentPersistenceTest.m in Sources */,
 				79A62D851A1A3137004C83F9 /* RKDocumentTest.m in Sources */,
+				A083A2D51AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */,
 				79A62D861A1A3137004C83F9 /* RKSectionTest.m in Sources */,
 				A092D9091AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m in Sources */,
 				79A62D871A1A3137004C83F9 /* RKLinkWriterTest.m in Sources */,
