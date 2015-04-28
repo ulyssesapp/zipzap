@@ -28,8 +28,7 @@
 	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
 	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXFootnotesWriter buildFootnotesUsingContext: context];
-	if (context.listStyles.count)
-		[RKDOCXListStyleWriter buildNumberingsUsingContxt: context];
+	[RKDOCXListStyleWriter buildNumberingDefinitionsUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];
 	[RKDOCXRelationshipsWriter buildDocumentRelationshipsUsingContext: context];

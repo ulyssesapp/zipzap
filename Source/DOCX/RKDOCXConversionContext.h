@@ -35,22 +35,28 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 @property (nonatomic, readonly) NSData *docxRepresentation;
 
 /*!
- @abstract Adds the given document part to the context object.
+ @abstract Adds the given document part to the context object and registers the content type for the filename.
  @discussion Throws an exception when adding duplicate files.
  */
-- (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename;
+- (void)addXMLDocumentPart:(NSXMLDocument *)part withFilename:(NSString *)filename contentType:(NSString *)contentType;
+
+/*!
+ @abstract Adds the given document part to the context object and registers the content type for the path extension of the filename.
+ @discussion Throws an exception when adding duplicate files.
+ */
+- (void)addBinaryDocumentPart:(NSData *)part withFileName:(NSString *)filename MIMEType:(NSString *)MIMEType;
+
+/*!
+ @abstract Contains all content types collected from the XML files of the document.
+ @discussion Maps from filename to content type.
+ */
+@property (nonatomic, readonly) NSDictionary *usedXMLTypes;
 
 /*!
  @abstract Contains all content types collected from additional asset files used inside the document.
  @discussion Maps from path extensions to MIME types.
  */
-@property (nonatomic, readonly) NSDictionary *usedContentTypes;
-
-/*!
- @abstract Adds a new extension to the mime type collection.
- @discussion Mime types are requiered by RKDOCXContentTypesWriter.
- */
-- (void)addContentType:(NSString *)mimeType forPathExtension:(NSString *)extension;
+@property (nonatomic, readonly) NSDictionary *usedMIMETypes;
 
 
 #pragma mark - Footnotes and Endnotes

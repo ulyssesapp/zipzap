@@ -14,6 +14,9 @@
 // Root element name
 NSString *RKDOCXDocumentRootElementName				= @"w:document";
 
+// Content type
+NSString *RKDOCXDocumentContentType					= @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
+
 // Element names
 NSString *RKDOCXDocumentContentBodyElementName		= @"w:body";
 NSString *RKDOCXDocumentContentParagraphElementName	= @"w:p";
@@ -32,7 +35,7 @@ NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 	
 	body.children = [RKDOCXSectionWriter sectionElementsUsingContext: context];
 	
-	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentFilename];
+	[context addXMLDocumentPart:document withFilename:RKDOCXDocumentFilename contentType:RKDOCXDocumentContentType];
 }
 
 @end

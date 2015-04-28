@@ -16,6 +16,9 @@
 // Root element name
 NSString *RKDOCXListStyleRootElementName								= @"w:numbering";
 
+// Content type
+NSString *RKDOCXNumberingContentType									= @"application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml";
+
 // Relationship type and target
 NSString *RKDOCXListStyleRelationshipType								= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering";
 NSString *RKDOCXListStyleRelationshipTarget								= @"numbering.xml";
@@ -50,8 +53,11 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 
 @implementation RKDOCXListStyleWriter
 
-+ (void)buildNumberingsUsingContxt:(RKDOCXConversionContext *)context
++ (void)buildNumberingDefinitionsUsingContext:(RKDOCXConversionContext *)context
 {
+	if (!context.listStyles.count)
+		return;
+	
 	NSXMLDocument *document = [self basicXMLDocumentWithStandardNamespacesAndRootElementName: RKDOCXListStyleRootElementName];
 	
 	// Abstract numberings
@@ -65,7 +71,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 	}
 	
 	[context indexForRelationshipWithTarget:RKDOCXListStyleRelationshipTarget andType:RKDOCXListStyleRelationshipType];
-	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXNumberingFilename];
+	[context addXMLDocumentPart:document withFilename:RKDOCXNumberingFilename contentType:RKDOCXNumberingContentType];
 }
 
 + (NSXMLElement *)abstractNumberingElementFromListStyle:(RKListStyle *)listStyle usingContext:(RKDOCXConversionContext *)context
@@ -146,17 +152,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		
 		// Enumerator Styling
 		NSDictionary *attributes = listStyle.levelStyles[index];
-		NSXMLElement *paragraphPropertiesElement = [NSXMLElement elementWithName: RKDOCXParagraphPropertiesElementName];
-		NSXMLElement *tabsElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabSetElementName];
-		[tabsElement addChild: [NSXMLElement elementWithName:RKDOCXParagraphStyleTabElementName children:nil attributes:@[
-																								[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"num"],
-																								[NSXMLElement attributeWithName:RKDOCXParagraphStyleTabPositionAttributeName stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerLocationKey] integerValue] + [attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue]]]];
-		[paragraphPropertiesElement addChild: tabsElement];
-		NSXMLElement *indentationElement = [NSXMLElement elementWithName:RKDOCXParagraphStyleIndentationElementName children:nil attributes:@[
-																											[NSXMLElement attributeWithName:RKDOCXParagraphStyleHeadIndentationAttributeName stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerLocationKey] integerValue] + [attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue],
-																											[NSXMLElement attributeWithName:RKDOCXParagraphStyleHangingIndentationAttributeName stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue]
-																											]];
-		[paragraphPropertiesElement addChild: indentationElement];
+		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocationKey:[attributes[RKListStyleMarkerLocationKey] integerValue] markerWidthKey:[attributes[RKListStyleMarkerWidthKey] integerValue]];
 		[levelElement addChild: paragraphPropertiesElement];
 		
 		[abstractNumberingElement addChild: levelElement];

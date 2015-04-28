@@ -14,6 +14,10 @@
 NSString *RKDOCXHeaderRootElementName		= @"w:hdr";
 NSString *RKDOCXFooterRootElementName		= @"w:ftr";
 
+// Content types
+NSString *RKDOCXFooterContentType			= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml";
+NSString *RKDOCXHeaderContentType			= @"application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml";
+
 // Relationship types
 NSString *RKDOCXHeaderRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/header";
 NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer";
@@ -24,15 +28,18 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 {
 	NSString *rootElementName;
 	NSString *relationshipType;
+	NSString *contentType;
 	switch (pageElement) {
 		case RKDOCXHeader:
 			rootElementName = RKDOCXHeaderRootElementName;
 			relationshipType = RKDOCXHeaderRelationshipType;
+			contentType = RKDOCXHeaderContentType;
 			break;
 			
 		case RKDOCXFooter:
 			rootElementName = RKDOCXFooterRootElementName;
 			relationshipType = RKDOCXFooterRelationshipType;
+			contentType = RKDOCXFooterContentType;
 			break;
 	}
 	
@@ -43,7 +50,7 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 	document.rootElement.children = [RKDOCXAttributedStringWriter processAttributedString:contentString usingContext:context];
 	
 	[context indexForRelationshipWithTarget:filename andType:relationshipType];
-	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:[@"word/" stringByAppendingString: filename]];
+	[context addXMLDocumentPart:document withFilename:[@"word/" stringByAppendingString: filename] contentType:contentType];
 }
 
 + (NSString *)filenameForPageElement:(RKDOCXPageElementType)pageElement withIndex:(NSUInteger)index

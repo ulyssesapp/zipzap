@@ -11,9 +11,13 @@
 #import "RKDOCXAttributedStringWriter.h"
 #import "RKDOCXRunWriter.h"
 
-// Root element name
+// Root element names
 NSString *RKDOCXEndnotesRootElementName							= @"w:endnotes";
 NSString *RKDOCXFootnotesRootElementName						= @"w:footnotes";
+
+// Content types
+NSString *RKDOCXEndnotesContentType								= @"application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml";
+NSString *RKDOCXFootnotesContentType							= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml";
 
 // Relationship type and target
 NSString *RKDOCXEndnotesRelationshipType						= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes";
@@ -51,14 +55,14 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotes:context.footnotes endnoteSection:NO];
 	if (footnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXFootnotesRelationshipTarget andType:RKDOCXFootnotesRelationshipType];
-		[context addDocumentPart:[footnotesDocument XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXFootnotesFilename];
+		[context addXMLDocumentPart:footnotesDocument withFilename:RKDOCXFootnotesFilename contentType:RKDOCXFootnotesContentType];
 	}
 	
 	// In case of endnotes
 	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotes:context.endnotes endnoteSection:YES];
 	if (endnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXEndnotesRelationshipTarget andType:RKDOCXEndnotesRelationshipType];
-		[context addDocumentPart:[endnotesDocument XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXEndnotesFilename];
+		[context addXMLDocumentPart:endnotesDocument withFilename:RKDOCXEndnotesFilename contentType:RKDOCXEndnotesContentType];
 	}
 }
 

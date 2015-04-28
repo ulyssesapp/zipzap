@@ -18,6 +18,6 @@
 /*!
  @abstract Writes the numbering definitions of the conversion context and adds the data objects to the context.
  */
-+ (void)buildNumberingsUsingContxt:(RKDOCXConversionContext *)context;
++ (void)buildNumberingDefinitionsUsingContext:(RKDOCXConversionContext *)context;
 
 @end
