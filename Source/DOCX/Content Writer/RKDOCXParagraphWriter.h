@@ -25,4 +25,9 @@
  */
 + (NSXMLElement *)paragraphElementWithPageBreak;
 
+/*!
+ @abstract Returns an XML element representing the paragraph properties of a numbering defintion.
+ */
++ (NSXMLElement *)paragraphPropertiesElementForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey;
+
 @end

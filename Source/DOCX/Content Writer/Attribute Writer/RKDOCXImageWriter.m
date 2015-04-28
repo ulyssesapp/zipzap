@@ -70,8 +70,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	
 	// Relationship Handling
 	NSString *filename = [RKDOCXImageLocationName stringByAppendingString: imageAttachment.imageFile.preferredFilename];
-	[context addContentType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension] forPathExtension:imageAttachment.imageFile.preferredFilename.pathExtension];
-	[context addDocumentPart:imageAttachment.imageFile.regularFileContents withFilename:[@"word/" stringByAppendingString: filename]];
+	[context addBinaryDocumentPart:imageAttachment.imageFile.regularFileContents withFileName:[@"word/" stringByAppendingString: filename] MIMEType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension]];
 	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
 	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
 	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];

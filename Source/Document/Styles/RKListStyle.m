@@ -75,7 +75,7 @@ NSString *RKListStyleMarkerWidthKey			= @"RKListStyleMarkerWidth";
     if (![other isKindOfClass: RKListStyle.class])
         return NO;
     
-    return [self.levelFormats isEqual: other.levelFormats] && [self.startNumbers isEqual: other.startNumbers] && [self.levelStyles isEqual: other.levelStyles];
+    return ([self.levelFormats isEqual: other.levelFormats] || self.levelFormats == other.levelFormats) && ([self.startNumbers isEqual: other.startNumbers] || self.startNumbers == other.startNumbers) && ([self.levelStyles isEqual: other.levelStyles] || self.levelStyles == other.levelStyles);
 }
 
 - (NSUInteger)hash

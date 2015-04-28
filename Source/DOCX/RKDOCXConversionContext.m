@@ -28,12 +28,14 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (self) {
 		_files = [NSMutableDictionary new];
 		_document = document;
-		_usedContentTypes = [NSDictionary new];
+		_usedXMLTypes = [NSDictionary new];
+		_usedMIMETypes = [NSDictionary new];
 		_footnotes = [NSDictionary new];
 		_endnotes = [NSDictionary new];
 		_headerCount = 0;
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
+		_listStyles = [NSDictionary new];
 		_documentRelationships = [NSDictionary new];
 	}
 	
@@ -59,20 +61,41 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return [archive contents];
 }
 
-- (void)addDocumentPart:(NSData *)part withFilename:(NSString *)filename
+- (void)addXMLDocumentPart:(NSXMLDocument *)part withFilename:(NSString *)filename contentType:(NSString *)contentType
 {
 	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
+	
+	if (contentType)
+		[self addContentType:contentType forFileName:filename];
+	
+	NSData *file = [part XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement];
+	[_files addEntriesFromDictionary: @{filename: file}];
+}
+
+- (void)addBinaryDocumentPart:(NSData *)part withFileName:(NSString *)filename MIMEType:(NSString *)MIMEType
+{
+	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
+	
+	[self addContentType:MIMEType forPathExtension:filename.pathExtension];
+	
 	[_files addEntriesFromDictionary: @{filename: part}];
 }
 
-- (void)addContentType:(NSString *)mimeType forPathExtension:(NSString *)extension
+- (void)addContentType:(NSString *)XMLType forFileName:(NSString *)filename
 {
-	if (_usedContentTypes[extension])
+	NSMutableDictionary *newXMLTypes = [_usedXMLTypes mutableCopy];
+	newXMLTypes[filename] = XMLType;
+	_usedXMLTypes = newXMLTypes;
+}
+
+- (void)addContentType:(NSString *)MIMEType forPathExtension:(NSString *)extension
+{
+	if (_usedMIMETypes[extension])
 		return;
 	
-	NSMutableDictionary *newContentTypes = [_usedContentTypes mutableCopy];
-	newContentTypes[extension] = mimeType;
-	_usedContentTypes = newContentTypes;
+	NSMutableDictionary *newMIMETypes = [_usedMIMETypes mutableCopy];
+	newMIMETypes[extension] = MIMEType;
+	_usedMIMETypes = newMIMETypes;
 }
 
 
@@ -98,6 +121,34 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary *newEndnotes = [_endnotes mutableCopy];
 	[newEndnotes addEntriesFromDictionary: @{@(index): content}];
 	_endnotes = newEndnotes;
+	
+	return index;
+}
+
+
+#pragma mark - Lists
+
+- (NSUInteger)indexForListStyle:(RKListStyle *)listStyle
+{
+	__block NSUInteger index = 0;
+	
+	// List Style already registered
+	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(id key, id obj, BOOL *stop) {
+		if ([obj isEqual: listStyle]) {
+			index = [key integerValue];
+			*stop = YES;
+		}
+	}];
+	
+	// Return index if list style was found
+	if (index)
+		return index;
+	
+	// Register new list style
+	index = _listStyles.count + 1;
+	NSMutableDictionary *newListStyles = [_listStyles mutableCopy];
+	newListStyles[@(index)] = listStyle;
+	_listStyles = newListStyles;
 	
 	return index;
 }

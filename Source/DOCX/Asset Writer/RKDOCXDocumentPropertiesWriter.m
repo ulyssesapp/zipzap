@@ -12,6 +12,10 @@
 NSString *RKDOCXCorePropertiesRootElementName				= @"cp:coreProperties";
 NSString *RKDOCXExtendedPropertiesRootElementName			= @"Properties";
 
+// Content types
+NSString *RKDOCXCorePropertiesContentType					= @"application/vnd.openxmlformats-package.core-properties+xml";
+NSString *RKDOCXExtendedPropertiesContentType				= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
+
 // Property element names
 NSString *RKDOCXDocumentPropertiesAuthorPropertyName		= @"dc:creator";
 NSString *RKDOCXDocumentPropertiesCategoryPropertyName		= @"cp:category";
@@ -42,7 +46,7 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	// Core Properties
 	document.rootElement.children = [self corePropertyElementsFromContext: context];
 	
-	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXCorePropertiesFilename];
+	[context addXMLDocumentPart:document withFilename:RKDOCXCorePropertiesFilename contentType:RKDOCXCorePropertiesContentType];
 }
 
 + (void)buildExtendedPropertiesUsingContext:(RKDOCXConversionContext *)context
@@ -55,7 +59,7 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXExtendedPropertiesRootElementName namespaces:namespaces];
 	
-	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXExtendedPropertiesFilename];
+	[context addXMLDocumentPart:document withFilename:RKDOCXExtendedPropertiesFilename contentType:RKDOCXExtendedPropertiesContentType];
 }
 
 + (NSArray *)corePropertyElementsFromContext:(RKDOCXConversionContext *)context

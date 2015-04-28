@@ -535,6 +535,16 @@
 		A074BE6A1AC449CF008B3DED /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE691AC449CF008B3DED /* ApplicationServices.framework */; };
 		A074BE6B1AC449DC008B3DED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
 		A074BE6D1AC44A88008B3DED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
+		A083A2D41AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */; };
+		A083A2D51AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */; };
+		A083A2D81AEA6ADC005A9C80 /* RKDOCXListItemWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A083A2D61AEA6ADC005A9C80 /* RKDOCXListItemWriter.h */; };
+		A083A2D91AEA6ADC005A9C80 /* RKDOCXListItemWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A083A2D61AEA6ADC005A9C80 /* RKDOCXListItemWriter.h */; };
+		A083A2DA1AEA6ADC005A9C80 /* RKDOCXListItemWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D71AEA6ADC005A9C80 /* RKDOCXListItemWriter.m */; };
+		A083A2DB1AEA6ADC005A9C80 /* RKDOCXListItemWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D71AEA6ADC005A9C80 /* RKDOCXListItemWriter.m */; };
+		A083A2DE1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A083A2DC1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h */; };
+		A083A2DF1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A083A2DC1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h */; };
+		A083A2E01AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2DD1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m */; };
+		A083A2E11AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2DD1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m */; };
 		A0920C6E1AD4324A00D51CF5 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0076DBC1AC5900D0049C15F /* libzipzap.a */; };
 		A0920C7A1AD4345800D51CF5 /* libKissXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C791AD4345800D51CF5 /* libKissXML.a */; };
 		A092D8FB1AD57EC400417A8D /* RKDOCXParagraphWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A092D8F91AD57EC400417A8D /* RKDOCXParagraphWriter.h */; };
@@ -959,6 +969,11 @@
 		A074BE671AC44980008B3DED /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../Library/Developer/Xcode/DerivedData/RTFKit-fwuzrwnetuzloademwuvoudkbkzy/Build/Products/Debug/libzipzap.a"; sourceTree = "<group>"; };
 		A074BE691AC449CF008B3DED /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		A074BE6C1AC44A88008B3DED /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXListWriterTest.m; path = "Content Writer/RKDOCXListWriterTest.m"; sourceTree = "<group>"; };
+		A083A2D61AEA6ADC005A9C80 /* RKDOCXListItemWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXListItemWriter.h; path = "Attribute Writer/RKDOCXListItemWriter.h"; sourceTree = "<group>"; };
+		A083A2D71AEA6ADC005A9C80 /* RKDOCXListItemWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXListItemWriter.m; path = "Attribute Writer/RKDOCXListItemWriter.m"; sourceTree = "<group>"; };
+		A083A2DC1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXListStyleWriter.h; path = "DOCX/Asset Writer/RKDOCXListStyleWriter.h"; sourceTree = "<group>"; };
+		A083A2DD1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXListStyleWriter.m; path = "DOCX/Asset Writer/RKDOCXListStyleWriter.m"; sourceTree = "<group>"; };
 		A0920C6C1AD4323200D51CF5 /* libKissXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKissXML.a; path = "KissXML/build/Debug-iphoneos/libKissXML.a"; sourceTree = "<group>"; };
 		A0920C6F1AD4324E00D51CF5 /* libKissXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKissXML.a; path = "KissXML/build/Debug-iphoneos/libKissXML.a"; sourceTree = "<group>"; };
 		A0920C711AD4326E00D51CF5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.2.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
@@ -1877,6 +1892,7 @@
 				A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */,
 				A013B4361ADE7ED500E45B4F /* RKDOCXImageWriterTest.m */,
 				A0BA23EF1AE946410025B23A /* RKDOCXLinkWriterTest.m */,
+				A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */,
 			);
 			name = "Content Writer";
 			sourceTree = "<group>";
@@ -1890,6 +1906,8 @@
 				A013B42E1ADE614000E45B4F /* RKDOCXImageWriter.m */,
 				A0BA23E91AE941420025B23A /* RKDOCXLinkWriter.h */,
 				A0BA23EA1AE941420025B23A /* RKDOCXLinkWriter.m */,
+				A083A2D61AEA6ADC005A9C80 /* RKDOCXListItemWriter.h */,
+				A083A2D71AEA6ADC005A9C80 /* RKDOCXListItemWriter.m */,
 				A0E41CD61AE1331500C403B3 /* RKDOCXPlaceholderWriter.h */,
 				A0E41CD71AE1331500C403B3 /* RKDOCXPlaceholderWriter.m */,
 				A092D9001AD5822600417A8D /* Paragraph Styles */,
@@ -1913,6 +1931,8 @@
 				A0472F0F1ADFC310004118B3 /* RKDOCXFootnotesWriter.m */,
 				A067B6C91AE7D3C1000D0B58 /* RKDOCXHeaderFooterWriter.h */,
 				A067B6CA1AE7D3C1000D0B58 /* RKDOCXHeaderFooterWriter.m */,
+				A083A2DC1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h */,
+				A083A2DD1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m */,
 			);
 			name = "Asset Writer";
 			sourceTree = "<group>";
@@ -2038,6 +2058,7 @@
 				A092D8FB1AD57EC400417A8D /* RKDOCXParagraphWriter.h in Headers */,
 				A09D36AA1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h in Headers */,
 				790AD98B15BC03110011E40E /* RKParagraphStyleSerializer.h in Headers */,
+				A083A2D81AEA6ADC005A9C80 /* RKDOCXListItemWriter.h in Headers */,
 				790AD98F15BC09160011E40E /* RKListStyleSerializer.h in Headers */,
 				A0E438F11AC97852009EB872 /* RKDOCXSettingsWriter.h in Headers */,
 				A074BE4F1AC42C10008B3DED /* RKDOCXWriter.h in Headers */,
@@ -2048,6 +2069,7 @@
 				79DE038715F8A7E6001AE98F /* RKAdditionalParagraphStyleSerializer.h in Headers */,
 				7962711F15FA29F0001E2BE2 /* NSString+Hyphenation.h in Headers */,
 				7946E937160138B30028EF11 /* RKPDFFrame.h in Headers */,
+				A083A2DE1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h in Headers */,
 				7946E93E1601DDAE0028EF11 /* RKPDFWriterTypes.h in Headers */,
 				A0E41CD81AE1331500C403B3 /* RKDOCXPlaceholderWriter.h in Headers */,
 				79A8F4671602222300A9DA63 /* RKPDFColumn.h in Headers */,
@@ -2070,6 +2092,7 @@
 				790AD8C315BACF320011E40E /* RKParagraphStyleWrapper.h in Headers */,
 				A044942F1ACAD199006FB62D /* RKDOCXConversionContext.h in Headers */,
 				790AD8C415BACF350011E40E /* RKTextTabWrapper.h in Headers */,
+				A083A2DF1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h in Headers */,
 				A0196A581ADBBEEC0091CCB8 /* RKDOCXSectionWriter.h in Headers */,
 				A09D36AB1AD7BDE00025474F /* RKDOCXAdditionalParagraphStyleWriter.h in Headers */,
 				790AD8D015BAD3EB0011E40E /* RKPDFRenderingContext.h in Headers */,
@@ -2137,6 +2160,7 @@
 				7971428E15BC15050082A67B /* RKParagraphStyleSerializer.h in Headers */,
 				7971429015BC15050082A67B /* RKListStyleSerializer.h in Headers */,
 				7971429215BC1E480082A67B /* RKAttributeSerializer.h in Headers */,
+				A083A2D91AEA6ADC005A9C80 /* RKDOCXListItemWriter.h in Headers */,
 				A0E49EDF1AD51D91004E7973 /* UIColor+RKColorExtensions.h in Headers */,
 				7946E93F1601DDAE0028EF11 /* RKPDFWriterTypes.h in Headers */,
 				A04494361ACAD1B3006FB62D /* RKDOCXSettingsWriter.h in Headers */,
@@ -2298,6 +2322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79F673AF14C84A9E005D03FA /* RKDocument.m in Sources */,
+				A083A2DA1AEA6ADC005A9C80 /* RKDOCXListItemWriter.m in Sources */,
 				79F673B914C84AE0005D03FA /* RKSection.m in Sources */,
 				796EAB9D14D9479B001E8401 /* RKWriter.m in Sources */,
 				A044943C1ACAD8FA006FB62D /* RKDOCXRunWriter.m in Sources */,
@@ -2327,6 +2352,7 @@
 				796EAC0B14D947F6001E8401 /* RKResourcePool.m in Sources */,
 				796EAC0E14D947F6001E8401 /* RKTaggedString.m in Sources */,
 				A0BA23ED1AE941420025B23A /* RKDOCXLinkWriter.m in Sources */,
+				A083A2E01AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m in Sources */,
 				796EAC5914D9491B001E8401 /* RKAttributeWriter.m in Sources */,
 				7935615314DB3B1F00FC0C1C /* RKListStyle+FormatStringParserAdditions.m in Sources */,
 				A0E438F21AC97852009EB872 /* RKDOCXSettingsWriter.m in Sources */,
@@ -2450,6 +2476,7 @@
 				796EAC5314D94894001E8401 /* RKConversionTest.m in Sources */,
 				796EAC5414D94894001E8401 /* RKResourcePoolTest.m in Sources */,
 				796EAC5514D94894001E8401 /* RKTaggedStringTest.m in Sources */,
+				A083A2D41AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */,
 				7935615A14DB3D0B00FC0C1C /* NSString+RKNumberFormattingTest.m in Sources */,
 				7935617514DC1CF500FC0C1C /* RKParagraphStyleWriterTest.m in Sources */,
 				7935618314DC22DC00FC0C1C /* RKListItemWriterTest.m in Sources */,
@@ -2483,6 +2510,7 @@
 				79A62D831A1A3137004C83F9 /* NSAttributedStringPersistenceTest.m in Sources */,
 				79A62D841A1A3137004C83F9 /* RKDocumentPersistenceTest.m in Sources */,
 				79A62D851A1A3137004C83F9 /* RKDocumentTest.m in Sources */,
+				A083A2D51AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */,
 				79A62D861A1A3137004C83F9 /* RKSectionTest.m in Sources */,
 				A092D9091AD585E500417A8D /* RKDOCXParagraphAttributeWriterTest.m in Sources */,
 				79A62D871A1A3137004C83F9 /* RKLinkWriterTest.m in Sources */,
@@ -2555,6 +2583,7 @@
 				79E76C161517580E0073153D /* RKParagraphStyleWriter.m in Sources */,
 				79EC71BC1A1B7D650076D99C /* NSMutableAttributedString+ParagraphStyleWrapper.m in Sources */,
 				A092D8FE1AD57EC400417A8D /* RKDOCXParagraphWriter.m in Sources */,
+				A083A2DB1AEA6ADC005A9C80 /* RKDOCXListItemWriter.m in Sources */,
 				79E76C181517580E0073153D /* RKLinkWriter.m in Sources */,
 				79E76C1A1517580E0073153D /* RKFootnoteWriter.m in Sources */,
 				A04494371ACAD1B6006FB62D /* RKDOCXSettingsWriter.m in Sources */,
@@ -2626,6 +2655,7 @@
 				790AD90415BAD3EB0011E40E /* RKSection+PDFUtilities.m in Sources */,
 				790AD90815BAD3EB0011E40E /* RKPDFWriter.m in Sources */,
 				790AD90E15BADD520011E40E /* RKRect.m in Sources */,
+				A083A2E11AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m in Sources */,
 				790AD91115BADE4A0011E40E /* RKDocument+RKPersistence.m in Sources */,
 				7945F8651A1A3B0D00640386 /* NSString+Hyphenation.m in Sources */,
 				790AD91315BADE4A0011E40E /* RKSection+RKPersistence.m in Sources */,

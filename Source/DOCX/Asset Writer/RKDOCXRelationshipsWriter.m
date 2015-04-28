@@ -39,7 +39,7 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 	// core.xml
 	[self addRelationshipWithTarget:RKDOCXCorePropertiesRelationshipTarget type:RKDOCXCorePropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
 	
-	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXPackageRelationshipsFilename];
+	[context addXMLDocumentPart:document withFilename:RKDOCXPackageRelationshipsFilename contentType:nil];
 }
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
@@ -51,7 +51,7 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 		[self addRelationshipWithTarget:target type:context.documentRelationships[target][RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat:@"rId%@", context.documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
 	}
 	
-	[context addDocumentPart:[document XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement] withFilename:RKDOCXDocumentRelationshipsFilename];
+	[context addXMLDocumentPart:document withFilename:RKDOCXDocumentRelationshipsFilename contentType:nil];
 }
 
 + (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement

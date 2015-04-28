@@ -39,7 +39,7 @@
 
 #pragma mark - Full format string operations
 
-- (void)scanFullFormatStringOfLevel:(NSUInteger)levelIndex usingBlock:(void (^)(NSString *token, NSUInteger currentLevel))block
+- (void)scanFullFormatStringOfLevel:(NSUInteger)levelIndex usingBlock:(void (^)(id token, NSUInteger currentLevel))block
 {
     static NSRegularExpression *tokenRegEx;
 	static dispatch_once_t onceToken;
@@ -93,7 +93,7 @@
     }
 
     // Iterate over all tokens
-    [tokens enumerateObjectsUsingBlock:^(NSString *token, NSUInteger tokenIndex, BOOL *stop) {
+    [tokens enumerateObjectsUsingBlock:^(id token, NSUInteger tokenIndex, BOOL *stop) {
         block(token, [levels[tokenIndex] unsignedIntegerValue]);
     }];
 }
