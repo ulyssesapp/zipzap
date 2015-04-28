@@ -9,6 +9,8 @@
 #import "RKDOCXListStyleWriter.h"
 
 #import "RKDOCXAttributeWriter.h"
+#import "RKDOCXParagraphWriter.h"
+#import "RKDOCXParagraphStyleWriter.h"
 #import "RKListStyle+FormatStringParserAdditions.h"
 
 // Root element name
@@ -52,10 +54,12 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 {
 	NSXMLDocument *document = [self basicXMLDocumentWithStandardNamespacesAndRootElementName: RKDOCXListStyleRootElementName];
 	
+	// Abstract numberings
 	for (NSNumber *index in context.listStyles) {
 		[document.rootElement addChild: [self abstractNumberingElementFromListStyle:context.listStyles[index] usingContext:context]];
 	}
 	
+	// Numbering instances
 	for (NSNumber *index in context.listStyles) {
 		[document.rootElement addChild: [self numberingElementFromListStyleIndentifier: index.integerValue]];
 	}
@@ -66,27 +70,27 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 
 + (NSXMLElement *)abstractNumberingElementFromListStyle:(RKListStyle *)listStyle usingContext:(RKDOCXConversionContext *)context
 {
-	// Numbering Identifier
+	// Numbering Identifier (§17.9.2)
 	NSXMLElement *abstractNumberingElement = [NSXMLElement elementWithName: RKDOCXListStyleAbstractNumberingElementName];
 	[abstractNumberingElement addAttribute: [NSXMLElement attributeWithName:RKDOCXListStyleAbstractNumberingAttributeName stringValue:@([context indexForListStyle: listStyle] - 1).stringValue]];
 	
-	// Multi level type
+	// Multi level type (§17.9.12)
 	NSXMLElement *multiLevelTypeElement = [NSXMLElement elementWithName: RKDOCXListStyleMultiLevelTypeElementName];
 	NSXMLElement *multiLevelTypeAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(listStyle.numberOfLevels == 1) ? RKDOCXListStyleMultiLevelTypeSingleLevelAttributeValue : RKDOCXListStyleMultiLevelTypeMultilevelAttributeValue];
 	[multiLevelTypeElement addAttribute: multiLevelTypeAttribute];
 	[abstractNumberingElement addChild: multiLevelTypeElement];
 	
-	// Numbering level definitions
+	// Numbering level definitions (§17.9.6)
 	for (NSUInteger index = 0; index < listStyle.numberOfLevels; index++) {
 		NSXMLElement *levelElement = [NSXMLElement elementWithName: RKDOCXListStyleLevelElementName];
 		[levelElement addAttribute: [NSXMLElement attributeWithName:RKDOCXListStyleLevelAttributeName stringValue:@(index).stringValue]];
 		
-		// Start Number
+		// Start Number (§17.9.25)
 		NSXMLElement *startElement = [NSXMLElement elementWithName: RKDOCXListStyleStartElementName];
 		[startElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:[listStyle.startNumbers[index] stringValue] ?: @"1"]];
 		[levelElement addChild: startElement];
 		
-		// Enumeration Format
+		// Enumeration Format (§17.9.17)
 		__block NSString *formatString;
 		__block NSString *levelTextString = @"";
 		
@@ -130,25 +134,27 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 			[levelElement addChild: enumerationFormatElement];
 		}
 		
+		// Level Text (§17.9.11)
 		NSXMLElement *levelTextElement = [NSXMLElement elementWithName: RKDOCXListStyleLevelTextElementName];
 		[levelTextElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:levelTextString]];
 		[levelElement addChild: levelTextElement];
 		
+		// Level Alignment (§17.9.7)
 		NSXMLElement *levelAlignmentElement = [NSXMLElement elementWithName: RKDOCXListStyleLevelAlignmentElementName];
-		[levelAlignmentElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"start"]];
+		[levelAlignmentElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleLeftAlignmentAttributeValue]];
 		[levelElement addChild: levelAlignmentElement];
 		
 		// Enumerator Styling
 		NSDictionary *attributes = listStyle.levelStyles[index];
-		NSXMLElement *paragraphPropertiesElement = [NSXMLElement elementWithName: @"w:pPr"];
-		NSXMLElement *tabsElement = [NSXMLElement elementWithName: @"w:tabs"];
-		[tabsElement addChild: [NSXMLElement elementWithName:@"w:tab" children:nil attributes:@[
+		NSXMLElement *paragraphPropertiesElement = [NSXMLElement elementWithName: RKDOCXParagraphPropertiesElementName];
+		NSXMLElement *tabsElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabSetElementName];
+		[tabsElement addChild: [NSXMLElement elementWithName:RKDOCXParagraphStyleTabElementName children:nil attributes:@[
 																								[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"num"],
-																								[NSXMLElement attributeWithName:@"w:pos" stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerLocationKey] integerValue] + [attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue]]]];
+																								[NSXMLElement attributeWithName:RKDOCXParagraphStyleTabPositionAttributeName stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerLocationKey] integerValue] + [attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue]]]];
 		[paragraphPropertiesElement addChild: tabsElement];
-		NSXMLElement *indentationElement = [NSXMLElement elementWithName:@"w:ind" children:nil attributes:@[
-																											[NSXMLElement attributeWithName:@"w:start" stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerLocationKey] integerValue] + [attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue],
-																											[NSXMLElement attributeWithName:@"w:hanging" stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue]
+		NSXMLElement *indentationElement = [NSXMLElement elementWithName:RKDOCXParagraphStyleIndentationElementName children:nil attributes:@[
+																											[NSXMLElement attributeWithName:RKDOCXParagraphStyleHeadIndentationAttributeName stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerLocationKey] integerValue] + [attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue],
+																											[NSXMLElement attributeWithName:RKDOCXParagraphStyleHangingIndentationAttributeName stringValue:@(RKPointsToTwips([attributes[RKListStyleMarkerWidthKey] integerValue])).stringValue]
 																											]];
 		[paragraphPropertiesElement addChild: indentationElement];
 		[levelElement addChild: paragraphPropertiesElement];
