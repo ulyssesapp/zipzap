@@ -75,6 +75,25 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	return properties;
 }
 
++ (NSXMLElement *)tabSettingsForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey
+{
+	NSXMLElement *tabsElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabSetElementName];
+	[tabsElement addChild: [NSXMLElement elementWithName:RKDOCXParagraphStyleTabElementName
+												children:nil
+											  attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"num"],
+														   [NSXMLElement attributeWithName:RKDOCXParagraphStyleTabPositionAttributeName stringValue:@(RKPointsToTwips(markerLocationKey + markerWidthKey)).stringValue]]]];
+	return tabsElement;
+}
+
++ (NSXMLElement *)indentationSettingsForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey
+{
+	NSXMLElement *indentationElement = [NSXMLElement elementWithName:RKDOCXParagraphStyleIndentationElementName
+															children:nil
+														  attributes:@[[NSXMLElement attributeWithName:RKDOCXParagraphStyleHeadIndentationAttributeName stringValue:@(RKPointsToTwips(markerLocationKey + markerWidthKey)).stringValue],
+																	   [NSXMLElement attributeWithName:RKDOCXParagraphStyleHangingIndentationAttributeName stringValue:@(RKPointsToTwips(markerWidthKey)).stringValue]]];
+	return indentationElement;
+}
+
 + (NSXMLElement *)indentationPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle
 {
 	if (paragraphStyle.headIndent == 0 && paragraphStyle.tailIndent == 0 && paragraphStyle.firstLineHeadIndent == 0)

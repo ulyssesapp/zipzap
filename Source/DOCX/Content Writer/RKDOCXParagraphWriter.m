@@ -85,4 +85,12 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:@[[RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXPageBreakCharacter]] attributes:nil];
 }
 
++ (NSXMLElement *)paragraphPropertiesElementForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey
+{
+	return [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName
+								children:@[[RKDOCXParagraphStyleWriter tabSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey],
+										   [RKDOCXParagraphStyleWriter indentationSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey]]
+							  attributes:nil];
+}
+
 @end
