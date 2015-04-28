@@ -95,6 +95,19 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 @property (nonatomic) BOOL evenAndOddHeaders;
 
 
+#pragma mark - Lists
+
+/*!
+ @abstract Mapping from list style identifiers (NSNumber) to list styles (RKListStyle).
+ */
+@property (nonatomic, readonly) NSDictionary *listStyles;
+
+/*!
+ @abstract Creates and returns an identifier for the given list style.
+ */
+- (NSUInteger)indexForListStyle:(RKListStyle *)listStyle;
+
+
 #pragma mark - Document relationships
 
 /*!

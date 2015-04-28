@@ -31,6 +31,7 @@ NSString *RKDOCXExtendedPropertiesContentType	= @"application/vnd.openxmlformats
 NSString *RKDOCXFooterContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml";
 NSString *RKDOCXFootnotesContentType			= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml";
 NSString *RKDOCXHeaderContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml";
+NSString *RKDOCXNumberingContentType			= @"application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml";
 NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
 
 @implementation RKDOCXContentTypesWriter
@@ -56,6 +57,8 @@ NSString *RKDOCXSettingsContentType				= @"application/vnd.openxmlformats-office
 		[self addContentType:RKDOCXHeaderContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForPageElement:RKDOCXHeader withIndex:index]] toXMLElement:document.rootElement];
 	for (NSUInteger index = 1; index <= context.footerCount; index++)
 		[self addContentType:RKDOCXFooterContentType forFilename:[@"word/" stringByAppendingString: [RKDOCXHeaderFooterWriter filenameForPageElement:RKDOCXFooter withIndex:index]] toXMLElement:document.rootElement];
+	if (context.listStyles.count)
+		[self addContentType:RKDOCXNumberingContentType forFilename:RKDOCXNumberingFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXSettingsContentType forFilename:RKDOCXSettingsFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXCorePropertiesContentType forFilename:RKDOCXCorePropertiesFilename toXMLElement:document.rootElement];
 	[self addContentType:RKDOCXExtendedPropertiesContentType forFilename:RKDOCXExtendedPropertiesFilename toXMLElement:document.rootElement];

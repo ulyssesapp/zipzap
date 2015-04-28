@@ -16,6 +16,7 @@ extern NSString *RKDOCXDocumentRelationshipsFilename;
 extern NSString *RKDOCXEndnotesFilename;
 extern NSString *RKDOCXExtendedPropertiesFilename;
 extern NSString *RKDOCXFootnotesFilename;
+extern NSString *RKDOCXNumberingFilename;
 extern NSString *RKDOCXPackageRelationshipsFilename;
 extern NSString *RKDOCXSettingsFilename;
 
@@ -28,5 +29,11 @@ extern NSString *RKDOCXSettingsFilename;
  @abstract Returns an XML document with XML processing instruction and rootelement.
  */
 + (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root namespaces:(NSDictionary *)namespaces;
+
+/*!
+ @abstract Convenience method that returns an XML document with commonly used namespaces.
+ @discussion All files with document text content use these namespaces.
+ */
++ (NSXMLDocument *)basicXMLDocumentWithStandardNamespacesAndRootElementName:(NSString *)root;
 
 @end

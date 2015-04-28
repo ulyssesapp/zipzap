@@ -73,7 +73,7 @@
     // The token count starts at 2, since the prefixing \t and the length modifier must be counted
     __block NSUInteger RTFTokenCount = 2;
     
-    [self scanFullFormatStringOfLevel:levelIndex usingBlock:^(NSString *token, NSUInteger currentLevel) {
+    [self scanFullFormatStringOfLevel:levelIndex usingBlock:^(id token, NSUInteger currentLevel) {
         if ([token isKindOfClass:NSNumber.class]) {
             // Store placeholder position
             [placeholderPositions addObject: @(RTFTokenCount)];
@@ -84,7 +84,7 @@
         }
         else {
             // Other string token
-            RTFTokenCount += token.length;
+            RTFTokenCount += [token length];
             token = [token RTFEscapedString];
         }
         

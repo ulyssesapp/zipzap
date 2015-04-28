@@ -34,6 +34,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_headerCount = 0;
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
+		_listStyles = [NSDictionary new];
 		_documentRelationships = [NSDictionary new];
 	}
 	
@@ -98,6 +99,34 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary *newEndnotes = [_endnotes mutableCopy];
 	[newEndnotes addEntriesFromDictionary: @{@(index): content}];
 	_endnotes = newEndnotes;
+	
+	return index;
+}
+
+
+#pragma mark - Lists
+
+- (NSUInteger)indexForListStyle:(RKListStyle *)listStyle
+{
+	__block NSUInteger index = 0;
+	
+	// List Style already registered
+	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(id key, id obj, BOOL *stop) {
+		if ([obj isEqual: listStyle]) {
+			index = [key integerValue];
+			*stop = YES;
+		}
+	}];
+	
+	// Return index if list style was found
+	if (index)
+		return index;
+	
+	// Register new list style
+	index = _listStyles.count + 1;
+	NSMutableDictionary *newListStyles = [_listStyles mutableCopy];
+	newListStyles[@(index)] = listStyle;
+	_listStyles = newListStyles;
 	
 	return index;
 }
