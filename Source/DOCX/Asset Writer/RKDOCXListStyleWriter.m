@@ -98,7 +98,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		
 		// Enumeration Format (§17.9.17)
 		__block NSString *formatString;
-		__block NSString *levelTextString = @"";
+		NSMutableString *levelTextString = [[NSMutableString alloc] initWithString: @""];
 		
 		[listStyle scanFullFormatStringOfLevel:index usingBlock:^(id token, NSUInteger tokenLevel) {
 			if ([token isKindOfClass: NSNumber.class]) {
@@ -128,10 +128,10 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 						break;
 				}
 				
-				levelTextString = [levelTextString stringByAppendingString: [@"%" stringByAppendingString: @(tokenLevel + 1).stringValue]];
+				[levelTextString appendString:[@"%" stringByAppendingString: @(tokenLevel + 1).stringValue]];
 			}
 			else if ([token isKindOfClass: NSString.class])
-				levelTextString = [levelTextString stringByAppendingString: token];
+				[levelTextString appendString: token];
 		}];
 		
 		if (formatString) {
