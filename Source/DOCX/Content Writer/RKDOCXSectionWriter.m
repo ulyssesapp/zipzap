@@ -10,6 +10,7 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 #import "RKDOCXHeaderFooterWriter.h"
+#import "RKDOCXParagraphWriter.h"
 #import "RKDOCXSettingsWriter.h"
 
 // Elements
@@ -55,62 +56,71 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 
 + (NSArray *)sectionElementsUsingContext:(RKDOCXConversionContext *)context
 {
-	RKSection *lastSection = context.document.sections.lastObject;
-	NSArray *lastSectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:lastSection.content usingContext:context];
-	NSXMLElement *sectionProperties = [NSXMLElement elementWithName: RKDOCXSectionPropertiesElementName];
+	NSMutableArray *paragraphs = [NSMutableArray new];
 	
-	// Columns (§17.6.4)
-	NSXMLElement *columnProperty = [self columnPropertyForSection: lastSection];
-	if (columnProperty)
-		[sectionProperties addChild: columnProperty];
+	for (RKSection *section in context.document.sections) {
+		NSXMLElement *sectionProperties = [NSXMLElement elementWithName: RKDOCXSectionPropertiesElementName];
+		
+		// Columns (§17.6.4)
+		NSXMLElement *columnProperty = [self columnPropertyForSection: section];
+		if (columnProperty)
+			[sectionProperties addChild: columnProperty];
+		
+		// Page Number and Index Of First Page (§17.6.12)
+		NSXMLElement *pageNumberTypeProperty = [self pageNumberTypePropertyForSection: section];
+		if (pageNumberTypeProperty)
+			[sectionProperties addChild: pageNumberTypeProperty];
+		
+		// Document settings repeated in each section
+		// Page Size and Page Orientation (§17.6.13)
+		NSXMLElement *pageSizeProperty = [self pageSizePropertyForDocument: context.document];
+		if (pageSizeProperty)
+			[sectionProperties addChild: pageSizeProperty];
+		
+		// Page Margin (§17.6.11)
+		NSXMLElement *pageMarginProperty = [self pageMarginPropertyForDocument: context.document];
+		if (pageMarginProperty)
+			[sectionProperties addChild: pageMarginProperty];
+		
+		// Footnote Properties
+		NSXMLElement *footnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:NO];
+		if (footnoteProperties)
+			[sectionProperties addChild: footnoteProperties];
+		
+		// Endnote Properties
+		NSXMLElement *endnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:YES];
+		if (endnoteProperties)
+			[sectionProperties addChild: endnoteProperties];
+		
+		// Headers and Footers
+		// DOCX requires a "titlePg" element when using a different header or footer for first pages. See ISO 29500-1:2012: §17.10.6.
+		if (!(section.hasSingleHeaderForAllPages && section.hasSingleFooterForAllPages) && ([section headerForPage: RKPageSelectionFirst] || [section footerForPage: RKPageSelectionFirst]))
+			[sectionProperties addChild: [NSXMLElement elementWithName: RKDOCXSectionTitlePageElementName]];
+		
+		// Create a reference for each separate Header
+		[section enumerateHeadersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
+			[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXHeader withIndex:++context.headerCount forAttributedString:header usingContext:context];
+			[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXHeader withAttributedString:header forPageSelector:pageSelector usingContext:context]];
+		}];
+		
+		// Create a reference for each separate Footer
+		[section enumerateFootersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
+			[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXFooter withIndex:++context.footerCount forAttributedString:footer usingContext:context];
+			[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXFooter withAttributedString:footer forPageSelector:pageSelector usingContext:context]];
+		}];
+		
+		NSArray *sectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:section.content usingContext:context];
+		
+		// If this is the last section, put it after all paragraphs. In any other case, add it to the last paragraph’s properties. See ISO 29500-1:2012: §17.6.18 and §17.6.17 (Section Properties and Final Section Properties).
+		if (![section isEqual: context.document.sections.lastObject])
+			sectionParagraphs = [sectionParagraphs arrayByAddingObject: [RKDOCXParagraphWriter paragraphElementWithProperties:@[sectionProperties] runElements:nil]];
+		else
+			sectionParagraphs = [sectionParagraphs arrayByAddingObject: sectionProperties];
+		
+		[paragraphs addObjectsFromArray: sectionParagraphs];
+	}
 	
-	// Page Number and Index Of First Page (§17.6.12)
-	NSXMLElement *pageNumberTypeProperty = [self pageNumberTypePropertyForSection: lastSection];
-	if (pageNumberTypeProperty)
-		[sectionProperties addChild: pageNumberTypeProperty];
-	
-	// Document settings repeated in each section
-	// Page Size and Page Orientation (§17.6.13)
-	NSXMLElement *pageSizeProperty = [self pageSizePropertyForDocument: context.document];
-	if (pageSizeProperty)
-		[sectionProperties addChild: pageSizeProperty];
-	
-	// Page Margin (§17.6.11)
-	NSXMLElement *pageMarginProperty = [self pageMarginPropertyForDocument: context.document];
-	if (pageMarginProperty)
-		[sectionProperties addChild: pageMarginProperty];
-	
-	// Footnote Properties
-	NSXMLElement *footnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:NO];
-	if (footnoteProperties)
-		[sectionProperties addChild: footnoteProperties];
-	
-	// Endnote Properties
-	NSXMLElement *endnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:YES];
-	if (endnoteProperties)
-		[sectionProperties addChild: endnoteProperties];
-
-	// Headers and Footers
-	// DOCX requires a "titlePg" element when using a different header or footer for first pages. See ISO 29500-1:2012: §17.10.6.
-	if (!(lastSection.hasSingleHeaderForAllPages && lastSection.hasSingleFooterForAllPages) && ([lastSection headerForPage: RKPageSelectionFirst] || [lastSection footerForPage: RKPageSelectionFirst]))
-		[sectionProperties addChild: [NSXMLElement elementWithName: RKDOCXSectionTitlePageElementName]];
-	
-	// Create a reference for each separate Header
-	[lastSection enumerateHeadersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
-		[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXHeader withIndex:++context.headerCount forAttributedString:header usingContext:context];
-		[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXHeader withAttributedString:header forPageSelector:pageSelector usingContext:context]];
-	}];
-	
-	// Create a reference for each separate Footer
-	[lastSection enumerateFootersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
-		[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXFooter withIndex:++context.footerCount forAttributedString:footer usingContext:context];
-		[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXFooter withAttributedString:footer forPageSelector:pageSelector usingContext:context]];
-	}];
-	
-	if (sectionProperties.childCount == 0)
-		return lastSectionParagraphs;
-	
-	return [lastSectionParagraphs arrayByAddingObject: sectionProperties];
+	return paragraphs;
 }
 
 + (NSXMLElement *)columnPropertyForSection:(RKSection *)section

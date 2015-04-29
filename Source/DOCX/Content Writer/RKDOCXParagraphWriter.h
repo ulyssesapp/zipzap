@@ -21,6 +21,11 @@
 + (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context;
 
 /*!
+ @abstract Returns an XML element with the given property and run elements (if any).
+ */
++ (NSXMLElement *)paragraphElementWithProperties:(NSArray *)properties runElements:(NSArray *)runElements;
+
+/*!
  @abstract Returns an XML element representing a paragraph including a run with a page break.
  */
 + (NSXMLElement *)paragraphElementWithPageBreak;
