@@ -110,6 +110,7 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 		
 		NSArray *sectionParagraphs;
 
+		// If this is the last section, put it after all paragraphs. In any other case, add it to the last paragraph’s properties
 		if (![section isEqual: context.document.sections.lastObject])
 			sectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:section.content withSectionProperties:sectionProperties usingContext:context];
 		else {
