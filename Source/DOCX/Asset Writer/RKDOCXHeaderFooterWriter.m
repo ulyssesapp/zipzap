@@ -47,7 +47,7 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithStandardNamespacesAndRootElementName: rootElementName];
 	
-	document.rootElement.children = [RKDOCXAttributedStringWriter processAttributedString:contentString usingContext:context];
+	document.rootElement.children = [RKDOCXAttributedStringWriter processAttributedString:contentString withSectionProperties:nil usingContext:context];
 	
 	[context indexForRelationshipWithTarget:filename andType:relationshipType];
 	[context addXMLDocumentPart:document withFilename:[@"word/" stringByAppendingString: filename] contentType:contentType];

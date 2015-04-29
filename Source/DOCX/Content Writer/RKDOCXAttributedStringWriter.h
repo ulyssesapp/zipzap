@@ -16,6 +16,6 @@
 /*!
  @abstract Returns an array of XML elements representing the paragraphs of the attributed string.
  */
-+ (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context;
 
 @end

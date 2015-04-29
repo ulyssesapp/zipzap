@@ -113,7 +113,7 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKDOCXReferenceTypeAttributeName: @(referenceType)}];
 	[referenceStringWithReferenceMark appendAttributedString: referenceString];
 	
-	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceStringWithReferenceMark usingContext:context];
+	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceStringWithReferenceMark withSectionProperties:nil usingContext:context];
 	
 	NSUInteger referenceIndex = 0;
 	if (referenceType == RKDOCXFootnoteReference) {

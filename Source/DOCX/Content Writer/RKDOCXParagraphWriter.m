@@ -20,11 +20,11 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 
 @implementation RKDOCXParagraphWriter
 
-+ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *paragraphElement = [NSXMLElement elementWithName: RKDOCXParagraphElementName];
 	
-	NSXMLElement *propertiesElement = [self paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:paragraphRange usingContext:context];
+	NSXMLElement *propertiesElement = [self paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:paragraphRange withSectionProperties:sectionProperties usingContext:context];
 	if (propertiesElement)
 		[paragraphElement addChild: propertiesElement];
 	
@@ -37,7 +37,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	return paragraphElement;
 }
 
-+ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
@@ -46,6 +46,9 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attrs usingContext:context]];
 		[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attrs usingContext:context]];
 	}];
+	
+	if (sectionProperties)
+		[properties addObject: sectionProperties];
 	
 	if (properties.count > 0)
 		return [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:properties attributes:nil];

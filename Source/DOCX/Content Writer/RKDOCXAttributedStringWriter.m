@@ -15,7 +15,7 @@ NSString *RKDOCXPageBreakCharacterName	= @"\f";
 
 @implementation RKDOCXAttributedStringWriter
 
-+ (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context
 {
 	static NSCharacterSet *pageBreakCharacterSet;
 	static dispatch_once_t onceToken;
@@ -28,8 +28,12 @@ NSString *RKDOCXPageBreakCharacterName	= @"\f";
 	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs|NSStringEnumerationSubstringNotRequired usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
 		[attributedString.string enumerateTokensWithDelimiters:pageBreakCharacterSet inRange:substringRange usingBlock:^(NSRange tokenRange, unichar delimiter) {
 			// Add paragraph, if any
-			if (tokenRange.length > 0)
-				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:tokenRange usingContext:context]];
+			if (tokenRange.length > 0) {
+				if (NSMaxRange(tokenRange) == attributedString.length)
+					[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:tokenRange withSectionProperties:sectionProperties usingContext:context]];
+				else
+					[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:tokenRange withSectionProperties:nil usingContext:context]];
+			}
 			
 			// Add page break, if any
 			if (delimiter == '\f')
