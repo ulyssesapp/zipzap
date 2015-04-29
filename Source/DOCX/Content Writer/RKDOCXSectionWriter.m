@@ -111,7 +111,7 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 		
 		NSArray *sectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:section.content usingContext:context];
 		
-		// If this is the last section, put it after all paragraphs. In any other case, add it to the last paragraph’s properties
+		// If this is the last section, put it after all paragraphs. In any other case, add it to the last paragraph’s properties. See ISO 29500-1:2012: §17.6.18 and §17.6.17 (Section Properties and Final Section Properties).
 		if (![section isEqual: context.document.sections.lastObject])
 			sectionParagraphs = [sectionParagraphs arrayByAddingObject: [RKDOCXParagraphWriter paragraphElementWithProperties:@[sectionProperties] runElements:nil]];
 		else

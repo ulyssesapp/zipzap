@@ -16,7 +16,7 @@
 
 /*!
  @abstract Returns an XML element representing a paragraph including properties and runs.
- @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs). Section Properties should be nil if there are none.
+ @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs).
  */
 + (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context;
 
