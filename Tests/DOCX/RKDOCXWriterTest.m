@@ -16,7 +16,7 @@
 
 - (void)testGeneratingEmptyDocument
 {
-	RKDocument *document = [[RKDocument alloc] init];
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @""]];
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"empty"];

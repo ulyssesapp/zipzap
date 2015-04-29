@@ -16,7 +16,7 @@
 
 - (void)testCoreProperties
 {
-	RKDocument *document = [[RKDocument alloc] init];
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @""]];
 	NSDate *date = [NSDate dateWithTimeIntervalSince1970: 0];
 	NSDictionary *metadata = @{RKTitleDocumentAttribute: @"Title",
 							   RKSubjectDocumentAttribute: @"Subject",

@@ -154,4 +154,14 @@
 	[self assertDOCX:converted withTestDocument:@"oddpagefooter"];
 }
 
+- (void)testTwoSections
+{
+	RKSection *sectionA = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document consists of two sections.\nThis is section one."]];
+	RKSection *sectionB = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"To see the section break, show invisible characters.\nThis is section two."]];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[sectionA, sectionB]];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"twosections"];
+}
+
 @end
