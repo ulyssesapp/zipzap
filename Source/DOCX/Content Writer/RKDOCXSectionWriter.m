@@ -10,6 +10,7 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 #import "RKDOCXHeaderFooterWriter.h"
+#import "RKDOCXParagraphWriter.h"
 #import "RKDOCXSettingsWriter.h"
 
 // Elements
@@ -108,15 +109,13 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 			[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXFooter withAttributedString:footer forPageSelector:pageSelector usingContext:context]];
 		}];
 		
-		NSArray *sectionParagraphs;
-
+		NSArray *sectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:section.content usingContext:context];
+		
 		// If this is the last section, put it after all paragraphs. In any other case, add it to the last paragraph’s properties
 		if (![section isEqual: context.document.sections.lastObject])
-			sectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:section.content withSectionProperties:sectionProperties usingContext:context];
-		else {
-			sectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:section.content withSectionProperties:nil usingContext:context];
+			sectionParagraphs = [sectionParagraphs arrayByAddingObject: [RKDOCXParagraphWriter paragraphElementWithProperties:@[sectionProperties] runElements:nil]];
+		else
 			sectionParagraphs = [sectionParagraphs arrayByAddingObject: sectionProperties];
-		}
 		
 		[paragraphs addObjectsFromArray: sectionParagraphs];
 	}

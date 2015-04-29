@@ -15,7 +15,7 @@ NSString *RKDOCXPageBreakCharacterName	= @"\f";
 
 @implementation RKDOCXAttributedStringWriter
 
-+ (NSArray *)processAttributedString:(NSAttributedString *)attributedString withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)processAttributedString:(NSAttributedString *)attributedString usingContext:(RKDOCXConversionContext *)context
 {
 	static NSCharacterSet *pageBreakCharacterSet;
 	static dispatch_once_t onceToken;
@@ -30,10 +30,6 @@ NSString *RKDOCXPageBreakCharacterName	= @"\f";
 			// Add paragraph, if any
 			if (tokenRange.length > 0)
 				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:tokenRange usingContext:context]];
-			
-			// Add section break, if end of section
-			if ((NSMaxRange(tokenRange) == attributedString.length) && sectionProperties)
-				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementWithProperties:@[sectionProperties] runElements:nil]];
 			
 			// Add page break, if any
 			if (delimiter == '\f')
