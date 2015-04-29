@@ -18,7 +18,12 @@
  @abstract Returns an XML element representing a paragraph including properties and runs.
  @discussion See ISO 29500-1:2012: §17.3.1 (Paragraphs). Section Properties should be nil if there are none.
  */
-+ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context;
++ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context;
+
+/*!
+ @abstract Returns an XML element with the given property and run elements (if any).
+ */
++ (NSXMLElement *)paragraphElementWithProperties:(NSArray *)properties runElements:(NSArray *)runElements;
 
 /*!
  @abstract Returns an XML element representing a paragraph including a run with a page break.

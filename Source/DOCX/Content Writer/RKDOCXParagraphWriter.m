@@ -20,24 +20,29 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 
 @implementation RKDOCXParagraphWriter
 
-+ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLElement *paragraphElement = [NSXMLElement elementWithName: RKDOCXParagraphElementName];
-	
-	NSXMLElement *propertiesElement = [self paragraphPropertiesElementWithPropertiesFromAttributedString:attributedString inRange:paragraphRange withSectionProperties:sectionProperties usingContext:context];
-	if (propertiesElement)
-		[paragraphElement addChild: propertiesElement];
-	
 	NSArray *runElements = [self runElementsFromAttributedString:attributedString inRange:paragraphRange usingContext:context];
-	NSParameterAssert(runElements.count);
-	for (NSXMLElement *runElement in runElements) {
-		[paragraphElement addChild: runElement];
-	}
+	NSXMLElement *paragraphElement = [self paragraphElementWithProperties:[self paragraphPropertiesWithPropertiesFromAttributedString:attributedString inRange:paragraphRange usingContext:context] runElements:runElements];
 	
 	return paragraphElement;
 }
 
-+ (NSXMLElement *)paragraphPropertiesElementWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange withSectionProperties:(NSXMLElement *)sectionProperties usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)paragraphElementWithProperties:(NSArray *)properties runElements:(NSArray *)runElements
+{
+	NSMutableArray *paragraphChildren = [NSMutableArray new];
+	if (!properties && !runElements)
+		return [NSXMLElement elementWithName: RKDOCXParagraphElementName];
+	
+	if (properties)
+		[paragraphChildren addObject: [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:properties attributes:nil]];
+	if (runElements)
+		[paragraphChildren addObjectsFromArray: runElements];
+	
+	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:(paragraphChildren.count != 0) ? paragraphChildren : nil attributes:nil];
+}
+
++ (NSArray *)paragraphPropertiesWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
@@ -47,11 +52,8 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 		[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attrs usingContext:context]];
 	}];
 	
-	if (sectionProperties)
-		[properties addObject: sectionProperties];
-	
 	if (properties.count > 0)
-		return [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:properties attributes:nil];
+		return properties;
 	
 	return nil;
 }
