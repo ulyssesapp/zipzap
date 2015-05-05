@@ -21,6 +21,7 @@ NSString *RKDOCXFootnotesFilename				= @"word/footnotes.xml";
 NSString *RKDOCXNumberingFilename				= @"word/numbering.xml";
 NSString *RKDOCXPackageRelationshipsFilename	= @"_rels/.rels";
 NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
+NSString *RKDOCXStyleTemplateFilename			= @"word/styles.xml";
 
 @implementation RKDOCXPartWriter
 
