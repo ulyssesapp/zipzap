@@ -173,6 +173,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	id attributeValue = attributes[attributeName];
 	id styleValue = context.document.characterStyles[attributes[RKCharacterStyleNameAttributeName]][attributeName];
 	
+	// No translation is performed if string attributes and style attributes are the same. (I.e. have the same value or are both set to nil.)
 	return !((attributeValue == styleValue) || [attributeValue isEqual: styleValue]);
 }
 
