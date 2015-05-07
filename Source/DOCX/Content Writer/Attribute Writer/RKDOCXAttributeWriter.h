@@ -8,7 +8,8 @@
 
 #import "RKDOCXConversionContext.h"
 
-// Commonly used attribute name
+// Commonly used attribute name and value
+extern NSString *RKDOCXAttributeWriterOffAttributeValue;
 extern NSString *RKDOCXAttributeWriterValueAttributeName;
 
 @interface RKDOCXAttributeWriter : NSObject

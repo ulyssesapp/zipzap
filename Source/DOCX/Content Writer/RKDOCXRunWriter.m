@@ -8,12 +8,13 @@
 
 #import "RKDOCXRunWriter.h"
 
+#import "NSString+ParsingConvenience.h"
 #import "RKDOCXFontAttributesWriter.h"
 #import "RKDOCXFootnotesWriter.h"
-#import "NSString+ParsingConvenience.h"
-#import "RKDOCXPlaceholderWriter.h"
-#import "RKDOCXTextEffectAttributesWriter.h"
 #import "RKDOCXImageWriter.h"
+#import "RKDOCXPlaceholderWriter.h"
+#import "RKDOCXStyleTemplateWriter.h"
+#import "RKDOCXTextEffectAttributesWriter.h"
 
 // Element names
 NSString *RKDOCXRunElementName				= @"w:r";
@@ -90,6 +91,10 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
+	
+	NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter characterStyleReferenceElementForAttributes:attributes usingContext:context];
+	if (styleReferenceElement)
+		[properties addObject: styleReferenceElement];
 	
 	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (propertyElements)

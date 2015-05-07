@@ -26,6 +26,11 @@
 + (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes contentElement:(NSXMLElement *)contentElement usingContext:(RKDOCXConversionContext *)context;
 
 /*!
+ @abstract Returns an array of XML elements containing the run style properties of the given attributes.
+ */
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
+
+/*!
  @abstract Returns an XML element representing a text element with the given string value.
  @discussion The text element is created with an 'xml:space="preserve"' attribute.
  */

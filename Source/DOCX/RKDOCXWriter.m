@@ -17,6 +17,7 @@
 #import "RKDOCXPartWriter.h"
 #import "RKDOCXRelationshipsWriter.h"
 #import "RKDOCXSettingsWriter.h"
+#import "RKDOCXStyleTemplateWriter.h"
 
 @implementation RKDOCXWriter
 
@@ -29,6 +30,7 @@
 	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXFootnotesWriter buildFootnotesUsingContext: context];
 	[RKDOCXListStyleWriter buildNumberingDefinitionsUsingContext: context];
+	[RKDOCXStyleTemplateWriter buildStyleTemplatesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];
 	[RKDOCXRelationshipsWriter buildDocumentRelationshipsUsingContext: context];

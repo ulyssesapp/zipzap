@@ -19,6 +19,7 @@ extern NSString *RKDOCXFootnotesFilename;
 extern NSString *RKDOCXNumberingFilename;
 extern NSString *RKDOCXPackageRelationshipsFilename;
 extern NSString *RKDOCXSettingsFilename;
+extern NSString *RKDOCXStyleTemplateFilename;
 
 /*!
  @abstract Abstract superclass used by all writers creating XML document parts.
