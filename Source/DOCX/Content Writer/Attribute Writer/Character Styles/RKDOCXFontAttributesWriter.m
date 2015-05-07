@@ -49,7 +49,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 			[properties addObject: [NSXMLElement elementWithName:RKDOCXFontAttributeBoldElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]]]];
 	}
 	
-	if (CTFontCopyFamilyName(fontAttribute) != CTFontCopyFamilyName(characterStyleFontAttribute)) {
+	if (![(__bridge NSString *)CTFontCopyFamilyName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFamilyName(characterStyleFontAttribute)]) {
 		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)], [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)], [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)], [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)]]];
 		[properties addObject: fontElement];
 	}

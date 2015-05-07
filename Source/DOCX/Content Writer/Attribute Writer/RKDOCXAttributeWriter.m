@@ -9,7 +9,7 @@
 #import "RKDOCXAttributeWriter.h"
 
 // Common attribute name
-NSString *RKDOCXAttributeWriterOffAttributeValue	= @"off";
+NSString *RKDOCXAttributeWriterOffAttributeValue	= @"0";
 NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
 
 @implementation RKDOCXAttributeWriter
