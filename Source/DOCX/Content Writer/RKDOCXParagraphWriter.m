@@ -14,6 +14,7 @@
 #import "RKDOCXParagraphStyleWriter.h"
 #import "RKDOCXPlaceholderWriter.h"
 #import "RKDOCXRunWriter.h"
+#import "RKDOCXStyleTemplateWriter.h"
 
 NSString *RKDOCXParagraphElementName			= @"w:p";
 NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
@@ -47,6 +48,10 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+		NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter paragraphStyleReferenceElementForAttributes:attrs usingContext:context];
+		if (styleReferenceElement)
+			[properties addObject: styleReferenceElement];
+
 		[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attrs usingContext:context]];
 		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attrs usingContext:context]];
 		[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attrs usingContext:context]];
@@ -83,6 +88,20 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	}];
 	
 	return runElements;
+}
+
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
+{
+	NSMutableArray *properties = [NSMutableArray new];
+	
+	[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attributes usingContext:context]];
+	[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
+	[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
+	
+	if (properties.count > 0)
+		return properties;
+	
+	return nil;
 }
 
 + (NSXMLElement *)paragraphElementWithPageBreak

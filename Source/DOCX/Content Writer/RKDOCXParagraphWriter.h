@@ -26,6 +26,11 @@
 + (NSXMLElement *)paragraphElementWithProperties:(NSArray *)properties runElements:(NSArray *)runElements;
 
 /*!
+ @abstract Returns an array of XML elements containing the paragraph style properties of the given attributes.
+ */
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
+
+/*!
  @abstract Returns an XML element representing a paragraph including a run with a page break.
  */
 + (NSXMLElement *)paragraphElementWithPageBreak;

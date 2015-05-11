@@ -9,6 +9,7 @@
 #import "RKDOCXStyleTemplateWriter.h"
 
 #import "RKDOCXAttributeWriter.h"
+#import "RKDOCXParagraphWriter.h"
 #import "RKDOCXRunWriter.h"
 
 // Root element name
@@ -56,20 +57,43 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXStyleTemplateRootElementName namespaces:namespaces];
 	
+	// Paragraph Styles
+	for (NSString *styleName in context.document.paragraphStyles) {
+		[document.rootElement addChild: [self styleElementForStyleName:styleName usingContext:context isCharacterStyle:NO]];
+	}
+	
+	// Character Styles
 	for (NSString *styleName in context.document.characterStyles) {
-		NSDictionary *attributes = context.document.characterStyles[styleName];
-		
-		NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:styleName]]];
-		NSXMLElement *runProperties = [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:[RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context] attributes:nil];
-		NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
-														  children:@[styleNameElement, runProperties]
-														attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateCharacterStyleAttributeValue],
-																	 [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:styleName]]];
-		[document.rootElement addChild: styleElement];
+		[document.rootElement addChild: [self styleElementForStyleName:styleName usingContext:context isCharacterStyle:YES]];
 	}
 	
 	[context indexForRelationshipWithTarget:RKDOCXStyleTemplateRelationshipTarget andType:RKDOCXStyleTemplateRelationshipType];
 	[context addXMLDocumentPart:document withFilename:RKDOCXStyleTemplateFilename contentType:RKDOCXStyleTemplateContentType];
+}
+
++ (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
+{
+	NSDictionary *attributes = isCharacterStyle ? context.document.characterStyles[styleName] : context.document.paragraphStyles[styleName];
+	NSString *propertiesElementName = isCharacterStyle ? RKDOCXStyleTemplateRunPropertiesElementName : RKDOCXStyleTemplateParagraphPropertiesElementName;
+	NSString *templateTypeAttributeValue = isCharacterStyle ? RKDOCXStyleTemplateCharacterStyleAttributeValue : RKDOCXStyleTemplateParagraphStyleAttributeValue;
+	NSArray *properties = isCharacterStyle ? [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context] : [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context];
+	
+	NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:styleName]]];
+	NSXMLElement *propertiesElement = [NSXMLElement elementWithName:propertiesElementName children:properties attributes:nil];
+	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
+													  children:@[styleNameElement, propertiesElement]
+													attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue],
+																 [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:styleName]]];
+	
+	return styleElement;
+}
+
++ (NSXMLElement *)paragraphStyleReferenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
+{
+	if (!attributes[RKParagraphStyleNameAttributeName])
+		return nil;
+	
+	return [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphReferenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:attributes[RKParagraphStyleNameAttributeName]]]];
 }
 
 + (NSXMLElement *)characterStyleReferenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context

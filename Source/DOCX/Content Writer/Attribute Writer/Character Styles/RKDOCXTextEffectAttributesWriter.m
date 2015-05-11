@@ -68,7 +68,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 {
 	RKColor *fontColorAttribute = attributes[RKForegroundColorAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKForegroundColorAttributeName fromAttributes:attributes context:context])
+	if (![self shouldTranslateAttributeWithName:RKForegroundColorAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:YES])
 		return nil;
 	
 	NSXMLElement *foregroundColorProperty = [NSXMLElement elementWithName:RKDOCXTextEffectsColorElementName];
@@ -83,7 +83,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 
 + (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	if (![self shouldTranslateAttributeWithName:RKStrokeWidthAttributeName fromAttributes:attributes context:context])
+	if (![self shouldTranslateAttributeWithName:RKStrokeWidthAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:YES])
 		return nil;
 	
 	NSXMLElement *strokeWidthProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsOutlineElementName];
@@ -96,7 +96,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 
 + (NSXMLElement *)shadowPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	if (![self shouldTranslateAttributeWithName:RKShadowAttributeName fromAttributes:attributes context:context])
+	if (![self shouldTranslateAttributeWithName:RKShadowAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:YES])
 		return nil;
 	
 	NSXMLElement *shadowProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsShadowElementName];
@@ -111,7 +111,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 {
 	NSNumber *strikethroughAttribute = attributes[RKStrikethroughStyleAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKStrikethroughStyleAttributeName fromAttributes:attributes context:context])
+	if (![self shouldTranslateAttributeWithName:RKStrikethroughStyleAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:YES])
 		return nil;
 	
 	NSXMLElement *strikethroughProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsSingleStrikethroughElementName];
@@ -126,7 +126,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 {
 	NSNumber *underlineAttribute = attributes[RKUnderlineStyleAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKUnderlineStyleAttributeName fromAttributes:attributes context:context])
+	if (![self shouldTranslateAttributeWithName:RKUnderlineStyleAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:YES])
 		return nil;
 	
 	NSXMLElement *underlineProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsUnderlineElementName];
@@ -151,7 +151,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	NSInteger superscriptAttribute = [attributes[RKSuperscriptAttributeName] integerValue];
 	
 	// String and style attribute are the same
-	if (![self shouldTranslateAttributeWithName:RKSuperscriptAttributeName fromAttributes:attributes context:context])
+	if (![self shouldTranslateAttributeWithName:RKSuperscriptAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:YES])
 		return nil;
 	
 	NSXMLElement *superscriptProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsSuperscriptElementName];
@@ -166,15 +166,6 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	[superscriptProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(superscriptAttribute < 0) ? RKDOCXTextEffectsSubscriptAttributeValue : RKDOCXTextEffectsSuperscriptAttributeValue]];
 	
 	return superscriptProperty;
-}
-
-+ (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes context:(RKDOCXConversionContext *)context
-{
-	id attributeValue = attributes[attributeName];
-	id styleValue = context.document.characterStyles[attributes[RKCharacterStyleNameAttributeName]][attributeName];
-	
-	// No translation is performed if string attributes and style attributes are the same. (I.e. have the same value or are both set to nil.)
-	return !((attributeValue == styleValue) || [attributeValue isEqual: styleValue]);
 }
 
 @end

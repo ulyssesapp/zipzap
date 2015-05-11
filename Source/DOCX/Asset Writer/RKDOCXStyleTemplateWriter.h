@@ -17,6 +17,12 @@
 + (void)buildStyleTemplatesUsingContext:(RKDOCXConversionContext *)context;
 
 /*!
+ @abstract Returns the reference element for a paragraph style, if mentioned in the attributes.
+ @discussion See ISO 29500-1:2012: §17.3.1.27 (Referenced Paragraph Style).
+ */
++ (NSXMLElement *)paragraphStyleReferenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
+
+/*!
  @abstract Returns the reference element for a character style, if mentioned in the attributes.
  @discussion See ISO 29500-1:2012: §17.3.2.29 (Referenced Character Style).
  */

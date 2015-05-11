@@ -21,4 +21,13 @@ NSString *RKDOCXAttributeWriterValueAttributeName	= @"w:val";
 	return nil;
 }
 
++ (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
+{
+	id attributeValue = attributes[attributeName];
+	id styleValue = isCharacterStyle ? context.document.characterStyles[attributes[RKCharacterStyleNameAttributeName]][attributeName] : context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][attributeName];
+	
+	// No translation is performed if string attributes and style attributes are the same. (I.e. have the same value or are both set to nil.)
+	return !((attributeValue == styleValue) || [attributeValue isEqual: styleValue]);
+}
+
 @end
