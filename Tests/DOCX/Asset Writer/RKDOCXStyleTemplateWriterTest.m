@@ -21,7 +21,7 @@
 
 @implementation RKDOCXStyleTemplateWriterTest
 
-- (void)testStyleTemplateWithIdenticStringAttributes
+- (void)testCharacterStyleTemplateWithIdenticStringAttributes
 {
 	CTFontRef styleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
 	
@@ -39,7 +39,7 @@
 	[self assertDOCX:converted withTestDocument:@"characterstylewithidenticattributes"];
 }
 
-- (void)testStyleTemplateWithOverridingStringAttributes
+- (void)testCharacterStyleTemplateWithOverridingStringAttributes
 {
 	// Character Style
 	CTFontRef styleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
@@ -64,7 +64,7 @@
 	[self assertDOCX:converted withTestDocument:@"characterstyletemplateoverride"];
 }
 
-- (void)testStyleTemplateWithExplicitDeactivatingStringAttributes
+- (void)testCharacterStyleTemplateWithExplicitDeactivatingStringAttributes
 {
 	// Character Style
 	NSDictionary *styleAttributes = @{RKStrokeWidthAttributeName: @1,
@@ -89,7 +89,7 @@
 	[self assertDOCX:converted withTestDocument:@"characterstylewithexplicitdeactiviation"];
 }
 
-- (void)testStyleTemplateWithImplicitDeactivatingStringAttributes
+- (void)testCharacterStyleTemplateWithImplicitDeactivatingStringAttributes
 {
 	// Character Style
 	CTFontRef styleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
@@ -124,6 +124,143 @@
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"localizedstyle"];
+}
+
+- (void)testParagraphStyleTemplateWithDeactivatedBaseWritingDirectionAttribute
+{
+	NSString *styleName = @"Bidi Style";
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: styleName, RKParagraphStyleAttributeName: [paragraphStyle copy]};
+	
+	paragraphStyle.baseWritingDirection = NSWritingDirectionRightToLeft;
+
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Base Writing Direction Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.paragraphStyles = @{styleName: @{RKParagraphStyleAttributeName: paragraphStyle}};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"paragraphstylewithdeactivatedbasewritingdirection"];
+}
+
+- (void)testParagraphStyleTemplateWithIdenticStringAttributes
+{
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	paragraphStyle.headIndent = 13;
+	paragraphStyle.tailIndent = 04;
+	paragraphStyle.firstLineHeadIndent = 19;
+	paragraphStyle.lineSpacing = 29;
+	paragraphStyle.paragraphSpacingBefore = 20;
+	paragraphStyle.paragraphSpacing = 15;
+	paragraphStyle.alignment = RKTextAlignmentJustified;
+	paragraphStyle.defaultTabInterval = 42;
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:0]];
+	
+	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: paragraphStyle};
+	NSString *styleName = @"Paragraph Style";
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: @{RKParagraphStyleNameAttributeName: styleName}];
+	[attributes addEntriesFromDictionary: styleAttributes];
+	
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text should have a paragraph style named \"Paragraph Style\". Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.paragraphStyles = @{styleName: styleAttributes};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"paragraphstylewithidenticattributes"];
+}
+
+- (void)testParagraphStyleTemplateWithOverridingStringAttributes
+{
+	// Character Style
+	NSMutableParagraphStyle *templateParagraphStyle = [NSMutableParagraphStyle new];
+	templateParagraphStyle.headIndent = 1;
+	templateParagraphStyle.tailIndent = 1;
+	templateParagraphStyle.firstLineHeadIndent = 1;
+	templateParagraphStyle.lineSpacing = 1;
+	templateParagraphStyle.paragraphSpacingBefore = 1;
+	templateParagraphStyle.paragraphSpacing = 1;
+	templateParagraphStyle.alignment = RKTextAlignmentRight;
+	templateParagraphStyle.defaultTabInterval = 1;
+	templateParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:0]];
+	RKAdditionalParagraphStyle *templateAdditionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	templateAdditionalParagraphStyle.keepWithFollowingParagraph = YES;
+	templateAdditionalParagraphStyle.skipOrphanControl = YES;
+	templateAdditionalParagraphStyle.hyphenationEnabled = NO;
+	
+	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: templateParagraphStyle,
+									  RKAdditionalParagraphStyleAttributeName: templateAdditionalParagraphStyle};
+	NSString *styleName = @"Style";
+	
+	// String Attributes
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	paragraphStyle.headIndent = 10;
+	paragraphStyle.tailIndent = 10;
+	paragraphStyle.firstLineHeadIndent = 10;
+	paragraphStyle.lineSpacing = 10;
+	paragraphStyle.paragraphSpacingBefore = 10;
+	paragraphStyle.paragraphSpacing = 10;
+	paragraphStyle.alignment = RKTextAlignmentCenter;
+	paragraphStyle.defaultTabInterval = 10;
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10 options:0],
+										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:20 options:0],
+										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:30 options:0]];
+	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	additionalParagraphStyle.keepWithFollowingParagraph = NO;
+	additionalParagraphStyle.skipOrphanControl = NO;
+	additionalParagraphStyle.hyphenationEnabled = YES;
+	
+	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: styleName,
+								 RKParagraphStyleAttributeName: paragraphStyle,
+								 RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
+	
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"You can see inside the DOCX file whether the test is working. The string attributes are the style attributes times 10." attributes:attributes];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.hyphenationEnabled = YES;
+	document.paragraphStyles = @{styleName: styleAttributes};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"paragraphstyletemplateoverride"];
+}
+
+- (void)testParagraphStyleTemplateWithImplicitDeactivatingStringAttributes
+{
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	paragraphStyle.headIndent = 1;
+	paragraphStyle.tailIndent = 1;
+	paragraphStyle.firstLineHeadIndent = 1;
+	paragraphStyle.lineSpacing = 1;
+	paragraphStyle.paragraphSpacingBefore = 1;
+	paragraphStyle.paragraphSpacing = 1;
+	paragraphStyle.alignment = RKTextAlignmentRight;
+	paragraphStyle.defaultTabInterval = 1;
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:0],
+										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:0],
+										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:0]];
+	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	additionalParagraphStyle.keepWithFollowingParagraph = YES;
+	additionalParagraphStyle.skipOrphanControl = YES;
+	additionalParagraphStyle.hyphenationEnabled = YES;
+	
+	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: paragraphStyle,
+									  RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
+	NSString *styleName = @"Style";
+	
+	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: styleName};
+	
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"You can see inside the DOCX file whether the test is working. The string attributes should be set to default values." attributes:attributes];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.hyphenationEnabled = YES;
+	document.paragraphStyles = @{styleName: styleAttributes};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"paragraphstylewithimplicitdeactiviation"];
 }
 
 @end
