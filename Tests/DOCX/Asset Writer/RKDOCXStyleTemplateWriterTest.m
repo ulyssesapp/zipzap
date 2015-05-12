@@ -21,6 +21,9 @@
 
 @implementation RKDOCXStyleTemplateWriterTest
 
+
+#pragma mark - Character style templates
+
 - (void)testCharacterStyleTemplateWithIdenticStringAttributes
 {
 	CTFontRef styleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
@@ -114,17 +117,20 @@
 	[self assertDOCX:converted withTestDocument:@"characterstylewithimplicitdeactiviation"];
 }
 
-- (void)testLocalizedStyleName
+- (void)testLocalizedCharacterStyleName
 {
-	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Emphasis should read \"Herausstellen\" and Strong should read \"Betont\" in the German localization of Word."];
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"Emphasis should read \"Herausstellen\" and Strong should read \"Betont\" in the German localization of Word."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{@"Emphasis": @{RKForegroundColorAttributeName: [RKColor colorWithRed:1 green:0 blue:0.5 alpha:0]},
 								 @"Strong": @{RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
 	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"localizedstyle"];
+	[self assertDOCX:converted withTestDocument:@"localizedcharacterstyle"];
 }
+
+
+#pragma mark - Paragraph style templates
 
 - (void)testParagraphStyleTemplateWithDeactivatedBaseWritingDirectionAttribute
 {
@@ -157,8 +163,13 @@
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:0],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:0],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:0]];
+	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	additionalParagraphStyle.keepWithFollowingParagraph = YES;
+	additionalParagraphStyle.skipOrphanControl = YES;
+	additionalParagraphStyle.hyphenationEnabled = NO;
 	
-	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: paragraphStyle};
+	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: paragraphStyle,
+									  RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
 	NSString *styleName = @"Paragraph Style";
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: @{RKParagraphStyleNameAttributeName: styleName}];
 	[attributes addEntriesFromDictionary: styleAttributes];
@@ -218,7 +229,7 @@
 								 RKParagraphStyleAttributeName: paragraphStyle,
 								 RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
 	
-	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"You can see inside the DOCX file whether the test is working. The string attributes are the style attributes times 10." attributes:attributes];
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This paragraph overrides all template style settings. Point values of the paragraph style are set to a 10 times value of the paragraph template. Alignment is set to center. Boolean settings have been inverted. Please see the test method implementation for further details." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.hyphenationEnabled = YES;
@@ -253,7 +264,7 @@
 	
 	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: styleName};
 	
-	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"You can see inside the DOCX file whether the test is working. The string attributes should be set to default values." attributes:attributes];
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"The string attributes of this paragraph should be set to default values. Please see the test method implementation for further details." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.hyphenationEnabled = YES;
@@ -261,6 +272,20 @@
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"paragraphstylewithimplicitdeactiviation"];
+}
+
+- (void)testLocalizedParagraphStyleName
+{
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"Heading 1 should read \"Überschrift 1\" and Heading 2 should read \"Überschrift 2\" in the German localization of Word."];
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	paragraphStyle.alignment = RKTextAlignmentCenter;
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.paragraphStyles = @{@"heading 1": @{RKParagraphStyleAttributeName: paragraphStyle},
+								 @"heading 2": @{RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"localizedparagraphstyle"];
 }
 
 @end
