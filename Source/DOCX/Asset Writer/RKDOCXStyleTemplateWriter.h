@@ -9,6 +9,10 @@
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXPartWriter.h"
 
+/*!
+ @abstract Generates the style template file containing all style templates referenced by the given context and adds them to the output document.
+ @discussion See ISO 29500-1:2012: §17.7 (Styles). The templates will be stored in the styles.xml file inside the output document. Should be called after the main document translation.
+ */
 @interface RKDOCXStyleTemplateWriter : RKDOCXPartWriter
 
 /*!

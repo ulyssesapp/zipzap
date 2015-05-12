@@ -14,11 +14,6 @@ extern NSString *RKDOCXAttributeWriterValueAttributeName;
 
 @interface RKDOCXAttributeWriter : NSObject
 
-/*!
- @abstract Decides whether or not an attribute should be translated.
- */
-+ (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle;
-
 @end
 
 /*!

@@ -39,19 +39,17 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	if (![self shouldTranslateAttributeWithName:RKParagraphStyleAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:NO])
-		return nil;
-	
 	NSParagraphStyle *paragraphStyleAttribute = attributes[RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
 	NSParagraphStyle *templateParagraphStyleAttribute = context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Base Writing Direction (§17.3.1.6)
-	if ([self shouldTranslateParagraphAttribute:@(paragraphStyleAttribute.baseWritingDirection) styleAttribute:@(templateParagraphStyleAttribute.baseWritingDirection)] && (paragraphStyleAttribute.baseWritingDirection == NSWritingDirectionRightToLeft || templateParagraphStyleAttribute.baseWritingDirection == NSWritingDirectionRightToLeft)) {
+	if (paragraphStyleAttribute.baseWritingDirection != templateParagraphStyleAttribute.baseWritingDirection) {
 		NSXMLElement *baseWritingDirectionProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleBaseWritingDirectionElementName];
 		if (paragraphStyleAttribute.baseWritingDirection != NSWritingDirectionRightToLeft)
 			[baseWritingDirectionProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
+		
 		[properties addObject: baseWritingDirectionProperty];
 	}
 	
@@ -99,9 +97,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 
 + (NSXMLElement *)indentationPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle
 {
-	if (![self shouldTranslateParagraphAttribute:@(paragraphStyle.headIndent) styleAttribute:@(templateParagraphStyle.headIndent)] &&
-		![self shouldTranslateParagraphAttribute:@(paragraphStyle.tailIndent) styleAttribute:@(templateParagraphStyle.tailIndent)] &&
-		![self shouldTranslateParagraphAttribute:@(paragraphStyle.firstLineHeadIndent) styleAttribute:@(templateParagraphStyle.firstLineHeadIndent)])
+	if (paragraphStyle.headIndent == templateParagraphStyle.headIndent && paragraphStyle.tailIndent == templateParagraphStyle.tailIndent && paragraphStyle.firstLineHeadIndent == templateParagraphStyle.firstLineHeadIndent)
 		return nil;
 	
 	NSXMLElement *indentationProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleIndentationElementName];
@@ -120,32 +116,38 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 
 + (NSXMLElement *)alignmentPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle
 {
-	if (![self shouldTranslateParagraphAttribute:@(paragraphStyle.alignment) styleAttribute:@(templateParagraphStyle.alignment)])
+	if (paragraphStyle.alignment == templateParagraphStyle.alignment)
 		return nil;
+	
+	NSString *alignmentValue;
 	
 	switch (paragraphStyle.alignment) {
 		case RKTextAlignmentLeft:
-			return [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleLeftAlignmentAttributeValue]]];
+			alignmentValue = RKDOCXParagraphStyleLeftAlignmentAttributeValue;
+			break;
 			
 		case RKTextAlignmentCenter:
-			return [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleCenterAlignmentAttributeValue]]];
+			alignmentValue = RKDOCXParagraphStyleCenterAlignmentAttributeValue;
+			break;
 			
 		case RKTextAlignmentRight:
-			return [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleRightAlignmentAttributeValue]]];
+			alignmentValue = RKDOCXParagraphStyleRightAlignmentAttributeValue;
+			break;
 			
 		case RKTextAlignmentJustified:
-			return [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleJustifiedAlignmentAttributeValue]]];
+			alignmentValue = RKDOCXParagraphStyleJustifiedAlignmentAttributeValue;
+			break;
 			
 		default:
 			return nil;
 	}
+	
+	return [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:alignmentValue]]];
 }
 
 + (NSXMLElement *)spacingPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle
 {
-	if (![self shouldTranslateParagraphAttribute:@(paragraphStyle.lineSpacing) styleAttribute:@(templateParagraphStyle.lineSpacing)] &&
-		![self shouldTranslateParagraphAttribute:@(paragraphStyle.paragraphSpacingBefore) styleAttribute:@(templateParagraphStyle.paragraphSpacingBefore)] &&
-		![self shouldTranslateParagraphAttribute:@(paragraphStyle.paragraphSpacing) styleAttribute:@(templateParagraphStyle.paragraphSpacing)])
+	if (paragraphStyle.lineSpacing == templateParagraphStyle.lineSpacing && paragraphStyle.paragraphSpacingBefore == templateParagraphStyle.paragraphSpacingBefore && paragraphStyle.paragraphSpacing == templateParagraphStyle.paragraphSpacing)
 		return nil;
 	
 	NSXMLElement *spacingProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleSpacingElementName];
@@ -186,21 +188,25 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	for (NSTextTab *tabStop in paragraphStyle.tabStops) {
 		NSXMLElement *tabProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabElementName];
 		
-		NSXMLElement *alignmentAttribute;
+		NSString *alignmentValue;
+		
 		switch (tabStop.alignment) {
 			case RKTextAlignmentRight:
-				alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleRightAlignmentAttributeValue];
+				alignmentValue = RKDOCXParagraphStyleRightAlignmentAttributeValue;
 				break;
 				
 			case RKTextAlignmentCenter:
-				alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleCenterAlignmentAttributeValue];
+				alignmentValue = RKDOCXParagraphStyleCenterAlignmentAttributeValue;
 				break;
 				
-			default:
-				alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleLeftAlignmentAttributeValue];
+			case RKTextAlignmentJustified: // will never happen
+			case RKTextAlignmentNatural:
+			case RKTextAlignmentLeft:
+				alignmentValue = RKDOCXParagraphStyleLeftAlignmentAttributeValue;
 				break;
 		}
-		[tabProperty addAttribute: alignmentAttribute];
+		
+		[tabProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:alignmentValue]];
 		
 		NSXMLElement *positionAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleTabPositionAttributeName stringValue:@(RKPointsToTwips(tabStop.location)).stringValue];
 		[tabProperty addAttribute: positionAttribute];
@@ -211,11 +217,6 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	[properties addObject: tabSetProperty];
 	
 	return properties;
-}
-
-+ (BOOL)shouldTranslateParagraphAttribute:(id)paragraphAttribute styleAttribute:(id)styleAttribute
-{
-	return !((paragraphAttribute == styleAttribute) || [paragraphAttribute isEqual: styleAttribute]);
 }
 
 @end

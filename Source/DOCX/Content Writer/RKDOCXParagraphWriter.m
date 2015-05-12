@@ -24,7 +24,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 + (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
 	NSArray *runElements = [self runElementsFromAttributedString:attributedString inRange:paragraphRange usingContext:context];
-	NSXMLElement *paragraphElement = [self paragraphElementWithProperties:[self paragraphPropertiesWithPropertiesFromAttributedString:attributedString inRange:paragraphRange usingContext:context] runElements:runElements];
+	NSXMLElement *paragraphElement = [self paragraphElementWithProperties:[self propertyElementsForAttributes:[attributedString attributesAtIndex:paragraphRange.location effectiveRange:NULL] usingContext:context] runElements:runElements];
 	
 	return paragraphElement;
 }
@@ -43,19 +43,17 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:(paragraphChildren.count != 0) ? paragraphChildren : nil attributes:nil];
 }
 
-+ (NSArray *)paragraphPropertiesWithPropertiesFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	[attributedString enumerateAttributesInRange:paragraphRange options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-		NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter paragraphStyleReferenceElementForAttributes:attrs usingContext:context];
-		if (styleReferenceElement)
-			[properties addObject: styleReferenceElement];
-
-		[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attrs usingContext:context]];
-		[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attrs usingContext:context]];
-		[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attrs usingContext:context]];
-	}];
+	NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter paragraphStyleReferenceElementForAttributes:attributes usingContext:context];
+	if (styleReferenceElement)
+		[properties addObject: styleReferenceElement];
+	
+	[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attributes usingContext:context]];
+	[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
+	[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
 	
 	if (properties.count > 0)
 		return properties;
@@ -88,20 +86,6 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	}];
 	
 	return runElements;
-}
-
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
-{
-	NSMutableArray *properties = [NSMutableArray new];
-	
-	[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attributes usingContext:context]];
-	[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
-	[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
-	
-	if (properties.count > 0)
-		return properties;
-	
-	return nil;
 }
 
 + (NSXMLElement *)paragraphElementWithPageBreak

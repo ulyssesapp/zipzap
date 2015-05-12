@@ -17,9 +17,6 @@ NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationElementName	= @"w:sup
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	if (![self shouldTranslateAttributeWithName:RKAdditionalParagraphStyleAttributeName fromAttributes:attributes usingContext:context isCharacterStyle:NO])
-		return nil;
-	
 	RKAdditionalParagraphStyle *paragraphStyle = attributes[RKAdditionalParagraphStyleAttributeName];
 	RKAdditionalParagraphStyle *templateParagraphStyle = context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][RKAdditionalParagraphStyleAttributeName];
 	
@@ -27,26 +24,30 @@ NSString *RKDOCXAdditionalParagraphStyleSuppressHyphenationElementName	= @"w:sup
 	
 	// Keep With following (§17.3.1.15)
 	if (paragraphStyle.keepWithFollowingParagraph != templateParagraphStyle.keepWithFollowingParagraph) {
-		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleKeepNextElementName]];
+		NSXMLElement *keepNextElement = [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleKeepNextElementName];
 		if (!paragraphStyle.keepWithFollowingParagraph)
-			[properties.lastObject addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
+			[keepNextElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
+		
+		[properties addObject: keepNextElement];
 	}
 	
 	// Skip Orphan Control (§17.3.1.44)
 	if (paragraphStyle.skipOrphanControl != templateParagraphStyle.skipOrphanControl) {
-		[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleOrphanControlElementName]];
+		NSXMLElement *widowControlElement = [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleOrphanControlElementName];
 		if (paragraphStyle.skipOrphanControl)
-			[properties.lastObject addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAdditionalParagraphStyleOrphanControlOffAttributeValue]];
+			[widowControlElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAdditionalParagraphStyleOrphanControlOffAttributeValue]];
+		
+		[properties addObject: widowControlElement];
 	}
 	
 	// Hyphenation (§17.3.1.34)
 	if (context.document.hyphenationEnabled)
 		if ((templateParagraphStyle || !paragraphStyle.hyphenationEnabled) && (!templateParagraphStyle || paragraphStyle.hyphenationEnabled != templateParagraphStyle.hyphenationEnabled)) {
-			
-//		if (!paragraphStyle || (paragraphStyle.hyphenationEnabled != templateParagraphStyle.hyphenationEnabled && templateParagraphStyle)) {
-			[properties addObject: [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationElementName]];
+			NSXMLElement *suppressAutoHyphensElement = [NSXMLElement elementWithName: RKDOCXAdditionalParagraphStyleSuppressHyphenationElementName];
 			if (paragraphStyle.hyphenationEnabled && paragraphStyle)
-				[properties.lastObject addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
+				[suppressAutoHyphensElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
+			
+			[properties addObject: suppressAutoHyphensElement];
 		}
 	
 	return properties;
