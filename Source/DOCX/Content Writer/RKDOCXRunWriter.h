@@ -27,6 +27,7 @@
 
 /*!
  @abstract Returns an array of XML elements containing the run style properties of the given attributes.
+ @discussion If the passed attributes dictionary contains a reference to a character style template (RKCharacterStyleNameAttributeName) this method will only create run properties that are overriding the given template.
  */
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
