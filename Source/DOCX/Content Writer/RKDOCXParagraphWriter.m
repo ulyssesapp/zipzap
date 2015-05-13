@@ -24,9 +24,9 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 + (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
 	NSArray *runElements = [self runElementsFromAttributedString:attributedString inRange:paragraphRange usingContext:context];
-	NSXMLElement *paragraphElement = [self paragraphElementWithProperties:[self propertyElementsForAttributes:[attributedString attributesAtIndex:paragraphRange.location effectiveRange:NULL] usingContext:context] runElements:runElements];
+	NSArray *propertyElements = [self propertyElementsForAttributes:[attributedString attributesAtIndex:paragraphRange.location effectiveRange:NULL] usingContext:context];
 	
-	return paragraphElement;
+	return [self paragraphElementWithProperties:propertyElements runElements:runElements];
 }
 
 + (NSXMLElement *)paragraphElementWithProperties:(NSArray *)properties runElements:(NSArray *)runElements

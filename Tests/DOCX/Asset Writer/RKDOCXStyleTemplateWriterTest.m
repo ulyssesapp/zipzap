@@ -163,6 +163,7 @@
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:0],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:0],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:0]];
+	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	additionalParagraphStyle.keepWithFollowingParagraph = YES;
 	additionalParagraphStyle.skipOrphanControl = YES;
@@ -198,6 +199,7 @@
 	templateParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:0],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:0],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:0]];
+	
 	RKAdditionalParagraphStyle *templateAdditionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	templateAdditionalParagraphStyle.keepWithFollowingParagraph = YES;
 	templateAdditionalParagraphStyle.skipOrphanControl = YES;
@@ -220,6 +222,7 @@
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10 options:0],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:20 options:0],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:30 options:0]];
+	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	additionalParagraphStyle.keepWithFollowingParagraph = NO;
 	additionalParagraphStyle.skipOrphanControl = NO;
@@ -253,6 +256,7 @@
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:0],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:0],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:0]];
+	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	additionalParagraphStyle.keepWithFollowingParagraph = YES;
 	additionalParagraphStyle.skipOrphanControl = YES;
