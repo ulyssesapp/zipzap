@@ -1,5 +1,5 @@
 //
-//  RKDOCXParagraphAttributeWriter.h
+//  RKDOCXParagraphWriter.h
 //  RTFKit
 //
 //  Created by Lucas Hauswald on 08.04.15.

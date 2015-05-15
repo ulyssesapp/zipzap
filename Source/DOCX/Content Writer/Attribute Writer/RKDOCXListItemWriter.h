@@ -1,5 +1,5 @@
 //
-//  RKDOCXListWriter.h
+//  RKDOCXListItemWriter.h
 //  RTFKit
 //
 //  Created by Lucas Hauswald on 24.04.15.

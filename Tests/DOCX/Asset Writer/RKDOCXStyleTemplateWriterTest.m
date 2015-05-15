@@ -8,12 +8,7 @@
 
 #import "XCTestCase+DOCX.h"
 #import "RKColor.h"
-
-#if TARGET_OS_IPHONE
-	#define RKFont UIFont
-#else
-	#define RKFont NSFont
-#endif
+#import "RKFont.h"
 
 @interface RKDOCXStyleTemplateWriterTest : XCTestCase
 
@@ -290,6 +285,39 @@
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"localizedparagraphstyle"];
+}
+
+
+#pragma mark - Mixed styles
+
+- (void)testOverriddenCharacterAttributesInParagraphStyle
+{
+	// Paragraph Style
+	CTFontRef paragraphStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
+	NSDictionary *paragraphStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)paragraphStyleFont,
+											   RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
+	NSString *paragraphStyleName = @"heading 1";
+	
+	// Character Style
+	CTFontRef characterStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
+	NSDictionary *characterStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)characterStyleFont,
+											   RKFontOverrideAttributeName: @(RKFontOverrideFontName | RKFontOverrideBoldTrait)};
+	NSString *characterStyleName = @"Strong";
+	
+	// String
+	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: paragraphStyleName,
+								 RKCharacterStyleNameAttributeName: characterStyleName,
+								 RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait),
+								 RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
+	
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text is displayed in blue Arial font with 12pt size, bold and italic, although the character style is set to Helvetica." attributes:attributes];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.paragraphStyles = @{paragraphStyleName: paragraphStyleAttributes};
+	document.characterStyles = @{characterStyleName: characterStyleAttributes};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"mixedstyletemplateoverride"];
 }
 
 @end

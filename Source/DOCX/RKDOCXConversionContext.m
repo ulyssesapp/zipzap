@@ -8,6 +8,7 @@
 
 #import "RKDOCXConversionContext.h"
 
+#import "RKDOCXFontAttributesWriter.h"
 #import <zipzap/zipzap.h>
 
 NSString *RKDOCXConversionContextRelationshipTypeName		= @"Type";
@@ -16,6 +17,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 @interface RKDOCXConversionContext ()
 {
 	NSMutableDictionary *_files;
+	NSMutableDictionary *_styleCache;
 }
 @end
 
@@ -27,6 +29,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	if (self) {
 		_files = [NSMutableDictionary new];
+		_styleCache = [NSMutableDictionary new];
 		_document = document;
 		_usedXMLTypes = [NSDictionary new];
 		_usedMIMETypes = [NSDictionary new];
@@ -40,6 +43,42 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	}
 	
 	return self;
+}
+
+- (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
+{
+	// In case there are no styles
+	if (!paragraphStyleName) {
+		if (!characterStyleName)
+			return nil;
+		else
+			return _document.characterStyles[characterStyleName];
+	}
+	else if (!characterStyleName)
+		return _document.paragraphStyles[paragraphStyleName];
+	
+	NSArray *styleKey = @[paragraphStyleName, characterStyleName];
+	
+	if (_styleCache[styleKey])
+		return _styleCache[styleKey];
+	
+	NSDictionary *paragraphAttributes = _document.paragraphStyles[paragraphStyleName];
+	NSDictionary *characterAttributes = _document.characterStyles[characterStyleName];
+	
+	NSMutableDictionary *cachedStyle = [NSMutableDictionary new];
+	
+	if (paragraphAttributes)
+		[cachedStyle addEntriesFromDictionary: paragraphAttributes];
+	
+	if (characterAttributes)
+		[cachedStyle addEntriesFromDictionary: characterAttributes];
+	
+	if (paragraphAttributes[RKFontAttributeName] && characterAttributes[RKFontAttributeName])
+		cachedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter overridingFontPropertiesForCharacterAttributes:characterAttributes paragraphAttributes:paragraphAttributes];
+	
+	[_styleCache addEntriesFromDictionary: @{styleKey: cachedStyle}];
+	
+	return cachedStyle;
 }
 
 
@@ -135,7 +174,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	// List Style already registered
 	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(id key, id obj, BOOL *stop) {
 		if ([obj isEqual: listStyle]) {
-			index = [key integerValue];
+			index = [key unsignedIntegerValue];
 			*stop = YES;
 		}
 	}];
@@ -162,7 +201,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// Relationship exists
 	if (_documentRelationships[target]) {
-		index = [_documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName] integerValue];
+		index = [_documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName] unsignedIntegerValue];
 		return index;
 	}
 	

@@ -7,7 +7,7 @@
 //
 
 #if TARGET_OS_IPHONE
-#define RKImage UIImage
+	#define RKImage UIImage
 #else
-#define RKImage NSImage
+	#define RKImage NSImage
 #endif

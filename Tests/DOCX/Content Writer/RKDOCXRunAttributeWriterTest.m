@@ -8,12 +8,7 @@
 
 #import "XCTestCase+DOCX.h"
 #import "RKColor.h"
-
-#if TARGET_OS_IPHONE
-	#define RKFont UIFont
-#else
-	#define RKFont NSFont
-#endif
+#import "RKFont.h"
 
 @interface RKDOCXRunAttributeWriterTest : XCTestCase
 

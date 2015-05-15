@@ -1,5 +1,5 @@
 //
-//  RKDOCXRunAttributeWriter.m
+//  RKDOCXRunWriter.m
 //  RTFKit
 //
 //  Created by Lucas Hauswald on 31.03.15.

@@ -25,6 +25,11 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 @property (nonatomic, readonly) RKDocument *document;
 
+/*!
+ @abstract Mixes the given paragraph and character style attributes and caches and returns the resulting style attributes.
+ */
+- (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyle characterStyle:(NSString *)characterStyle;
+
 
 #pragma mark - Output context
 
@@ -33,18 +38,6 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @discussion Should be used only after performing all required conversion steps.
  */
 @property (nonatomic, readonly) NSData *docxRepresentation;
-
-/*!
- @abstract Adds the given document part to the context object and registers the content type for the filename.
- @discussion Throws an exception when adding duplicate files.
- */
-- (void)addXMLDocumentPart:(NSXMLDocument *)part withFilename:(NSString *)filename contentType:(NSString *)contentType;
-
-/*!
- @abstract Adds the given document part to the context object and registers the content type for the path extension of the filename.
- @discussion Throws an exception when adding duplicate files.
- */
-- (void)addBinaryDocumentPart:(NSData *)part withFileName:(NSString *)filename MIMEType:(NSString *)MIMEType;
 
 /*!
  @abstract Contains all content types collected from the XML files of the document.
@@ -57,6 +50,18 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @discussion Maps from path extensions to MIME types.
  */
 @property (nonatomic, readonly) NSDictionary *usedMIMETypes;
+
+/*!
+ @abstract Adds the given document part to the context object and registers the content type for the filename.
+ @discussion Throws an exception when adding duplicate files.
+ */
+- (void)addXMLDocumentPart:(NSXMLDocument *)part withFilename:(NSString *)filename contentType:(NSString *)contentType;
+
+/*!
+ @abstract Adds the given document part to the context object and registers the content type for the path extension of the filename.
+ @discussion Throws an exception when adding duplicate files.
+ */
+- (void)addBinaryDocumentPart:(NSData *)part withFileName:(NSString *)filename MIMEType:(NSString *)MIMEType;
 
 
 #pragma mark - Footnotes and Endnotes
