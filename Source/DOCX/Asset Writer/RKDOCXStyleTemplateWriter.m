@@ -20,7 +20,6 @@ NSString *RKDOCXStyleTemplateContentType					= @"application/vnd.openxmlformats-
 
 // Relationship type and target
 NSString *RKDOCXStyleTemplateRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles";
-NSString *RKDOCXStyleTemplateRelationshipTarget				= @"styles.xml";
 
 // Elements
 NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
@@ -67,8 +66,8 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 		[document.rootElement addChild: [self styleElementForStyleName:styleName usingContext:context isCharacterStyle:YES]];
 	}
 	
-	[context indexForRelationshipWithTarget:RKDOCXStyleTemplateRelationshipTarget andType:RKDOCXStyleTemplateRelationshipType];
-	[context addXMLDocumentPart:document withFilename:RKDOCXStyleTemplateFilename contentType:RKDOCXStyleTemplateContentType];
+	[context indexForRelationshipWithTarget:RKDOCXStyleTemplateFilename andType:RKDOCXStyleTemplateRelationshipType];
+	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXStyleTemplateFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXStyleTemplateContentType];
 }
 
 + (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle

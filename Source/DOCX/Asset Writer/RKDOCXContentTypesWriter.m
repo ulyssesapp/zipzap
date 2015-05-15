@@ -41,7 +41,7 @@ NSString *RKDOCXDefaultXMLContentType			= @"application/xml";
 		[self addContentType:context.usedXMLTypes[filename] forFilename:filename toXMLElement:document.rootElement];
 	}
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXContentTypesFilename contentType:nil];
+	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXContentTypesFilename inLevel:RKDOCXRootLevel] contentType:nil];
 }
 
 + (void)addContentType:(NSString *)contentType forExtension:(NSString *)extension toXMLElement:(NSXMLElement *)rootElement

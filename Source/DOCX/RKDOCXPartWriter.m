@@ -12,16 +12,16 @@
 
 // Filenames
 NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
-NSString *RKDOCXCorePropertiesFilename			= @"docProps/core.xml";
-NSString *RKDOCXDocumentFilename				= @"word/document.xml";
-NSString *RKDOCXDocumentRelationshipsFilename	= @"word/_rels/document.xml.rels";
-NSString *RKDOCXEndnotesFilename				= @"word/endnotes.xml";
-NSString *RKDOCXExtendedPropertiesFilename		= @"docProps/app.xml";
-NSString *RKDOCXFootnotesFilename				= @"word/footnotes.xml";
-NSString *RKDOCXNumberingFilename				= @"word/numbering.xml";
-NSString *RKDOCXPackageRelationshipsFilename	= @"_rels/.rels";
-NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
-NSString *RKDOCXStyleTemplateFilename			= @"word/styles.xml";
+NSString *RKDOCXCorePropertiesFilename			= @"core.xml";
+NSString *RKDOCXDocumentFilename				= @"document.xml";
+NSString *RKDOCXDocumentRelationshipsFilename	= @"document.xml.rels";
+NSString *RKDOCXEndnotesFilename				= @"endnotes.xml";
+NSString *RKDOCXExtendedPropertiesFilename		= @"app.xml";
+NSString *RKDOCXFootnotesFilename				= @"footnotes.xml";
+NSString *RKDOCXNumberingFilename				= @"numbering.xml";
+NSString *RKDOCXPackageRelationshipsFilename	= @".rels";
+NSString *RKDOCXSettingsFilename				= @"settings.xml";
+NSString *RKDOCXStyleTemplateFilename			= @"styles.xml";
 
 @implementation RKDOCXPartWriter
 
@@ -73,6 +73,43 @@ NSString *RKDOCXStyleTemplateFilename			= @"word/styles.xml";
 								 };
 	
 	return [self basicXMLDocumentWithRootElementName:root namespaces:namespaces];
+}
+
++ (NSString *)fullPathForFilename:(NSString *)filename inLevel:(RKDOCXPartFilenameLevel)level
+{
+	NSString *levelString;
+	
+	switch (level) {
+		case RKDOCXRootLevel:
+			levelString = @"";
+			break;
+			
+		case RKDOCXRelsLevel:
+			levelString = @"_rels/";
+			break;
+			
+		case RKDOCXDocPropsLevel:
+			levelString = @"docProps/";
+			break;
+			
+		case RKDOCXWordLevel:
+			levelString = @"word/";
+			break;
+			
+		case RKDOCXMediaLevel:
+			levelString = @"media/";
+			break;
+			
+		case RKDOCXWordRelsLevel:
+			levelString = @"word/_rels/";
+			break;
+			
+		case RKDOCXWordMediaLevel:
+			levelString = @"word/media/";
+			break;
+	}
+	
+	return [levelString stringByAppendingString: filename];
 }
 
 @end

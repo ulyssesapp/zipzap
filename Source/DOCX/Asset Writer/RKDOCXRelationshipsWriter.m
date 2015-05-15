@@ -14,13 +14,11 @@ NSString *RKDOCXRelationshipsRootElementName			= @"Relationships";
 // Element name
 NSString *RKDOCXRelationshipElementName					= @"Relationship";
 
-// Package relationship types and targets
+// Package relationship types
 NSString *RKDOCXCorePropertiesRelationshipType			= @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
-NSString *RKDOCXCorePropertiesRelationshipTarget		= @"docProps/core.xml";
 NSString *RKDOCXDocumentRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
-NSString *RKDOCXDocumentRelationshipTarget				= @"word/document.xml";
 NSString *RKDOCXExtendedPropertiesRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
-NSString *RKDOCXExtendedPropertiesRelationshipTarget	= @"docProps/app.xml";
+
 NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
 
 @implementation RKDOCXRelationshipsWriter
@@ -33,13 +31,13 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 	NSUInteger relationshipCounter = 0;
 	
 	// document.xml
-	[self addRelationshipWithTarget:RKDOCXDocumentRelationshipTarget type:RKDOCXDocumentRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
+	[self addRelationshipWithTarget:[self fullPathForFilename:RKDOCXDocumentFilename inLevel:RKDOCXWordLevel] type:RKDOCXDocumentRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
 	// app.xml
-	[self addRelationshipWithTarget:RKDOCXExtendedPropertiesRelationshipTarget type:RKDOCXExtendedPropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
+	[self addRelationshipWithTarget:[self fullPathForFilename:RKDOCXExtendedPropertiesFilename inLevel:RKDOCXDocPropsLevel] type:RKDOCXExtendedPropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
 	// core.xml
-	[self addRelationshipWithTarget:RKDOCXCorePropertiesRelationshipTarget type:RKDOCXCorePropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
+	[self addRelationshipWithTarget:[self fullPathForFilename:RKDOCXCorePropertiesFilename inLevel:RKDOCXDocPropsLevel] type:RKDOCXCorePropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXPackageRelationshipsFilename contentType:nil];
+	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXPackageRelationshipsFilename inLevel:RKDOCXRelsLevel] contentType:nil];
 }
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context

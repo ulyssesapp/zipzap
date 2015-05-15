@@ -21,9 +21,7 @@ NSString *RKDOCXFootnotesContentType							= @"application/vnd.openxmlformats-of
 
 // Relationship type and target
 NSString *RKDOCXEndnotesRelationshipType						= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes";
-NSString *RKDOCXEndnotesRelationshipTarget						= @"endnotes.xml";
 NSString *RKDOCXFootnotesRelationshipType						= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes";
-NSString *RKDOCXFootnotesRelationshipTarget						= @"footnotes.xml";
 
 // Elements
 NSString *RKDOCXFootnotesContinuationSeparatorAttributeValue	= @"continuationSeparator";
@@ -60,15 +58,15 @@ typedef enum : NSUInteger {
 	// In case of footnotes
 	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotes:context.footnotes endnoteSection:NO];
 	if (footnotesDocument) {
-		[context indexForRelationshipWithTarget:RKDOCXFootnotesRelationshipTarget andType:RKDOCXFootnotesRelationshipType];
-		[context addXMLDocumentPart:footnotesDocument withFilename:RKDOCXFootnotesFilename contentType:RKDOCXFootnotesContentType];
+		[context indexForRelationshipWithTarget:RKDOCXFootnotesFilename andType:RKDOCXFootnotesRelationshipType];
+		[context addXMLDocumentPart:footnotesDocument withFilename:[self fullPathForFilename:RKDOCXFootnotesFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXFootnotesContentType];
 	}
 	
 	// In case of endnotes
 	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotes:context.endnotes endnoteSection:YES];
 	if (endnotesDocument) {
-		[context indexForRelationshipWithTarget:RKDOCXEndnotesRelationshipTarget andType:RKDOCXEndnotesRelationshipType];
-		[context addXMLDocumentPart:endnotesDocument withFilename:RKDOCXEndnotesFilename contentType:RKDOCXEndnotesContentType];
+		[context indexForRelationshipWithTarget:RKDOCXEndnotesFilename andType:RKDOCXEndnotesRelationshipType];
+		[context addXMLDocumentPart:endnotesDocument withFilename:[self fullPathForFilename:RKDOCXEndnotesFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXEndnotesContentType];
 	}
 }
 

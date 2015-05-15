@@ -35,7 +35,7 @@ NSString *RKDOCXDocumentContentTextElementName		= @"w:t";
 	
 	body.children = [RKDOCXSectionWriter sectionElementsUsingContext: context];
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXDocumentFilename contentType:RKDOCXDocumentContentType];
+	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXDocumentFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXDocumentContentType];
 }
 
 @end

@@ -46,7 +46,7 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	// Core Properties
 	document.rootElement.children = [self corePropertyElementsFromContext: context];
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXCorePropertiesFilename contentType:RKDOCXCorePropertiesContentType];
+	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXCorePropertiesFilename inLevel:RKDOCXDocPropsLevel] contentType:RKDOCXCorePropertiesContentType];
 }
 
 + (void)buildExtendedPropertiesUsingContext:(RKDOCXConversionContext *)context
@@ -59,7 +59,7 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXExtendedPropertiesRootElementName namespaces:namespaces];
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXExtendedPropertiesFilename contentType:RKDOCXExtendedPropertiesContentType];
+	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXExtendedPropertiesFilename inLevel:RKDOCXDocPropsLevel] contentType:RKDOCXExtendedPropertiesContentType];
 }
 
 + (NSArray *)corePropertyElementsFromContext:(RKDOCXConversionContext *)context

@@ -9,6 +9,7 @@
 #import "RKDOCXImageWriter.h"
 
 #import "RKImage.h"
+#import "RKDOCXPartWriter.h"
 #import "RKDOCXRunWriter.h"
 
 #import "NSXMLElement+IntegerValueConvenience.h"
@@ -57,7 +58,6 @@ NSString *RKDOCXImageRightMarginAttributeName		= @"distR";
 NSString *RKDOCXImageTopMarginAttributeName			= @"distT";
 
 // Other
-NSString *RKDOCXImageLocationName					= @"media/";
 NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
 
 @implementation RKDOCXImageWriter
@@ -72,8 +72,8 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
 	
 	// Relationship Handling
-	NSString *filename = [RKDOCXImageLocationName stringByAppendingString: imageAttachment.imageFile.preferredFilename];
-	[context addBinaryDocumentPart:imageAttachment.imageFile.regularFileContents withFileName:[@"word/" stringByAppendingString: filename] MIMEType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension]];
+	NSString *filename = [RKDOCXPartWriter fullPathForFilename:imageAttachment.imageFile.preferredFilename inLevel:RKDOCXMediaLevel];
+	[context addBinaryDocumentPart:imageAttachment.imageFile.regularFileContents withFileName:[RKDOCXPartWriter fullPathForFilename:filename inLevel:RKDOCXWordLevel] MIMEType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension]];
 	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
 	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
 	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];
