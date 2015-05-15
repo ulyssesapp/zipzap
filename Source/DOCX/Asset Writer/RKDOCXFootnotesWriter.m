@@ -44,6 +44,12 @@ NSString *RKDOCXFootnoteReferenceAttributeName					= @"RKDOCXFootnoteReference";
 
 NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 
+typedef enum : NSUInteger {
+	RKDOCXNoReference		= 0,
+	RKDOCXFootnoteReference	= 1,
+	RKDOCXEndnoteReference	= 2
+} RKDOCXReferenceType;
+
 @implementation RKDOCXFootnotesWriter
 
 + (void)buildFootnotesUsingContext:(RKDOCXConversionContext *)context
@@ -129,7 +135,7 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 {
 	NSString *refElementName;
 	
-	switch ([attributes[RKDOCXReferenceTypeAttributeName] integerValue]) {
+	switch ([attributes[RKDOCXReferenceTypeAttributeName] unsignedIntegerValue]) {
 		case RKDOCXFootnoteReference:
 			refElementName = RKDOCXFootnotesFootnoteRefElementName;
 			break;

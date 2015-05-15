@@ -474,6 +474,10 @@
 		A0196A5D1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0196A5B1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m */; };
 		A02631361AD6B6BE00FFE40D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631351AD6B6BE00FFE40D /* libxml2.dylib */; };
 		A02631381AD6B6C400FFE40D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631371AD6B6C400FFE40D /* libz.dylib */; };
+		A02ACC721B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */; };
+		A02ACC731B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */; };
+		A02ACC741B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = A02ACC711B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m */; };
+		A02ACC751B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = A02ACC711B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m */; };
 		A03EC1A71AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A03EC1A61AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m */; };
 		A03EC1A81AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A03EC1A61AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m */; };
 		A04494231ACACE14006FB62D /* RKDOCXDocumentContentWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A04494211ACACE14006FB62D /* RKDOCXDocumentContentWriter.h */; };
@@ -950,6 +954,8 @@
 		A0196A5B1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXSectionWriterTest.m; path = "Content Writer/RKDOCXSectionWriterTest.m"; sourceTree = "<group>"; };
 		A02631351AD6B6BE00FFE40D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libxml2.dylib; sourceTree = DEVELOPER_DIR; };
 		A02631371AD6B6C400FFE40D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSXMLElement+IntegerValueConvenience.h"; path = "Utils/NSXMLElement+IntegerValueConvenience.h"; sourceTree = "<group>"; };
+		A02ACC711B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSXMLElement+IntegerValueConvenience.m"; path = "Utils/NSXMLElement+IntegerValueConvenience.m"; sourceTree = "<group>"; };
 		A03EC1A61AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXStyleTemplateWriterTest.m; path = "Asset Writer/RKDOCXStyleTemplateWriterTest.m"; sourceTree = "<group>"; };
 		A04494211ACACE14006FB62D /* RKDOCXDocumentContentWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKDOCXDocumentContentWriter.h; sourceTree = "<group>"; };
 		A04494221ACACE14006FB62D /* RKDOCXDocumentContentWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXDocumentContentWriter.m; sourceTree = "<group>"; };
@@ -1618,6 +1624,8 @@
 				A013B4331ADE63FE00E45B4F /* RKImage.h */,
 				A067B6CF1AE8F049000D0B58 /* NSString+ParsingConvenience.h */,
 				A067B6D01AE8F049000D0B58 /* NSString+ParsingConvenience.m */,
+				A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */,
+				A02ACC711B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1982,6 +1990,7 @@
 				79F6B50C1A8902C60046B78D /* RKOperationHandle.h in Headers */,
 				796EABC514D947D5001E8401 /* RKFontAttributeWriter.h in Headers */,
 				796EABCB14D947D5001E8401 /* RKShadowAttributeWriter.h in Headers */,
+				A02ACC721B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h in Headers */,
 				796EABD114D947D5001E8401 /* RKStrikethroughStyleAttributeWriter.h in Headers */,
 				796EABD714D947D5001E8401 /* RKStrokeWidthAttributeWriter.h in Headers */,
 				A0E438E91AC974D3009EB872 /* RKDOCXRelationshipsWriter.h in Headers */,
@@ -2184,6 +2193,7 @@
 				790AD9AC15BC107C0011E40E /* RKLinkSerializer.h in Headers */,
 				A04494301ACAD1A0006FB62D /* RKDOCXRelationshipsWriter.h in Headers */,
 				7971428815BC15050082A67B /* RKFootnoteSerializer.h in Headers */,
+				A02ACC731B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h in Headers */,
 				7971428A15BC15050082A67B /* RKStyleAttributeSerializer.h in Headers */,
 				7971428C15BC15050082A67B /* RKStyleNamingAttributeSerializer.h in Headers */,
 				7971428E15BC15050082A67B /* RKParagraphStyleSerializer.h in Headers */,
@@ -2465,6 +2475,7 @@
 				790AD98C15BC03110011E40E /* RKParagraphStyleSerializer.m in Sources */,
 				790AD99015BC09160011E40E /* RKListStyleSerializer.m in Sources */,
 				790AD99B15BC0BF00011E40E /* RKColorSerializer.m in Sources */,
+				A02ACC741B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */,
 				790AD99F15BC0BF00011E40E /* RKFontSerializer.m in Sources */,
 				A092D9051AD5834C00417A8D /* RKDOCXParagraphStyleWriter.m in Sources */,
 				79D4D27917F08FBE00EC5504 /* RKImageAttachment.m in Sources */,
@@ -2628,6 +2639,7 @@
 				79E76C201517580E0073153D /* RKStrokeWidthAttributeWriter.m in Sources */,
 				79E76C211517580E0073153D /* RKSuperscriptAttributeWriter.m in Sources */,
 				79E76C221517580E0073153D /* RKUnderlineStyleAttributeWriter.m in Sources */,
+				A02ACC751B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */,
 				79E76C231517580E0073153D /* RKInlineStyleWriter.m in Sources */,
 				A0EE06C91B039C4A00C7A8D2 /* RKFontOverride.m in Sources */,
 				79E76C241517580E0073153D /* RKAttributeWriter.m in Sources */,

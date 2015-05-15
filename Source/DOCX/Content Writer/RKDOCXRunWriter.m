@@ -8,13 +8,14 @@
 
 #import "RKDOCXRunWriter.h"
 
-#import "NSString+ParsingConvenience.h"
 #import "RKDOCXFontAttributesWriter.h"
 #import "RKDOCXFootnotesWriter.h"
 #import "RKDOCXImageWriter.h"
 #import "RKDOCXPlaceholderWriter.h"
 #import "RKDOCXStyleTemplateWriter.h"
 #import "RKDOCXTextEffectAttributesWriter.h"
+
+#import "NSString+ParsingConvenience.h"
 
 // Element names
 NSString *RKDOCXRunElementName				= @"w:r";

@@ -13,6 +13,9 @@
 #import "RKDOCXParagraphWriter.h"
 #import "RKDOCXSettingsWriter.h"
 
+#import "NSXMLElement+IntegerValueConvenience.h"
+
+
 // Elements
 NSString *RKDOCXSectionColumnElementName							= @"w:cols";
 NSString *RKDOCXSectionFooterReferenceElementName					= @"w:footerReference";
@@ -111,7 +114,7 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 		
 		NSArray *sectionParagraphs = [RKDOCXAttributedStringWriter processAttributedString:section.content usingContext:context];
 		
-		// If this is the last section, put it after all paragraphs. In any other case, add it to the last paragraph’s properties. See ISO 29500-1:2012: §17.6.18 and §17.6.17 (Section Properties and Final Section Properties).
+		// If this is the last section, put it after the last paragraph. In any other case, add it to the last paragraph’s properties. See ISO 29500-1:2012: §17.6.18 and §17.6.17 (Section Properties and Final Section Properties).
 		if (![section isEqual: context.document.sections.lastObject])
 			sectionParagraphs = [sectionParagraphs arrayByAddingObject: [RKDOCXParagraphWriter paragraphElementWithProperties:@[sectionProperties] runElements:nil]];
 		else
@@ -128,9 +131,9 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 	if (section.numberOfColumns < 2)
 		return nil;
 	
-	NSXMLElement *numberOfColumnsAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnCountAttributeName stringValue:@(section.numberOfColumns).stringValue];
+	NSXMLElement *numberOfColumnsAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnCountAttributeName integerValue:section.numberOfColumns];
 	NSXMLElement *equalWidthAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumeEqualWidthAttributeName stringValue:@"1"];
-	NSXMLElement *spacingAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnSpacingAttributeName stringValue:@(RKPointsToTwips(section.columnSpacing)).stringValue];
+	NSXMLElement *spacingAttribute = [NSXMLElement attributeWithName:RKDOCXSectionColumnSpacingAttributeName integerValue:RKPointsToTwips(section.columnSpacing)];
 	
 	return [NSXMLElement elementWithName:RKDOCXSectionColumnElementName children:nil attributes:@[numberOfColumnsAttribute, equalWidthAttribute, spacingAttribute]];
 }
@@ -143,7 +146,7 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 	NSXMLElement *pageNumberTypeProperty = [NSXMLElement elementWithName:RKDOCXSectionPageNumberTypeElementName];
 	
 	if (section.indexOfFirstPage != NSNotFound) {
-		NSXMLElement *startPageAttribute = [NSXMLElement attributeWithName:RKDOCXSectionStartPageAttributeName stringValue:@(section.indexOfFirstPage).stringValue];
+		NSXMLElement *startPageAttribute = [NSXMLElement attributeWithName:RKDOCXSectionStartPageAttributeName integerValue:section.indexOfFirstPage];
 		[pageNumberTypeProperty addAttribute: startPageAttribute];
 	}
 	
@@ -176,8 +179,8 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 
 + (NSXMLElement *)pageSizePropertyForDocument:(RKDocument *)document
 {
-	NSXMLElement *widthAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeWidthAttributeName stringValue:@(RKPointsToTwips(document.pageSize.width)).stringValue];
-	NSXMLElement *heightAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeHeightAttributeName stringValue:@(RKPointsToTwips(document.pageSize.height)).stringValue];
+	NSXMLElement *widthAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeWidthAttributeName integerValue:RKPointsToTwips(document.pageSize.width)];
+	NSXMLElement *heightAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeHeightAttributeName integerValue:RKPointsToTwips(document.pageSize.height)];
 	NSXMLElement *orientationAttribute;
 	if (document.pageOrientation == RKPageOrientationLandscape) {
 		orientationAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageSizeOrientationAttributeName stringValue:RKDOCXSectionPageSizeOrientationLandscapeAttributeValue];
@@ -190,12 +193,12 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 
 + (NSXMLElement *)pageMarginPropertyForDocument:(RKDocument *)document
 {
-	NSXMLElement *headerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginHeaderAttributeName stringValue:@(RKPointsToTwips(document.headerSpacingBefore)).stringValue];
-	NSXMLElement *footerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginFooterAttributeName stringValue:@(RKPointsToTwips(document.footerSpacingAfter)).stringValue];
+	NSXMLElement *headerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginHeaderAttributeName integerValue:RKPointsToTwips(document.headerSpacingBefore)];
+	NSXMLElement *footerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginFooterAttributeName integerValue:RKPointsToTwips(document.footerSpacingAfter)];
 	// There is no headerAfter or footerBefore margin in DOCX.
 	
-	NSXMLElement *topAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginTopAttributeName stringValue:@(RKPointsToTwips(document.pageInsets.top)).stringValue];
-	NSXMLElement *bottomAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginBottomAttributeName stringValue:@(RKPointsToTwips(document.pageInsets.bottom)).stringValue];
+	NSXMLElement *topAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginTopAttributeName integerValue:RKPointsToTwips(document.pageInsets.top)];
+	NSXMLElement *bottomAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginBottomAttributeName integerValue:RKPointsToTwips(document.pageInsets.bottom)];
 	
 	NSString *innerMargin = @(RKPointsToTwips(document.pageInsets.inner)).stringValue;
 	NSString *outerMargin = @(RKPointsToTwips(document.pageInsets.outer)).stringValue;

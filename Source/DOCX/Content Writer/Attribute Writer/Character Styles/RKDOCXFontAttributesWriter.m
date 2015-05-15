@@ -8,6 +8,8 @@
 
 #import "RKDOCXFontAttributesWriter.h"
 
+#import "NSXMLElement+IntegerValueConvenience.h"
+
 NSString *RKDOCXFontAttributeAsciiFontAttributeValue			= @"w:ascii";
 NSString *RKDOCXFontAttributeBoldElementName					= @"w:b";
 NSString *RKDOCXFontAttributeComplexScriptFontAttributeValue	= @"w:cs";
@@ -60,9 +62,8 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	
 	if (CTFontGetSize(fontAttribute) != CTFontGetSize(characterStyleFontAttribute) && !(overrideMask & RKFontOverrideFontSize)) {
 		NSUInteger wordFontSize = [self wordFontSizeFromPointSize: CTFontGetSize(fontAttribute)];
-		NSString *fontSize = [@(wordFontSize) stringValue];
-		NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue: fontSize]]];
-		NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue: fontSize]]];
+		NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:wordFontSize]]];
+		NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:wordFontSize]]];
 		[properties addObjectsFromArray: @[sizeElement, complexSizeElement]];
 	}
 	

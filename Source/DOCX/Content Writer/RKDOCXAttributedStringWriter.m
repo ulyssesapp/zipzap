@@ -8,8 +8,9 @@
 
 #import "RKDOCXAttributedStringWriter.h"
 
-#import "NSString+ParsingConvenience.h"
 #import "RKDOCXParagraphWriter.h"
+
+#import "NSString+ParsingConvenience.h"
 
 NSString *RKDOCXPageBreakCharacterName	= @"\f";
 

@@ -67,7 +67,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 	
 	// Numbering instances
 	for (NSNumber *index in context.listStyles) {
-		[document.rootElement addChild: [self numberingElementFromListStyleIndentifier: index.integerValue]];
+		[document.rootElement addChild: [self numberingElementFromListStyleIndentifier: index.unsignedIntegerValue]];
 	}
 	
 	[context indexForRelationshipWithTarget:RKDOCXListStyleRelationshipTarget andType:RKDOCXListStyleRelationshipType];
@@ -102,7 +102,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		
 		[listStyle scanFullFormatStringOfLevel:index usingBlock:^(id token, NSUInteger tokenLevel) {
 			if ([token isKindOfClass: NSNumber.class]) {
-				switch ([token integerValue]) {
+				switch ([token unsignedIntegerValue]) {
 					case RKListFormatCodeBullet:
 						formatString = RKDOCXListStyleEnumerationFormatBulletAttributeValue;
 						break;
@@ -152,7 +152,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		
 		// Enumerator Styling
 		NSDictionary *attributes = listStyle.levelStyles[index];
-		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocationKey:[attributes[RKListStyleMarkerLocationKey] integerValue] markerWidthKey:[attributes[RKListStyleMarkerWidthKey] integerValue]];
+		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocationKey:[attributes[RKListStyleMarkerLocationKey] unsignedIntegerValue] markerWidthKey:[attributes[RKListStyleMarkerWidthKey] unsignedIntegerValue]];
 		[levelElement addChild: paragraphPropertiesElement];
 		
 		[abstractNumberingElement addChild: levelElement];

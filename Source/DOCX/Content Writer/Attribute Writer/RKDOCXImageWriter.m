@@ -10,8 +10,11 @@
 
 #import "RKImage.h"
 #import "RKDOCXRunWriter.h"
+
+#import "NSXMLElement+IntegerValueConvenience.h"
+
 #if TARGET_OS_IPHONE
-#import <MobileCoreServices/MobileCoreServices.h>
+	#import <MobileCoreServices/MobileCoreServices.h>
 #endif
 
 // Elements
@@ -80,10 +83,10 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 											[NSXMLElement attributeWithName:RKDOCXImageDescriptionAttributeName stringValue:@""]];
 	
 	// Image Margins
-	NSArray *margins = @[[NSXMLElement attributeWithName:RKDOCXImageTopMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.top)).stringValue],
-						 [NSXMLElement attributeWithName:RKDOCXImageLeftMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.left)).stringValue],
-						 [NSXMLElement attributeWithName:RKDOCXImageRightMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.right)).stringValue],
-						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.bottom)).stringValue]];
+	NSArray *margins = @[[NSXMLElement attributeWithName:RKDOCXImageTopMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.top)],
+						 [NSXMLElement attributeWithName:RKDOCXImageLeftMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.left)],
+						 [NSXMLElement attributeWithName:RKDOCXImageRightMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.right)],
+						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.bottom)]];
 	
 	// Image Size
 	NSString *width = @(RKPointsToEMUs(image.size.width)).stringValue;
