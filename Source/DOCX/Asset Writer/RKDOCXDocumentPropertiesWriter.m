@@ -16,6 +16,10 @@ NSString *RKDOCXExtendedPropertiesRootElementName			= @"Properties";
 NSString *RKDOCXCorePropertiesContentType					= @"application/vnd.openxmlformats-package.core-properties+xml";
 NSString *RKDOCXExtendedPropertiesContentType				= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
 
+// Filenames
+NSString *RKDOCXCorePropertiesFilename						= @"core.xml";
+NSString *RKDOCXExtendedPropertiesFilename					= @"app.xml";
+
 // Property element names
 NSString *RKDOCXDocumentPropertiesAuthorPropertyName		= @"dc:creator";
 NSString *RKDOCXDocumentPropertiesCategoryPropertyName		= @"cp:category";

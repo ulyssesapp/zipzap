@@ -22,6 +22,9 @@ NSString *RKDOCXNumberingContentType									= @"application/vnd.openxmlformats-
 // Relationship type
 NSString *RKDOCXListStyleRelationshipType								= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering";
 
+// Filename
+NSString *RKDOCXNumberingFilename										= @"numbering.xml";
+
 // Elements
 NSString *RKDOCXListStyleAbstractNumberingElementName					= @"w:abstractNum";
 NSString *RKDOCXListStyleLevelAlignmentElementName						= @"w:lvlJc";

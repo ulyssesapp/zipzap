@@ -19,9 +19,13 @@ NSString *RKDOCXFootnotesRootElementName						= @"w:footnotes";
 NSString *RKDOCXEndnotesContentType								= @"application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml";
 NSString *RKDOCXFootnotesContentType							= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml";
 
-// Relationship type and target
+// Relationship types
 NSString *RKDOCXEndnotesRelationshipType						= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes";
 NSString *RKDOCXFootnotesRelationshipType						= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes";
+
+// Filenames
+NSString *RKDOCXEndnotesFilename								= @"endnotes.xml";
+NSString *RKDOCXFootnotesFilename								= @"footnotes.xml";
 
 // Elements
 NSString *RKDOCXFootnotesContinuationSeparatorAttributeValue	= @"continuationSeparator";

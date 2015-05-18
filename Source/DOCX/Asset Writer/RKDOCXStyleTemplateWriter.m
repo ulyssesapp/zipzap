@@ -18,8 +18,11 @@ NSString *RKDOCXStyleTemplateRootElementName				= @"w:styles";
 // Content type
 NSString *RKDOCXStyleTemplateContentType					= @"application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml";
 
-// Relationship type and target
+// Relationship type
 NSString *RKDOCXStyleTemplateRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles";
+
+// Filename
+NSString *RKDOCXStyleTemplateFilename						= @"styles.xml";
 
 // Elements
 NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";

@@ -8,6 +8,9 @@
 
 #import "RKDOCXRelationshipsWriter.h"
 
+#import "RKDOCXDocumentContentWriter.h"
+#import "RKDOCXDocumentPropertiesWriter.h"
+
 // Root element name
 NSString *RKDOCXRelationshipsRootElementName			= @"Relationships";
 
@@ -18,6 +21,10 @@ NSString *RKDOCXRelationshipElementName					= @"Relationship";
 NSString *RKDOCXCorePropertiesRelationshipType			= @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
 NSString *RKDOCXDocumentRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
 NSString *RKDOCXExtendedPropertiesRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
+
+// Filenames
+NSString *RKDOCXDocumentRelationshipsFilename			= @"document.xml.rels";
+NSString *RKDOCXPackageRelationshipsFilename			= @".rels";
 
 NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
 
@@ -49,7 +56,7 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 		[self addRelationshipWithTarget:target type:context.documentRelationships[target][RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat:@"rId%@", context.documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
 	}
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXDocumentRelationshipsFilename contentType:nil];
+	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXDocumentRelationshipsFilename inLevel:RKDOCXWordRelsLevel] contentType:nil];
 }
 
 + (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement

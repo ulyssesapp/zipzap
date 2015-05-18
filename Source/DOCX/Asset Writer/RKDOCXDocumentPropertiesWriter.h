@@ -9,6 +9,10 @@
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXPartWriter.h"
 
+// Filenames required by RKDOCXRelationshipWriter
+extern NSString *RKDOCXCorePropertiesFilename;
+extern NSString *RKDOCXExtendedPropertiesFilename;
+
 /*!
  @abstract Collects the core properties and app-specific extended properties used by the given context and adds it to the output document.
  @discussion See ISO 29500-2:2012: §11.1 (Core Properties Part). The collected properties will be stored inside the app.xml and core.xml files inside the output document.

@@ -23,6 +23,9 @@ NSString *RKDOCXDefaultRelationshipContentType	= @"application/vnd.openxmlformat
 NSString *RKDOCXDefaultXMLExtension				= @"xml";
 NSString *RKDOCXDefaultXMLContentType			= @"application/xml";
 
+// Filename
+NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
+
 @implementation RKDOCXContentTypesWriter
 
 + (void)buildContentTypesUsingContext:(RKDOCXConversionContext *)context

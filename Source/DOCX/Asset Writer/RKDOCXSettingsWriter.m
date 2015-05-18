@@ -19,6 +19,9 @@ NSString *RKDOCXSettingsContentType									= @"application/vnd.openxmlformats-o
 // Relationship type
 NSString *RKDOCXSettingsRelationshipType							= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
 
+// Filename
+NSString *RKDOCXSettingsFilename									= @"settings.xml";
+
 // Setting names
 // Elements
 NSString *RKDOCXSettingsAutoHyphenationElementName					= @"w:autoHyphenation";

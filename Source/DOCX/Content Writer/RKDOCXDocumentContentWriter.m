@@ -17,6 +17,9 @@ NSString *RKDOCXDocumentRootElementName				= @"w:document";
 // Content type
 NSString *RKDOCXDocumentContentType					= @"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 
+// Filename
+NSString *RKDOCXDocumentFilename					= @"document.xml";
+
 // Element names
 NSString *RKDOCXDocumentContentBodyElementName		= @"w:body";
 NSString *RKDOCXDocumentContentParagraphElementName	= @"w:p";

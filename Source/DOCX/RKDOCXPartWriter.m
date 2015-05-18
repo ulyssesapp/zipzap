@@ -10,19 +10,6 @@
 
 #import "RKDOCXConversionContext.h"
 
-// Filenames
-NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
-NSString *RKDOCXCorePropertiesFilename			= @"core.xml";
-NSString *RKDOCXDocumentFilename				= @"document.xml";
-NSString *RKDOCXDocumentRelationshipsFilename	= @"document.xml.rels";
-NSString *RKDOCXEndnotesFilename				= @"endnotes.xml";
-NSString *RKDOCXExtendedPropertiesFilename		= @"app.xml";
-NSString *RKDOCXFootnotesFilename				= @"footnotes.xml";
-NSString *RKDOCXNumberingFilename				= @"numbering.xml";
-NSString *RKDOCXPackageRelationshipsFilename	= @".rels";
-NSString *RKDOCXSettingsFilename				= @"settings.xml";
-NSString *RKDOCXStyleTemplateFilename			= @"styles.xml";
-
 @implementation RKDOCXPartWriter
 
 + (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root namespaces:(NSDictionary *)namespaces

@@ -8,19 +8,6 @@
 
 @class RKDOCXConversionContext;
 
-// Filenames
-extern NSString *RKDOCXContentTypesFilename;
-extern NSString *RKDOCXCorePropertiesFilename;
-extern NSString *RKDOCXDocumentFilename;
-extern NSString *RKDOCXDocumentRelationshipsFilename;
-extern NSString *RKDOCXEndnotesFilename;
-extern NSString *RKDOCXExtendedPropertiesFilename;
-extern NSString *RKDOCXFootnotesFilename;
-extern NSString *RKDOCXNumberingFilename;
-extern NSString *RKDOCXPackageRelationshipsFilename;
-extern NSString *RKDOCXSettingsFilename;
-extern NSString *RKDOCXStyleTemplateFilename;
-
 /*!
  @abstract Specifies which subfolder string needs to be prepended to a filename.
  

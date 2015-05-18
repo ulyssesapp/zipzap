@@ -8,6 +8,9 @@
 
 #import "RKDOCXPartWriter.h"
 
+// Filename required by RKDOCXRelationshipWriter
+extern NSString *RKDOCXDocumentFilename;
+
 @class RKDOCXConversionContext;
 
 /*!
