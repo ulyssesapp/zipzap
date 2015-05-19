@@ -451,10 +451,8 @@
 		79FCF8D015A5CCB700D98438 /* RKSection+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8CE15A5CCB700D98438 /* RKSection+PDFUtilities.m */; };
 		79FCF8D315A5CEE100D98438 /* NSAttributedString+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8D115A5CEE000D98438 /* NSAttributedString+PDFUtilities.h */; };
 		79FCF8D415A5CEE100D98438 /* NSAttributedString+PDFUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8D215A5CEE100D98438 /* NSAttributedString+PDFUtilities.m */; };
-		A0076DBD1AC5900D0049C15F /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0076DBC1AC5900D0049C15F /* libzipzap.a */; };
 		A0076DBF1AC590210049C15F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE691AC449CF008B3DED /* ApplicationServices.framework */; };
 		A0076DC01AC590260049C15F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
-		A0076DC11AC59F540049C15F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
 		A013B42F1ADE614000E45B4F /* RKDOCXImageWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A013B42D1ADE614000E45B4F /* RKDOCXImageWriter.h */; };
 		A013B4301ADE614000E45B4F /* RKDOCXImageWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A013B42D1ADE614000E45B4F /* RKDOCXImageWriter.h */; };
 		A013B4311ADE614000E45B4F /* RKDOCXImageWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A013B42E1ADE614000E45B4F /* RKDOCXImageWriter.m */; };
@@ -472,8 +470,6 @@
 		A0196A5A1ADBBEEC0091CCB8 /* RKDOCXSectionWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0196A561ADBBEEC0091CCB8 /* RKDOCXSectionWriter.m */; };
 		A0196A5C1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0196A5B1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m */; };
 		A0196A5D1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0196A5B1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m */; };
-		A02631361AD6B6BE00FFE40D /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631351AD6B6BE00FFE40D /* libxml2.dylib */; };
-		A02631381AD6B6C400FFE40D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631371AD6B6C400FFE40D /* libz.dylib */; };
 		A02ACC721B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */; };
 		A02ACC731B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */; };
 		A02ACC741B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = A02ACC711B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m */; };
@@ -1054,10 +1050,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0076DC11AC59F540049C15F /* libz.dylib in Frameworks */,
 				A0076DC01AC590260049C15F /* Foundation.framework in Frameworks */,
 				A0076DBF1AC590210049C15F /* ApplicationServices.framework in Frameworks */,
-				A0076DBD1AC5900D0049C15F /* libzipzap.a in Frameworks */,
 				50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */,
 				50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */,
 			);
@@ -1067,8 +1061,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A02631381AD6B6C400FFE40D /* libz.dylib in Frameworks */,
-				A02631361AD6B6BE00FFE40D /* libxml2.dylib in Frameworks */,
 				A016E5571AD5383600C2519D /* Foundation.framework in Frameworks */,
 				A016E5541AD5380800C2519D /* libRTFKit.a in Frameworks */,
 				79A62DAE1A1A35C0004C83F9 /* MobileCoreServices.framework in Frameworks */,
@@ -2841,7 +2833,6 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-fwuzrwnetuzloademwuvoudkbkzy/Build/Products/Debug",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2864,7 +2855,6 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-fwuzrwnetuzloademwuvoudkbkzy/Build/Products/Debug",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -2886,7 +2876,6 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2907,7 +2896,6 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2944,14 +2932,6 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-					"-lc++",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -2986,14 +2966,6 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-framework",
-					XCTest,
-					"-ObjC",
-					"-lc++",
-				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -3018,7 +2990,6 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
 				);
 				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RTFKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
@@ -3043,7 +3014,6 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
 				);
 				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RTFKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
