@@ -44,7 +44,7 @@ NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
 		[self addContentType:context.usedXMLTypes[filename] forFilename:filename toXMLElement:document.rootElement];
 	}
 	
-	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXContentTypesFilename inLevel:RKDOCXRootLevel] contentType:nil];
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXContentTypesFilename folder:RKDOCXRootFolder] contentType:nil];
 }
 
 + (void)addContentType:(NSString *)contentType forExtension:(NSString *)extension toXMLElement:(NSXMLElement *)rootElement
@@ -52,6 +52,7 @@ NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
 	NSXMLElement *defaultElement = [NSXMLElement elementWithName: RKDOCXDefaultContentTypeElementName];
 	[defaultElement addAttribute: [NSXMLElement attributeWithName:@"Extension" stringValue:extension]];
 	[defaultElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:contentType]];
+	
 	[rootElement addChild: defaultElement];
 }
 
@@ -60,6 +61,7 @@ NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
 	NSXMLElement *overrideElement = [NSXMLElement elementWithName: RKDOCXOverrideContentTypeElementName];
 	[overrideElement addAttribute: [NSXMLElement attributeWithName:@"PartName" stringValue:[@"/" stringByAppendingString: filename]]];
 	[overrideElement addAttribute: [NSXMLElement attributeWithName:@"ContentType" stringValue:contentType]];
+	
 	[rootElement addChild: overrideElement];
 }
 

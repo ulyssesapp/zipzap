@@ -73,7 +73,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 	}
 	
 	[context indexForRelationshipWithTarget:RKDOCXNumberingFilename andType:RKDOCXListStyleRelationshipType];
-	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXNumberingFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXNumberingContentType];
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXNumberingFilename folder:RKDOCXWordFolder] contentType:RKDOCXNumberingContentType];
 }
 
 + (NSXMLElement *)abstractNumberingElementFromListStyle:(RKListStyle *)listStyle usingContext:(RKDOCXConversionContext *)context

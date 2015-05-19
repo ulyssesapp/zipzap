@@ -16,8 +16,8 @@
 @interface RKDOCXFontAttributesWriter : RKDOCXAttributeWriter
 
 /*!
- @abstract Returns a dictionary containing the combination of the RKFontAttributes in the given dictionaries.
+ @abstract Returns a font resulting of the combination of the passed two fonts using the RKFontMixMask.
  */
-+ (RKFont *)overridingFontPropertiesForCharacterAttributes:(NSDictionary *)characterAttributes paragraphAttributes:(NSDictionary *)paragraphAttributes;
++ (RKFont *)fontByMixingFont:(RKFont *)baseFont withOverridingFont:(RKFont *)overridingFont usingMask:(RKFontMixMask)mask;
 
 @end

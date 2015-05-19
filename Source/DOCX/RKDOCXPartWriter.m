@@ -62,36 +62,36 @@
 	return [self basicXMLDocumentWithRootElementName:root namespaces:namespaces];
 }
 
-+ (NSString *)fullPathForFilename:(NSString *)filename inLevel:(RKDOCXPartFilenameLevel)level
++ (NSString *)packagePathForFilename:(NSString *)filename folder:(RKDOCXPackageFolder)folder
 {
 	NSString *levelString;
 	
-	switch (level) {
-		case RKDOCXRootLevel:
+	switch (folder) {
+		case RKDOCXRootFolder:
 			levelString = @"";
 			break;
 			
-		case RKDOCXRelsLevel:
+		case RKDOCXRelsFolder:
 			levelString = @"_rels/";
 			break;
 			
-		case RKDOCXDocPropsLevel:
+		case RKDOCXDocPropsFolder:
 			levelString = @"docProps/";
 			break;
 			
-		case RKDOCXWordLevel:
+		case RKDOCXWordFolder:
 			levelString = @"word/";
 			break;
 			
-		case RKDOCXMediaLevel:
+		case RKDOCXMediaFolder:
 			levelString = @"media/";
 			break;
 			
-		case RKDOCXWordRelsLevel:
+		case RKDOCXWordRelsFolder:
 			levelString = @"word/_rels/";
 			break;
 			
-		case RKDOCXWordMediaLevel:
+		case RKDOCXWordMediaFolder:
 			levelString = @"word/media/";
 			break;
 	}

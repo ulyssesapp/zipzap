@@ -17,11 +17,6 @@ NSString *RKDOCXRelationshipsRootElementName			= @"Relationships";
 // Element name
 NSString *RKDOCXRelationshipElementName					= @"Relationship";
 
-// Package relationship types
-NSString *RKDOCXCorePropertiesRelationshipType			= @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
-NSString *RKDOCXDocumentRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
-NSString *RKDOCXExtendedPropertiesRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
-
 // Filenames
 NSString *RKDOCXDocumentRelationshipsFilename			= @"document.xml.rels";
 NSString *RKDOCXPackageRelationshipsFilename			= @".rels";
@@ -37,14 +32,11 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 	// Relationships
 	NSUInteger relationshipCounter = 0;
 	
-	// document.xml
-	[self addRelationshipWithTarget:[self fullPathForFilename:RKDOCXDocumentFilename inLevel:RKDOCXWordLevel] type:RKDOCXDocumentRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
-	// app.xml
-	[self addRelationshipWithTarget:[self fullPathForFilename:RKDOCXExtendedPropertiesFilename inLevel:RKDOCXDocPropsLevel] type:RKDOCXExtendedPropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
-	// core.xml
-	[self addRelationshipWithTarget:[self fullPathForFilename:RKDOCXCorePropertiesFilename inLevel:RKDOCXDocPropsLevel] type:RKDOCXCorePropertiesRelationshipType id:[NSString stringWithFormat:@"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
-	
-	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXPackageRelationshipsFilename inLevel:RKDOCXRelsLevel] contentType:nil];
+	for (NSString *target in context.packageRelationships) {
+		[self addRelationshipWithTarget:target type:context.packageRelationships[target] id:[NSString stringWithFormat: @"rId%ld", ++relationshipCounter] toXMLElement:document.rootElement];
+	}
+
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXPackageRelationshipsFilename folder:RKDOCXRelsFolder] contentType:nil];
 }
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
@@ -56,7 +48,7 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 		[self addRelationshipWithTarget:target type:context.documentRelationships[target][RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat:@"rId%@", context.documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
 	}
 	
-	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXDocumentRelationshipsFilename inLevel:RKDOCXWordRelsLevel] contentType:nil];
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXDocumentRelationshipsFilename folder:RKDOCXWordRelsFolder] contentType:nil];
 }
 
 + (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement

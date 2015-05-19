@@ -106,7 +106,7 @@ NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsMirrorMarginsElementName]];
 	
 	[context indexForRelationshipWithTarget:RKDOCXSettingsFilename andType:RKDOCXSettingsRelationshipType];
-	[context addXMLDocumentPart:document withFilename:[self fullPathForFilename:RKDOCXSettingsFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXSettingsContentType];
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXSettingsFilename folder:RKDOCXWordFolder] contentType:RKDOCXSettingsContentType];
 }
 
 + (NSXMLElement *)footnotePropertiesFromDocument:(RKDocument *)document isEndnote:(BOOL)isEndnote

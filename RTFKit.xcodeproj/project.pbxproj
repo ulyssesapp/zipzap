@@ -608,10 +608,10 @@
 		A0E49EE01AD51D91004E7973 /* UIColor+RKColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E49EDE1AD51D91004E7973 /* UIColor+RKColorExtensions.m */; };
 		A0E49EE51AD520C3004E7973 /* NSColor+RKColorExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E49EE31AD520C3004E7973 /* NSColor+RKColorExtensions.h */; };
 		A0E49EE61AD520C3004E7973 /* NSColor+RKColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E49EE41AD520C3004E7973 /* NSColor+RKColorExtensions.m */; };
-		A0EE06C61B039C4A00C7A8D2 /* RKFontOverride.h in Headers */ = {isa = PBXBuildFile; fileRef = A0EE06C41B039C4A00C7A8D2 /* RKFontOverride.h */; };
-		A0EE06C71B039C4A00C7A8D2 /* RKFontOverride.h in Headers */ = {isa = PBXBuildFile; fileRef = A0EE06C41B039C4A00C7A8D2 /* RKFontOverride.h */; };
-		A0EE06C81B039C4A00C7A8D2 /* RKFontOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EE06C51B039C4A00C7A8D2 /* RKFontOverride.m */; };
-		A0EE06C91B039C4A00C7A8D2 /* RKFontOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EE06C51B039C4A00C7A8D2 /* RKFontOverride.m */; };
+		A0EE06C61B039C4A00C7A8D2 /* RKFontMixing.h in Headers */ = {isa = PBXBuildFile; fileRef = A0EE06C41B039C4A00C7A8D2 /* RKFontMixing.h */; };
+		A0EE06C71B039C4A00C7A8D2 /* RKFontMixing.h in Headers */ = {isa = PBXBuildFile; fileRef = A0EE06C41B039C4A00C7A8D2 /* RKFontMixing.h */; };
+		A0EE06C81B039C4A00C7A8D2 /* RKFontMixing.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EE06C51B039C4A00C7A8D2 /* RKFontMixing.m */; };
+		A0EE06C91B039C4A00C7A8D2 /* RKFontMixing.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EE06C51B039C4A00C7A8D2 /* RKFontMixing.m */; };
 		CF576D0016CBA01C00EADC01 /* RKListStyle+WriterAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935615614DB3C5B00FC0C1C /* RKListStyle+WriterAdditionsTest.m */; };
 		CF576D0316CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = CF576D0216CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m */; };
 /* End PBXBuildFile section */
@@ -1035,8 +1035,8 @@
 		A0E49EDE1AD51D91004E7973 /* UIColor+RKColorExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+RKColorExtensions.m"; path = "Utils/UIColor+RKColorExtensions.m"; sourceTree = "<group>"; };
 		A0E49EE31AD520C3004E7973 /* NSColor+RKColorExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+RKColorExtensions.h"; path = "Utils/NSColor+RKColorExtensions.h"; sourceTree = "<group>"; };
 		A0E49EE41AD520C3004E7973 /* NSColor+RKColorExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor+RKColorExtensions.m"; path = "Utils/NSColor+RKColorExtensions.m"; sourceTree = "<group>"; };
-		A0EE06C41B039C4A00C7A8D2 /* RKFontOverride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFontOverride.h; path = Document/Attributes/RKFontOverride.h; sourceTree = "<group>"; };
-		A0EE06C51B039C4A00C7A8D2 /* RKFontOverride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFontOverride.m; path = Document/Attributes/RKFontOverride.m; sourceTree = "<group>"; };
+		A0EE06C41B039C4A00C7A8D2 /* RKFontMixing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFontMixing.h; path = Document/Attributes/RKFontMixing.h; sourceTree = "<group>"; };
+		A0EE06C51B039C4A00C7A8D2 /* RKFontMixing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFontMixing.m; path = Document/Attributes/RKFontMixing.m; sourceTree = "<group>"; };
 		CF576D0116CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SenTestCase+RKCocoaIntegrationTest.h"; path = "Test Extensions/SenTestCase+RKCocoaIntegrationTest.h"; sourceTree = "<group>"; };
 		CF576D0216CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SenTestCase+RKCocoaIntegrationTest.m"; path = "Test Extensions/SenTestCase+RKCocoaIntegrationTest.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1278,8 +1278,8 @@
 		7935616014DC00FA00FC0C1C /* Attributes */ = {
 			isa = PBXGroup;
 			children = (
-				A0EE06C41B039C4A00C7A8D2 /* RKFontOverride.h */,
-				A0EE06C51B039C4A00C7A8D2 /* RKFontOverride.m */,
+				A0EE06C41B039C4A00C7A8D2 /* RKFontMixing.h */,
+				A0EE06C51B039C4A00C7A8D2 /* RKFontMixing.m */,
 				7935616614DC016F00FC0C1C /* RKListItem.h */,
 				7935616714DC016F00FC0C1C /* RKListItem.m */,
 				7935619114DC6D8C00FC0C1C /* RKFootnote.h */,
@@ -2005,7 +2005,7 @@
 				A0E49EDA1AD51B94004E7973 /* RKColor.h in Headers */,
 				796EAC0714D947F6001E8401 /* RKConversion.h in Headers */,
 				796EAC0A14D947F6001E8401 /* RKResourcePool.h in Headers */,
-				A0EE06C61B039C4A00C7A8D2 /* RKFontOverride.h in Headers */,
+				A0EE06C61B039C4A00C7A8D2 /* RKFontMixing.h in Headers */,
 				796EAC0D14D947F6001E8401 /* RKTaggedString.h in Headers */,
 				796EAC5814D9491B001E8401 /* RKAttributeWriter.h in Headers */,
 				7935615214DB3B1F00FC0C1C /* RKListStyle+FormatStringParserAdditions.h in Headers */,
@@ -2142,7 +2142,7 @@
 				A0472F111ADFC310004118B3 /* RKDOCXFootnotesWriter.h in Headers */,
 				790AD8DC15BAD3EB0011E40E /* RKLinkCoreTextConverter.h in Headers */,
 				790AD8DE15BAD3EB0011E40E /* RKTextAttachmentCoreTextConverter.h in Headers */,
-				A0EE06C71B039C4A00C7A8D2 /* RKFontOverride.h in Headers */,
+				A0EE06C71B039C4A00C7A8D2 /* RKFontMixing.h in Headers */,
 				A065823D1B038E9800DAA032 /* RKFont.h in Headers */,
 				790AD8E015BAD3EB0011E40E /* RKFootnoteCoreTextConverter.h in Headers */,
 				A067B6D21AE8F049000D0B58 /* NSString+ParsingConvenience.h in Headers */,
@@ -2374,7 +2374,7 @@
 				796EABC314D947D5001E8401 /* RKColorAttributeWriter.m in Sources */,
 				A069F6641AD7F61E00F58E15 /* RKDOCXAttributeWriter.m in Sources */,
 				796EABC614D947D5001E8401 /* RKFontAttributeWriter.m in Sources */,
-				A0EE06C81B039C4A00C7A8D2 /* RKFontOverride.m in Sources */,
+				A0EE06C81B039C4A00C7A8D2 /* RKFontMixing.m in Sources */,
 				A074BE4E1AC42BFC008B3DED /* RKDOCXWriter.m in Sources */,
 				796EABCC14D947D5001E8401 /* RKShadowAttributeWriter.m in Sources */,
 				A04AA0901AF1308000B0946C /* RKDOCXStyleTemplateWriter.m in Sources */,
@@ -2641,7 +2641,7 @@
 				79E76C221517580E0073153D /* RKUnderlineStyleAttributeWriter.m in Sources */,
 				A02ACC751B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */,
 				79E76C231517580E0073153D /* RKInlineStyleWriter.m in Sources */,
-				A0EE06C91B039C4A00C7A8D2 /* RKFontOverride.m in Sources */,
+				A0EE06C91B039C4A00C7A8D2 /* RKFontMixing.m in Sources */,
 				79E76C241517580E0073153D /* RKAttributeWriter.m in Sources */,
 				79E76C25151758250073153D /* RKAttributedStringWriter.m in Sources */,
 				79E76C26151758250073153D /* RKBodyWriter.m in Sources */,

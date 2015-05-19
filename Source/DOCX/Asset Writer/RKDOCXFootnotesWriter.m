@@ -46,10 +46,17 @@ NSString *RKDOCXFootnoteReferenceAttributeName					= @"RKDOCXFootnoteReference";
 
 NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 
+/*!
+ @abstract Specifies the type of endnote/footnote reference that should be created.
+ 
+ @const RKDOCXNoReference		No reference should be created. If this value is actually used, something has gone wrong.
+ @const RKDOCXFootnoteReference	A footnote reference should be created.
+ @const RKDOCXEndnoteReference	An endnote reference should be created.
+ */
 typedef enum : NSUInteger {
-	RKDOCXNoReference		= 0,
-	RKDOCXFootnoteReference	= 1,
-	RKDOCXEndnoteReference	= 2
+	RKDOCXNoReference,
+	RKDOCXFootnoteReference,
+	RKDOCXEndnoteReference,
 } RKDOCXReferenceType;
 
 @implementation RKDOCXFootnotesWriter
@@ -63,14 +70,14 @@ typedef enum : NSUInteger {
 	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotes:context.footnotes endnoteSection:NO];
 	if (footnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXFootnotesFilename andType:RKDOCXFootnotesRelationshipType];
-		[context addXMLDocumentPart:footnotesDocument withFilename:[self fullPathForFilename:RKDOCXFootnotesFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXFootnotesContentType];
+		[context addDocumentPartWithXMLDocument:footnotesDocument filename:[self packagePathForFilename:RKDOCXFootnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXFootnotesContentType];
 	}
 	
 	// In case of endnotes
 	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotes:context.endnotes endnoteSection:YES];
 	if (endnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXEndnotesFilename andType:RKDOCXEndnotesRelationshipType];
-		[context addXMLDocumentPart:endnotesDocument withFilename:[self fullPathForFilename:RKDOCXEndnotesFilename inLevel:RKDOCXWordLevel] contentType:RKDOCXEndnotesContentType];
+		[context addDocumentPartWithXMLDocument:endnotesDocument filename:[self packagePathForFilename:RKDOCXEndnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXEndnotesContentType];
 	}
 }
 

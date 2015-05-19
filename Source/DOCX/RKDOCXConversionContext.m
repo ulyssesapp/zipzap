@@ -40,6 +40,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_evenAndOddHeaders = NO;
 		_listStyles = [NSDictionary new];
 		_documentRelationships = [NSDictionary new];
+		_packageRelationships = [NSDictionary new];
 	}
 	
 	return self;
@@ -47,25 +48,28 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
 {
-	// In case there are no styles
-	if (!paragraphStyleName) {
-		if (!characterStyleName)
-			return nil;
-		else
-			return _document.characterStyles[characterStyleName];
-	}
+	// Simple cases: Style mixing is not required
+	if (!paragraphStyleName && !characterStyleName)
+		return nil;
+	
+	else if (!paragraphStyleName)
+		return _document.characterStyles[characterStyleName];
+	
 	else if (!characterStyleName)
 		return _document.paragraphStyles[paragraphStyleName];
 	
+	// Try to use pre-chached value
 	NSArray *styleKey = @[paragraphStyleName, characterStyleName];
+	NSMutableDictionary *cachedStyle = _styleCache[styleKey];
 	
-	if (_styleCache[styleKey])
-		return _styleCache[styleKey];
+	if (cachedStyle)
+		return cachedStyle;
+	else
+		cachedStyle = [NSMutableDictionary new];
 	
+	// Mix character and paragraph style, character styles have the higher priority
 	NSDictionary *paragraphAttributes = _document.paragraphStyles[paragraphStyleName];
 	NSDictionary *characterAttributes = _document.characterStyles[characterStyleName];
-	
-	NSMutableDictionary *cachedStyle = [NSMutableDictionary new];
 	
 	if (paragraphAttributes)
 		[cachedStyle addEntriesFromDictionary: paragraphAttributes];
@@ -74,9 +78,10 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		[cachedStyle addEntriesFromDictionary: characterAttributes];
 	
 	if (paragraphAttributes[RKFontAttributeName] && characterAttributes[RKFontAttributeName])
-		cachedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter overridingFontPropertiesForCharacterAttributes:characterAttributes paragraphAttributes:paragraphAttributes];
+		cachedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:paragraphAttributes[RKFontAttributeName] withOverridingFont:characterAttributes[RKFontAttributeName] usingMask:[characterAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
 	
-	[_styleCache addEntriesFromDictionary: @{styleKey: cachedStyle}];
+	// Add mixed style to cache
+	_styleCache[styleKey] = cachedStyle;
 	
 	return cachedStyle;
 }
@@ -100,7 +105,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return [archive contents];
 }
 
-- (void)addXMLDocumentPart:(NSXMLDocument *)part withFilename:(NSString *)filename contentType:(NSString *)contentType
+- (void)addDocumentPartWithXMLDocument:(NSXMLDocument *)part filename:(NSString *)filename contentType:(NSString *)contentType
 {
 	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 	
@@ -108,16 +113,17 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		[self addContentType:contentType forFileName:filename];
 	
 	NSData *file = [part XMLDataWithOptions: NSXMLNodePrettyPrint | NSXMLNodeCompactEmptyElement];
-	[_files addEntriesFromDictionary: @{filename: file}];
+	
+	_files[filename] = file;
 }
 
-- (void)addBinaryDocumentPart:(NSData *)part withFileName:(NSString *)filename MIMEType:(NSString *)MIMEType
+- (void)addDocumentPartWithData:(NSData *)part filename:(NSString *)filename MIMEType:(NSString *)MIMEType
 {
 	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 	
 	[self addContentType:MIMEType forPathExtension:filename.pathExtension];
 	
-	[_files addEntriesFromDictionary: @{filename: part}];
+	_files[filename] = part;
 }
 
 - (void)addContentType:(NSString *)XMLType forFileName:(NSString *)filename
@@ -146,7 +152,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSUInteger index = _footnotes.count + 2;
 	
 	NSMutableDictionary *newFootnotes = [_footnotes mutableCopy];
-	[newFootnotes addEntriesFromDictionary: @{@(index): content}];
+	newFootnotes[@(index)] = content;
 	_footnotes = newFootnotes;
 	
 	return index;
@@ -158,7 +164,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSUInteger index = _endnotes.count + 2;
 	
 	NSMutableDictionary *newEndnotes = [_endnotes mutableCopy];
-	[newEndnotes addEntriesFromDictionary: @{@(index): content}];
+	newEndnotes[@(index)] = content;
 	_endnotes = newEndnotes;
 	
 	return index;
@@ -172,9 +178,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	__block NSUInteger index = 0;
 	
 	// List Style already registered
-	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(id key, id obj, BOOL *stop) {
-		if ([obj isEqual: listStyle]) {
-			index = [key unsignedIntegerValue];
+	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(NSNumber *currentIndex, RKListStyle *currentListStyle, BOOL *stop) {
+		if ([currentListStyle isEqual: listStyle]) {
+			index = currentIndex.unsignedIntegerValue;
 			*stop = YES;
 		}
 	}];
@@ -217,6 +223,14 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	_documentRelationships = newRelationships;
 	
 	return index;
+}
+
+- (void)addPackageRelationshipWithTarget:(NSString *)target type:(NSString *)type
+{
+	NSMutableDictionary *newPackageRelationships = [_packageRelationships mutableCopy];
+	newPackageRelationships[target] = type;
+	
+	_packageRelationships = newPackageRelationships;
 }
 
 @end

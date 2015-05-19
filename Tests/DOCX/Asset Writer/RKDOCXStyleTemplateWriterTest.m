@@ -301,7 +301,7 @@
 	// Character Style
 	CTFontRef characterStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
 	NSDictionary *characterStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)characterStyleFont,
-											   RKFontOverrideAttributeName: @(RKFontOverrideFontName | RKFontOverrideBoldTrait)};
+											   RKFontMixAttributeName: @(RKFontMixIgnoreFontName | RKFontMixIgnoreBoldTrait)};
 	NSString *characterStyleName = @"Strong";
 	
 	// String
@@ -318,6 +318,27 @@
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"mixedstyletemplateoverride"];
+}
+
+- (void)testOverriddenStringAttributesInCharacterStyle
+{
+	// Character Style
+	CTFontRef characterStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
+	NSDictionary *characterStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)characterStyleFont,};
+	NSString *characterStyleName = @"Strong";
+	
+	// String
+	NSDictionary *attributes = @{RKCharacterStyleNameAttributeName: characterStyleName,
+								 RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait),
+								 RKFontMixAttributeName: @(RKFontMixIgnoreFontName | RKFontMixIgnoreItalicTrait)};
+	
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text is displayed in bold Helvetica font with 12pt size, although the string attribute is set to bold and italic Arial." attributes:attributes];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.characterStyles = @{characterStyleName: characterStyleAttributes};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"mixedstringstyleoverride"];
 }
 
 @end
