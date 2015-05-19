@@ -543,10 +543,8 @@
 		A074BE5C1AC4423C008B3DED /* RKDOCXConversionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE5A1AC4423C008B3DED /* RKDOCXConversionContext.m */; };
 		A074BE5D1AC44246008B3DED /* RKDOCXPartWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE561AC44229008B3DED /* RKDOCXPartWriter.m */; };
 		A074BE5E1AC4424B008B3DED /* RKDOCXConversionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = A074BE5A1AC4423C008B3DED /* RKDOCXConversionContext.m */; };
-		A074BE681AC44980008B3DED /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE671AC44980008B3DED /* libzipzap.a */; };
 		A074BE6A1AC449CF008B3DED /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE691AC449CF008B3DED /* ApplicationServices.framework */; };
 		A074BE6B1AC449DC008B3DED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3F14C494C800F23C04 /* Foundation.framework */; };
-		A074BE6D1AC44A88008B3DED /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A074BE6C1AC44A88008B3DED /* libz.dylib */; };
 		A083A2D41AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */; };
 		A083A2D51AEA5457005A9C80 /* RKDOCXListWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */; };
 		A083A2D81AEA6ADC005A9C80 /* RKDOCXListItemWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A083A2D61AEA6ADC005A9C80 /* RKDOCXListItemWriter.h */; };
@@ -557,8 +555,6 @@
 		A083A2DF1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A083A2DC1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.h */; };
 		A083A2E01AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2DD1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m */; };
 		A083A2E11AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A083A2DD1AEA6F6D005A9C80 /* RKDOCXListStyleWriter.m */; };
-		A0920C6E1AD4324A00D51CF5 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0076DBC1AC5900D0049C15F /* libzipzap.a */; };
-		A0920C7A1AD4345800D51CF5 /* libKissXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0920C791AD4345800D51CF5 /* libKissXML.a */; };
 		A092D8FB1AD57EC400417A8D /* RKDOCXParagraphWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A092D8F91AD57EC400417A8D /* RKDOCXParagraphWriter.h */; };
 		A092D8FC1AD57EC400417A8D /* RKDOCXParagraphWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A092D8F91AD57EC400417A8D /* RKDOCXParagraphWriter.h */; };
 		A092D8FD1AD57EC400417A8D /* RKDOCXParagraphWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A092D8FA1AD57EC400417A8D /* RKDOCXParagraphWriter.m */; };
@@ -1046,10 +1042,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A074BE6D1AC44A88008B3DED /* libz.dylib in Frameworks */,
 				A074BE6B1AC449DC008B3DED /* Foundation.framework in Frameworks */,
 				A074BE6A1AC449CF008B3DED /* ApplicationServices.framework in Frameworks */,
-				A074BE681AC44980008B3DED /* libzipzap.a in Frameworks */,
 				7970958C15A71E8400CE9DFA /* CoreText.framework in Frameworks */,
 				7970958A15A71E7F00CE9DFA /* CoreGraphics.framework in Frameworks */,
 				50317D3B14C494C800F23C04 /* Cocoa.framework in Frameworks */,
@@ -1087,8 +1081,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0587F4F1AE1558500909686 /* MobileCoreServices.framework in Frameworks */,
-				A0920C7A1AD4345800D51CF5 /* libKissXML.a in Frameworks */,
-				A0920C6E1AD4324A00D51CF5 /* libzipzap.a in Frameworks */,
 				790AD8CA15BAD0290011E40E /* UIKit.framework in Frameworks */,
 				790AD8C715BAD0160011E40E /* CoreGraphics.framework in Frameworks */,
 				790AD8C815BAD0160011E40E /* CoreText.framework in Frameworks */,
@@ -2843,7 +2835,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"zipzap/**",
 				);
 				INSTALL_PATH = "@rpath";
 				LIBRARY_SEARCH_PATHS = (
@@ -2867,7 +2858,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"zipzap/**",
 				);
 				INSTALL_PATH = "@rpath";
 				LIBRARY_SEARCH_PATHS = (
@@ -2890,13 +2880,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"zipzap/**",
 				);
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info-Mac.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
-					"$(PROJECT_DIR)/KissXML/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2913,13 +2901,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"zipzap/**",
 				);
 				INFOPLIST_FILE = "Tests/RTFKitTests-Info-Mac.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
-					"$(PROJECT_DIR)/KissXML/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2956,7 +2942,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
-					"$(PROJECT_DIR)/KissXML/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -2999,7 +2984,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
-					"$(PROJECT_DIR)/KissXML/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -3025,8 +3009,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"KissXML/**",
-					"zipzap/**",
 					/usr/include/libxml2,
 				);
 				INSTALL_PATH = "@rpath";
@@ -3034,7 +3016,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
-					"$(PROJECT_DIR)/KissXML/build/Debug-iphoneos",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-ObjC";
@@ -3053,8 +3034,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"KissXML/**",
-					"zipzap/**",
 					/usr/include/libxml2,
 				);
 				INSTALL_PATH = "@rpath";
@@ -3062,7 +3041,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/RTFKit-ftfccbjcqakivcaaffoahmlqxoxq/Build/Products/Debug",
-					"$(PROJECT_DIR)/KissXML/build/Debug-iphoneos",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-ObjC";
