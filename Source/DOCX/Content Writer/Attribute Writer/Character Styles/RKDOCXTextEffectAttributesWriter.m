@@ -88,7 +88,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	
 	NSXMLElement *strokeWidthProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsOutlineElementName];
 	
-	if (!attributes[RKStrokeWidthAttributeName] || [attributes[RKStrokeWidthAttributeName] isLessThanOrEqualTo: @0])
+	if (!attributes[RKStrokeWidthAttributeName] || ([attributes[RKStrokeWidthAttributeName] integerValue] <= 0))
 		[strokeWidthProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
 	
 	return strokeWidthProperty;
