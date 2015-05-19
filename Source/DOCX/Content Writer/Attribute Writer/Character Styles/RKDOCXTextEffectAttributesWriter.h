@@ -1,5 +1,5 @@
 //
-//  RKDOCXTextEffectsWriter.h
+//  RKDOCXTextEffectAttributesWriter.h
 //  RTFKit
 //
 //  Created by Lucas Hauswald on 07.04.15.

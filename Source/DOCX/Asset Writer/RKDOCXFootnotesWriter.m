@@ -19,11 +19,13 @@ NSString *RKDOCXFootnotesRootElementName						= @"w:footnotes";
 NSString *RKDOCXEndnotesContentType								= @"application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml";
 NSString *RKDOCXFootnotesContentType							= @"application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml";
 
-// Relationship type and target
+// Relationship types
 NSString *RKDOCXEndnotesRelationshipType						= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes";
-NSString *RKDOCXEndnotesRelationshipTarget						= @"endnotes.xml";
 NSString *RKDOCXFootnotesRelationshipType						= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes";
-NSString *RKDOCXFootnotesRelationshipTarget						= @"footnotes.xml";
+
+// Filenames
+NSString *RKDOCXEndnotesFilename								= @"endnotes.xml";
+NSString *RKDOCXFootnotesFilename								= @"footnotes.xml";
 
 // Elements
 NSString *RKDOCXFootnotesContinuationSeparatorAttributeValue	= @"continuationSeparator";
@@ -44,6 +46,19 @@ NSString *RKDOCXFootnoteReferenceAttributeName					= @"RKDOCXFootnoteReference";
 
 NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 
+/*!
+ @abstract Specifies the type of endnote/footnote reference that should be created.
+ 
+ @const RKDOCXNoReference		No reference should be created. If this value is actually used, something has gone wrong.
+ @const RKDOCXFootnoteReference	A footnote reference should be created.
+ @const RKDOCXEndnoteReference	An endnote reference should be created.
+ */
+typedef enum : NSUInteger {
+	RKDOCXNoReference,
+	RKDOCXFootnoteReference,
+	RKDOCXEndnoteReference,
+} RKDOCXReferenceType;
+
 @implementation RKDOCXFootnotesWriter
 
 + (void)buildFootnotesUsingContext:(RKDOCXConversionContext *)context
@@ -54,15 +69,15 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	// In case of footnotes
 	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotes:context.footnotes endnoteSection:NO];
 	if (footnotesDocument) {
-		[context indexForRelationshipWithTarget:RKDOCXFootnotesRelationshipTarget andType:RKDOCXFootnotesRelationshipType];
-		[context addXMLDocumentPart:footnotesDocument withFilename:RKDOCXFootnotesFilename contentType:RKDOCXFootnotesContentType];
+		[context indexForRelationshipWithTarget:RKDOCXFootnotesFilename andType:RKDOCXFootnotesRelationshipType];
+		[context addDocumentPartWithXMLDocument:footnotesDocument filename:[self packagePathForFilename:RKDOCXFootnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXFootnotesContentType];
 	}
 	
 	// In case of endnotes
 	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotes:context.endnotes endnoteSection:YES];
 	if (endnotesDocument) {
-		[context indexForRelationshipWithTarget:RKDOCXEndnotesRelationshipTarget andType:RKDOCXEndnotesRelationshipType];
-		[context addXMLDocumentPart:endnotesDocument withFilename:RKDOCXEndnotesFilename contentType:RKDOCXEndnotesContentType];
+		[context indexForRelationshipWithTarget:RKDOCXEndnotesFilename andType:RKDOCXEndnotesRelationshipType];
+		[context addDocumentPartWithXMLDocument:endnotesDocument filename:[self packagePathForFilename:RKDOCXEndnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXEndnotesContentType];
 	}
 }
 
@@ -129,7 +144,7 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 {
 	NSString *refElementName;
 	
-	switch ([attributes[RKDOCXReferenceTypeAttributeName] integerValue]) {
+	switch ([attributes[RKDOCXReferenceTypeAttributeName] unsignedIntegerValue]) {
 		case RKDOCXFootnoteReference:
 			refElementName = RKDOCXFootnotesFootnoteRefElementName;
 			break;

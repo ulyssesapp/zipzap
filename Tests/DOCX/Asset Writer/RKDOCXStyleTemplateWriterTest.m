@@ -8,12 +8,7 @@
 
 #import "XCTestCase+DOCX.h"
 #import "RKColor.h"
-
-#if TARGET_OS_IPHONE
-	#define RKFont UIFont
-#else
-	#define RKFont NSFont
-#endif
+#import "RKFont.h"
 
 @interface RKDOCXStyleTemplateWriterTest : XCTestCase
 
@@ -290,6 +285,65 @@
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"localizedparagraphstyle"];
+}
+
+
+#pragma mark - Mixed styles
+
+- (void)testOverriddenCharacterAttributesInParagraphStyle
+{
+	// Paragraph Style
+	CTFontRef paragraphStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
+	NSDictionary *paragraphStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)paragraphStyleFont,
+											   RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
+	NSString *paragraphStyleName = @"heading 1";
+	
+	// Character Style
+	CTFontRef characterStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
+	NSDictionary *characterStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)characterStyleFont,
+											   RKFontMixAttributeName: @(RKFontMixIgnoreFontName | RKFontMixIgnoreBoldTrait)};
+	NSString *characterStyleName = @"Strong";
+	
+	// String
+	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: paragraphStyleName,
+								 RKCharacterStyleNameAttributeName: characterStyleName,
+								 RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait),
+								 RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
+	
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text is displayed in blue Arial font with 12pt size, bold and italic, although the character style is set to Helvetica." attributes:attributes];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.paragraphStyles = @{paragraphStyleName: paragraphStyleAttributes};
+	document.characterStyles = @{characterStyleName: characterStyleAttributes};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"mixedstyletemplateoverride"];
+}
+
+- (void)testOverriddenStringAttributesInCharacterStyle
+{
+	// Character Style
+	CTFontRef characterStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Times New Roman", 24, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
+	NSDictionary *characterStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)characterStyleFont};
+	NSString *characterStyleName = @"Strong";
+	
+	// String
+	NSDictionary *attributes = @{RKCharacterStyleNameAttributeName: characterStyleName,
+								 RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, 0, kCTFontItalicTrait | kCTFontBoldTrait)};
+	
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"This text is displayed in normal Times New Roman font with 12pt size.\nThis text is displayed in normal Helvetica font with 24pt size.\nThis text is displayed as bold Helvetica font with 12pt size.\nThis text is displayed as italic Helvetica font with 12pt size.\nThis text overrides all style attributes.\nThis text only uses style formatting." attributes:attributes];
+	[attributedString addAttribute:RKFontMixAttributeName value:@(RKFontMixIgnoreFontName) range:NSMakeRange(0, 69)];
+	[attributedString addAttribute:RKFontMixAttributeName value:@(RKFontMixIgnoreFontSize) range:NSMakeRange(70, 64)];
+	[attributedString addAttribute:RKFontMixAttributeName value:@(RKFontMixIgnoreBoldTrait) range:NSMakeRange(134, 61)];
+	[attributedString addAttribute:RKFontMixAttributeName value:@(RKFontMixIgnoreItalicTrait) range:NSMakeRange(196, 63)];
+	[attributedString addAttribute:RKFontMixAttributeName value:@0 range:NSMakeRange(260, 41)];
+	[attributedString addAttribute:RKFontMixAttributeName value:@(RKFontMixIgnoreAll) range:NSMakeRange(302, 37)];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.characterStyles = @{characterStyleName: characterStyleAttributes};
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"mixedstringstyleoverride"];
 }
 
 @end

@@ -16,9 +16,11 @@ NSString *RKDOCXSettingsRootElementName								= @"w:settings";
 // Content type
 NSString *RKDOCXSettingsContentType									= @"application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml";
 
-// Relationship type and target
+// Relationship type
 NSString *RKDOCXSettingsRelationshipType							= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings";
-NSString *RKDOCXSettingsRelationshipTarget							= @"settings.xml";
+
+// Filename
+NSString *RKDOCXSettingsFilename									= @"settings.xml";
 
 // Setting names
 // Elements
@@ -103,8 +105,8 @@ NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 	if (context.document.twoSided)
 		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsMirrorMarginsElementName]];
 	
-	[context indexForRelationshipWithTarget:RKDOCXSettingsRelationshipTarget andType:RKDOCXSettingsRelationshipType];
-	[context addXMLDocumentPart:document withFilename:RKDOCXSettingsFilename contentType:RKDOCXSettingsContentType];
+	[context indexForRelationshipWithTarget:RKDOCXSettingsFilename andType:RKDOCXSettingsRelationshipType];
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXSettingsFilename folder:RKDOCXWordFolder] contentType:RKDOCXSettingsContentType];
 }
 
 + (NSXMLElement *)footnotePropertiesFromDocument:(RKDocument *)document isEndnote:(BOOL)isEndnote

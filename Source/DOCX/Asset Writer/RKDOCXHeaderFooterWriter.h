@@ -12,8 +12,8 @@
 /*!
  @abstract Represents a page element type.
  
- @const RKDOCXHeader Page element represents a header.
- @const RKDOCXFooter Page element represents a footer.
+ @const RKDOCXHeader	Page element represents a header.
+ @const RKDOCXFooter	Page element represents a footer.
  */
 typedef enum : NSUInteger {
 	RKDOCXHeader,

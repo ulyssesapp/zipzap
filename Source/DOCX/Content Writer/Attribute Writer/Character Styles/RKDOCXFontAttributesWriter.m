@@ -1,5 +1,5 @@
 //
-//  RKDOCXFontAttributeWriter.m
+//  RKDOCXFontAttributesWriter.m
 //  RTFKit
 //
 //  Created by Lucas Hauswald on 31.03.15.
@@ -7,6 +7,8 @@
 //
 
 #import "RKDOCXFontAttributesWriter.h"
+
+#import "NSXMLElement+IntegerValueConvenience.h"
 
 NSString *RKDOCXFontAttributeAsciiFontAttributeValue			= @"w:ascii";
 NSString *RKDOCXFontAttributeBoldElementName					= @"w:b";
@@ -23,7 +25,10 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	CTFontRef fontAttribute = (__bridge CTFontRef)attributes[RKFontAttributeName];
-	if (!fontAttribute)
+	NSNumber *ignoreAttribute = attributes[RKFontMixAttributeName];
+	RKFontMixMask ignoreMask = ignoreAttribute ? ignoreAttribute.unsignedIntegerValue : 0;
+	
+	if (!fontAttribute || ignoreMask == RKFontMixIgnoreAll)
 		return nil;
 	
 	NSMutableArray *properties = [NSMutableArray new];
@@ -31,35 +36,41 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	NSUInteger traits = CTFontGetSymbolicTraits(fontAttribute);
 	
 	// Character style for comparison
-	NSDictionary *characterStyle = context.document.characterStyles[attributes[RKCharacterStyleNameAttributeName]];
+	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
 	CTFontRef characterStyleFontAttribute = (__bridge CTFontRef)characterStyle[RKFontAttributeName];
 	NSUInteger styleTraits = CTFontGetSymbolicTraits(characterStyleFontAttribute);
 	
-	if ((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait)) {
-		if (traits & kCTFontItalicTrait)
-			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeItalicElementName]];
-		else
-			[properties addObject: [NSXMLElement elementWithName:RKDOCXFontAttributeItalicElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]]]];
+	// Font Name (§17.3.2.26)
+	if (![(__bridge NSString *)CTFontCopyFamilyName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFamilyName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
+		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)]]];
+		[properties addObject: fontElement];
 	}
 	
-	if ((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait)) {
+	// Font Size (§17.3.2.38/§17.3.2.39)
+	if (CTFontGetSize(fontAttribute) != CTFontGetSize(characterStyleFontAttribute) && !(ignoreMask & RKFontMixIgnoreFontSize)) {
+		NSUInteger wordFontSize = [self wordFontSizeFromPointSize: CTFontGetSize(fontAttribute)];
+		NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:wordFontSize]]];
+		NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:wordFontSize]]];
+		[properties addObjectsFromArray: @[sizeElement, complexSizeElement]];
+	}
+	
+	// Bold Trait (§17.3.2.1)
+	if ((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait) && !(ignoreMask & RKFontMixIgnoreBoldTrait)) {
 		if (traits & kCTFontBoldTrait)
 			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeBoldElementName]];
 		else
 			[properties addObject: [NSXMLElement elementWithName:RKDOCXFontAttributeBoldElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]]]];
 	}
 	
-	if (![(__bridge NSString *)CTFontCopyFamilyName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFamilyName(characterStyleFontAttribute)]) {
-		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)], [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)], [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)], [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)]]];
-		[properties addObject: fontElement];
-	}
-	
-	if (CTFontGetSize(fontAttribute) != CTFontGetSize(characterStyleFontAttribute)) {
-		NSUInteger wordFontSize = [self wordFontSizeFromPointSize: CTFontGetSize(fontAttribute)];
-		NSString *fontSize = [@(wordFontSize) stringValue];
-		NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue: fontSize]]];
-		NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue: fontSize]]];
-		[properties addObjectsFromArray: @[sizeElement, complexSizeElement]];
+	// Italic Trait (§17.3.2.16)
+	if ((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait) && !(ignoreMask & RKFontMixIgnoreItalicTrait)) {
+		if (traits & kCTFontItalicTrait)
+			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeItalicElementName]];
+		else
+			[properties addObject: [NSXMLElement elementWithName:RKDOCXFontAttributeItalicElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]]]];
 	}
 	
 	return properties;
@@ -72,6 +83,32 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	
 	// For now we round the font size
 	return (NSUInteger)round(wordFontSize);
+}
+
++ (RKFont *)fontByMixingFont:(RKFont *)baseFont withOverridingFont:(RKFont *)overridingFont usingMask:(RKFontMixMask)mask
+{
+	if (mask == 0)
+		return overridingFont;
+	else if (mask == RKFontMixIgnoreAll)
+		return baseFont;
+	
+	CTFontRef baseFontRef = (__bridge CTFontRef)baseFont;
+	CTFontRef overridingFontRef = (__bridge CTFontRef)overridingFont;
+	
+	CFStringRef fontName	= (mask & RKFontMixIgnoreFontName) ? CTFontCopyFamilyName(baseFontRef) : CTFontCopyFamilyName(overridingFontRef);
+	CGFloat fontSize		= (mask & RKFontMixIgnoreFontSize) ? CTFontGetSize(baseFontRef) : CTFontGetSize(overridingFontRef);
+	BOOL enableBoldTrait	= (mask & RKFontMixIgnoreBoldTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait : CTFontGetSymbolicTraits(overridingFontRef) & kCTFontBoldTrait;
+	BOOL enableItalicTrait	= (mask & RKFontMixIgnoreItalicTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait : CTFontGetSymbolicTraits(overridingFontRef) & kCTFontItalicTrait;
+	
+	CTFontSymbolicTraits traits = ((enableItalicTrait) ? kCTFontItalicTrait : 0) | ((enableBoldTrait) ? kCTFontBoldTrait : 0);
+	
+	// Create font with name and size
+	CTFontRef resultingFontAttribute = CTFontCreateWithName(fontName, fontSize, NULL);
+	
+	// Add bold and italic traits to font
+	resultingFontAttribute = CTFontCreateCopyWithSymbolicTraits(resultingFontAttribute, 0.0, NULL, traits, kCTFontItalicTrait | kCTFontBoldTrait);
+	
+	return (__bridge RKFont *)resultingFontAttribute;
 }
 
 @end

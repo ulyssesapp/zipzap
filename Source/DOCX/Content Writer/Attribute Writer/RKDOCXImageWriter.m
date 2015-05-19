@@ -9,9 +9,13 @@
 #import "RKDOCXImageWriter.h"
 
 #import "RKImage.h"
+#import "RKDOCXPartWriter.h"
 #import "RKDOCXRunWriter.h"
+
+#import "NSXMLElement+IntegerValueConvenience.h"
+
 #if TARGET_OS_IPHONE
-#import <MobileCoreServices/MobileCoreServices.h>
+	#import <MobileCoreServices/MobileCoreServices.h>
 #endif
 
 // Elements
@@ -54,7 +58,6 @@ NSString *RKDOCXImageRightMarginAttributeName		= @"distR";
 NSString *RKDOCXImageTopMarginAttributeName			= @"distT";
 
 // Other
-NSString *RKDOCXImageLocationName					= @"media/";
 NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
 
 @implementation RKDOCXImageWriter
@@ -69,8 +72,8 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
 	
 	// Relationship Handling
-	NSString *filename = [RKDOCXImageLocationName stringByAppendingString: imageAttachment.imageFile.preferredFilename];
-	[context addBinaryDocumentPart:imageAttachment.imageFile.regularFileContents withFileName:[@"word/" stringByAppendingString: filename] MIMEType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension]];
+	NSString *filename = [RKDOCXPartWriter packagePathForFilename:imageAttachment.imageFile.preferredFilename folder:RKDOCXMediaFolder];
+	[context addDocumentPartWithData:imageAttachment.imageFile.regularFileContents filename:[RKDOCXPartWriter packagePathForFilename:filename folder:RKDOCXWordFolder] MIMEType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension]];
 	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
 	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
 	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];
@@ -80,10 +83,10 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 											[NSXMLElement attributeWithName:RKDOCXImageDescriptionAttributeName stringValue:@""]];
 	
 	// Image Margins
-	NSArray *margins = @[[NSXMLElement attributeWithName:RKDOCXImageTopMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.top)).stringValue],
-						 [NSXMLElement attributeWithName:RKDOCXImageLeftMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.left)).stringValue],
-						 [NSXMLElement attributeWithName:RKDOCXImageRightMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.right)).stringValue],
-						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName stringValue:@(RKPointsToEMUs(imageAttachment.margin.bottom)).stringValue]];
+	NSArray *margins = @[[NSXMLElement attributeWithName:RKDOCXImageTopMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.top)],
+						 [NSXMLElement attributeWithName:RKDOCXImageLeftMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.left)],
+						 [NSXMLElement attributeWithName:RKDOCXImageRightMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.right)],
+						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.bottom)]];
 	
 	// Image Size
 	NSString *width = @(RKPointsToEMUs(image.size.width)).stringValue;

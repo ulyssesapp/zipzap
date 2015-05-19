@@ -14,6 +14,7 @@
 #import "RKImageAttachment.h"
 #import "RKListStyle.h"
 #import "RKListItem.h"
+#import "RKFontMixing.h"
 
 #import "RKFootnote.h"
 #import "RKPlaceholder.h"

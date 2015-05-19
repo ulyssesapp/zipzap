@@ -11,12 +11,6 @@
 
 extern NSString *RKDOCXReferenceTypeAttributeName;
 
-typedef enum : NSUInteger {
-	RKDOCXNoReference		= 0,
-	RKDOCXFootnoteReference	= 1,
-	RKDOCXEndnoteReference	= 2
-} RKDOCXReferenceType;
-
 /*!
  @abstract Generates the footnotes and endnotes files containing all footnotes and endnotes referenced by the given context and adds them to the output document.
  @discussion See ISO 29500-1:2012: §17.11 (Footnotes and Endnotes). The footnotes will be stored in the footnotes.xml file and the endnotes in the endnotes.xml file inside the output document. Should be called after the main document translation.

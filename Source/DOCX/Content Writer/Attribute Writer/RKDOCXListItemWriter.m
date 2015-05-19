@@ -1,5 +1,5 @@
 //
-//  RKDOCXListWriter.m
+//  RKDOCXListItemWriter.m
 //  RTFKit
 //
 //  Created by Lucas Hauswald on 24.04.15.
@@ -7,6 +7,8 @@
 //
 
 #import "RKDOCXListItemWriter.h"
+
+#import "NSXMLElement+IntegerValueConvenience.h"
 
 NSString *RKDOCXListItemNumberingIdentifierElementName	= @"w:numId";
 NSString *RKDOCXListItemNumberingPropertyElementName	= @"w:numPr";
@@ -22,11 +24,11 @@ NSString *RKDOCXListItemLevelElementName				= @"w:ilvl";
 		return nil;
 	
 	// List level
-	NSXMLElement *levelAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@(listItem.indentationLevel).stringValue];
+	NSXMLElement *levelAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:listItem.indentationLevel];
 	NSXMLElement *levelElement = [NSXMLElement elementWithName:RKDOCXListItemLevelElementName children:nil attributes:@[levelAttribute]];
 	
 	// List style
-	NSXMLElement *numberingIdAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@([context indexForListStyle: listItem.listStyle]).stringValue];
+	NSXMLElement *numberingIdAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:[context indexForListStyle: listItem.listStyle]];
 	NSXMLElement *numberingIdElement = [NSXMLElement elementWithName:RKDOCXListItemNumberingIdentifierElementName children:nil attributes:@[numberingIdAttribute]];
 	
 	return @[[NSXMLElement elementWithName:RKDOCXListItemNumberingPropertyElementName children:@[levelElement, numberingIdElement] attributes:nil]];

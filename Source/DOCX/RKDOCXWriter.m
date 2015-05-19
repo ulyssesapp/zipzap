@@ -25,7 +25,6 @@
 {
 	RKDOCXConversionContext *context = [[RKDOCXConversionContext alloc] initWithDocument: document];
 	
-	[RKDOCXRelationshipsWriter buildPackageRelationshipsUsingContext: context];
 	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
 	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXFootnotesWriter buildFootnotesUsingContext: context];
@@ -34,6 +33,7 @@
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildExtendedPropertiesUsingContext: context];
 	[RKDOCXRelationshipsWriter buildDocumentRelationshipsUsingContext: context];
+	[RKDOCXRelationshipsWriter buildPackageRelationshipsUsingContext: context];
 	[RKDOCXContentTypesWriter buildContentTypesUsingContext: context];
 	
 	return [context docxRepresentation];

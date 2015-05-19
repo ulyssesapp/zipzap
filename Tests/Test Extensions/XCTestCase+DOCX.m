@@ -51,7 +51,7 @@
 
 - (void)assertDOCX:(NSData *)docx withTestDocument:(NSString *)name
 {
-	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:@"docx" subdirectory:@"Test Data/docx"];
+	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:@"docx" subdirectory:[@"Test Data/docx/" stringByAppendingString: NSStringFromClass(self.class)]];
 	
 	XCTAssertNotNil(url, @"Cannot build URL");
 	

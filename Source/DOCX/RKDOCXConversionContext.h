@@ -25,6 +25,11 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 @property (nonatomic, readonly) RKDocument *document;
 
+/*!
+ @abstract Mixes the given paragraph and character style attributes and caches and returns the resulting style attributes.
+ */
+- (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyle characterStyle:(NSString *)characterStyle;
+
 
 #pragma mark - Output context
 
@@ -33,18 +38,6 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @discussion Should be used only after performing all required conversion steps.
  */
 @property (nonatomic, readonly) NSData *docxRepresentation;
-
-/*!
- @abstract Adds the given document part to the context object and registers the content type for the filename.
- @discussion Throws an exception when adding duplicate files.
- */
-- (void)addXMLDocumentPart:(NSXMLDocument *)part withFilename:(NSString *)filename contentType:(NSString *)contentType;
-
-/*!
- @abstract Adds the given document part to the context object and registers the content type for the path extension of the filename.
- @discussion Throws an exception when adding duplicate files.
- */
-- (void)addBinaryDocumentPart:(NSData *)part withFileName:(NSString *)filename MIMEType:(NSString *)MIMEType;
 
 /*!
  @abstract Contains all content types collected from the XML files of the document.
@@ -57,6 +50,18 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @discussion Maps from path extensions to MIME types.
  */
 @property (nonatomic, readonly) NSDictionary *usedMIMETypes;
+
+/*!
+ @abstract Adds the given document part to the context object and registers the content type for the filename.
+ @discussion Throws an exception when adding duplicate files.
+ */
+- (void)addDocumentPartWithXMLDocument:(NSXMLDocument *)part filename:(NSString *)filename contentType:(NSString *)contentType;
+
+/*!
+ @abstract Adds the given document part to the context object and registers the content type for the path extension of the filename.
+ @discussion Throws an exception when adding duplicate files.
+ */
+- (void)addDocumentPartWithData:(NSData *)part filename:(NSString *)filename MIMEType:(NSString *)MIMEType;
 
 
 #pragma mark - Footnotes and Endnotes
@@ -117,7 +122,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 #pragma mark - Document relationships
 
 /*!
- @abstract Mapping from relationship targets (NSString) to relationship identifiers (NSNumber).
+ @abstract Mapping from relationship targets (NSString) to relationship identifiers (NSNumber) and relationship types (NSString).
  */
 @property (nonatomic, readonly) NSDictionary *documentRelationships;
 
@@ -126,5 +131,16 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @discussion Also creates a new identifier if needed.
  */
 - (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type;
+
+/*!
+ @abstract Mapping from relationship targets (NSString) to relationship types (NSString).
+ */
+@property (nonatomic, readonly) NSDictionary *packageRelationships;
+
+/*!
+ @abstract Adds a new package relationship to the packageRelationships dictionary of the context object.
+ @discussion There is no relationship identifier needed.
+ */
+- (void)addPackageRelationshipWithTarget:(NSString *)target type:(NSString *)type;
 
 @end

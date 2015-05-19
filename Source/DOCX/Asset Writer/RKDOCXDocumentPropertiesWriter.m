@@ -16,17 +16,25 @@ NSString *RKDOCXExtendedPropertiesRootElementName			= @"Properties";
 NSString *RKDOCXCorePropertiesContentType					= @"application/vnd.openxmlformats-package.core-properties+xml";
 NSString *RKDOCXExtendedPropertiesContentType				= @"application/vnd.openxmlformats-officedocument.extended-properties+xml";
 
-// Property element names
-NSString *RKDOCXDocumentPropertiesAuthorPropertyName		= @"dc:creator";
-NSString *RKDOCXDocumentPropertiesCategoryPropertyName		= @"cp:category";
-NSString *RKDOCXDocumentPropertiesCreationTimePropertyName	= @"dcterms:created";
-NSString *RKDOCXDocumentPropertiesEditorPropertyName		= @"cp:lastModifiedBy";
-NSString *RKDOCXDocumentPropertiesKeywordsPropertyName		= @"cp:keywords";
-NSString *RKDOCXDocumentPropertiesModificationPropertyName	= @"dcterms:modified";
-NSString *RKDOCXDocumentPropertiesSubjectPropertyName		= @"dc:subject";
+// Filenames
+NSString *RKDOCXCorePropertiesFilename						= @"core.xml";
+NSString *RKDOCXExtendedPropertiesFilename					= @"app.xml";
+
+// Relationship types
+NSString *RKDOCXCorePropertiesRelationshipType				= @"http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
+NSString *RKDOCXExtendedPropertiesRelationshipType			= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
+
+// Element names
+NSString *RKDOCXDocumentPropertiesAuthorElementName			= @"dc:creator";
+NSString *RKDOCXDocumentPropertiesCategoryElementName		= @"cp:category";
+NSString *RKDOCXDocumentPropertiesCreationTimeElementName	= @"dcterms:created";
+NSString *RKDOCXDocumentPropertiesEditorElementName			= @"cp:lastModifiedBy";
+NSString *RKDOCXDocumentPropertiesKeywordsElementName		= @"cp:keywords";
+NSString *RKDOCXDocumentPropertiesModificationElementName	= @"dcterms:modified";
+NSString *RKDOCXDocumentPropertiesSubjectElementName		= @"dc:subject";
 NSString *RKDOCXDocumentPropertiesTimeAttributeName			= @"xsi:type";
-NSString *RKDOCXDocumentPropertiesTimeTypeName				= @"dcterms:W3CDTF";
-NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
+NSString *RKDOCXDocumentPropertiesTimeTypeAttributeValue	= @"dcterms:W3CDTF";
+NSString *RKDOCXDocumentPropertiesTitleElementName			= @"dc:title";
 
 @implementation RKDOCXDocumentPropertiesWriter
 
@@ -46,7 +54,8 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	// Core Properties
 	document.rootElement.children = [self corePropertyElementsFromContext: context];
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXCorePropertiesFilename contentType:RKDOCXCorePropertiesContentType];
+	[context addPackageRelationshipWithTarget:[self packagePathForFilename:RKDOCXCorePropertiesFilename folder:RKDOCXDocPropsFolder] type:RKDOCXCorePropertiesRelationshipType];
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXCorePropertiesFilename folder:RKDOCXDocPropsFolder] contentType:RKDOCXCorePropertiesContentType];
 }
 
 + (void)buildExtendedPropertiesUsingContext:(RKDOCXConversionContext *)context
@@ -59,7 +68,8 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXExtendedPropertiesRootElementName namespaces:namespaces];
 	
-	[context addXMLDocumentPart:document withFilename:RKDOCXExtendedPropertiesFilename contentType:RKDOCXExtendedPropertiesContentType];
+	[context addPackageRelationshipWithTarget:[self packagePathForFilename:RKDOCXExtendedPropertiesFilename folder:RKDOCXDocPropsFolder] type:RKDOCXExtendedPropertiesRelationshipType];
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXExtendedPropertiesFilename folder:RKDOCXDocPropsFolder] contentType:RKDOCXExtendedPropertiesContentType];
 }
 
 + (NSArray *)corePropertyElementsFromContext:(RKDOCXConversionContext *)context
@@ -71,37 +81,37 @@ NSString *RKDOCXDocumentPropertiesTitlePropertyName			= @"dc:title";
 	NSMutableArray *coreProperties = [NSMutableArray new];
 	
 	if (metadata[RKTitleDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesTitlePropertyName stringValue:metadata[RKTitleDocumentAttribute]]];
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesTitleElementName stringValue:metadata[RKTitleDocumentAttribute]]];
 	
 	if (metadata[RKSubjectDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesSubjectPropertyName stringValue:metadata[RKSubjectDocumentAttribute]]];
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesSubjectElementName stringValue:metadata[RKSubjectDocumentAttribute]]];
 	
 	if (metadata[RKAuthorDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesAuthorPropertyName stringValue:metadata[RKAuthorDocumentAttribute]]];
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesAuthorElementName stringValue:metadata[RKAuthorDocumentAttribute]]];
 	
 	// Not according to standard, because Word ignores the standard in this case.
 	if (metadata[RKKeywordsDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesKeywordsPropertyName stringValue:[metadata[RKKeywordsDocumentAttribute] componentsJoinedByString: @", "]]];
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesKeywordsElementName stringValue:[metadata[RKKeywordsDocumentAttribute] componentsJoinedByString: @", "]]];
 	
 	if (metadata[RKEditorDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesEditorPropertyName stringValue:metadata[RKEditorDocumentAttribute]]];
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesEditorElementName stringValue:metadata[RKEditorDocumentAttribute]]];
 	
-	NSXMLElement *timeAttribute = [NSXMLElement attributeWithName:RKDOCXDocumentPropertiesTimeAttributeName stringValue:RKDOCXDocumentPropertiesTimeTypeName];
+	NSXMLElement *timeAttribute = [NSXMLElement attributeWithName:RKDOCXDocumentPropertiesTimeAttributeName stringValue:RKDOCXDocumentPropertiesTimeTypeAttributeValue];
 	
 	if (metadata[RKCreationTimeDocumentAttribute]) {
-		NSXMLElement *creationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCreationTimePropertyName stringValue:[self stringFromDate: metadata[RKCreationTimeDocumentAttribute]]];
+		NSXMLElement *creationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCreationTimeElementName stringValue:[self stringFromDate: metadata[RKCreationTimeDocumentAttribute]]];
 		[creationTimeElement addAttribute: [timeAttribute copy]];
 		[coreProperties addObject: creationTimeElement];
 	}
 	
 	if (metadata[RKModificationTimeDocumentAttribute]) {
-		NSXMLElement *modificationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesModificationPropertyName stringValue:[self stringFromDate: metadata[RKModificationTimeDocumentAttribute]]];
+		NSXMLElement *modificationTimeElement = [NSXMLElement elementWithName:RKDOCXDocumentPropertiesModificationElementName stringValue:[self stringFromDate: metadata[RKModificationTimeDocumentAttribute]]];
 		[modificationTimeElement addAttribute: [timeAttribute copy]];
 		[coreProperties addObject: modificationTimeElement];
 	}
 	
 	if (metadata[RKCategoryDocumentAttribute])
-		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCategoryPropertyName stringValue:metadata[RKCategoryDocumentAttribute]]];
+		[coreProperties addObject: [NSXMLElement elementWithName:RKDOCXDocumentPropertiesCategoryElementName stringValue:metadata[RKCategoryDocumentAttribute]]];
 	
 	return coreProperties;
 }

@@ -10,19 +10,6 @@
 
 #import "RKDOCXConversionContext.h"
 
-// Filenames
-NSString *RKDOCXContentTypesFilename			= @"[Content_Types].xml";
-NSString *RKDOCXCorePropertiesFilename			= @"docProps/core.xml";
-NSString *RKDOCXDocumentFilename				= @"word/document.xml";
-NSString *RKDOCXDocumentRelationshipsFilename	= @"word/_rels/document.xml.rels";
-NSString *RKDOCXEndnotesFilename				= @"word/endnotes.xml";
-NSString *RKDOCXExtendedPropertiesFilename		= @"docProps/app.xml";
-NSString *RKDOCXFootnotesFilename				= @"word/footnotes.xml";
-NSString *RKDOCXNumberingFilename				= @"word/numbering.xml";
-NSString *RKDOCXPackageRelationshipsFilename	= @"_rels/.rels";
-NSString *RKDOCXSettingsFilename				= @"word/settings.xml";
-NSString *RKDOCXStyleTemplateFilename			= @"word/styles.xml";
-
 @implementation RKDOCXPartWriter
 
 + (NSXMLDocument *)basicXMLDocumentWithRootElementName:(NSString *)root namespaces:(NSDictionary *)namespaces
@@ -73,6 +60,43 @@ NSString *RKDOCXStyleTemplateFilename			= @"word/styles.xml";
 								 };
 	
 	return [self basicXMLDocumentWithRootElementName:root namespaces:namespaces];
+}
+
++ (NSString *)packagePathForFilename:(NSString *)filename folder:(RKDOCXPackageFolder)folder
+{
+	NSString *levelString;
+	
+	switch (folder) {
+		case RKDOCXRootFolder:
+			levelString = @"";
+			break;
+			
+		case RKDOCXRelsFolder:
+			levelString = @"_rels/";
+			break;
+			
+		case RKDOCXDocPropsFolder:
+			levelString = @"docProps/";
+			break;
+			
+		case RKDOCXWordFolder:
+			levelString = @"word/";
+			break;
+			
+		case RKDOCXMediaFolder:
+			levelString = @"media/";
+			break;
+			
+		case RKDOCXWordRelsFolder:
+			levelString = @"word/_rels/";
+			break;
+			
+		case RKDOCXWordMediaFolder:
+			levelString = @"word/media/";
+			break;
+	}
+	
+	return [levelString stringByAppendingString: filename];
 }
 
 @end
