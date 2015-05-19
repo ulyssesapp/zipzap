@@ -30,4 +30,4 @@ typedef enum : NSUInteger {
  */
 extern NSString *RKFontMixAttributeName;
 
-#define RKFontOverrideAll		(RKFontMixIgnoreFontName & RKFontMixIgnoreFontSize & RKFontMixIgnoreItalicTrait & RKFontMixIgnoreBoldTrait)
+#define RKFontMixIgnoreAll	(RKFontMixIgnoreFontName | RKFontMixIgnoreFontSize | RKFontMixIgnoreBoldTrait | RKFontMixIgnoreItalicTrait)

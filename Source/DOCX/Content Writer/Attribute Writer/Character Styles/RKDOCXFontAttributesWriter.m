@@ -25,12 +25,14 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	CTFontRef fontAttribute = (__bridge CTFontRef)attributes[RKFontAttributeName];
-	if (!fontAttribute)
+	NSNumber *ignoreAttribute = attributes[RKFontMixAttributeName];
+	RKFontMixMask ignoreMask = ignoreAttribute ? ignoreAttribute.unsignedIntegerValue : 0;
+	
+	if (!fontAttribute || ignoreMask == RKFontMixIgnoreAll)
 		return nil;
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	RKFontMixMask overrideMask = [attributes[RKFontMixAttributeName] unsignedIntegerValue];
 	NSUInteger traits = CTFontGetSymbolicTraits(fontAttribute);
 	
 	// Character style for comparison
@@ -39,7 +41,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	NSUInteger styleTraits = CTFontGetSymbolicTraits(characterStyleFontAttribute);
 	
 	// Font Name (§17.3.2.26)
-	if (![(__bridge NSString *)CTFontCopyFamilyName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFamilyName(characterStyleFontAttribute)] && !(overrideMask & RKFontMixIgnoreFontName)) {
+	if (![(__bridge NSString *)CTFontCopyFamilyName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFamilyName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
 		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)],
 																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)],
 																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFamilyName(fontAttribute)],
@@ -48,7 +50,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	}
 	
 	// Font Size (§17.3.2.38/§17.3.2.39)
-	if (CTFontGetSize(fontAttribute) != CTFontGetSize(characterStyleFontAttribute) && !(overrideMask & RKFontMixIgnoreFontSize)) {
+	if (CTFontGetSize(fontAttribute) != CTFontGetSize(characterStyleFontAttribute) && !(ignoreMask & RKFontMixIgnoreFontSize)) {
 		NSUInteger wordFontSize = [self wordFontSizeFromPointSize: CTFontGetSize(fontAttribute)];
 		NSXMLElement *sizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:wordFontSize]]];
 		NSXMLElement *complexSizeElement = [NSXMLElement elementWithName:RKDOCXFontAttributeComplexScriptFontSizeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:wordFontSize]]];
@@ -56,7 +58,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	}
 	
 	// Bold Trait (§17.3.2.1)
-	if ((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait) && !(overrideMask & RKFontMixIgnoreBoldTrait)) {
+	if ((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait) && !(ignoreMask & RKFontMixIgnoreBoldTrait)) {
 		if (traits & kCTFontBoldTrait)
 			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeBoldElementName]];
 		else
@@ -64,7 +66,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	}
 	
 	// Italic Trait (§17.3.2.16)
-	if ((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait) && !(overrideMask & RKFontMixIgnoreItalicTrait)) {
+	if ((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait) && !(ignoreMask & RKFontMixIgnoreItalicTrait)) {
 		if (traits & kCTFontItalicTrait)
 			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeItalicElementName]];
 		else
@@ -87,7 +89,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 {
 	if (mask == 0)
 		return overridingFont;
-	else if (mask == RKFontOverrideAll)
+	else if (mask == RKFontMixIgnoreAll)
 		return baseFont;
 	
 	CTFontRef baseFontRef = (__bridge CTFontRef)baseFont;
