@@ -40,10 +40,10 @@
 		79C43C781B0C863B00471132 /* ZZArchiveEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D899CFD9162C608300112F49 /* ZZArchiveEntry.m */; };
 		79C43C791B0C863B00471132 /* ZZError.m in Sources */ = {isa = PBXBuildFile; fileRef = D8366ACD16B1F8B400BC012E /* ZZError.m */; };
 		79C43CBF1B0C873100471132 /* zipzap.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B0FD611640A6B000727A70 /* zipzap.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		79C43CC01B0C873100471132 /* ZZArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFDA162C608300112F49 /* ZZArchive.h */; };
-		79C43CC11B0C873100471132 /* ZZArchiveEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFD8162C608300112F49 /* ZZArchiveEntry.h */; };
-		79C43CC21B0C873100471132 /* ZZConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; };
-		79C43CC31B0C873100471132 /* ZZError.h in Headers */ = {isa = PBXBuildFile; fileRef = D8366ACC16B1F8B400BC012E /* ZZError.h */; };
+		79C43CC01B0C873100471132 /* ZZArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFDA162C608300112F49 /* ZZArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		79C43CC11B0C873100471132 /* ZZArchiveEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFD8162C608300112F49 /* ZZArchiveEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		79C43CC21B0C873100471132 /* ZZConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		79C43CC31B0C873100471132 /* ZZError.h in Headers */ = {isa = PBXBuildFile; fileRef = D8366ACC16B1F8B400BC012E /* ZZError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79C43CC51B0C873C00471132 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C43CC41B0C873C00471132 /* CoreGraphics.framework */; };
 		79C43CC71B0C874100471132 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C43CC61B0C874100471132 /* libz.dylib */; };
 		79C43CC81B0C874700471132 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D899CF8A162C5EC100112F49 /* Foundation.framework */; };
