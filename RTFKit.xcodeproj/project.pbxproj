@@ -298,7 +298,6 @@
 		790B5C6F1B0B970B004193F8 /* UIColor+RKColorExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E49EDD1AD51D91004E7973 /* UIColor+RKColorExtensions.h */; };
 		790B5C701B0B970B004193F8 /* UIColor+RKColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E49EDE1AD51D91004E7973 /* UIColor+RKColorExtensions.m */; };
 		790B5C711B0B970B004193F8 /* NSColor+RKColorExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E49EE31AD520C3004E7973 /* NSColor+RKColorExtensions.h */; };
-		790B5C721B0B970B004193F8 /* NSColor+RKColorExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E49EE41AD520C3004E7973 /* NSColor+RKColorExtensions.m */; };
 		790B5C731B0B970B004193F8 /* RKImage.h in Headers */ = {isa = PBXBuildFile; fileRef = A013B4331ADE63FE00E45B4F /* RKImage.h */; };
 		790B5C741B0B970B004193F8 /* NSString+ParsingConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = A067B6CF1AE8F049000D0B58 /* NSString+ParsingConvenience.h */; };
 		790B5C751B0B970B004193F8 /* NSString+ParsingConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = A067B6D01AE8F049000D0B58 /* NSString+ParsingConvenience.m */; };
@@ -2704,7 +2703,6 @@
 				790B5B881B0B96ED004193F8 /* RKStyleNameAttributeWriter.m in Sources */,
 				790B5B751B0B96ED004193F8 /* RKPlaceholder.m in Sources */,
 				790B5BCC1B0B96ED004193F8 /* RKParagraphStyleWrapper.m in Sources */,
-				790B5C721B0B970B004193F8 /* NSColor+RKColorExtensions.m in Sources */,
 				790B5C621B0B970B004193F8 /* NSDictionary+FlagSerialization.m in Sources */,
 				790B5C431B0B970B004193F8 /* NSAttributedString+RKPersistence.m in Sources */,
 				790B5BE41B0B96ED004193F8 /* RKDOCXLinkWriter.m in Sources */,
