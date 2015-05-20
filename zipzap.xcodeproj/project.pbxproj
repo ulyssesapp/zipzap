@@ -180,7 +180,7 @@
 		5B50393218707C36002B2B12 /* ZZStandardDecryptInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZZStandardDecryptInputStream.h; sourceTree = "<group>"; };
 		5BC58CA418745940002FAE04 /* large-test-encrypted-standard.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "large-test-encrypted-standard.zip"; sourceTree = "<group>"; };
 		5BC58CA518745940002FAE04 /* small-test-encrypted-standard.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "small-test-encrypted-standard.zip"; sourceTree = "<group>"; };
-		79C43C451B0C858B00471132 /* zipzap_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = zipzap_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		79C43C451B0C858B00471132 /* zipzap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = zipzap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C43C481B0C858B00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79C43C491B0C858B00471132 /* zipzap-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "zipzap-ios.h"; sourceTree = "<group>"; };
 		79C43C551B0C858B00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 		79C43C631B0C860300471132 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		79C43C651B0C860800471132 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		79C43C671B0C860E00471132 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
-		79C43CA61B0C870A00471132 /* zipzap_mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = zipzap_mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		79C43CA61B0C870A00471132 /* zipzap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = zipzap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C43CA91B0C870A00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79C43CAA1B0C870A00471132 /* zipzap-mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "zipzap-mac.h"; sourceTree = "<group>"; };
 		79C43CB61B0C870A00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -479,8 +479,8 @@
 				D899CF82162C5EC100112F49 /* libzipzap.a */,
 				D899CF96162C5EC100112F49 /* zipzapTests.xctest */,
 				D899CFB0162C5EEB00112F49 /* libzipzap.a */,
-				79C43C451B0C858B00471132 /* zipzap_ios.framework */,
-				79C43CA61B0C870A00471132 /* zipzap_mac.framework */,
+				79C43C451B0C858B00471132 /* zipzap.framework */,
+				79C43CA61B0C870A00471132 /* zipzap.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -626,7 +626,7 @@
 			);
 			name = "zipzap-ios";
 			productName = "zipzap-ios";
-			productReference = 79C43C451B0C858B00471132 /* zipzap_ios.framework */;
+			productReference = 79C43C451B0C858B00471132 /* zipzap.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		79C43CA51B0C870A00471132 /* zipzap-mac */ = {
@@ -644,7 +644,7 @@
 			);
 			name = "zipzap-mac";
 			productName = "zipzap-mac";
-			productReference = 79C43CA61B0C870A00471132 /* zipzap_mac.framework */;
+			productReference = 79C43CA61B0C870A00471132 /* zipzap.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		D899CF81162C5EC100112F49 /* zipzap (OS X) */ = {
@@ -968,7 +968,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = zipzap_ios;
+				PRODUCT_NAME = zipzap;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1018,7 +1018,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = zipzap_ios;
+				PRODUCT_NAME = zipzap;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1076,7 +1076,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = zipzap_mac;
+				PRODUCT_NAME = zipzap;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1126,7 +1126,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = zipzap_mac;
+				PRODUCT_NAME = zipzap;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
