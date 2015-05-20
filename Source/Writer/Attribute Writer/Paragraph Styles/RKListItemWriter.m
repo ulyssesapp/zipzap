@@ -61,8 +61,8 @@
 			
 		// Setup new NSTextTabs instances for the given tabs stops
 		NSMutableArray *newTabStops = [NSMutableArray new];
-		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:enumeratorLocation alignment:kCTTextAlignmentLeft]];
-		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:textLocation alignment:kCTTextAlignmentLeft]];
+		[newTabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:enumeratorLocation options:nil]];
+		[newTabStops addObject: [[NSTextTab alloc]initWithTextAlignment:RKTextAlignmentLeft location:textLocation options:nil]];
 
 		// If there are already tab stops, take only tab stops at a higher location than the first text
 		for (NSTextTab *tab in paragraphStyle.tabStops) {
