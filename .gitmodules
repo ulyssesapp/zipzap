@@ -1,0 +1,3 @@
+[submodule "Libraries/KissXML"]
+	path = Libraries/KissXML
+	url = https://github.com/macguru/KissXML
