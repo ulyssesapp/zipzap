@@ -677,6 +677,41 @@
 			remoteGlobalIDString = 790B5B541B0B96B9004193F8;
 			remoteInfo = "RTFKit iOS";
 		};
+		79A15B2B1B0C7827000E767C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B251B0C7827000E767C /* zipzap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D899CF82162C5EC100112F49;
+			remoteInfo = "zipzap (OS X)";
+		};
+		79A15B2D1B0C7827000E767C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B251B0C7827000E767C /* zipzap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D899CFB0162C5EEB00112F49;
+			remoteInfo = "zipzap (iOS)";
+		};
+		79A15B2F1B0C7827000E767C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B251B0C7827000E767C /* zipzap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D899CF96162C5EC100112F49;
+			remoteInfo = zipzapTests;
+		};
+		79A15B361B0C782A000E767C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 40E53ED31729F68F001664EC;
+			remoteInfo = KissXML;
+		};
+		79A15B381B0C782A000E767C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 40E53EE41729F68F001664EC;
+			remoteInfo = KissXMLTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -875,6 +910,8 @@
 		79A15A891B0C725D000E767C /* libKissXML.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libKissXML.a; path = "Libraries/KissXML/build/Debug-iphoneos/libKissXML.a"; sourceTree = "<group>"; };
 		79A15A8C1B0C726D000E767C /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		79A15A8E1B0C727A000E767C /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		79A15B251B0C7827000E767C /* zipzap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = zipzap.xcodeproj; path = Zipzap/zipzap.xcodeproj; sourceTree = "<group>"; };
+		79A15B311B0C782A000E767C /* KissXML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KissXML.xcodeproj; path = KissXML/KissXML.xcodeproj; sourceTree = "<group>"; };
 		79A3597E14D024A80076A5F7 /* Test Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Test Data"; sourceTree = "<group>"; };
 		79A55276152C607B008EADAB /* RKListEnumeratorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListEnumeratorTest.h; path = Utils/RKListEnumeratorTest.h; sourceTree = "<group>"; };
 		79A55277152C607B008EADAB /* RKListEnumeratorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListEnumeratorTest.m; path = Utils/RKListEnumeratorTest.m; sourceTree = "<group>"; };
@@ -1162,6 +1199,7 @@
 				50317D6F14C4953800F23C04 /* Tests */,
 				50317D3914C494C800F23C04 /* Frameworks */,
 				50317D3814C494C800F23C04 /* Products */,
+				79A15A9D1B0C781A000E767C /* Libraries */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1655,6 +1693,34 @@
 				790AD8C615BAD0160011E40E /* CoreText.framework */,
 			);
 			name = iOS;
+			sourceTree = "<group>";
+		};
+		79A15A9D1B0C781A000E767C /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				79A15B311B0C782A000E767C /* KissXML.xcodeproj */,
+				79A15B251B0C7827000E767C /* zipzap.xcodeproj */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		79A15B261B0C7827000E767C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79A15B2C1B0C7827000E767C /* libzipzap.a */,
+				79A15B2E1B0C7827000E767C /* libzipzap.a */,
+				79A15B301B0C7827000E767C /* zipzapTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79A15B321B0C782A000E767C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79A15B371B0C782A000E767C /* libKissXML.a */,
+				79A15B391B0C782A000E767C /* KissXMLTests.octest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		79A359A214D1A1D10076A5F7 /* Utils */ = {
@@ -2425,10 +2491,21 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				English,
 			);
 			mainGroup = 50317D2C14C494C800F23C04;
 			productRefGroup = 50317D3814C494C800F23C04 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 79A15B321B0C782A000E767C /* Products */;
+					ProjectRef = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+				},
+				{
+					ProductGroup = 79A15B261B0C7827000E767C /* Products */;
+					ProjectRef = 79A15B251B0C7827000E767C /* zipzap.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				50317D3614C494C800F23C04 /* RTFKit */,
@@ -2438,6 +2515,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		79A15B2C1B0C7827000E767C /* libzipzap.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libzipzap.a;
+			remoteRef = 79A15B2B1B0C7827000E767C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79A15B2E1B0C7827000E767C /* libzipzap.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libzipzap.a;
+			remoteRef = 79A15B2D1B0C7827000E767C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79A15B301B0C7827000E767C /* zipzapTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = zipzapTests.xctest;
+			remoteRef = 79A15B2F1B0C7827000E767C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79A15B371B0C782A000E767C /* libKissXML.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKissXML.a;
+			remoteRef = 79A15B361B0C782A000E767C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79A15B391B0C782A000E767C /* KissXMLTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KissXMLTests.octest;
+			remoteRef = 79A15B381B0C782A000E767C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		50317D4814C494C800F23C04 /* Resources */ = {
