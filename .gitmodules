@@ -1,3 +1,6 @@
 [submodule "Libraries/KissXML"]
 	path = Libraries/KissXML
 	url = https://github.com/macguru/KissXML
+[submodule "Libraries/Zipzap"]
+	path = Libraries/Zipzap
+	url = git://github.com/macguru/zipzap.git
