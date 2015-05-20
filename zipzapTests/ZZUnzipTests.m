@@ -106,9 +106,9 @@
 		
 		XCTAssertTrue([nextEntry check:nil], @"zipFile.entries[%lu] should check correctly.", (unsigned long)index);
 		
-		NSDateComponents* dateComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]
-											components: NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-											| NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit
+		NSDateComponents* dateComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]
+											components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
+											| NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond
 											fromDate:nextEntry.lastModified];
 		XCTAssertEqual(dateComponents.year,
 					   [[nextInfo[7] substringWithRange:NSMakeRange(0, 4)] integerValue],

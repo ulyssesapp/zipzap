@@ -163,9 +163,9 @@
 							 @"Zip entry #%lu compression method must match new entry compressed.",
 							 (unsigned long)index);
 		
-		NSDateComponents* dateComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar]
-											components: NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit
-											| NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit
+		NSDateComponents* dateComponents = [[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]
+											components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
+											| NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond
 											fromDate:nextNewEntry[@"lastModified"]];
 		XCTAssertEqual(dateComponents.year,
 					   [[nextZipInfo[7] substringWithRange:NSMakeRange(0, 4)] integerValue],
