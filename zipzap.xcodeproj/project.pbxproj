@@ -14,7 +14,6 @@
 		5BC58CA618745940002FAE04 /* large-test-encrypted-standard.zip in Resources */ = {isa = PBXBuildFile; fileRef = 5BC58CA418745940002FAE04 /* large-test-encrypted-standard.zip */; };
 		5BC58CA718745940002FAE04 /* small-test-encrypted-standard.zip in Resources */ = {isa = PBXBuildFile; fileRef = 5BC58CA518745940002FAE04 /* small-test-encrypted-standard.zip */; };
 		5BC58CAC18745D22002FAE04 /* ZZStandardCryptoEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B50392E187069E4002B2B12 /* ZZStandardCryptoEngine.cpp */; };
-		79C43C4A1B0C858B00471132 /* zipzap-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C43C491B0C858B00471132 /* zipzap-ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79C43C5E1B0C85F700471132 /* zipzap.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B0FD611640A6B000727A70 /* zipzap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79C43C5F1B0C85F700471132 /* ZZArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFDA162C608300112F49 /* ZZArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79C43C601B0C85F700471132 /* ZZArchiveEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFD8162C608300112F49 /* ZZArchiveEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -40,12 +39,11 @@
 		79C43C771B0C863B00471132 /* ZZArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = D899CFDB162C608300112F49 /* ZZArchive.mm */; };
 		79C43C781B0C863B00471132 /* ZZArchiveEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D899CFD9162C608300112F49 /* ZZArchiveEntry.m */; };
 		79C43C791B0C863B00471132 /* ZZError.m in Sources */ = {isa = PBXBuildFile; fileRef = D8366ACD16B1F8B400BC012E /* ZZError.m */; };
-		79C43CAB1B0C870A00471132 /* zipzap-mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 79C43CAA1B0C870A00471132 /* zipzap-mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79C43CBF1B0C873100471132 /* zipzap.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B0FD611640A6B000727A70 /* zipzap.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		79C43CC01B0C873100471132 /* ZZArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFDA162C608300112F49 /* ZZArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		79C43CC11B0C873100471132 /* ZZArchiveEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFD8162C608300112F49 /* ZZArchiveEntry.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		79C43CC21B0C873100471132 /* ZZConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		79C43CC31B0C873100471132 /* ZZError.h in Headers */ = {isa = PBXBuildFile; fileRef = D8366ACC16B1F8B400BC012E /* ZZError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		79C43CC01B0C873100471132 /* ZZArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFDA162C608300112F49 /* ZZArchive.h */; };
+		79C43CC11B0C873100471132 /* ZZArchiveEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = D899CFD8162C608300112F49 /* ZZArchiveEntry.h */; };
+		79C43CC21B0C873100471132 /* ZZConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B50392518706368002B2B12 /* ZZConstants.h */; };
+		79C43CC31B0C873100471132 /* ZZError.h in Headers */ = {isa = PBXBuildFile; fileRef = D8366ACC16B1F8B400BC012E /* ZZError.h */; };
 		79C43CC51B0C873C00471132 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C43CC41B0C873C00471132 /* CoreGraphics.framework */; };
 		79C43CC71B0C874100471132 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C43CC61B0C874100471132 /* libz.dylib */; };
 		79C43CC81B0C874700471132 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D899CF8A162C5EC100112F49 /* Foundation.framework */; };
@@ -182,17 +180,11 @@
 		5BC58CA518745940002FAE04 /* small-test-encrypted-standard.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "small-test-encrypted-standard.zip"; sourceTree = "<group>"; };
 		79C43C451B0C858B00471132 /* zipzap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = zipzap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C43C481B0C858B00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		79C43C491B0C858B00471132 /* zipzap-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "zipzap-ios.h"; sourceTree = "<group>"; };
-		79C43C551B0C858B00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		79C43C561B0C858B00471132 /* zipzap_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = zipzap_iosTests.m; sourceTree = "<group>"; };
 		79C43C631B0C860300471132 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		79C43C651B0C860800471132 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		79C43C671B0C860E00471132 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		79C43CA61B0C870A00471132 /* zipzap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = zipzap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C43CA91B0C870A00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		79C43CAA1B0C870A00471132 /* zipzap-mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "zipzap-mac.h"; sourceTree = "<group>"; };
-		79C43CB61B0C870A00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		79C43CB71B0C870A00471132 /* zipzap_macTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = zipzap_macTests.m; sourceTree = "<group>"; };
 		79C43CC41B0C873C00471132 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		79C43CC61B0C874100471132 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D804E4C8187645FE00289404 /* ZZDataProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZDataProvider.h; sourceTree = "<group>"; };
@@ -389,7 +381,6 @@
 		79C43C461B0C858B00471132 /* zipzap-ios */ = {
 			isa = PBXGroup;
 			children = (
-				79C43C491B0C858B00471132 /* zipzap-ios.h */,
 				79C43C471B0C858B00471132 /* Supporting Files */,
 			);
 			path = "zipzap-ios";
@@ -403,27 +394,9 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		79C43C531B0C858B00471132 /* zipzap-iosTests */ = {
-			isa = PBXGroup;
-			children = (
-				79C43C561B0C858B00471132 /* zipzap_iosTests.m */,
-				79C43C541B0C858B00471132 /* Supporting Files */,
-			);
-			path = "zipzap-iosTests";
-			sourceTree = "<group>";
-		};
-		79C43C541B0C858B00471132 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				79C43C551B0C858B00471132 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		79C43CA71B0C870A00471132 /* zipzap-mac */ = {
 			isa = PBXGroup;
 			children = (
-				79C43CAA1B0C870A00471132 /* zipzap-mac.h */,
 				79C43CA81B0C870A00471132 /* Supporting Files */,
 			);
 			path = "zipzap-mac";
@@ -437,32 +410,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		79C43CB41B0C870A00471132 /* zipzap-macTests */ = {
-			isa = PBXGroup;
-			children = (
-				79C43CB71B0C870A00471132 /* zipzap_macTests.m */,
-				79C43CB51B0C870A00471132 /* Supporting Files */,
-			);
-			path = "zipzap-macTests";
-			sourceTree = "<group>";
-		};
-		79C43CB51B0C870A00471132 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				79C43CB61B0C870A00471132 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		D899CF75162C5E8400112F49 = {
 			isa = PBXGroup;
 			children = (
 				D899CF8B162C5EC100112F49 /* zipzap */,
 				D899CF9D162C5EC100112F49 /* zipzapTests */,
 				79C43C461B0C858B00471132 /* zipzap-ios */,
-				79C43C531B0C858B00471132 /* zipzap-iosTests */,
 				79C43CA71B0C870A00471132 /* zipzap-mac */,
-				79C43CB41B0C870A00471132 /* zipzap-macTests */,
 				D899CF84162C5EC100112F49 /* Frameworks */,
 				D899CF83162C5EC100112F49 /* Products */,
 				D8A32673163C2240008606AC /* LICENSE.text */,
@@ -556,7 +510,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79C43C4A1B0C858B00471132 /* zipzap-ios.h in Headers */,
 				79C43C5E1B0C85F700471132 /* zipzap.h in Headers */,
 				79C43C5F1B0C85F700471132 /* ZZArchive.h in Headers */,
 				79C43C601B0C85F700471132 /* ZZArchiveEntry.h in Headers */,
@@ -569,7 +522,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79C43CAB1B0C870A00471132 /* zipzap-mac.h in Headers */,
 				79C43CBF1B0C873100471132 /* zipzap.h in Headers */,
 				79C43CC01B0C873100471132 /* ZZArchive.h in Headers */,
 				79C43CC11B0C873100471132 /* ZZArchiveEntry.h in Headers */,
@@ -927,7 +879,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -942,7 +893,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -983,7 +933,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -998,7 +947,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1034,7 +982,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1049,7 +997,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1090,7 +1037,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1105,7 +1052,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
