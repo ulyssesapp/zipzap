@@ -24,7 +24,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1000285B045591386EA6AF8472752EBBC3EB0618</key>
-		<string>../../../..</string>
+		<string>../../..</string>
 		<key>70A8537565E8EBD1B9D364933832E742DD9D1D11</key>
 		<string>../../../RTFKit/Libraries/KissXML</string>
 		<key>82DF43EF5CA016D15C41E0AF1AF686E9973475B7</key>
@@ -46,7 +46,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>1000285B045591386EA6AF8472752EBBC3EB0618</string>
 			<key>IDESourceControlWCCName</key>
-			<string>..</string>
+			<string></string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
