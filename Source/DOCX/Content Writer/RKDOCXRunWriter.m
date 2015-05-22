@@ -58,7 +58,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	});
 	
 	NSMutableArray *runElements = [NSMutableArray new];
-	[attributedString.string enumerateTokensWithDelimiters:characterSet	inRange:range usingBlock:^(NSRange tokenRange, unichar delimiter) {
+	[attributedString.string rk_enumerateTokensWithDelimiters:characterSet	inRange:range usingBlock:^(NSRange tokenRange, unichar delimiter) {
 		// Add text run, if any
 		if (tokenRange.length > 0)
 			[runElements addObject: [self runElementForAttributes:attributes contentElement:[self textElementWithStringValue: [attributedString.string substringWithRange: tokenRange]] usingContext:context]];

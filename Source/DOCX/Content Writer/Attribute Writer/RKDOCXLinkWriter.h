@@ -15,7 +15,8 @@
 
 /*!
  @abstract Converts the passed link attachment to a hyperlink element.
+ @discussion linkAttribute must be either of type NSURL or NSString.
  */
-+ (NSXMLElement *)linkElementForAttribute:(NSURL *)linkAttribute usingContext:(RKDOCXConversionContext *)context;
++ (NSXMLElement *)linkElementForAttribute:(id)linkAttribute usingContext:(RKDOCXConversionContext *)context;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "RKDOCXImageWriter.h"
 
+#import "RKConversion.h"
 #import "RKImage.h"
 #import "RKDOCXPartWriter.h"
 #import "RKDOCXRunWriter.h"
@@ -72,10 +73,14 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
 	
 	// Relationship Handling
-	NSString *filename = [RKDOCXPartWriter packagePathForFilename:imageAttachment.imageFile.preferredFilename folder:RKDOCXMediaFolder];
+	NSString *filename = [RKDOCXPartWriter packagePathForFilename:[imageAttachment.imageFile.preferredFilename sanitizedFilenameForRTFD] folder:RKDOCXMediaFolder];
+	
+	// Word does not support spaces in filenames.
+	filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+	
 	[context addDocumentPartWithData:imageAttachment.imageFile.regularFileContents filename:[RKDOCXPartWriter packagePathForFilename:filename folder:RKDOCXWordFolder] MIMEType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension]];
-	NSString *identifier = @([context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]).stringValue;
-	NSString *relationshipID = [@"rId" stringByAppendingString: identifier];
+	NSString *identifier = [context nextImageId];
+	NSString *relationshipID = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]];
 	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];
 	NSArray *nonVisualPropertyAttributes = @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier], [NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename]];
 	NSArray *documentPropertyAttributes = @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier],

@@ -10,7 +10,7 @@
 
 @implementation NSString (ParsingConvenience)
 
-- (void)enumerateTokensWithDelimiters:(NSCharacterSet *)set inRange:(NSRange)range usingBlock:(void(^)(NSRange tokenRange, unichar delimiter))block
+- (void)rk_enumerateTokensWithDelimiters:(NSCharacterSet *)set inRange:(NSRange)range usingBlock:(void(^)(NSRange tokenRange, unichar delimiter))block
 {
 	NSParameterAssert(block != nil);
 	

@@ -63,6 +63,11 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (void)addDocumentPartWithData:(NSData *)part filename:(NSString *)filename MIMEType:(NSString *)MIMEType;
 
+/*!
+ @abstract Returns the next unique ID for embedded images.
+ @discussion The id has no special use, it just needs to be unique.
+ */
+- (NSString *)nextImageId;
 
 #pragma mark - Footnotes and Endnotes
 

@@ -15,11 +15,11 @@
 	NSArray *generatedEntries = [[ZZArchive archiveWithData: generated] entries];
 	NSArray *expectedEntries = [[ZZArchive archiveWithData: expected] entries];
 	
-	generatedEntries = [generatedEntries sortedArrayUsingComparator:^NSComparisonResult(ZZArchiveEntry *obj1, ZZArchiveEntry *obj2) {
+	generatedEntries = [generatedEntries sortedArrayUsingComparator: ^NSComparisonResult(ZZArchiveEntry *obj1, ZZArchiveEntry *obj2) {
 		return [obj1.fileName compare: obj2.fileName];
 	}];
 	
-	expectedEntries = [expectedEntries sortedArrayUsingComparator:^NSComparisonResult(ZZArchiveEntry *obj1, ZZArchiveEntry *obj2) {
+	expectedEntries = [expectedEntries sortedArrayUsingComparator: ^NSComparisonResult(ZZArchiveEntry *obj1, ZZArchiveEntry *obj2) {
 		return [obj1.fileName compare: obj2.fileName];
 	}];
 	

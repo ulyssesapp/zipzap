@@ -13,6 +13,6 @@
  @param tokenRange Range of the next substring without delimiter.
  @param delimiter Character found after the end of tokenRange. Is NULL if no delimiter was found.
  */
-- (void)enumerateTokensWithDelimiters:(NSCharacterSet *)set inRange:(NSRange)range usingBlock:(void(^)(NSRange tokenRange, unichar delimiter))block;
+- (void)rk_enumerateTokensWithDelimiters:(NSCharacterSet *)set inRange:(NSRange)range usingBlock:(void(^)(NSRange tokenRange, unichar delimiter))block;
 
 @end

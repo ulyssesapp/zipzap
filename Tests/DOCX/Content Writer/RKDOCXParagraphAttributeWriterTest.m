@@ -229,4 +229,14 @@
 	[self assertDOCX:converted withTestDocument:@"linebreaks"];
 }
 
+- (void)testEmptyParagraphs
+{
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"There are three empty paragraphs below this one.\n\n\n\nAgain, there should be three empty paragraphs above this one."];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"emptyparagraphs"];
+}
+
 @end

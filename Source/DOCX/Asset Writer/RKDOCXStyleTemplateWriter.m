@@ -44,7 +44,7 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 
 + (void)buildStyleTemplatesUsingContext:(RKDOCXConversionContext *)context
 {
-	if (!context.document.characterStyles && !context.document.paragraphStyles)
+	if (!context.document.characterStyles.count && !context.document.paragraphStyles.count)
 		return;
 	
 	// Namespaces

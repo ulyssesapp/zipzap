@@ -18,6 +18,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 {
 	NSMutableDictionary *_files;
 	NSMutableDictionary *_styleCache;
+	NSUInteger _imageID;
 }
 @end
 
@@ -30,6 +31,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (self) {
 		_files = [NSMutableDictionary new];
 		_styleCache = [NSMutableDictionary new];
+		_imageID = 0;
 		_document = document;
 		_usedXMLTypes = [NSDictionary new];
 		_usedMIMETypes = [NSDictionary new];
@@ -119,7 +121,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (void)addDocumentPartWithData:(NSData *)part filename:(NSString *)filename MIMEType:(NSString *)MIMEType
 {
-	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
+	// Already added: skip the file (e.g. reused image).
+	if (_files[filename])
+		return;
 	
 	[self addContentType:MIMEType forPathExtension:filename.pathExtension];
 	
@@ -141,6 +145,11 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary *newMIMETypes = [_usedMIMETypes mutableCopy];
 	newMIMETypes[extension] = MIMEType;
 	_usedMIMETypes = newMIMETypes;
+}
+
+- (NSString *)nextImageId
+{
+	return @(++_imageID).stringValue;
 }
 
 
