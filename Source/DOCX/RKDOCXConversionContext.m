@@ -19,6 +19,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary *_files;
 	NSMutableDictionary *_styleCache;
 	NSUInteger _imageID;
+	NSMutableDictionary *_documentRelationships;
+	NSMutableDictionary *_endnoteRelationships;
+	NSMutableDictionary *_footnoteRelationships;
 }
 @end
 
@@ -41,7 +44,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
 		_listStyles = [NSDictionary new];
-		_documentRelationships = [NSDictionary new];
+		_documentRelationships = [NSMutableDictionary new];
+		_endnoteRelationships = [NSMutableDictionary new];
+		_footnoteRelationships = [NSMutableDictionary new];
 		_packageRelationships = [NSDictionary new];
 	}
 	
@@ -210,26 +215,35 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 #pragma mark - Document relationships
 
-- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
+- (NSUInteger)indexForDocumentRelationshipWithTarget:(NSString *)target andType:(NSString *)type
+{
+	return [self indexForRelationshipWithTarget:target andType:type inRelationships:_documentRelationships];
+}
+
+- (NSUInteger)indexForEndnoteRelationshipWithTarget:(NSString *)target andType:(NSString *)type
+{
+	return [self indexForRelationshipWithTarget:target andType:type inRelationships:_endnoteRelationships];
+}
+
+- (NSUInteger)indexForFootnoteRelationshipWithTarget:(NSString *)target andType:(NSString *)type
+{
+	return [self indexForRelationshipWithTarget:target andType:type inRelationships:_footnoteRelationships];
+}
+
+- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type inRelationships:(NSMutableDictionary *)relationships
 {
 	NSUInteger index = 0;
 	
 	// Relationship exists
-	if (_documentRelationships[target]) {
-		index = [_documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName] unsignedIntegerValue];
+	if (relationships[target]) {
+		index = [relationships[target][RKDOCXConversionContextRelationshipIdentifierName] unsignedIntegerValue];
 		return index;
 	}
 	
 	// Create new relationship
-	index = _documentRelationships.count + 1;
-	NSMutableDictionary *newRelationships = [_documentRelationships mutableCopy];
-	[newRelationships addEntriesFromDictionary: @{
-												  target: @{
-														  RKDOCXConversionContextRelationshipTypeName: type,
-														  RKDOCXConversionContextRelationshipIdentifierName: @(index)
-														  }
-												  }];
-	_documentRelationships = newRelationships;
+	index = relationships.count + 1;
+	relationships[target] = @{RKDOCXConversionContextRelationshipTypeName: type,
+							  RKDOCXConversionContextRelationshipIdentifierName: @(index)};
 	
 	return index;
 }

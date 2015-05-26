@@ -23,9 +23,25 @@ NSString *RKDOCXLinkTargetAttributeName		= @"r:id";
 
 	NSAssert([linkAttribute isKindOfClass: NSURL.class] || [linkAttribute isKindOfClass: NSString.class], @"linkAttribute has invalid class type '%@'.", NSStringFromClass([linkAttribute class]));
 	
-	NSString *absoluteString = [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
+	NSString *target = [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
 	
-	NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:absoluteString andType:RKDOCXLinkRelationshipType]]];
+	NSUInteger targetIdentifier;
+	
+	switch (context.currentRelationshipContext) {
+		case RKDOCXMainDocumentContext:
+			targetIdentifier = [context indexForDocumentRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
+			break;
+			
+		case RKDOCXEndnoteContext:
+			targetIdentifier = [context indexForEndnoteRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
+			break;
+			
+		case RKDOCXFootnoteContext:
+			targetIdentifier = [context indexForFootnoteRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
+			break;
+	}
+	
+	NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", targetIdentifier]];
 	
 	return [NSXMLElement elementWithName:RKDOCXLinkHyperlinkElementName children:nil attributes:@[targetAttribute]];
 }

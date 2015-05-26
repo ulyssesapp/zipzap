@@ -105,7 +105,7 @@ NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 	if (context.document.twoSided)
 		[document.rootElement addChild: [NSXMLElement elementWithName: RKDOCXSettingsMirrorMarginsElementName]];
 	
-	[context indexForRelationshipWithTarget:RKDOCXSettingsFilename andType:RKDOCXSettingsRelationshipType];
+	[context indexForDocumentRelationshipWithTarget:RKDOCXSettingsFilename andType:RKDOCXSettingsRelationshipType];
 	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXSettingsFilename folder:RKDOCXWordFolder] contentType:RKDOCXSettingsContentType];
 }
 

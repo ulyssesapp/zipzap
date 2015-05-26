@@ -9,6 +9,9 @@
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXPartWriter.h"
 
+/*!
+ @abstract Specifies the type of endnote/footnote reference that should be created.
+ */
 extern NSString *RKDOCXReferenceTypeAttributeName;
 
 /*!

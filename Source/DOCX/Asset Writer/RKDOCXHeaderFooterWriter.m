@@ -49,7 +49,7 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 	
 	document.rootElement.children = [RKDOCXAttributedStringWriter processAttributedString:contentString usingContext:context];
 	
-	[context indexForRelationshipWithTarget:filename andType:relationshipType];
+	[context indexForDocumentRelationshipWithTarget:filename andType:relationshipType];
 	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:filename folder:RKDOCXWordFolder] contentType:contentType];
 }
 
