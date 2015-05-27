@@ -8,7 +8,6 @@
 
 #import "RKDOCXParagraphWriter.h"
 
-#import "RKDOCXAdditionalParagraphStyleWriter.h"
 #import "RKDOCXLinkWriter.h"
 #import "RKDOCXListItemWriter.h"
 #import "RKDOCXParagraphStyleWriter.h"
@@ -53,7 +52,6 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	
 	[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attributes usingContext:context]];
 	[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
-	[properties addObjectsFromArray: [RKDOCXAdditionalParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
 	
 	if (properties.count > 0)
 		return properties;

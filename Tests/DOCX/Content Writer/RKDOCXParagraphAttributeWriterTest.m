@@ -119,10 +119,11 @@
 - (void)testParagraphElementWithSpacingAttribute
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.lineSpacing = 15;
+	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	additionalParagraphStyle.baselineDistance = 15;
 	paragraphStyle.paragraphSpacingBefore = 48;
 	paragraphStyle.paragraphSpacing = 48;
-	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
+	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle, RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Spacing Test (Line Spacing: 15pt, Paragraph Spacing Before/After: 48pt): Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
