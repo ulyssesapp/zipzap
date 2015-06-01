@@ -26,11 +26,12 @@ NSString *RKDOCXPageBreakCharacterName	= @"\f";
 	
 	NSMutableArray *paragraphs = [NSMutableArray new];
 	
-	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs/*|NSStringEnumerationSubstringNotRequired*/ usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+	[attributedString.string enumerateSubstringsInRange:NSMakeRange(0, attributedString.length) options:NSStringEnumerationByParagraphs|NSStringEnumerationSubstringNotRequired usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
 		[attributedString.string rk_enumerateTokensWithDelimiters:pageBreakCharacterSet inRange:substringRange usingBlock:^(NSRange tokenRange, unichar delimiter) {
 			// Add paragraph, if any
 			if (tokenRange.length > 0)
 				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementFromAttributedString:attributedString inRange:tokenRange usingContext:context]];
+			// Add paragraph, if empty
 			else if (delimiter != '\f')
 				[paragraphs addObject: [RKDOCXParagraphWriter paragraphElementWithProperties:nil runElements:nil]];
 			

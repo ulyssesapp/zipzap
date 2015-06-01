@@ -19,6 +19,8 @@ NSString *RKDOCXRelationshipElementName					= @"Relationship";
 
 // Filenames
 NSString *RKDOCXDocumentRelationshipsFilename			= @"document.xml.rels";
+NSString *RKDOCXEndnotesRelationshipsFilename			= @"endnotes.xml.rels";
+NSString *RKDOCXFootnotesRelationshipsFilename			= @"footnotes.xml.rels";
 NSString *RKDOCXPackageRelationshipsFilename			= @".rels";
 
 NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
@@ -41,14 +43,43 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
+	[self buildRelationshipsOfType:RKDOCXMainDocumentContext UsingContext:context];
+	[self buildRelationshipsOfType:RKDOCXEndnoteContext UsingContext:context];
+	[self buildRelationshipsOfType:RKDOCXFootnoteContext UsingContext:context];
+}
+
++ (void)buildRelationshipsOfType:(RKDOCXProcessingContext)relationshipType UsingContext:(RKDOCXConversionContext *)context
+{
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
+	NSDictionary *relationships;
+	NSString *filename;
 	
-	// Relationships
-	for (NSString *target in context.documentRelationships) {
-		[self addRelationshipWithTarget:target type:context.documentRelationships[target][RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat:@"rId%@", context.documentRelationships[target][RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
+	switch (relationshipType) {
+		case RKDOCXMainDocumentContext:
+			relationships = context.documentRelationships;
+			filename = RKDOCXDocumentRelationshipsFilename;
+			break;
+			
+		case RKDOCXEndnoteContext:
+			relationships = context.endnoteRelationships;
+			filename = RKDOCXEndnotesRelationshipsFilename;
+			break;
+			
+		case RKDOCXFootnoteContext:
+			relationships = context.footnoteRelationships;
+			filename = RKDOCXFootnotesRelationshipsFilename;
+			break;
 	}
 	
-	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXDocumentRelationshipsFilename folder:RKDOCXWordRelsFolder] contentType:nil];
+	if (relationships.count == 0)
+		return;
+	
+	// Relationships
+	for (NSString *target in relationships) {
+		[self addRelationshipWithTarget:target type:relationships[target][RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat:@"rId%@", relationships[target][RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
+	}
+	
+	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:filename folder:RKDOCXWordRelsFolder] contentType:nil];
 }
 
 + (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement

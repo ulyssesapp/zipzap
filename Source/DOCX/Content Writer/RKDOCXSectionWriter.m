@@ -251,7 +251,7 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 	}
 	
 	NSXMLElement *referenceElement = [NSXMLElement elementWithName: referenceElementName];
-	NSString *rId = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:[RKDOCXHeaderFooterWriter filenameForPageElement:pageElement withIndex:index] andType:nil]];
+	NSString *rId = [NSString stringWithFormat: @"rId%lu", [context indexForDocumentRelationshipWithTarget:[RKDOCXHeaderFooterWriter filenameForPageElement:pageElement withIndex:index] andType:nil]];
 	[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionIdentifierAttributeName stringValue:rId]];
 	[referenceElement addAttribute: [NSXMLElement attributeWithName:RKDOCXSectionTypeAttributeName stringValue:typeAttribute]];
 	
