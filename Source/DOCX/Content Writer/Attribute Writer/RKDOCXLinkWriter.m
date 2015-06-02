@@ -28,15 +28,15 @@ NSString *RKDOCXLinkTargetAttributeName		= @"r:id";
 	NSUInteger targetIdentifier;
 	
 	switch (context.currentRelationshipContext) {
-		case RKDOCXMainDocumentContext:
+		case RKDOCXRelationshipDocumentSource:
 			targetIdentifier = [context indexForDocumentRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
 			break;
 			
-		case RKDOCXEndnoteContext:
+		case RKDOCXRelationshipEndnoteSource:
 			targetIdentifier = [context indexForEndnoteRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
 			break;
 			
-		case RKDOCXFootnoteContext:
+		case RKDOCXRelationshipFootnoteSource:
 			targetIdentifier = [context indexForFootnoteRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
 			break;
 	}

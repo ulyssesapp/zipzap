@@ -51,10 +51,6 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	//
-	// Paragraph Style
-	//
-	
 	// Base Writing Direction (§17.3.1.6)
 	if (paragraphStyleAttribute.baseWritingDirection != templateParagraphStyleAttribute.baseWritingDirection) {
 		NSXMLElement *baseWritingDirectionProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleBaseWritingDirectionElementName];
@@ -83,10 +79,6 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	NSArray *tabStopProperties = [self tabStopPropertiesForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute usingContext:context];
 	if (tabStopProperties)
 		[properties addObjectsFromArray: tabStopProperties];
-	
-	//
-	// Additional Paragraph Style
-	//
 	
 	// Keep With following (§17.3.1.15)
 	if (additionalParagraphStyle.keepWithFollowingParagraph != templateAdditionalParagraphStyle.keepWithFollowingParagraph) {

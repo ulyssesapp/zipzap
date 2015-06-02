@@ -152,7 +152,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	_usedMIMETypes = newMIMETypes;
 }
 
-- (NSString *)nextImageId
+- (NSString *)newImageId
 {
 	return @(++_imageID).stringValue;
 }

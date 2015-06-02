@@ -43,29 +43,29 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
-	[self buildRelationshipsOfType:RKDOCXMainDocumentContext UsingContext:context];
-	[self buildRelationshipsOfType:RKDOCXEndnoteContext UsingContext:context];
-	[self buildRelationshipsOfType:RKDOCXFootnoteContext UsingContext:context];
+	[self buildRelationshipsOfType:RKDOCXRelationshipDocumentSource usingContext:context];
+	[self buildRelationshipsOfType:RKDOCXRelationshipEndnoteSource usingContext:context];
+	[self buildRelationshipsOfType:RKDOCXRelationshipFootnoteSource usingContext:context];
 }
 
-+ (void)buildRelationshipsOfType:(RKDOCXProcessingContext)relationshipType UsingContext:(RKDOCXConversionContext *)context
++ (void)buildRelationshipsOfType:(RKDOCXRelationshipSource)relationshipType usingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
 	NSDictionary *relationships;
 	NSString *filename;
 	
 	switch (relationshipType) {
-		case RKDOCXMainDocumentContext:
+		case RKDOCXRelationshipDocumentSource:
 			relationships = context.documentRelationships;
 			filename = RKDOCXDocumentRelationshipsFilename;
 			break;
 			
-		case RKDOCXEndnoteContext:
+		case RKDOCXRelationshipEndnoteSource:
 			relationships = context.endnoteRelationships;
 			filename = RKDOCXEndnotesRelationshipsFilename;
 			break;
 			
-		case RKDOCXFootnoteContext:
+		case RKDOCXRelationshipFootnoteSource:
 			relationships = context.footnoteRelationships;
 			filename = RKDOCXFootnotesRelationshipsFilename;
 			break;
