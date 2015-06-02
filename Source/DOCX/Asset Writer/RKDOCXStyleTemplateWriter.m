@@ -82,11 +82,11 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:styleName]]];
 	
 	// In case of paragraph style
-	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context];
+	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:YES];
 	if (!isCharacterStyle && paragraphAttributes.count > 0)
 		[styleElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphPropertiesElementName children:paragraphAttributes attributes:nil]];
 	
-	NSArray *characterAttributes = [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context];
+	NSArray *characterAttributes = [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:YES];
 	if (characterAttributes.count > 0)
 		[styleElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:characterAttributes attributes:nil]];
 	

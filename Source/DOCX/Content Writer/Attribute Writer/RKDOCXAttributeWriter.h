@@ -24,6 +24,6 @@ extern NSString *RKDOCXAttributeWriterValueAttributeName;
 /*!
  @abstract Returns an array of XML elements containing the properties of a paragraph or run.
  */
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames;
 
 @end

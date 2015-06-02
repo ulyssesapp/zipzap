@@ -23,7 +23,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 + (NSXMLElement *)paragraphElementFromAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)paragraphRange usingContext:(RKDOCXConversionContext *)context
 {
 	NSArray *runElements = [self runElementsFromAttributedString:attributedString inRange:paragraphRange usingContext:context];
-	NSArray *propertyElements = [self propertyElementsForAttributes:[attributedString attributesAtIndex:paragraphRange.location effectiveRange:NULL] usingContext:context];
+	NSArray *propertyElements = [self propertyElementsForAttributes:[attributedString attributesAtIndex:paragraphRange.location effectiveRange:NULL] usingContext:context shouldIgnoreStyleNames:NO];
 	
 	return [self paragraphElementWithProperties:propertyElements runElements:runElements];
 }
@@ -42,16 +42,18 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:(paragraphChildren.count != 0) ? paragraphChildren : nil attributes:nil];
 }
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter paragraphStyleReferenceElementForAttributes:attributes usingContext:context];
-	if (styleReferenceElement)
-		[properties addObject: styleReferenceElement];
+	if (!ignoreStyleNames) {
+		NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter paragraphStyleReferenceElementForAttributes:attributes usingContext:context];
+		if (styleReferenceElement)
+			[properties addObject: styleReferenceElement];
+	}
 	
-	[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attributes usingContext:context]];
-	[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context]];
+	[properties addObjectsFromArray: [RKDOCXListItemWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames]];
+	[properties addObjectsFromArray: [RKDOCXParagraphStyleWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames]];
 	
 	if (properties.count > 0)
 		return properties;

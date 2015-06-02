@@ -77,7 +77,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
 	NSArray *properties;
 	if (attributes && context)
-		properties = [self propertyElementsForAttributes:attributes usingContext:context];
+		properties = [self propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:NO];
 	
 	if (properties.count) {
 		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
@@ -89,19 +89,21 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	return runElement;
 }
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter characterStyleReferenceElementForAttributes:attributes usingContext:context];
-	if (styleReferenceElement)
-		[properties addObject: styleReferenceElement];
+	if (!ignoreStyleNames) {
+		NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter characterStyleReferenceElementForAttributes:attributes usingContext:context];
+		if (styleReferenceElement)
+			[properties addObject: styleReferenceElement];
+	}
 	
-	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
+	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
-	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
+	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	

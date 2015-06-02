@@ -22,7 +22,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 
 @implementation RKDOCXFontAttributesWriter
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	CTFontRef fontAttribute = (__bridge CTFontRef)attributes[RKFontAttributeName];
 	NSNumber *ignoreAttribute = attributes[RKFontMixAttributeName];
@@ -36,8 +36,8 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	NSUInteger traits = CTFontGetSymbolicTraits(fontAttribute);
 	
 	// Character style for comparison
-	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
-	CTFontRef characterStyleFontAttribute = (__bridge CTFontRef)characterStyle[RKFontAttributeName];
+	NSDictionary *characterStyle = !ignoreStyleNames ? [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]]: nil;
+	CTFontRef characterStyleFontAttribute = !ignoreStyleNames ? (__bridge CTFontRef)characterStyle[RKFontAttributeName] : NULL;
 	NSUInteger styleTraits = CTFontGetSymbolicTraits(characterStyleFontAttribute);
 	
 	// Font Name (§17.3.2.26)

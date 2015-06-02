@@ -16,7 +16,7 @@ NSString *RKDOCXListItemLevelElementName				= @"w:ilvl";
 
 @implementation RKDOCXListItemWriter
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	RKListItem *listItem = attributes[RKListItemAttributeName];
 	

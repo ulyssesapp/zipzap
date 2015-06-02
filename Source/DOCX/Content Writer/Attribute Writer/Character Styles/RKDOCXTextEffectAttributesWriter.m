@@ -27,48 +27,48 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 
 @implementation RKDOCXTextEffectAttributesWriter
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Font color (§17.3.2.6)
-	NSXMLElement *foregroundColorProperty = [self foregroundColorPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *foregroundColorProperty = [self foregroundColorPropertyForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (foregroundColorProperty)
 		[properties addObject: foregroundColorProperty];
 	
 	// Outline (§17.3.2.23)
-	NSXMLElement *strokeWidthProperty = [self strokeWidthPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *strokeWidthProperty = [self strokeWidthPropertyForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (strokeWidthProperty)
 		[properties addObject: strokeWidthProperty];
 	
 	// Shadow (§17.3.2.31)
-	NSXMLElement *shadowProperty = [self shadowPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *shadowProperty = [self shadowPropertyForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (shadowProperty)
 		[properties addObject: shadowProperty];
 	
 	// Strikethrough (§17.3.2.9/§17.3.2.37)
-	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (strikethroughProperty)
 		[properties addObject: strikethroughProperty];
 	
 	// Underline (§17.3.2.40)
-	NSXMLElement *underlineProperty = [self underlinePropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *underlineProperty = [self underlinePropertyForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (underlineProperty)
 		[properties addObject: underlineProperty];
 	
 	// Subscript/Superscript (§17.3.2.42)
-	NSXMLElement *superscriptProperty = [self superscriptPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *superscriptProperty = [self superscriptPropertyForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
 	if (superscriptProperty)
 		[properties addObject: superscriptProperty];
 	
 	return properties;
 }
 
-+ (NSXMLElement *)foregroundColorPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)foregroundColorPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	RKColor *fontColorAttribute = attributes[RKForegroundColorAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKForegroundColorAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKForegroundColorAttributeName fromAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames])
 		return nil;
 	
 	NSXMLElement *foregroundColorProperty = [NSXMLElement elementWithName:RKDOCXTextEffectsColorElementName];
@@ -81,9 +81,9 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return foregroundColorProperty;
 }
 
-+ (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
-	if (![self shouldTranslateAttributeWithName:RKStrokeWidthAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKStrokeWidthAttributeName fromAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames])
 		return nil;
 	
 	NSXMLElement *strokeWidthProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsOutlineElementName];
@@ -94,9 +94,9 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return strokeWidthProperty;
 }
 
-+ (NSXMLElement *)shadowPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)shadowPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
-	if (![self shouldTranslateAttributeWithName:RKShadowAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKShadowAttributeName fromAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames])
 		return nil;
 	
 	NSXMLElement *shadowProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsShadowElementName];
@@ -107,11 +107,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return shadowProperty;
 }
 
-+ (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	NSNumber *strikethroughAttribute = attributes[RKStrikethroughStyleAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKStrikethroughStyleAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKStrikethroughStyleAttributeName fromAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames])
 		return nil;
 	
 	NSXMLElement *strikethroughProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsSingleStrikethroughElementName];
@@ -122,11 +122,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return strikethroughProperty;
 }
 
-+ (NSXMLElement *)underlinePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)underlinePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	NSNumber *underlineAttribute = attributes[RKUnderlineStyleAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKUnderlineStyleAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKUnderlineStyleAttributeName fromAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames])
 		return nil;
 	
 	NSXMLElement *underlineProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsUnderlineElementName];
@@ -146,12 +146,12 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return underlineProperty;
 }
 
-+ (NSXMLElement *)superscriptPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)superscriptPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	NSInteger superscriptAttribute = [attributes[RKSuperscriptAttributeName] unsignedIntegerValue];
 	
 	// String and style attribute are the same
-	if (![self shouldTranslateAttributeWithName:RKSuperscriptAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKSuperscriptAttributeName fromAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames])
 		return nil;
 	
 	NSXMLElement *superscriptProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsSuperscriptElementName];
@@ -168,11 +168,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return superscriptProperty;
 }
 
-+ (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
 {
 	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
 	id attributeValue = attributes[attributeName];
-	id styleValue = characterStyle[attributeName];
+	id styleValue = !ignoreStyleNames ? characterStyle[attributeName] : nil;
 	
 	// No translation is performed if string attributes and style attributes are the same. (I.e. have the same value or are both set to nil.)
 	return !((attributeValue == styleValue) || [attributeValue isEqual: styleValue]);
