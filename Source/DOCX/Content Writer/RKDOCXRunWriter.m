@@ -77,7 +77,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
 	NSArray *properties;
 	if (attributes && context)
-		properties = [self propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:NO];
+		properties = [self propertyElementsForAttributes:attributes usingContext:context];
 	
 	if (properties.count) {
 		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
@@ -89,21 +89,19 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	return runElement;
 }
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context shouldIgnoreStyleNames:(BOOL)ignoreStyleNames
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	if (!ignoreStyleNames) {
-		NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter characterStyleReferenceElementForAttributes:attributes usingContext:context];
-		if (styleReferenceElement)
-			[properties addObject: styleReferenceElement];
-	}
+	NSXMLElement *styleReferenceElement = [RKDOCXStyleTemplateWriter characterStyleReferenceElementForAttributes:attributes usingContext:context];
+	if (styleReferenceElement)
+		[properties addObject: styleReferenceElement];
 	
-	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
+	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
-	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context shouldIgnoreStyleNames:ignoreStyleNames];
+	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
