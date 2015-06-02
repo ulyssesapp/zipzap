@@ -116,7 +116,7 @@ NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 	RKFootnoteEnumerationPolicy noteEnumerationPolicy;
 	
 	if (isEndnote) {
-		if (document.endnotePlacement == RKEndnotePlacementDocumentEnd && document.endnoteEnumerationStyle == RKFootnoteEnumerationDecimal && document.endnoteEnumerationPolicy == RKFootnoteContinuousEnumeration)
+		if (document.endnotePlacement == RKEndnotePlacementDocumentEnd && document.endnoteEnumerationStyle == RKFootnoteEnumerationRomanLowerCase && document.endnoteEnumerationPolicy == RKFootnoteContinuousEnumeration)
 			return nil;
 		
 		// Endnote Placement (§17.11.22)

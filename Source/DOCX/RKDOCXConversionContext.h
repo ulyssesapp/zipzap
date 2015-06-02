@@ -12,15 +12,15 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 /*!
  @abstract Specifies what document part the currently processed string belongs to.
  
- @const RKDOCXMainDocumentContext	String processing takes place in the context of the main document.
- @const RKDOCXEndnoteContext		String processing takes place in the context of a footnote.
- @const RKDOCXFootnoteContext		String processing takes place in the context of an endnote.
+ @const RKDOCXRelationshipDocumentSource	String processing takes place in the context of the main document.
+ @const RKDOCXRelationshipEndnoteSource		String processing takes place in the context of a footnote.
+ @const RKDOCXRelationshipFootnoteSource	String processing takes place in the context of an endnote.
  */
 typedef enum : NSUInteger {
-	RKDOCXMainDocumentContext,
-	RKDOCXEndnoteContext,
-	RKDOCXFootnoteContext,
-} RKDOCXProcessingContext;
+	RKDOCXRelationshipDocumentSource,
+	RKDOCXRelationshipEndnoteSource,
+	RKDOCXRelationshipFootnoteSource,
+} RKDOCXRelationshipSource;
 
 /*!
  @abstract Collects state generated during the conversion process that is shared between conversion steps.
@@ -80,7 +80,8 @@ typedef enum : NSUInteger {
  @abstract Returns the next unique ID for embedded images.
  @discussion The id has no special use, it just needs to be unique.
  */
-- (NSString *)nextImageId;
+- (NSString *)newImageId;
+
 
 #pragma mark - Footnotes and Endnotes
 
@@ -142,7 +143,7 @@ typedef enum : NSUInteger {
 /*!
  @abstract Specifies whether the current attributed string is part of the main document, an endnote or a footnote.
  */
-@property (nonatomic) RKDOCXProcessingContext currentRelationshipContext;
+@property (nonatomic) RKDOCXRelationshipSource currentRelationshipContext;
 
 /*!
  @abstract Mapping from document relationship targets (NSString) to document relationship identifiers (NSNumber) and document relationship types (NSString).

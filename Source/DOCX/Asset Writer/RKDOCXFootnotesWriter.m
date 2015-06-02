@@ -94,17 +94,17 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 
 + (NSXMLElement *)referenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	RKDOCXProcessingContext referenceType = RKDOCXMainDocumentContext;
+	RKDOCXRelationshipSource referenceType = RKDOCXRelationshipDocumentSource;
 	NSString *referenceElementName;
 	NSAttributedString *referenceString;
 	
 	if (attributes[RKFootnoteAttributeName]) {
-		referenceType = RKDOCXFootnoteContext;
+		referenceType = RKDOCXRelationshipFootnoteSource;
 		referenceElementName = RKDOCXFootnotesFootnoteReferenceElementName;
 		referenceString = attributes[RKFootnoteAttributeName];
 	}
 	else if (attributes[RKEndnoteAttributeName]) {
-		referenceType = RKDOCXEndnoteContext;
+		referenceType = RKDOCXRelationshipEndnoteSource;
 		referenceElementName = RKDOCXFootnotesEndnoteReferenceElementName;
 		referenceString = attributes[RKEndnoteAttributeName];
 	}
@@ -117,10 +117,10 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	
 	context.currentRelationshipContext = referenceType;
 	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceStringWithReferenceMark usingContext:context];
-	context.currentRelationshipContext = RKDOCXMainDocumentContext;
+	context.currentRelationshipContext = RKDOCXRelationshipDocumentSource;
 	
 	NSUInteger referenceIndex = 0;
-	if (referenceType == RKDOCXFootnoteContext) {
+	if (referenceType == RKDOCXRelationshipFootnoteSource) {
 		referenceIndex = [context indexForFootnoteContent: referenceContent];
 	} else {
 		referenceIndex = [context indexForEndnoteContent: referenceContent];
@@ -134,11 +134,11 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	NSString *refElementName;
 	
 	switch ([attributes[RKDOCXReferenceTypeAttributeName] unsignedIntegerValue]) {
-		case RKDOCXFootnoteContext:
+		case RKDOCXRelationshipFootnoteSource:
 			refElementName = RKDOCXFootnotesFootnoteRefElementName;
 			break;
 			
-		case RKDOCXEndnoteContext:
+		case RKDOCXRelationshipEndnoteSource:
 			refElementName = RKDOCXFootnotesEndnoteRefElementName;
 			break;
 			

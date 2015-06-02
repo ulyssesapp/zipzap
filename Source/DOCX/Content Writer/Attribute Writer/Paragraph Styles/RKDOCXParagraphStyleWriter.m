@@ -46,14 +46,10 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 {
 	NSParagraphStyle *paragraphStyleAttribute = attributes[RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
 	NSParagraphStyle *templateParagraphStyleAttribute = context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
-	RKAdditionalParagraphStyle *additionalParagraphStyle = attributes[RKAdditionalParagraphStyleAttributeName];
-	RKAdditionalParagraphStyle *templateAdditionalParagraphStyle = context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][RKAdditionalParagraphStyleAttributeName];
+	RKAdditionalParagraphStyle *additionalParagraphStyleAttribute = attributes[RKAdditionalParagraphStyleAttributeName];
+	RKAdditionalParagraphStyle *templateAdditionalParagraphStyleAttribute = context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][RKAdditionalParagraphStyleAttributeName];
 	
 	NSMutableArray *properties = [NSMutableArray new];
-	
-	//
-	// Paragraph Style
-	//
 	
 	// Base Writing Direction (§17.3.1.6)
 	if (paragraphStyleAttribute.baseWritingDirection != templateParagraphStyleAttribute.baseWritingDirection) {
@@ -75,7 +71,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 		[properties addObject: alignmentProperty];
 	
 	// Spacing (§17.3.1.33)
-	NSXMLElement *spacingProperty = [self spacingPropertyForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute additionalParagraphStyle:additionalParagraphStyle templateAdditionalParagraphStyle:templateAdditionalParagraphStyle];
+	NSXMLElement *spacingProperty = [self spacingPropertyForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute additionalParagraphStyle:additionalParagraphStyleAttribute templateAdditionalParagraphStyle:templateAdditionalParagraphStyleAttribute];
 	if (spacingProperty)
 		[properties addObject: spacingProperty];
 	
@@ -84,23 +80,19 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	if (tabStopProperties)
 		[properties addObjectsFromArray: tabStopProperties];
 	
-	//
-	// Additional Paragraph Style
-	//
-	
 	// Keep With following (§17.3.1.15)
-	if (additionalParagraphStyle.keepWithFollowingParagraph != templateAdditionalParagraphStyle.keepWithFollowingParagraph) {
+	if (additionalParagraphStyleAttribute.keepWithFollowingParagraph != templateAdditionalParagraphStyleAttribute.keepWithFollowingParagraph) {
 		NSXMLElement *keepNextElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleKeepNextElementName];
-		if (!additionalParagraphStyle.keepWithFollowingParagraph)
+		if (!additionalParagraphStyleAttribute.keepWithFollowingParagraph)
 			[keepNextElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
 		
 		[properties addObject: keepNextElement];
 	}
 	
 	// Skip Orphan Control (§17.3.1.44)
-	if (additionalParagraphStyle.skipOrphanControl != templateAdditionalParagraphStyle.skipOrphanControl) {
+	if (additionalParagraphStyleAttribute.skipOrphanControl != templateAdditionalParagraphStyleAttribute.skipOrphanControl) {
 		NSXMLElement *widowControlElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleOrphanControlElementName];
-		if (additionalParagraphStyle.skipOrphanControl)
+		if (additionalParagraphStyleAttribute.skipOrphanControl)
 			[widowControlElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
 		
 		[properties addObject: widowControlElement];
@@ -108,9 +100,9 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	
 	// Hyphenation (§17.3.1.34)
 	if (context.document.hyphenationEnabled)
-		if ((templateAdditionalParagraphStyle || !additionalParagraphStyle.hyphenationEnabled) && (!templateAdditionalParagraphStyle || additionalParagraphStyle.hyphenationEnabled != templateAdditionalParagraphStyle.hyphenationEnabled)) {
+		if ((templateAdditionalParagraphStyleAttribute || !additionalParagraphStyleAttribute.hyphenationEnabled) && (!templateAdditionalParagraphStyleAttribute || additionalParagraphStyleAttribute.hyphenationEnabled != templateAdditionalParagraphStyleAttribute.hyphenationEnabled)) {
 			NSXMLElement *suppressAutoHyphensElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleSuppressHyphenationElementName];
-			if (additionalParagraphStyle.hyphenationEnabled && additionalParagraphStyle)
+			if (additionalParagraphStyleAttribute.hyphenationEnabled && additionalParagraphStyleAttribute)
 				[suppressAutoHyphensElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
 			
 			[properties addObject: suppressAutoHyphensElement];
@@ -149,10 +141,15 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 		[indentationProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXParagraphStyleHeadIndentationAttributeName integerValue:RKPointsToTwips(paragraphStyle.headIndent)]];
 	
 	if (paragraphStyle.tailIndent != templateParagraphStyle.tailIndent)
-		[indentationProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXParagraphStyleTailIndentationAttributeName integerValue:RKPointsToTwips(paragraphStyle.tailIndent)]];
+		[indentationProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXParagraphStyleTailIndentationAttributeName integerValue:RKPointsToTwips(paragraphStyle.tailIndent * -1)]];
 	
-	if (paragraphStyle.firstLineHeadIndent != templateParagraphStyle.firstLineHeadIndent)
-		[indentationProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXParagraphStyleFirstLineIndentationAttributeName integerValue:RKPointsToTwips(paragraphStyle.firstLineHeadIndent)]];
+	if (paragraphStyle.firstLineHeadIndent - paragraphStyle.headIndent != templateParagraphStyle.firstLineHeadIndent - templateParagraphStyle.headIndent) {
+		NSInteger firstLineIndent = RKPointsToTwips(paragraphStyle.firstLineHeadIndent - paragraphStyle.headIndent);
+		if (firstLineIndent < 0)
+			[indentationProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXParagraphStyleHangingIndentationAttributeName integerValue:(firstLineIndent * -1)]];
+		else
+			[indentationProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXParagraphStyleFirstLineIndentationAttributeName integerValue:firstLineIndent]];
+	}
 	
 	return (indentationProperty.attributes.count > 0) ? indentationProperty : nil;
 }
