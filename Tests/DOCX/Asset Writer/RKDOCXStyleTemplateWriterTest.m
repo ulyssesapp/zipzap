@@ -23,10 +23,11 @@
 {
 	CTFontRef styleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
 	
-	NSDictionary *styleAttributes = @{RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0], RKFontAttributeName: (__bridge RKFont *)styleFont};
 	NSString *styleName = @"Character Style";
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: @{RKCharacterStyleNameAttributeName: styleName}];
-	[attributes addEntriesFromDictionary: styleAttributes];
+	NSDictionary *styleAttributes = @{RKCharacterStyleNameAttributeName: styleName,
+									  RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0],
+									  RKFontAttributeName: (__bridge RKFont *)styleFont};
+	NSDictionary *attributes = [styleAttributes copy];
 	
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text should have a character style named \"Character Style\". The style enables italic and bold font traits and colors the font blue." attributes:attributes];
 	
@@ -41,10 +42,11 @@
 {
 	// Character Style
 	CTFontRef styleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
-	NSDictionary *styleAttributes = @{RKFontAttributeName: (__bridge RKFont *)styleFont,
+	NSString *styleName = @"Style";
+	NSDictionary *styleAttributes = @{RKCharacterStyleNameAttributeName: styleName,
+									  RKFontAttributeName: (__bridge RKFont *)styleFont,
 									  RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0],
 									  RKSuperscriptAttributeName: @1};
-	NSString *styleName = @"Style";
 	
 	// String Attributes
 	CTFontRef font = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 24, NULL), 0.0, NULL, 0, kCTFontItalicTrait | kCTFontBoldTrait);
@@ -65,11 +67,12 @@
 - (void)testCharacterStyleTemplateWithExplicitDeactivatingStringAttributes
 {
 	// Character Style
-	NSDictionary *styleAttributes = @{RKStrokeWidthAttributeName: @1,
+	NSString *styleName = @"Style";
+	NSDictionary *styleAttributes = @{RKCharacterStyleNameAttributeName: styleName,
+									  RKStrokeWidthAttributeName: @1,
 									  RKStrikethroughStyleAttributeName: @(RKUnderlineStyleSingle),
 									  RKUnderlineStyleAttributeName: @(RKUnderlineStyleSingle),
 									  RKSuperscriptAttributeName: @1};
-	NSString *styleName = @"Style";
 	
 	// String Attributes
 	NSDictionary *attributes = @{RKCharacterStyleNameAttributeName: styleName,
@@ -91,14 +94,15 @@
 {
 	// Character Style
 	CTFontRef styleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
-	NSDictionary *styleAttributes = @{RKFontAttributeName: (__bridge RKFont *)styleFont,
+	NSString *styleName = @"Style";
+	NSDictionary *styleAttributes = @{RKCharacterStyleNameAttributeName: styleName,
+									  RKFontAttributeName: (__bridge RKFont *)styleFont,
 									  RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0],
 									  RKStrokeWidthAttributeName: @1,
 									  RKShadowAttributeName: [NSShadow new],
 									  RKStrikethroughStyleAttributeName: @(RKUnderlineStyleSingle),
 									  RKUnderlineStyleAttributeName: @(RKUnderlineStyleSingle),
 									  RKSuperscriptAttributeName: @1};
-	NSString *styleName = @"Style";
 	
 	// String Attributes
 	NSDictionary *attributes = @{RKCharacterStyleNameAttributeName: styleName};
@@ -117,8 +121,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"Emphasis should read \"Herausstellen\" and Strong should read \"Betont\" in the German localization of Word."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	document.characterStyles = @{@"Emphasis": @{RKForegroundColorAttributeName: [RKColor colorWithRed:1 green:0 blue:0.5 alpha:0]},
-								 @"Strong": @{RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
+	document.characterStyles = @{@"Emphasis": @{RKCharacterStyleNameAttributeName: @"Emphasis", RKForegroundColorAttributeName: [RKColor colorWithRed:1 green:0 blue:0.5 alpha:0]},
+								 @"Strong": @{RKCharacterStyleNameAttributeName: @"Strong", RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"localizedcharacterstyle"];
@@ -138,7 +142,7 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Base Writing Direction Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	document.paragraphStyles = @{styleName: @{RKParagraphStyleAttributeName: paragraphStyle}};
+	document.paragraphStyles = @{styleName: @{RKParagraphStyleNameAttributeName: styleName, RKParagraphStyleAttributeName: paragraphStyle}};
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"paragraphstylewithdeactivatedbasewritingdirection"];
@@ -148,7 +152,7 @@
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 	paragraphStyle.headIndent = 13;
-	paragraphStyle.tailIndent = 04;
+	paragraphStyle.tailIndent = -04;
 	paragraphStyle.firstLineHeadIndent = 19;
 	paragraphStyle.paragraphSpacingBefore = 20;
 	paragraphStyle.paragraphSpacing = 15;
@@ -164,11 +168,11 @@
 	additionalParagraphStyle.skipOrphanControl = YES;
 	additionalParagraphStyle.hyphenationEnabled = NO;
 	
-	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: paragraphStyle,
-									  RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
 	NSString *styleName = @"Paragraph Style";
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary: @{RKParagraphStyleNameAttributeName: styleName}];
-	[attributes addEntriesFromDictionary: styleAttributes];
+	NSDictionary *styleAttributes = @{RKParagraphStyleNameAttributeName: styleName,
+									  RKParagraphStyleAttributeName: paragraphStyle,
+									  RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
+	NSDictionary *attributes = [styleAttributes copy];
 	
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text should have a paragraph style named \"Paragraph Style\". Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
@@ -184,7 +188,7 @@
 	// Character Style
 	NSMutableParagraphStyle *templateParagraphStyle = [NSMutableParagraphStyle new];
 	templateParagraphStyle.headIndent = 1;
-	templateParagraphStyle.tailIndent = 1;
+	templateParagraphStyle.tailIndent = -1;
 	templateParagraphStyle.firstLineHeadIndent = 1;
 	templateParagraphStyle.paragraphSpacingBefore = 1;
 	templateParagraphStyle.paragraphSpacing = 1;
@@ -200,14 +204,15 @@
 	templateAdditionalParagraphStyle.skipOrphanControl = YES;
 	templateAdditionalParagraphStyle.hyphenationEnabled = NO;
 	
-	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: templateParagraphStyle,
-									  RKAdditionalParagraphStyleAttributeName: templateAdditionalParagraphStyle};
 	NSString *styleName = @"Style";
+	NSDictionary *styleAttributes = @{RKParagraphStyleNameAttributeName: styleName,
+									  RKParagraphStyleAttributeName: templateParagraphStyle,
+									  RKAdditionalParagraphStyleAttributeName: templateAdditionalParagraphStyle};
 	
 	// String Attributes
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 	paragraphStyle.headIndent = 10;
-	paragraphStyle.tailIndent = 10;
+	paragraphStyle.tailIndent = -10;
 	paragraphStyle.firstLineHeadIndent = 10;
 	paragraphStyle.paragraphSpacingBefore = 10;
 	paragraphStyle.paragraphSpacing = 10;
@@ -241,8 +246,8 @@
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 	paragraphStyle.headIndent = 1;
-	paragraphStyle.tailIndent = 1;
-	paragraphStyle.firstLineHeadIndent = 1;
+	paragraphStyle.tailIndent = -1;
+	paragraphStyle.firstLineHeadIndent = 2;
 	paragraphStyle.paragraphSpacingBefore = 1;
 	paragraphStyle.paragraphSpacing = 1;
 	paragraphStyle.alignment = RKTextAlignmentRight;
@@ -257,9 +262,10 @@
 	additionalParagraphStyle.skipOrphanControl = YES;
 	additionalParagraphStyle.hyphenationEnabled = YES;
 	
-	NSDictionary *styleAttributes = @{RKParagraphStyleAttributeName: paragraphStyle,
-									  RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
 	NSString *styleName = @"Style";
+	NSDictionary *styleAttributes = @{RKParagraphStyleNameAttributeName: styleName,
+									  RKParagraphStyleAttributeName: paragraphStyle,
+									  RKAdditionalParagraphStyleAttributeName: additionalParagraphStyle};
 	
 	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: styleName};
 	
@@ -280,8 +286,8 @@
 	paragraphStyle.alignment = RKTextAlignmentCenter;
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	document.paragraphStyles = @{@"heading 1": @{RKParagraphStyleAttributeName: paragraphStyle},
-								 @"heading 2": @{RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
+	document.paragraphStyles = @{@"heading 1": @{RKParagraphStyleNameAttributeName: @"heading 1", RKParagraphStyleAttributeName: paragraphStyle},
+								 @"heading 2": @{RKParagraphStyleNameAttributeName: @"heading 2", RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
 	NSData *converted = [document DOCX];
 	
 	[self assertDOCX:converted withTestDocument:@"localizedparagraphstyle"];
@@ -294,15 +300,17 @@
 {
 	// Paragraph Style
 	CTFontRef paragraphStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
-	NSDictionary *paragraphStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)paragraphStyleFont,
-											   RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
 	NSString *paragraphStyleName = @"heading 1";
+	NSDictionary *paragraphStyleAttributes = @{RKParagraphStyleNameAttributeName: paragraphStyleName,
+											   RKFontAttributeName: (__bridge RKFont *)paragraphStyleFont,
+											   RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0]};
 	
 	// Character Style
 	CTFontRef characterStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
-	NSDictionary *characterStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)characterStyleFont,
-											   RKFontMixAttributeName: @(RKFontMixIgnoreFontName | RKFontMixIgnoreBoldTrait)};
 	NSString *characterStyleName = @"Strong";
+	NSDictionary *characterStyleAttributes = @{RKCharacterStyleNameAttributeName: characterStyleName,
+											   RKFontAttributeName: (__bridge RKFont *)characterStyleFont,
+											   RKFontMixAttributeName: @(RKFontMixIgnoreFontName | RKFontMixIgnoreBoldTrait)};
 	
 	// String
 	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: paragraphStyleName,
@@ -324,8 +332,8 @@
 {
 	// Character Style
 	CTFontRef characterStyleFont = CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Times New Roman", 24, NULL), 0.0, NULL, kCTFontItalicTrait | kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait);
-	NSDictionary *characterStyleAttributes = @{RKFontAttributeName: (__bridge RKFont *)characterStyleFont};
 	NSString *characterStyleName = @"Strong";
+	NSDictionary *characterStyleAttributes = @{RKCharacterStyleNameAttributeName: characterStyleName, RKFontAttributeName: (__bridge RKFont *)characterStyleFont};
 	
 	// String
 	NSDictionary *attributes = @{RKCharacterStyleNameAttributeName: characterStyleName,
