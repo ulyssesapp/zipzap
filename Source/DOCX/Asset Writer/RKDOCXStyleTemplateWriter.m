@@ -75,7 +75,12 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 
 + (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
 {
-	NSDictionary *attributes = isCharacterStyle ? context.document.characterStyles[styleName] : context.document.paragraphStyles[styleName];
+	NSMutableDictionary *attributes = isCharacterStyle ? [context.document.characterStyles[styleName] mutableCopy] : [context.document.paragraphStyles[styleName] mutableCopy];
+	
+	// Remove character and paragraph style names to prevent recursive style templates
+	[attributes removeObjectForKey: RKCharacterStyleNameAttributeName];
+	[attributes removeObjectForKey: RKParagraphStyleNameAttributeName];
+	
 	NSString *templateTypeAttributeValue = isCharacterStyle ? RKDOCXStyleTemplateCharacterStyleAttributeValue : RKDOCXStyleTemplateParagraphStyleAttributeValue;
 	
 	NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:styleName]]];
