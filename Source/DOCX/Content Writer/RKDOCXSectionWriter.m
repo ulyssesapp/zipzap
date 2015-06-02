@@ -193,15 +193,15 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 
 + (NSXMLElement *)pageMarginPropertyForDocument:(RKDocument *)document
 {
-	NSXMLElement *headerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginHeaderAttributeName integerValue:round(RKPointsToTwips(document.headerSpacingBefore))];
-	NSXMLElement *footerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginFooterAttributeName integerValue:round(RKPointsToTwips(document.footerSpacingAfter))];
+	NSXMLElement *headerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginHeaderAttributeName integerValue:RKPointsToTwips(document.headerSpacingBefore)];
+	NSXMLElement *footerAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginFooterAttributeName integerValue:RKPointsToTwips(document.footerSpacingAfter)];
 	// There is no headerAfter or footerBefore margin in DOCX.
 	
-	NSXMLElement *topAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginTopAttributeName integerValue:round(RKPointsToTwips(document.pageInsets.top))];
-	NSXMLElement *bottomAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginBottomAttributeName integerValue:round(RKPointsToTwips(document.pageInsets.bottom))];
+	NSXMLElement *topAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginTopAttributeName integerValue:RKPointsToTwips(document.pageInsets.top)];
+	NSXMLElement *bottomAttribute = [NSXMLElement attributeWithName:RKDOCXSectionPageMarginBottomAttributeName integerValue:RKPointsToTwips(document.pageInsets.bottom)];
 	
-	NSString *innerMargin = @(round(RKPointsToTwips(document.pageInsets.inner))).stringValue;
-	NSString *outerMargin = @(round(RKPointsToTwips(document.pageInsets.outer))).stringValue;
+	NSString *innerMargin = @(RKPointsToTwips(document.pageInsets.inner)).stringValue;
+	NSString *outerMargin = @(RKPointsToTwips(document.pageInsets.outer)).stringValue;
 
 	NSXMLElement *leftAttribute;
 	NSXMLElement *rightAttribute;
