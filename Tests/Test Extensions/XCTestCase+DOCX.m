@@ -53,8 +53,8 @@
 {
 #if TARGET_OS_IPHONE
 	// Adaption required for test stability. See ULYSSES-4867.
-	char *originalXmlTreeIndentString;
-	strcpy(originalXmlTreeIndentString, xmlTreeIndentString);
+	const char *originalXmlTreeIndentString;
+	originalXmlTreeIndentString = xmlTreeIndentString;
 	xmlTreeIndentString = "    ";
 #endif
 	
