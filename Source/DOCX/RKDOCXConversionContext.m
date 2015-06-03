@@ -11,6 +11,7 @@
 #import "RKDOCXFontAttributesWriter.h"
 #import <zipzap/zipzap.h>
 
+NSString *RKDOCXConversionContextRelationshipTarget			= @"Target";
 NSString *RKDOCXConversionContextRelationshipTypeName		= @"Type";
 NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
@@ -20,8 +21,6 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary *_styleCache;
 	NSUInteger _imageID;
 	NSMutableDictionary *_documentRelationships;
-	NSMutableDictionary *_endnoteRelationships;
-	NSMutableDictionary *_footnoteRelationships;
 }
 @end
 
@@ -44,9 +43,8 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
 		_listStyles = [NSDictionary new];
+		_currentRelationshipSource = @"document.xml";
 		_documentRelationships = [NSMutableDictionary new];
-		_endnoteRelationships = [NSMutableDictionary new];
-		_footnoteRelationships = [NSMutableDictionary new];
 		_packageRelationships = [NSDictionary new];
 	}
 	
@@ -215,37 +213,22 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 #pragma mark - Document relationships
 
-- (NSUInteger)indexForDocumentRelationshipWithTarget:(NSString *)target andType:(NSString *)type
+- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
 {
-	return [self indexForRelationshipWithTarget:target andType:type inRelationships:_documentRelationships];
-}
-
-- (NSUInteger)indexForEndnoteRelationshipWithTarget:(NSString *)target andType:(NSString *)type
-{
-	return [self indexForRelationshipWithTarget:target andType:type inRelationships:_endnoteRelationships];
-}
-
-- (NSUInteger)indexForFootnoteRelationshipWithTarget:(NSString *)target andType:(NSString *)type
-{
-	return [self indexForRelationshipWithTarget:target andType:type inRelationships:_footnoteRelationships];
-}
-
-- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type inRelationships:(NSMutableDictionary *)relationships
-{
-	NSUInteger index = 0;
+	NSMutableArray *relationships = _documentRelationships[_currentRelationshipSource] ?: [NSMutableArray new];
 	
-	// Relationship exists
-	if (relationships[target]) {
-		index = [relationships[target][RKDOCXConversionContextRelationshipIdentifierName] unsignedIntegerValue];
-		return index;
+	for (NSDictionary *relationship in relationships) {
+		if ([relationship[RKDOCXConversionContextRelationshipTarget] isEqual: target])
+			return [relationship[RKDOCXConversionContextRelationshipIdentifierName] unsignedIntegerValue];
 	}
 	
-	// Create new relationship
-	index = relationships.count + 1;
-	relationships[target] = @{RKDOCXConversionContextRelationshipTypeName: type,
-							  RKDOCXConversionContextRelationshipIdentifierName: @(index)};
+	[relationships addObject: @{RKDOCXConversionContextRelationshipTarget: target,
+								RKDOCXConversionContextRelationshipTypeName: type,
+								RKDOCXConversionContextRelationshipIdentifierName: @(relationships.count + 1)}];
 	
-	return index;
+	_documentRelationships[_currentRelationshipSource] = relationships;
+	
+	return relationships.count;
 }
 
 - (void)addPackageRelationshipWithTarget:(NSString *)target type:(NSString *)type

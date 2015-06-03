@@ -46,6 +46,19 @@ NSString *RKDOCXFootnoteReferenceAttributeName					= @"RKDOCXFootnoteReference";
 
 NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 
+/*!
+ @abstract Specifies the type of endnote/footnote reference that should be created.
+ 
+ @const RKDOCXNoReference		No reference should be created. If this value is actually used, something has gone wrong.
+ @const RKDOCXFootnoteReference	A footnote reference should be created.
+ @const RKDOCXEndnoteReference	An endnote reference should be created.
+ */
+typedef enum : NSUInteger {
+	RKDOCXNoReference,
+	RKDOCXFootnoteReference,
+	RKDOCXEndnoteReference,
+} RKDOCXReferenceType;
+
 @implementation RKDOCXFootnotesWriter
 
 + (void)buildFootnotesUsingContext:(RKDOCXConversionContext *)context
@@ -56,14 +69,14 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	// In case of footnotes
 	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotes:context.footnotes endnoteSection:NO];
 	if (footnotesDocument) {
-		[context indexForDocumentRelationshipWithTarget:RKDOCXFootnotesFilename andType:RKDOCXFootnotesRelationshipType];
+		[context indexForRelationshipWithTarget:RKDOCXFootnotesFilename andType:RKDOCXFootnotesRelationshipType];
 		[context addDocumentPartWithXMLDocument:footnotesDocument filename:[self packagePathForFilename:RKDOCXFootnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXFootnotesContentType];
 	}
 	
 	// In case of endnotes
 	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotes:context.endnotes endnoteSection:YES];
 	if (endnotesDocument) {
-		[context indexForDocumentRelationshipWithTarget:RKDOCXEndnotesFilename andType:RKDOCXEndnotesRelationshipType];
+		[context indexForRelationshipWithTarget:RKDOCXEndnotesFilename andType:RKDOCXEndnotesRelationshipType];
 		[context addDocumentPartWithXMLDocument:endnotesDocument filename:[self packagePathForFilename:RKDOCXEndnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXEndnotesContentType];
 	}
 }
@@ -94,19 +107,22 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 
 + (NSXMLElement *)referenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	RKDOCXRelationshipSource referenceType = RKDOCXRelationshipDocumentSource;
+	RKDOCXReferenceType referenceType = RKDOCXNoReference;
 	NSString *referenceElementName;
 	NSAttributedString *referenceString;
+	NSString *newRelationshipSource;
 	
 	if (attributes[RKFootnoteAttributeName]) {
-		referenceType = RKDOCXRelationshipFootnoteSource;
+		referenceType = RKDOCXFootnoteReference;
 		referenceElementName = RKDOCXFootnotesFootnoteReferenceElementName;
 		referenceString = attributes[RKFootnoteAttributeName];
+		newRelationshipSource = RKDOCXFootnotesFilename;
 	}
 	else if (attributes[RKEndnoteAttributeName]) {
-		referenceType = RKDOCXRelationshipEndnoteSource;
+		referenceType = RKDOCXEndnoteReference;
 		referenceElementName = RKDOCXFootnotesEndnoteReferenceElementName;
 		referenceString = attributes[RKEndnoteAttributeName];
+		newRelationshipSource = RKDOCXEndnotesFilename;
 	}
 	else {
 		return nil;
@@ -115,12 +131,17 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKDOCXReferenceTypeAttributeName: @(referenceType)}];
 	[referenceStringWithReferenceMark appendAttributedString: referenceString];
 	
-	context.currentRelationshipContext = referenceType;
+	// Change relationship source for endnotes/footnotes
+	NSString *previousRelationshipSource = context.currentRelationshipSource;
+	context.currentRelationshipSource = newRelationshipSource;
+	
 	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceStringWithReferenceMark usingContext:context];
-	context.currentRelationshipContext = RKDOCXRelationshipDocumentSource;
+	
+	// Restore previous relationship
+	context.currentRelationshipSource = previousRelationshipSource;
 	
 	NSUInteger referenceIndex = 0;
-	if (referenceType == RKDOCXRelationshipFootnoteSource) {
+	if (referenceType == RKDOCXFootnoteReference) {
 		referenceIndex = [context indexForFootnoteContent: referenceContent];
 	} else {
 		referenceIndex = [context indexForEndnoteContent: referenceContent];
@@ -134,11 +155,11 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	NSString *refElementName;
 	
 	switch ([attributes[RKDOCXReferenceTypeAttributeName] unsignedIntegerValue]) {
-		case RKDOCXRelationshipFootnoteSource:
+		case RKDOCXFootnoteReference:
 			refElementName = RKDOCXFootnotesFootnoteRefElementName;
 			break;
 			
-		case RKDOCXRelationshipEndnoteSource:
+		case RKDOCXEndnoteReference:
 			refElementName = RKDOCXFootnotesEndnoteRefElementName;
 			break;
 			

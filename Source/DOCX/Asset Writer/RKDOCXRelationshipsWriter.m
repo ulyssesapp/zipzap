@@ -43,43 +43,15 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
-	[self buildRelationshipsOfType:RKDOCXRelationshipDocumentSource usingContext:context];
-	[self buildRelationshipsOfType:RKDOCXRelationshipEndnoteSource usingContext:context];
-	[self buildRelationshipsOfType:RKDOCXRelationshipFootnoteSource usingContext:context];
-}
-
-+ (void)buildRelationshipsOfType:(RKDOCXRelationshipSource)relationshipType usingContext:(RKDOCXConversionContext *)context
-{
-	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
-	NSDictionary *relationships;
-	NSString *filename;
-	
-	switch (relationshipType) {
-		case RKDOCXRelationshipDocumentSource:
-			relationships = context.documentRelationships;
-			filename = RKDOCXDocumentRelationshipsFilename;
-			break;
-			
-		case RKDOCXRelationshipEndnoteSource:
-			relationships = context.endnoteRelationships;
-			filename = RKDOCXEndnotesRelationshipsFilename;
-			break;
-			
-		case RKDOCXRelationshipFootnoteSource:
-			relationships = context.footnoteRelationships;
-			filename = RKDOCXFootnotesRelationshipsFilename;
-			break;
+	for (NSString *relationshipSource in context.documentRelationships) {
+		NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
+		
+		for (NSDictionary *relationship in context.documentRelationships[relationshipSource]) {
+			[self addRelationshipWithTarget:relationship[RKDOCXConversionContextRelationshipTarget] type:relationship[RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat: @"rId%@", relationship[RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
+		}
+		
+		[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:[relationshipSource stringByAppendingString: RKDOCXPackageRelationshipsFilename] folder:RKDOCXWordRelsFolder] contentType:nil];
 	}
-	
-	if (relationships.count == 0)
-		return;
-	
-	// Relationships
-	for (NSString *target in relationships) {
-		[self addRelationshipWithTarget:target type:relationships[target][RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat:@"rId%@", relationships[target][RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
-	}
-	
-	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:filename folder:RKDOCXWordRelsFolder] contentType:nil];
 }
 
 + (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement

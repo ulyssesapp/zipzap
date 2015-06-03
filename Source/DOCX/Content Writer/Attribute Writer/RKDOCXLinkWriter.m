@@ -25,21 +25,7 @@ NSString *RKDOCXLinkTargetAttributeName		= @"r:id";
 	
 	NSString *target = [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
 	
-	NSUInteger targetIdentifier;
-	
-	switch (context.currentRelationshipContext) {
-		case RKDOCXRelationshipDocumentSource:
-			targetIdentifier = [context indexForDocumentRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
-			break;
-			
-		case RKDOCXRelationshipEndnoteSource:
-			targetIdentifier = [context indexForEndnoteRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
-			break;
-			
-		case RKDOCXRelationshipFootnoteSource:
-			targetIdentifier = [context indexForFootnoteRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
-			break;
-	}
+	NSUInteger targetIdentifier = [context indexForRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
 	
 	NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", targetIdentifier]];
 	
