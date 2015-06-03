@@ -20,9 +20,8 @@
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKFootnoteAttributeName: [[NSAttributedString alloc] initWithString:@"This is the content of the footnote."]}]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"footnote"];
+	[self assertDOCX:document withTestDocument:@"footnote"];
 }
 
 - (void)testAttributedStringWithEndnote
@@ -31,9 +30,8 @@
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKEndnoteAttributeName: [[NSAttributedString alloc] initWithString:@"This is the content of the endnote."]}]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"endnote"];
+	[self assertDOCX:document withTestDocument:@"endnote"];
 }
 
 - (void)testAttributedStringWithFootnoteAndEndnote
@@ -43,9 +41,8 @@
 	[attributedString addAttribute:RKEndnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the endnote content."] range:NSMakeRange(21, 1)];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"footnoteandendnote"];
+	[self assertDOCX:document withTestDocument:@"footnoteandendnote"];
 }
 
 - (void)testAttributedStringWithTwoFootnotes
@@ -55,9 +52,8 @@
 	[attributedString addAttribute:RKFootnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the second footnote content."] range:NSMakeRange(24, 1)];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"twofootnotes"];
+	[self assertDOCX:document withTestDocument:@"twofootnotes"];
 }
 
 @end

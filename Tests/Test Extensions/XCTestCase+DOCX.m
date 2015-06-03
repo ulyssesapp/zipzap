@@ -49,8 +49,22 @@
 #endif
 }
 
-- (void)assertDOCX:(NSData *)docx withTestDocument:(NSString *)name
+- (void)assertDOCX:(RKDocument *)document withTestDocument:(NSString *)name
 {
+#if TARGET_OS_IPHONE
+	// Adaption required for test stability. See ULYSSES-4867.
+	const char *originalXmlTreeIndentString;
+	originalXmlTreeIndentString = xmlTreeIndentString;
+	xmlTreeIndentString = "    ";
+#endif
+	
+	NSData *docx = [document DOCX];
+	
+#if TARGET_OS_IPHONE
+	// Restore previous state
+	xmlTreeIndentString = originalXmlTreeIndentString;
+#endif
+	
 	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:@"docx" subdirectory:[@"Test Data/docx/" stringByAppendingString: NSStringFromClass(self.class)]];
 	
 	XCTAssertNotNil(url, @"Cannot build URL");

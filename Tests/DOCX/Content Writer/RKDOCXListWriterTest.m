@@ -24,9 +24,8 @@
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"Second list item: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."] withStyle:listStyle withIndentationLevel:1];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"list"];
+	[self assertDOCX:document withTestDocument:@"list"];
 }
 
 - (void)testMultipleListStyles
@@ -46,9 +45,8 @@
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"CAAA"] withStyle:listStyle withIndentationLevel:3];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"multipleliststyles"];
+	[self assertDOCX:document withTestDocument:@"multipleliststyles"];
 }
 
 - (void)testDifferentStartNumbers
@@ -63,9 +61,8 @@
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1.1.2"] withStyle:listStyle withIndentationLevel:2];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"listswithstartnumbers"];
+	[self assertDOCX:document withTestDocument:@"listswithstartnumbers"];
 }
 
 - (void)testListWithRunAttribute
@@ -77,9 +74,8 @@
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString:@"This list item is bold." attributes:@{RKFontAttributeName: (__bridge RKFont *)font}] withStyle:listStyle withIndentationLevel:1];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"listwithrunattributes"];
+	[self assertDOCX:document withTestDocument:@"listwithrunattributes"];
 }
 
 - (void)testListWithParagraphAttribute
@@ -95,9 +91,8 @@
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString:@"This is justified text: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." attributes:@{RKParagraphStyleAttributeName: paragraphStyleB}] withStyle:listStyleB withIndentationLevel:0];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"listwithparagraphattributes"];
+	[self assertDOCX:document withTestDocument:@"listwithparagraphattributes"];
 }
 
 @end

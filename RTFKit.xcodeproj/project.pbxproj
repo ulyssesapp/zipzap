@@ -598,6 +598,7 @@
 		A04568FB1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A04568FA1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m */; };
 		A0472F101ADFC310004118B3 /* RKDOCXFootnotesWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0472F0E1ADFC310004118B3 /* RKDOCXFootnotesWriter.h */; };
 		A0472F121ADFC310004118B3 /* RKDOCXFootnotesWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0472F0F1ADFC310004118B3 /* RKDOCXFootnotesWriter.m */; };
+		A04A92AB1B1F109100DEE254 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631351AD6B6BE00FFE40D /* libxml2.dylib */; };
 		A04AA08E1AF1308000B0946C /* RKDOCXStyleTemplateWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A04AA08C1AF1308000B0946C /* RKDOCXStyleTemplateWriter.h */; };
 		A04AA0901AF1308000B0946C /* RKDOCXStyleTemplateWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A04AA08D1AF1308000B0946C /* RKDOCXStyleTemplateWriter.m */; };
 		A065823C1B038E9800DAA032 /* RKFont.h in Headers */ = {isa = PBXBuildFile; fileRef = A065823B1B038E9800DAA032 /* RKFont.h */; };
@@ -1181,6 +1182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A04A92AB1B1F109100DEE254 /* libxml2.dylib in Frameworks */,
 				79A15A861B0C70AF000E767C /* MobileCoreServices.framework in Frameworks */,
 				79A15A851B0C70A6000E767C /* UIKit.framework in Frameworks */,
 				79A15A841B0C7091000E767C /* CoreText.framework in Frameworks */,

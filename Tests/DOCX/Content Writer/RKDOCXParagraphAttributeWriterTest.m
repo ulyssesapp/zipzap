@@ -19,9 +19,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Default Paragraph Style Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:@{RKParagraphStyleAttributeName: [NSParagraphStyle defaultParagraphStyle]}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"default"];
+	[self assertDOCX:document withTestDocument:@"default"];
 }
 
 - (void)testParagraphElementWithBaseWritingDirectionAttribute
@@ -32,9 +31,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Base Writing Direction Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"basewritingdirection"];
+	[self assertDOCX:document withTestDocument:@"basewritingdirection"];
 }
 
 - (void)testParagraphElementWithHeadAndTailIndentationAttribute
@@ -46,9 +44,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Head and Tail Indentation Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"headandtailindent"];
+	[self assertDOCX:document withTestDocument:@"headandtailindent"];
 }
 
 - (void)testParagraphElementWithFirstLineHeadIndentationAttribute
@@ -64,9 +61,8 @@
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"First Line Head Outdent Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:outdentAttributes]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"firstlineheadindent"];
+	[self assertDOCX:document withTestDocument:@"firstlineheadindent"];
 }
 
 - (void)testParagraphElementWithLeftAlignmentAttribute
@@ -77,9 +73,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Left Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"leftalignment"];
+	[self assertDOCX:document withTestDocument:@"leftalignment"];
 }
 
 - (void)testParagraphElementWithCenterAlignmentAttribute
@@ -90,9 +85,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Center Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"centeralignment"];
+	[self assertDOCX:document withTestDocument:@"centeralignment"];
 }
 
 - (void)testParagraphElementWithRightAlignmentAttribute
@@ -103,9 +97,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Right Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"rightalignment"];
+	[self assertDOCX:document withTestDocument:@"rightalignment"];
 }
 
 - (void)testParagraphElementWithJustifiedAlignmentAttribute
@@ -116,9 +109,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Justified Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"justifiedalignment"];
+	[self assertDOCX:document withTestDocument:@"justifiedalignment"];
 }
 
 - (void)testParagraphElementWithSpacingAttribute
@@ -132,9 +124,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Spacing Test (Line Spacing: 15pt, Paragraph Spacing Before/After: 48pt): Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"spacing"];
+	[self assertDOCX:document withTestDocument:@"spacing"];
 }
 
 - (void)testParagraphElementWithCustomTabStops
@@ -147,9 +138,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Custom Tab Stop Test:\t\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"tabstops"];
+	[self assertDOCX:document withTestDocument:@"tabstops"];
 }
 
 - (void)testParagraphElementWithDefaultTabInterval
@@ -160,9 +150,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Default Tab Interval Test:\t\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"defaulttabinterval"];
+	[self assertDOCX:document withTestDocument:@"defaulttabinterval"];
 }
 
 - (void)testParagraphElementWithKeepNextAttribute
@@ -179,9 +168,8 @@
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:paragraph]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"keepwithfollowing"];
+	[self assertDOCX:document withTestDocument:@"keepwithfollowing"];
 }
 
 - (void)testParagraphElementWithOrphanControlAttribute
@@ -196,9 +184,8 @@
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString: @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est." attributes:attributes]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"orphancontrol"];
+	[self assertDOCX:document withTestDocument:@"orphancontrol"];
 }
 
 - (void)testParagraphElementWithHyphenationAttribute
@@ -210,9 +197,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.hyphenationEnabled = YES;
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"hyphenation"];
+	[self assertDOCX:document withTestDocument:@"hyphenation"];
 }
 
 - (void)testParagraphElementWithPageBreaks
@@ -220,9 +206,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"Page Break Test:\f\fLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\fAt vero eos et accusam et justo duo dolores et ea rebum.\fStet clita kasd gubergren, no sea takimata sanctus est."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"pagebreaks"];
+	[self assertDOCX:document withTestDocument:@"pagebreaks"];
 }
 
 - (void)testParagraphElementWithLineBreaks
@@ -230,9 +215,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: [NSString stringWithFormat: @"Line Break Test:%C%CTwo line breaks above this line.%COne line break above this line.", RKLineSeparatorCharacter, RKLineSeparatorCharacter, RKLineSeparatorCharacter]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"linebreaks"];
+	[self assertDOCX:document withTestDocument:@"linebreaks"];
 }
 
 - (void)testEmptyParagraphs
@@ -240,9 +224,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"There are three empty paragraphs below this one.\n\n\n\nAgain, there should be three empty paragraphs above this one."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"emptyparagraphs"];
+	[self assertDOCX:document withTestDocument:@"emptyparagraphs"];
 }
 
 @end

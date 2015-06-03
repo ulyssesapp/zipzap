@@ -21,9 +21,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc " attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"png"];
+	[self assertDOCX:document withTestDocument:@"png"];
 }
 
 - (void)testJPGImageSupport
@@ -33,9 +32,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc " attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"jpg"];
+	[self assertDOCX:document withTestDocument:@"jpg"];
 }
 
 @end

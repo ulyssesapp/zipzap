@@ -33,9 +33,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{styleName: styleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"characterstylewithidenticattributes"];
+	[self assertDOCX:document withTestDocument:@"characterstylewithidenticattributes"];
 }
 
 - (void)testCharacterStyleTemplateWithOverridingStringAttributes
@@ -59,9 +58,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{styleName: styleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"characterstyletemplateoverride"];
+	[self assertDOCX:document withTestDocument:@"characterstyletemplateoverride"];
 }
 
 - (void)testCharacterStyleTemplateWithExplicitDeactivatingStringAttributes
@@ -85,9 +83,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{styleName: styleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"characterstylewithexplicitdeactiviation"];
+	[self assertDOCX:document withTestDocument:@"characterstylewithexplicitdeactiviation"];
 }
 
 - (void)testCharacterStyleTemplateWithImplicitDeactivatingStringAttributes
@@ -111,9 +108,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{styleName: styleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"characterstylewithimplicitdeactiviation"];
+	[self assertDOCX:document withTestDocument:@"characterstylewithimplicitdeactiviation"];
 }
 
 - (void)testLocalizedCharacterStyleName
@@ -123,9 +119,8 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{@"Emphasis": @{RKCharacterStyleNameAttributeName: @"Emphasis", RKForegroundColorAttributeName: [RKColor colorWithRed:1 green:0 blue:0.5 alpha:0]},
 								 @"Strong": @{RKCharacterStyleNameAttributeName: @"Strong", RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"localizedcharacterstyle"];
+	[self assertDOCX:document withTestDocument:@"localizedcharacterstyle"];
 }
 
 
@@ -143,9 +138,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.paragraphStyles = @{styleName: @{RKParagraphStyleNameAttributeName: styleName, RKParagraphStyleAttributeName: paragraphStyle}};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"paragraphstylewithdeactivatedbasewritingdirection"];
+	[self assertDOCX:document withTestDocument:@"paragraphstylewithdeactivatedbasewritingdirection"];
 }
 
 - (void)testParagraphStyleTemplateWithIdenticStringAttributes
@@ -178,9 +172,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.paragraphStyles = @{styleName: styleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"paragraphstylewithidenticattributes"];
+	[self assertDOCX:document withTestDocument:@"paragraphstylewithidenticattributes"];
 }
 
 - (void)testParagraphStyleTemplateWithOverridingStringAttributes
@@ -237,9 +230,8 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.hyphenationEnabled = YES;
 	document.paragraphStyles = @{styleName: styleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"paragraphstyletemplateoverride"];
+	[self assertDOCX:document withTestDocument:@"paragraphstyletemplateoverride"];
 }
 
 - (void)testParagraphStyleTemplateWithImplicitDeactivatingStringAttributes
@@ -274,9 +266,8 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.hyphenationEnabled = YES;
 	document.paragraphStyles = @{styleName: styleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"paragraphstylewithimplicitdeactiviation"];
+	[self assertDOCX:document withTestDocument:@"paragraphstylewithimplicitdeactiviation"];
 }
 
 - (void)testLocalizedParagraphStyleName
@@ -288,9 +279,8 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.paragraphStyles = @{@"heading 1": @{RKParagraphStyleNameAttributeName: @"heading 1", RKParagraphStyleAttributeName: paragraphStyle},
 								 @"heading 2": @{RKParagraphStyleNameAttributeName: @"heading 2", RKForegroundColorAttributeName: [RKColor colorWithRed:0.5 green:0 blue:1 alpha:0]}};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"localizedparagraphstyle"];
+	[self assertDOCX:document withTestDocument:@"localizedparagraphstyle"];
 }
 
 
@@ -323,9 +313,8 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.paragraphStyles = @{paragraphStyleName: paragraphStyleAttributes};
 	document.characterStyles = @{characterStyleName: characterStyleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"mixedstyletemplateoverride"];
+	[self assertDOCX:document withTestDocument:@"mixedstyletemplateoverride"];
 }
 
 - (void)testOverriddenStringAttributesInCharacterStyle
@@ -349,9 +338,8 @@
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{characterStyleName: characterStyleAttributes};
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"mixedstringstyleoverride"];
+	[self assertDOCX:document withTestDocument:@"mixedstringstyleoverride"];
 }
 
 @end
