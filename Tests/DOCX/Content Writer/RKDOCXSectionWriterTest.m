@@ -58,6 +58,16 @@
 	[self assertDOCX:converted withTestDocument:@"pagemargins"];
 }
 
+- (void)testSectionPropertiesElementWithFractionalPageMargins
+{
+	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This page has page margins with fractional numbers, which should be rounded. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est."]];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
+	document.pageInsets = RKPageInsetsMake(12.3456, 65.4321, 7.890, 9.870);
+	NSData *converted = [document DOCX];
+	
+	[self assertDOCX:converted withTestDocument:@"fractionalpagemargins"];
+}
+
 - (void)testSectionWithSameHeader
 {
 	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document has one header for all pages.\f\f"]];
