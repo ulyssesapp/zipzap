@@ -29,9 +29,8 @@
 	document.endnoteEnumerationStyle = RKFootnoteEnumerationChicagoManual;
 	document.endnoteEnumerationPolicy = RKFootnoteEnumerationPerSection;
 	document.twoSided = YES;
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"settings"];
+	[self assertDOCX:document withTestDocument:@"settings"];
 }
 
 @end

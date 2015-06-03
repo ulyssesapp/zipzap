@@ -23,9 +23,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Font Size Test (42)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"fontsize"];
+	[self assertDOCX:document withTestDocument:@"fontsize"];
 }
 
 - (void)testRunElementWithFontNameAttribute
@@ -35,9 +34,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Font Name Test (Papyrus)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"fontname"];
+	[self assertDOCX:document withTestDocument:@"fontname"];
 }
 
 - (void)testRunElementWithBoldItalicFontNameAttribute
@@ -47,9 +45,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Bold Italic Font Name Test (Arial)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"bold-italic-fontname"];
+	[self assertDOCX:document withTestDocument:@"bold-italic-fontname"];
 }
 
 - (void)testRunElementWithFontColorAttribute
@@ -58,9 +55,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Font Color Test (#0080FF)" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"color"];
+	[self assertDOCX:document withTestDocument:@"color"];
 }
 
 - (void)testTwoRunElementsWithFontColorAttributes
@@ -70,9 +66,8 @@
 	[attributedString addAttribute:RKForegroundColorAttributeName value:[RKColor colorWithRed:1 green:0 blue:0.5 alpha:0] range:NSMakeRange(20, attributedString.length - 20)];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"twocolors"];
+	[self assertDOCX:document withTestDocument:@"twocolors"];
 }
 
 - (void)testRunElementWithOutlineAttribute
@@ -81,9 +76,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Outline Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"outline"];
+	[self assertDOCX:document withTestDocument:@"outline"];
 }
 
 - (void)testRunElementWithShadowAttribute
@@ -92,9 +86,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Shadow Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"shadow"];
+	[self assertDOCX:document withTestDocument:@"shadow"];
 }
 
 - (void)testRunElementWithSingleStrikethroughAttribute
@@ -103,9 +96,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Single Strikethrough Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"strike"];
+	[self assertDOCX:document withTestDocument:@"strike"];
 }
 
 - (void)testRunElementWithUnsupportedStrikethroughAttribute
@@ -115,9 +107,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Single Strikethrough Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"strike"];
+	[self assertDOCX:document withTestDocument:@"strike"];
 }
 
 - (void)testRunElementWithUnderlineAttribute
@@ -126,9 +117,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Underline Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"underline"];
+	[self assertDOCX:document withTestDocument:@"underline"];
 }
 
 - (void)testRunElementWithSubscriptAttribute
@@ -137,9 +127,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Subscript Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"subscript"];
+	[self assertDOCX:document withTestDocument:@"subscript"];
 }
 
 - (void)testRunElementWithSuperscriptAttribute
@@ -148,9 +137,8 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Superscript Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"superscript"];
+	[self assertDOCX:document withTestDocument:@"superscript"];
 }
 
 - (void)testPageNumberPlaceholder
@@ -160,9 +148,8 @@
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:attributes]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"pagenumber"];
+	[self assertDOCX:document withTestDocument:@"pagenumber"];
 }
 
 @end

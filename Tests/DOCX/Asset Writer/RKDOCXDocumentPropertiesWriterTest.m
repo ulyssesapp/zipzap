@@ -27,9 +27,8 @@
 							   RKModificationTimeDocumentAttribute: date,
 							   RKCategoryDocumentAttribute: @"Test Document"};
 	document.metadata = metadata;
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"coreproperties"];
+	[self assertDOCX:document withTestDocument:@"coreproperties"];
 }
 
 @end

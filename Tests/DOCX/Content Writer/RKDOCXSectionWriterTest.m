@@ -19,9 +19,8 @@
 	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This text is displayed in two columns. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est."]];
 	section.numberOfColumns = 2;
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"twocolumns"];
+	[self assertDOCX:document withTestDocument:@"twocolumns"];
 }
 
 - (void)testSectionPropertiesElementWithPageNumberType
@@ -30,9 +29,8 @@
 	section.indexOfFirstPage = 42;
 	section.pageNumberingStyle = RKPageNumberingRomanUpperCase;
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"pagenumbertype"];
+	[self assertDOCX:document withTestDocument:@"pagenumbertype"];
 }
 
 - (void)testSectionPropertiesElementWithPageSize
@@ -41,9 +39,8 @@
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
 	document.pageSize = CGSizeMake(500, 500);
 	document.pageOrientation = RKPageOrientationLandscape;
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"pagesize"];
+	[self assertDOCX:document withTestDocument:@"pagesize"];
 }
 
 - (void)testSectionPropertiesElementWithPageMargins
@@ -53,9 +50,8 @@
 	document.headerSpacingBefore = 72;
 	document.footerSpacingAfter = 72;
 	document.pageInsets = RKPageInsetsMake(36, 36, 36, 36);
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"pagemargins"];
+	[self assertDOCX:document withTestDocument:@"pagemargins"];
 }
 
 - (void)testSectionPropertiesElementWithFractionalPageMargins
@@ -63,9 +59,8 @@
 	RKSection *section = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This page has page margins with fractional numbers, which should be rounded. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est."]];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
 	document.pageInsets = RKPageInsetsMake(12.3456, 65.4321, 7.890, 9.870);
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"fractionalpagemargins"];
+	[self assertDOCX:document withTestDocument:@"fractionalpagemargins"];
 }
 
 - (void)testSectionWithSameHeader
@@ -74,9 +69,8 @@
 	NSAttributedString *header = [[NSAttributedString alloc] initWithString: @"This is the only header."];
 	[section setHeader:header forPages:RKPageSelectorAll];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"sameheader"];
+	[self assertDOCX:document withTestDocument:@"sameheader"];
 }
 
 - (void)testSectionWithSameFooter
@@ -85,9 +79,8 @@
 	NSAttributedString *footer = [[NSAttributedString alloc] initWithString: @"This is the only footer."];
 	[section setFooter:footer forPages:RKPageSelectorAll];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"samefooter"];
+	[self assertDOCX:document withTestDocument:@"samefooter"];
 }
 
 - (void)testSectionWithDifferentHeaders
@@ -100,9 +93,8 @@
 	[section setHeader:leftHeader forPages:RKPageSelectionLeft];
 	[section setHeader:rightHeader forPages:RKPageSelectionRight];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"differentheaders"];
+	[self assertDOCX:document withTestDocument:@"differentheaders"];
 }
 
 - (void)testSectionWithDifferentFooters
@@ -115,9 +107,8 @@
 	[section setFooter:leftFooter forPages:RKPageSelectionLeft];
 	[section setFooter:rightFooter forPages:RKPageSelectionRight];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"differentfooters"];
+	[self assertDOCX:document withTestDocument:@"differentfooters"];
 }
 
 - (void)testSectionWithFirstPageHeader
@@ -126,9 +117,8 @@
 	NSAttributedString *header = [[NSAttributedString alloc] initWithString: @"This is the only header."];
 	[section setHeader:header forPages:RKPageSelectionFirst];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"firstpageheader"];
+	[self assertDOCX:document withTestDocument:@"firstpageheader"];
 }
 
 - (void)testSectionWithFirstPageFooter
@@ -137,9 +127,8 @@
 	NSAttributedString *footer = [[NSAttributedString alloc] initWithString: @"This is the only footer."];
 	[section setFooter:footer forPages:RKPageSelectionFirst];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"firstpagefooter"];
+	[self assertDOCX:document withTestDocument:@"firstpagefooter"];
 }
 
 - (void)testSectionWithOddPageHeader
@@ -148,9 +137,8 @@
 	NSAttributedString *header = [[NSAttributedString alloc] initWithString: @"This is the odd header."];
 	[section setHeader:header forPages:RKPageSelectionLeft];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"oddpageheader"];
+	[self assertDOCX:document withTestDocument:@"oddpageheader"];
 }
 
 - (void)testSectionWithOddPageFooter
@@ -159,9 +147,8 @@
 	NSAttributedString *footer = [[NSAttributedString alloc] initWithString: @"This is the odd footer."];
 	[section setFooter:footer forPages:RKPageSelectionLeft];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[section]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"oddpagefooter"];
+	[self assertDOCX:document withTestDocument:@"oddpagefooter"];
 }
 
 - (void)testTwoSections
@@ -169,9 +156,8 @@
 	RKSection *sectionA = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document consists of two sections.\nThis is section one."]];
 	RKSection *sectionB = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"To see the section break, show invisible characters.\nThis is section two."]];
 	RKDocument *document = [[RKDocument alloc] initWithSections: @[sectionA, sectionB]];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"twosections"];
+	[self assertDOCX:document withTestDocument:@"twosections"];
 }
 
 @end

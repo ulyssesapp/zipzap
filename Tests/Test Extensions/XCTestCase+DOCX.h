@@ -22,6 +22,6 @@
 /*!
  @abstract Loads a test document from TestData and compares it filewise with the given DOCX output.
  */
-- (void)assertDOCX:(NSData *)docx withTestDocument:(NSString *)name;
+- (void)assertDOCX:(RKDocument *)document withTestDocument:(NSString *)name;
 
 @end

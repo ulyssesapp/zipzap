@@ -22,9 +22,8 @@
 	[attributedString addAttribute:RKForegroundColorAttributeName value:[RKColor colorWithRed:0 green:0 blue:1 alpha:0] range:NSMakeRange(5, 7)];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	NSData *converted = [document DOCX];
 	
-	[self assertDOCX:converted withTestDocument:@"link"];
+	[self assertDOCX:document withTestDocument:@"link"];
 }
 
 @end
