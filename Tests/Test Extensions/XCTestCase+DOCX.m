@@ -53,10 +53,17 @@
 {
 #if TARGET_OS_IPHONE
 	// Adaption required for test stability. See ULYSSES-4867.
+	char *originalXmlTreeIndentString;
+	strcpy(originalXmlTreeIndentString, xmlTreeIndentString);
 	xmlTreeIndentString = "    ";
 #endif
 	
 	NSData *docx = [document DOCX];
+	
+#if TARGET_OS_IPHONE
+	// Restore previous state
+	xmlTreeIndentString = originalXmlTreeIndentString;
+#endif
 	
 	NSURL *url = [[NSBundle bundleForClass: [self class]] URLForResource:name withExtension:@"docx" subdirectory:[@"Test Data/docx/" stringByAppendingString: NSStringFromClass(self.class)]];
 	
