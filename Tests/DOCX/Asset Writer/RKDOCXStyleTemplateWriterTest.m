@@ -284,6 +284,19 @@
 }
 
 
+#pragma mark - Default style
+
+- (void)testDefaultStyle
+{
+	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait)};
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This document uses a default style in its styles.xml file." attributes:attributes];
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.defaultStyle = [attributes copy];
+	
+	[self assertDOCX:document withTestDocument:@"defaultstyle"];
+}
+
+
 #pragma mark - Mixed styles
 
 - (void)testOverriddenCharacterAttributesInParagraphStyle

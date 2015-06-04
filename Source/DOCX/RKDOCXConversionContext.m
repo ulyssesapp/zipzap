@@ -53,15 +53,16 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
 {
-	// Simple cases: Style mixing is not required
+	NSDictionary *defaultStyle = _document.defaultStyle ?: nil;
+	
 	if (!paragraphStyleName && !characterStyleName)
-		return nil;
+		return defaultStyle;
 	
 	else if (!paragraphStyleName)
-		return _document.characterStyles[characterStyleName];
+		return [self mixStyleAttributes:_document.characterStyles[characterStyleName] intoStyleAttributes:defaultStyle];
 	
 	else if (!characterStyleName)
-		return _document.paragraphStyles[paragraphStyleName];
+		return [self mixStyleAttributes:_document.paragraphStyles[paragraphStyleName] intoStyleAttributes:defaultStyle];
 	
 	// Try to use pre-chached value
 	NSArray *styleKey = @[paragraphStyleName, characterStyleName];
@@ -69,26 +70,31 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	if (cachedStyle)
 		return cachedStyle;
-	else
-		cachedStyle = [NSMutableDictionary new];
 	
 	// Mix character and paragraph style, character styles have the higher priority
-	NSDictionary *paragraphAttributes = _document.paragraphStyles[paragraphStyleName];
-	NSDictionary *characterAttributes = _document.characterStyles[characterStyleName];
-	
-	if (paragraphAttributes)
-		[cachedStyle addEntriesFromDictionary: paragraphAttributes];
-	
-	if (characterAttributes)
-		[cachedStyle addEntriesFromDictionary: characterAttributes];
-	
-	if (paragraphAttributes[RKFontAttributeName] && characterAttributes[RKFontAttributeName])
-		cachedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:paragraphAttributes[RKFontAttributeName] withOverridingFont:characterAttributes[RKFontAttributeName] usingMask:[characterAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
+	else
+		cachedStyle = [self mixStyleAttributes:_document.characterStyles[characterStyleName] intoStyleAttributes:_document.paragraphStyles[paragraphStyleName]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;
 	
 	return cachedStyle;
+}
+
+- (NSMutableDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyle intoStyleAttributes:(NSDictionary *)lowPriorityStyle
+{
+	NSMutableDictionary *mixedStyle = _document.defaultStyle ? [NSMutableDictionary dictionaryWithDictionary: _document.defaultStyle] : [NSMutableDictionary new];
+	
+	if (lowPriorityStyle)
+		[mixedStyle addEntriesFromDictionary: lowPriorityStyle];
+	
+	if (highPriorityStyle)
+		[mixedStyle addEntriesFromDictionary: highPriorityStyle];
+	
+	if (lowPriorityStyle[RKFontAttributeName] && highPriorityStyle[RKFontAttributeName])
+		mixedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:lowPriorityStyle[RKFontAttributeName] withOverridingFont:highPriorityStyle[RKFontAttributeName] usingMask:[highPriorityStyle[RKFontMixAttributeName] unsignedIntegerValue]];
+	
+	return mixedStyle;
 }
 
 

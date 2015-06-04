@@ -25,9 +25,11 @@ NSString *RKDOCXStyleTemplateRelationshipType				= @"http://schemas.openxmlforma
 NSString *RKDOCXStyleTemplateFilename						= @"styles.xml";
 
 // Elements
+NSString *RKDOCXStyleTemplateDocumentDefaultsElementName	= @"w:docDefaults";
 NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
 NSString *RKDOCXStyleTemplateParagraphPropertiesElementName	= @"w:pPr";
 NSString *RKDOCXStyleTemplateParagraphReferenceElementName	= @"w:pStyle";
+NSString *RKDOCXStyleTemplateRunDefaultElementName			= @"w:rPrDefault";
 NSString *RKDOCXStyleTemplateRunPropertiesElementName		= @"w:rPr";
 NSString *RKDOCXStyleTemplateRunReferenceElementName		= @"w:rStyle";
 NSString *RKDOCXStyleTemplateStyleElementName				= @"w:style";
@@ -44,7 +46,7 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 
 + (void)buildStyleTemplatesUsingContext:(RKDOCXConversionContext *)context
 {
-	if (!context.document.characterStyles.count && !context.document.paragraphStyles.count)
+	if (!context.document.characterStyles.count && !context.document.paragraphStyles.count && !context.document.defaultStyle)
 		return;
 	
 	// Namespaces
@@ -58,6 +60,22 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 								 };
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXStyleTemplateRootElementName namespaces:namespaces];
+	
+	
+	// Document defaults
+	NSArray *defaultRunProperties = [RKDOCXRunWriter propertyElementsForAttributes:context.document.defaultStyle usingContext:nil];
+	if (defaultRunProperties.count > 0) {
+		NSXMLElement *documentDefaultsElement = [NSXMLElement elementWithName: RKDOCXStyleTemplateDocumentDefaultsElementName];
+		NSXMLElement *runDefaultPropertiesElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:defaultRunProperties attributes:nil];
+		[documentDefaultsElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateRunDefaultElementName children:@[runDefaultPropertiesElement] attributes:nil]];
+		[document.rootElement addChild: documentDefaultsElement];
+	}
+	
+	// Repeat the document defaults as "Normal" style to make Pages happy
+	if (context.document.defaultStyle.count > 0) {
+		NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"Normal"]]];
+		[document.rootElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:[RKDOCXRunWriter propertyElementsForAttributes:context.document.defaultStyle usingContext:nil] attributes:nil]] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateParagraphStyleAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:@"Normal"]]]];
+	}
 	
 	// Paragraph Styles
 	for (NSString *styleName in context.document.paragraphStyles) {
