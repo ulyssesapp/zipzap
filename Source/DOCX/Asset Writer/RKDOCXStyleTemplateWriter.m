@@ -27,6 +27,7 @@ NSString *RKDOCXStyleTemplateFilename						= @"styles.xml";
 // Elements
 NSString *RKDOCXStyleTemplateDocumentDefaultsElementName	= @"w:docDefaults";
 NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
+NSString *RKDOCXStyleTemplateParagraphDefaultElementName	= @"w:pPrDefault";
 NSString *RKDOCXStyleTemplateParagraphPropertiesElementName	= @"w:pPr";
 NSString *RKDOCXStyleTemplateParagraphReferenceElementName	= @"w:pStyle";
 NSString *RKDOCXStyleTemplateRunDefaultElementName			= @"w:rPrDefault";
@@ -64,18 +65,33 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXStyleTemplateRootElementName namespaces:namespaces];
 	
 	// Document defaults (§17.7.5)
+	NSXMLElement *documentDefaultsElement = [NSXMLElement elementWithName: RKDOCXStyleTemplateDocumentDefaultsElementName];
+	
+	// Paragraph defaults
+	NSArray *defaultParagraphProperties = [RKDOCXParagraphWriter propertyElementsForAttributes:context.document.defaultStyle usingContext:nil];
+	if (defaultParagraphProperties.count > 0) {
+		NSXMLElement *defaultPropertiesElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphPropertiesElementName children:defaultParagraphProperties attributes:nil];
+		[documentDefaultsElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphDefaultElementName children:@[defaultPropertiesElement] attributes:nil]];
+	}
+	
+	// Character defaults
 	NSArray *defaultRunProperties = [RKDOCXRunWriter propertyElementsForAttributes:context.document.defaultStyle usingContext:nil];
 	if (defaultRunProperties.count > 0) {
-		NSXMLElement *documentDefaultsElement = [NSXMLElement elementWithName: RKDOCXStyleTemplateDocumentDefaultsElementName];
-		NSXMLElement *runDefaultPropertiesElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:defaultRunProperties attributes:nil];
-		[documentDefaultsElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateRunDefaultElementName children:@[runDefaultPropertiesElement] attributes:nil]];
-		[document.rootElement addChild: documentDefaultsElement];
+		NSXMLElement *defaultPropertiesElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:defaultRunProperties attributes:nil];
+		[documentDefaultsElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateRunDefaultElementName children:@[defaultPropertiesElement] attributes:nil]];
 	}
+	
+	if (documentDefaultsElement.childCount > 0)
+		[document.rootElement addChild: documentDefaultsElement];
 	
 	// Repeat the document defaults as "Normal" style to make Pages happy
 	if (context.document.defaultStyle.count > 0) {
 		NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"Normal"]]];
-		[document.rootElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:[RKDOCXRunWriter propertyElementsForAttributes:context.document.defaultStyle usingContext:nil] attributes:nil]] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateParagraphStyleAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateDefaultAttributeName stringValue:RKDOCXStyleTemplateDefaultAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:@"Normal"]]]];
+		[document.rootElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
+															 children:@[styleNameElement,
+																		[NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphPropertiesElementName children:[RKDOCXParagraphWriter propertyElementsForAttributes:context.document.defaultStyle usingContext:nil] attributes:nil],
+																		[NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:[RKDOCXRunWriter propertyElementsForAttributes:context.document.defaultStyle usingContext:nil] attributes:nil]]
+														   attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateParagraphStyleAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateDefaultAttributeName stringValue:RKDOCXStyleTemplateDefaultAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:@"Normal"]]]];
 	}
 	
 	// Paragraph Styles

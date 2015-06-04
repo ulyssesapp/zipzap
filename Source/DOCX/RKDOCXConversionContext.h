@@ -31,6 +31,11 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyle characterStyle:(NSString *)characterStyle;
 
+/*!
+ @abstract Mixes the first style dictionary into the second style dictionary.
+ */
+- (NSMutableDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyle intoStyleAttributes:(NSDictionary *)lowPriorityStyle;
+
 
 #pragma mark - Output context
 
