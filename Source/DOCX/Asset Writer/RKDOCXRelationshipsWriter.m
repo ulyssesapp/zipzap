@@ -43,15 +43,14 @@ NSString *RKDOCXLinkRelationshipType					= @"http://schemas.openxmlformats.org/o
 
 + (void)buildDocumentRelationshipsUsingContext:(RKDOCXConversionContext *)context
 {
-	for (NSString *relationshipSource in context.documentRelationships) {
+	[context.documentRelationships enumerateKeysAndObjectsUsingBlock: ^(NSString *relationshipSource, NSArray *relationships, BOOL *stop) {
 		NSXMLDocument *document = [self basicXMLDocumentWithRootElementName:RKDOCXRelationshipsRootElementName namespaces:@{@"xmlns": @"http://schemas.openxmlformats.org/package/2006/relationships"}];
 		
-		for (NSDictionary *relationship in context.documentRelationships[relationshipSource]) {
+		for (NSDictionary *relationship in relationships)
 			[self addRelationshipWithTarget:relationship[RKDOCXConversionContextRelationshipTarget] type:relationship[RKDOCXConversionContextRelationshipTypeName] id:[NSString stringWithFormat: @"rId%@", relationship[RKDOCXConversionContextRelationshipIdentifierName]] toXMLElement:document.rootElement];
-		}
 		
 		[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:[relationshipSource stringByAppendingString: RKDOCXPackageRelationshipsFilename] folder:RKDOCXWordRelsFolder] contentType:nil];
-	}
+	}];
 }
 
 + (void)addRelationshipWithTarget:(NSString *)target type:(NSString *)type id:(NSString *)identifier toXMLElement:(NSXMLElement *)rootElement
