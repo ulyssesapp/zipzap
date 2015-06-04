@@ -56,4 +56,29 @@
 	[self assertDOCX:document withTestDocument:@"twofootnotes"];
 }
 
+- (void)testFootnoteWithLink
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Footnote Test"];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKFootnoteAttributeName: [[NSAttributedString alloc] initWithString:@"This is a link inside a footnote." attributes:@{RKLinkAttributeName: [NSURL URLWithString: @"http://example.org/"]}]}]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"footnotewithlink"];
+}
+
+- (void)testFootnoteWithImage
+{
+	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"png" subdirectory:@"Test Data/resources"];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] margin:RKEdgeInsetsMake(0, 0, 0, 0)];
+	NSMutableAttributedString *footnoteString = [[NSMutableAttributedString alloc] initWithString:@"This is an image inside a footnote: "];
+	[footnoteString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment}]];
+	
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Footnote Test"];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKFootnoteAttributeName: footnoteString}]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"footnotewithimage"];
+}
+
 @end

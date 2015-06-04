@@ -47,9 +47,16 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithStandardNamespacesAndRootElementName: rootElementName];
 	
+	// Change relationship source for header/footer
+	NSString *previousRelationshipSource = context.currentRelationshipSource;
+	context.currentRelationshipSource = filename;
+
 	document.rootElement.children = [RKDOCXAttributedStringWriter processAttributedString:contentString usingContext:context];
 	
-	[context indexForDocumentRelationshipWithTarget:filename andType:relationshipType];
+	// Restore previous relationship
+	context.currentRelationshipSource = previousRelationshipSource;
+	
+	[context indexForRelationshipWithTarget:filename andType:relationshipType];
 	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:filename folder:RKDOCXWordFolder] contentType:contentType];
 }
 

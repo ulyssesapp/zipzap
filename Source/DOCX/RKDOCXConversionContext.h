@@ -6,21 +6,9 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+extern NSString *RKDOCXConversionContextRelationshipTarget;
 extern NSString *RKDOCXConversionContextRelationshipTypeName;
 extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
-
-/*!
- @abstract Specifies what document part the currently processed string belongs to.
- 
- @const RKDOCXRelationshipDocumentSource	String processing takes place in the context of the main document.
- @const RKDOCXRelationshipEndnoteSource		String processing takes place in the context of a footnote.
- @const RKDOCXRelationshipFootnoteSource	String processing takes place in the context of an endnote.
- */
-typedef enum : NSUInteger {
-	RKDOCXRelationshipDocumentSource,
-	RKDOCXRelationshipEndnoteSource,
-	RKDOCXRelationshipFootnoteSource,
-} RKDOCXRelationshipSource;
 
 /*!
  @abstract Collects state generated during the conversion process that is shared between conversion steps.
@@ -141,42 +129,22 @@ typedef enum : NSUInteger {
 #pragma mark - Document relationships
 
 /*!
- @abstract Specifies whether the current attributed string is part of the main document, an endnote or a footnote.
+ @abstract Specifies which relationship source the attributed string belongs to.
+ @discussion E.g. "document.xml" or "header2.xml".
  */
-@property (nonatomic) RKDOCXRelationshipSource currentRelationshipContext;
+@property (nonatomic, readwrite) NSString *currentRelationshipSource;
 
 /*!
  @abstract Mapping from document relationship targets (NSString) to document relationship identifiers (NSNumber) and document relationship types (NSString).
  */
+#warning Documentation needs an update!
 @property (nonatomic, readonly) NSDictionary *documentRelationships;
 
 /*!
- @abstract Returns the document relationship identifier of a target.
+ @abstract Returns the relationship identifier of a target.
  @discussion Also creates a new identifier if needed.
  */
-- (NSUInteger)indexForDocumentRelationshipWithTarget:(NSString *)target andType:(NSString *)type;
-
-/*!
- @abstract Mapping from endnote relationship targets (NSString) to endnote relationship identifiers (NSNumber) and endnote relationship types (NSString).
- */
-@property (nonatomic, readonly) NSDictionary *endnoteRelationships;
-
-/*!
- @abstract Returns the endnote relationship identifier of a target.
- @discussion Also creates a new identifier if needed.
- */
-- (NSUInteger)indexForEndnoteRelationshipWithTarget:(NSString *)target andType:(NSString *)type;
-
-/*!
- @abstract Mapping from footnote relationship targets (NSString) to footnote relationship identifiers (NSNumber) and footnote relationship types (NSString).
- */
-@property (nonatomic, readonly) NSDictionary *footnoteRelationships;
-
-/*!
- @abstract Returns the footnote relationship identifier of a target.
- @discussion Also creates a new identifier if needed.
- */
-- (NSUInteger)indexForFootnoteRelationshipWithTarget:(NSString *)target andType:(NSString *)type;
+- (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type;
 
 /*!
  @abstract Mapping from relationship targets (NSString) to relationship types (NSString).
