@@ -36,4 +36,15 @@
 	[self assertDOCX:document withTestDocument:@"jpg"];
 }
 
+- (void)testLargeImageSupport
+{
+	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"large-image" withExtension:@"png" subdirectory:@"Test Data/resources"];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] margin:RKEdgeInsetsMake(42, 42, 42, 42)];
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc " attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"largepng"];
+}
+
 @end
