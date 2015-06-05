@@ -1,5 +1,5 @@
 //
-//  RKDOCXConversionContext.h
+//  RKDOCXConversionContext.m
 //  RTFKit
 //
 //  Created by Lucas Hauswald on 26.03.15.
