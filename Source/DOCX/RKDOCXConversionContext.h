@@ -32,9 +32,9 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyle characterStyle:(NSString *)characterStyle;
 
 /*!
- @abstract Mixes the first style dictionary into the second style dictionary.
+ @abstract Mixes the first style dictionary into the second style dictionary and returns the resulting dictionary.
  */
-- (NSMutableDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyle intoStyleAttributes:(NSDictionary *)lowPriorityStyle;
+- (NSDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyleAttributes intoStyleAttributes:(NSDictionary *)lowPriorityStyleAttributes;
 
 
 #pragma mark - Output context
@@ -140,9 +140,9 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 @property (nonatomic, readwrite) NSString *currentRelationshipSource;
 
 /*!
- @abstract Mapping from document relationship targets (NSString) to document relationship identifiers (NSNumber) and document relationship types (NSString).
+ @abstract Mapping from filenames of relationship sources to an array of relationship dictionaries.
+ @discussion A relationship (sub-)dictionary contains information about the relationship target (NSString), the relationship identifier (NSNumber) and the relationship type (NSString).
  */
-#warning Documentation needs an update!
 @property (nonatomic, readonly) NSDictionary *documentRelationships;
 
 /*!

@@ -198,7 +198,8 @@
 @property(nonatomic) RKFootnoteEnumerationPolicy endnoteEnumerationPolicy;
 
 /*!
- @abstract Specifies the document-wide default style.
+ @abstract Specifies the document-wide default style
+ @discussion A mapping from style attribute names to style values. (Similar to each subdictionary of paragraphStyles or characterStyles.) Used by DOCXWriter to define document defaults.
  */
 @property(nonatomic) NSDictionary *defaultStyle;
 

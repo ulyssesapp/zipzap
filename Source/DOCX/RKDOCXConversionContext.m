@@ -53,27 +53,27 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
 {
-	NSDictionary *defaultStyle = _document.defaultStyle ?: nil;
+	NSDictionary *defaultStyle = self.document.defaultStyle;
 	
 	if (!paragraphStyleName && !characterStyleName)
 		return defaultStyle;
 	
 	else if (!paragraphStyleName)
-		return [self mixStyleAttributes:_document.characterStyles[characterStyleName] intoStyleAttributes:defaultStyle];
+		return [self mixStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:defaultStyle];
 	
 	else if (!characterStyleName)
-		return [self mixStyleAttributes:_document.paragraphStyles[paragraphStyleName] intoStyleAttributes:defaultStyle];
+		return [self mixStyleAttributes:self.document.paragraphStyles[paragraphStyleName] intoStyleAttributes:defaultStyle];
 	
 	// Try to use pre-chached value
 	NSArray *styleKey = @[paragraphStyleName, characterStyleName];
-	NSMutableDictionary *cachedStyle = _styleCache[styleKey];
+	NSDictionary *cachedStyle = _styleCache[styleKey];
 	
 	if (cachedStyle)
 		return cachedStyle;
 	
 	// Mix character and paragraph style, character styles have the higher priority
 	else
-		cachedStyle = [self mixStyleAttributes:_document.characterStyles[characterStyleName] intoStyleAttributes:_document.paragraphStyles[paragraphStyleName]];
+		cachedStyle = [self mixStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:self.document.paragraphStyles[paragraphStyleName]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;
@@ -81,18 +81,18 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return cachedStyle;
 }
 
-- (NSMutableDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyle intoStyleAttributes:(NSDictionary *)lowPriorityStyle
+- (NSDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyleAttributes intoStyleAttributes:(NSDictionary *)lowPriorityStyleAttributes
 {
-	NSMutableDictionary *mixedStyle = _document.defaultStyle ? [NSMutableDictionary dictionaryWithDictionary: _document.defaultStyle] : [NSMutableDictionary new];
+	NSMutableDictionary *mixedStyle = self.document.defaultStyle ? [self.document.defaultStyle mutableCopy] : [NSMutableDictionary new];
 	
-	if (lowPriorityStyle)
-		[mixedStyle addEntriesFromDictionary: lowPriorityStyle];
+	if (lowPriorityStyleAttributes)
+		[mixedStyle addEntriesFromDictionary: lowPriorityStyleAttributes];
 	
-	if (highPriorityStyle)
-		[mixedStyle addEntriesFromDictionary: highPriorityStyle];
+	if (highPriorityStyleAttributes)
+		[mixedStyle addEntriesFromDictionary: highPriorityStyleAttributes];
 	
-	if (lowPriorityStyle[RKFontAttributeName] && highPriorityStyle[RKFontAttributeName])
-		mixedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:lowPriorityStyle[RKFontAttributeName] withOverridingFont:highPriorityStyle[RKFontAttributeName] usingMask:[highPriorityStyle[RKFontMixAttributeName] unsignedIntegerValue]];
+	if (lowPriorityStyleAttributes[RKFontAttributeName] && highPriorityStyleAttributes[RKFontAttributeName])
+		mixedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:lowPriorityStyleAttributes[RKFontAttributeName] withOverridingFont:highPriorityStyleAttributes[RKFontAttributeName] usingMask:[highPriorityStyleAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
 	
 	return mixedStyle;
 }
@@ -221,7 +221,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
 {
-	NSMutableArray *relationships = _documentRelationships[_currentRelationshipSource] ?: [NSMutableArray new];
+	NSMutableArray *relationships = _documentRelationships[self.currentRelationshipSource] ?: [NSMutableArray new];
 	
 	for (NSDictionary *relationship in relationships) {
 		if ([relationship[RKDOCXConversionContextRelationshipTarget] isEqual: target])
@@ -232,7 +232,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 								RKDOCXConversionContextRelationshipTypeName: type,
 								RKDOCXConversionContextRelationshipIdentifierName: @(relationships.count + 1)}];
 	
-	_documentRelationships[_currentRelationshipSource] = relationships;
+	_documentRelationships[self.currentRelationshipSource] = relationships;
 	
 	return relationships.count;
 }
