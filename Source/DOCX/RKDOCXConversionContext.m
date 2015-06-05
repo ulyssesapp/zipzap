@@ -53,42 +53,48 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
 {
-	// Simple cases: Style mixing is not required
+	NSDictionary *defaultStyle = self.document.defaultStyle;
+	
 	if (!paragraphStyleName && !characterStyleName)
-		return nil;
+		return defaultStyle;
 	
 	else if (!paragraphStyleName)
-		return _document.characterStyles[characterStyleName];
+		return [self mixStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:defaultStyle];
 	
 	else if (!characterStyleName)
-		return _document.paragraphStyles[paragraphStyleName];
+		return [self mixStyleAttributes:self.document.paragraphStyles[paragraphStyleName] intoStyleAttributes:defaultStyle];
 	
 	// Try to use pre-chached value
 	NSArray *styleKey = @[paragraphStyleName, characterStyleName];
-	NSMutableDictionary *cachedStyle = _styleCache[styleKey];
+	NSDictionary *cachedStyle = _styleCache[styleKey];
 	
 	if (cachedStyle)
 		return cachedStyle;
-	else
-		cachedStyle = [NSMutableDictionary new];
 	
 	// Mix character and paragraph style, character styles have the higher priority
-	NSDictionary *paragraphAttributes = _document.paragraphStyles[paragraphStyleName];
-	NSDictionary *characterAttributes = _document.characterStyles[characterStyleName];
-	
-	if (paragraphAttributes)
-		[cachedStyle addEntriesFromDictionary: paragraphAttributes];
-	
-	if (characterAttributes)
-		[cachedStyle addEntriesFromDictionary: characterAttributes];
-	
-	if (paragraphAttributes[RKFontAttributeName] && characterAttributes[RKFontAttributeName])
-		cachedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:paragraphAttributes[RKFontAttributeName] withOverridingFont:characterAttributes[RKFontAttributeName] usingMask:[characterAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
+	else
+		cachedStyle = [self mixStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:self.document.paragraphStyles[paragraphStyleName]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;
 	
 	return cachedStyle;
+}
+
+- (NSDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyleAttributes intoStyleAttributes:(NSDictionary *)lowPriorityStyleAttributes
+{
+	NSMutableDictionary *mixedStyle = self.document.defaultStyle ? [self.document.defaultStyle mutableCopy] : [NSMutableDictionary new];
+	
+	if (lowPriorityStyleAttributes)
+		[mixedStyle addEntriesFromDictionary: lowPriorityStyleAttributes];
+	
+	if (highPriorityStyleAttributes)
+		[mixedStyle addEntriesFromDictionary: highPriorityStyleAttributes];
+	
+	if (lowPriorityStyleAttributes[RKFontAttributeName] && highPriorityStyleAttributes[RKFontAttributeName])
+		mixedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:lowPriorityStyleAttributes[RKFontAttributeName] withOverridingFont:highPriorityStyleAttributes[RKFontAttributeName] usingMask:[highPriorityStyleAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
+	
+	return mixedStyle;
 }
 
 
@@ -215,7 +221,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
 {
-	NSMutableArray *relationships = _documentRelationships[_currentRelationshipSource] ?: [NSMutableArray new];
+	NSMutableArray *relationships = _documentRelationships[self.currentRelationshipSource] ?: [NSMutableArray new];
 	
 	for (NSDictionary *relationship in relationships) {
 		if ([relationship[RKDOCXConversionContextRelationshipTarget] isEqual: target])
@@ -226,7 +232,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 								RKDOCXConversionContextRelationshipTypeName: type,
 								RKDOCXConversionContextRelationshipIdentifierName: @(relationships.count + 1)}];
 	
-	_documentRelationships[_currentRelationshipSource] = relationships;
+	_documentRelationships[self.currentRelationshipSource] = relationships;
 	
 	return relationships.count;
 }

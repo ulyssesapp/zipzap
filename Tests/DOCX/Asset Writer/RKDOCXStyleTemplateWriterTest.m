@@ -284,6 +284,32 @@
 }
 
 
+#pragma mark - Default style
+
+- (void)testDefaultStyle
+{
+	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	paragraphStyle.headIndent = 13;
+	paragraphStyle.tailIndent = -04;
+	paragraphStyle.firstLineHeadIndent = 19;
+	paragraphStyle.paragraphSpacingBefore = 20;
+	paragraphStyle.paragraphSpacing = 15;
+	paragraphStyle.alignment = RKTextAlignmentJustified;
+	paragraphStyle.defaultTabInterval = 42;
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:0]];
+	
+	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait),
+								 RKParagraphStyleAttributeName: paragraphStyle};
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This document uses a default style in its styles.xml file." attributes:attributes];
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.defaultStyle = [attributes copy];
+	
+	[self assertDOCX:document withTestDocument:@"defaultstyle"];
+}
+
+
 #pragma mark - Mixed styles
 
 - (void)testOverriddenCharacterAttributesInParagraphStyle
