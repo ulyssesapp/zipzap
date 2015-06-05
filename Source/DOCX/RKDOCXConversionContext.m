@@ -54,26 +54,33 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
 {
 	NSDictionary *defaultStyle = self.document.defaultStyle;
+	NSArray *styleKey;
 	
 	if (!paragraphStyleName && !characterStyleName)
 		return defaultStyle;
 	
+	// Try to use pre-chached value
 	else if (!paragraphStyleName)
-		return [self mixStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:defaultStyle];
+		styleKey = @[characterStyleName];
 	
 	else if (!characterStyleName)
-		return [self mixStyleAttributes:self.document.paragraphStyles[paragraphStyleName] intoStyleAttributes:defaultStyle];
+		styleKey = @[paragraphStyleName];
 	
-	// Try to use pre-chached value
-	NSArray *styleKey = @[paragraphStyleName, characterStyleName];
+	else
+		styleKey = @[characterStyleName, paragraphStyleName];
+	
 	NSDictionary *cachedStyle = _styleCache[styleKey];
 	
 	if (cachedStyle)
 		return cachedStyle;
 	
+	// Mix given paragraph or character style with default style, depending on which is available
+	if (styleKey.count == 1)
+		cachedStyle = [self attributesByMixingStyleAttributes:(characterStyleName ? self.document.characterStyles[characterStyleName] : self.document.paragraphStyles[paragraphStyleName]) intoStyleAttributes:defaultStyle];
+	
 	// Mix character and paragraph style, character styles have the higher priority
 	else
-		cachedStyle = [self mixStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:self.document.paragraphStyles[paragraphStyleName]];
+		cachedStyle = [self attributesByMixingStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:self.document.paragraphStyles[paragraphStyleName]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;
@@ -81,7 +88,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return cachedStyle;
 }
 
-- (NSDictionary *)mixStyleAttributes:(NSDictionary *)highPriorityStyleAttributes intoStyleAttributes:(NSDictionary *)lowPriorityStyleAttributes
+- (NSDictionary *)attributesByMixingStyleAttributes:(NSDictionary *)highPriorityStyleAttributes intoStyleAttributes:(NSDictionary *)lowPriorityStyleAttributes
 {
 	NSMutableDictionary *mixedStyle = self.document.defaultStyle ? [self.document.defaultStyle mutableCopy] : [NSMutableDictionary new];
 	
