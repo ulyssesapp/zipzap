@@ -160,4 +160,14 @@
 	[self assertDOCX:document withTestDocument:@"twosections"];
 }
 
+- (void)testTwoSidedSections
+{
+	RKSection *sectionA = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"This document consists of two sections.\nThis is section one."]];
+	RKSection *sectionB = [[RKSection alloc] initWithContent: [[NSAttributedString alloc] initWithString: @"The test is passed if this text is on page three. When using the print preview, there should be an empty page between section one and two.\nThis is section two.\nNote: Word hides empty pages unless previewing the print layout."]];
+	RKDocument *document = [[RKDocument alloc] initWithSections: @[sectionA, sectionB]];
+	document.twoSided = YES;
+	
+	[self assertDOCX:document withTestDocument:@"twosidedsections"];
+}
+
 @end

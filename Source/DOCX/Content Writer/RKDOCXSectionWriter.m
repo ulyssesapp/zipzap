@@ -9,6 +9,7 @@
 #import "RKDOCXSectionWriter.h"
 
 #import "RKDOCXAttributedStringWriter.h"
+#import "RKDOCXAttributeWriter.h"
 #import "RKDOCXHeaderFooterWriter.h"
 #import "RKDOCXParagraphWriter.h"
 #import "RKDOCXSettingsWriter.h"
@@ -25,6 +26,7 @@ NSString *RKDOCXSectionPageNumberTypeElementName					= @"w:pgNumType";
 NSString *RKDOCXSectionPageSizeElementName							= @"w:pgSz";
 NSString *RKDOCXSectionPropertiesElementName						= @"w:sectPr";
 NSString *RKDOCXSectionTitlePageElementName							= @"w:titlePg";
+NSString *RKDOCXSectionTypeElementName								= @"w:type";
 
 // Attributes
 NSString *RKDOCXSectionColumnCountAttributeName						= @"w:num";
@@ -51,9 +53,10 @@ NSString *RKDOCXSectionPageNumberUpperLetterAttributeValue			= @"upperLetter";
 NSString *RKDOCXSectionPageNumberUpperRomanAttributeValue			= @"upperRoman";
 NSString *RKDOCXSectionPageSizeOrientationLandscapeAttributeValue	= @"landscape";
 NSString *RKDOCXSectionPageSizeOrientationPortraitAttributeValue	= @"portrait";
-NSString *RKDOCXSectionTypeDefaultAttriuteValue						= @"default";
-NSString *RKDOCXSectionTypeEvenAttributeValue						= @"even";
-NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
+NSString *RKDOCXSectionHeaderFooterTypeDefaultAttriuteValue			= @"default";
+NSString *RKDOCXSectionHeaderFooterTypeEvenAttributeValue			= @"even";
+NSString *RKDOCXSectionHeaderFooterTypeFirstAttributeValue			= @"first";
+NSString *RKDOCXSectionTypeOddPageAttributeValue					= @"oddPage";
 
 @implementation RKDOCXSectionWriter
 
@@ -84,6 +87,10 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 		NSXMLElement *pageMarginProperty = [self pageMarginPropertyForDocument: context.document];
 		if (pageMarginProperty)
 			[sectionProperties addChild: pageMarginProperty];
+		
+		// Sections start on odd pages
+		if (context.document.twoSided && ![section isEqual: context.document.sections.firstObject])
+			[sectionProperties addChild: [NSXMLElement elementWithName:RKDOCXSectionTypeElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXSectionTypeOddPageAttributeValue]]]];
 		
 		// Footnote Properties
 		NSXMLElement *footnoteProperties = [RKDOCXSettingsWriter footnotePropertiesFromDocument:context.document isEndnote:NO];
@@ -236,17 +243,17 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 	NSString *typeAttribute;
 	switch (pageSelector) {
 		case RKPageSelectionFirst:
-			typeAttribute = RKDOCXSectionTypeFirstAttributeValue;
+			typeAttribute = RKDOCXSectionHeaderFooterTypeFirstAttributeValue;
 			break;
 			
 		case RKPageSelectionLeft:
-			typeAttribute = RKDOCXSectionTypeEvenAttributeValue;
+			typeAttribute = RKDOCXSectionHeaderFooterTypeEvenAttributeValue;
 			context.evenAndOddHeaders = YES;
 			break;
 			
 		case RKPageSelectionRight:
 		case RKPageSelectorAll:
-			typeAttribute = RKDOCXSectionTypeDefaultAttriuteValue;
+			typeAttribute = RKDOCXSectionHeaderFooterTypeDefaultAttriuteValue;
 			break;
 	}
 	
