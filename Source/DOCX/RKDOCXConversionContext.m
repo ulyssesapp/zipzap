@@ -80,7 +80,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// Mix character and paragraph style, character styles have the higher priority
 	else
-		cachedStyle = [self attributesByMixingStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:self.document.paragraphStyles[paragraphStyleName]];
+		cachedStyle = [self attributesByMixingStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:[self cachedStyleFromParagraphStyle:paragraphStyleName characterStyle:nil]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;
