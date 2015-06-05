@@ -26,9 +26,7 @@ NSString *RKDOCXStyleTemplateFilename						= @"styles.xml";
 
 // Elements
 NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
-NSString *RKDOCXStyleTemplateParagraphPropertiesElementName	= @"w:pPr";
 NSString *RKDOCXStyleTemplateParagraphReferenceElementName	= @"w:pStyle";
-NSString *RKDOCXStyleTemplateRunPropertiesElementName		= @"w:rPr";
 NSString *RKDOCXStyleTemplateRunReferenceElementName		= @"w:rStyle";
 NSString *RKDOCXStyleTemplateStyleElementName				= @"w:style";
 
@@ -89,11 +87,11 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	// In case of paragraph style
 	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (!isCharacterStyle && paragraphAttributes.count > 0)
-		[styleElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphPropertiesElementName children:paragraphAttributes attributes:nil]];
+		[styleElement addChild: [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:paragraphAttributes attributes:nil]];
 	
 	NSArray *characterAttributes = [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (characterAttributes.count > 0)
-		[styleElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateRunPropertiesElementName children:characterAttributes attributes:nil]];
+		[styleElement addChild: [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:characterAttributes attributes:nil]];
 	
 	return styleElement;
 }

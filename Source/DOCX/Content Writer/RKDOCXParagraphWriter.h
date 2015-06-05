@@ -9,6 +9,11 @@
 #import "RKDOCXConversionContext.h"
 
 /*!
+ @abstract Parent element of paragraph properties.
+ */
+extern NSString *RKDOCXParagraphPropertiesElementName;
+
+/*!
  @abstract Generates a paragraph properties element "<w:pPr>" to be added to the parent document.
  @discussion See ISO 29500-1:2012: §17.3.1.26 (Paragraph Properties).
  */

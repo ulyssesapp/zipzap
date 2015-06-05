@@ -11,6 +11,7 @@
 #import "RKDOCXAttributeWriter.h"
 #import "RKDOCXParagraphWriter.h"
 #import "RKDOCXParagraphStyleWriter.h"
+#import "RKDOCXRunWriter.h"
 #import "RKListStyle+FormatStringParserAdditions.h"
 
 // Root element name
@@ -156,6 +157,8 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		NSDictionary *attributes = listStyle.levelStyles[index];
 		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocationKey:[attributes[RKListStyleMarkerLocationKey] unsignedIntegerValue] markerWidthKey:[attributes[RKListStyleMarkerWidthKey] unsignedIntegerValue]];
 		[levelElement addChild: paragraphPropertiesElement];
+		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:[RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context] attributes:nil];
+		[levelElement addChild: runPropertiesElement];
 		
 		[abstractNumberingElement addChild: levelElement];
 	}

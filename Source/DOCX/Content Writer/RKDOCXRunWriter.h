@@ -9,6 +9,11 @@
 #import "RKDOCXConversionContext.h"
 
 /*!
+ @abstract Parent element of run properties.
+ */
+extern NSString *RKDOCXRunPropertiesElementName;
+
+/*!
  @abstract Generates a run element "<w:r>" to be added to the parent paragraph.
  @discussion See ISO 29500-1:2012: §17.3.2 (Run) and §17.3.3 (Run Content).
  */
