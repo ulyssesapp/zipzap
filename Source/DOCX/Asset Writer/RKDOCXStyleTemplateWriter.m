@@ -83,7 +83,8 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	if (documentDefaultsElement.childCount > 0)
 		[document.rootElement addChild: documentDefaultsElement];
 	
-	// Repeat the document defaults as "Normal" style to make Pages happy
+	// Repeat the document defaults as "Normal", otherwise Pages ignores the default settings.
+	// Additionally, Pages requires every paragraph to use a style, or else it will use the previous paragraph’s formatting.
 	if (defaultStyle.count > 0) {
 		NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
 		[document.rootElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
