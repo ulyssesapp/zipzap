@@ -53,42 +53,55 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
 {
-	// Simple cases: Style mixing is not required
+	NSDictionary *defaultStyle = self.document.defaultStyle;
+	NSArray *styleKey;
+	
 	if (!paragraphStyleName && !characterStyleName)
-		return nil;
-	
-	else if (!paragraphStyleName)
-		return _document.characterStyles[characterStyleName];
-	
-	else if (!characterStyleName)
-		return _document.paragraphStyles[paragraphStyleName];
+		return defaultStyle;
 	
 	// Try to use pre-chached value
-	NSArray *styleKey = @[paragraphStyleName, characterStyleName];
-	NSMutableDictionary *cachedStyle = _styleCache[styleKey];
+	else if (!paragraphStyleName)
+		styleKey = @[characterStyleName];
+	
+	else if (!characterStyleName)
+		styleKey = @[paragraphStyleName];
+	
+	else
+		styleKey = @[characterStyleName, paragraphStyleName];
+	
+	NSDictionary *cachedStyle = _styleCache[styleKey];
 	
 	if (cachedStyle)
 		return cachedStyle;
-	else
-		cachedStyle = [NSMutableDictionary new];
+	
+	// Mix given paragraph or character style with default style, depending on which is available
+	if (styleKey.count == 1)
+		cachedStyle = [self attributesByMixingStyleAttributes:(characterStyleName ? self.document.characterStyles[characterStyleName] : self.document.paragraphStyles[paragraphStyleName]) intoStyleAttributes:defaultStyle];
 	
 	// Mix character and paragraph style, character styles have the higher priority
-	NSDictionary *paragraphAttributes = _document.paragraphStyles[paragraphStyleName];
-	NSDictionary *characterAttributes = _document.characterStyles[characterStyleName];
-	
-	if (paragraphAttributes)
-		[cachedStyle addEntriesFromDictionary: paragraphAttributes];
-	
-	if (characterAttributes)
-		[cachedStyle addEntriesFromDictionary: characterAttributes];
-	
-	if (paragraphAttributes[RKFontAttributeName] && characterAttributes[RKFontAttributeName])
-		cachedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:paragraphAttributes[RKFontAttributeName] withOverridingFont:characterAttributes[RKFontAttributeName] usingMask:[characterAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
+	else
+		cachedStyle = [self attributesByMixingStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:self.document.paragraphStyles[paragraphStyleName]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;
 	
 	return cachedStyle;
+}
+
+- (NSDictionary *)attributesByMixingStyleAttributes:(NSDictionary *)highPriorityStyleAttributes intoStyleAttributes:(NSDictionary *)lowPriorityStyleAttributes
+{
+	NSMutableDictionary *mixedStyle = self.document.defaultStyle ? [self.document.defaultStyle mutableCopy] : [NSMutableDictionary new];
+	
+	if (lowPriorityStyleAttributes)
+		[mixedStyle addEntriesFromDictionary: lowPriorityStyleAttributes];
+	
+	if (highPriorityStyleAttributes)
+		[mixedStyle addEntriesFromDictionary: highPriorityStyleAttributes];
+	
+	if (lowPriorityStyleAttributes[RKFontAttributeName] && highPriorityStyleAttributes[RKFontAttributeName])
+		mixedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:lowPriorityStyleAttributes[RKFontAttributeName] withOverridingFont:highPriorityStyleAttributes[RKFontAttributeName] usingMask:[highPriorityStyleAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
+	
+	return mixedStyle;
 }
 
 
@@ -215,7 +228,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSUInteger)indexForRelationshipWithTarget:(NSString *)target andType:(NSString *)type
 {
-	NSMutableArray *relationships = _documentRelationships[_currentRelationshipSource] ?: [NSMutableArray new];
+	NSMutableArray *relationships = _documentRelationships[self.currentRelationshipSource] ?: [NSMutableArray new];
 	
 	for (NSDictionary *relationship in relationships) {
 		if ([relationship[RKDOCXConversionContextRelationshipTarget] isEqual: target])
@@ -226,7 +239,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 								RKDOCXConversionContextRelationshipTypeName: type,
 								RKDOCXConversionContextRelationshipIdentifierName: @(relationships.count + 1)}];
 	
-	_documentRelationships[_currentRelationshipSource] = relationships;
+	_documentRelationships[self.currentRelationshipSource] = relationships;
 	
 	return relationships.count;
 }

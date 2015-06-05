@@ -6,8 +6,22 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+/*!
+ @abstract The filename of the relationship target relative to the location of the relationships source.
+ @discussion See ISO 29500-2:2012: §9.3.2.2.
+ */
 extern NSString *RKDOCXConversionContextRelationshipTarget;
+
+/*!
+ @abstract The relationship type URI for the relationship target.
+ @discussion See ISO 29500-2:2012: §9.3.2.2.
+ */
 extern NSString *RKDOCXConversionContextRelationshipTypeName;
+
+/*!
+ @abstract The relationship identifier as a string containing a bare number.
+ @discussion Other parts of the identifier are not included (e.g. "rId"). See ISO 29500-2:2012: §9.3.2.2.
+ */
 extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 
 /*!
@@ -135,9 +149,9 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 @property (nonatomic, readwrite) NSString *currentRelationshipSource;
 
 /*!
- @abstract Mapping from document relationship targets (NSString) to document relationship identifiers (NSNumber) and document relationship types (NSString).
+ @abstract Maps from filenames of relationship sources to relationship descriptors.
+ @discussion Used to build relationship files (See ISO 29500-2:2012: §9.3.1). See RKDOCXConversionContextRelationshipTarget, … for keys used inside relationship descriptors.
  */
-#warning Documentation needs an update!
 @property (nonatomic, readonly) NSDictionary *documentRelationships;
 
 /*!

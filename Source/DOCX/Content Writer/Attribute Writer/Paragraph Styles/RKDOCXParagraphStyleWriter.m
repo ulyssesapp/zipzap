@@ -45,9 +45,11 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSParagraphStyle *paragraphStyleAttribute = attributes[RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
-	NSParagraphStyle *templateParagraphStyleAttribute = context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
 	RKAdditionalParagraphStyle *additionalParagraphStyleAttribute = attributes[RKAdditionalParagraphStyleAttributeName];
-	RKAdditionalParagraphStyle *templateAdditionalParagraphStyleAttribute = context.document.paragraphStyles[attributes[RKParagraphStyleNameAttributeName]][RKAdditionalParagraphStyleAttributeName];
+	
+	NSDictionary *templateStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:nil];
+	NSParagraphStyle *templateParagraphStyleAttribute = templateStyle[RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
+	RKAdditionalParagraphStyle *templateAdditionalParagraphStyleAttribute = templateStyle[RKAdditionalParagraphStyleAttributeName];
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
