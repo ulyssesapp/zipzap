@@ -131,7 +131,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 
 + (NSSize)scaledImageSizeForImage:(RKImage *)image usingContext:(RKDOCXConversionContext *)context
 {
-	NSSize scaledImageSize = NSMakeSize(image.size.width, image.size.height);
+	NSSize scaledImageSize = image.size;
 	
 	CGFloat aspect = scaledImageSize.width / (context.document.pageSize.width - (context.document.pageInsets.inner + context.document.pageInsets.outer));
 	
