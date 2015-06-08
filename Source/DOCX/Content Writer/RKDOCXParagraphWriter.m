@@ -99,4 +99,11 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 							  attributes:nil];
 }
 
++ (NSXMLElement *)paragraphElementForSeparatorElement:(NSXMLElement *)separatorElement usingContext:(RKDOCXConversionContext *)context
+{
+	NSXMLElement *paragraphPropertiesElement = [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:[RKDOCXParagraphStyleWriter paragraphPropertiesForSeparatorElementUsingContext:context] attributes:nil];
+	NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributes:nil contentElement:separatorElement usingContext:nil];
+	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:@[paragraphPropertiesElement, runElement] attributes:nil];
+}
+
 @end

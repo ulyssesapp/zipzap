@@ -46,4 +46,9 @@ extern NSString *RKDOCXParagraphPropertiesElementName;
  */
 + (NSXMLElement *)paragraphPropertiesElementForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey;
 
+/*!
+ @abstract Returns an XML element representing a paragraph containing a separator element and its properties.
+ */
++ (NSXMLElement *)paragraphElementForSeparatorElement:(NSXMLElement *)separatorElement usingContext:(RKDOCXConversionContext *)context;
+
 @end

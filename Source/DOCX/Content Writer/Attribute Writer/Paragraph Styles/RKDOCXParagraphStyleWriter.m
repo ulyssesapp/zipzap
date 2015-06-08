@@ -132,6 +132,18 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	return indentationElement;
 }
 
++ (NSArray *)paragraphPropertiesForSeparatorElementUsingContext:(RKDOCXConversionContext *)context
+{
+	NSXMLElement *beforeAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingBeforeAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingBefore)];
+	NSXMLElement *afterAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingAfterAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingAfter)];
+	NSXMLElement *spacingProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleSpacingElementName children:nil attributes:@[beforeAttribute, afterAttribute]];
+	
+	NSXMLElement *alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(context.document.footnoteAreaAnchorAlignment == NSRightTextAlignment) ? RKDOCXParagraphStyleRightAlignmentAttributeValue : RKDOCXParagraphStyleLeftAlignmentAttributeValue];
+	NSXMLElement *alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[alignmentAttribute]];
+	
+	return @[spacingProperty, alignmentProperty];
+}
+
 + (NSXMLElement *)indentationPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle
 {
 	if (paragraphStyle.headIndent == templateParagraphStyle.headIndent && paragraphStyle.tailIndent == templateParagraphStyle.tailIndent && paragraphStyle.firstLineHeadIndent == templateParagraphStyle.firstLineHeadIndent)
