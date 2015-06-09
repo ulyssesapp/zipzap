@@ -138,7 +138,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	NSXMLElement *afterAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingAfterAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingAfter)];
 	NSXMLElement *spacingProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleSpacingElementName children:nil attributes:@[beforeAttribute, afterAttribute]];
 	
-	NSXMLElement *alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(context.document.footnoteAreaAnchorAlignment == NSRightTextAlignment) ? RKDOCXParagraphStyleRightAlignmentAttributeValue : RKDOCXParagraphStyleLeftAlignmentAttributeValue];
+	NSXMLElement *alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(context.document.footnoteAreaAnchorAlignment == RKTextAlignmentRight) ? RKDOCXParagraphStyleRightAlignmentAttributeValue : RKDOCXParagraphStyleLeftAlignmentAttributeValue];
 	NSXMLElement *alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[alignmentAttribute]];
 	
 	return @[spacingProperty, alignmentProperty];
