@@ -94,7 +94,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.bottom)]];
 	
 	// Image Size
-	NSSize scaledImageSize = [self scaledImageSizeForImage:image usingContext:context];
+	CGSize scaledImageSize = [self scaledImageSizeForImage:image usingContext:context];
 	NSInteger width = RKPointsToEMUs(scaledImageSize.width);
 	NSInteger height = RKPointsToEMUs(scaledImageSize.height);
 	NSXMLElement *extentElement = [NSXMLElement elementWithName:RKDOCXImageExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName integerValue:width],
@@ -129,9 +129,9 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	return (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)typeIdentifier, kUTTagClassMIMEType);
 }
 
-+ (NSSize)scaledImageSizeForImage:(RKImage *)image usingContext:(RKDOCXConversionContext *)context
++ (CGSize)scaledImageSizeForImage:(RKImage *)image usingContext:(RKDOCXConversionContext *)context
 {
-	NSSize scaledImageSize = image.size;
+	CGSize scaledImageSize = image.size;
 	
 	CGFloat aspect = scaledImageSize.width / (context.document.pageSize.width - (context.document.pageInsets.inner + context.document.pageInsets.outer));
 	
