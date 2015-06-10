@@ -68,21 +68,21 @@ typedef enum : NSUInteger {
 		return;
 	
 	// In case of footnotes
-	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotesInEndnoteSection:NO usingContext:context];
+	NSXMLDocument *footnotesDocument = [self buildFootnotesDocumentPartUsingContext:context isEndnoteSection:NO];
 	if (footnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXFootnotesFilename andType:RKDOCXFootnotesRelationshipType];
 		[context addDocumentPartWithXMLDocument:footnotesDocument filename:[self packagePathForFilename:RKDOCXFootnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXFootnotesContentType];
 	}
 	
 	// In case of endnotes
-	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotesInEndnoteSection:YES usingContext:context];
+	NSXMLDocument *endnotesDocument = [self buildFootnotesDocumentPartUsingContext:context isEndnoteSection:YES];
 	if (endnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXEndnotesFilename andType:RKDOCXEndnotesRelationshipType];
 		[context addDocumentPartWithXMLDocument:endnotesDocument filename:[self packagePathForFilename:RKDOCXEndnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXEndnotesContentType];
 	}
 }
 
-+ (NSXMLDocument *)buildDocumentPartForNotesInEndnoteSection:(BOOL)isEndnoteSection usingContext:(RKDOCXConversionContext *)context
++ (NSXMLDocument *)buildFootnotesDocumentPartUsingContext:(RKDOCXConversionContext *)context isEndnoteSection:(BOOL)isEndnoteSection
 {
 	NSDictionary *notes = isEndnoteSection ? context.endnotes : context.footnotes;
 	
