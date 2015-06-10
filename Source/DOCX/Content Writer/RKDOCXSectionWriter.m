@@ -102,6 +102,7 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 		
 		// Create a reference for each separate Header
 		[section enumerateHeadersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
+			// Do not create empty headers
 			if (header.string.length) {
 				[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXHeader withIndex:++context.headerCount forAttributedString:header usingContext:context];
 				[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXHeader withAttributedString:header forPageSelector:pageSelector usingContext:context]];
@@ -110,6 +111,7 @@ NSString *RKDOCXSectionTypeFirstAttributeValue						= @"first";
 		
 		// Create a reference for each separate Footer
 		[section enumerateFootersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
+			// Do not create empty footers
 			if (footer.string.length) {
 				[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXFooter withIndex:++context.footerCount forAttributedString:footer usingContext:context];
 				[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXFooter withAttributedString:footer forPageSelector:pageSelector usingContext:context]];
