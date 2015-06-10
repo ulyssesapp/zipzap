@@ -35,11 +35,19 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 		return [NSXMLElement elementWithName: RKDOCXParagraphElementName];
 	
 	if (properties)
-		[paragraphChildren addObject: [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:properties attributes:nil]];
+		[paragraphChildren addObject: [self paragraphPropertiesElementWithProperties: properties]];
 	if (runElements)
 		[paragraphChildren addObjectsFromArray: runElements];
 	
 	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:(paragraphChildren.count != 0) ? paragraphChildren : nil attributes:nil];
+}
+
++ (NSXMLElement *)paragraphPropertiesElementWithProperties:(NSArray *)properties
+{
+	if (!properties.count)
+		return nil;
+	
+	return [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:properties attributes:nil];
 }
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
@@ -93,15 +101,13 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 
 + (NSXMLElement *)paragraphPropertiesElementForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey
 {
-	return [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName
-								children:@[[RKDOCXParagraphStyleWriter tabSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey],
-										   [RKDOCXParagraphStyleWriter indentationSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey]]
-							  attributes:nil];
+	return [self paragraphPropertiesElementWithProperties: @[[RKDOCXParagraphStyleWriter tabSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey],
+															 [RKDOCXParagraphStyleWriter indentationSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey]]];
 }
 
 + (NSXMLElement *)paragraphElementForSeparatorElement:(NSXMLElement *)separatorElement usingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLElement *paragraphPropertiesElement = [NSXMLElement elementWithName:RKDOCXParagraphPropertiesElementName children:[RKDOCXParagraphStyleWriter paragraphPropertiesForSeparatorElementUsingContext:context] attributes:nil];
+	NSXMLElement *paragraphPropertiesElement = [self paragraphPropertiesElementWithProperties: [RKDOCXParagraphStyleWriter paragraphPropertiesForSeparatorElementUsingContext:context]];
 	NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributes:nil contentElement:separatorElement usingContext:nil];
 	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:@[paragraphPropertiesElement, runElement] attributes:nil];
 }

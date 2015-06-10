@@ -9,11 +9,6 @@
 #import "RKDOCXConversionContext.h"
 
 /*!
- @abstract Parent element of paragraph properties.
- */
-extern NSString *RKDOCXParagraphPropertiesElementName;
-
-/*!
  @abstract Generates a paragraph properties element "<w:pPr>" to be added to the parent document.
  @discussion See ISO 29500-1:2012: §17.3.1.26 (Paragraph Properties).
  */
@@ -29,6 +24,11 @@ extern NSString *RKDOCXParagraphPropertiesElementName;
  @abstract Returns an XML element with the given property and run elements (if any).
  */
 + (NSXMLElement *)paragraphElementWithProperties:(NSArray *)properties runElements:(NSArray *)runElements;
+
+/*!
+ @abstract Returns an XML element representing a paragraph property element with the given property elements.
+ */
++ (NSXMLElement *)paragraphPropertiesElementWithProperties:(NSArray *)properties;
 
 /*!
  @abstract Returns an array of XML elements containing the paragraph style properties of the given attributes.

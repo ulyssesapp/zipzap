@@ -9,11 +9,6 @@
 #import "RKDOCXConversionContext.h"
 
 /*!
- @abstract Parent element of run properties.
- */
-extern NSString *RKDOCXRunPropertiesElementName;
-
-/*!
  @abstract Generates a run element "<w:r>" to be added to the parent paragraph.
  @discussion See ISO 29500-1:2012: §17.3.2 (Run) and §17.3.3 (Run Content).
  */
@@ -29,6 +24,11 @@ extern NSString *RKDOCXRunPropertiesElementName;
  @abstract Returns an XML element representing a run with the given properties and content elements.
  */
 + (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes contentElement:(NSXMLElement *)contentElement usingContext:(RKDOCXConversionContext *)context;
+
+/*!
+ @abstract Returns an XML element representing a run property element with the given property elements.
+ */
++ (NSXMLElement *)runPropertiesElementWithProperties:(NSArray *)properties;
 
 /*!
  @abstract Returns an array of XML elements containing the run style properties of the given attributes.
