@@ -137,11 +137,13 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 				[levelTextString appendString: token];
 		}];
 		
-		if (formatString) {
-			NSXMLElement *enumerationFormatElement = [NSXMLElement elementWithName: RKDOCXListStyleEnumerationFormatElementName];
-			[enumerationFormatElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:formatString]];
-			[levelElement addChild: enumerationFormatElement];
-		}
+		// Set enumeration format to bullet, if list is unordered
+		if (!formatString)
+			formatString = RKDOCXListStyleEnumerationFormatBulletAttributeValue;
+		
+		NSXMLElement *enumerationFormatElement = [NSXMLElement elementWithName: RKDOCXListStyleEnumerationFormatElementName];
+		[enumerationFormatElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:formatString]];
+		[levelElement addChild: enumerationFormatElement];
 		
 		// Level Text (§17.9.11)
 		NSXMLElement *levelTextElement = [NSXMLElement elementWithName: RKDOCXListStyleLevelTextElementName];
