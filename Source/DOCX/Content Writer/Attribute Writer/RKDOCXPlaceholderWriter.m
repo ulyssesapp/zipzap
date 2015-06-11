@@ -11,7 +11,7 @@ NSString *RKDOCXPlaceholderBreakElementName				= @"w:br";
 NSString *RKDOCXPlaceholderInstructionAttributeName		= @"w:instr";
 NSString *RKDOCXPlaceholderLineBreakAttributeValue		= @"textWrapping";
 NSString *RKDOCXPlaceholderPageBreakAttributeValue		= @"page";
-NSString *RKDOCXPlaceholderPageNumberAttributeValue		= @"PAGE";
+NSString *RKDOCXPlaceholderPageNumberAttributeValue		= @"PAGE \\* MERGEFORMAT";
 NSString *RKDOCXPlaceholderSimpleFieldElementName		= @"w:fldSimple";
 NSString *RKDOCXPlaceholderTabStopElementName			= @"w:tab";
 
@@ -28,7 +28,7 @@ NSString *RKDOCXBreakAttributeName						= @"RKDOCXBreak";
 	if (![attributes[RKPlaceholderAttributeName] isEqual: @(RKPlaceholderPageNumber)])
 		return nil;
 	
-	NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributes:nil contentElement:[RKDOCXRunWriter textElementWithStringValue:@"1"] usingContext:context];
+	NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributes:attributes contentElement:[RKDOCXRunWriter textElementWithStringValue:@"1"] usingContext:context];
 	return [NSXMLElement elementWithName:RKDOCXPlaceholderSimpleFieldElementName children:@[runElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXPlaceholderInstructionAttributeName stringValue:RKDOCXPlaceholderPageNumberAttributeValue]]];
 }
 

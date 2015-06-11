@@ -94,12 +94,13 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.bottom)]];
 	
 	// Image Size
-	NSString *width = @(RKPointsToEMUs(image.size.width)).stringValue;
-	NSString *height = @(RKPointsToEMUs(image.size.height)).stringValue;
-	NSXMLElement *extentElement = [NSXMLElement elementWithName:RKDOCXImageExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName stringValue:width],
-																													   [NSXMLElement attributeWithName:RKDOCXImageCanvasYAttributeName stringValue:height]]];
-	NSXMLElement *transformExtentElement = [NSXMLElement elementWithName:RKDOCXImageTransformExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName stringValue:width],
-																																		 [NSXMLElement attributeWithName:RKDOCXImageCanvasYAttributeName stringValue:height]]];
+	CGSize scaledImageSize = [self scaledImageSizeForImage:image usingContext:context];
+	NSInteger width = RKPointsToEMUs(scaledImageSize.width);
+	NSInteger height = RKPointsToEMUs(scaledImageSize.height);
+	NSXMLElement *extentElement = [NSXMLElement elementWithName:RKDOCXImageExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName integerValue:width],
+																													   [NSXMLElement attributeWithName:RKDOCXImageCanvasYAttributeName integerValue:height]]];
+	NSXMLElement *transformExtentElement = [NSXMLElement elementWithName:RKDOCXImageTransformExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName integerValue:width],
+																																		 [NSXMLElement attributeWithName:RKDOCXImageCanvasYAttributeName integerValue:height]]];
 	
 	// Boilerplate XML Tree
 	NSXMLElement *presetGeometryElement = [NSXMLElement elementWithName:RKDOCXImagePresetGeometryElementName children:@[[NSXMLElement elementWithName: RKDOCXImageAdjustValueListElementName]] attributes:@[[NSXMLElement attributeWithName:RKDOCXImagePresetGeometryAttributeName stringValue:@"rect"]]];
@@ -126,6 +127,20 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	
 	// Get MIME type for type identifier
 	return (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)typeIdentifier, kUTTagClassMIMEType);
+}
+
++ (CGSize)scaledImageSizeForImage:(RKImage *)image usingContext:(RKDOCXConversionContext *)context
+{
+	CGSize scaledImageSize = image.size;
+	
+	CGFloat aspect = scaledImageSize.width / (context.document.pageSize.width - (context.document.pageInsets.inner + context.document.pageInsets.outer));
+	
+	if (aspect > 1) {
+		scaledImageSize.width /= aspect;
+		scaledImageSize.height /= aspect;
+	}
+	
+	return scaledImageSize;
 }
 
 @end

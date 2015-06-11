@@ -80,13 +80,21 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 		properties = [self propertyElementsForAttributes:attributes usingContext:context];
 	
 	if (properties.count) {
-		NSXMLElement *runPropertiesElement = [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
+		NSXMLElement *runPropertiesElement = [self runPropertiesElementWithProperties: properties];
 		[runElement addChild: runPropertiesElement];
 	}
 	NSParameterAssert(contentElement);
 	[runElement addChild: contentElement];
 	
 	return runElement;
+}
+
++ (NSXMLElement *)runPropertiesElementWithProperties:(NSArray *)properties
+{
+	if (!properties.count)
+		return nil;
+	
+	return [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
 }
 
 + (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context

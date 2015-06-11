@@ -11,6 +11,7 @@
 #import "RKDOCXAttributeWriter.h"
 #import "RKDOCXParagraphWriter.h"
 #import "RKDOCXParagraphStyleWriter.h"
+#import "RKDOCXRunWriter.h"
 #import "RKListStyle+FormatStringParserAdditions.h"
 
 // Root element name
@@ -136,11 +137,13 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 				[levelTextString appendString: token];
 		}];
 		
-		if (formatString) {
-			NSXMLElement *enumerationFormatElement = [NSXMLElement elementWithName: RKDOCXListStyleEnumerationFormatElementName];
-			[enumerationFormatElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:formatString]];
-			[levelElement addChild: enumerationFormatElement];
-		}
+		// Set enumeration format to bullet, if list is unordered
+		if (!formatString)
+			formatString = RKDOCXListStyleEnumerationFormatBulletAttributeValue;
+		
+		NSXMLElement *enumerationFormatElement = [NSXMLElement elementWithName: RKDOCXListStyleEnumerationFormatElementName];
+		[enumerationFormatElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:formatString]];
+		[levelElement addChild: enumerationFormatElement];
 		
 		// Level Text (§17.9.11)
 		NSXMLElement *levelTextElement = [NSXMLElement elementWithName: RKDOCXListStyleLevelTextElementName];
@@ -156,6 +159,9 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		NSDictionary *attributes = listStyle.levelStyles[index];
 		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocationKey:[attributes[RKListStyleMarkerLocationKey] unsignedIntegerValue] markerWidthKey:[attributes[RKListStyleMarkerWidthKey] unsignedIntegerValue]];
 		[levelElement addChild: paragraphPropertiesElement];
+		NSXMLElement *runPropertiesElement = [RKDOCXRunWriter runPropertiesElementWithProperties: [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context]];
+		if (runPropertiesElement.childCount > 0)
+			[levelElement addChild: runPropertiesElement];
 		
 		[abstractNumberingElement addChild: levelElement];
 	}

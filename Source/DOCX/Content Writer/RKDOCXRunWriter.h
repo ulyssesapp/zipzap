@@ -26,6 +26,11 @@
 + (NSXMLElement *)runElementForAttributes:(NSDictionary *)attributes contentElement:(NSXMLElement *)contentElement usingContext:(RKDOCXConversionContext *)context;
 
 /*!
+ @abstract Returns an XML element representing a run property element with the given property elements.
+ */
++ (NSXMLElement *)runPropertiesElementWithProperties:(NSArray *)properties;
+
+/*!
  @abstract Returns an array of XML elements containing the run style properties of the given attributes.
  @discussion If the passed attributes dictionary contains a reference to a character style template (RKCharacterStyleNameAttributeName) this method will only create run properties that are overriding the given template.
  */

@@ -9,6 +9,7 @@
 #import "RKDOCXFootnotesWriter.h"
 
 #import "RKDOCXAttributedStringWriter.h"
+#import "RKDOCXParagraphWriter.h"
 #import "RKDOCXRunWriter.h"
 
 // Root element names
@@ -67,22 +68,24 @@ typedef enum : NSUInteger {
 		return;
 	
 	// In case of footnotes
-	NSXMLDocument *footnotesDocument = [self buildDocumentPartForNotes:context.footnotes endnoteSection:NO];
+	NSXMLDocument *footnotesDocument = [self buildFootnotesDocumentPartUsingContext:context isEndnoteSection:NO];
 	if (footnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXFootnotesFilename andType:RKDOCXFootnotesRelationshipType];
 		[context addDocumentPartWithXMLDocument:footnotesDocument filename:[self packagePathForFilename:RKDOCXFootnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXFootnotesContentType];
 	}
 	
 	// In case of endnotes
-	NSXMLDocument *endnotesDocument = [self buildDocumentPartForNotes:context.endnotes endnoteSection:YES];
+	NSXMLDocument *endnotesDocument = [self buildFootnotesDocumentPartUsingContext:context isEndnoteSection:YES];
 	if (endnotesDocument) {
 		[context indexForRelationshipWithTarget:RKDOCXEndnotesFilename andType:RKDOCXEndnotesRelationshipType];
 		[context addDocumentPartWithXMLDocument:endnotesDocument filename:[self packagePathForFilename:RKDOCXEndnotesFilename folder:RKDOCXWordFolder] contentType:RKDOCXEndnotesContentType];
 	}
 }
 
-+ (NSXMLDocument *)buildDocumentPartForNotes:(NSDictionary *)notes endnoteSection:(BOOL)isEndnoteSection
++ (NSXMLDocument *)buildFootnotesDocumentPartUsingContext:(RKDOCXConversionContext *)context isEndnoteSection:(BOOL)isEndnoteSection
 {
+	NSDictionary *notes = isEndnoteSection ? context.endnotes : context.footnotes;
+	
 	if (!notes.count)
 		return nil;
 	
@@ -92,10 +95,10 @@ typedef enum : NSUInteger {
 	NSXMLDocument *document = [self basicXMLDocumentWithStandardNamespacesAndRootElementName: rootElementName];
 	
 	// Separator
-	[document.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesSeparatorAttributeValue identifier:@"0" endnote:isEndnoteSection]];
+	[document.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesSeparatorAttributeValue identifier:@"0" endnote:isEndnoteSection usingContext:context]];
 	
 	// Continuation Separator
-	[document.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesContinuationSeparatorAttributeValue identifier:@"1" endnote:isEndnoteSection]];
+	[document.rootElement addChild: [self separatorElementWithName:RKDOCXFootnotesContinuationSeparatorAttributeValue identifier:@"1" endnote:isEndnoteSection usingContext:context]];
 	
 	// Notes
 	for (NSNumber *index in notes) {
@@ -128,7 +131,10 @@ typedef enum : NSUInteger {
 		return nil;
 	}
 	
-	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKDOCXReferenceTypeAttributeName: @(referenceType)}];
+	NSMutableDictionary *referenceMarkAttributes = [context.document.footnoteAreaAnchorAttributes mutableCopy];
+	referenceMarkAttributes[RKDOCXReferenceTypeAttributeName] = @(referenceType);
+	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString:@"\ufffc" attributes:referenceMarkAttributes];
+	[referenceStringWithReferenceMark appendAttributedString:[[NSAttributedString alloc] initWithString: @" "]];
 	[referenceStringWithReferenceMark appendAttributedString: referenceString];
 	
 	// Change relationship source for endnotes/footnotes
@@ -171,11 +177,10 @@ typedef enum : NSUInteger {
 	return [RKDOCXRunWriter runElementForAttributes:attributes contentElement:footnoteRefElement usingContext:context];
 }
 
-+ (NSXMLElement *)separatorElementWithName:(NSString *)separatorName identifier:(NSString *)identifier endnote:(BOOL)isEndnote
++ (NSXMLElement *)separatorElementWithName:(NSString *)separatorName identifier:(NSString *)identifier endnote:(BOOL)isEndnote usingContext:(RKDOCXConversionContext *)context
 {
 	NSXMLElement *separatorElement = [NSXMLElement elementWithName: [@"w:" stringByAppendingString: separatorName]];
-	NSXMLElement *runElement = [NSXMLElement elementWithName:@"w:r" children:@[separatorElement] attributes:nil];
-	NSXMLElement *paragraphElement = [NSXMLElement elementWithName:@"w:p" children:@[runElement] attributes:nil];
+	NSXMLElement *paragraphElement = [RKDOCXParagraphWriter paragraphElementForSeparatorElement:separatorElement usingContext:context];
 	NSXMLElement *typeAttribute = [NSXMLElement attributeWithName:RKDOCXFootnotesTypeAttributeName stringValue:separatorName];
 	NSXMLElement *identifierAttribute = [NSXMLElement attributeWithName:RKDOCXFootnotesIdentifierAttributeName stringValue:identifier];
 	NSString *elementName = isEndnote ? RKDOCXFootnotesEndnoteElementName : RKDOCXFootnotesFootnoteElementName;

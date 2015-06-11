@@ -30,4 +30,9 @@ extern NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue;
  */
 + (NSXMLElement *)indentationSettingsForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey;
 
+/*!
+ @abstract Returns the alignment and spacing properties of the footnote area separators of the given context.
+ */
++ (NSArray *)paragraphPropertiesForSeparatorElementUsingContext:(RKDOCXConversionContext *)context;
+
 @end
