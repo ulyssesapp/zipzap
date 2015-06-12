@@ -132,7 +132,7 @@ typedef enum : NSUInteger {
 	}
 	
 	NSMutableAttributedString *mutableReferenceString = [referenceString mutableCopy];
-	[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, mutableReferenceString.length - 1)];
+	[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, mutableReferenceString.length ? mutableReferenceString.length - 1: mutableReferenceString.length)];
 	referenceString = mutableReferenceString;
 	
 	NSMutableDictionary *referenceMarkAttributes = [context.document.footnoteAreaAnchorAttributes mutableCopy];
