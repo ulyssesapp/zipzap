@@ -223,6 +223,13 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 + (NSArray *)tabStopPropertiesForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties;
+	NSArray *tabStops;
+	
+	if ([context.currentRelationshipSource isEqual: @"footnotes.xml"] || [context.currentRelationshipSource isEqual: @"endnotes.xml"])
+		tabStops = @[[[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:nil],
+					 [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:nil]];
+	else
+		tabStops = paragraphStyle.tabStops;
 	
 	// Default tab stop interval set?
 	if (paragraphStyle.defaultTabInterval != templateParagraphStyle.defaultTabInterval) {
@@ -230,7 +237,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	}
 	
 	// Custom tab stops set? If not, either return defaultTabInterval or nil in case no interval has been set.
-	if (!paragraphStyle.tabStops || paragraphStyle.tabStops.count == 0 || [paragraphStyle.tabStops isEqual: templateParagraphStyle.tabStops])
+	if (!tabStops || tabStops.count == 0 || [tabStops isEqual: templateParagraphStyle.tabStops])
 		return properties;
 	
 	// Initialize array if no default tap stop interval has been set.
@@ -239,7 +246,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	
 	NSXMLElement *tabSetProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleTabSetElementName];
 	
-	for (NSTextTab *tabStop in paragraphStyle.tabStops) {
+	for (NSTextTab *tabStop in tabStops) {
 		NSXMLElement *tabProperty = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabElementName];
 		
 		NSString *alignmentValue;
