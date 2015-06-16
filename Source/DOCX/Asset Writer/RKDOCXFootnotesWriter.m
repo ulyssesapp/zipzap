@@ -144,13 +144,13 @@ typedef enum : NSUInteger {
 	// Change relationship source for endnotes/footnotes
 	NSString *previousRelationshipSource = context.currentRelationshipSource;
 	context.currentRelationshipSource = newRelationshipSource;
-	context.prependTabStops = YES;
+	context.prependFootnoteIndentations = YES;
 	
 	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceStringWithReferenceMark usingContext:context];
 	
 	// Restore previous relationship source
 	context.currentRelationshipSource = previousRelationshipSource;
-	context.prependTabStops = NO;
+	context.prependFootnoteIndentations = NO;
 	
 	NSUInteger referenceIndex = 0;
 	if (referenceType == RKDOCXFootnoteReference) {

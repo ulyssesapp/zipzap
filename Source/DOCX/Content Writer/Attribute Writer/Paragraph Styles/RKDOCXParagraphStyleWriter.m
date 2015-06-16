@@ -225,7 +225,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	NSMutableArray *properties;
 	NSArray *tabStops;
 	
-	if (context.prependTabStops)
+	if (context.prependFootnoteIndentations)
 		tabStops = @[[[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:nil],
 					 [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:nil]];
 	else
