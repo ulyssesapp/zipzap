@@ -131,20 +131,26 @@ typedef enum : NSUInteger {
 		return nil;
 	}
 	
+	NSMutableAttributedString *mutableReferenceString = [referenceString mutableCopy];
+	[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, mutableReferenceString.length ? mutableReferenceString.length - 1: mutableReferenceString.length)];
+	referenceString = mutableReferenceString;
+	
 	NSMutableDictionary *referenceMarkAttributes = [context.document.footnoteAreaAnchorAttributes mutableCopy];
 	referenceMarkAttributes[RKDOCXReferenceTypeAttributeName] = @(referenceType);
-	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString:@"\ufffc" attributes:referenceMarkAttributes];
-	[referenceStringWithReferenceMark appendAttributedString:[[NSAttributedString alloc] initWithString: @" "]];
+	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString: @"\t\ufffc\t"];
+	[referenceStringWithReferenceMark addAttributes:referenceMarkAttributes range:NSMakeRange(1, 1)];
 	[referenceStringWithReferenceMark appendAttributedString: referenceString];
 	
 	// Change relationship source for endnotes/footnotes
 	NSString *previousRelationshipSource = context.currentRelationshipSource;
 	context.currentRelationshipSource = newRelationshipSource;
+	context.prependFootnoteIndentations = YES;
 	
 	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceStringWithReferenceMark usingContext:context];
 	
-	// Restore previous relationship
+	// Restore previous relationship source
 	context.currentRelationshipSource = previousRelationshipSource;
+	context.prependFootnoteIndentations = NO;
 	
 	NSUInteger referenceIndex = 0;
 	if (referenceType == RKDOCXFootnoteReference) {

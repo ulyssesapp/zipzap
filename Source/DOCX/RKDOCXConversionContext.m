@@ -39,6 +39,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_usedMIMETypes = [NSDictionary new];
 		_footnotes = [NSDictionary new];
 		_endnotes = [NSDictionary new];
+		_prependFootnoteIndentations = NO;
 		_headerCount = 0;
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
