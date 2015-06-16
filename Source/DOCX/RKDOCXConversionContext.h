@@ -107,6 +107,12 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (NSUInteger)indexForEndnoteContent:(NSArray *)content;
 
+/*!
+ @abstract Specifies whether footnotes or endnotes are currently being processed.
+ @discussion If set to yes, custom tab stops will be overwritten with footnote anchor attributes.
+ */
+@property (nonatomic) BOOL prependTabStops;
+
 
 #pragma mark - Headers and Footers
 
