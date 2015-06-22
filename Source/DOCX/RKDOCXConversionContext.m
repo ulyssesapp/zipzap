@@ -35,6 +35,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_files = [NSMutableDictionary new];
 		_styleCache = [NSMutableDictionary new];
 		_checkedFontNames = [[NSMutableDictionary alloc] initWithDictionary: @{
+																			   // To improve compatibility of certain fonts, we handle them differently. See ULYSSES-5070 for further details.
 																			   // Whitelisted fonts
 																			   @"Menlo Regular": @YES,
 																			   @"Menlo Bold": @YES,
