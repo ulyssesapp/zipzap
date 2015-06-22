@@ -34,16 +34,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (self) {
 		_files = [NSMutableDictionary new];
 		_styleCache = [NSMutableDictionary new];
-		_checkedFontNames = [[NSMutableDictionary alloc] initWithDictionary: @{
-																			   // To improve compatibility of certain fonts, we handle them differently. See ULYSSES-5070 for further details.
-																			   // Whitelisted fonts
-																			   @"Menlo Regular": @YES,
-																			   @"Menlo Bold": @YES,
-																			   @"Menlo Italic": @YES,
-																			   
-																			   // Blacklisted fonts
-																			   @"Helvetica Neue Italic": @NO,
-																			   }];
+		_checkedFontNames = [[self.class fontNamesRequiringFullNames] mutableCopy];
 		_imageID = 0;
 		_document = document;
 		_usedXMLTypes = [NSDictionary new];
@@ -120,7 +111,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 {
 	NSString *fontName = (__bridge NSString *)CTFontCopyFullName((__bridge CTFontRef)font);
 	
-	// Look for previously checked font
+	// Look for previously checked font. See also +fontNamesRequiringFullNaming.
 	if (_checkedFontNames[fontName])
 		return [_checkedFontNames[fontName] boolValue];
 	
@@ -134,9 +125,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	}
 	
 	// Check all other fonts from family
-	NSString *fontFamily = (__bridge NSString *)CTFontCopyFamilyName((__bridge CTFontRef)font);
-	
-	for (NSString *otherFontName in [RKDOCXConversionContext fontNamesForFamilyName: fontFamily]) {
+	for (NSString *otherFontName in [ULFont fontNamesForFamilyName: font.familyName]) {
 		ULFont *otherFont = [ULFont fontWithName:otherFontName size:font.pointSize];
 		if ([otherFont.fontName isEqual: font.fontName])
 			continue;
@@ -151,14 +140,17 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return NO;
 }
 
-+ (NSArray *)fontNamesForFamilyName:(NSString *)familyName
++ (NSDictionary *)fontNamesRequiringFullNames
 {
-	NSMutableArray *members = [NSMutableArray new];;
-	
-	for (NSArray *fontVariant in [NSFontManager.sharedFontManager availableMembersOfFontFamily: familyName])
-		[members addObject: fontVariant.firstObject];
-	
-	return members;
+	return @{
+			// The following fonts do not support traits on Word 2011, thus we need to use full font names:
+			@"Menlo Regular":			@YES,
+			@"Menlo Bold":				@YES,
+			@"Menlo Italic":				@YES,
+													   
+			// The following fonts do not support full names on Word 2011. The automatic fallback in -isFullNameRequieredForFont shall not be used:
+			@"Helvetica Neue Italic":	@NO
+			};
 }
 
 
