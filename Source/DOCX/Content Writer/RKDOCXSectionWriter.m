@@ -109,12 +109,20 @@ NSString *RKDOCXSectionTypeOddPageAttributeValue					= @"oddPage";
 		
 		// Create a reference for each separate Header
 		[section enumerateHeadersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *header) {
+			// Skip empty headers, since they may be used to keep first page headers explicitly empty.
+			if (!header.length)
+				return;
+			
 			[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXHeader withIndex:++context.headerCount forAttributedString:header usingContext:context];
 			[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXHeader withAttributedString:header forPageSelector:pageSelector usingContext:context]];
 		}];
 		
 		// Create a reference for each separate Footer
 		[section enumerateFootersUsingBlock: ^(RKPageSelectionMask pageSelector, NSAttributedString *footer) {
+			// Skip empty footer, since they may be used to keep first page footers explicitly empty.
+			if (!footer.length)
+				return;
+
 			[RKDOCXHeaderFooterWriter buildPageElement:RKDOCXFooter withIndex:++context.footerCount forAttributedString:footer usingContext:context];
 			[sectionProperties addChild: [self sectionPropertyElementForPageElement:RKDOCXFooter withAttributedString:footer forPageSelector:pageSelector usingContext:context]];
 		}];
