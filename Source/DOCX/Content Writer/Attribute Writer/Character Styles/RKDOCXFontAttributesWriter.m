@@ -41,11 +41,21 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	NSUInteger styleTraits = CTFontGetSymbolicTraits(characterStyleFontAttribute);
 	
 	// Font Name (§17.3.2.26)
+	if (!context)
+		context = [[RKDOCXConversionContext alloc] initWithDocument: [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @""]]];
+	
+	NSString *fontName;
+	BOOL fullFontNameRequired = [context isFullNameRequieredForFont: (__bridge ULFont *)fontAttribute];
+	if (fullFontNameRequired)
+		fontName = (__bridge NSString *)CTFontCopyFullName(fontAttribute);
+	else
+		fontName = (__bridge NSString *)CTFontCopyFamilyName(fontAttribute);
+	
 	if (![(__bridge NSString *)CTFontCopyFullName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFullName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
-		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFullName(fontAttribute)],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFullName(fontAttribute)],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFullName(fontAttribute)],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeValue stringValue:(__bridge NSString *)CTFontCopyFullName(fontAttribute)]]];
+		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeValue stringValue:fontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeValue stringValue:fontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeValue stringValue:fontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeValue stringValue:fontName]]];
 		[properties addObject: fontElement];
 	}
 	
@@ -58,7 +68,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	}
 	
 	// Bold Trait (§17.3.2.1)
-	if ((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait) && !(ignoreMask & RKFontMixIgnoreBoldTrait)) {
+	if (((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait) && !(ignoreMask & RKFontMixIgnoreBoldTrait)) && !fullFontNameRequired) {
 		if (traits & kCTFontBoldTrait)
 			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeBoldElementName]];
 		else
@@ -66,7 +76,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	}
 	
 	// Italic Trait (§17.3.2.16)
-	if ((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait) && !(ignoreMask & RKFontMixIgnoreItalicTrait)) {
+	if (((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait) && !(ignoreMask & RKFontMixIgnoreItalicTrait)) && !fullFontNameRequired) {
 		if (traits & kCTFontItalicTrait)
 			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeItalicElementName]];
 		else
