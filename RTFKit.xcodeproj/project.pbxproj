@@ -381,6 +381,8 @@
 		7946E93E1601DDAE0028EF11 /* RKPDFWriterTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 7946E93D1601DDAE0028EF11 /* RKPDFWriterTypes.h */; };
 		79470FE7152C5AB900254072 /* RKListCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79470FE5152C5AB900254072 /* RKListCounter.h */; };
 		79470FE8152C5AB900254072 /* RKListCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79470FE6152C5AB900254072 /* RKListCounter.m */; };
+		79561EA81B3879B300509613 /* RKFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 79561EA51B3879B300509613 /* RKFont.m */; };
+		79561EA91B3879B300509613 /* RKFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 79561EA51B3879B300509613 /* RKFont.m */; };
 		795C1BC314EC1AEF0041EB69 /* RKListStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 795C1BC114EC1AEF0041EB69 /* RKListStyle.h */; };
 		795C1BC414EC1AEF0041EB69 /* RKListStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 795C1BC214EC1AEF0041EB69 /* RKListStyle.m */; };
 		795C1BC714EC33620041EB69 /* NSString+RKConvenienceAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 795C1BC514EC33620041EB69 /* NSString+RKConvenienceAdditions.h */; };
@@ -805,6 +807,7 @@
 		7946E93D1601DDAE0028EF11 /* RKPDFWriterTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPDFWriterTypes.h; path = PDF/Utils/RKPDFWriterTypes.h; sourceTree = "<group>"; };
 		79470FE5152C5AB900254072 /* RKListCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListCounter.h; path = Utils/RKListCounter.h; sourceTree = "<group>"; };
 		79470FE6152C5AB900254072 /* RKListCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListCounter.m; path = Utils/RKListCounter.m; sourceTree = "<group>"; };
+		79561EA51B3879B300509613 /* RKFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKFont.m; sourceTree = "<group>"; };
 		795C1BC114EC1AEF0041EB69 /* RKListStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListStyle.h; path = Source/Document/Styles/RKListStyle.h; sourceTree = SOURCE_ROOT; };
 		795C1BC214EC1AEF0041EB69 /* RKListStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListStyle.m; path = Source/Document/Styles/RKListStyle.m; sourceTree = SOURCE_ROOT; };
 		795C1BC514EC33620041EB69 /* NSString+RKConvenienceAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+RKConvenienceAdditions.h"; path = "Writer/Utils/NSString+RKConvenienceAdditions.h"; sourceTree = "<group>"; };
@@ -1751,6 +1754,7 @@
 				79F6B50A1A8902C60046B78D /* RKOperationHandle.h */,
 				79F6B50B1A8902C60046B78D /* RKOperationHandle.m */,
 				A065823B1B038E9800DAA032 /* RKFont.h */,
+				79561EA51B3879B300509613 /* RKFont.m */,
 				A0E49ED91AD51B94004E7973 /* RKColor.h */,
 				A0E49EDD1AD51D91004E7973 /* UIColor+RKColorExtensions.h */,
 				A0E49EDE1AD51D91004E7973 /* UIColor+RKColorExtensions.m */,
@@ -2719,6 +2723,7 @@
 				790AD99015BC09160011E40E /* RKListStyleSerializer.m in Sources */,
 				790AD99B15BC0BF00011E40E /* RKColorSerializer.m in Sources */,
 				A02ACC741B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */,
+				79561EA81B3879B300509613 /* RKFont.m in Sources */,
 				790AD99F15BC0BF00011E40E /* RKFontSerializer.m in Sources */,
 				A092D9051AD5834C00417A8D /* RKDOCXParagraphStyleWriter.m in Sources */,
 				79D4D27917F08FBE00EC5504 /* RKImageAttachment.m in Sources */,
@@ -2837,6 +2842,7 @@
 				790B5BC61B0B96ED004193F8 /* NSMutableAttributedString+ParagraphStyleWrapper.m in Sources */,
 				790B5BD21B0B96ED004193F8 /* RKDOCXPartWriter.m in Sources */,
 				790B5BF41B0B96ED004193F8 /* RKDOCXContentTypesWriter.m in Sources */,
+				79561EA91B3879B300509613 /* RKFont.m in Sources */,
 				790B5C631B0B970B004193F8 /* RKPortableAttributeNames-iOS.m in Sources */,
 				790B5C701B0B970B004193F8 /* UIColor+RKColorExtensions.m in Sources */,
 				790B5B981B0B96ED004193F8 /* RKColorAttributeWriter.m in Sources */,

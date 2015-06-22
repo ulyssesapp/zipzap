@@ -10,4 +10,10 @@
 	#define RKFont UIFont
 #else
 	#define RKFont NSFont
+
+@interface NSFont (RKFont)
+
++ (NSArray *)fontNamesForFamilyName:(NSString *)familyName;
+
+@end
 #endif
