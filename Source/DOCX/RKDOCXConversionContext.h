@@ -6,6 +6,12 @@
 //  Copyright (c) 2015 The Soulmen. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+	#define	ULFont				UIFont
+#else
+	#define ULFont				NSFont
+#endif
+
 /*!
  @abstract The filename of the relationship target relative to the location of the relationships source.
  @discussion See ISO 29500-2:2012: §9.3.2.2.
@@ -45,6 +51,10 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyle characterStyle:(NSString *)characterStyle;
 
+/*!
+ @abstract Checks the given font family for competing font styles.
+ */
+- (BOOL)isFullNameRequieredForFont:(ULFont *)font;
 
 #pragma mark - Output context
 

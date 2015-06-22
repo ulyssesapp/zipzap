@@ -104,7 +104,7 @@ NSString *RKDOCXSectionTypeOddPageAttributeValue					= @"oddPage";
 		
 		// Headers and Footers
 		// DOCX requires a "titlePg" element when using a different header or footer for first pages. See ISO 29500-1:2012: §17.10.6.
-		if (!(section.hasSingleHeaderForAllPages && section.hasSingleFooterForAllPages) && ([section headerForPage: RKPageSelectionFirst] || [section footerForPage: RKPageSelectionFirst]))
+		if ((!section.hasSingleHeaderForAllPages && [section headerForPage: RKPageSelectionFirst]) || (!section.hasSingleFooterForAllPages && [section footerForPage: RKPageSelectionFirst]))
 			[sectionProperties addChild: [NSXMLElement elementWithName: RKDOCXSectionTitlePageElementName]];
 		
 		// Create a reference for each separate Header

@@ -19,6 +19,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 {
 	NSMutableDictionary *_files;
 	NSMutableDictionary *_styleCache;
+	NSMutableDictionary *_checkedFontNames;
 	NSUInteger _imageID;
 	NSMutableDictionary *_documentRelationships;
 }
@@ -33,6 +34,16 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (self) {
 		_files = [NSMutableDictionary new];
 		_styleCache = [NSMutableDictionary new];
+		_checkedFontNames = [[NSMutableDictionary alloc] initWithDictionary: @{
+																			   // To improve compatibility of certain fonts, we handle them differently. See ULYSSES-5070 for further details.
+																			   // Whitelisted fonts
+																			   @"Menlo Regular": @YES,
+																			   @"Menlo Bold": @YES,
+																			   @"Menlo Italic": @YES,
+																			   
+																			   // Blacklisted fonts
+																			   @"Helvetica Neue Italic": @NO,
+																			   }];
 		_imageID = 0;
 		_document = document;
 		_usedXMLTypes = [NSDictionary new];
@@ -103,6 +114,51 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		mixedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:lowPriorityStyleAttributes[RKFontAttributeName] withOverridingFont:highPriorityStyleAttributes[RKFontAttributeName] usingMask:[highPriorityStyleAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
 	
 	return mixedStyle;
+}
+
+- (BOOL)isFullNameRequieredForFont:(ULFont *)font
+{
+	NSString *fontName = (__bridge NSString *)CTFontCopyFullName((__bridge CTFontRef)font);
+	
+	// Look for previously checked font
+	if (_checkedFontNames[fontName])
+		return [_checkedFontNames[fontName] boolValue];
+	
+	// Ignore font if it doesn't use the requested traits at all
+	CTFontSymbolicTraits fontTraits = CTFontGetSymbolicTraits((__bridge CTFontRef)font);
+	CTFontSymbolicTraits filteredTraits = (kCTFontTraitItalic|kCTFontTraitBold);
+	
+	if ((fontTraits & filteredTraits) == 0) {
+		_checkedFontNames[fontName] = @NO;
+		return NO;
+	}
+	
+	// Check all other fonts from family
+	NSString *fontFamily = (__bridge NSString *)CTFontCopyFamilyName((__bridge CTFontRef)font);
+	
+	for (NSString *otherFontName in [RKDOCXConversionContext fontNamesForFamilyName: fontFamily]) {
+		ULFont *otherFont = [ULFont fontWithName:otherFontName size:font.pointSize];
+		if ([otherFont.fontName isEqual: font.fontName])
+			continue;
+		
+		if ((CTFontGetSymbolicTraits((__bridge CTFontRef)otherFont)/* & (kCTFontTraitItalic|kCTFontTraitBold)*/) == fontTraits) {
+			_checkedFontNames[fontName] = @YES;
+			return YES;
+		}
+	}
+	
+	_checkedFontNames[fontName] = @NO;
+	return NO;
+}
+
++ (NSArray *)fontNamesForFamilyName:(NSString *)familyName
+{
+	NSMutableArray *members = [NSMutableArray new];;
+	
+	for (NSArray *fontVariant in [NSFontManager.sharedFontManager availableMembersOfFontFamily: familyName])
+		[members addObject: fontVariant.firstObject];
+	
+	return members;
 }
 
 

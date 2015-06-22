@@ -25,6 +25,7 @@ NSString *RKDOCXStyleTemplateRelationshipType				= @"http://schemas.openxmlforma
 NSString *RKDOCXStyleTemplateFilename						= @"styles.xml";
 
 // Elements
+NSString *RKDOCXStyleTemplateBasedOnElementName				= @"w:basedOn";
 NSString *RKDOCXStyleTemplateDocumentDefaultsElementName	= @"w:docDefaults";
 NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
 NSString *RKDOCXStyleTemplateParagraphDefaultElementName	= @"w:pPrDefault";
@@ -129,7 +130,8 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	NSString *templateTypeAttributeValue = isCharacterStyle ? RKDOCXStyleTemplateCharacterStyleAttributeValue : RKDOCXStyleTemplateParagraphStyleAttributeValue;
 	
 	NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:styleName]]];
-	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:styleName]]];
+	NSXMLElement *basedOnElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateBasedOnElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
+	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, basedOnElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:styleName]]];
 	
 	// In case of paragraph style
 	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context];

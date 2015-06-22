@@ -236,9 +236,8 @@
 
 - (BOOL)hasSingleObjectForAllPagesInDictionary:(NSDictionary *)dictionary
 {
-    return (    (([self objectForPage:RKPageSelectionLeft fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
-             && (([self objectForPage:RKPageSelectionFirst fromDictionary:dictionary]) == ([self objectForPage:RKPageSelectionRight fromDictionary:dictionary]))
-           );
+	return ([[self objectForPage:RKPageSelectionLeft fromDictionary:dictionary] isEqual: [self objectForPage:RKPageSelectionRight fromDictionary:dictionary]] &&
+			[[self objectForPage:RKPageSelectionFirst fromDictionary:dictionary] isEqual: [self objectForPage:RKPageSelectionRight fromDictionary:dictionary]]);
 }
 
 - (void)enumerateObjectsInPageSetting:(NSMutableDictionary *)dictionary usingBlock:(void(^)(RKPageSelectionMask pageSelector, id object))block
