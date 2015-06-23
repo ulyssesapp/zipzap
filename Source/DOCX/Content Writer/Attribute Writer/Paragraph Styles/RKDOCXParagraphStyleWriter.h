@@ -8,12 +8,6 @@
 
 #import "RKDOCXAttributeWriter.h"
 
-// Names required by text lists
-extern NSString *RKDOCXParagraphStyleCenterAlignmentAttributeValue;
-extern NSString *RKDOCXParagraphStyleJustifiedAlignmentAttributeValue;
-extern NSString *RKDOCXParagraphStyleLeftAlignmentAttributeValue;
-extern NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue;
-
 /*!
  @abstract Generates XML elements for the given attributes of an attributed string.
  @discussion See ISO 29500-1:2012: §17.3.1.6 (Right to Left Paragraph Layout), §17.3.1.12 (Paragraph Indentation), §17.3.1.13 (Paragraph Alignment), §17.15.1.25 (Distance Between Automatic Stops), §17.3.1.33 (Spacing Between Lines and Above/Below Paragraph), §17.3.1.38 (Set of Custom Tab Stops), §17.3.1.15 (Keep Paragraph With Next Paragraph), §17.3.1.34 (Supress Hyphenation for Paragraph) and §17.3.1.44 (Allow First/Last Line to Display on a Separate Page).

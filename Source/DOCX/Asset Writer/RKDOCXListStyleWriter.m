@@ -42,6 +42,7 @@ NSString *RKDOCXListStyleLevelAttributeName								= @"w:ilvl";
 NSString *RKDOCXListStyleNumberingAttributeName							= @"w:numId";
 
 // Attribute Values
+NSString *RKDOCXListStyleAlignmentAttributeValue						= @"left";
 NSString *RKDOCXListStyleMultiLevelTypeHybridMultilevelAttributeValue	= @"hybridMultilevel";
 NSString *RKDOCXListStyleMultiLevelTypeMultilevelAttributeValue			= @"multilevel";
 NSString *RKDOCXListStyleMultiLevelTypeSingleLevelAttributeValue		= @"singleLevel";
@@ -152,7 +153,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		
 		// Level Alignment (§17.9.7)
 		NSXMLElement *levelAlignmentElement = [NSXMLElement elementWithName: RKDOCXListStyleLevelAlignmentElementName];
-		[levelAlignmentElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXParagraphStyleLeftAlignmentAttributeValue]];
+		[levelAlignmentElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXListStyleAlignmentAttributeValue]];
 		[levelElement addChild: levelAlignmentElement];
 		
 		// Enumerator Styling
