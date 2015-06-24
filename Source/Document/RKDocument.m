@@ -47,6 +47,8 @@
 		_footnoteAreaAnchorAlignment = RKTextAlignmentLeft;
 
 		_pageBinding = RKPageBindingLeft;
+		
+		_defaultStyle = @{RKParagraphStyleAttributeName: NSParagraphStyle.defaultParagraphStyle};
     }
     
     return self;
