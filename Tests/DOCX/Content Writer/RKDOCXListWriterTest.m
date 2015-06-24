@@ -22,7 +22,7 @@
 	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @""];
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"First list item: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."] withStyle:listStyle withIndentationLevel:0];
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"Second list item: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."] withStyle:listStyle withIndentationLevel:1];
-	
+
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
 	[self assertDOCX:document withTestDocument:@"list"];

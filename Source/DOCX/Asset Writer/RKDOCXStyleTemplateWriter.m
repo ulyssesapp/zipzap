@@ -86,13 +86,20 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	// Additionally, Pages requires every paragraph to use a style, or else it will use the previous paragraph’s formatting.
 	if (defaultStyle.count > 0) {
 		NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
-		[document.rootElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
-															 children:@[styleNameElement,
-																		[self defaultParagraphPropertiesElementForStyleAttributes: defaultStyle],
-																		[self defaultRunPropertiesElementForStyleAttributes: defaultStyle]]
-														   attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateParagraphStyleAttributeValue],
-																		[NSXMLElement attributeWithName:RKDOCXStyleTemplateDefaultAttributeName stringValue:RKDOCXStyleTemplateDefaultAttributeValue],
-																		[NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]]];
+		NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
+															  children:@[styleNameElement]
+															attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateParagraphStyleAttributeValue],
+																		 [NSXMLElement attributeWithName:RKDOCXStyleTemplateDefaultAttributeName stringValue:RKDOCXStyleTemplateDefaultAttributeValue],
+																		 [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
+		NSXMLElement *paragraphDefaultsElement = [self defaultParagraphPropertiesElementForStyleAttributes: defaultStyle];
+		if (paragraphDefaultsElement)
+			[styleElement addChild: paragraphDefaultsElement];
+		
+		NSXMLElement *runDefaultsElement = [self defaultRunPropertiesElementForStyleAttributes: defaultStyle];
+		if (runDefaultsElement)
+			[styleElement addChild: runDefaultsElement];
+		
+		[document.rootElement addChild: styleElement];
 	}
 	
 	// Paragraph Styles

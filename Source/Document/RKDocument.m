@@ -47,6 +47,9 @@
 		_footnoteAreaAnchorAlignment = RKTextAlignmentLeft;
 
 		_pageBinding = RKPageBindingLeft;
+		
+		// Pages requires a style.xml file in documents with lists, so we always generate one.
+		_defaultStyle = @{RKParagraphStyleAttributeName: NSParagraphStyle.defaultParagraphStyle};
     }
     
     return self;
