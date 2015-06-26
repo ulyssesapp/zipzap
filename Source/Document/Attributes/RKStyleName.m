@@ -11,6 +11,8 @@
 NSString *RKCharacterStyleNameAttributeName = @"RKCharacterStyleName";
 NSString *RKParagraphStyleNameAttributeName = @"RKParagraphStyleName";
 
+NSString *RKDefaultStyleName				= @"RKDefaultStyleName";
+
 @implementation NSMutableAttributedString (RKAttributedStringPredefinedStyleConvenience)
 
 - (void)addPredefinedCharacterStyleAttribute:(NSString *)styleSheetName range:(NSRange)range

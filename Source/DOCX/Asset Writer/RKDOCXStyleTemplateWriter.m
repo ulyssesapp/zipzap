@@ -12,6 +12,8 @@
 #import "RKDOCXParagraphWriter.h"
 #import "RKDOCXRunWriter.h"
 
+#import "NSXMLElement+IntegerValueConvenience.h"
+
 // Root element name
 NSString *RKDOCXStyleTemplateRootElementName				= @"w:styles";
 
@@ -28,6 +30,8 @@ NSString *RKDOCXStyleTemplateFilename						= @"styles.xml";
 NSString *RKDOCXStyleTemplateBasedOnElementName				= @"w:basedOn";
 NSString *RKDOCXStyleTemplateDocumentDefaultsElementName	= @"w:docDefaults";
 NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
+NSString *RKDOCXStyleTemplatePrimaryStyleElementName		= @"w:qFormat";
+NSString *RKDOCXStyleTemplateUIPriorityElementName			= @"w:uiPriority";
 NSString *RKDOCXStyleTemplateParagraphDefaultElementName	= @"w:pPrDefault";
 NSString *RKDOCXStyleTemplateParagraphReferenceElementName	= @"w:pStyle";
 NSString *RKDOCXStyleTemplateRunDefaultElementName			= @"w:rPrDefault";
@@ -44,6 +48,11 @@ NSString *RKDOCXStyleTemplateCharacterStyleAttributeValue	= @"character";
 NSString *RKDOCXStyleTemplateDefaultAttributeValue			= @"1";
 NSString *RKDOCXStyleTemplateDefaultStyleNameAttributeValue	= @"Normal";
 NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
+NSString *RKDOCXStyleTemplateDefaultStyleName				= @"Normal";
+
+NSUInteger RKDOCXUIPriorityParagraphStyle					= 1;
+NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
+
 
 @implementation RKDOCXStyleTemplateWriter
 
@@ -129,6 +138,8 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 + (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
 {
 	NSMutableDictionary *attributes = isCharacterStyle ? [context.document.characterStyles[styleName] mutableCopy] : [context.document.paragraphStyles[styleName] mutableCopy];
+	NSUInteger uiPriority = isCharacterStyle ? RKDOCXUIPriorityCharacterStyle : RKDOCXUIPriorityParagraphStyle;
+	NSString *docxStyleName = [styleName isEqual: RKDefaultStyleName] ? RKDOCXStyleTemplateDefaultAttributeName : styleName;
 	
 	// Remove character and paragraph style names to prevent recursive style templates
 	[attributes removeObjectForKey: RKCharacterStyleNameAttributeName];
@@ -136,11 +147,14 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 	
 	NSString *templateTypeAttributeValue = isCharacterStyle ? RKDOCXStyleTemplateCharacterStyleAttributeValue : RKDOCXStyleTemplateParagraphStyleAttributeValue;
 	
-	NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:styleName]]];
+	NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:docxStyleName]]];
 	NSXMLElement *basedOnElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateBasedOnElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
-	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, basedOnElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:styleName]]];
+	NSXMLElement *priorityElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateUIPriorityElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:uiPriority]]];
+	NSXMLElement *qFormatElement = [NSXMLElement elementWithName:RKDOCXStyleTemplatePrimaryStyleElementName children:nil attributes:nil];
 	
-	// In case of paragraph style
+	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, basedOnElement, priorityElement, qFormatElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:docxStyleName]]];
+	
+	// Add style elements for paragraphs and character styles as needed
 	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context];
 	if (!isCharacterStyle && paragraphAttributes.count > 0)
 		[styleElement addChild: [RKDOCXParagraphWriter paragraphPropertiesElementWithProperties: paragraphAttributes]];
@@ -154,18 +168,26 @@ NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
 
 + (NSXMLElement *)paragraphStyleReferenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	if (!attributes[RKParagraphStyleNameAttributeName])
+	NSString *styleName = attributes[RKParagraphStyleNameAttributeName];
+	if (!styleName)
 		return nil;
 	
-	return [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphReferenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:attributes[RKParagraphStyleNameAttributeName]]]];
+	if ([styleName isEqual: RKDefaultStyleName])
+		styleName = RKDOCXStyleTemplateDefaultStyleName;
+	
+	return [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphReferenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:styleName]]];
 }
 
 + (NSXMLElement *)characterStyleReferenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	if (!attributes[RKCharacterStyleNameAttributeName])
+	NSString *styleName = attributes[RKCharacterStyleNameAttributeName];
+	if (!styleName)
 		return nil;
 	
-	return [NSXMLElement elementWithName:RKDOCXStyleTemplateRunReferenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:attributes[RKCharacterStyleNameAttributeName]]]];
+	if ([styleName isEqual: RKDefaultStyleName])
+		styleName = RKDOCXStyleTemplateDefaultStyleName;
+	
+	return [NSXMLElement elementWithName:RKDOCXStyleTemplateRunReferenceElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:styleName]]];
 }
 
 @end
