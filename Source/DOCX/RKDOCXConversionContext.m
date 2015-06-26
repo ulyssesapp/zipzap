@@ -17,11 +17,12 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 @interface RKDOCXConversionContext ()
 {
-	NSMutableDictionary *_files;
-	NSMutableDictionary *_styleCache;
-	NSMutableDictionary *_checkedFontNames;
-	NSUInteger _imageID;
-	NSMutableDictionary *_documentRelationships;
+	NSMutableDictionary		*_files;
+	NSMutableDictionary		*_styleCache;
+	NSMutableDictionary		*_checkedFontNames;
+	NSUInteger				_imageID;
+	NSMutableDictionary		*_documentRelationships;
+	NSMutableSet			*_consumedListItems;
 }
 @end
 
@@ -46,6 +47,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
 		_listStyles = [NSDictionary new];
+		_consumedListItems = [NSMutableSet new];
 		_currentRelationshipSource = @"document.xml";
 		_documentRelationships = [NSMutableDictionary new];
 		_packageRelationships = [NSDictionary new];
@@ -273,6 +275,15 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	_listStyles = newListStyles;
 	
 	return index;
+}
+
+- (BOOL)consumeListItem:(RKListItem *)listItem
+{
+	if ([_consumedListItems containsObject: listItem])
+		return YES;
+	
+	[_consumedListItems addObject: listItem];
+	return NO;
 }
 
 

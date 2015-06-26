@@ -155,6 +155,11 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (NSUInteger)indexForListStyle:(RKListStyle *)listStyle;
 
+/*!
+ @abstract Returns YES is the passed list item has been used already. Returns NO if not and remembers the visit.
+ */
+- (BOOL)consumeListItem:(RKListItem *)listItem;
+
 
 #pragma mark - Document relationships
 

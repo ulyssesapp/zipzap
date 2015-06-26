@@ -22,12 +22,15 @@ NSString *RKDOCXListItemLevelElementName				= @"w:ilvl";
 	
 	if (!listItem)
 		return nil;
+
+	if ([context consumeListItem: listItem])
+		return nil;
 	
 	// List level
 	NSXMLElement *levelAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:listItem.indentationLevel];
 	NSXMLElement *levelElement = [NSXMLElement elementWithName:RKDOCXListItemLevelElementName children:nil attributes:@[levelAttribute]];
 	
-	// List style
+	// Enumerator element
 	NSXMLElement *numberingIdAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:[context indexForListStyle: listItem.listStyle]];
 	NSXMLElement *numberingIdElement = [NSXMLElement elementWithName:RKDOCXListItemNumberingIdentifierElementName children:nil attributes:@[numberingIdAttribute]];
 	
