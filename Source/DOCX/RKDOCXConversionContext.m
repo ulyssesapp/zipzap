@@ -147,9 +147,12 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 			@"Menlo Regular":			@YES,
 			@"Menlo Bold":				@YES,
 			@"Menlo Italic":			@YES,
-													   
+
+			@"Helvetica Neue UltraLight":	@YES,
+			@"Helvetica Neue Light":		@YES,			
+			
 			// The following fonts do not support full names on Word 2011. The automatic fallback in -isFullNameRequieredForFont shall not be used:
-			@"Helvetica Neue Italic":	@NO
+			@"Helvetica Neue Italic":		@NO
 			};
 }
 
