@@ -182,6 +182,11 @@ typedef enum : NSUInteger {
  */
 @property (nonatomic, strong, readonly) RKListCounter *listCounter;
 
+/*!
+ @abstract Returns NO if a list item has been used the first time. Returns YES if not.
+ */
+- (BOOL)consumeListItem:(RKListItem *)listItem;
+
 
 #pragma mark - Page context
 

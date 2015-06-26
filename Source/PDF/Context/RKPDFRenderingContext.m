@@ -39,7 +39,10 @@
     NSUInteger _footnoteCounter;
     NSUInteger _endnoteCounter;
     NSUInteger _footnoteAnchorCounter;
-    
+	
+	// List items
+	NSMutableSet *_consumedListItems;
+	
     // The graphics context
     CGContextRef _pdfContext;
 	
@@ -89,6 +92,7 @@
     _pageNumberOfCurrentSection = NSUIntegerMax;
     
     _footnoteAnchorCounter = 0;
+	_consumedListItems = [NSMutableSet new];
     
     _documentNotes = [NSMutableArray new];
     _sectionNotes = [NSMutableArray new];
@@ -386,6 +390,18 @@
     _footnoteAnchorCounter ++;
     
     return [NSString stringWithFormat: @"note-%lu", _footnoteAnchorCounter];
+}
+
+
+#pragma mark - List handling
+
+- (BOOL)consumeListItem:(RKListItem *)listItem
+{
+	if ([_consumedListItems containsObject: listItem])
+		return YES;
+	
+	[_consumedListItems addObject: listItem];
+	return NO;
 }
 
 @end

@@ -42,8 +42,14 @@
 		if (currentAttributes[RKAdditionalParagraphStyleAttributeName])
 			listMarkerAttributes[RKAdditionalParagraphStyleAttributeName] = currentAttributes[RKAdditionalParagraphStyleAttributeName];
 		
-        // Insert marker string (include a tab behave the same as the cocoa text engine)
-        NSString *markerString = [NSString stringWithFormat:@"\t%@\t", [context.listCounter markerForListItem: listItem]];
+		// Do not insert marker string if item has been already used by another paragraph.
+        NSString *markerString;
+		if (![context consumeListItem: listItem])
+			markerString = [NSString stringWithFormat:@"\t%@\t", [context.listCounter markerForListItem: listItem]];
+		else
+			markerString = @"\t\t";
+			
+		// Insert marker string (include a tab behave the same as the cocoa text engine)
         NSAttributedString *styledMarkerString = [[NSAttributedString alloc] initWithString:markerString attributes:listMarkerAttributes];
 		__block NSRange fixRange = NSMakeRange(range.location + insertionOffset, range.length + markerString.length);
         
