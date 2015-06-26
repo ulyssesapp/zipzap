@@ -82,9 +82,15 @@
 
 - (NSUInteger)indexOfListStyle:(RKListStyle *)listStyle
 {
-    NSArray *keys = [_listStyles allKeysForObject: listStyle];
-    
-    if (!keys.count) {
+	__block NSUInteger key = NSNotFound;
+	[_listStyles enumerateKeysAndObjectsUsingBlock:^(NSNumber *currentKey, RKListStyle *currentListStyle, BOOL *stop) {
+		if (listStyle == currentListStyle) {
+			key = currentKey.unsignedIntegerValue;
+			*stop = YES;
+		}
+	}];
+	
+    if (key == NSNotFound) {
         NSNumber *listIndex = [self unusedListIndex];
         [_listStyles setObject:listStyle forKey:listIndex];
         [_listItemIndices setObject:[NSMutableArray new] forKey:listIndex];
@@ -92,7 +98,7 @@
         return listIndex.unsignedIntegerValue;
     }
     
-    return [keys[0] unsignedIntegerValue];
+    return key;
 }
 
 - (NSDictionary *)listStyles

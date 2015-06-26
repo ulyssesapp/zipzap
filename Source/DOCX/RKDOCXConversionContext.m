@@ -258,7 +258,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// List Style already registered
 	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(NSNumber *currentIndex, RKListStyle *currentListStyle, BOOL *stop) {
-		if ([currentListStyle isEqual: listStyle]) {
+		if (currentListStyle == listStyle) {
 			index = currentIndex.unsignedIntegerValue;
 			*stop = YES;
 		}
