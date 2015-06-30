@@ -37,20 +37,27 @@
 			// Prepare attributes for list marker
 			NSDictionary *currentAttributes = [attributedString attributesAtIndex:range.location effectiveRange:nil];
 			NSMutableDictionary *listMarkerAttributes = [[listItem.listStyle markerStyleForLevel: listItem.indentationLevel] mutableCopy] ?: [NSMutableDictionary new];
-
-			// Do not insert marker string if item has been already used by another paragraph.
+			CTParagraphStyleRef paragraphStyle = (__bridge CTParagraphStyleRef)currentAttributes[NSParagraphStyleAttributeName];
+			
+			// Only insert marker string if it has not been already used by another paragraph.
 			NSString *markerString;
-			if (![context consumeListItem: listItem])
+			if (![context consumeListItem: listItem]) {
 				markerString = [NSString stringWithFormat:@"%@\t", [context.listCounter markerForListItem: listItem]];
-			else
-				markerString = @"\t";
+			}
+			else {
+				markerString = @"";
+				
+				RKParagraphStyleWrapper *wrappedParagraphStyle = [[RKParagraphStyleWrapper alloc] initWithCTParagraphStyle: paragraphStyle];
+				wrappedParagraphStyle.firstLineHeadIndent = [listMarkerAttributes[RKListStyleMarkerLocationKey] floatValue] + [listMarkerAttributes[RKListStyleMarkerWidthKey] floatValue];
+				paragraphStyle = [wrappedParagraphStyle newCTParagraphStyle];
+			}
 			
 			// Insert marker string (include a tab behave the same as the cocoa text engine)
 			NSAttributedString *styledMarkerString = [[NSAttributedString alloc] initWithString:markerString attributes:listMarkerAttributes];
 			__block NSRange fixRange = NSMakeRange(range.location + insertionOffset, range.length + markerString.length);
 			
 			[converted insertAttributedString:styledMarkerString atIndex:range.location + insertionOffset];
-			[converted addAttribute:NSParagraphStyleAttributeName value:currentAttributes[NSParagraphStyleAttributeName] range:fixRange];
+			[converted addAttribute:NSParagraphStyleAttributeName value:(__bridge id)paragraphStyle range:fixRange];
 			[converted addAttribute:RKAdditionalParagraphStyleAttributeName value:currentAttributes[RKAdditionalParagraphStyleAttributeName] range:fixRange];
 
 			insertionOffset += markerString.length;
