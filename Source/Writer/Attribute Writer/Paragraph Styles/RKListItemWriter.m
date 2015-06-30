@@ -39,7 +39,8 @@
 
 	NSDictionary *markerStyle = [listStyle markerStyleForLevel: listItem.indentationLevel];
 	CGFloat enumeratorLocation = [markerStyle[RKListStyleMarkerLocationKey] floatValue];
-	CGFloat textLocation = [markerStyle[RKListStyleMarkerWidthKey] floatValue] + enumeratorLocation;
+	CGFloat relativeTextLocation = [markerStyle[RKListStyleMarkerWidthKey] floatValue];
+	CGFloat textLocation = relativeTextLocation + enumeratorLocation;
 	__block NSUInteger paragraphIndex = 0;
 	
 	enumeratorLocation = round(enumeratorLocation * 0.5) / 0.5;
@@ -61,8 +62,8 @@
 			
 		// Setup new NSTextTabs instances for the given tabs stops
 		NSMutableArray *newTabStops = [NSMutableArray new];
-		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:enumeratorLocation alignment:kCTTextAlignmentLeft]];
-		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:textLocation alignment:kCTTextAlignmentLeft]];
+		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:0 alignment:kCTTextAlignmentLeft]];
+		[newTabStops addObject: [[RKTextTabWrapper alloc] initWithLocation:relativeTextLocation alignment:kCTTextAlignmentLeft]];
 
 		// If there are already tab stops, take only tab stops at a higher location than the first text
 		for (NSTextTab *tab in paragraphStyle.tabStops) {

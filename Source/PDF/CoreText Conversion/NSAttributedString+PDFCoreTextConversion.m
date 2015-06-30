@@ -32,7 +32,7 @@ NSMutableArray *NSAttributedStringCoreTextConverters;
 - (NSAttributedString *)coreTextRepresentationUsingContext:(RKPDFRenderingContext *)context
 {
     // Preprocess styles as it is done for RTF output
-    NSAttributedString *convertedString = [RKAttributedStringWriter attributedStringByAdjustingStyles:self usingPreprocessingPolicy:0];
+    NSAttributedString *convertedString = [RKAttributedStringWriter attributedStringByAdjustingStyles:self usingPreprocessingPolicy:RKAttributePreprocessorListMarkerPositionsUsingIndent];
     
     // Convert styles to CoreText representation
     for (Class converter in NSAttributedStringCoreTextConverters) {
