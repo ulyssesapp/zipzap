@@ -7,6 +7,7 @@
 //
 
 #import "RKDOCXListItemWriter.h"
+#import "RKDOCXParagraphStyleWriter.h"
 
 #import "NSXMLElement+IntegerValueConvenience.h"
 
@@ -23,8 +24,15 @@ NSString *RKDOCXListItemLevelElementName				= @"w:ilvl";
 	if (!listItem)
 		return nil;
 
-	if ([context consumeListItem: listItem])
-		return nil;
+	// Manually indent paragraph without marker string
+	if ([context consumeListItem: listItem]) {
+		NSDictionary *markerAttributes = [listItem.listStyle markerStyleForLevel: listItem.indentationLevel];
+		CGFloat markerLocation = [markerAttributes[RKListStyleMarkerLocationKey] floatValue];
+		CGFloat markerWidth = [markerAttributes[RKListStyleMarkerWidthKey] floatValue];
+		
+		NSXMLElement *indentationElement = [RKDOCXParagraphStyleWriter indentationSettingsForMarkerLocation:markerLocation + markerWidth markerWidth:0];
+		return @[indentationElement];
+	}
 	
 	// List level
 	NSXMLElement *levelAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:listItem.indentationLevel];

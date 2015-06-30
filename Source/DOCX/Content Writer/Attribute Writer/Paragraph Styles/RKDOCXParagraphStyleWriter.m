@@ -63,9 +63,12 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	}
 	
 	// Indentation (§17.3.1.12)
-	NSXMLElement *indentationProperty = [self indentationPropertyForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute];
-	if (indentationProperty)
-		[properties addObject: indentationProperty];
+	// HACK: Only set indentation when paragraph is not inside an itemization
+	if (!attributes[RKListItemAttributeName]) {
+		NSXMLElement *indentationProperty = [self indentationPropertyForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute];
+		if (indentationProperty)
+			[properties addObject: indentationProperty];
+	}
 	
 	// Alignment (§17.3.1.13)
 	NSXMLElement *alignmentProperty = [self alignmentPropertyForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute];
