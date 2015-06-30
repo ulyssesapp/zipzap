@@ -158,8 +158,9 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		
 		// Enumerator Styling
 		NSDictionary *attributes = listStyle.levelStyles[index];
-		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocationKey:[attributes[RKListStyleMarkerLocationKey] unsignedIntegerValue] markerWidthKey:[attributes[RKListStyleMarkerWidthKey] unsignedIntegerValue]];
+		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocation:[attributes[RKListStyleMarkerLocationKey] unsignedIntegerValue] markerWidth:[attributes[RKListStyleMarkerWidthKey] unsignedIntegerValue]];
 		[levelElement addChild: paragraphPropertiesElement];
+		
 		NSXMLElement *runPropertiesElement = [RKDOCXRunWriter runPropertiesElementWithProperties: [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context]];
 		if (runPropertiesElement.childCount > 0)
 			[levelElement addChild: runPropertiesElement];
@@ -174,6 +175,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 {
 	NSXMLElement *abstractNumberingElement = [NSXMLElement elementWithName: RKDOCXListStyleAbstractNumberingAttributeName];
 	[abstractNumberingElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@(identifier - 1).stringValue]];
+	
 	return [NSXMLElement elementWithName:RKDOCXListStyleNumberingElementName children:@[abstractNumberingElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXListStyleNumberingAttributeName stringValue:@(identifier).stringValue]]];
 }
 

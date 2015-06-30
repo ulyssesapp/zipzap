@@ -44,7 +44,7 @@
 /*!
  @abstract Returns an XML element representing the paragraph properties of a numbering defintion.
  */
-+ (NSXMLElement *)paragraphPropertiesElementForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey;
++ (NSXMLElement *)paragraphPropertiesElementForMarkerLocation:(NSUInteger)markerLocation markerWidth:(NSUInteger)markerWidth;
 
 /*!
  @abstract Returns an XML element representing a paragraph containing a separator element and its properties.

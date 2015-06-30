@@ -17,12 +17,12 @@
 /*!
  @abstract Returns tab stop settings required for text lists.
  */
-+ (NSXMLElement *)tabSettingsForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey;
++ (NSXMLElement *)tabSettingsForMarkerLocation:(NSUInteger)markerLocation markerWidth:(NSUInteger)markerWidth;
 
 /*!
  @abstract Returns indentation settings required for text lists.
  */
-+ (NSXMLElement *)indentationSettingsForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey;
++ (NSXMLElement *)indentationSettingsForMarkerLocation:(NSUInteger)markerLocation markerWidth:(NSUInteger)markerWidth;
 
 /*!
  @abstract Returns the alignment and spacing properties of the footnote area separators of the given context.

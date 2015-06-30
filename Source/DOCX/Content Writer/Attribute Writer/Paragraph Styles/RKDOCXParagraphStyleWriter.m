@@ -113,36 +113,8 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	return properties;
 }
 
-+ (NSXMLElement *)tabSettingsForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey
-{
-	NSXMLElement *tabsElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabSetElementName];
-	[tabsElement addChild: [NSXMLElement elementWithName:RKDOCXParagraphStyleTabElementName
-												children:nil
-											  attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"num"],
-														   [NSXMLElement attributeWithName:RKDOCXParagraphStyleTabPositionAttributeName integerValue:RKPointsToTwips(markerLocationKey + markerWidthKey)]]]];
-	return tabsElement;
-}
 
-+ (NSXMLElement *)indentationSettingsForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey
-{
-	NSXMLElement *indentationElement = [NSXMLElement elementWithName:RKDOCXParagraphStyleIndentationElementName
-															children:nil
-														  attributes:@[[NSXMLElement attributeWithName:RKDOCXParagraphStyleHeadIndentationAttributeName integerValue:RKPointsToTwips(markerLocationKey + markerWidthKey)],
-																	   [NSXMLElement attributeWithName:RKDOCXParagraphStyleHangingIndentationAttributeName integerValue:RKPointsToTwips(markerWidthKey)]]];
-	return indentationElement;
-}
-
-+ (NSArray *)paragraphPropertiesForSeparatorElementUsingContext:(RKDOCXConversionContext *)context
-{
-	NSXMLElement *beforeAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingBeforeAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingBefore)];
-	NSXMLElement *afterAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingAfterAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingAfter)];
-	NSXMLElement *spacingProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleSpacingElementName children:nil attributes:@[beforeAttribute, afterAttribute]];
-	
-	NSXMLElement *alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(context.document.footnoteAreaAnchorAlignment == RKTextAlignmentRight) ? RKDOCXParagraphStyleRightAlignmentAttributeValue : RKDOCXParagraphStyleLeftAlignmentAttributeValue];
-	NSXMLElement *alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[alignmentAttribute]];
-	
-	return @[spacingProperty, alignmentProperty];
-}
+#pragma mark - Settings
 
 + (NSXMLElement *)indentationPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle
 {
@@ -278,6 +250,40 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	[properties addObject: tabSetProperty];
 	
 	return properties;
+}
+
+
+#pragma mark - Convenience constructors
+
++ (NSXMLElement *)tabSettingsForMarkerLocation:(NSUInteger)markerLocation markerWidth:(NSUInteger)markerWidth
+{
+	NSXMLElement *tabsElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleTabSetElementName];
+	[tabsElement addChild: [NSXMLElement elementWithName:RKDOCXParagraphStyleTabElementName
+												children:nil
+											  attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"num"],
+														   [NSXMLElement attributeWithName:RKDOCXParagraphStyleTabPositionAttributeName integerValue:RKPointsToTwips(markerLocation + markerWidth)]]]];
+	return tabsElement;
+}
+
++ (NSXMLElement *)indentationSettingsForMarkerLocation:(NSUInteger)markerLocation markerWidth:(NSUInteger)markerWidth
+{
+	NSXMLElement *indentationElement = [NSXMLElement elementWithName:RKDOCXParagraphStyleIndentationElementName
+															children:nil
+														  attributes:@[[NSXMLElement attributeWithName:RKDOCXParagraphStyleHeadIndentationAttributeName integerValue:RKPointsToTwips(markerLocation + markerWidth)],
+																	   [NSXMLElement attributeWithName:RKDOCXParagraphStyleHangingIndentationAttributeName integerValue:RKPointsToTwips(markerWidth)]]];
+	return indentationElement;
+}
+
++ (NSArray *)paragraphPropertiesForSeparatorElementUsingContext:(RKDOCXConversionContext *)context
+{
+	NSXMLElement *beforeAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingBeforeAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingBefore)];
+	NSXMLElement *afterAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingAfterAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingAfter)];
+	NSXMLElement *spacingProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleSpacingElementName children:nil attributes:@[beforeAttribute, afterAttribute]];
+	
+	NSXMLElement *alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(context.document.footnoteAreaAnchorAlignment == RKTextAlignmentRight) ? RKDOCXParagraphStyleRightAlignmentAttributeValue : RKDOCXParagraphStyleLeftAlignmentAttributeValue];
+	NSXMLElement *alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[alignmentAttribute]];
+	
+	return @[spacingProperty, alignmentProperty];
 }
 
 @end

@@ -99,10 +99,10 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	return [NSXMLElement elementWithName:RKDOCXParagraphElementName children:@[[RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXPageBreakCharacter]] attributes:nil];
 }
 
-+ (NSXMLElement *)paragraphPropertiesElementForMarkerLocationKey:(NSUInteger)markerLocationKey markerWidthKey:(NSUInteger)markerWidthKey
++ (NSXMLElement *)paragraphPropertiesElementForMarkerLocation:(NSUInteger)markerLocation markerWidth:(NSUInteger)markerWidth
 {
-	return [self paragraphPropertiesElementWithProperties: @[[RKDOCXParagraphStyleWriter tabSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey],
-															 [RKDOCXParagraphStyleWriter indentationSettingsForMarkerLocationKey:markerLocationKey markerWidthKey:markerWidthKey]]];
+	return [self paragraphPropertiesElementWithProperties: @[[RKDOCXParagraphStyleWriter tabSettingsForMarkerLocation:markerLocation markerWidth:markerWidth],
+															 [RKDOCXParagraphStyleWriter indentationSettingsForMarkerLocation:markerLocation markerWidth:markerWidth]]];
 }
 
 + (NSXMLElement *)paragraphElementForSeparatorElement:(NSXMLElement *)separatorElement usingContext:(RKDOCXConversionContext *)context
