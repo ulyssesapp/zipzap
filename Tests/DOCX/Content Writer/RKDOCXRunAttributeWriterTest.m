@@ -72,7 +72,7 @@
 
 - (void)testRunElementWithOutlineAttribute
 {
-	NSDictionary *attributes = @{RKStrokeWidthAttributeName: @(1)};
+	NSDictionary *attributes = @{RKStrokeWidthAttributeName: @1};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Outline Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -88,6 +88,16 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
 	[self assertDOCX:document withTestDocument:@"shadow"];
+}
+
+- (void)testRunElementWithSpacingAttribute
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Character Spacing Test\n" attributes:@{RKKernAttributeName: @1}];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"Negative Character Spacing Test" attributes:@{RKKernAttributeName: @(-1)}]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"characterspacing"];
 }
 
 - (void)testRunElementWithSingleStrikethroughAttribute
@@ -133,7 +143,7 @@
 
 - (void)testRunElementWithSuperscriptAttribute
 {
-	NSDictionary *attributes = @{RKSuperscriptAttributeName: @(1)};
+	NSDictionary *attributes = @{RKSuperscriptAttributeName: @1};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Superscript Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
