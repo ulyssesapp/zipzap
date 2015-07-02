@@ -206,17 +206,17 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 + (NSXMLElement *)ligaturePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
-	id attributeValue = attributes[RKLigatureAttributeName];
-	id styleValue = characterStyle[RKLigatureAttributeName];
+	id attributeValue = attributes[RKLigatureAttributeName] ?: @1;
+	id styleValue = characterStyle[RKLigatureAttributeName] ?: @1;
 	
-	if ((attributeValue == styleValue) && [attributeValue isEqual: styleValue])
+	if ((attributeValue == styleValue) && context)
 		return nil;
 	
 	NSXMLElement *ligatureProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsLigatureElementName];
 	
-	NSUInteger ligatureValue = [attributes[RKLigatureAttributeName] unsignedIntegerValue];
+	NSUInteger ligatureValue = [attributeValue unsignedIntegerValue];
 	
-	if (attributes[RKLigatureAttributeName] && ligatureValue == 0)
+	if (attributeValue && ligatureValue == 0)
 		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureNoneAttributeValue]];
 	else if (ligatureValue == 2)
 		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureAllAttributeValue]];
