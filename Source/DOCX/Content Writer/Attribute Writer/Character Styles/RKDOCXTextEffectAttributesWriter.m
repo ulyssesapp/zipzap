@@ -11,6 +11,7 @@
 #import "RKColor.h"
 
 NSString *RKDOCXTextEffectsBaselineAttributeValue			= @"baseline";
+NSString *RKDOCXTextEffectsCharacterSpacingElementName		= @"w:spacing";
 NSString *RKDOCXTextEffectsColorAutoAttributeValue			= @"auto";
 NSString *RKDOCXTextEffectsColorElementName					= @"w:color";
 NSString *RKDOCXTextEffectsDoubleStrikethroughElementName	= @"w:dstrike";
@@ -45,6 +46,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	NSXMLElement *shadowProperty = [self shadowPropertyForAttributes:attributes usingContext:context];
 	if (shadowProperty)
 		[properties addObject: shadowProperty];
+	
+	// Character Spacing (§17.3.2.35)
+	NSXMLElement *spacingProperty = [self spacingPropertyForAttributes:attributes usingContext:context];
+	if (spacingProperty)
+		[properties addObject: spacingProperty];
 	
 	// Strikethrough (§17.3.2.9/§17.3.2.37)
 	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes:attributes usingContext:context];
@@ -105,6 +111,25 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 		[shadowProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
 	
 	return shadowProperty;
+}
+
++ (NSXMLElement *)spacingPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
+{
+	if (![self shouldTranslateAttributeWithName:RKKernAttributeName fromAttributes:attributes usingContext:context])
+		return nil;
+	
+	NSXMLElement *spacingProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsCharacterSpacingElementName];
+	
+	NSString *spacingValue;
+	
+	if (!attributes[RKKernAttributeName])
+		spacingValue = RKDOCXAttributeWriterOffAttributeValue;
+	else
+		spacingValue = @(RKPointsToTwips([attributes[RKKernAttributeName] integerValue])).stringValue;
+	
+	[spacingProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:spacingValue]];
+	
+	return spacingProperty;
 }
 
 + (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
