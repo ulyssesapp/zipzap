@@ -113,6 +113,12 @@
     NSFileWrapper *expectedFiles = [[NSFileWrapper alloc] initWithURL:expectedURL options:0 error:nil];
     
     [originalFiles.fileWrappers enumerateKeysAndObjectsUsingBlock:^(NSString *originalFilename, NSFileWrapper *originalFile, BOOL *stop) {
+		// Skip tests with iOS / OS X suffix
+		if ([originalFilename.stringByDeletingPathExtension hasSuffix: @"-ios"] && !TARGET_OS_IPHONE)
+			return;
+		if ([originalFilename.stringByDeletingPathExtension hasSuffix: @"-osx"] && TARGET_OS_IPHONE)
+			return;
+		
         // Create PDF and PNG from serialized RTF
         NSDictionary *originalFilePlist = [NSPropertyListSerialization propertyListWithData:originalFile.regularFileContents options:0 format:NULL error:nil];
         RKDocument *document = [[RKDocument alloc] initWithRTFKitPropertyListRepresentation:originalFilePlist error:nil];

@@ -98,8 +98,6 @@
     _sectionNotes = [NSMutableArray new];
     _pageNotes = [NSMutableArray new];
     
-    _listCounter = [RKListCounter new];
-
 	_savedStates = [NSMutableArray new];
 	_operationHandle = operationHandle;
 	
@@ -390,18 +388,6 @@
     _footnoteAnchorCounter ++;
     
     return [NSString stringWithFormat: @"note-%lu", _footnoteAnchorCounter];
-}
-
-
-#pragma mark - List handling
-
-- (BOOL)consumeListItem:(RKListItem *)listItem
-{
-	if ([_consumedListItems containsObject: listItem])
-		return YES;
-	
-	[_consumedListItems addObject: listItem];
-	return NO;
 }
 
 @end
