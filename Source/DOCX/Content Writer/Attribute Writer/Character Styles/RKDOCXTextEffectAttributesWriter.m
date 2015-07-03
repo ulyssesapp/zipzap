@@ -128,18 +128,13 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	if (![self shouldTranslateAttributeWithName:RKKernAttributeName fromAttributes:attributes usingContext:context])
 		return nil;
 	
-	NSXMLElement *spacingProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsCharacterSpacingElementName];
-	
 	NSString *spacingValue;
-	
 	if (!attributes[RKKernAttributeName])
 		spacingValue = RKDOCXAttributeWriterOffAttributeValue;
 	else
 		spacingValue = @(RKPointsToTwips([attributes[RKKernAttributeName] integerValue])).stringValue;
-	
-	[spacingProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:spacingValue]];
-	
-	return spacingProperty;
+
+	return [NSXMLElement elementWithName: RKDOCXTextEffectsCharacterSpacingElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:spacingValue]]];
 }
 
 + (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
@@ -213,13 +208,14 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 		return nil;
 	
 	NSXMLElement *ligatureProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsLigatureElementName];
-	
 	NSUInteger ligatureValue = [attributeValue unsignedIntegerValue];
 	
 	if (attributeValue && ligatureValue == 0)
 		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureNoneAttributeValue]];
+
 	else if (ligatureValue == 2)
 		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureAllAttributeValue]];
+	
 	else
 		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureDefaultAttributeValue]];
 	
