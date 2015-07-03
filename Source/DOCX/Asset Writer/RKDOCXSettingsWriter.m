@@ -47,6 +47,13 @@ NSString *RKDOCXSettingsPositionSamePageAttributeValue				= @"pageBottom";	// Al
 NSString *RKDOCXSettingsPositionSectionEndAttributeValue			= @"sectEnd";
 NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 
+// Compatibility Mode
+NSString *RKDOCXSettingsCompatibilityElementName					= @"w:compat";
+NSString *RKDOCXSettingsCompatibilityFarEastElementName				= @"w:useFELayout";
+NSString *RKDOCXSettingsCompatibilitySettingElementName				= @"w:compatSetting";
+NSString *RKDOCXSettingsCompatibilitySettingNameAttributeName		= @"w:name";
+NSString *RKDOCXSettingsCompatibilityURIAttributeName				= @"w:uri";
+NSString *RKDOCXSettingsCompatibilityURIAttributeValue				= @"http://schemas.microsoft.com/office/word";
 
 @implementation RKDOCXSettingsWriter
 
@@ -71,15 +78,24 @@ NSString *RKDOCXSettingsPositionDocumentEndAttributeValue			= @"docEnd";
 	
 	// Settings
 	// Complex type font compatibility settings
-	NSXMLElement *compat = [NSXMLElement elementWithName: @"w:compat"];
-	[compat addChild: [NSXMLElement elementWithName: @"w:useFELayout"]];
+	NSXMLElement *compat = [NSXMLElement elementWithName: RKDOCXSettingsCompatibilityElementName];
+	[compat addChild: [NSXMLElement elementWithName: RKDOCXSettingsCompatibilityFarEastElementName]];
 	
 	// Avoid compatibility mode
-	NSXMLElement *compatSetting = [NSXMLElement elementWithName: @"w:compatSetting"];
-	[compatSetting addAttribute: [NSXMLElement attributeWithName:@"w:name" stringValue:@"compatibilityMode"]];
-	[compatSetting addAttribute: [NSXMLElement attributeWithName:@"w:uri" stringValue:@"http://schemas.microsoft.com/office/word"]];
-	[compatSetting addAttribute: [NSXMLElement attributeWithName:@"w:val" stringValue:@"15"]];
-	[compat addChild: compatSetting];
+	NSXMLElement *compatModeSetting = [NSXMLElement elementWithName: RKDOCXSettingsCompatibilitySettingElementName];
+	[compatModeSetting addAttribute: [NSXMLElement attributeWithName:RKDOCXSettingsCompatibilitySettingNameAttributeName stringValue:@"compatibilityMode"]];
+	[compatModeSetting addAttribute: [NSXMLElement attributeWithName:RKDOCXSettingsCompatibilityURIAttributeName stringValue:RKDOCXSettingsCompatibilityURIAttributeValue]];
+	[compatModeSetting addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"15"]];
+	
+	[compat addChild: compatModeSetting];
+	
+	// Support ligatures in Word 2011
+	NSXMLElement *ligaturecompatSetting = [NSXMLElement elementWithName: RKDOCXSettingsCompatibilitySettingElementName];
+	[ligaturecompatSetting addAttribute: [NSXMLElement attributeWithName:RKDOCXSettingsCompatibilitySettingNameAttributeName stringValue:@"enableOpenTypeFeatures"]];
+	[ligaturecompatSetting addAttribute: [NSXMLElement attributeWithName:RKDOCXSettingsCompatibilityURIAttributeName stringValue:RKDOCXSettingsCompatibilityURIAttributeValue]];
+	[ligaturecompatSetting addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@"1"]];
+	
+	[compat addChild: ligaturecompatSetting];
 	
 	[document.rootElement addChild: compat];
 	
