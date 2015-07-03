@@ -186,8 +186,6 @@
 		790B5C041B0B970B004193F8 /* RKCoreTextRepresentationConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C955F15AC945700713471 /* RKCoreTextRepresentationConverter.m */; };
 		790B5C051B0B970B004193F8 /* RKParagraphStyleCoreTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8A915A5C4FA00D98438 /* RKParagraphStyleCoreTextConverter.h */; };
 		790B5C061B0B970B004193F8 /* RKParagraphStyleCoreTextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8AA15A5C4FA00D98438 /* RKParagraphStyleCoreTextConverter.m */; };
-		790B5C071B0B970B004193F8 /* RKListItemCoreTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C115A5C5B400D98438 /* RKListItemCoreTextConverter.h */; };
-		790B5C081B0B970B004193F8 /* RKListItemCoreTextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8C215A5C5B400D98438 /* RKListItemCoreTextConverter.m */; };
 		790B5C091B0B970B004193F8 /* RKTextStyleCoreTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8AD15A5C51900D98438 /* RKTextStyleCoreTextConverter.h */; };
 		790B5C0A1B0B970B004193F8 /* RKTextStyleCoreTextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8AE15A5C51900D98438 /* RKTextStyleCoreTextConverter.m */; };
 		790B5C0B1B0B970B004193F8 /* RKColorCoreTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8B115A5C52B00D98438 /* RKColorCoreTextConverter.h */; };
@@ -567,8 +565,6 @@
 		79FCF8BC15A5C55C00D98438 /* RKTextAttachmentCoreTextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8BA15A5C55B00D98438 /* RKTextAttachmentCoreTextConverter.m */; };
 		79FCF8BF15A5C5A100D98438 /* RKFootnoteCoreTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8BD15A5C5A100D98438 /* RKFootnoteCoreTextConverter.h */; };
 		79FCF8C015A5C5A100D98438 /* RKFootnoteCoreTextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8BE15A5C5A100D98438 /* RKFootnoteCoreTextConverter.m */; };
-		79FCF8C315A5C5B500D98438 /* RKListItemCoreTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C115A5C5B400D98438 /* RKListItemCoreTextConverter.h */; };
-		79FCF8C415A5C5B500D98438 /* RKListItemCoreTextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8C215A5C5B400D98438 /* RKListItemCoreTextConverter.m */; };
 		79FCF8C715A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C515A5C5CC00D98438 /* RKPlaceholderCoreTextConverter.h */; };
 		79FCF8C815A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FCF8C615A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.m */; };
 		79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilities.h */; };
@@ -1033,8 +1029,6 @@
 		79FCF8BA15A5C55B00D98438 /* RKTextAttachmentCoreTextConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKTextAttachmentCoreTextConverter.m; path = "PDF/CoreText Conversion/Converter/RKTextAttachmentCoreTextConverter.m"; sourceTree = "<group>"; };
 		79FCF8BD15A5C5A100D98438 /* RKFootnoteCoreTextConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKFootnoteCoreTextConverter.h; path = "PDF/CoreText Conversion/Converter/RKFootnoteCoreTextConverter.h"; sourceTree = "<group>"; };
 		79FCF8BE15A5C5A100D98438 /* RKFootnoteCoreTextConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFootnoteCoreTextConverter.m; path = "PDF/CoreText Conversion/Converter/RKFootnoteCoreTextConverter.m"; sourceTree = "<group>"; };
-		79FCF8C115A5C5B400D98438 /* RKListItemCoreTextConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKListItemCoreTextConverter.h; path = "PDF/CoreText Conversion/Converter/RKListItemCoreTextConverter.h"; sourceTree = "<group>"; };
-		79FCF8C215A5C5B400D98438 /* RKListItemCoreTextConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKListItemCoreTextConverter.m; path = "PDF/CoreText Conversion/Converter/RKListItemCoreTextConverter.m"; sourceTree = "<group>"; };
 		79FCF8C515A5C5CC00D98438 /* RKPlaceholderCoreTextConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKPlaceholderCoreTextConverter.h; path = "PDF/CoreText Conversion/Converter/RKPlaceholderCoreTextConverter.h"; sourceTree = "<group>"; };
 		79FCF8C615A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKPlaceholderCoreTextConverter.m; path = "PDF/CoreText Conversion/Converter/RKPlaceholderCoreTextConverter.m"; sourceTree = "<group>"; };
 		79FCF8C915A5CC4D00D98438 /* RKDocument+PDFUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "RKDocument+PDFUtilities.h"; path = "PDF/Utils/RKDocument+PDFUtilities.h"; sourceTree = "<group>"; };
@@ -1957,8 +1951,6 @@
 				796C955F15AC945700713471 /* RKCoreTextRepresentationConverter.m */,
 				79FCF8A915A5C4FA00D98438 /* RKParagraphStyleCoreTextConverter.h */,
 				79FCF8AA15A5C4FA00D98438 /* RKParagraphStyleCoreTextConverter.m */,
-				79FCF8C115A5C5B400D98438 /* RKListItemCoreTextConverter.h */,
-				79FCF8C215A5C5B400D98438 /* RKListItemCoreTextConverter.m */,
 				79FCF8AD15A5C51900D98438 /* RKTextStyleCoreTextConverter.h */,
 				79FCF8AE15A5C51900D98438 /* RKTextStyleCoreTextConverter.m */,
 				79FCF8B115A5C52B00D98438 /* RKColorCoreTextConverter.h */,
@@ -2196,7 +2188,6 @@
 				79FCF8BB15A5C55C00D98438 /* RKTextAttachmentCoreTextConverter.h in Headers */,
 				79FCF8BF15A5C5A100D98438 /* RKFootnoteCoreTextConverter.h in Headers */,
 				A074BE5B1AC4423C008B3DED /* RKDOCXConversionContext.h in Headers */,
-				79FCF8C315A5C5B500D98438 /* RKListItemCoreTextConverter.h in Headers */,
 				79FCF8C715A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.h in Headers */,
 				79FCF8CB15A5CC4D00D98438 /* RKDocument+PDFUtilities.h in Headers */,
 				79FCF8CF15A5CCB700D98438 /* RKSection+PDFUtilities.h in Headers */,
@@ -2349,7 +2340,6 @@
 				790B5C1D1B0B970B004193F8 /* RKPDFLinkRenderer.h in Headers */,
 				790B5BFB1B0B96ED004193F8 /* RKDOCXHeaderFooterWriter.h in Headers */,
 				790B5BA91B0B96ED004193F8 /* RKAttributeWriter.h in Headers */,
-				790B5C071B0B970B004193F8 /* RKListItemCoreTextConverter.h in Headers */,
 				790B5B9B1B0B96ED004193F8 /* RKKernAttributeWriter.h in Headers */,
 				790B5B991B0B96ED004193F8 /* RKFontAttributeWriter.h in Headers */,
 				790B5B7C1B0B96ED004193F8 /* RKListStyle.h in Headers */,
@@ -2689,7 +2679,6 @@
 				79FCF8BC15A5C55C00D98438 /* RKTextAttachmentCoreTextConverter.m in Sources */,
 				A0E41CDA1AE1331500C403B3 /* RKDOCXPlaceholderWriter.m in Sources */,
 				79FCF8C015A5C5A100D98438 /* RKFootnoteCoreTextConverter.m in Sources */,
-				79FCF8C415A5C5B500D98438 /* RKListItemCoreTextConverter.m in Sources */,
 				79FCF8C815A5C5CD00D98438 /* RKPlaceholderCoreTextConverter.m in Sources */,
 				79FCF8CC15A5CC4D00D98438 /* RKDocument+PDFUtilities.m in Sources */,
 				79FCF8D015A5CCB700D98438 /* RKSection+PDFUtilities.m in Sources */,
@@ -2902,7 +2891,6 @@
 				790B5C1E1B0B970B004193F8 /* RKPDFLinkRenderer.m in Sources */,
 				790B5C751B0B970B004193F8 /* NSString+ParsingConvenience.m in Sources */,
 				790B5C491B0B970B004193F8 /* RKFontSerializer.m in Sources */,
-				790B5C081B0B970B004193F8 /* RKListItemCoreTextConverter.m in Sources */,
 				790B5B811B0B96ED004193F8 /* RKDocument.m in Sources */,
 				790B5C0C1B0B970B004193F8 /* RKColorCoreTextConverter.m in Sources */,
 				790B5C061B0B970B004193F8 /* RKParagraphStyleCoreTextConverter.m in Sources */,

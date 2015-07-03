@@ -175,19 +175,6 @@ typedef enum : NSUInteger {
 - (void)unregisterNotesInAttributedString:(NSAttributedString *)stringWithNotes range:(NSRange)range;
 
 
-#pragma mark - List rendering
-
-/*!
- @abstract A list enumerator used to keep track over list styles and their enumeration states
- */
-@property (nonatomic, strong, readonly) RKListCounter *listCounter;
-
-/*!
- @abstract Returns NO if a list item has been used the first time. Returns YES if not.
- */
-- (BOOL)consumeListItem:(RKListItem *)listItem;
-
-
 #pragma mark - Page context
 
 /*!
