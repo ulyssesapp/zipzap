@@ -72,7 +72,7 @@
 
 - (void)testRunElementWithOutlineAttribute
 {
-	NSDictionary *attributes = @{RKStrokeWidthAttributeName: @(1)};
+	NSDictionary *attributes = @{RKStrokeWidthAttributeName: @1};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Outline Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -88,6 +88,16 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
 	[self assertDOCX:document withTestDocument:@"shadow"];
+}
+
+- (void)testRunElementWithSpacingAttribute
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Character Spacing Test\n" attributes:@{RKKernAttributeName: @1}];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"Negative Character Spacing Test" attributes:@{RKKernAttributeName: @(-1)}]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"characterspacing"];
 }
 
 - (void)testRunElementWithSingleStrikethroughAttribute
@@ -133,12 +143,35 @@
 
 - (void)testRunElementWithSuperscriptAttribute
 {
-	NSDictionary *attributes = @{RKSuperscriptAttributeName: @(1)};
+	NSDictionary *attributes = @{RKSuperscriptAttributeName: @1};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Superscript Test" attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
 	[self assertDOCX:document withTestDocument:@"superscript"];
+}
+
+- (void)testRunElementWithLigatures
+{
+	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"Zapfino", 12, NULL);
+	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)font};
+	
+	NSMutableDictionary *noLigatures = [attributes mutableCopy];
+	noLigatures[RKLigatureAttributeName] = @0;
+	NSMutableDictionary * defaultLigatures = [attributes mutableCopy];
+	defaultLigatures[RKLigatureAttributeName] = @1;
+	NSMutableDictionary *allLigatures = [attributes mutableCopy];
+	allLigatures[RKLigatureAttributeName] = @2;
+	NSDictionary *noMentionOfLigatures = [attributes mutableCopy];
+	
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"This text is written in Zapfino and is using no ligatures.\n" attributes:noLigatures];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"This text is written in Zapfino and is using default ligatures.\n" attributes:defaultLigatures]];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"This text is written in Zapfino and is using all supported ligatures.\n" attributes:allLigatures]];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"The attributes of this text do not mention ligatures, so the text should be using default ligatures. It is written in Zapfino, by the way." attributes:noMentionOfLigatures]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"ligatures"];
 }
 
 - (void)testPageNumberPlaceholder

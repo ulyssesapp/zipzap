@@ -11,9 +11,15 @@
 #import "RKColor.h"
 
 NSString *RKDOCXTextEffectsBaselineAttributeValue			= @"baseline";
+NSString *RKDOCXTextEffectsCharacterSpacingElementName		= @"w:spacing";
 NSString *RKDOCXTextEffectsColorAutoAttributeValue			= @"auto";
 NSString *RKDOCXTextEffectsColorElementName					= @"w:color";
 NSString *RKDOCXTextEffectsDoubleStrikethroughElementName	= @"w:dstrike";
+NSString *RKDOCXTextEffectsLigatureAttributeName			= @"w14:val";
+NSString *RKDOCXTextEffectsLigatureElementName				= @"w14:ligatures";
+NSString *RKDOCXTextEffectsLigatureAllAttributeValue		= @"all";
+NSString *RKDOCXTextEffectsLigatureDefaultAttributeValue	= @"historicalDiscretional"; // alternatively: standardContextual
+NSString *RKDOCXTextEffectsLigatureNoneAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsNoUnderlineAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsOutlineElementName				= @"w:outline";
 NSString *RKDOCXTextEffectsShadowElementName				= @"w:shadow";
@@ -46,6 +52,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	if (shadowProperty)
 		[properties addObject: shadowProperty];
 	
+	// Character Spacing (§17.3.2.35)
+	NSXMLElement *spacingProperty = [self spacingPropertyForAttributes:attributes usingContext:context];
+	if (spacingProperty)
+		[properties addObject: spacingProperty];
+	
 	// Strikethrough (§17.3.2.9/§17.3.2.37)
 	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes:attributes usingContext:context];
 	if (strikethroughProperty)
@@ -60,6 +71,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	NSXMLElement *superscriptProperty = [self superscriptPropertyForAttributes:attributes usingContext:context];
 	if (superscriptProperty)
 		[properties addObject: superscriptProperty];
+	
+	// Ligatures (no mention in official standard)
+	NSXMLElement *ligatureProperty = [self ligaturePropertyForAttributes:attributes usingContext:context];
+	if (ligatureProperty)
+		[properties addObject: ligatureProperty];
 	
 	return properties;
 }
@@ -105,6 +121,20 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 		[shadowProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
 	
 	return shadowProperty;
+}
+
++ (NSXMLElement *)spacingPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
+{
+	if (![self shouldTranslateAttributeWithName:RKKernAttributeName fromAttributes:attributes usingContext:context])
+		return nil;
+	
+	NSString *spacingValue;
+	if (!attributes[RKKernAttributeName])
+		spacingValue = RKDOCXAttributeWriterOffAttributeValue;
+	else
+		spacingValue = @(RKPointsToTwips([attributes[RKKernAttributeName] integerValue])).stringValue;
+
+	return [NSXMLElement elementWithName: RKDOCXTextEffectsCharacterSpacingElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:spacingValue]]];
 }
 
 + (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
@@ -166,6 +196,30 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	[superscriptProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(superscriptAttribute < 0) ? RKDOCXTextEffectsSubscriptAttributeValue : RKDOCXTextEffectsSuperscriptAttributeValue]];
 	
 	return superscriptProperty;
+}
+
++ (NSXMLElement *)ligaturePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
+{
+	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
+	id attributeValue = attributes[RKLigatureAttributeName] ?: @1;
+	id styleValue = characterStyle[RKLigatureAttributeName] ?: @1;
+	
+	if ((attributeValue == styleValue) && context)
+		return nil;
+	
+	NSXMLElement *ligatureProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsLigatureElementName];
+	NSUInteger ligatureValue = [attributeValue unsignedIntegerValue];
+	
+	if (attributeValue && ligatureValue == 0)
+		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureNoneAttributeValue]];
+
+	else if (ligatureValue == 2)
+		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureAllAttributeValue]];
+	
+	else
+		[ligatureProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsLigatureAttributeName stringValue:RKDOCXTextEffectsLigatureDefaultAttributeValue]];
+	
+	return ligatureProperty;
 }
 
 + (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
