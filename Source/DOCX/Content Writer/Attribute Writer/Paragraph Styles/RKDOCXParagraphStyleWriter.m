@@ -198,13 +198,16 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 + (NSArray *)tabStopPropertiesForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle usingContext:(RKDOCXConversionContext *)context
 {
 	NSMutableArray *properties;
-	NSArray *tabStops;
+	NSMutableArray *tabStops = [NSMutableArray new];
 	
-	if (context.prependFootnoteIndentations)
-		tabStops = @[[[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:nil],
-					 [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:nil]];
+	if (context.prependFootnoteIndentations) {
+		if (context.document.footnoteAreaAnchorInset > 0)
+			[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:nil]];
+		
+		[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:nil]];
+	}
 	else
-		tabStops = paragraphStyle.tabStops;
+		tabStops = [paragraphStyle.tabStops copy];
 	
 	// Default tab stop interval set?
 	if (paragraphStyle.defaultTabInterval != templateParagraphStyle.defaultTabInterval) {

@@ -131,14 +131,24 @@ typedef enum : NSUInteger {
 		return nil;
 	}
 	
-	NSMutableAttributedString *mutableReferenceString = [referenceString mutableCopy];
-	[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, mutableReferenceString.length ? mutableReferenceString.length - 1: mutableReferenceString.length)];
-	referenceString = mutableReferenceString;
-	
 	NSMutableDictionary *referenceMarkAttributes = [context.document.footnoteAreaAnchorAttributes mutableCopy];
 	referenceMarkAttributes[RKDOCXReferenceTypeAttributeName] = @(referenceType);
-	NSMutableAttributedString *referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString: @"\t\ufffc\t"];
-	[referenceStringWithReferenceMark addAttributes:referenceMarkAttributes range:NSMakeRange(1, 1)];
+	
+	NSMutableAttributedString *referenceStringWithReferenceMark;
+	NSMutableAttributedString *mutableReferenceString = [referenceString mutableCopy];
+	// Only insert tabs if anchor inset is existent
+	if (context.document.footnoteAreaAnchorInset <= 0) {
+		referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString: @"\ufffc\t"];
+		[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t" options:0 range:NSMakeRange(0, mutableReferenceString.length ? mutableReferenceString.length - 1: mutableReferenceString.length)];
+		[referenceStringWithReferenceMark addAttributes:referenceMarkAttributes range:NSMakeRange(0, 1)];
+	}
+	else {
+		referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString: @"\t\ufffc\t"];
+		[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, mutableReferenceString.length ? mutableReferenceString.length - 1: mutableReferenceString.length)];
+		[referenceStringWithReferenceMark addAttributes:referenceMarkAttributes range:NSMakeRange(1, 1)];
+	}
+	
+	referenceString = mutableReferenceString;
 	[referenceStringWithReferenceMark appendAttributedString: referenceString];
 	
 	// Change relationship source for endnotes/footnotes
