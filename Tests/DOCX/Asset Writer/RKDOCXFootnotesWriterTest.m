@@ -63,10 +63,12 @@
 
 - (void)testFootnoteWithLink
 {
-	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Footnote Test"];
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Footnote Test. The footnote anchor should have an inset of 12pt, the content should have an inset of 24pt."];
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKFootnoteAttributeName: [[NSAttributedString alloc] initWithString:@"This is a link inside a footnote." attributes:@{RKLinkAttributeName: [NSURL URLWithString: @"http://example.org/"]}], RKSuperscriptAttributeName: @1}]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.footnoteAreaAnchorInset = 12;
+	document.footnoteAreaContentInset = 24;
 	
 	[self assertDOCX:document withTestDocument:@"footnotewithlink"];
 }
