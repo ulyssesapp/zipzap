@@ -112,62 +112,71 @@ typedef enum : NSUInteger {
 {
 	RKDOCXReferenceType referenceType = RKDOCXNoReference;
 	NSString *referenceElementName;
-	NSAttributedString *referenceString;
+	NSMutableAttributedString *referenceString;
 	NSString *newRelationshipSource;
 	
+	// Get footnote or endnote contents
 	if (attributes[RKFootnoteAttributeName]) {
 		referenceType = RKDOCXFootnoteReference;
 		referenceElementName = RKDOCXFootnotesFootnoteReferenceElementName;
-		referenceString = attributes[RKFootnoteAttributeName];
+		referenceString = [attributes[RKFootnoteAttributeName] mutableCopy];
 		newRelationshipSource = RKDOCXFootnotesFilename;
 	}
 	else if (attributes[RKEndnoteAttributeName]) {
 		referenceType = RKDOCXEndnoteReference;
 		referenceElementName = RKDOCXFootnotesEndnoteReferenceElementName;
-		referenceString = attributes[RKEndnoteAttributeName];
+		referenceString = [attributes[RKEndnoteAttributeName] mutableCopy];
 		newRelationshipSource = RKDOCXEndnotesFilename;
 	}
 	else {
 		return nil;
 	}
-	
+
 	NSMutableDictionary *referenceMarkAttributes = [context.document.footnoteAreaAnchorAttributes mutableCopy];
-	referenceMarkAttributes[RKDOCXReferenceTypeAttributeName] = @(referenceType);
+
+	// Insert anchor and content indenting tab
+	[referenceString insertAttributedString:[[NSAttributedString alloc] initWithString:@"\ufffc\t" attributes:referenceMarkAttributes] atIndex:0];
+	[referenceString addAttribute:RKDOCXReferenceTypeAttributeName value:@(referenceType) range:NSMakeRange(0, 1)];
 	
-	NSMutableAttributedString *referenceStringWithReferenceMark;
-	NSMutableAttributedString *mutableReferenceString = [referenceString mutableCopy];
-	
-	// Only insert tabs if anchor inset is existent
-	if (context.document.footnoteAreaAnchorInset <= 0) {
-		referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString: @"\ufffc\t"];
-		[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t" options:0 range:NSMakeRange(0, mutableReferenceString.length ? mutableReferenceString.length - 1: mutableReferenceString.length)];
-		[referenceStringWithReferenceMark addAttributes:referenceMarkAttributes range:NSMakeRange(0, 1)];
+	// Indent subsequent lines and marker indent, if needed
+	NSString *newLineFix;
+	if (context.document.footnoteAreaAnchorInset > 0) {
+		newLineFix = @"\n\t\t";
+		[referenceString insertAttributedString:[[NSAttributedString alloc] initWithString:@"\t" attributes:nil] atIndex:0];
 	}
 	else {
-		referenceStringWithReferenceMark = [[NSMutableAttributedString alloc] initWithString: @"\t\ufffc\t"];
-		[mutableReferenceString.mutableString replaceOccurrencesOfString:@"\n" withString:@"\n\t\t" options:0 range:NSMakeRange(0, mutableReferenceString.length ? mutableReferenceString.length - 1: mutableReferenceString.length)];
-		[referenceStringWithReferenceMark addAttributes:referenceMarkAttributes range:NSMakeRange(1, 1)];
+		newLineFix = @"\n\t";
 	}
+
+	if (referenceString.length > 0)
+		[referenceString.mutableString replaceOccurrencesOfString:@"\n" withString:newLineFix options:0 range:NSMakeRange(0, referenceString.length-1)];
 	
-	referenceString = mutableReferenceString;
-	[referenceStringWithReferenceMark appendAttributedString: referenceString];
-	
-	// Override tab settings
-	NSMutableParagraphStyle *paragraphStyleWithTabStops = [[referenceString attribute:RKParagraphStyleAttributeName atIndex:0 effectiveRange:NULL] mutableCopy] ?: [NSMutableParagraphStyle new];
+	// Adjust tab stops to contain marker and content insets
 	NSMutableArray *tabStops = [NSMutableArray new];
-	
 	if (context.document.footnoteAreaAnchorInset > 0)
 		[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:nil]];
+	
 	[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:nil]];
+
+	NSMutableParagraphStyle *paragraphStyleWithTabStops = [[referenceString attribute:RKParagraphStyleAttributeName atIndex:0 effectiveRange:NULL] mutableCopy];
+	if (!paragraphStyleWithTabStops) {
+		paragraphStyleWithTabStops = [NSMutableParagraphStyle new];
+		paragraphStyleWithTabStops.tabStops = @[];
+	}
+	
+	for (NSTextTab *tabStop in paragraphStyleWithTabStops.tabStops) {
+		if (tabStop.location > context.document.footnoteAreaContentInset)
+			[tabStops addObject: tabStop];
+	}
 	
 	paragraphStyleWithTabStops.tabStops = tabStops;
-	[referenceStringWithReferenceMark addAttribute:RKParagraphStyleAttributeName value:paragraphStyleWithTabStops range:NSMakeRange(0, referenceStringWithReferenceMark.length)];
+	[referenceString addAttribute:RKParagraphStyleAttributeName value:paragraphStyleWithTabStops range:NSMakeRange(0, referenceString.length)];
 	
 	// Change relationship source for endnotes/footnotes
 	NSString *previousRelationshipSource = context.currentRelationshipSource;
 	context.currentRelationshipSource = newRelationshipSource;
 	
-	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceStringWithReferenceMark usingContext:context];
+	NSArray *referenceContent = [RKDOCXAttributedStringWriter processAttributedString:referenceString usingContext:context];
 	
 	// Restore previous relationship source
 	context.currentRelationshipSource = previousRelationshipSource;
