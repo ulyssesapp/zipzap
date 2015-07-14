@@ -117,12 +117,6 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (NSUInteger)indexForEndnoteContent:(NSArray *)content;
 
-/*!
- @abstract Specifies whether tab stops of a paragraphs should be prepended by indentation tab stops required for placement of footnotes.
- @discussion If set to yes paragraph writers will prepend a tab stop for placing a footnote's anchor and its contents.
- */
-@property (nonatomic) BOOL prependFootnoteIndentations;
-
 
 #pragma mark - Headers and Footers
 
