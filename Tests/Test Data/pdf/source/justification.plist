@@ -33,7 +33,7 @@
 							<key>location</key>
 							<integer>0</integer>
 							<key>length</key>
-							<integer>250</integer>
+							<integer>253</integer>
 						</dict>
 						<key>attributeValues</key>
 						<dict>
@@ -51,10 +51,35 @@
 							</dict>
 						</dict>
 					</dict>
+					<dict>
+						<key>attributeRange</key>
+						<dict>
+							<key>location</key>
+							<integer>253</integer>
+							<key>length</key>
+							<integer>73</integer>
+						</dict>
+						<key>attributeValues</key>
+						<dict>
+							<key>RKAdditionalParagraphStyle</key>
+							<dict>
+								<key>justifyLineBreaks</key>
+								<true/>
+							</dict>
+							<key>NSParagraphStyle</key>
+							<dict>
+								<key>paragraphSpacing</key>
+								<integer>10</integer>
+								<key>alignment</key>
+								<string>justified</string>
+							</dict>
+						</dict>
+					</dict>
 				</array>
 				<key>string</key>
 				<string>This is some example text with justified text alignment. It is beautifully arranged by CoreText. It is very simple to do that. Please note that the last line of a paragraph is ragged-right.
-Furthermore note that fixed line-breaks will be justified too!</string>
+Furthermore note that fixed line-breaks will be not justified!
+Besides it has been specified explicitly like done in the last paragraph!</string>
 			</dict>
 		</dict>
 	</array>

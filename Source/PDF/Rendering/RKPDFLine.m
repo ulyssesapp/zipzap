@@ -29,14 +29,14 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 
 @implementation RKPDFLine
 
-- (id)initWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight justificationAllowed:(BOOL)justificationAllowed context:(RKPDFRenderingContext *)context
+- (id)initWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight context:(RKPDFRenderingContext *)context
 {
 	self = [super init];
 	
 	if (self) {
 		_context = context;
 		
-		[self setupWithAttributedString:attributedString inRange:range usingWidth:width maximumHeight:maximumHeight justificationAllowed:justificationAllowed];
+		[self setupWithAttributedString:attributedString inRange:range usingWidth:width maximumHeight:maximumHeight];
 	}
 	
 	return self;
@@ -48,7 +48,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		CFRelease(_line);
 }
 
-- (void)setupWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight justificationAllowed:(BOOL)justificationAllowed
+- (void)setupWithAttributedString:(NSAttributedString *)attributedString inRange:(NSRange)range usingWidth:(CGFloat)width maximumHeight:(CGFloat)maximumHeight
 {
 	NSMutableAttributedString *lineContent = [[attributedString attributedSubstringFromRange: range] mutableCopy];
 	__block NSInteger instantiationExtension = 0;
@@ -88,14 +88,20 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	_additionalParagraphStyle = [lineContent attribute:RKAdditionalParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
 	
 	// Create a justified alignment if requested
-	if ((_paragraphStyle.textAlignment == kCTJustifiedTextAlignment) && (justificationAllowed)) {
-		CTLineRef justifiedLine = CTLineCreateJustifiedLine(ctLine, 1.0, width);
-		if (justifiedLine) {
-			CFRelease(ctLine);
-			ctLine = justifiedLine;
+	if ((_paragraphStyle.textAlignment == kCTJustifiedTextAlignment)) {
+		NSUInteger breakPosition = range.location + suggestedBreak - 1;
+		BOOL isEndOfString = (breakPosition+1 >= NSMaxRange(range));
+		unichar lastCharacter = isEndOfString ? 0 : [attributedString.string characterAtIndex: breakPosition];
+		
+		if (!isEndOfString && (lastCharacter != '\n') && (lastCharacter != RKLineSeparatorCharacter || _additionalParagraphStyle.justifyLineBreaks)) {
+			CTLineRef justifiedLine = CTLineCreateJustifiedLine(ctLine, 1.0, width);
+			if (justifiedLine) {
+				CFRelease(ctLine);
+				ctLine = justifiedLine;
+			}
+			else
+				NSLog(@"Cannot justify line for string: %@ on page %lu. Use unjustified variant.", lineContent.string, _context.currentPageNumber);
 		}
- 		else
-			NSLog(@"Cannot justify line for string: %@ on page %lu. Use unjustified variant.", lineContent.string, _context.currentPageNumber);
 	}
 
 	// Determine preferred line height

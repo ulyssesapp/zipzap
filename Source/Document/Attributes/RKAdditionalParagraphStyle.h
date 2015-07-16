@@ -41,4 +41,10 @@ extern NSString *RKAdditionalParagraphStyleAttributeName;
  */
 @property (nonatomic) BOOL overrideLineHeightAndSpacing;
 
+/*!
+ @abstract Specifies that line breaks should be justified.
+ @discussion Default: NO. Ignored in DOCX and RTF.
+ */
+@property(nonatomic) BOOL justifyLineBreaks;
+
 @end

@@ -14,6 +14,7 @@ NSString *RKAdditionalParagraphStyleHyphenationEnabledKey = @"hyphenationEnabled
 NSString *RKAdditionalParagraphStyleSkipOrphanControlKey = @"skipOrphanControl";
 NSString *RKAdditionalParagraphStyleBaselineDistanceKey = @"baselineDistance";
 NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"overrideLineHeightAndSpacing";
+NSString *RKAdditionalParagraphStyleJustifyLineBreaksKey = @"justifyLineBreaks";
 
 @implementation RKAdditionalParagraphStyleSerializer
 
@@ -37,6 +38,7 @@ NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"override
 	paragraphStyle.baselineDistance = [propertyList[RKAdditionalParagraphStyleBaselineDistanceKey] doubleValue];
 	paragraphStyle.overrideLineHeightAndSpacing = [propertyList[RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey] boolValue];
 	paragraphStyle.skipOrphanControl = [[propertyList objectForKey: RKAdditionalParagraphStyleSkipOrphanControlKey] boolValue];
+	paragraphStyle.justifyLineBreaks = [[propertyList objectForKey: RKAdditionalParagraphStyleJustifyLineBreaksKey] boolValue];
 	
 	return paragraphStyle;
 }
@@ -49,6 +51,7 @@ NSString *RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey = @"override
 				[NSNumber numberWithFloat: attributeValue.baselineDistance], RKAdditionalParagraphStyleBaselineDistanceKey,
 				[NSNumber numberWithBool: attributeValue.overrideLineHeightAndSpacing], RKAdditionalParagraphStyleOverrideLineHeightAndSpacingKey,
 				[NSNumber numberWithBool: attributeValue.skipOrphanControl], RKAdditionalParagraphStyleSkipOrphanControlKey,
+				[NSNumber numberWithBool: attributeValue.justifyLineBreaks], RKAdditionalParagraphStyleJustifyLineBreaksKey,
 			nil];
 }
 
