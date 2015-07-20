@@ -13,8 +13,10 @@
 NSString *RKDOCXTextEffectsBaselineAttributeValue			= @"baseline";
 NSString *RKDOCXTextEffectsCharacterSpacingElementName		= @"w:spacing";
 NSString *RKDOCXTextEffectsColorAutoAttributeValue			= @"auto";
+NSString *RKDOCXTextEffectsNoHighlightAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsColorElementName					= @"w:color";
 NSString *RKDOCXTextEffectsDoubleStrikethroughElementName	= @"w:dstrike";
+NSString *RKDOCXTextEffectsHighlightElementValue			= @"w:highlight";
 NSString *RKDOCXTextEffectsLigatureAttributeName			= @"w14:val";
 NSString *RKDOCXTextEffectsLigatureElementName				= @"w14:ligatures";
 NSString *RKDOCXTextEffectsLigatureAllAttributeValue		= @"all";
@@ -41,6 +43,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	NSXMLElement *foregroundColorProperty = [self foregroundColorPropertyForAttributes:attributes usingContext:context];
 	if (foregroundColorProperty)
 		[properties addObject: foregroundColorProperty];
+	
+	// Highlight color (17.3.2.15)
+	NSXMLElement *highlightColorProperty = [self highlightColorPropertyForAttributes:attributes usingContext:context];
+	if (highlightColorProperty)
+		[properties addObject: highlightColorProperty];
 	
 	// Outline (§17.3.2.23)
 	NSXMLElement *strokeWidthProperty = [self strokeWidthPropertyForAttributes:attributes usingContext:context];
@@ -92,9 +99,61 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	if (!fontColorAttribute)
 		[foregroundColorProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXTextEffectsColorAutoAttributeValue]];
 	else
-		[foregroundColorProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:fontColorAttribute.hexRepresentation]];
+		[foregroundColorProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:fontColorAttribute.rk_hexRepresentation]];
 	
 	return foregroundColorProperty;
+}
+
++ (NSXMLElement *)highlightColorPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
+{
+	static NSDictionary *highlightColors;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		// Color definitions taken from ST_HighlightColor: §17.18.40
+		highlightColors = @{
+							@"black":		[RKColor rk_colorWithHexRepresentation: @"000000"],
+							@"blue":		[RKColor rk_colorWithHexRepresentation: @"0000FF"],
+							@"cyan":		[RKColor rk_colorWithHexRepresentation: @"00FFFF"],
+							@"darkBlue":	[RKColor rk_colorWithHexRepresentation: @"00008B"],
+							@"darkCyan":	[RKColor rk_colorWithHexRepresentation: @"008B8B"],
+							@"darkGray":	[RKColor rk_colorWithHexRepresentation: @"A9A9A9"],
+							@"darkGreen":	[RKColor rk_colorWithHexRepresentation: @"006400"],
+							@"darkMagenta":	[RKColor rk_colorWithHexRepresentation: @"800080"],
+							@"darkRed":		[RKColor rk_colorWithHexRepresentation: @"8B0000"],
+							@"darkYellow":	[RKColor rk_colorWithHexRepresentation: @"808000"],
+							@"green":		[RKColor rk_colorWithHexRepresentation: @"00FF00"],
+							@"lightGray":	[RKColor rk_colorWithHexRepresentation: @"D3D3D3"],
+							@"magenta":		[RKColor rk_colorWithHexRepresentation: @"FF00FF"],
+							@"red":			[RKColor rk_colorWithHexRepresentation: @"FF0000"],
+							@"white":		[RKColor rk_colorWithHexRepresentation: @"FFFFFF"],
+							@"yellow":		[RKColor rk_colorWithHexRepresentation: @"FFFF00"]
+						   };
+	});
+
+	RKColor *highlightColorAttribute = attributes[RKBackgroundColorAttributeName];
+	
+	// No color: just ignore.
+	if (!highlightColorAttribute)
+		return nil;
+
+	// Get closest color
+	CGFloat highlightRed = highlightColorAttribute.redComponent;
+	CGFloat highlightGreen = highlightColorAttribute.greenComponent;
+	CGFloat highlightBlue = highlightColorAttribute.blueComponent;
+
+	__block NSString *nearestColorName = nil;
+	__block CGFloat nearestColorDistance = INFINITY;
+
+	[highlightColors enumerateKeysAndObjectsUsingBlock:^(NSString *colorName, RKColor *currentColor, BOOL *stop) {
+		CGFloat currentDistance = pow(highlightRed - currentColor.redComponent, 2) + pow(highlightGreen - currentColor.greenComponent, 2) + pow(highlightBlue - currentColor.blueComponent, 2);
+		if (currentDistance <= nearestColorDistance) {
+			nearestColorDistance = currentDistance;
+			nearestColorName = colorName;
+		}
+	}];
+
+	// Highlight color is always translated, since it is ignored when being part of a style definition
+	return [NSXMLElement elementWithName:RKDOCXTextEffectsHighlightElementValue children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:nearestColorName]]];
 }
 
 + (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
@@ -170,7 +229,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	
 	RKColor *underlineColorAttribute = attributes[RKUnderlineColorAttributeName];
 	if (underlineColorAttribute) {
-		[underlineProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorElementName stringValue:[attributes[RKUnderlineColorAttributeName] hexRepresentation]]];
+		[underlineProperty addAttribute: [NSXMLElement attributeWithName:RKDOCXTextEffectsUnderlineColorElementName stringValue:[attributes[RKUnderlineColorAttributeName] rk_hexRepresentation]]];
 	}
 	
 	return underlineProperty;

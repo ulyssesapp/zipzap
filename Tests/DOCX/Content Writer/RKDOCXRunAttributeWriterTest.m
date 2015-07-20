@@ -70,6 +70,18 @@
 	[self assertDOCX:document withTestDocument:@"twocolors"];
 }
 
+- (void)testRunElementWithBackgroundColorAttribute
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Highlight Color Test: Red Yellow Green" attributes:@{}];
+	[attributedString addAttribute:RKBackgroundColorAttributeName value:[RKColor rk_colorWithHexRepresentation: @"ff2020"] range:NSMakeRange(22, 3)];
+	[attributedString addAttribute:RKBackgroundColorAttributeName value:[RKColor rk_colorWithHexRepresentation: @"cfcf00"] range:NSMakeRange(26, 6)];
+	[attributedString addAttribute:RKBackgroundColorAttributeName value:[RKColor rk_colorWithHexRepresentation: @"10ef10"] range:NSMakeRange(33, 5)];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"highlight-color"];
+}
+
 - (void)testRunElementWithOutlineAttribute
 {
 	NSDictionary *attributes = @{RKStrokeWidthAttributeName: @1};
