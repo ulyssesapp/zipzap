@@ -125,8 +125,8 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 							@"lightGray":	[RKColor rk_colorWithHexRepresentation: @"D3D3D3"],
 							@"magenta":		[RKColor rk_colorWithHexRepresentation: @"FF00FF"],
 							@"red":			[RKColor rk_colorWithHexRepresentation: @"FF0000"],
-							@"white":		[RKColor rk_colorWithHexRepresentation: @"FFFFFF"],
-							@"yellow":		[RKColor rk_colorWithHexRepresentation: @"FFFF00"]
+							@"yellow":		[RKColor rk_colorWithHexRepresentation: @"FFFF00"],
+							@"white":		[RKColor rk_colorWithHexRepresentation: @"FFFFFF"]
 						   };
 	});
 
@@ -137,15 +137,20 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 		return nil;
 
 	// Get closest color
-	CGFloat highlightRed = highlightColorAttribute.redComponent;
-	CGFloat highlightGreen = highlightColorAttribute.greenComponent;
-	CGFloat highlightBlue = highlightColorAttribute.blueComponent;
+	CGFloat highlightHue = highlightColorAttribute.hueComponent;
+	CGFloat highlightSaturation = highlightColorAttribute.saturationComponent;
+	CGFloat highlightBrightness = highlightColorAttribute.brightnessComponent;
 
 	__block NSString *nearestColorName = nil;
 	__block CGFloat nearestColorDistance = INFINITY;
 
 	[highlightColors enumerateKeysAndObjectsUsingBlock:^(NSString *colorName, RKColor *currentColor, BOOL *stop) {
-		CGFloat currentDistance = pow(highlightRed - currentColor.redComponent, 2) + pow(highlightGreen - currentColor.greenComponent, 2) + pow(highlightBlue - currentColor.blueComponent, 2);
+		// Ignore colors without saturation, if the color itself has saturation
+		if ((currentColor.saturationComponent <= 0.01) != (highlightSaturation <= 0.01))
+			return;
+
+		// Otherwise determine distance to color
+		CGFloat currentDistance = pow(highlightHue - currentColor.hueComponent, 2) + pow(highlightSaturation - currentColor.saturationComponent, 2) + (pow(highlightBrightness - currentColor.brightnessComponent, 2));
 		if (currentDistance <= nearestColorDistance) {
 			nearestColorDistance = currentDistance;
 			nearestColorName = colorName;
