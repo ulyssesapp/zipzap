@@ -96,7 +96,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	if (defaultStyle.count > 0) {
 		NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
 		NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
-															  children:@[styleNameElement]
+															  children:@[styleNameElement, [NSXMLElement elementWithName:RKDOCXStyleTemplatePrimaryStyleElementName children:nil attributes:nil]]
 															attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateParagraphStyleAttributeValue],
 																		 [NSXMLElement attributeWithName:RKDOCXStyleTemplateDefaultAttributeName stringValue:RKDOCXStyleTemplateDefaultAttributeValue],
 																		 [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
