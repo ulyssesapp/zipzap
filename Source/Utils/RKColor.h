@@ -8,10 +8,20 @@
 
 #if TARGET_OS_IPHONE
 	#define RKColor UIColor
-
-	#import "UIColor+RKColorExtensions.h"
 #else
 	#define RKColor NSColor
-
-	#import "NSColor+RKColorExtensions.h"
 #endif
+
+@interface RKColor (RKColorExtensions)
+
+/*!
+ @abstract Creates a new color from the given RGB hex representation.
+ */
++ (RKColor *)rk_colorWithHexRepresentation:(NSString *)string;
+
+/*!
+ @abstract Returns the hexadecimal value of the color.
+ */
+@property(nonatomic, readonly) NSString *rk_hexRepresentation;
+
+@end

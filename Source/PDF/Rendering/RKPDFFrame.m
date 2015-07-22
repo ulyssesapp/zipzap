@@ -104,19 +104,10 @@
 			CGFloat suggestedWidth = [self maximumWidthForAttributedString:attributedString inRange:remainingParagraphRange isFirstInParagraph:isFirstLineOfParagraph];
 			
 			// Layout line
-			RKPDFLine *line = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:remainingParagraphRange usingWidth:suggestedWidth maximumHeight:_boundingBox.size.height justificationAllowed:YES context:_context];
+			RKPDFLine *line = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:remainingParagraphRange usingWidth:suggestedWidth maximumHeight:_boundingBox.size.height context:_context];
 			NSRange lineRange = line.visibleRange;
 			
 			BOOL isLastLineOfParagraph = (remainingParagraphRange.location + lineRange.length) == NSMaxRange(paragraphRange);
-
-			// If our line is the last in a paragraph: do not justify it
-			if (isLastLineOfParagraph) {
-				// De-register unused footnotes
-				[_context unregisterNotesInAttributedString:line.content range:NSMakeRange(0, line.content.length)];
-				
-				line = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:remainingParagraphRange usingWidth:suggestedWidth maximumHeight:_boundingBox.size.height justificationAllowed:NO context:_context];
-				NSAssert(lineRange.length == line.visibleRange.length, @"Line range should not change after unjustifying a line");
-			}
 			
 			// Determine line placement
 			CGFloat yOffset = 0;
@@ -141,7 +132,7 @@
 			
 			if (widowWidth && succeedingLineRange.length && (succeedingLineRange.location < NSMaxRange(remainingParagraphRange))) {
 				// Determine height of succeeding line for widow controlling
-				RKPDFLine *succeedingLine = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:succeedingLineRange usingWidth:widowWidth maximumHeight:_maximumHeight justificationAllowed:YES context:_context];
+				RKPDFLine *succeedingLine = [[RKPDFLine alloc] initWithAttributedString:attributedString inRange:succeedingLineRange usingWidth:widowWidth maximumHeight:_maximumHeight context:_context];
 				BOOL isSuccessorLastLineOfParagraph = NSMaxRange(succeedingLineRange) == NSMaxRange([attributedString.string paragraphRangeForRange: succeedingLineRange]);
 				
 				nextLineHeight = [self rectForLine:succeedingLine isFirstInParagraph:isLastLineOfParagraph isLastInParagraph:isSuccessorLastLineOfParagraph isFirstInFrame:NO yOffset:NULL].size.height;

@@ -22,6 +22,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 		_overrideLineHeightAndSpacing = NO;
 		_baselineDistance = 0;
 		_skipOrphanControl = NO;
+		_justifyLineBreaks = NO;
 	}
 	
 	return self;
@@ -34,7 +35,8 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 			&& (self.skipOrphanControl == object.skipOrphanControl)
 			&& (self.hyphenationEnabled == object.hyphenationEnabled)
 			&& (self.baselineDistance == object.baselineDistance)
-			&& (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing);
+			&& (self.overrideLineHeightAndSpacing == object.overrideLineHeightAndSpacing)
+			&& (self.justifyLineBreaks == object.justifyLineBreaks);
 }
 
 - (NSUInteger)hash
@@ -50,6 +52,7 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 	newStyle.skipOrphanControl = self.skipOrphanControl;
 	newStyle.baselineDistance = self.baselineDistance;
 	newStyle.overrideLineHeightAndSpacing = self.overrideLineHeightAndSpacing;
+	newStyle.justifyLineBreaks = self.justifyLineBreaks;
 	
 	return newStyle;
 }
@@ -61,13 +64,15 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 											"hyphenationEnabled:			%u, "
 											"baselineDistance:				%f, "
 										    "overrideLineHeightAndSpacing:	%d, "
-											"skipOrphanControl:				%u"
+											"skipOrphanControl:				%u, "
+											"justifyLineBreaks:				%u"
 										")",
 			self.keepWithFollowingParagraph,
 			self.hyphenationEnabled,
 			self.baselineDistance,
 			self.overrideLineHeightAndSpacing,
-			self.skipOrphanControl
+			self.skipOrphanControl,
+			self.justifyLineBreaks
 			];
 }
 
