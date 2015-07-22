@@ -32,9 +32,9 @@
 
 /*!
  @abstract Returns an array of XML elements containing the run style properties of the given attributes.
- @discussion If the passed attributes dictionary contains a reference to a character style template (RKCharacterStyleNameAttributeName) this method will only create run properties that are overriding the given template.
+ @discussion If specified, the property elements will be generated to create the default style. I.E. template style settings will be ignored. Otherwise, only differences to default and paragraph template styles will be returned.
  */
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle;
 
 /*!
  @abstract Returns an XML element representing a text element with the given string value.

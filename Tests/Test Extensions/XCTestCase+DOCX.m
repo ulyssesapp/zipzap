@@ -40,11 +40,21 @@
 	
 	[NSFileManager.defaultManager createDirectoryAtURL:temporaryDirectoryURL withIntermediateDirectories:YES attributes:nil error:NULL];
 	
-	[generated writeToURL:[[temporaryDirectoryURL URLByAppendingPathComponent: filename] URLByAppendingPathExtension: @"docx"] atomically:YES];
-	[expected writeToURL:[[temporaryDirectoryURL URLByAppendingPathComponent: [filename stringByAppendingString: @"-expected"]] URLByAppendingPathExtension: @"docx"] atomically:YES];
+	NSURL *generatedURL = [[temporaryDirectoryURL URLByAppendingPathComponent: filename] URLByAppendingPathExtension: @"docx"];
+	NSURL *expectedURL = [[temporaryDirectoryURL URLByAppendingPathComponent: [filename stringByAppendingString: @"-expected"]] URLByAppendingPathExtension: @"docx"];
+	
+	[generated writeToURL:generatedURL atomically:YES];
+	[expected writeToURL:expectedURL atomically:YES];
 	
 	NSLog(@"\n\n-----------------\n\nTest failed. Output written to:\n%@\n\n", temporaryDirectoryURL.path);
+
 #if !TARGET_OS_IPHONE
+	[NSFileManager.defaultManager removeItemAtURL:generatedURL.URLByDeletingPathExtension error:NULL];
+	[NSFileManager.defaultManager removeItemAtURL:expectedURL.URLByDeletingPathExtension error:NULL];
+	
+	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[generatedURL.path, @"-d", generatedURL.URLByDeletingPathExtension]] waitUntilExit];
+	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[expectedURL.path, @"-d", expectedURL.URLByDeletingPathExtension]] waitUntilExit];
+	
 	[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[temporaryDirectoryURL]];
 #endif
 }

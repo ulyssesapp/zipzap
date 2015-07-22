@@ -22,7 +22,7 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 
 @implementation RKDOCXFontAttributesWriter
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
 	CTFontRef fontAttribute = (__bridge CTFontRef)attributes[RKFontAttributeName];
 	NSNumber *ignoreAttribute = attributes[RKFontMixAttributeName];
@@ -35,15 +35,12 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 	
 	NSUInteger traits = CTFontGetSymbolicTraits(fontAttribute);
 	
-	// Character style for comparison
-	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
+	// Template style for comparison
+	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName] processingDefaultStyle:isDefaultStyle];
 	CTFontRef characterStyleFontAttribute = (__bridge CTFontRef)characterStyle[RKFontAttributeName];
 	NSUInteger styleTraits = CTFontGetSymbolicTraits(characterStyleFontAttribute);
 	
 	// Font Name (§17.3.2.26)
-	if (!context)
-		context = [[RKDOCXConversionContext alloc] initWithDocument: [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @""]]];
-	
 	NSString *fontName;
 	BOOL fullFontNameRequired = [context isFullNameRequieredForFont: (__bridge ULFont *)fontAttribute];
 	if (fullFontNameRequired)

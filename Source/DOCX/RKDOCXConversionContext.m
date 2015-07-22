@@ -55,11 +55,16 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return self;
 }
 
-- (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName
+- (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyleName characterStyle:(NSString *)characterStyleName processingDefaultStyle:(BOOL)processingDefaultStyle
 {
+	// When processing a default style, no style templates should be used. Thus
+	if (processingDefaultStyle)
+		return nil;
+	
 	NSDictionary *defaultStyle = self.document.defaultStyle;
 	NSArray *styleKey;
-	
+
+	// Use default style if no template is given
 	if (!paragraphStyleName && !characterStyleName)
 		return defaultStyle;
 	
@@ -84,7 +89,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// Mix character and paragraph style, character styles have the higher priority
 	else
-		cachedStyle = [self attributesByMixingStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:[self cachedStyleFromParagraphStyle:paragraphStyleName characterStyle:nil]];
+		cachedStyle = [self attributesByMixingStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:[self cachedStyleFromParagraphStyle:paragraphStyleName characterStyle:nil processingDefaultStyle:processingDefaultStyle]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;

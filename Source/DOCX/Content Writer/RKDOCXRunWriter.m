@@ -76,13 +76,15 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 {
 	NSXMLElement *runElement = [NSXMLElement elementWithName: RKDOCXRunElementName];
 	NSArray *properties;
-	if (attributes && context)
-		properties = [self propertyElementsForAttributes:attributes usingContext:context];
+
+	if (attributes)
+		properties = [self propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:NO];
 	
 	if (properties.count) {
 		NSXMLElement *runPropertiesElement = [self runPropertiesElementWithProperties: properties];
 		[runElement addChild: runPropertiesElement];
 	}
+	
 	NSParameterAssert(contentElement);
 	[runElement addChild: contentElement];
 	
@@ -97,7 +99,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	return [NSXMLElement elementWithName:RKDOCXRunPropertiesElementName children:properties attributes:nil];
 }
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
@@ -105,11 +107,11 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	if (styleReferenceElement)
 		[properties addObject: styleReferenceElement];
 	
-	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
+	NSArray *propertyElements = [RKDOCXFontAttributesWriter propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
-	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context];
+	propertyElements = [RKDOCXTextEffectAttributesWriter propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (propertyElements)
 		[properties addObjectsFromArray: propertyElements];
 	
