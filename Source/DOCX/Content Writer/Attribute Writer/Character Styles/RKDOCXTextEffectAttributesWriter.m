@@ -44,7 +44,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	if (foregroundColorProperty)
 		[properties addObject: foregroundColorProperty];
 	
-	// Highlight color (17.3.2.15)
+	// Highlight color (§17.3.2.15)
 	NSXMLElement *highlightColorProperty = [self highlightColorPropertyForAttributes:attributes usingContext:context];
 	if (highlightColorProperty)
 		[properties addObject: highlightColorProperty];
@@ -137,20 +137,22 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 		return nil;
 
 	// Get closest color
-	CGFloat highlightHue = highlightColorAttribute.hueComponent;
-	CGFloat highlightSaturation = highlightColorAttribute.saturationComponent;
-	CGFloat highlightBrightness = highlightColorAttribute.brightnessComponent;
+	CGFloat highlightHue, highlightSaturation, highlightBrightness;
+	[highlightColorAttribute getHue:&highlightHue saturation:&highlightSaturation brightness:&highlightBrightness alpha:NULL];
 
 	__block NSString *nearestColorName = nil;
 	__block CGFloat nearestColorDistance = INFINITY;
 
 	[highlightColors enumerateKeysAndObjectsUsingBlock:^(NSString *colorName, RKColor *currentColor, BOOL *stop) {
+		CGFloat currentHue, currentSaturation, currentBrightness;
+		[currentColor getHue:&currentHue saturation:&currentSaturation brightness:&currentBrightness alpha:NULL];
+		
 		// Ignore colors without saturation, if the color itself has saturation
-		if ((currentColor.saturationComponent <= 0.01) != (highlightSaturation <= 0.01))
+		if ((currentSaturation <= 0.01) != (highlightSaturation <= 0.01))
 			return;
 
 		// Otherwise determine distance to color
-		CGFloat currentDistance = pow(highlightHue - currentColor.hueComponent, 2) + pow(highlightSaturation - currentColor.saturationComponent, 2) + (pow(highlightBrightness - currentColor.brightnessComponent, 2));
+		CGFloat currentDistance = pow(highlightHue - currentHue, 2) + pow(highlightSaturation - currentSaturation, 2) + pow(highlightBrightness - currentBrightness, 2);
 		if (currentDistance <= nearestColorDistance) {
 			nearestColorDistance = currentDistance;
 			nearestColorName = colorName;
