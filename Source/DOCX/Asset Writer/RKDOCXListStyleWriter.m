@@ -161,7 +161,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 		NSXMLElement *paragraphPropertiesElement = [RKDOCXParagraphWriter paragraphPropertiesElementForMarkerLocation:[attributes[RKListStyleMarkerLocationKey] unsignedIntegerValue] markerWidth:[attributes[RKListStyleMarkerWidthKey] unsignedIntegerValue]];
 		[levelElement addChild: paragraphPropertiesElement];
 		
-		NSXMLElement *runPropertiesElement = [RKDOCXRunWriter runPropertiesElementWithProperties: [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context]];
+		NSXMLElement *runPropertiesElement = [RKDOCXRunWriter runPropertiesElementWithProperties: [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:NO]];
 		if (runPropertiesElement.childCount > 0)
 			[levelElement addChild: runPropertiesElement];
 		

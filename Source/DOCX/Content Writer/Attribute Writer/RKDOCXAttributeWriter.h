@@ -23,7 +23,8 @@ extern NSString *RKDOCXAttributeWriterValueAttributeName;
 
 /*!
  @abstract Returns an array of XML elements containing the properties of a paragraph or run.
+ @discussion If specified, the property elements will be generated to create the default style. I.E. template style settings will be ignored. Otherwise, only differences to default and template styles will be returned.
  */
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle;
 
 @end

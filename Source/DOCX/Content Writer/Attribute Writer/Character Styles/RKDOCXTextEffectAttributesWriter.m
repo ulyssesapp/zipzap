@@ -35,63 +35,63 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 
 @implementation RKDOCXTextEffectAttributesWriter
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Font color (§17.3.2.6)
-	NSXMLElement *foregroundColorProperty = [self foregroundColorPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *foregroundColorProperty = [self foregroundColorPropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (foregroundColorProperty)
 		[properties addObject: foregroundColorProperty];
 	
-	// Highlight color (§17.3.2.15)
+	// Highlight color (§17.3.2.15). Don't need to ignore style templates, since highlight color is not inherited from templates.
 	NSXMLElement *highlightColorProperty = [self highlightColorPropertyForAttributes:attributes usingContext:context];
 	if (highlightColorProperty)
 		[properties addObject: highlightColorProperty];
 	
 	// Outline (§17.3.2.23)
-	NSXMLElement *strokeWidthProperty = [self strokeWidthPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *strokeWidthProperty = [self strokeWidthPropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (strokeWidthProperty)
 		[properties addObject: strokeWidthProperty];
 	
 	// Shadow (§17.3.2.31)
-	NSXMLElement *shadowProperty = [self shadowPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *shadowProperty = [self shadowPropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (shadowProperty)
 		[properties addObject: shadowProperty];
 	
 	// Character Spacing (§17.3.2.35)
-	NSXMLElement *spacingProperty = [self spacingPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *spacingProperty = [self spacingPropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (spacingProperty)
 		[properties addObject: spacingProperty];
 	
 	// Strikethrough (§17.3.2.9/§17.3.2.37)
-	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *strikethroughProperty = [self strikethroughPropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (strikethroughProperty)
 		[properties addObject: strikethroughProperty];
 	
 	// Underline (§17.3.2.40)
-	NSXMLElement *underlineProperty = [self underlinePropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *underlineProperty = [self underlinePropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (underlineProperty)
 		[properties addObject: underlineProperty];
 	
 	// Subscript/Superscript (§17.3.2.42)
-	NSXMLElement *superscriptProperty = [self superscriptPropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *superscriptProperty = [self superscriptPropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (superscriptProperty)
 		[properties addObject: superscriptProperty];
 	
 	// Ligatures (no mention in official standard)
-	NSXMLElement *ligatureProperty = [self ligaturePropertyForAttributes:attributes usingContext:context];
+	NSXMLElement *ligatureProperty = [self ligaturePropertyForAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle];
 	if (ligatureProperty)
 		[properties addObject: ligatureProperty];
 	
 	return properties;
 }
 
-+ (NSXMLElement *)foregroundColorPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)foregroundColorPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
 	RKColor *fontColorAttribute = attributes[RKForegroundColorAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKForegroundColorAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKForegroundColorAttributeName fromAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle])
 		return nil;
 	
 	NSXMLElement *foregroundColorProperty = [NSXMLElement elementWithName:RKDOCXTextEffectsColorElementName];
@@ -163,9 +163,9 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return [NSXMLElement elementWithName:RKDOCXTextEffectsHighlightElementValue children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:nearestColorName]]];
 }
 
-+ (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
-	if (![self shouldTranslateAttributeWithName:RKStrokeWidthAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKStrokeWidthAttributeName fromAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle])
 		return nil;
 	
 	NSXMLElement *strokeWidthProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsOutlineElementName];
@@ -176,9 +176,9 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return strokeWidthProperty;
 }
 
-+ (NSXMLElement *)shadowPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)shadowPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
-	if (![self shouldTranslateAttributeWithName:RKShadowAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKShadowAttributeName fromAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle])
 		return nil;
 	
 	NSXMLElement *shadowProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsShadowElementName];
@@ -189,9 +189,9 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return shadowProperty;
 }
 
-+ (NSXMLElement *)spacingPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)spacingPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
-	if (![self shouldTranslateAttributeWithName:RKKernAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKKernAttributeName fromAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle])
 		return nil;
 	
 	NSString *spacingValue;
@@ -203,11 +203,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return [NSXMLElement elementWithName: RKDOCXTextEffectsCharacterSpacingElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:spacingValue]]];
 }
 
-+ (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)strikethroughPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
 	NSNumber *strikethroughAttribute = attributes[RKStrikethroughStyleAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKStrikethroughStyleAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKStrikethroughStyleAttributeName fromAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle])
 		return nil;
 	
 	NSXMLElement *strikethroughProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsSingleStrikethroughElementName];
@@ -218,11 +218,11 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return strikethroughProperty;
 }
 
-+ (NSXMLElement *)underlinePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)underlinePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
 	NSNumber *underlineAttribute = attributes[RKUnderlineStyleAttributeName];
 	
-	if (![self shouldTranslateAttributeWithName:RKUnderlineStyleAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKUnderlineStyleAttributeName fromAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle])
 		return nil;
 	
 	NSXMLElement *underlineProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsUnderlineElementName];
@@ -242,12 +242,12 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return underlineProperty;
 }
 
-+ (NSXMLElement *)superscriptPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)superscriptPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
 	NSInteger superscriptAttribute = [attributes[RKSuperscriptAttributeName] unsignedIntegerValue];
 	
 	// String and style attribute are the same
-	if (![self shouldTranslateAttributeWithName:RKSuperscriptAttributeName fromAttributes:attributes usingContext:context])
+	if (![self shouldTranslateAttributeWithName:RKSuperscriptAttributeName fromAttributes:attributes usingContext:context isDefaultStyle:isDefaultStyle])
 		return nil;
 	
 	NSXMLElement *superscriptProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsSuperscriptElementName];
@@ -264,13 +264,14 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return superscriptProperty;
 }
 
-+ (NSXMLElement *)ligaturePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSXMLElement *)ligaturePropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
-	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
+	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName] processingDefaultStyle:isDefaultStyle];
 	id attributeValue = attributes[RKLigatureAttributeName] ?: @1;
 	id styleValue = characterStyle[RKLigatureAttributeName] ?: @1;
 	
-	if ((attributeValue == styleValue) && context)
+	// Ignore ligature setting if matching with template style. Always set when processing default style, since ligatures are not activate by default in DOCX.
+	if (!isDefaultStyle && [attributeValue isEqual: styleValue])
 		return nil;
 	
 	NSXMLElement *ligatureProperty = [NSXMLElement elementWithName: RKDOCXTextEffectsLigatureElementName];
@@ -288,9 +289,9 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	return ligatureProperty;
 }
 
-+ (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (BOOL)shouldTranslateAttributeWithName:(NSString *)attributeName fromAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle
 {
-	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName]];
+	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName] processingDefaultStyle:isDefaultStyle];
 	id attributeValue = attributes[attributeName];
 	id styleValue = characterStyle[attributeName];
 	

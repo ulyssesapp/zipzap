@@ -79,12 +79,12 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	NSXMLElement *documentDefaultsElement = [NSXMLElement elementWithName: RKDOCXStyleTemplateDocumentDefaultsElementName];
 	
 	// Paragraph defaults
-	NSXMLElement *defaultParagraphPropertiesElement = [self defaultParagraphPropertiesElementForStyleAttributes: defaultStyle];
+	NSXMLElement *defaultParagraphPropertiesElement = [self defaultParagraphPropertiesElementForStyleAttributes:defaultStyle usingContext:context];
 	if (defaultParagraphPropertiesElement)
 		[documentDefaultsElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateParagraphDefaultElementName children:@[defaultParagraphPropertiesElement] attributes:nil]];
 	
 	// Character defaults
-	NSXMLElement *defaultRunPropertiesElement = [self defaultRunPropertiesElementForStyleAttributes: defaultStyle];
+	NSXMLElement *defaultRunPropertiesElement = [self defaultRunPropertiesElementForStyleAttributes:defaultStyle usingContext:context];
 	if (defaultRunPropertiesElement)
 		[documentDefaultsElement addChild: [NSXMLElement elementWithName:RKDOCXStyleTemplateRunDefaultElementName children:@[defaultRunPropertiesElement] attributes:nil]];
 	
@@ -96,15 +96,15 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	if (defaultStyle.count > 0) {
 		NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
 		NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName
-															  children:@[styleNameElement]
+															  children:@[styleNameElement, [NSXMLElement elementWithName:RKDOCXStyleTemplatePrimaryStyleElementName children:nil attributes:nil]]
 															attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:RKDOCXStyleTemplateParagraphStyleAttributeValue],
 																		 [NSXMLElement attributeWithName:RKDOCXStyleTemplateDefaultAttributeName stringValue:RKDOCXStyleTemplateDefaultAttributeValue],
 																		 [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:RKDOCXStyleTemplateDefaultStyleNameAttributeValue]]];
-		NSXMLElement *paragraphDefaultsElement = [self defaultParagraphPropertiesElementForStyleAttributes: defaultStyle];
+		NSXMLElement *paragraphDefaultsElement = [self defaultParagraphPropertiesElementForStyleAttributes:defaultStyle usingContext:context];
 		if (paragraphDefaultsElement)
 			[styleElement addChild: paragraphDefaultsElement];
 		
-		NSXMLElement *runDefaultsElement = [self defaultRunPropertiesElementForStyleAttributes: defaultStyle];
+		NSXMLElement *runDefaultsElement = [self defaultRunPropertiesElementForStyleAttributes:defaultStyle usingContext:context];
 		if (runDefaultsElement)
 			[styleElement addChild: runDefaultsElement];
 		
@@ -125,14 +125,16 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXStyleTemplateFilename folder:RKDOCXWordFolder] contentType:RKDOCXStyleTemplateContentType];
 }
 
-+ (NSXMLElement *)defaultParagraphPropertiesElementForStyleAttributes:(NSDictionary *)styleAttributes
++ (NSXMLElement *)defaultParagraphPropertiesElementForStyleAttributes:(NSDictionary *)styleAttributes usingContext:(RKDOCXConversionContext *)context
 {
-	return [RKDOCXParagraphWriter paragraphPropertiesElementWithProperties: [RKDOCXParagraphWriter propertyElementsForAttributes:styleAttributes usingContext:nil]];
+	// Ignore style templates, to prevent that default style will be based upon its own.
+	return [RKDOCXParagraphWriter paragraphPropertiesElementWithProperties: [RKDOCXParagraphWriter propertyElementsForAttributes:styleAttributes usingContext:context isDefaultStyle:YES]];
 }
 
-+ (NSXMLElement *)defaultRunPropertiesElementForStyleAttributes:(NSDictionary *)styleAttributes
++ (NSXMLElement *)defaultRunPropertiesElementForStyleAttributes:(NSDictionary *)styleAttributes usingContext:(RKDOCXConversionContext *)context
 {
-	return [RKDOCXRunWriter runPropertiesElementWithProperties: [RKDOCXRunWriter propertyElementsForAttributes:styleAttributes usingContext:nil]];
+	// Ignore style templates, to prevent that default style will be based upon its own.
+	return [RKDOCXRunWriter runPropertiesElementWithProperties: [RKDOCXRunWriter propertyElementsForAttributes:styleAttributes usingContext:context isDefaultStyle:YES]];
 }
 
 + (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
@@ -155,11 +157,11 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, basedOnElement, priorityElement, qFormatElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:docxStyleName]]];
 	
 	// Add style elements for paragraphs and character styles as needed
-	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context];
+	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:NO];
 	if (!isCharacterStyle && paragraphAttributes.count > 0)
 		[styleElement addChild: [RKDOCXParagraphWriter paragraphPropertiesElementWithProperties: paragraphAttributes]];
 	
-	NSArray *characterAttributes = [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context];
+	NSArray *characterAttributes = [RKDOCXRunWriter propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:NO];
 	if (characterAttributes.count > 0)
 		[styleElement addChild: [RKDOCXRunWriter runPropertiesElementWithProperties: characterAttributes]];
 	

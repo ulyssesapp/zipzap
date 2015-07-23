@@ -42,12 +42,12 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 
 @implementation RKDOCXParagraphStyleWriter
 
-+ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)propertyElementsForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle;
 {
 	NSParagraphStyle *paragraphStyleAttribute = attributes[RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
 	RKAdditionalParagraphStyle *additionalParagraphStyleAttribute = attributes[RKAdditionalParagraphStyleAttributeName];
 	
-	NSDictionary *templateStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:nil];
+	NSDictionary *templateStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:nil processingDefaultStyle:isDefaultStyle];
 	NSParagraphStyle *templateParagraphStyleAttribute = templateStyle[RKParagraphStyleAttributeName] ?: NSParagraphStyle.defaultParagraphStyle;
 	RKAdditionalParagraphStyle *templateAdditionalParagraphStyleAttribute = templateStyle[RKAdditionalParagraphStyleAttributeName];
 	
@@ -104,14 +104,18 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	}
 	
 	// Hyphenation (§17.3.1.34)
-	if (context.document.hyphenationEnabled)
-		if ((templateAdditionalParagraphStyleAttribute || !additionalParagraphStyleAttribute.hyphenationEnabled) && (!templateAdditionalParagraphStyleAttribute || additionalParagraphStyleAttribute.hyphenationEnabled != templateAdditionalParagraphStyleAttribute.hyphenationEnabled)) {
+	if (context.document.hyphenationEnabled) {
+		// Do not set hyphenation if matching style template.
+		if ((additionalParagraphStyleAttribute.hyphenationEnabled != templateAdditionalParagraphStyleAttribute.hyphenationEnabled) || (!templateAdditionalParagraphStyleAttribute && !additionalParagraphStyleAttribute.hyphenationEnabled)) {
 			NSXMLElement *suppressAutoHyphensElement = [NSXMLElement elementWithName: RKDOCXParagraphStyleSuppressHyphenationElementName];
-			if (additionalParagraphStyleAttribute.hyphenationEnabled && additionalParagraphStyleAttribute)
+
+			// Re-activate hyphenation when overriding template setting
+			if (additionalParagraphStyleAttribute.hyphenationEnabled && !templateAdditionalParagraphStyleAttribute.hyphenationEnabled)
 				[suppressAutoHyphensElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:RKDOCXAttributeWriterOffAttributeValue]];
 			
 			[properties addObject: suppressAutoHyphensElement];
 		}
+	}
 	
 	return properties;
 }
