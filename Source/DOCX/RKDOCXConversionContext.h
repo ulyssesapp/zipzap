@@ -44,7 +44,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 /*!
  @abstract The document a conversion context belongs to.
  */
-@property(nonatomic, readonly) RKDocument *document;
+@property (nonatomic, readonly) RKDocument *document;
 
 /*!
  @abstract Mixes the given paragraph and character style attributes and caches and returns the resulting style attributes.
@@ -64,19 +64,19 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @abstract The data representation of the generated DOCX file as far as collected.
  @discussion Should be used only after performing all required conversion steps.
  */
-@property(nonatomic, readonly) NSData *docxRepresentation;
+@property (nonatomic, readonly) NSData *docxRepresentation;
 
 /*!
  @abstract Contains all content types collected from the XML files of the document.
  @discussion Maps from filename to content type.
  */
-@property(nonatomic, readonly) NSDictionary *usedXMLTypes;
+@property (nonatomic, readonly) NSDictionary *usedXMLTypes;
 
 /*!
  @abstract Contains all content types collected from additional asset files used inside the document.
  @discussion Maps from path extensions to MIME types.
  */
-@property(nonatomic, readonly) NSDictionary *usedMIMETypes;
+@property (nonatomic, readonly) NSDictionary *usedMIMETypes;
 
 /*!
  @abstract Adds the given document part to the context object and registers the content type for the filename.
@@ -102,7 +102,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 /*!
  @abstract Mapping from footnote identifiers (NSNumber) to footnote content (NSXMLElement).
  */
-@property(nonatomic, readonly) NSDictionary *footnotes;
+@property (nonatomic, readonly) NSDictionary *footnotes;
 
 /*!
  @abstract Creates and returns an identifier for the given footnote content.

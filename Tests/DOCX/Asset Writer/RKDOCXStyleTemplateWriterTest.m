@@ -151,6 +151,7 @@
 	paragraphStyle.paragraphSpacingBefore = 20;
 	paragraphStyle.paragraphSpacing = 15;
 	paragraphStyle.alignment = RKTextAlignmentJustified;
+	paragraphStyle.headerLevel = 1;
 	paragraphStyle.defaultTabInterval = 42;
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:@{}],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:@{}],
@@ -186,6 +187,7 @@
 	templateParagraphStyle.paragraphSpacingBefore = 1;
 	templateParagraphStyle.paragraphSpacing = 1;
 	templateParagraphStyle.alignment = RKTextAlignmentRight;
+	templateParagraphStyle.headerLevel = 1;
 	templateParagraphStyle.defaultTabInterval = 1;
 	templateParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:@{}],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:@{}],
@@ -210,6 +212,7 @@
 	paragraphStyle.paragraphSpacingBefore = 10;
 	paragraphStyle.paragraphSpacing = 10;
 	paragraphStyle.alignment = RKTextAlignmentCenter;
+	paragraphStyle.headerLevel = 6;
 	paragraphStyle.defaultTabInterval = 10;
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10 options:@{}],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:20 options:@{}],
@@ -243,6 +246,7 @@
 	paragraphStyle.paragraphSpacingBefore = 1;
 	paragraphStyle.paragraphSpacing = 1;
 	paragraphStyle.alignment = RKTextAlignmentRight;
+	paragraphStyle.headerLevel = 1;
 	paragraphStyle.defaultTabInterval = 1;
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:@{}],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:@{}],

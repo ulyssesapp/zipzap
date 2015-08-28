@@ -16,6 +16,7 @@ NSString *RKDOCXParagraphStyleBaseWritingDirectionElementName		= @"w:bidi";
 NSString *RKDOCXParagraphStyleDefaultTabStopElementName				= @"w:defaultTabStop";
 NSString *RKDOCXParagraphStyleIndentationElementName				= @"w:ind";
 NSString *RKDOCXParagraphStyleKeepNextElementName					= @"w:keepNext";
+NSString *RKDOCXParagraphStyleOutlineLevelElementName				= @"w:outlineLvl";
 NSString *RKDOCXParagraphStyleSpacingElementName					= @"w:spacing";
 NSString *RKDOCXParagraphStyleSuppressHyphenationElementName		= @"w:suppressAutoHyphens";
 NSString *RKDOCXParagraphStyleTabSetElementName						= @"w:tabs";
@@ -84,6 +85,11 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	NSArray *tabStopProperties = [self tabStopPropertiesForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute usingContext:context];
 	if (tabStopProperties)
 		[properties addObjectsFromArray: tabStopProperties];
+	
+	// Outline Level ($17.3.1.20)
+	NSXMLElement *outlineLevelProperty = [self outlineLevelPropertyForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute];
+	if (outlineLevelProperty)
+		[properties addObject: outlineLevelProperty];
 	
 	// Keep With following (§17.3.1.15)
 	if (additionalParagraphStyleAttribute.keepWithFollowingParagraph != templateAdditionalParagraphStyleAttribute.keepWithFollowingParagraph) {
@@ -250,6 +256,21 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	[properties addObject: tabSetProperty];
 	
 	return properties;
+}
+
++ (NSXMLElement *)outlineLevelPropertyForParagraphStyle:(NSParagraphStyle *)paragraphStyle templateParagraphStyle:(NSParagraphStyle *)templateParagraphStyle
+{
+	if (paragraphStyle.headerLevel == templateParagraphStyle.headerLevel)
+		return nil;
+	
+	NSUInteger outlineLevel;
+	
+	if (!paragraphStyle.headerLevel)
+		outlineLevel = 9;
+	else
+		outlineLevel = paragraphStyle.headerLevel - 1;
+	
+	return [NSXMLElement elementWithName:RKDOCXParagraphStyleOutlineLevelElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:outlineLevel]]];
 }
 
 
