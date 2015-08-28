@@ -86,7 +86,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 	if (tabStopProperties)
 		[properties addObjectsFromArray: tabStopProperties];
 	
-	// Outline Level ($17.3.1.20)
+	// Outline Level (§17.3.1.20) 
 	NSXMLElement *outlineLevelProperty = [self outlineLevelPropertyForParagraphStyle:paragraphStyleAttribute templateParagraphStyle:templateParagraphStyleAttribute];
 	if (outlineLevelProperty)
 		[properties addObject: outlineLevelProperty];
