@@ -151,13 +151,13 @@
 	paragraphStyle.paragraphSpacingBefore = 20;
 	paragraphStyle.paragraphSpacing = 15;
 	paragraphStyle.alignment = RKTextAlignmentJustified;
-	paragraphStyle.headerLevel = 1;
 	paragraphStyle.defaultTabInterval = 42;
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:@{}],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:@{}],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:@{}]];
 	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	additionalParagraphStyle.headerLevel = 1;
 	additionalParagraphStyle.baselineDistance = 29;
 	additionalParagraphStyle.keepWithFollowingParagraph = YES;
 	additionalParagraphStyle.skipOrphanControl = YES;
@@ -187,13 +187,13 @@
 	templateParagraphStyle.paragraphSpacingBefore = 1;
 	templateParagraphStyle.paragraphSpacing = 1;
 	templateParagraphStyle.alignment = RKTextAlignmentRight;
-	templateParagraphStyle.headerLevel = 1;
 	templateParagraphStyle.defaultTabInterval = 1;
 	templateParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:@{}],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:@{}],
 								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:@{}]];
 	
 	RKAdditionalParagraphStyle *templateAdditionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	templateAdditionalParagraphStyle.headerLevel = 1;
 	templateAdditionalParagraphStyle.baselineDistance = 1;
 	templateAdditionalParagraphStyle.keepWithFollowingParagraph = YES;
 	templateAdditionalParagraphStyle.skipOrphanControl = YES;
@@ -212,13 +212,13 @@
 	paragraphStyle.paragraphSpacingBefore = 10;
 	paragraphStyle.paragraphSpacing = 10;
 	paragraphStyle.alignment = RKTextAlignmentCenter;
-	paragraphStyle.headerLevel = 6;
 	paragraphStyle.defaultTabInterval = 10;
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10 options:@{}],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:20 options:@{}],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:30 options:@{}]];
 	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	additionalParagraphStyle.headerLevel = 6;
 	additionalParagraphStyle.baselineDistance = 10;
 	additionalParagraphStyle.keepWithFollowingParagraph = NO;
 	additionalParagraphStyle.skipOrphanControl = NO;
@@ -246,13 +246,13 @@
 	paragraphStyle.paragraphSpacingBefore = 1;
 	paragraphStyle.paragraphSpacing = 1;
 	paragraphStyle.alignment = RKTextAlignmentRight;
-	paragraphStyle.headerLevel = 1;
 	paragraphStyle.defaultTabInterval = 1;
 	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:@{}],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:@{}],
 										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:@{}]];
 	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
+	additionalParagraphStyle.headerLevel = 1;
 	additionalParagraphStyle.baselineDistance = 1;
 	additionalParagraphStyle.keepWithFollowingParagraph = YES;
 	additionalParagraphStyle.skipOrphanControl = YES;

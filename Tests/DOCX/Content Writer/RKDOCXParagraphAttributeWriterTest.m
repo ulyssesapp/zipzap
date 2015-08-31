@@ -156,9 +156,9 @@
 
 - (void)testParagraphElementWithOutlineLevelAttribute
 {
-	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+	RKAdditionalParagraphStyle *paragraphStyle = [RKAdditionalParagraphStyle new];
 	paragraphStyle.headerLevel = 1;
-	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
+	NSDictionary *attributes = @{RKAdditionalParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This should be a level 1 heading." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
