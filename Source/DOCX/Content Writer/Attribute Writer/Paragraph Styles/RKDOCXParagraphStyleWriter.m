@@ -260,7 +260,6 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 
 + (NSXMLElement *)outlineLevelPropertyForAdditionalParagraphStyle:(RKAdditionalParagraphStyle *)paragraphStyle templateAdditionalParagraphStyle:(RKAdditionalParagraphStyle *)templateParagraphStyle
 {
-#if !TARGET_OS_IPHONE
 	if (paragraphStyle.headerLevel == templateParagraphStyle.headerLevel)
 		return nil;
 	
@@ -272,10 +271,6 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
 		outlineLevel = paragraphStyle.headerLevel - 1;
 	
 	return [NSXMLElement elementWithName:RKDOCXParagraphStyleOutlineLevelElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:outlineLevel]]];
-#else
-	// See UMOBILE-1106: -headerLevel property not supported on iOS.
-	return nil;
-#endif
 }
 
 
