@@ -14,6 +14,12 @@ extern NSString *RKAdditionalParagraphStyleAttributeName;
 @interface RKAdditionalParagraphStyle : NSObject
 
 /*!
+ @abstract Specifies the heading level of the current paragraph.
+ @discussion 1 to 6 are heading levels, 0 is standard text.
+ */
+@property (nonatomic) NSUInteger headerLevel;
+
+/*!
  @abstract Specifies whether widow / orphan control should be skipped.
  @discussion Default: NO. Ignored in RTF.
  */
