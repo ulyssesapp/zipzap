@@ -56,6 +56,7 @@ NSString *RKDOCXImagePictureNamespace				= @"xmlns:pic";
 NSString *RKDOCXImagePictureNamespaceURL			= @"http://schemas.openxmlformats.org/drawingml/2006/picture";
 NSString *RKDOCXImagePresetGeometryAttributeName	= @"prst";
 NSString *RKDOCXImageRightMarginAttributeName		= @"distR";
+NSString *RKDOCXImageTitleAttributeName				= @"title";
 NSString *RKDOCXImageTopMarginAttributeName			= @"distT";
 
 // Other
@@ -85,7 +86,8 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	NSArray *nonVisualPropertyAttributes = @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier], [NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename]];
 	NSArray *documentPropertyAttributes = @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier],
 											[NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename],
-											[NSXMLElement attributeWithName:RKDOCXImageDescriptionAttributeName stringValue:@""]];
+											[NSXMLElement attributeWithName:RKDOCXImageTitleAttributeName stringValue:imageAttachment.title],
+											[NSXMLElement attributeWithName:RKDOCXImageDescriptionAttributeName stringValue:imageAttachment.descr]];
 	
 	// Image Margins
 	NSArray *margins = @[[NSXMLElement attributeWithName:RKDOCXImageTopMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.top)],

@@ -96,7 +96,7 @@
 - (void)testFootnoteWithImage
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"png" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] margin:RKEdgeInsetsMake(0, 0, 0, 0)];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0)];
 	NSMutableAttributedString *footnoteString = [[NSMutableAttributedString alloc] initWithString:@"This is an image inside a footnote: "];
 	[footnoteString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment, RKSuperscriptAttributeName: @1}]];
 	
