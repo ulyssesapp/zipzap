@@ -18,8 +18,8 @@ NSString *RKImageAttachmentAttributeName		= @"RKImageAttachment";
 	
 	if (self) {
 		_imageFile = file;
-		_title = title ?: @"";
-		_descr = descr ?: @"";
+		_title = title;
+		_descr = descr;
 		_margin = margin;
 	}
 	

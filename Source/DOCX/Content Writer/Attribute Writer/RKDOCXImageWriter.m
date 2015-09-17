@@ -84,10 +84,12 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	NSString *relationshipID = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]];
 	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];
 	NSArray *nonVisualPropertyAttributes = @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier], [NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename]];
-	NSArray *documentPropertyAttributes = @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier],
-											[NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename],
-											[NSXMLElement attributeWithName:RKDOCXImageTitleAttributeName stringValue:imageAttachment.title],
-											[NSXMLElement attributeWithName:RKDOCXImageDescriptionAttributeName stringValue:imageAttachment.descr]];
+	NSMutableArray *documentPropertyAttributes = [NSMutableArray arrayWithArray: @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier],
+																				   [NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename]]];
+	if (imageAttachment.title.length)
+		[documentPropertyAttributes addObject: [NSXMLElement attributeWithName:RKDOCXImageTitleAttributeName stringValue:imageAttachment.title]];
+	if (imageAttachment.descr.length)
+		[documentPropertyAttributes addObject: [NSXMLElement attributeWithName:RKDOCXImageDescriptionAttributeName stringValue:imageAttachment.descr]];
 	
 	// Image Margins
 	NSArray *margins = @[[NSXMLElement attributeWithName:RKDOCXImageTopMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.top)],
