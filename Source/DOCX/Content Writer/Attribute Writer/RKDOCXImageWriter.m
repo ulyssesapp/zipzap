@@ -68,7 +68,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 {
 	RKImageAttachment *imageAttachment = attributes[RKImageAttachmentAttributeName];
 	
-	if (!imageAttachment)
+	if (!imageAttachment.imageFile.preferredFilename)
 		return nil;
 	
 	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
