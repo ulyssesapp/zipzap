@@ -20,7 +20,7 @@ NSString *RKDOCXTextEffectsHighlightElementName				= @"w:highlight";
 NSString *RKDOCXTextEffectsLigatureAttributeName			= @"w14:val";
 NSString *RKDOCXTextEffectsLigatureElementName				= @"w14:ligatures";
 NSString *RKDOCXTextEffectsLigatureAllAttributeValue		= @"all";
-NSString *RKDOCXTextEffectsLigatureDefaultAttributeValue	= @"historicalDiscretional"; // alternatively: standardContextual
+NSString *RKDOCXTextEffectsLigatureDefaultAttributeValue	= @"standardContextual"; // alternatively: historicalDiscretional
 NSString *RKDOCXTextEffectsLigatureNoneAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsNoUnderlineAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsOutlineElementName				= @"w:outline";
@@ -270,7 +270,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	id attributeValue = attributes[RKLigatureAttributeName] ?: @1;
 	id styleValue = characterStyle[RKLigatureAttributeName] ?: @1;
 	
-	// Ignore ligature setting if matching with template style. Always set when processing default style, since ligatures are not activate by default in DOCX.
+	// Ignore ligature setting if matching with template style. Always set when processing default style, since ligatures are not activated by default in DOCX.
 	if (!isDefaultStyle && [attributeValue isEqual: styleValue])
 		return nil;
 	
