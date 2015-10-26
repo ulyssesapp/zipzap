@@ -25,13 +25,18 @@ NSString *RKDOCXSettingsFilename									= @"settings.xml";
 // Setting names
 // Elements
 NSString *RKDOCXSettingsAutoHyphenationElementName					= @"w:autoHyphenation";
+NSString *RKDOCXSettingsEndnoteElementName							= @"w:endnote";
 NSString *RKDOCXSettingsEndnotePropertiesElementName				= @"w:endnotePr";
 NSString *RKDOCXSettingsEnumerationFormatElementName				= @"w:numFmt";
 NSString *RKDOCXSettingsEnumerationRestartElementName				= @"w:numRestart";
 NSString *RKDOCXSettingsEvenAndOddHeadersElementName				= @"w:evenAndOddHeaders";
+NSString *RKDOCXSettingsFootnoteElementName							= @"w:footnote";
 NSString *RKDOCXSettingsFootnotePropertiesElementName				= @"w:footnotePr";
 NSString *RKDOCXSettingsMirrorMarginsElementName					= @"w:mirrorMargins";
 NSString *RKDOCXSettingsPositionElementName							= @"w:pos";
+
+// Attribute Names
+NSString *RKDOCXSettingsIDAttributeName								= @"w:id";
 
 // Attribute Values
 NSString *RKDOCXSettingsEnumerationContinuousAttributeValue			= @"continuous";
@@ -105,13 +110,19 @@ NSString *RKDOCXSettingsCompatibilityURIAttributeValue				= @"http://schemas.mic
 	
 	// Footnote Properties
 	NSXMLElement *footnoteProperties = [self footnotePropertiesFromDocument:context.document isEndnote:NO];
-	if (footnoteProperties)
+	if (footnoteProperties && context.footnotes.count) {
+		[footnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsFootnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"0"]]]];
+		[footnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsFootnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"1"]]]];
 		[document.rootElement addChild: footnoteProperties];
+	}
 	
 	// Endnote Properties
 	NSXMLElement *endnoteProperties = [self footnotePropertiesFromDocument:context.document isEndnote:YES];
-	if (endnoteProperties)
+	if (endnoteProperties && context.endnotes.count) {
+		[endnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsEndnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"0"]]]];
+		[endnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsEndnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"1"]]]];
 		[document.rootElement addChild: endnoteProperties];
+	}
 	
 	// Even And Odd Headers
 	if (context.evenAndOddHeaders)
