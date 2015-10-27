@@ -29,7 +29,7 @@
 
 - (NSTextTab *)newNSTextTab
 {
-	return [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentFromCTTextAlignment(_tabAlignment) location:_location options:@{}];
+    return [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentFromCTTextAlignment(_tabAlignment) location:_location options:NULL];
 }
 
 - (id)initWithLocation:(CGFloat)location alignment:(CTTextAlignment)alignment

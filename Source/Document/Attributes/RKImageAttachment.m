@@ -12,14 +12,12 @@ NSString *RKImageAttachmentAttributeName		= @"RKImageAttachment";
 
 @implementation RKImageAttachment
 
-- (id)initWithFile:(NSFileWrapper *)file title:(NSString *)title description:(NSString *)descr margin:(RKEdgeInsets)margin
+- (id)initWithFile:(NSFileWrapper *)file margin:(RKEdgeInsets)margin
 {
 	self = [super init];
 	
 	if (self) {
 		_imageFile = file;
-		_title = title;
-		_descr = descr;
 		_margin = margin;
 	}
 	

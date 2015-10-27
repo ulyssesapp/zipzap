@@ -66,7 +66,7 @@
     
 #if !TARGET_OS_IPHONE
 	NSBitmapImageRep *representation = [NSBitmapImageRep imageRepWithData: originalImage];
-	NSData *convertedImage = [representation representationUsingType:NSPNGFileType properties:@{}];
+    NSData *convertedImage = [representation representationUsingType:NSPNGFileType properties:nil ];
 	imageSize = representation.size;
 #else
     UIImage *image = [UIImage imageWithData: originalImage];

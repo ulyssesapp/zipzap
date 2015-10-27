@@ -131,9 +131,9 @@
 - (void)testParagraphElementWithCustomTabStops
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:@{}]];
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:0],
+								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:0]];
 	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Custom Tab Stop Test:\t\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
@@ -152,18 +152,6 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
 	[self assertDOCX:document withTestDocument:@"defaulttabinterval"];
-}
-
-- (void)testParagraphElementWithOutlineLevelAttribute
-{
-	RKAdditionalParagraphStyle *paragraphStyle = [RKAdditionalParagraphStyle new];
-	paragraphStyle.headerLevel = 1;
-	NSDictionary *attributes = @{RKAdditionalParagraphStyleAttributeName: paragraphStyle};
-	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This should be a level 1 heading." attributes:attributes];
-	
-	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	
-	[self assertDOCX:document withTestDocument:@"outlinelevel"];
 }
 
 - (void)testParagraphElementWithKeepNextAttribute

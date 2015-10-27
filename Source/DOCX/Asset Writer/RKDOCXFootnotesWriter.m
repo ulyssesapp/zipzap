@@ -154,9 +154,9 @@ typedef enum : NSUInteger {
 	// Adjust tab stops to contain marker and content insets
 	NSMutableArray *tabStops = [NSMutableArray new];
 	if (context.document.footnoteAreaAnchorInset > 0)
-		[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:@{}]];
+		[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:nil]];
 	
-	[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:@{}]];
+	[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:nil]];
 
 	NSMutableParagraphStyle *paragraphStyleWithTabStops = [[referenceString attribute:RKParagraphStyleAttributeName atIndex:0 effectiveRange:NULL] mutableCopy];
 	if (!paragraphStyleWithTabStops) {

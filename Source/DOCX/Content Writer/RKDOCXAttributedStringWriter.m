@@ -21,7 +21,7 @@ NSString *RKDOCXPageBreakCharacterName	= @"\f";
 	static NSCharacterSet *pageBreakCharacterSet;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		pageBreakCharacterSet = [NSCharacterSet characterSetWithCharactersInString: RKDOCXPageBreakCharacterName];
+		pageBreakCharacterSet = [NSCharacterSet characterSetWithCharactersInString:RKDOCXPageBreakCharacterName];
 	});
 	
 	NSMutableArray *paragraphs = [NSMutableArray new];
