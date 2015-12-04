@@ -18,29 +18,19 @@ extern NSString *RKImageAttachmentAttributeName;
 @interface RKImageAttachment : NSObject
 
 /*!
- @abstract Initializes an init attachment with the given file, title, description and margin.
+ @abstract Initializes an init attachment with the given file and margin.
  */
-- (id)initWithFile:(NSFileWrapper *)file title:(NSString *)title description:(NSString *)descr margin:(RKEdgeInsets)margin;
+- (id)initWithFile:(NSFileWrapper *)file margin:(RKEdgeInsets)margin;
 
 /*!
  @abstract The NSFileWrapper containing the actual image file.
  */
-@property (nonatomic, readonly) NSFileWrapper *imageFile;
-
-/*!
- @abstract The title of the image.
- */
-@property (nonatomic, readonly) NSString *title;
-
-/*!
- @abstract The description of the image.
- */
-@property (nonatomic, readonly) NSString *descr;
+@property(nonatomic, readonly) NSFileWrapper *imageFile;
 
 /*!
  @abstract The margin of the image.
  @discussion Defaults to 0. Image margin is only supported by Word.
  */
-@property (nonatomic, readonly) RKEdgeInsets margin;
+@property(nonatomic, readonly) RKEdgeInsets margin;
 
 @end

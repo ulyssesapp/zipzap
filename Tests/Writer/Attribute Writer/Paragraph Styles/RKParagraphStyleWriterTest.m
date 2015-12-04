@@ -289,7 +289,7 @@
     paragraphStyle.defaultTabInterval = 11.0f;
     
     paragraphStyle.tabStops = [NSArray arrayWithObjects: 
-							   [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10.0f options:@{}],
+                               [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10.0f options:@{}],
                                [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:20.0f options:@{}],
                                [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:30.0f options:@{}],
                                nil

@@ -21,7 +21,6 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 		_hyphenationEnabled = NO;
 		_overrideLineHeightAndSpacing = NO;
 		_baselineDistance = 0;
-		_headerLevel = 0;
 		_skipOrphanControl = NO;
 		_justifyLineBreaks = NO;
 	}
@@ -32,7 +31,6 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 - (BOOL)isEqual:(RKAdditionalParagraphStyle *)object
 {
 	return	   [object isKindOfClass: RKAdditionalParagraphStyle.class]
-			&& (self.headerLevel == object.headerLevel)
 			&& (self.keepWithFollowingParagraph == object.keepWithFollowingParagraph)
 			&& (self.skipOrphanControl == object.skipOrphanControl)
 			&& (self.hyphenationEnabled == object.hyphenationEnabled)
@@ -49,7 +47,6 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 - (id)copyWithZone:(NSZone *)zone
 {
 	RKAdditionalParagraphStyle *newStyle = [RKAdditionalParagraphStyle new];
-	newStyle.headerLevel = self.headerLevel;
 	newStyle.keepWithFollowingParagraph = self.keepWithFollowingParagraph;
 	newStyle.hyphenationEnabled = self.hyphenationEnabled;
 	newStyle.skipOrphanControl = self.skipOrphanControl;
@@ -63,7 +60,6 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 - (NSString *)description
 {
 	return [NSString stringWithFormat: @"RKAdditionalParagraphStyle: ("
-											"headerLevel:					%lu, "
 											"keepWithFollowingParagraph:	%d, "
 											"hyphenationEnabled:			%u, "
 											"baselineDistance:				%f, "
@@ -71,7 +67,6 @@ NSString *RKAdditionalParagraphStyleAttributeName = @"RKAdditionalParagraphStyle
 											"skipOrphanControl:				%u, "
 											"justifyLineBreaks:				%u"
 										")",
-			(unsigned long)self.headerLevel,
 			self.keepWithFollowingParagraph,
 			self.hyphenationEnabled,
 			self.baselineDistance,

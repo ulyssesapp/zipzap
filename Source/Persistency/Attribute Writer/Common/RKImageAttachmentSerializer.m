@@ -40,7 +40,7 @@ NSString *RKImageAttachmentMarginRightKey				= @"marginRight";
     
 	RKEdgeInsets margin = RKEdgeInsetsMake([propertyList[RKImageAttachmentMarginTopKey] doubleValue], [propertyList[RKImageAttachmentMarginLeftKey] doubleValue], [propertyList[RKImageAttachmentMarginBottomKey] doubleValue], [propertyList[RKImageAttachmentMarginRightKey] doubleValue]);
 	
-    return [[RKImageAttachment alloc] initWithFile:file title:nil description:nil margin:margin];
+    return [[RKImageAttachment alloc] initWithFile:file margin:margin];
 }
 
 + (id)propertyListForAttribute:(NSString *)attributeName value:(RKImageAttachment *)imageAttachment context:(RKPersistenceContext *)context
