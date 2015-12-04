@@ -110,7 +110,10 @@ NSString *RKDOCXSettingsCompatibilityURIAttributeValue				= @"http://schemas.mic
 	
 	// Footnote Properties
 	NSXMLElement *footnoteProperties = [self footnotePropertiesFromDocument:context.document isEndnote:NO];
-	if (footnoteProperties && context.footnotes.count) {
+	if (context.footnotes.count) {
+		if (!footnoteProperties)
+			footnoteProperties = [NSXMLElement elementWithName:RKDOCXSettingsFootnotePropertiesElementName];
+		
 		[footnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsFootnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"0"]]]];
 		[footnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsFootnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"1"]]]];
 		[document.rootElement addChild: footnoteProperties];
@@ -118,7 +121,10 @@ NSString *RKDOCXSettingsCompatibilityURIAttributeValue				= @"http://schemas.mic
 	
 	// Endnote Properties
 	NSXMLElement *endnoteProperties = [self footnotePropertiesFromDocument:context.document isEndnote:YES];
-	if (endnoteProperties && context.endnotes.count) {
+	if (context.endnotes.count) {
+		if (!endnoteProperties)
+			endnoteProperties = [NSXMLElement elementWithName:RKDOCXSettingsEndnotePropertiesElementName];
+		
 		[endnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsEndnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"0"]]]];
 		[endnoteProperties addChild: [NSXMLElement elementWithName:RKDOCXSettingsEndnoteElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXSettingsIDAttributeName stringValue:@"1"]]]];
 		[document.rootElement addChild: endnoteProperties];
