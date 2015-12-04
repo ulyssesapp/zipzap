@@ -33,4 +33,15 @@
 	[self assertDOCX:document withTestDocument:@"settings"];
 }
 
+- (void)testSettingsWithFootnoteSeparatorPlacement
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @"The footnote separator\ufffc should be aligned at the right."];
+	[attributedString addAttribute:RKFootnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the footnote content."] range:NSMakeRange(22, 1)];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
+	
+	[self assertDOCX:document withTestDocument:@"separatorsettings"];
+}
+
 @end
