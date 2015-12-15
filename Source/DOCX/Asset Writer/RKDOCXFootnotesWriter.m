@@ -138,39 +138,43 @@ typedef enum : NSUInteger {
 	[referenceString insertAttributedString:[[NSAttributedString alloc] initWithString:@"\ufffc\t" attributes:referenceMarkAttributes] atIndex:0];
 	[referenceString addAttribute:RKDOCXReferenceTypeAttributeName value:@(referenceType) range:NSMakeRange(0, 1)];
 	
-	// Indent subsequent lines and marker indent, if needed
-	NSString *newLineFix;
-	if (context.document.footnoteAreaAnchorInset > 0) {
-		newLineFix = @"\n\t\t";
-		[referenceString insertAttributedString:[[NSAttributedString alloc] initWithString:@"\t" attributes:nil] atIndex:0];
-	}
-	else {
-		newLineFix = @"\n\t";
-	}
-
-	if (referenceString.length > 0)
-		[referenceString.mutableString replaceOccurrencesOfString:@"\n" withString:newLineFix options:0 range:NSMakeRange(0, referenceString.length-1)];
+	NSMutableParagraphStyle *paragraphStyleWithContentInset = referenceString.length > 2 ? [[referenceString attribute:RKParagraphStyleAttributeName atIndex:2 effectiveRange:NULL] mutableCopy] : nil;
+	if (!paragraphStyleWithContentInset)
+		paragraphStyleWithContentInset = [NSMutableParagraphStyle new];
 	
-	// Adjust tab stops to contain marker and content insets
-	NSMutableArray *tabStops = [NSMutableArray new];
-	if (context.document.footnoteAreaAnchorInset > 0)
-		[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:context.document.footnoteAreaAnchorAlignment location:context.document.footnoteAreaAnchorInset options:@{}]];
+	// Set indent for content
+	paragraphStyleWithContentInset.headIndent = context.document.footnoteAreaContentInset;
+	paragraphStyleWithContentInset.firstLineHeadIndent = paragraphStyleWithContentInset.headIndent;
 	
-	[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:@{}]];
-
-	NSMutableParagraphStyle *paragraphStyleWithTabStops = [[referenceString attribute:RKParagraphStyleAttributeName atIndex:0 effectiveRange:NULL] mutableCopy];
-	if (!paragraphStyleWithTabStops) {
-		paragraphStyleWithTabStops = [NSMutableParagraphStyle new];
-		paragraphStyleWithTabStops.tabStops = @[];
+	NSMutableParagraphStyle *firstParagraphStyle = [paragraphStyleWithContentInset mutableCopy];
+	
+	// Adjust tab stop to contain marker inset if necessary
+	if (context.document.footnoteAreaContentInset > 0) {
+		NSMutableArray *tabStops = [NSMutableArray new];
+		[tabStops addObject: [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:context.document.footnoteAreaContentInset options:@{}]];
+		
+		for (NSTextTab *tabStop in firstParagraphStyle.tabStops) {
+			if (tabStop.location > context.document.footnoteAreaContentInset)
+				[tabStops addObject: tabStop];
+		}
+		
+		firstParagraphStyle.tabStops = tabStops;
 	}
 	
-	for (NSTextTab *tabStop in paragraphStyleWithTabStops.tabStops) {
-		if (tabStop.location > context.document.footnoteAreaContentInset)
-			[tabStops addObject: tabStop];
-	}
+	// Set indent for first line of first paragraph (with marker and content)
+	firstParagraphStyle.firstLineHeadIndent = context.document.footnoteAreaContentInset - (context.document.footnoteAreaContentInset - context.document.footnoteAreaAnchorInset);
 	
-	paragraphStyleWithTabStops.tabStops = tabStops;
-	[referenceString addAttribute:RKParagraphStyleAttributeName value:paragraphStyleWithTabStops range:NSMakeRange(0, referenceString.length)];
+	NSRange firstNewlineRange = [referenceString.string rangeOfCharacterFromSet: NSCharacterSet.newlineCharacterSet];
+	if (firstNewlineRange.location == NSNotFound)
+		firstNewlineRange = NSMakeRange(referenceString.length - 1, 1);
+	
+	NSRange firstParagraphRange = NSMakeRange(0, firstNewlineRange.location);
+	
+	// Add style attribute for all paragraphs
+	[referenceString addAttribute:RKParagraphStyleAttributeName value:paragraphStyleWithContentInset range:NSMakeRange(0, referenceString.length)];
+	
+	// Add style attribute for first paragraph
+	[referenceString addAttribute:RKParagraphStyleAttributeName value:firstParagraphStyle range:firstParagraphRange];
 	
 	// Change relationship source for endnotes/footnotes
 	NSString *previousRelationshipSource = context.currentRelationshipSource;
