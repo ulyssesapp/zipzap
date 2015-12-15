@@ -138,7 +138,7 @@ typedef enum : NSUInteger {
 	[referenceString insertAttributedString:[[NSAttributedString alloc] initWithString:@"\ufffc\t" attributes:referenceMarkAttributes] atIndex:0];
 	[referenceString addAttribute:RKDOCXReferenceTypeAttributeName value:@(referenceType) range:NSMakeRange(0, 1)];
 	
-	NSMutableParagraphStyle *paragraphStyleWithContentInset = [[referenceString attribute:RKParagraphStyleAttributeName atIndex:2 effectiveRange:NULL] mutableCopy];
+	NSMutableParagraphStyle *paragraphStyleWithContentInset = referenceString.length > 2 ? [[referenceString attribute:RKParagraphStyleAttributeName atIndex:2 effectiveRange:NULL] mutableCopy] : nil;
 	if (!paragraphStyleWithContentInset)
 		paragraphStyleWithContentInset = [NSMutableParagraphStyle new];
 	
