@@ -161,6 +161,7 @@
 	additionalParagraphStyle.keepWithFollowingParagraph = YES;
 	additionalParagraphStyle.skipOrphanControl = YES;
 	additionalParagraphStyle.hyphenationEnabled = NO;
+	additionalParagraphStyle.headerLevel = 1;
 	
 	NSString *styleName = @"Paragraph Style";
 	NSDictionary *styleAttributes = @{RKParagraphStyleNameAttributeName: styleName,
@@ -196,6 +197,7 @@
 	templateAdditionalParagraphStyle.keepWithFollowingParagraph = YES;
 	templateAdditionalParagraphStyle.skipOrphanControl = YES;
 	templateAdditionalParagraphStyle.hyphenationEnabled = YES;
+	templateAdditionalParagraphStyle.headerLevel = 1;
 	
 	NSString *styleName = @"Style";
 	NSDictionary *styleAttributes = @{RKParagraphStyleNameAttributeName: styleName,
@@ -220,6 +222,7 @@
 	additionalParagraphStyle.keepWithFollowingParagraph = NO;
 	additionalParagraphStyle.skipOrphanControl = NO;
 	additionalParagraphStyle.hyphenationEnabled = NO;
+	additionalParagraphStyle.headerLevel = 0;
 	
 	NSDictionary *attributes = @{RKParagraphStyleNameAttributeName: styleName,
 								 RKParagraphStyleAttributeName: paragraphStyle,
@@ -253,6 +256,7 @@
 	additionalParagraphStyle.keepWithFollowingParagraph = YES;
 	additionalParagraphStyle.skipOrphanControl = YES;
 	additionalParagraphStyle.hyphenationEnabled = NO;
+	additionalParagraphStyle.headerLevel = 1;
 	
 	NSString *styleName = @"Style";
 	NSDictionary *styleAttributes = @{RKParagraphStyleNameAttributeName: styleName,
