@@ -213,11 +213,11 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (void)addContentType:(NSString *)MIMEType forPathExtension:(NSString *)extension
 {
-	if (_usedMIMETypes[extension])
+	if (_usedMIMETypes[extension.lowercaseString])
 		return;
 	
 	NSMutableDictionary *newMIMETypes = [_usedMIMETypes mutableCopy];
-	newMIMETypes[extension] = MIMEType;
+	newMIMETypes[extension.lowercaseString] = MIMEType;
 	_usedMIMETypes = newMIMETypes;
 }
 
