@@ -47,4 +47,21 @@
 	[self assertDOCX:document withTestDocument:@"largepng"];
 }
 
+- (void)testContentTypesWithUppercaseFileExtensions
+{
+	NSURL *uppercaseImageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"uppercase-image" withExtension:@"PNG" subdirectory:@"Test Data/resources"];
+	NSURL *lowercaseImageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"lowercase-image" withExtension:@"png" subdirectory:@"Test Data/resources"];
+	RKImageAttachment *uppercaseImageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:uppercaseImageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0)];
+	RKImageAttachment *lowercaseImageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:lowercaseImageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0)];
+	
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @"Uppercase file extension:\n"];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: uppercaseImageAttachment}]];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString: @"\nLowercase file extension:\n"]];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: lowercaseImageAttachment}]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"contenttypenames"];
+}
+
 @end
