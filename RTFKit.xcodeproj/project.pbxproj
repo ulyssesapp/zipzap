@@ -632,6 +632,8 @@
 		A0BA23EB1AE941420025B23A /* RKDOCXLinkWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BA23E91AE941420025B23A /* RKDOCXLinkWriter.h */; };
 		A0BA23ED1AE941420025B23A /* RKDOCXLinkWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BA23EA1AE941420025B23A /* RKDOCXLinkWriter.m */; };
 		A0BA23F01AE946410025B23A /* RKDOCXLinkWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BA23EF1AE946410025B23A /* RKDOCXLinkWriterTest.m */; };
+		A0C807AB1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C807AA1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m */; };
+		A0C807AC1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C807AA1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m */; };
 		A0CED9001AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CED8FF1AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m */; };
 		A0D244D91ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */; };
 		A0E33E4E1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */; };
@@ -1111,6 +1113,7 @@
 		A0BA23E91AE941420025B23A /* RKDOCXLinkWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKDOCXLinkWriter.h; path = "Attribute Writer/RKDOCXLinkWriter.h"; sourceTree = "<group>"; };
 		A0BA23EA1AE941420025B23A /* RKDOCXLinkWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXLinkWriter.m; path = "Attribute Writer/RKDOCXLinkWriter.m"; sourceTree = "<group>"; };
 		A0BA23EF1AE946410025B23A /* RKDOCXLinkWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXLinkWriterTest.m; path = "Content Writer/RKDOCXLinkWriterTest.m"; sourceTree = "<group>"; };
+		A0C807AA1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKDOCXReviewAnnotationWriterTest.m; sourceTree = "<group>"; };
 		A0CED8FF1AD8266B009E157A /* RKDOCXDocumentPropertiesWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXDocumentPropertiesWriterTest.m; path = "Tests/DOCX/Asset Writer/RKDOCXDocumentPropertiesWriterTest.m"; sourceTree = SOURCE_ROOT; };
 		A0D244D81ACBF65D0096D5D3 /* RKDOCXRunAttributeWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXRunAttributeWriterTest.m; path = "Content Writer/RKDOCXRunAttributeWriterTest.m"; sourceTree = "<group>"; };
 		A0E33E4D1AC95AFC00EEF4E4 /* XCTestCase+DOCX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "XCTestCase+DOCX.m"; path = "Test Extensions/XCTestCase+DOCX.m"; sourceTree = "<group>"; };
@@ -2051,6 +2054,7 @@
 				A013B4361ADE7ED500E45B4F /* RKDOCXImageWriterTest.m */,
 				A0BA23EF1AE946410025B23A /* RKDOCXLinkWriterTest.m */,
 				A083A2D31AEA5457005A9C80 /* RKDOCXListWriterTest.m */,
+				A0C807AA1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m */,
 			);
 			name = "Content Writer";
 			sourceTree = "<group>";
@@ -2776,6 +2780,7 @@
 				79A67E7815FA2D66005609B3 /* RKTextTab.m in Sources */,
 				79A67E7A15FA2D66005609B3 /* SenTestCase+RKAttributeWriterTestHelper.m in Sources */,
 				79A67E7E15FA2D66005609B3 /* SenTestCase+RKReferenceTest.m in Sources */,
+				A0C807AB1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m in Sources */,
 				79A67E8015FA2D66005609B3 /* SenTestCase+RKTestHelper.m in Sources */,
 				CF576D0016CBA01C00EADC01 /* RKListStyle+WriterAdditionsTest.m in Sources */,
 				A04568FB1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m in Sources */,
@@ -2961,6 +2966,7 @@
 				790B5C951B0B97AE004193F8 /* RKDOCXWriterTest.m in Sources */,
 				790B5C8A1B0B979A004193F8 /* RKUnderlineStyleAttributeWriterTest.m in Sources */,
 				790B5CA91B0B97AE004193F8 /* NSStringHyphenationTest.m in Sources */,
+				A0C807AC1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m in Sources */,
 				790B5C9F1B0B97AE004193F8 /* RKDOCXStyleTemplateWriterTest.m in Sources */,
 				790B5C931B0B979A004193F8 /* RKParagraphStyleWrapperTest.m in Sources */,
 				790B5C9B1B0B97AE004193F8 /* RKDOCXListWriterTest.m in Sources */,
