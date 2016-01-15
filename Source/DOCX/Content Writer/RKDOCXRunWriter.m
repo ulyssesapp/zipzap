@@ -21,10 +21,11 @@
 NSString *RKDOCXRunElementName				= @"w:r";
 NSString *RKDOCXRunPropertiesElementName	= @"w:rPr";
 NSString *RKDOCXRunTextElementName			= @"w:t";
+NSString *RKDOCXRunDeletedTextElementName	= @"w:delText";
 
 @implementation RKDOCXRunWriter
 
-+ (NSArray *)runElementsForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)runElementsForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range runType:(RKDOCXRunType)runType usingContext:(RKDOCXConversionContext *)context
 {
 	// Check for empty range
 	if (!range.length)
@@ -61,7 +62,7 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	[attributedString.string rk_enumerateTokensWithDelimiters:characterSet	inRange:range usingBlock:^(NSRange tokenRange, unichar delimiter) {
 		// Add text run, if any
 		if (tokenRange.length > 0)
-			[runElements addObject: [self runElementForAttributes:attributes contentElement:[self textElementWithStringValue: [attributedString.string substringWithRange: tokenRange]] usingContext:context]];
+			[runElements addObject: [self runElementForAttributes:attributes contentElement:[self textElementOfType:runType withStringValue: [attributedString.string substringWithRange: tokenRange]] usingContext:context]];
 		
 		if (delimiter == '\t')
 			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXTabStopCharacter]];
@@ -118,9 +119,22 @@ NSString *RKDOCXRunTextElementName			= @"w:t";
 	return properties;
 }
 
-+ (NSXMLElement *)textElementWithStringValue:(NSString *)stringValue
++ (NSXMLElement *)textElementOfType:(RKDOCXRunType)runType withStringValue:(NSString *)stringValue
 {
-	NSXMLElement *textElement = [NSXMLElement elementWithName:RKDOCXRunTextElementName stringValue:stringValue];
+	NSString *textElementName;
+	
+	switch (runType) {
+		case RKDOCXRunDeletedType:
+			textElementName = RKDOCXRunDeletedTextElementName;
+			break;
+			
+		case RKDOCXRunInsertedType:
+		case RKDOCXRunStandardType:
+			textElementName = RKDOCXRunTextElementName;
+			break;
+	}
+	
+	NSXMLElement *textElement = [NSXMLElement elementWithName:textElementName stringValue:stringValue];
 	[textElement addAttribute: [NSXMLElement attributeWithName:@"xml:space" stringValue:@"preserve"]];
 	
 	return textElement;

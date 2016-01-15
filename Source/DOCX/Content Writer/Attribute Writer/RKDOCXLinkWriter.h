@@ -7,6 +7,11 @@
 //
 
 #import "RKDOCXConversionContext.h"
+#import "RKDOCXRunWriter.h"
+
+// Keys
+extern NSString *RKDOCXFieldLinkFirstPartKey;
+extern NSString *RKDOCXFieldLinkLastPartKey;
 
 /*!
  @abstract Converter for link run elements.
@@ -18,5 +23,11 @@
  @discussion linkAttribute must be either of type NSURL or NSString.
  */
 + (NSXMLElement *)linkElementForAttribute:(id)linkAttribute usingContext:(RKDOCXConversionContext *)context;
+
+/*!
+ @abstract Returns a dictionary containing all runs requiered for field hyperlinks.
+ @discussion The dictionary contains two entries, one is an array filled with runs preceeding the actual link run, the other one is the element succeeding the link run.
+ */
++ (NSDictionary *)fieldHyperlinkRunElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType usingContext:(RKDOCXConversionContext *)context;
 
 @end

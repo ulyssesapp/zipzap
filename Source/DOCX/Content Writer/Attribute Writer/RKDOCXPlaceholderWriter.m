@@ -28,7 +28,7 @@ NSString *RKDOCXBreakAttributeName						= @"RKDOCXBreak";
 	if (![attributes[RKPlaceholderAttributeName] isEqual: @(RKPlaceholderPageNumber)])
 		return nil;
 	
-	NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributes:attributes contentElement:[RKDOCXRunWriter textElementWithStringValue:@"1"] usingContext:context];
+	NSXMLElement *runElement = [RKDOCXRunWriter runElementForAttributes:attributes contentElement:[RKDOCXRunWriter textElementOfType:RKDOCXRunStandardType withStringValue:@"1"] usingContext:context];
 	return [NSXMLElement elementWithName:RKDOCXPlaceholderSimpleFieldElementName children:@[runElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXPlaceholderInstructionAttributeName stringValue:RKDOCXPlaceholderPageNumberAttributeValue]]];
 }
 

@@ -79,7 +79,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	// Word does not support spaces in filenames.
 	filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
 	
-	[context addDocumentPartWithData:imageAttachment.imageFile.regularFileContents filename:[RKDOCXPartWriter packagePathForFilename:filename folder:RKDOCXWordFolder] MIMEType:[self preferredMIMETypeForPathExtension: imageAttachment.imageFile.preferredFilename.pathExtension]];
+	[context addDocumentPartWithData:imageAttachment.imageFile.regularFileContents filename:[RKDOCXPartWriter packagePathForFilename:filename folder:RKDOCXWordFolder] MIMEType:[self preferredMIMETypeForPathExtension: filename.pathExtension]];
 	NSString *identifier = [context newImageId];
 	NSString *relationshipID = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]];
 	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];

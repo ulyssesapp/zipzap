@@ -9,27 +9,68 @@
 #import "RKDOCXLinkWriter.h"
 
 #import "RKDOCXRelationshipsWriter.h"
-#import "RKDOCXRunWriter.h"
 
-NSString *RKDOCXLinkHyperlinkElementName	= @"w:hyperlink";
-NSString *RKDOCXLinkTargetAttributeName		= @"r:id";
+// Elements
+NSString *RKDOCXDeletedInstructionTextElementName	= @"w:delInstrText";
+NSString *RKDOCXFieldCharElementName				= @"w:fldChar";
+NSString *RKDOCXInstructionTextElementName			= @"w:instrText";
+NSString *RKDOCXLinkHyperlinkElementName			= @"w:hyperlink";
+
+// Attributes
+NSString *RKDOCXFieldCharTypeAttributeName			= @"w:fldCharType";
+NSString *RKDOCXLinkTargetAttributeName				= @"r:id";
+
+// Attribute Values
+NSString *RKDOCXFieldCharTypeBeginAttributeValue	= @"begin";
+NSString *RKDOCXFieldCharTypeEndAttributeValue		= @"end";
+NSString *RKDOCXFieldCharTypeSeparateAttributeValue	= @"separate";
+
+// Keys
+NSString *RKDOCXFieldLinkFirstPartKey				= @"RKDOCXFieldLinkFirstPart";
+NSString *RKDOCXFieldLinkLastPartKey				= @"RKDOCXFieldLinkLastPart";
 
 @implementation RKDOCXLinkWriter
 
 + (NSXMLElement *)linkElementForAttribute:(id)linkAttribute usingContext:(RKDOCXConversionContext *)context
 {
-	if (!linkAttribute)
-		return nil;
-
-	NSAssert([linkAttribute isKindOfClass: NSURL.class] || [linkAttribute isKindOfClass: NSString.class], @"linkAttribute has invalid class type '%@'.", NSStringFromClass([linkAttribute class]));
+	NSString *target = [self.class targetForLinkAttribute: linkAttribute];
 	
-	NSString *target = [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
+	if (!target)
+		return nil;
 	
 	NSUInteger targetIdentifier = [context indexForRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
 	
 	NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", targetIdentifier]];
 	
 	return [NSXMLElement elementWithName:RKDOCXLinkHyperlinkElementName children:nil attributes:@[targetAttribute]];
+}
+
++ (NSDictionary *)fieldHyperlinkRunElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType usingContext:(RKDOCXConversionContext *)context
+{
+	NSString *target = [self.class targetForLinkAttribute: linkAttribute];
+	
+	if (!target)
+		return nil;
+	
+	NSMutableArray *fieldArray = [NSMutableArray new];
+	
+	[fieldArray addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeBeginAttributeValue]]] usingContext:context]];
+	[fieldArray addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:(runType == RKDOCXRunDeletedType ? RKDOCXDeletedInstructionTextElementName : RKDOCXInstructionTextElementName) stringValue:[NSString stringWithFormat: @"HYPERLINK \"%@\"", target]] usingContext:context]];
+	[fieldArray addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeSeparateAttributeValue]]] usingContext:context]];
+	
+	NSXMLElement *endElement = [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeEndAttributeValue]]] usingContext:context];
+	
+	return @{RKDOCXFieldLinkFirstPartKey: fieldArray, RKDOCXFieldLinkLastPartKey: endElement};
+}
+
++ (NSString *)targetForLinkAttribute:(id)linkAttribute
+{
+	if (!linkAttribute)
+		return nil;
+	
+	NSAssert([linkAttribute isKindOfClass: NSURL.class] || [linkAttribute isKindOfClass: NSString.class], @"linkAttribute has invalid class type '%@'.", NSStringFromClass([linkAttribute class]));
+	
+	return [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
 }
 
 @end

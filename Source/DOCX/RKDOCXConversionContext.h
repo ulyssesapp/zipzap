@@ -92,10 +92,15 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 
 /*!
  @abstract Returns the next unique ID for embedded images.
- @discussion The id has no special use, it just needs to be unique.
+ @discussion The ID has no special use, it just needs to be unique.
  */
 - (NSString *)newImageId;
 
+/*!
+ @abstract Returns the next unique ID for deleted, inserted and annotated run elements.
+ @discussion The ID has no special use, it just needs to be unique.
+ */
+- (NSString *)newReviewId;
 
 #pragma mark - Footnotes and Endnotes
 

@@ -9,6 +9,19 @@
 #import "RKDOCXConversionContext.h"
 
 /*!
+ @abstract Specifies the type of the run that is to be translated.
+ 
+ @const RKDOCXRunStandardType	The string is a usual run without any special elements.
+ @const RKDOCXRunDeletedType	The string contains deleted text.
+ @const RKDOCXRunInsertedType	The string contains inserted text.
+ */
+typedef enum : NSUInteger {
+	RKDOCXRunStandardType,
+	RKDOCXRunDeletedType,
+	RKDOCXRunInsertedType,
+} RKDOCXRunType;
+
+/*!
  @abstract Generates a run element "<w:r>" to be added to the parent paragraph.
  @discussion See ISO 29500-1:2012: §17.3.2 (Run) and §17.3.3 (Run Content).
  */
@@ -18,7 +31,7 @@
  @abstract Returns an array of XML elements representing one or more runs with the given attributes and the corresponding text.
  @discussion The text is built using the attributed string and the range.
  */
-+ (NSArray *)runElementsForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range usingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)runElementsForAttributedString:(NSAttributedString *)attributedString attributes:(NSDictionary *)attributes range:(NSRange)range runType:(RKDOCXRunType)runType usingContext:(RKDOCXConversionContext *)context;
 
 /*!
  @abstract Returns an XML element representing a run with the given properties and content elements.
@@ -40,6 +53,6 @@
  @abstract Returns an XML element representing a text element with the given string value.
  @discussion The text element is created with an 'xml:space="preserve"' attribute.
  */
-+ (NSXMLElement *)textElementWithStringValue:(NSString *)stringValue;
++ (NSXMLElement *)textElementOfType:(RKDOCXRunType)runType withStringValue:(NSString *)stringValue;
 
 @end
