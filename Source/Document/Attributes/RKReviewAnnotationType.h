@@ -10,7 +10,7 @@
  @abstract Possible annotation types
  @const RKReviewAnnotationTypeNone		The string should be treated as a normal string
  @const RKReviewAnnotationTypeDeletion	The string should be treated as a deleted string
- @const RKReviewModeInsertion			The string should be treated as an inserted string
+ @const RKReviewAnnotationInsertion		The string should be treated as an inserted string
  */
 typedef enum : NSUInteger {
 	RKReviewAnnotationTypeNone,

@@ -8,7 +8,7 @@
 
 #import "RKReviewAnnotationType.h"
 
-NSString *RKReviewAnnotationTypeAttributeName	= @"RKReviewMode";
+NSString *RKReviewAnnotationTypeAttributeName	= @"RKReviewAnnotationType";
 
 @implementation NSAttributedString (RKAttributedStringReviewAnnotationTypeConvenience)
 
