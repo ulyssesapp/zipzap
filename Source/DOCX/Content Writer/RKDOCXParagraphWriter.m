@@ -82,7 +82,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 			}
 		}];
 		
-		// Handling of review runs
+		// Handling of links with review runs
 		if (foundReviewRuns) {
 			[attributedString enumerateAttribute:RKReviewAnnotationTypeAttributeName inRange:linkRange options:0 usingBlock:^(id reviewModeAttribute, NSRange reviewModeRange, BOOL *stopReviewMode) {
 				RKReviewAnnotationType reviewMode = RKReviewAnnotationTypeNone;
@@ -105,7 +105,6 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 						break;
 						
 					case RKReviewAnnotationTypeNone:
-						NSAssert(false, @"Disabled review mode has not been recognized as such.");
 						break;
 				}
 				
@@ -126,13 +125,17 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 				if (fieldHyperlinkRuns.count)
 					[reviewChildren addObject: fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey]];
 				
-				reviewElement.children = reviewChildren;
-				
-				[runElements addObject: reviewElement];
+				// Handle non-review runs
+				if (reviewMode == RKReviewAnnotationTypeNone)
+					[runElements addObjectsFromArray: reviewChildren];
+				else {
+					reviewElement.children = reviewChildren;
+					[runElements addObject: reviewElement];
+				}
 			}];
 		}
 		
-		// Handling of normal runs
+		// Handling of links without review runs
 		else {
 			NSXMLElement *linkElement = [RKDOCXLinkWriter linkElementForAttribute:linkAttribute usingContext:context];
 			NSMutableArray *linkChildren = [NSMutableArray new];
