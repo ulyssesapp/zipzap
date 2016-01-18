@@ -17,7 +17,7 @@
 
 - (void)testParagraphsWithDeletedText
 {
-	NSAttributedString *attributedString = [NSAttributedString attributedStringWithReviewMode:RKReviewModeDeletion string:@"This text should be marked as deleted."];
+	NSAttributedString *attributedString = [NSAttributedString attributedStringWithReviewMode:RKReviewAnnotationTypeDeletion string:@"This text should be marked as deleted."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
@@ -26,7 +26,7 @@
 
 - (void)testParagraphsWithDeletedLink
 {
-	NSMutableAttributedString *attributedString = [[NSAttributedString attributedStringWithReviewMode:RKReviewModeDeletion string:@"This is a deleted link."] mutableCopy];
+	NSMutableAttributedString *attributedString = [[NSAttributedString attributedStringWithReviewMode:RKReviewAnnotationTypeDeletion string:@"This is a deleted link."] mutableCopy];
 	[attributedString addAttribute:RKLinkAttributeName value:[NSURL URLWithString:@"http://example.org/"] range:NSMakeRange(18, 4)];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -36,7 +36,7 @@
 
 - (void)testParagraphsWithInsertedText
 {
-	NSAttributedString *attributedString = [NSAttributedString attributedStringWithReviewMode:RKReviewModeInsertion string:@"This text should be marked as inserted."];
+	NSAttributedString *attributedString = [NSAttributedString attributedStringWithReviewMode:RKReviewAnnotationTypeInsertion string:@"This text should be marked as inserted."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
@@ -45,7 +45,7 @@
 
 - (void)testParagraphsWithInsertedLink
 {
-	NSMutableAttributedString *attributedString = [[NSAttributedString attributedStringWithReviewMode:RKReviewModeInsertion string:@"This is an inserted link."] mutableCopy];
+	NSMutableAttributedString *attributedString = [[NSAttributedString attributedStringWithReviewMode:RKReviewAnnotationTypeInsertion string:@"This is an inserted link."] mutableCopy];
 	[attributedString addAttribute:RKLinkAttributeName value:[NSURL URLWithString:@"http://example.org/"] range:NSMakeRange(20, 4)];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];

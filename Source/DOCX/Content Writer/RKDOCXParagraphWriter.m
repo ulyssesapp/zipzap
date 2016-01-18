@@ -85,7 +85,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 		// Handling of review runs
 		if (foundReviewRuns) {
 			[attributedString enumerateAttribute:RKReviewAnnotationTypeAttributeName inRange:linkRange options:0 usingBlock:^(id reviewModeAttribute, NSRange reviewModeRange, BOOL *stopReviewMode) {
-				RKReviewAnnotationType reviewMode = RKReviewModeDisabled;
+				RKReviewAnnotationType reviewMode = RKReviewAnnotationTypeNone;
 				
 				if (reviewModeAttribute)
 					reviewMode = [reviewModeAttribute unsignedIntegerValue];
@@ -94,17 +94,17 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 				RKDOCXRunType runType = RKDOCXRunStandardType;
 				
 				switch (reviewMode) {
-					case RKReviewModeDeletion:
+					case RKReviewAnnotationTypeDeletion:
 						reviewElement = [RKDOCXReviewAnnotationWriter containerElementForDeletedRunsUsingContext: context];
 						runType = RKDOCXRunDeletedType;
 						break;
 						
-					case RKReviewModeInsertion:
+					case RKReviewAnnotationTypeInsertion:
 						reviewElement = [RKDOCXReviewAnnotationWriter containerElementForInsertedRunsUsingContext: context];
 						runType = RKDOCXRunInsertedType;
 						break;
 						
-					case RKReviewModeDisabled:
+					case RKReviewAnnotationTypeNone:
 						NSAssert(false, @"Disabled review mode has not been recognized as such.");
 						break;
 				}

@@ -7,15 +7,15 @@
 //
 
 /*!
- @abstract Possible Review modes
- @const RKReviewModeDisabled	The string should be treated as a normal string
- @const RKReviewModeDeletion	The string should be treated as a deleted string
- @const RKReviewModeInsertion	The string should be treated as an inserted string
+ @abstract Possible annotation types
+ @const RKReviewAnnotationTypeNone		The string should be treated as a normal string
+ @const RKReviewAnnotationTypeDeletion	The string should be treated as a deleted string
+ @const RKReviewModeInsertion			The string should be treated as an inserted string
  */
 typedef enum : NSUInteger {
-	RKReviewModeDisabled,
-	RKReviewModeDeletion,
-	RKReviewModeInsertion,
+	RKReviewAnnotationTypeNone,
+	RKReviewAnnotationTypeDeletion,
+	RKReviewAnnotationTypeInsertion,
 } RKReviewAnnotationType;
 
 extern NSString *RKReviewAnnotationTypeAttributeName;
