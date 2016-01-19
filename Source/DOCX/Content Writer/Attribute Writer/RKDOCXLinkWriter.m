@@ -9,27 +9,63 @@
 #import "RKDOCXLinkWriter.h"
 
 #import "RKDOCXRelationshipsWriter.h"
-#import "RKDOCXRunWriter.h"
 
-NSString *RKDOCXLinkHyperlinkElementName	= @"w:hyperlink";
-NSString *RKDOCXLinkTargetAttributeName		= @"r:id";
+// Elements
+NSString *RKDOCXDeletedInstructionTextElementName	= @"w:delInstrText";
+NSString *RKDOCXFieldCharElementName				= @"w:fldChar";
+NSString *RKDOCXInstructionTextElementName			= @"w:instrText";
+NSString *RKDOCXLinkHyperlinkElementName			= @"w:hyperlink";
+
+// Attributes
+NSString *RKDOCXFieldCharTypeAttributeName			= @"w:fldCharType";
+NSString *RKDOCXLinkTargetAttributeName				= @"r:id";
+
+// Attribute Values
+NSString *RKDOCXFieldCharTypeBeginAttributeValue	= @"begin";
+NSString *RKDOCXFieldCharTypeEndAttributeValue		= @"end";
+NSString *RKDOCXFieldCharTypeSeparateAttributeValue	= @"separate";
+
+// Keys
+NSString *RKDOCXFieldLinkFirstPartKey				= @"RKDOCXFieldLinkFirstPart";
+NSString *RKDOCXFieldLinkLastPartKey				= @"RKDOCXFieldLinkLastPart";
 
 @implementation RKDOCXLinkWriter
 
-+ (NSXMLElement *)linkElementForAttribute:(id)linkAttribute usingContext:(RKDOCXConversionContext *)context
++ (NSArray *)runElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType runElements:(NSArray *)runElements usingContext:(RKDOCXConversionContext *)context
 {
 	if (!linkAttribute)
-		return nil;
-
+		return runElements;
+	
 	NSAssert([linkAttribute isKindOfClass: NSURL.class] || [linkAttribute isKindOfClass: NSString.class], @"linkAttribute has invalid class type '%@'.", NSStringFromClass([linkAttribute class]));
 	
 	NSString *target = [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
 	
-	NSUInteger targetIdentifier = [context indexForRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
+	NSMutableArray *linkRunElements = [NSMutableArray new];
 	
-	NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", targetIdentifier]];
+	if (runType == RKDOCXRunStandardType) {
+		NSUInteger targetIdentifier = [context indexForRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
+		
+		NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", targetIdentifier]];
+		
+		[linkRunElements addObject: [NSXMLElement elementWithName:RKDOCXLinkHyperlinkElementName children:runElements attributes:@[targetAttribute]]];
+	}
+	else if (runType == RKDOCXRunDeletedType || runType == RKDOCXRunInsertedType) {
+		
+		// Add first link parts
+		[linkRunElements addObjectsFromArray: @[
+												[RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeBeginAttributeValue]]] usingContext:context],
+												[RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:(runType == RKDOCXRunDeletedType ? RKDOCXDeletedInstructionTextElementName : RKDOCXInstructionTextElementName) stringValue:[NSString stringWithFormat: @"HYPERLINK \"%@\"", target]] usingContext:context],
+												[RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeSeparateAttributeValue]]] usingContext:context]
+												]];
+		
+		// Add main run parts
+		[linkRunElements addObjectsFromArray: runElements];
+		
+		// Add last link part
+		[linkRunElements addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeEndAttributeValue]]] usingContext:context]];
+	}
 	
-	return [NSXMLElement elementWithName:RKDOCXLinkHyperlinkElementName children:nil attributes:@[targetAttribute]];
+	return linkRunElements ?: runElements;
 }
 
 @end

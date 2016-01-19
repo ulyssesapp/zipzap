@@ -7,6 +7,11 @@
 //
 
 #import "RKDOCXConversionContext.h"
+#import "RKDOCXRunWriter.h"
+
+// Keys
+extern NSString *RKDOCXFieldLinkFirstPartKey;
+extern NSString *RKDOCXFieldLinkLastPartKey;
 
 /*!
  @abstract Converter for link run elements.
@@ -14,9 +19,9 @@
 @interface RKDOCXLinkWriter : NSObject
 
 /*!
- @abstract Converts the passed link attachment to a hyperlink element.
+ @abstract Converts the passed link attachment to an array containing either a single hyperlink element or all run elements including field hyperlink runs. If the linkAttribute is nil the method returns the passed runElements array.
  @discussion linkAttribute must be either of type NSURL or NSString.
  */
-+ (NSXMLElement *)linkElementForAttribute:(id)linkAttribute usingContext:(RKDOCXConversionContext *)context;
++ (NSArray *)runElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType runElements:(NSArray *)runElements usingContext:(RKDOCXConversionContext *)context;
 
 @end

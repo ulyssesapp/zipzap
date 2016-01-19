@@ -12,6 +12,7 @@
 #import "RKDOCXListItemWriter.h"
 #import "RKDOCXParagraphStyleWriter.h"
 #import "RKDOCXPlaceholderWriter.h"
+#import "RKDOCXReviewAnnotationWriter.h"
 #import "RKDOCXRunWriter.h"
 #import "RKDOCXStyleTemplateWriter.h"
 
@@ -71,24 +72,41 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 {
 	NSMutableArray *runElements = [NSMutableArray new];
 	
-	[attributedString enumerateAttribute:RKLinkAttributeName inRange:paragraphRange options:0 usingBlock:^(id linkAttribute, NSRange linkRange, BOOL *stop) {
-		NSXMLElement *linkElement = [RKDOCXLinkWriter linkElementForAttribute:linkAttribute usingContext:context];
-		NSMutableArray *linkChildren = [NSMutableArray new];
-		
-		// If there is a link attribute, add the runs as children to the parent link element.
-		[attributedString enumerateAttributesInRange:linkRange options:0 usingBlock:^(NSDictionary *attrs, NSRange runRange, BOOL *stop) {
-			NSArray *innerRunElements = [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange usingContext:context];
+	[attributedString enumerateAttribute:RKLinkAttributeName inRange:paragraphRange options:0 usingBlock:^(id linkAttribute, NSRange linkRange, BOOL *stopLinkEnumeration) {
+		[attributedString enumerateAttribute:RKReviewAnnotationTypeAttributeName inRange:linkRange options:0 usingBlock:^(id reviewAnnotationAttribute, NSRange reviewAnnotationRange, BOOL *stopReviewAnnotationEnumeration) {
+			RKDOCXRunType runType = RKDOCXRunStandardType;
+			NSXMLElement *containerElement;
 			
-			if (linkElement)
-				[linkChildren addObjectsFromArray: innerRunElements];
+			switch ((RKReviewAnnotationType)[reviewAnnotationAttribute unsignedIntegerValue]) {
+				case RKReviewAnnotationTypeDeletion:
+					runType = RKDOCXRunDeletedType;
+					containerElement = [RKDOCXReviewAnnotationWriter containerElementForDeletedRunsUsingContext: context];
+					break;
+					
+				case RKReviewAnnotationTypeInsertion:
+					runType = RKDOCXRunInsertedType;
+					containerElement = [RKDOCXReviewAnnotationWriter containerElementForInsertedRunsUsingContext: context];
+					break;
+					
+				case RKReviewAnnotationTypeNone:
+					break;
+			}
+			
+			NSMutableArray *localRunElements = [NSMutableArray new];
+			
+			[attributedString enumerateAttributesInRange:reviewAnnotationRange options:0 usingBlock:^(NSDictionary *attributes, NSRange runRange, BOOL *stopRunEnumeration) {
+				[localRunElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attributes range:runRange runType:runType usingContext:context]];
+			}];
+			
+			NSArray *childElements = [[RKDOCXLinkWriter runElementsForLinkAttribute:linkAttribute runType:runType runElements:localRunElements usingContext:context] mutableCopy];
+			
+			if (containerElement) {
+				containerElement.children = childElements;
+				[runElements addObject: containerElement];
+			}
 			else
-				[runElements addObjectsFromArray: innerRunElements];
+				[runElements addObjectsFromArray: childElements];
 		}];
-		
-		if (linkElement) {
-			linkElement.children = linkChildren;
-			[runElements addObject: linkElement];
-		}
 	}];
 	
 	return runElements;

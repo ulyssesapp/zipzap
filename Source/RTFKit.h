@@ -18,6 +18,7 @@
 
 #import "RKFootnote.h"
 #import "RKPlaceholder.h"
+#import "RKReviewAnnotationType.h"
 #import "RKStyleName.h"
 #import "RKAdditionalParagraphStyle.h"
 

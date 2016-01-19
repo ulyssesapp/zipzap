@@ -21,6 +21,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary		*_styleCache;
 	NSMutableDictionary		*_checkedFontNames;
 	NSUInteger				_imageID;
+	NSUInteger				_reviewID;
 	NSMutableDictionary		*_documentRelationships;
 	NSMutableSet			*_consumedListItems;
 }
@@ -37,6 +38,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_styleCache = [NSMutableDictionary new];
 		_checkedFontNames = [[self.class fontNamesRequiringFullNames] mutableCopy];
 		_imageID = 0;
+		_reviewID = 0;
 		_document = document;
 		_usedXMLTypes = [NSDictionary new];
 		_usedMIMETypes = [NSDictionary new];
@@ -224,6 +226,11 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 - (NSString *)newImageId
 {
 	return @(++_imageID).stringValue;
+}
+
+- (NSString *)newReviewId
+{
+	return @(++_reviewID).stringValue;
 }
 
 
