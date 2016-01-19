@@ -72,89 +72,59 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 {
 	NSMutableArray *runElements = [NSMutableArray new];
 	
-	[attributedString enumerateAttribute:RKLinkAttributeName inRange:paragraphRange options:0 usingBlock:^(id linkAttribute, NSRange linkRange, BOOL *stop) {
-		__block BOOL foundReviewRuns = NO;
-		
-		[attributedString enumerateAttribute:RKReviewAnnotationTypeAttributeName inRange:linkRange options:0 usingBlock:^(id reviewModeAttribute, NSRange reviewModeRange, BOOL *stopReviewMode) {
-			if ([reviewModeAttribute unsignedIntegerValue]) {
-				foundReviewRuns = YES;
-				*stopReviewMode = YES;
+	[attributedString enumerateAttribute:RKLinkAttributeName inRange:paragraphRange options:0 usingBlock:^(id linkAttribute, NSRange linkRange, BOOL *stopLinkEnumeration) {
+		[attributedString enumerateAttribute:RKReviewAnnotationTypeAttributeName inRange:linkRange options:0 usingBlock:^(id reviewAnnotationAttribute, NSRange reviewAnnotationRange, BOOL *stopReviewAnnotationEnumeration) {
+			RKDOCXRunType runType = RKDOCXRunStandardType;
+			NSXMLElement *containerElement;
+			NSDictionary *fieldHyperlinkRuns;
+			
+			switch ((RKReviewAnnotationType)[reviewAnnotationAttribute unsignedIntegerValue]) {
+				case RKReviewAnnotationTypeDeletion:
+					runType = RKDOCXRunDeletedType;
+					containerElement = [RKDOCXReviewAnnotationWriter containerElementForDeletedRunsUsingContext: context];
+					break;
+					
+				case RKReviewAnnotationTypeInsertion:
+					runType = RKDOCXRunInsertedType;
+					containerElement = [RKDOCXReviewAnnotationWriter containerElementForInsertedRunsUsingContext: context];
+					break;
+					
+				case RKReviewAnnotationTypeNone:
+					// Prepare non-field link element
+					containerElement = [RKDOCXLinkWriter linkElementForAttribute:linkAttribute usingContext:context];
+					break;
+			}
+			
+			// Prepare field link elements
+			if (runType != RKDOCXRunStandardType)
+				fieldHyperlinkRuns = [RKDOCXLinkWriter fieldHyperlinkRunElementsForLinkAttribute:linkAttribute runType:runType usingContext:context];
+			
+			NSMutableArray *childrenElements = [NSMutableArray new];
+			
+			// Prepare eventual field link
+			if (fieldHyperlinkRuns[RKDOCXFieldLinkFirstPartKey])
+				[childrenElements addObjectsFromArray: fieldHyperlinkRuns[RKDOCXFieldLinkFirstPartKey]];
+			
+			// Add main run content
+			[attributedString enumerateAttributesInRange:reviewAnnotationRange options:0 usingBlock:^(NSDictionary *attributes, NSRange runRange, BOOL *stopRunEnumeration) {
+				[childrenElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attributes range:runRange runType:runType usingContext:context]];
+			}];
+			
+			// Close eventual link
+			if (fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey])
+				[childrenElements addObject: fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey]];
+			
+			if (childrenElements.count) {
+				// Add links or review elements
+				if (containerElement) {
+					containerElement.children = childrenElements;
+					[runElements addObject: containerElement];
+				}
+				// Add standard runs
+				else
+					[runElements addObjectsFromArray: childrenElements];
 			}
 		}];
-		
-		// Handling of links with review runs
-		if (foundReviewRuns) {
-			[attributedString enumerateAttribute:RKReviewAnnotationTypeAttributeName inRange:linkRange options:0 usingBlock:^(id reviewModeAttribute, NSRange reviewModeRange, BOOL *stopReviewMode) {
-				RKReviewAnnotationType reviewMode = RKReviewAnnotationTypeNone;
-				
-				if (reviewModeAttribute)
-					reviewMode = [reviewModeAttribute unsignedIntegerValue];
-				
-				NSXMLElement *reviewElement;
-				RKDOCXRunType runType = RKDOCXRunStandardType;
-				
-				switch (reviewMode) {
-					case RKReviewAnnotationTypeDeletion:
-						reviewElement = [RKDOCXReviewAnnotationWriter containerElementForDeletedRunsUsingContext: context];
-						runType = RKDOCXRunDeletedType;
-						break;
-						
-					case RKReviewAnnotationTypeInsertion:
-						reviewElement = [RKDOCXReviewAnnotationWriter containerElementForInsertedRunsUsingContext: context];
-						runType = RKDOCXRunInsertedType;
-						break;
-						
-					case RKReviewAnnotationTypeNone:
-						break;
-				}
-				
-				NSDictionary *fieldHyperlinkRuns = [RKDOCXLinkWriter fieldHyperlinkRunElementsForLinkAttribute:linkAttribute runType:runType usingContext:context];
-				
-				NSMutableArray *reviewChildren = [NSMutableArray new];
-				
-				// Prepare eventual link
-				if (fieldHyperlinkRuns.count)
-					[reviewChildren addObjectsFromArray: fieldHyperlinkRuns[RKDOCXFieldLinkFirstPartKey]];
-				
-				// Add main run content
-				[attributedString enumerateAttributesInRange:reviewModeRange options:0 usingBlock:^(NSDictionary *attrs, NSRange runRange, BOOL *stopRun) {
-					[reviewChildren addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange runType:runType usingContext:context]];
-				}];
-				
-				// Close eventual link
-				if (fieldHyperlinkRuns.count)
-					[reviewChildren addObject: fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey]];
-				
-				// Handle non-review runs
-				if (reviewMode == RKReviewAnnotationTypeNone)
-					[runElements addObjectsFromArray: reviewChildren];
-				else {
-					reviewElement.children = reviewChildren;
-					[runElements addObject: reviewElement];
-				}
-			}];
-		}
-		
-		// Handling of links without review runs
-		else {
-			NSXMLElement *linkElement = [RKDOCXLinkWriter linkElementForAttribute:linkAttribute usingContext:context];
-			NSMutableArray *linkChildren = [NSMutableArray new];
-			
-			// If there is a link attribute, add the runs as children to the parent link element.
-			[attributedString enumerateAttributesInRange:linkRange options:0 usingBlock:^(NSDictionary *attrs, NSRange runRange, BOOL *stop) {
-				NSArray *innerRunElements = [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attrs range:runRange runType:RKDOCXRunStandardType usingContext:context];
-				
-				if (linkElement)
-					[linkChildren addObjectsFromArray: innerRunElements];
-				else
-					[runElements addObjectsFromArray: innerRunElements];
-			}];
-			
-			if (linkElement) {
-				linkElement.children = linkChildren;
-				[runElements addObject: linkElement];
-			}
-		}
 	}];
 	
 	return runElements;
