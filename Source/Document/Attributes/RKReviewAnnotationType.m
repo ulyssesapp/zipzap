@@ -9,12 +9,3 @@
 #import "RKReviewAnnotationType.h"
 
 NSString *RKReviewAnnotationTypeAttributeName	= @"RKReviewAnnotationType";
-
-@implementation NSAttributedString (RKAttributedStringReviewAnnotationTypeConvenience)
-
-+ (NSAttributedString *)attributedStringWithReviewMode:(RKReviewAnnotationType)reviewAnnotation string:(NSString *)string
-{
-	return [[NSAttributedString alloc] initWithString:string attributes:@{RKReviewAnnotationTypeAttributeName: @(reviewAnnotation)}];
-}
-
-@end

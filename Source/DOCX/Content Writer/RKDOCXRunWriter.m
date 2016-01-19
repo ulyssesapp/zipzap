@@ -128,6 +128,7 @@ NSString *RKDOCXRunDeletedTextElementName	= @"w:delText";
 			textElementName = RKDOCXRunDeletedTextElementName;
 			break;
 			
+		// Inserted runs are the same as standard runs
 		case RKDOCXRunInsertedType:
 		case RKDOCXRunStandardType:
 			textElementName = RKDOCXRunTextElementName;
