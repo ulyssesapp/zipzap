@@ -33,77 +33,39 @@ NSString *RKDOCXFieldLinkLastPartKey				= @"RKDOCXFieldLinkLastPart";
 
 + (NSArray *)runElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType runElements:(NSArray *)runElements usingContext:(RKDOCXConversionContext *)context
 {
-	NSXMLElement *linkElement;
-	NSDictionary *fieldHyperlinkRuns;
-	
-	switch (runType) {
-		case RKDOCXRunStandardType:
-			linkElement = [self.class linkElementForAttribute:linkAttribute usingContext:context];
-			
-			if (!linkElement)
-				return runElements;
-			
-			linkElement.children = runElements;
-			return @[linkElement];
-			
-		case RKDOCXRunDeletedType:
-		case RKDOCXRunInsertedType:
-			fieldHyperlinkRuns = [self.class fieldHyperlinkRunElementsForLinkAttribute:linkAttribute runType:runType usingContext:context];
-			
-			if (!fieldHyperlinkRuns.count)
-				return runElements;
-			
-			NSMutableArray *linkRuns = [NSMutableArray new];
-			[linkRuns addObjectsFromArray: fieldHyperlinkRuns[RKDOCXFieldLinkFirstPartKey]];
-			[linkRuns addObjectsFromArray: runElements];
-			[linkRuns addObject: fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey]];
-			
-			return linkRuns;
-	}
-	
-	return runElements;
-}
-
-+ (NSXMLElement *)linkElementForAttribute:(id)linkAttribute usingContext:(RKDOCXConversionContext *)context
-{
-	NSString *target = [self.class targetForLinkAttribute: linkAttribute];
-	
-	if (!target)
-		return nil;
-	
-	NSUInteger targetIdentifier = [context indexForRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
-	
-	NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", targetIdentifier]];
-	
-	return [NSXMLElement elementWithName:RKDOCXLinkHyperlinkElementName children:nil attributes:@[targetAttribute]];
-}
-
-+ (NSDictionary *)fieldHyperlinkRunElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType usingContext:(RKDOCXConversionContext *)context
-{
-	NSString *target = [self.class targetForLinkAttribute: linkAttribute];
-	
-	if (!target)
-		return nil;
-	
-	NSMutableArray *fieldArray = [NSMutableArray new];
-	
-	[fieldArray addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeBeginAttributeValue]]] usingContext:context]];
-	[fieldArray addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:(runType == RKDOCXRunDeletedType ? RKDOCXDeletedInstructionTextElementName : RKDOCXInstructionTextElementName) stringValue:[NSString stringWithFormat: @"HYPERLINK \"%@\"", target]] usingContext:context]];
-	[fieldArray addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeSeparateAttributeValue]]] usingContext:context]];
-	
-	NSXMLElement *endElement = [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeEndAttributeValue]]] usingContext:context];
-	
-	return @{RKDOCXFieldLinkFirstPartKey: fieldArray, RKDOCXFieldLinkLastPartKey: endElement};
-}
-
-+ (NSString *)targetForLinkAttribute:(id)linkAttribute
-{
 	if (!linkAttribute)
-		return nil;
+		return runElements;
 	
 	NSAssert([linkAttribute isKindOfClass: NSURL.class] || [linkAttribute isKindOfClass: NSString.class], @"linkAttribute has invalid class type '%@'.", NSStringFromClass([linkAttribute class]));
 	
-	return [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
+	NSString *target = [linkAttribute isKindOfClass: NSString.class] ? linkAttribute : [linkAttribute absoluteString];
+	
+	NSMutableArray *linkRunElements = [NSMutableArray new];
+	
+	if (runType == RKDOCXRunStandardType) {
+		NSUInteger targetIdentifier = [context indexForRelationshipWithTarget:target andType:RKDOCXLinkRelationshipType];
+		
+		NSXMLElement *targetAttribute = [NSXMLElement attributeWithName:RKDOCXLinkTargetAttributeName stringValue:[NSString stringWithFormat: @"rId%lu", targetIdentifier]];
+		
+		[linkRunElements addObject: [NSXMLElement elementWithName:RKDOCXLinkHyperlinkElementName children:runElements attributes:@[targetAttribute]]];
+	}
+	else if (runType == RKDOCXRunDeletedType || runType == RKDOCXRunInsertedType) {
+		
+		// Add first link parts
+		[linkRunElements addObjectsFromArray: @[
+												[RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeBeginAttributeValue]]] usingContext:context],
+												[RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:(runType == RKDOCXRunDeletedType ? RKDOCXDeletedInstructionTextElementName : RKDOCXInstructionTextElementName) stringValue:[NSString stringWithFormat: @"HYPERLINK \"%@\"", target]] usingContext:context],
+												[RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeSeparateAttributeValue]]] usingContext:context]
+												]];
+		
+		// Add main run parts
+		[linkRunElements addObjectsFromArray: runElements];
+		
+		// Add last link part
+		[linkRunElements addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeEndAttributeValue]]] usingContext:context]];
+	}
+	
+	return linkRunElements ?: runElements;
 }
 
 @end
