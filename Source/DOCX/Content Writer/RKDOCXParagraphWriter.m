@@ -76,7 +76,6 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 		[attributedString enumerateAttribute:RKReviewAnnotationTypeAttributeName inRange:linkRange options:0 usingBlock:^(id reviewAnnotationAttribute, NSRange reviewAnnotationRange, BOOL *stopReviewAnnotationEnumeration) {
 			RKDOCXRunType runType = RKDOCXRunStandardType;
 			NSXMLElement *containerElement;
-			NSDictionary *fieldHyperlinkRuns;
 			
 			switch ((RKReviewAnnotationType)[reviewAnnotationAttribute unsignedIntegerValue]) {
 				case RKReviewAnnotationTypeDeletion:
@@ -90,40 +89,23 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 					break;
 					
 				case RKReviewAnnotationTypeNone:
-					// Prepare non-field link element
-					containerElement = [RKDOCXLinkWriter linkElementForAttribute:linkAttribute usingContext:context];
 					break;
 			}
 			
-			// Prepare field link elements
-			if (runType != RKDOCXRunStandardType)
-				fieldHyperlinkRuns = [RKDOCXLinkWriter fieldHyperlinkRunElementsForLinkAttribute:linkAttribute runType:runType usingContext:context];
+			NSMutableArray *localRunElements = [NSMutableArray new];
 			
-			NSMutableArray *childrenElements = [NSMutableArray new];
-			
-			// Prepare eventual field link
-			if (fieldHyperlinkRuns[RKDOCXFieldLinkFirstPartKey])
-				[childrenElements addObjectsFromArray: fieldHyperlinkRuns[RKDOCXFieldLinkFirstPartKey]];
-			
-			// Add main run content
 			[attributedString enumerateAttributesInRange:reviewAnnotationRange options:0 usingBlock:^(NSDictionary *attributes, NSRange runRange, BOOL *stopRunEnumeration) {
-				[childrenElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attributes range:runRange runType:runType usingContext:context]];
+				[localRunElements addObjectsFromArray: [RKDOCXRunWriter runElementsForAttributedString:attributedString attributes:attributes range:runRange runType:runType usingContext:context]];
 			}];
 			
-			// Close eventual link
-			if (fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey])
-				[childrenElements addObject: fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey]];
+			NSArray *childElements = [[RKDOCXLinkWriter runElementsForLinkAttribute:linkAttribute runType:runType runElements:localRunElements usingContext:context] mutableCopy];
 			
-			if (childrenElements.count) {
-				// Add links or review elements
-				if (containerElement) {
-					containerElement.children = childrenElements;
-					[runElements addObject: containerElement];
-				}
-				// Add standard runs
-				else
-					[runElements addObjectsFromArray: childrenElements];
+			if (containerElement) {
+				containerElement.children = childElements;
+				[runElements addObject: containerElement];
 			}
+			else
+				[runElements addObjectsFromArray: childElements];
 		}];
 	}];
 	

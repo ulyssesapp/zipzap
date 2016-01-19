@@ -19,6 +19,12 @@ extern NSString *RKDOCXFieldLinkLastPartKey;
 @interface RKDOCXLinkWriter : NSObject
 
 /*!
+ @abstract Converts the passed link attachment to an array containing either a single hyperlink element or all run elements including field hyperlink runs. If the linkAttribute is nil the method returns the passed runElements array.
+ @discussion linkAttribute must be either of type NSURL or NSString.
+ */
++ (NSArray *)runElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType runElements:(NSArray *)runElements usingContext:(RKDOCXConversionContext *)context;
+
+/*!
  @abstract Converts the passed link attachment to a hyperlink element.
  @discussion linkAttribute must be either of type NSURL or NSString.
  */

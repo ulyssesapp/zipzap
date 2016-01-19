@@ -31,6 +31,39 @@ NSString *RKDOCXFieldLinkLastPartKey				= @"RKDOCXFieldLinkLastPart";
 
 @implementation RKDOCXLinkWriter
 
++ (NSArray *)runElementsForLinkAttribute:(id)linkAttribute runType:(RKDOCXRunType)runType runElements:(NSArray *)runElements usingContext:(RKDOCXConversionContext *)context
+{
+	NSXMLElement *linkElement;
+	NSDictionary *fieldHyperlinkRuns;
+	
+	switch (runType) {
+		case RKDOCXRunStandardType:
+			linkElement = [self.class linkElementForAttribute:linkAttribute usingContext:context];
+			
+			if (!linkElement)
+				return runElements;
+			
+			linkElement.children = runElements;
+			return @[linkElement];
+			
+		case RKDOCXRunDeletedType:
+		case RKDOCXRunInsertedType:
+			fieldHyperlinkRuns = [self.class fieldHyperlinkRunElementsForLinkAttribute:linkAttribute runType:runType usingContext:context];
+			
+			if (!fieldHyperlinkRuns.count)
+				return runElements;
+			
+			NSMutableArray *linkRuns = [NSMutableArray new];
+			[linkRuns addObjectsFromArray: fieldHyperlinkRuns[RKDOCXFieldLinkFirstPartKey]];
+			[linkRuns addObjectsFromArray: runElements];
+			[linkRuns addObject: fieldHyperlinkRuns[RKDOCXFieldLinkLastPartKey]];
+			
+			return linkRuns;
+	}
+	
+	return runElements;
+}
+
 + (NSXMLElement *)linkElementForAttribute:(id)linkAttribute usingContext:(RKDOCXConversionContext *)context
 {
 	NSString *target = [self.class targetForLinkAttribute: linkAttribute];
