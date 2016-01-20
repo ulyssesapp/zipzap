@@ -10,28 +10,33 @@
 
 #import "RKColor.h"
 
-NSString *RKDOCXTextEffectsBaselineAttributeValue			= @"baseline";
+// Elements
 NSString *RKDOCXTextEffectsCharacterSpacingElementName		= @"w:spacing";
-NSString *RKDOCXTextEffectsColorAutoAttributeValue			= @"auto";
-NSString *RKDOCXTextEffectsNoHighlightAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsColorElementName					= @"w:color";
 NSString *RKDOCXTextEffectsDoubleStrikethroughElementName	= @"w:dstrike";
-NSString *RKDOCXTextEffectsHighlightElementValue			= @"w:highlight";
-NSString *RKDOCXTextEffectsLigatureAttributeName			= @"w14:val";
+NSString *RKDOCXTextEffectsHighlightElementName				= @"w:highlight";
 NSString *RKDOCXTextEffectsLigatureElementName				= @"w14:ligatures";
+NSString *RKDOCXTextEffectsOutlineElementName				= @"w:outline";
+NSString *RKDOCXTextEffectsShadowElementName				= @"w:shadow";
+NSString *RKDOCXTextEffectsSingleStrikethroughElementName	= @"w:strike";
+NSString *RKDOCXTextEffectsSuperscriptElementName			= @"w:vertAlign";
+NSString *RKDOCXTextEffectsUnderlineColorElementName		= @"w:color";
+NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
+
+// Attributes
+NSString *RKDOCXTextEffectsLigatureAttributeName			= @"w14:val";
+
+// Attribute Values
+NSString *RKDOCXTextEffectsBaselineAttributeValue			= @"baseline";
+NSString *RKDOCXTextEffectsColorAutoAttributeValue			= @"auto";
+NSString *RKDOCXTextEffectsNoHighlightAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsLigatureAllAttributeValue		= @"all";
 NSString *RKDOCXTextEffectsLigatureDefaultAttributeValue	= @"historicalDiscretional"; // alternatively: standardContextual
 NSString *RKDOCXTextEffectsLigatureNoneAttributeValue		= @"none";
 NSString *RKDOCXTextEffectsNoUnderlineAttributeValue		= @"none";
-NSString *RKDOCXTextEffectsOutlineElementName				= @"w:outline";
-NSString *RKDOCXTextEffectsShadowElementName				= @"w:shadow";
-NSString *RKDOCXTextEffectsSingleStrikethroughElementName	= @"w:strike";
 NSString *RKDOCXTextEffectsSingleUnderlineAttributeValue	= @"single";
 NSString *RKDOCXTextEffectsSubscriptAttributeValue			= @"subscript";
 NSString *RKDOCXTextEffectsSuperscriptAttributeValue		= @"superscript";
-NSString *RKDOCXTextEffectsSuperscriptElementName			= @"w:vertAlign";
-NSString *RKDOCXTextEffectsUnderlineColorElementName		= @"w:color";
-NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 
 @implementation RKDOCXTextEffectAttributesWriter
 
@@ -160,7 +165,7 @@ NSString *RKDOCXTextEffectsUnderlineElementName				= @"w:u";
 	}];
 
 	// Highlight color is always translated, since it is ignored when being part of a style definition
-	return [NSXMLElement elementWithName:RKDOCXTextEffectsHighlightElementValue children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:nearestColorName]]];
+	return [NSXMLElement elementWithName:RKDOCXTextEffectsHighlightElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:nearestColorName]]];
 }
 
 + (NSXMLElement *)strokeWidthPropertyForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context isDefaultStyle:(BOOL)isDefaultStyle

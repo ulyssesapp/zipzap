@@ -17,7 +17,7 @@
 
 #import "NSString+ParsingConvenience.h"
 
-// Element names
+// Elements
 NSString *RKDOCXRunElementName				= @"w:r";
 NSString *RKDOCXRunPropertiesElementName	= @"w:rPr";
 NSString *RKDOCXRunTextElementName			= @"w:t";

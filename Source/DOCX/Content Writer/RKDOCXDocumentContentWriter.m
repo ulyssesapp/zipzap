@@ -23,7 +23,7 @@ NSString *RKDOCXDocumentFilename					= @"document.xml";
 // Relationship type
 NSString *RKDOCXDocumentRelationshipType			= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
 
-// Element names
+// Elements
 NSString *RKDOCXDocumentContentBodyElementName		= @"w:body";
 NSString *RKDOCXDocumentContentParagraphElementName	= @"w:p";
 NSString *RKDOCXDocumentContentRunElementName		= @"w:r";

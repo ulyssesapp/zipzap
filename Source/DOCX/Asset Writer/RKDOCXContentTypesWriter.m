@@ -13,7 +13,7 @@
 // Root element name
 NSString *RKDOCXContentTypesRootElementName		= @"Types";
 
-// Element names
+// Elements
 NSString *RKDOCXDefaultContentTypeElementName	= @"Default";
 NSString *RKDOCXOverrideContentTypeElementName	= @"Override";
 

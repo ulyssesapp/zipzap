@@ -42,6 +42,7 @@ NSString *RKDOCXFootnotesFootnoteReferenceElementName			= @"w:footnoteReference"
 NSString *RKDOCXFootnotesTypeAttributeName						= @"w:type";
 NSString *RKDOCXFootnotesIdentifierAttributeName				= @"w:id";
 
+// Attribute Names
 NSString *RKDOCXEndnoteReferenceAttributeName					= @"RKDOCXEndnoteReference";
 NSString *RKDOCXFootnoteReferenceAttributeName					= @"RKDOCXFootnoteReference";
 
