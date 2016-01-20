@@ -36,7 +36,7 @@ NSString *RKDOCXRunDeletedTextElementName	= @"w:delText";
 	if (placeholderElement)
 		return @[placeholderElement];
 	
-	// Check for footnote/endnote reference mark (located in the footnote’s/endnote’s content)
+	// Check for footnote/endnote/comment reference mark (located in the footnote’s/endnote’s/comment’s content)
 	NSXMLElement *referenceMarkElement = [RKDOCXFootnotesWriter referenceMarkForAttributes:attributes usingContext:context];
 	if (referenceMarkElement)
 		return @[referenceMarkElement];

@@ -8,6 +8,7 @@
 
 #import "RKDOCXWriter.h"
 
+#import "RKDOCXReviewAnnotationWriter.h"
 #import "RKDOCXContentTypesWriter.h"
 #import "RKDOCXConversionContext.h"
 #import "RKDOCXDocumentContentWriter.h"
@@ -28,6 +29,7 @@
 	[RKDOCXDocumentContentWriter buildDocumentUsingContext: context];
 	[RKDOCXSettingsWriter buildSettingsUsingContext: context];
 	[RKDOCXFootnotesWriter buildFootnotesUsingContext: context];
+	[RKDOCXReviewAnnotationWriter buildCommentsUsingContext: context];
 	[RKDOCXListStyleWriter buildNumberingDefinitionsUsingContext: context];
 	[RKDOCXStyleTemplateWriter buildStyleTemplatesUsingContext: context];
 	[RKDOCXDocumentPropertiesWriter buildCorePropertiesUsingContext: context];

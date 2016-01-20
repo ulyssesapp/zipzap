@@ -44,6 +44,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_usedMIMETypes = [NSDictionary new];
 		_footnotes = [NSDictionary new];
 		_endnotes = [NSDictionary new];
+		_comments = [NSDictionary new];
 		_headerCount = 0;
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
@@ -234,7 +235,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 }
 
 
-#pragma mark - Footnotes and Endnotes
+#pragma mark - Footnotes, Endnotes and Comments
 
 - (NSUInteger)indexForFootnoteContent:(NSArray *)content
 {
@@ -256,6 +257,17 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary *newEndnotes = [_endnotes mutableCopy];
 	newEndnotes[@(index)] = content;
 	_endnotes = newEndnotes;
+	
+	return index;
+}
+
+- (NSUInteger)indexForCommentContent:(NSArray *)content
+{
+	NSUInteger index = _comments.count;
+	
+	NSMutableDictionary *newComments = [_comments mutableCopy];
+	newComments[@(index)] = content;
+	_comments = newComments;
 	
 	return index;
 }
