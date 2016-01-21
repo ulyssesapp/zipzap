@@ -65,7 +65,7 @@ NSString *RKDOCXFieldLinkLastPartKey				= @"RKDOCXFieldLinkLastPart";
 		[linkRunElements addObject: [RKDOCXRunWriter runElementForAttributes:nil contentElement:[NSXMLElement elementWithName:RKDOCXFieldCharElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFieldCharTypeAttributeName stringValue:RKDOCXFieldCharTypeEndAttributeValue]]] usingContext:context]];
 	}
 	
-	return linkRunElements ?: runElements;
+	return linkRunElements.count ? linkRunElements : runElements;
 }
 
 @end

@@ -53,7 +53,7 @@ NSString *RKDOCXFooterRelationshipType		= @"http://schemas.openxmlformats.org/of
 
 	document.rootElement.children = [RKDOCXAttributedStringWriter processAttributedString:contentString usingContext:context];
 	
-	// Restore previous relationship
+	// Restore previous relationship source
 	context.currentRelationshipSource = previousRelationshipSource;
 	
 	[context indexForRelationshipWithTarget:filename andType:relationshipType];

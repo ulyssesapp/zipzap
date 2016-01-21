@@ -9,3 +9,4 @@
 #import "RKReviewAnnotationType.h"
 
 NSString *RKReviewAnnotationTypeAttributeName	= @"RKReviewAnnotationType";
+NSString *RKReviewCommentAttributeName			= @"RKReviewComment";

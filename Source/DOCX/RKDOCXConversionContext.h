@@ -102,7 +102,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (NSString *)newReviewId;
 
-#pragma mark - Footnotes and Endnotes
+#pragma mark - Footnotes, Endnotes and Comments
 
 /*!
  @abstract Mapping from footnote identifiers (NSNumber) to footnote content (NSXMLElement).
@@ -123,6 +123,16 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  @abstract Creates and returns an identifier for the given endnote content.
  */
 - (NSUInteger)indexForEndnoteContent:(NSArray *)content;
+
+/*!
+ @abstract Mapping from comment identifiers (NSNumber) to comment content (NSXMLElement).
+ */
+@property (nonatomic, readonly) NSDictionary *comments;
+
+/*!
+ @abstract Creates and returns an identifier for the given comment content.
+ */
+- (NSUInteger)indexForCommentContent:(NSArray *)content;
 
 
 #pragma mark - Headers and Footers

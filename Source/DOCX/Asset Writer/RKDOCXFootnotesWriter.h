@@ -11,6 +11,21 @@
 
 /*!
  @abstract Specifies the type of endnote/footnote reference that should be created.
+ 
+ @const RKDOCXNoReference		No reference should be created. If this value is actually used, something has gone wrong.
+ @const RKDOCXFootnoteReference	A footnote reference should be created.
+ @const RKDOCXEndnoteReference	An endnote reference should be created.
+ @const RKDOCXCommentReference	A comment reference should be created.
+ */
+typedef enum : NSUInteger {
+	RKDOCXNoReference,
+	RKDOCXFootnoteReference,
+	RKDOCXEndnoteReference,
+	RKDOCXCommentReference,
+} RKDOCXReferenceType;
+
+/*!
+ @abstract Specifies the type of endnote/footnote reference that should be created.
  */
 extern NSString *RKDOCXReferenceTypeAttributeName;
 

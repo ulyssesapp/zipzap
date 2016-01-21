@@ -35,7 +35,7 @@ NSString *RKDOCXSettingsFootnotePropertiesElementName				= @"w:footnotePr";
 NSString *RKDOCXSettingsMirrorMarginsElementName					= @"w:mirrorMargins";
 NSString *RKDOCXSettingsPositionElementName							= @"w:pos";
 
-// Attribute Names
+// Attributes
 NSString *RKDOCXSettingsIDAttributeName								= @"w:id";
 
 // Attribute Values

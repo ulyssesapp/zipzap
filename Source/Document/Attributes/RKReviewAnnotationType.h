@@ -24,3 +24,9 @@ typedef enum : NSUInteger {
  @discussion Can be of type RKReviewAnnotationType, with the default being RKReviewAnnotationTypeNone.
  */
 extern NSString *RKReviewAnnotationTypeAttributeName;
+
+/*!
+ @abstract Attribute name for referencing review comments.
+ @discussion Maps to NSAttributedString.
+ */
+extern NSString *RKReviewCommentAttributeName;

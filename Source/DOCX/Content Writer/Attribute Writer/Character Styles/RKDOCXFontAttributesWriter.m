@@ -10,15 +10,20 @@
 
 #import "NSXMLElement+IntegerValueConvenience.h"
 
-NSString *RKDOCXFontAttributeAsciiFontAttributeValue			= @"w:ascii";
+// Elements
 NSString *RKDOCXFontAttributeBoldElementName					= @"w:b";
-NSString *RKDOCXFontAttributeComplexScriptFontAttributeValue	= @"w:cs";
 NSString *RKDOCXFontAttributeComplexScriptFontSizeElementName	= @"w:szCs";
-NSString *RKDOCXFontAttributeEastAsiaFontAttributeValue			= @"w:eastAsia";
 NSString *RKDOCXFontAttributeFontElementName					= @"w:rFonts";
 NSString *RKDOCXFontAttributeFontSizeElementName				= @"w:sz";
-NSString *RKDOCXFontAttributeHighAnsiFontAttributeValue			= @"w:hAnsi";
 NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
+
+// Attributes
+
+// Attribute Values
+NSString *RKDOCXFontAttributeAsciiFontAttributeName				= @"w:ascii";
+NSString *RKDOCXFontAttributeComplexScriptFontAttributeName		= @"w:cs";
+NSString *RKDOCXFontAttributeEastAsiaFontAttributeName			= @"w:eastAsia";
+NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 
 @implementation RKDOCXFontAttributesWriter
 
@@ -49,10 +54,10 @@ NSString *RKDOCXFontAttributeItalicElementName					= @"w:i";
 		fontName = (__bridge NSString *)CTFontCopyFamilyName(fontAttribute);
 	
 	if (![(__bridge NSString *)CTFontCopyFullName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFullName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
-		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeValue stringValue:fontName],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeValue stringValue:fontName],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeValue stringValue:fontName],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeValue stringValue:fontName]]];
+		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeName stringValue:fontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeName stringValue:fontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeName stringValue:fontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeName stringValue:fontName]]];
 		[properties addObject: fontElement];
 	}
 	

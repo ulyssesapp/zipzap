@@ -31,6 +31,7 @@ NSString *RKDOCXFootnotesFilename								= @"footnotes.xml";
 // Elements
 NSString *RKDOCXFootnotesContinuationSeparatorAttributeValue	= @"continuationSeparator";
 NSString *RKDOCXFootnotesSeparatorAttributeValue				= @"separator";
+NSString *RKDOCXFootnotesAnnotationRefElementName				= @"w:annotationRef";
 NSString *RKDOCXFootnotesEndnoteElementName						= @"w:endnote";
 NSString *RKDOCXFootnotesEndnoteRefElementName					= @"w:endnoteRef";
 NSString *RKDOCXFootnotesEndnoteReferenceElementName			= @"w:endnoteReference";
@@ -42,23 +43,11 @@ NSString *RKDOCXFootnotesFootnoteReferenceElementName			= @"w:footnoteReference"
 NSString *RKDOCXFootnotesTypeAttributeName						= @"w:type";
 NSString *RKDOCXFootnotesIdentifierAttributeName				= @"w:id";
 
+// Attribute Names
 NSString *RKDOCXEndnoteReferenceAttributeName					= @"RKDOCXEndnoteReference";
 NSString *RKDOCXFootnoteReferenceAttributeName					= @"RKDOCXFootnoteReference";
 
 NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
-
-/*!
- @abstract Specifies the type of endnote/footnote reference that should be created.
- 
- @const RKDOCXNoReference		No reference should be created. If this value is actually used, something has gone wrong.
- @const RKDOCXFootnoteReference	A footnote reference should be created.
- @const RKDOCXEndnoteReference	An endnote reference should be created.
- */
-typedef enum : NSUInteger {
-	RKDOCXNoReference,
-	RKDOCXFootnoteReference,
-	RKDOCXEndnoteReference,
-} RKDOCXReferenceType;
 
 @implementation RKDOCXFootnotesWriter
 
@@ -206,6 +195,10 @@ typedef enum : NSUInteger {
 			
 		case RKDOCXEndnoteReference:
 			refElementName = RKDOCXFootnotesEndnoteRefElementName;
+			break;
+			
+		case RKDOCXCommentReference:
+			refElementName = RKDOCXFootnotesAnnotationRefElementName;
 			break;
 			
 		default:
