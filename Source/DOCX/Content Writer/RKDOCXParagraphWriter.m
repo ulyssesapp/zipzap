@@ -73,7 +73,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 	NSMutableArray *runElements = [NSMutableArray new];
 	
 	[attributedString enumerateAttribute:RKReviewCommentAttributeName inRange:paragraphRange options:0 usingBlock:^(id commentAttribute, NSRange commentRange, BOOL *stopCommentEnumeration) {
-		NSUInteger commentID;
+		NSUInteger commentID = NSNotFound;
 		
 		if (commentAttribute)
 			[runElements addObject: [RKDOCXReviewAnnotationWriter startElementForCommentAttribute:commentAttribute withID:&commentID usingContext:context]];
@@ -115,7 +115,7 @@ NSString *RKDOCXParagraphPropertiesElementName	= @"w:pPr";
 			}];
 		}];
 		
-		if (commentAttribute)
+		if (commentID != NSNotFound)
 			[runElements addObjectsFromArray: [RKDOCXReviewAnnotationWriter endElementsForCommentID:commentID usingContext:context]];
 	}];
 
