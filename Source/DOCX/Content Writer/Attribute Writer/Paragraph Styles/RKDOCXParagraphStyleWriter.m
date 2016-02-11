@@ -37,9 +37,9 @@ NSString *RKDOCXParagraphStyleTailIndentationAttributeName			= @"w:end";
 // Attribute Values
 NSString *RKDOCXParagraphStyleCenterAlignmentAttributeValue			= @"center";
 NSString *RKDOCXParagraphStyleJustifiedAlignmentAttributeValue		= @"both";
-NSString *RKDOCXParagraphStyleLeftAlignmentAttributeValue			= @"start";
+NSString *RKDOCXParagraphStyleLeftAlignmentAttributeValue			= @"left";		// According to the standard it should be "start", "left" is Word 2007/2008 compatible. See ULYSSES-5510 for more details.
 NSString *RKDOCXParagraphStyleLineSpacingRuleAttributeValue			= @"atLeast";	// Alternatively: @"exactly"
-NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"end";
+NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"right";		// According to the standard it should be "end", "right" is Word 2007/2008 compatible. See ULYSSES-5510 for more details.
 
 @implementation RKDOCXParagraphStyleWriter
 
