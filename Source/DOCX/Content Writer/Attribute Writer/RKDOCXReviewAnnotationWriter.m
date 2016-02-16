@@ -25,6 +25,7 @@ NSString *RKDOCXCommentsFilename				= @"comments.xml";
 NSString *RKDOCXCommentsRelationshipType		= @"http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
 
 // Elements
+NSString *RKDOCXAuthorAttributeName				= @"w:author";
 NSString *RKDOCXCommentElementName				= @"w:comment";
 NSString *RKDOCXCommentRangeEndElementName		= @"w:commentRangeEnd";
 NSString *RKDOCXCommentRangeStartElementName	= @"w:commentRangeStart";
@@ -54,12 +55,12 @@ NSString *RKDOCXIDAttributeName					= @"w:id";
 
 + (NSXMLElement *)containerElementForDeletedRunsUsingContext:(RKDOCXConversionContext *)context
 {
-	return [NSXMLElement elementWithName:RKDOCXDeletedElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXIDAttributeName stringValue:context.newReviewId]]];
+	return [NSXMLElement elementWithName:RKDOCXDeletedElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXIDAttributeName stringValue:context.newReviewId], [NSXMLElement attributeWithName:RKDOCXAuthorAttributeName stringValue:@""]]];
 }
 
 + (NSXMLElement *)containerElementForInsertedRunsUsingContext:(RKDOCXConversionContext *)context
 {
-	return [NSXMLElement elementWithName:RKDOCXInsertedElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXIDAttributeName stringValue:context.newReviewId]]];
+	return [NSXMLElement elementWithName:RKDOCXInsertedElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXIDAttributeName stringValue:context.newReviewId], [NSXMLElement attributeWithName:RKDOCXAuthorAttributeName stringValue:@""]]];
 }
 
 + (NSXMLElement *)startElementForCommentAttribute:(NSAttributedString *)comment withID:(NSUInteger *)outCommentID usingContext:(RKDOCXConversionContext *)context
