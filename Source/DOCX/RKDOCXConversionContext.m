@@ -22,6 +22,8 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary		*_checkedFontNames;
 	NSUInteger				_imageID;
 	NSUInteger				_reviewID;
+	NSMutableDictionary		*_characterStyles;
+	NSMutableDictionary		*_paragraphStyles;
 	NSMutableDictionary		*_documentRelationships;
 	NSMutableSet			*_consumedListItems;
 }
@@ -40,6 +42,8 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_imageID = 0;
 		_reviewID = 0;
 		_document = document;
+		_characterStyles = [document.characterStyles mutableCopy] ?: [NSMutableDictionary new];
+		_paragraphStyles = [document.paragraphStyles mutableCopy] ?: [NSMutableDictionary new];
 		_usedXMLTypes = [NSDictionary new];
 		_usedMIMETypes = [NSDictionary new];
 		_footnotes = [NSDictionary new];
@@ -88,11 +92,11 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// Mix given paragraph or character style with default style, depending on which is available
 	if (styleKey.count == 1)
-		cachedStyle = [self attributesByMixingStyleAttributes:(characterStyleName ? self.document.characterStyles[characterStyleName] : self.document.paragraphStyles[paragraphStyleName]) intoStyleAttributes:defaultStyle];
+		cachedStyle = [self attributesByMixingStyleAttributes:(characterStyleName ? _characterStyles[characterStyleName] : _paragraphStyles[paragraphStyleName]) intoStyleAttributes:defaultStyle];
 	
 	// Mix character and paragraph style, character styles have the higher priority
 	else
-		cachedStyle = [self attributesByMixingStyleAttributes:self.document.characterStyles[characterStyleName] intoStyleAttributes:[self cachedStyleFromParagraphStyle:paragraphStyleName characterStyle:nil processingDefaultStyle:processingDefaultStyle]];
+		cachedStyle = [self attributesByMixingStyleAttributes:_characterStyles[characterStyleName] intoStyleAttributes:[self cachedStyleFromParagraphStyle:paragraphStyleName characterStyle:nil processingDefaultStyle:processingDefaultStyle]];
 	
 	// Add mixed style to cache
 	_styleCache[styleKey] = cachedStyle;
@@ -164,6 +168,16 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 			@"Helvetica Neue Italic":		@NO,
 			@"Avenir Next Italic":			@NO
 			};
+}
+
+- (void)registerCharacterStyle:(NSDictionary *)style withName:(NSString *)name
+{
+	_characterStyles[name] = style;
+}
+
+- (void)registerParagraphStyle:(NSDictionary *)style withName:(NSString *)name
+{
+	_paragraphStyles[name] = style;
 }
 
 
