@@ -36,7 +36,9 @@ NSString *RKDOCXStyleTemplateParagraphDefaultElementName	= @"w:pPrDefault";
 NSString *RKDOCXStyleTemplateParagraphReferenceElementName	= @"w:pStyle";
 NSString *RKDOCXStyleTemplateRunDefaultElementName			= @"w:rPrDefault";
 NSString *RKDOCXStyleTemplateRunReferenceElementName		= @"w:rStyle";
+NSString *RKDOCXStyleTemplateSemiHiddenElementName			= @"w:semiHidden";
 NSString *RKDOCXStyleTemplateStyleElementName				= @"w:style";
+NSString *RKDOCXStyleTemplateHideWhenUnusedElementName		= @"w:unhideWhenUsed";
 
 // Attributes
 NSString *RKDOCXStyleTemplateDefaultAttributeName			= @"w:default";
@@ -155,6 +157,22 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	NSXMLElement *qFormatElement = [NSXMLElement elementWithName:RKDOCXStyleTemplatePrimaryStyleElementName children:nil attributes:nil];
 	
 	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, basedOnElement, priorityElement, qFormatElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:docxStyleName]]];
+	
+	// Show or hide template in Word
+	if (attributes[RKStyleTemplateVisibilityAttributeName])
+		switch ((RKStyleTemplateVisibility)[attributes[RKStyleTemplateVisibilityAttributeName] unsignedIntegerValue]) {
+			case RKStyleTemplateVisibilityAlways:
+				break;
+				
+			case RKStyleTemplateVisibilityWhenUsed:
+				[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateSemiHiddenElementName]];
+				[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateHideWhenUnusedElementName]];
+				break;
+				
+			case RKStyleTemplateVisibilityNever:
+				[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateSemiHiddenElementName]];
+				break;
+		}
 	
 	// Add style elements for paragraphs and character styles as needed
 	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:NO];
