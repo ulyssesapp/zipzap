@@ -86,6 +86,11 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	else
 		styleKey = @[characterStyleName, paragraphStyleName];
 	
+	NSDictionary *cachedStyle = _styleCache[styleKey];
+	
+	if (cachedStyle)
+		return cachedStyle;
+	
 	// Log used styles
 	NSMutableSet *newUsedStyles = [_usedStyles mutableCopy];
 	
@@ -96,11 +101,6 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		[newUsedStyles addObject: paragraphStyleName];
 	
 	_usedStyles = newUsedStyles;
-	
-	NSDictionary *cachedStyle = _styleCache[styleKey];
-	
-	if (cachedStyle)
-		return cachedStyle;
 	
 	// Mix given paragraph or character style with default style, depending on which is available
 	if (styleKey.count == 1)
