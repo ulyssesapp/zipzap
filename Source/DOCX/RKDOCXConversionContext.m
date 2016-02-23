@@ -44,6 +44,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_document = document;
 		_characterStyles = [document.characterStyles mutableCopy] ?: [NSMutableDictionary new];
 		_paragraphStyles = [document.paragraphStyles mutableCopy] ?: [NSMutableDictionary new];
+		_usedStyles = [NSSet new];
 		_usedXMLTypes = [NSDictionary new];
 		_usedMIMETypes = [NSDictionary new];
 		_footnotes = [NSDictionary new];
@@ -84,6 +85,17 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	else
 		styleKey = @[characterStyleName, paragraphStyleName];
+	
+	// Log used styles
+	NSMutableSet *newUsedStyles = [_usedStyles mutableCopy];
+	
+	if (characterStyleName)
+		[newUsedStyles addObject: characterStyleName];
+	
+	if (paragraphStyleName)
+		[newUsedStyles addObject: paragraphStyleName];
+	
+	_usedStyles = newUsedStyles;
 	
 	NSDictionary *cachedStyle = _styleCache[styleKey];
 	

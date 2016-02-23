@@ -38,7 +38,7 @@ NSString *RKDOCXStyleTemplateRunDefaultElementName			= @"w:rPrDefault";
 NSString *RKDOCXStyleTemplateRunReferenceElementName		= @"w:rStyle";
 NSString *RKDOCXStyleTemplateSemiHiddenElementName			= @"w:semiHidden";
 NSString *RKDOCXStyleTemplateStyleElementName				= @"w:style";
-NSString *RKDOCXStyleTemplateHideWhenUnusedElementName		= @"w:unhideWhenUsed";
+NSString *RKDOCXStyleTemplateUnhideWhenUsedElementName		= @"w:unhideWhenUsed";
 
 // Attributes
 NSString *RKDOCXStyleTemplateDefaultAttributeName			= @"w:default";
@@ -165,8 +165,10 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 				break;
 				
 			case RKStyleTemplateVisibilityWhenUsed:
-				[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateSemiHiddenElementName]];
-				[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateHideWhenUnusedElementName]];
+				if (![context.usedStyles containsObject: styleName]) {
+					[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateSemiHiddenElementName]];
+					[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateUnhideWhenUsedElementName]];
+				}
 				break;
 				
 			case RKStyleTemplateVisibilityNever:
