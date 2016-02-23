@@ -30,6 +30,26 @@ typedef enum : NSUInteger {
 extern NSString *RKDOCXReferenceTypeAttributeName;
 
 /*!
+ @abstract Style name of the endnote reference character style.
+ */
+extern NSString *RKDOCXEndnoteReferenceStyleName;
+
+/*!
+ @abstract Style name of the endnote text paragraph style.
+ */
+extern NSString *RKDOCXEndnoteTextStyleName;
+
+/*!
+ @abstract Style name of the footnote reference character style.
+ */
+extern NSString *RKDOCXFootnoteReferenceStyleName;
+
+/*!
+ @abstract Style name of the footnote text paragraph style.
+ */
+extern NSString *RKDOCXFootnoteTextStyleName;
+
+/*!
  @abstract Generates the footnotes and endnotes files containing all footnotes and endnotes referenced by the given context and adds them to the output document.
  @discussion See ISO 29500-1:2012: §17.11 (Footnotes and Endnotes). The footnotes will be stored in the footnotes.xml file and the endnotes in the endnotes.xml file inside the output document. Should be called after the main document translation.
  */

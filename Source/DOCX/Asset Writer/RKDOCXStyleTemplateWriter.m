@@ -62,7 +62,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 {
 	NSDictionary *defaultStyle = context.document.defaultStyle;
 	
-	if (!context.document.characterStyles.count && !context.document.paragraphStyles.count && !defaultStyle)
+	if (!context.characterStyles.count && !context.paragraphStyles.count && !defaultStyle)
 		return;
 	
 	// Namespaces
@@ -114,12 +114,12 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	}
 	
 	// Paragraph Styles
-	for (NSString *styleName in context.document.paragraphStyles) {
+	for (NSString *styleName in context.paragraphStyles) {
 		[document.rootElement addChild: [self styleElementForStyleName:styleName usingContext:context isCharacterStyle:NO]];
 	}
 	
 	// Character Styles
-	for (NSString *styleName in context.document.characterStyles) {
+	for (NSString *styleName in context.characterStyles) {
 		[document.rootElement addChild: [self styleElementForStyleName:styleName usingContext:context isCharacterStyle:YES]];
 	}
 	
@@ -141,7 +141,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 
 + (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
 {
-	NSMutableDictionary *attributes = isCharacterStyle ? [context.document.characterStyles[styleName] mutableCopy] : [context.document.paragraphStyles[styleName] mutableCopy];
+	NSMutableDictionary *attributes = isCharacterStyle ? [context.characterStyles[styleName] mutableCopy] : [context.paragraphStyles[styleName] mutableCopy];
 	NSUInteger uiPriority = isCharacterStyle ? RKDOCXUIPriorityCharacterStyle : RKDOCXUIPriorityParagraphStyle;
 	NSString *docxStyleName = [styleName isEqual: RKDefaultStyleName] ? RKDOCXStyleTemplateDefaultAttributeName : styleName;
 	
