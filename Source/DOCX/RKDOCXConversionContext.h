@@ -77,6 +77,11 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
  */
 - (void)registerParagraphStyle:(NSDictionary *)style withName:(NSString *)name;
 
+/*!
+ @abstract Contains the names of all styles that have actually been used in the document.
+ */
+@property (nonatomic, readonly) NSSet *usedStyles;
+
 
 #pragma mark - Output context
 
