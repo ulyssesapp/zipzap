@@ -204,6 +204,8 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		// Calculate bounding box, if required
 		if (textObject || textRenderer)
 			boundingBox = [self boundingBoxForRun:run range:runRange insideLine:_line withBoundingBox:CGRectMake(0, -_descent, _size.width, _size.height)];
+		else
+			boundingBox = CGRectMake(0, 0, 0, 0);
 		
 		// Apply pre-renderer
 		if (textRenderer)
