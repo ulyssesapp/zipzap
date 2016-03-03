@@ -49,6 +49,11 @@ NSString *RKDOCXFootnoteReferenceAttributeName					= @"RKDOCXFootnoteReference";
 
 NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 
+NSString *RKDOCXEndnoteReferenceStyleName						= @"endnote reference";
+NSString *RKDOCXEndnoteTextStyleName							= @"endnote text";
+NSString *RKDOCXFootnoteReferenceStyleName						= @"footnote reference";
+NSString *RKDOCXFootnoteTextStyleName							= @"footnote text";
+
 @implementation RKDOCXFootnotesWriter
 
 + (void)buildFootnotesUsingContext:(RKDOCXConversionContext *)context
@@ -102,6 +107,8 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 	RKDOCXReferenceType referenceType = RKDOCXNoReference;
 	NSString *referenceElementName;
 	NSMutableAttributedString *referenceString;
+	NSString *characterStyleName;
+	NSString *paragraphStyleName;
 	NSString *newRelationshipSource;
 	
 	// Get footnote or endnote contents
@@ -109,31 +116,61 @@ NSString *RKDOCXReferenceTypeAttributeName						= @"RKDOCXReferenceType";
 		referenceType = RKDOCXFootnoteReference;
 		referenceElementName = RKDOCXFootnotesFootnoteReferenceElementName;
 		referenceString = [attributes[RKFootnoteAttributeName] mutableCopy];
+		characterStyleName = RKDOCXFootnoteReferenceStyleName;
+		paragraphStyleName = RKDOCXFootnoteTextStyleName;
 		newRelationshipSource = RKDOCXFootnotesFilename;
 	}
 	else if (attributes[RKEndnoteAttributeName]) {
 		referenceType = RKDOCXEndnoteReference;
 		referenceElementName = RKDOCXFootnotesEndnoteReferenceElementName;
 		referenceString = [attributes[RKEndnoteAttributeName] mutableCopy];
+		characterStyleName = RKDOCXEndnoteReferenceStyleName;
+		paragraphStyleName = RKDOCXEndnoteTextStyleName;
 		newRelationshipSource = RKDOCXEndnotesFilename;
 	}
 	else {
 		return nil;
 	}
-
-	NSMutableDictionary *referenceMarkAttributes = [context.document.footnoteAreaAnchorAttributes mutableCopy];
-
+	
+	NSMutableDictionary *referenceMarkAttributes;
+	
+	if (context.characterStyles[characterStyleName])
+		referenceMarkAttributes = context.characterStyles[characterStyleName];
+	
+	// Store reference style after first time usage
+	else {
+		referenceMarkAttributes = [context.document.footnoteAreaAnchorAttributes mutableCopy];
+		
+		// Overwrite style name with 'EndnoteReference'/'FootnoteReference'
+		referenceMarkAttributes[RKCharacterStyleNameAttributeName] = characterStyleName;
+		[context registerCharacterStyle:referenceMarkAttributes withName:characterStyleName];
+	}
+	
 	// Insert anchor and content indenting tab
 	[referenceString insertAttributedString:[[NSAttributedString alloc] initWithString:@"\ufffc\t" attributes:referenceMarkAttributes] atIndex:0];
 	[referenceString addAttribute:RKDOCXReferenceTypeAttributeName value:@(referenceType) range:NSMakeRange(0, 1)];
 	
-	NSMutableParagraphStyle *paragraphStyleWithContentInset = referenceString.length > 2 ? [[referenceString attribute:RKParagraphStyleAttributeName atIndex:2 effectiveRange:NULL] mutableCopy] : nil;
-	if (!paragraphStyleWithContentInset)
-		paragraphStyleWithContentInset = [NSMutableParagraphStyle new];
+	NSMutableParagraphStyle *paragraphStyleWithContentInset;
 	
-	// Set indent for content
-	paragraphStyleWithContentInset.headIndent = context.document.footnoteAreaContentInset;
-	paragraphStyleWithContentInset.firstLineHeadIndent = paragraphStyleWithContentInset.headIndent;
+	if (context.paragraphStyles[paragraphStyleName])
+		paragraphStyleWithContentInset = context.paragraphStyles[paragraphStyleName][RKParagraphStyleAttributeName];
+	
+	// Store paragraph style after first usage
+	else {
+		paragraphStyleWithContentInset = referenceString.length > 2 ? [[referenceString attribute:RKParagraphStyleAttributeName atIndex:2 effectiveRange:NULL] mutableCopy] : nil;
+		
+		if (!paragraphStyleWithContentInset)
+			paragraphStyleWithContentInset = [NSMutableParagraphStyle new];
+		
+		// Set indent for content
+		paragraphStyleWithContentInset.headIndent = context.document.footnoteAreaContentInset;
+		paragraphStyleWithContentInset.firstLineHeadIndent = paragraphStyleWithContentInset.headIndent;
+		
+		[context registerParagraphStyle:@{RKParagraphStyleNameAttributeName: paragraphStyleName, RKParagraphStyleAttributeName: paragraphStyleWithContentInset} withName:paragraphStyleName];
+	}
+	
+	// Overwrite style name with 'EndnoteText'/'FootnoteText'
+	[referenceString addAttribute:RKParagraphStyleNameAttributeName value:paragraphStyleName range:NSMakeRange(0, referenceString.length)];
 	
 	NSMutableParagraphStyle *firstParagraphStyle = [paragraphStyleWithContentInset mutableCopy];
 	

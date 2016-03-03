@@ -36,7 +36,9 @@ NSString *RKDOCXStyleTemplateParagraphDefaultElementName	= @"w:pPrDefault";
 NSString *RKDOCXStyleTemplateParagraphReferenceElementName	= @"w:pStyle";
 NSString *RKDOCXStyleTemplateRunDefaultElementName			= @"w:rPrDefault";
 NSString *RKDOCXStyleTemplateRunReferenceElementName		= @"w:rStyle";
+NSString *RKDOCXStyleTemplateSemiHiddenElementName			= @"w:semiHidden";
 NSString *RKDOCXStyleTemplateStyleElementName				= @"w:style";
+NSString *RKDOCXStyleTemplateUnhideWhenUsedElementName		= @"w:unhideWhenUsed";
 
 // Attributes
 NSString *RKDOCXStyleTemplateDefaultAttributeName			= @"w:default";
@@ -60,7 +62,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 {
 	NSDictionary *defaultStyle = context.document.defaultStyle;
 	
-	if (!context.document.characterStyles.count && !context.document.paragraphStyles.count && !defaultStyle)
+	if (!context.characterStyles.count && !context.paragraphStyles.count && !defaultStyle)
 		return;
 	
 	// Namespaces
@@ -112,12 +114,12 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	}
 	
 	// Paragraph Styles
-	for (NSString *styleName in context.document.paragraphStyles) {
+	for (NSString *styleName in context.paragraphStyles) {
 		[document.rootElement addChild: [self styleElementForStyleName:styleName usingContext:context isCharacterStyle:NO]];
 	}
 	
 	// Character Styles
-	for (NSString *styleName in context.document.characterStyles) {
+	for (NSString *styleName in context.characterStyles) {
 		[document.rootElement addChild: [self styleElementForStyleName:styleName usingContext:context isCharacterStyle:YES]];
 	}
 	
@@ -139,7 +141,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 
 + (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
 {
-	NSMutableDictionary *attributes = isCharacterStyle ? [context.document.characterStyles[styleName] mutableCopy] : [context.document.paragraphStyles[styleName] mutableCopy];
+	NSMutableDictionary *attributes = isCharacterStyle ? [context.characterStyles[styleName] mutableCopy] : [context.paragraphStyles[styleName] mutableCopy];
 	NSUInteger uiPriority = isCharacterStyle ? RKDOCXUIPriorityCharacterStyle : RKDOCXUIPriorityParagraphStyle;
 	NSString *docxStyleName = [styleName isEqual: RKDefaultStyleName] ? RKDOCXStyleTemplateDefaultAttributeName : styleName;
 	
@@ -155,6 +157,24 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	NSXMLElement *qFormatElement = [NSXMLElement elementWithName:RKDOCXStyleTemplatePrimaryStyleElementName children:nil attributes:nil];
 	
 	NSXMLElement *styleElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleElementName children:@[styleNameElement, basedOnElement, priorityElement, qFormatElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXStyleTemplateTypeAttributeName stringValue:templateTypeAttributeValue], [NSXMLElement attributeWithName:RKDOCXStyleTemplateStyleIDAttributeName stringValue:docxStyleName]]];
+	
+	// Show or hide template in Word
+	if (attributes[RKStyleTemplateVisibilityAttributeName])
+		switch ((RKStyleTemplateVisibility)[attributes[RKStyleTemplateVisibilityAttributeName] unsignedIntegerValue]) {
+			case RKStyleTemplateVisibilityAlways:
+				break;
+				
+			case RKStyleTemplateVisibilityWhenUsed:
+				if (![context.usedStyles containsObject: styleName]) {
+					[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateSemiHiddenElementName]];
+					[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateUnhideWhenUsedElementName]];
+				}
+				break;
+				
+			case RKStyleTemplateVisibilityNever:
+				[styleElement addChild: [NSXMLElement elementWithName: RKDOCXStyleTemplateSemiHiddenElementName]];
+				break;
+		}
 	
 	// Add style elements for paragraphs and character styles as needed
 	NSArray *paragraphAttributes = [RKDOCXParagraphWriter propertyElementsForAttributes:attributes usingContext:context isDefaultStyle:NO];

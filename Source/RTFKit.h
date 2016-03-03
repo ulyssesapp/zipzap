@@ -20,6 +20,7 @@
 #import "RKPlaceholder.h"
 #import "RKReviewAnnotationType.h"
 #import "RKStyleName.h"
+#import "RKStyleTemplateVisibility.h"
 #import "RKAdditionalParagraphStyle.h"
 
 #if TARGET_OS_IPHONE

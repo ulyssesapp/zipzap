@@ -372,4 +372,17 @@
 	[self assertDOCX:document withTestDocument:@"mixedstringstyleoverride"];
 }
 
+- (void)testStyleTemplateVisibility
+{
+	NSDictionary *styles = @{@"always": @{RKStyleTemplateVisibilityAttributeName: @(RKStyleTemplateVisibilityAlways)},
+							 @"when-used": @{RKStyleTemplateVisibilityAttributeName: @(RKStyleTemplateVisibilityWhenUsed)},
+							 @"never": @{RKStyleTemplateVisibilityAttributeName: @(RKStyleTemplateVisibilityNever)}};
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: @"The small styles selection in the menu bar should only show two \"always\" styles. The styles \"when-used\" and \"never\" are only visible in the file itself."]];
+	document.characterStyles = [styles copy];
+	document.paragraphStyles = [styles copy];
+	
+	[self assertDOCX:document withTestDocument:@"templatevisibility"];
+}
+
 @end
