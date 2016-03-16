@@ -149,6 +149,9 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	[attributes removeObjectForKey: RKCharacterStyleNameAttributeName];
 	[attributes removeObjectForKey: RKParagraphStyleNameAttributeName];
 	
+	// Remove background color (not supported in styles)
+	[attributes removeObjectForKey: RKBackgroundColorAttributeName];
+	
 	NSString *templateTypeAttributeValue = isCharacterStyle ? RKDOCXStyleTemplateCharacterStyleAttributeValue : RKDOCXStyleTemplateParagraphStyleAttributeValue;
 	
 	NSXMLElement *styleNameElement = [NSXMLElement elementWithName:RKDOCXStyleTemplateStyleNameElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:docxStyleName]]];
