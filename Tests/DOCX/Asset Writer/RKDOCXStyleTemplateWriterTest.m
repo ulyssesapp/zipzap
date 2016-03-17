@@ -26,10 +26,11 @@
 	NSString *styleName = @"Character Style";
 	NSDictionary *styleAttributes = @{RKCharacterStyleNameAttributeName: styleName,
 									  RKForegroundColorAttributeName: [RKColor colorWithRed:0 green:0.5 blue:1 alpha:0],
-									  RKFontAttributeName: (__bridge RKFont *)styleFont};
+									  RKFontAttributeName: (__bridge RKFont *)styleFont,
+									  RKBackgroundColorAttributeName: [RKColor colorWithRed:0 green:1 blue:0 alpha:0]};
 	NSDictionary *attributes = [styleAttributes copy];
 	
-	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text should have a character style named \"Character Style\". The style enables italic and bold font traits and colors the font blue." attributes:attributes];
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"This text should have a character style named \"Character Style\". The style enables italic and bold font traits and colors the font blue. The background is colored green." attributes:attributes];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.characterStyles = @{styleName: styleAttributes};

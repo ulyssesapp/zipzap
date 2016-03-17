@@ -198,35 +198,38 @@
 	lineRect.origin = CGPointMake(_visibleBoundingBox.origin.x, _visibleBoundingBox.origin.y);
 	lineRect.size = line.size;
 	
+	// Get margins
+	CGFloat leftMarginWidth, rightMarginWidth;
+	
 	// Apply head indentation
 	if (isFirstInParagraph)
-		lineRect.origin.x += paragraphStyle.firstLineHeadIndent;
+		leftMarginWidth = paragraphStyle.firstLineHeadIndent;
 	else
-		lineRect.origin.x += paragraphStyle.headIndent;
+		leftMarginWidth = paragraphStyle.headIndent;
 	
 	// Apply tail indentation
 	if (paragraphStyle.tailIndent > 0)
-		lineRect.size.width = paragraphStyle.tailIndent - lineRect.origin.x;
+		rightMarginWidth = paragraphStyle.tailIndent - _visibleBoundingBox.origin.x;
 	else
-		lineRect.size.width += paragraphStyle.tailIndent;
-	
+		rightMarginWidth = -paragraphStyle.tailIndent;
 	
 	// Adjust text alignment
 	switch (paragraphStyle.textAlignment) {
 		case kCTLeftTextAlignment:
 		case kCTNaturalTextAlignment:
 		case kCTJustifiedTextAlignment:
+			lineRect.origin.x += leftMarginWidth;
 			break;
 			
 		case kCTCenterTextAlignment:
-			lineRect.origin.x += (_visibleBoundingBox.size.width - lineRect.size.width) / 2.0f;
+			lineRect.origin.x += leftMarginWidth + ((_visibleBoundingBox.size.width - leftMarginWidth - rightMarginWidth - line.size.width) / 2.0f);
 			break;
 
 		case kCTRightTextAlignment:
-			lineRect.origin.x += _visibleBoundingBox.size.width - lineRect.size.width;
+			lineRect.origin.x += _visibleBoundingBox.size.width - rightMarginWidth - line.size.width;
 			break;
 	}
-
+	
 	if (!additionalParagraphStyle.overrideLineHeightAndSpacing) {
 		// Apply line spacing
 		CGFloat lineSpacing = paragraphStyle.lineSpacing;
