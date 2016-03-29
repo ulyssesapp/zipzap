@@ -70,6 +70,10 @@ NSString *RKPDFRendererStrikethroughColorAttributeName	= @"RKPDFRendererStriketh
     if (style & RKUnderlineStyleThick)
 		strokeWidth *= 2;
 
+	// Set minimum stroke width for fonts with crappy sizes
+	if (strokeWidth < 0.5)
+		strokeWidth = 0.5f;
+	
 	// Round stroke width and yOffset to prevent scaling issues in PDF
 	strokeWidth = round(strokeWidth / 0.5) * 0.5;
 	yOffset = round(yOffset / 0.5) * 0.5;
