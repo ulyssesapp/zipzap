@@ -2485,7 +2485,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "The Soulmen";
 				TargetAttributes = {
 					50317D3614C494C800F23C04 = {
