@@ -194,7 +194,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 + (NSXMLElement *)paragraphStyleReferenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSString *styleName = attributes[RKParagraphStyleNameAttributeName];
-	if (!styleName)
+	if (!styleName || !context.paragraphStyles[styleName])
 		return nil;
 	
 	if ([styleName isEqual: RKDefaultStyleName])
@@ -206,7 +206,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 + (NSXMLElement *)characterStyleReferenceElementForAttributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
 	NSString *styleName = attributes[RKCharacterStyleNameAttributeName];
-	if (!styleName)
+	if (!styleName || !context.characterStyles[styleName])
 		return nil;
 	
 	if ([styleName isEqual: RKDefaultStyleName])

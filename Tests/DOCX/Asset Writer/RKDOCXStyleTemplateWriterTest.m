@@ -386,4 +386,13 @@
 	[self assertDOCX:document withTestDocument:@"templatevisibility"];
 }
 
+- (void)testNonexistentStyles
+{
+	NSDictionary *attributes = @{RKCharacterStyleNameAttributeName: @"Character Style", RKParagraphStyleNameAttributeName: @"Paragraph Style"};
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString:@"This text should not have any styles associated with it, because there are no styles written to the styles.xml file." attributes:attributes]];
+	
+	[self assertDOCX:document withTestDocument:@"nonexistentstyles"];
+}
+
 @end
