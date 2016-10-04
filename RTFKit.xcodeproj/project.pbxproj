@@ -580,6 +580,8 @@
 		A0196A571ADBBEEC0091CCB8 /* RKDOCXSectionWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = A0196A551ADBBEEC0091CCB8 /* RKDOCXSectionWriter.h */; };
 		A0196A591ADBBEEC0091CCB8 /* RKDOCXSectionWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A0196A561ADBBEEC0091CCB8 /* RKDOCXSectionWriter.m */; };
 		A0196A5C1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0196A5B1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m */; };
+		A0292A901DA3E5D30023472A /* RKUtilityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0292A8F1DA3E5D30023472A /* RKUtilityTest.m */; };
+		A0292A911DA3E5D30023472A /* RKUtilityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0292A8F1DA3E5D30023472A /* RKUtilityTest.m */; };
 		A02ACC721B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h in Headers */ = {isa = PBXBuildFile; fileRef = A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */; };
 		A02ACC741B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m in Sources */ = {isa = PBXBuildFile; fileRef = A02ACC711B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m */; };
 		A03EC1A71AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A03EC1A61AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m */; };
@@ -1060,6 +1062,7 @@
 		A0196A5B1ADBD0430091CCB8 /* RKDOCXSectionWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXSectionWriterTest.m; path = "Content Writer/RKDOCXSectionWriterTest.m"; sourceTree = "<group>"; };
 		A02631351AD6B6BE00FFE40D /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libxml2.dylib; sourceTree = DEVELOPER_DIR; };
 		A02631371AD6B6C400FFE40D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		A0292A8F1DA3E5D30023472A /* RKUtilityTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKUtilityTest.m; path = Utils/RKUtilityTest.m; sourceTree = "<group>"; };
 		A02ACC701B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSXMLElement+IntegerValueConvenience.h"; path = "Utils/NSXMLElement+IntegerValueConvenience.h"; sourceTree = "<group>"; };
 		A02ACC711B061EEF0023AB46 /* NSXMLElement+IntegerValueConvenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSXMLElement+IntegerValueConvenience.m"; path = "Utils/NSXMLElement+IntegerValueConvenience.m"; sourceTree = "<group>"; };
 		A03EC1A61AF773DD00C1A0D0 /* RKDOCXStyleTemplateWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKDOCXStyleTemplateWriterTest.m; path = "Asset Writer/RKDOCXStyleTemplateWriterTest.m"; sourceTree = "<group>"; };
@@ -1749,6 +1752,7 @@
 				79A55277152C607B008EADAB /* RKListEnumeratorTest.m */,
 				7962712215FA2C7F001E2BE2 /* NSStringHyphenationTest.h */,
 				7962712315FA2C7F001E2BE2 /* NSStringHyphenationTest.m */,
+				A0292A8F1DA3E5D30023472A /* RKUtilityTest.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2430,7 +2434,6 @@
 				50317D4614C494C800F23C04 /* Sources */,
 				50317D4714C494C800F23C04 /* Frameworks */,
 				50317D4814C494C800F23C04 /* Resources */,
-				50317D4914C494C800F23C04 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2600,22 +2603,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		50317D4914C494C800F23C04 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		50317D3314C494C800F23C04 /* Sources */ = {
@@ -2803,6 +2790,7 @@
 				79A67E7A15FA2D66005609B3 /* SenTestCase+RKAttributeWriterTestHelper.m in Sources */,
 				79A67E7E15FA2D66005609B3 /* SenTestCase+RKReferenceTest.m in Sources */,
 				A0C807AB1C46A62D00EB2109 /* RKDOCXReviewAnnotationWriterTest.m in Sources */,
+				A0292A901DA3E5D30023472A /* RKUtilityTest.m in Sources */,
 				79A67E8015FA2D66005609B3 /* SenTestCase+RKTestHelper.m in Sources */,
 				CF576D0016CBA01C00EADC01 /* RKListStyle+WriterAdditionsTest.m in Sources */,
 				A04568FB1ADC1A3F0064FD98 /* RKDOCXSettingsWriterTest.m in Sources */,
@@ -2978,6 +2966,7 @@
 				790B5C941B0B979A004193F8 /* RKWriterTest.m in Sources */,
 				790B5C811B0B979A004193F8 /* RKParagraphStyleWriterTest.m in Sources */,
 				790B5C9E1B0B97AE004193F8 /* RKDOCXFootnotesWriterTest.m in Sources */,
+				A0292A911DA3E5D30023472A /* RKUtilityTest.m in Sources */,
 				790B5C7B1B0B979A004193F8 /* RKSectionTest.m in Sources */,
 				790B5C781B0B979A004193F8 /* NSAttributedStringPersistenceTest.m in Sources */,
 				790B5C961B0B97AE004193F8 /* RKDOCXSectionWriterTest.m in Sources */,
