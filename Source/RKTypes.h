@@ -101,19 +101,19 @@ typedef enum : NSUInteger {
  @abstract Simple conversions from Points to TWIPS
  @discussion (1 TWIP = 1 / 20 Point = 1 / 1440 inch)
  */
-#define RKPointsToTwips(__points)       ((NSInteger)(__points) * 20)
+#define RKPointsToTwips(__points)       ((NSInteger)((__points) * 20))
 
 /*!
  @abstract Simple conversions from TWIPS to Points
  @see RKTwipsToPoints
  */
-#define RKTwipsToPoints(__twips)        ((NSInteger)(__twips) / 20)
+#define RKTwipsToPoints(__twips)        ((NSInteger)((__twips) / 20))
 
 /*!
  @abstract Simple conversions from Points to EMUs
  @discussion (1 EMU = 1 / 12700 Point = 1 / 914400 inch)
  */
-#define RKPointsToEMUs(__points)		((NSInteger)(__points) * 12700)
+#define RKPointsToEMUs(__points)		((NSInteger)((__points) * 12700))
 
 /*!
  @abstract The character used to indicate hyphenation
