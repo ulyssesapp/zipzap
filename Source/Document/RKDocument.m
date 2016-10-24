@@ -44,7 +44,7 @@
 		_footnoteAreaDividerWidth = 1;
 		_footnoteAreaAnchorInset = 0;
 		_footnoteAreaContentInset = 20;
-		_footnoteAreaAnchorAlignment = RKTextAlignmentLeft;
+		_footnoteAreaAnchorAlignment = NSTextAlignmentLeft;
 
 		_pageBinding = RKPageBindingLeft;
 		

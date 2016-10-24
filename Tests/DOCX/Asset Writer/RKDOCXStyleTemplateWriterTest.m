@@ -151,11 +151,11 @@
 	paragraphStyle.firstLineHeadIndent = 19;
 	paragraphStyle.paragraphSpacingBefore = 20;
 	paragraphStyle.paragraphSpacing = 15;
-	paragraphStyle.alignment = RKTextAlignmentJustified;
+	paragraphStyle.alignment = NSTextAlignmentJustified;
 	paragraphStyle.defaultTabInterval = 42;
-	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:@{}]];
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:42 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentCenter location:123 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:321 options:@{}]];
 	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	additionalParagraphStyle.headerLevel = 1;
@@ -187,11 +187,11 @@
 	templateParagraphStyle.firstLineHeadIndent = 1;
 	templateParagraphStyle.paragraphSpacingBefore = 1;
 	templateParagraphStyle.paragraphSpacing = 1;
-	templateParagraphStyle.alignment = RKTextAlignmentRight;
+	templateParagraphStyle.alignment = NSTextAlignmentRight;
 	templateParagraphStyle.defaultTabInterval = 1;
-	templateParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:@{}]];
+	templateParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:1 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:2 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:3 options:@{}]];
 	
 	RKAdditionalParagraphStyle *templateAdditionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	templateAdditionalParagraphStyle.headerLevel = 1;
@@ -212,11 +212,11 @@
 	paragraphStyle.firstLineHeadIndent = 10;
 	paragraphStyle.paragraphSpacingBefore = 10;
 	paragraphStyle.paragraphSpacing = 10;
-	paragraphStyle.alignment = RKTextAlignmentCenter;
+	paragraphStyle.alignment = NSTextAlignmentCenter;
 	paragraphStyle.defaultTabInterval = 10;
-	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10 options:@{}],
-										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:20 options:@{}],
-										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:30 options:@{}]];
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:10 options:@{}],
+										[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:20 options:@{}],
+										[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:30 options:@{}]];
 	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	additionalParagraphStyle.headerLevel = 6;
@@ -246,11 +246,11 @@
 	paragraphStyle.firstLineHeadIndent = 2;
 	paragraphStyle.paragraphSpacingBefore = 1;
 	paragraphStyle.paragraphSpacing = 1;
-	paragraphStyle.alignment = RKTextAlignmentRight;
+	paragraphStyle.alignment = NSTextAlignmentRight;
 	paragraphStyle.defaultTabInterval = 1;
-	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:1 options:@{}],
-										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:2 options:@{}],
-										[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:3 options:@{}]];
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:1 options:@{}],
+										[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:2 options:@{}],
+										[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:3 options:@{}]];
 	
 	RKAdditionalParagraphStyle *additionalParagraphStyle = [RKAdditionalParagraphStyle new];
 	additionalParagraphStyle.headerLevel = 1;
@@ -279,7 +279,7 @@
 {
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"Heading 1 should read \"Überschrift 1\" and Heading 2 should read \"Überschrift 2\" in the German localization of Word."];
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.alignment = RKTextAlignmentCenter;
+	paragraphStyle.alignment = NSTextAlignmentCenter;
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	document.paragraphStyles = @{@"heading 1": @{RKParagraphStyleNameAttributeName: @"heading 1", RKParagraphStyleAttributeName: paragraphStyle},
@@ -299,11 +299,11 @@
 	paragraphStyle.firstLineHeadIndent = 19;
 	paragraphStyle.paragraphSpacingBefore = 20;
 	paragraphStyle.paragraphSpacing = 15;
-	paragraphStyle.alignment = RKTextAlignmentJustified;
+	paragraphStyle.alignment = NSTextAlignmentJustified;
 	paragraphStyle.defaultTabInterval = 42;
-	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:@{}]];
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:42 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentCenter location:123 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:321 options:@{}]];
 	
 	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Arial", 12, NULL), 0.0, NULL, kCTFontBoldTrait, kCTFontItalicTrait | kCTFontBoldTrait),
 								 RKParagraphStyleAttributeName: paragraphStyle};

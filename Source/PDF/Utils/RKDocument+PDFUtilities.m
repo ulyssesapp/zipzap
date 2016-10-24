@@ -131,7 +131,7 @@
     
     CGFloat separatorLength = (boundingBox.size.width < self.footnoteAreaDividerLength) ? boundingBox.size.width : self.footnoteAreaDividerLength;
 
-	CGFloat separatorX = (self.footnoteAreaDividerPosition == RKTextAlignmentLeft) ? boundingBox.origin.x : CGRectGetMaxX(boundingBox) - self.footnoteAreaDividerLength;
+	CGFloat separatorX = (self.footnoteAreaDividerPosition == NSTextAlignmentLeft) ? boundingBox.origin.x : CGRectGetMaxX(boundingBox) - self.footnoteAreaDividerLength;
 	CGFloat separatorY = boundingBox.origin.y + boundingBox.size.height + self.footnoteAreaDividerWidth + self.footnoteAreaDividerSpacingAfter;
 	
     CGPoint startPoint = CGPointMake(separatorX, separatorY);

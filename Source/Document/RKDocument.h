@@ -108,7 +108,7 @@
 
 /*!
  @abstract The horizontal position of the footnote divider
- @discussion Currently only NSLeftTextAlignment and NSRightTextAlignment are supported.
+ @discussion Currently only NSTextAlignmentLeft and NSTextAlignmentRight are supported.
  */
 @property(nonatomic) NSTextAlignment footnoteAreaDividerPosition;
 

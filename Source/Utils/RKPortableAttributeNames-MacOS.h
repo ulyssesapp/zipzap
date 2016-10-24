@@ -58,18 +58,9 @@
 #define RKCategoryDocumentAttribute             NSCategoryDocumentAttribute
 
 /*!
- @abstract Text alignment settings.
- */
-#define RKTextAlignmentLeft			NSLeftTextAlignment
-#define RKTextAlignmentRight		NSRightTextAlignment
-#define RKTextAlignmentNatural		NSNaturalTextAlignment
-#define RKTextAlignmentCenter		NSCenterTextAlignment
-#define RKTextAlignmentJustified	NSJustifiedTextAlignment
-
-/*!
  @abstract Alignment conversion
  */
-#define RKTextAlignmentToCTTextAlignment(__nsAlignment)		(CTTextAlignment)(__nsAlignment)
-#define RKTextAlignmentFromCTTextAlignment(__ctAlignment)	(NSTextAlignment)(__ctAlignment)
+#define NSTextAlignmentToCTTextAlignment(__nsAlignment)		(CTTextAlignment)(__nsAlignment)
+#define NSTextAlignmentFromCTTextAlignment(__ctAlignment)	(NSTextAlignment)(__ctAlignment)
 
 #endif

@@ -63,7 +63,7 @@
 {
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 
-    paragraphStyle.alignment = RKTextAlignmentCenter;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
     paragraphStyle.tailIndent = .0f;

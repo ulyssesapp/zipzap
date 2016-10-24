@@ -140,7 +140,7 @@
 	
     // This testcase should verify that we can use "Test Data/footnote.rtf" in order to verify its interpretation with MS Word, Nissus, Mellel etc.
     RKDocument *document = [[RKDocument alloc] initWithAttributedString:original];
-	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
+	document.footnoteAreaDividerPosition = NSTextAlignmentRight;
 	document.footnoteAreaDividerSpacingBefore = 60;
 	document.footnoteAreaDividerSpacingAfter = 60;
 	

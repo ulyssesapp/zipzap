@@ -84,10 +84,10 @@
 	RKListStyle *listStyleB = [RKListStyle listStyleWithLevelFormats:@[@"%A.", @"%A.", @"%A."] styles:@[@{RKListStyleMarkerLocationKey: @10, RKListStyleMarkerWidthKey: @20}, @{RKListStyleMarkerLocationKey: @15, RKListStyleMarkerWidthKey: @25}, @{RKListStyleMarkerLocationKey: @20, RKListStyleMarkerWidthKey: @30}]];
 	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @""];
 	NSMutableParagraphStyle *paragraphStyleA = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-	paragraphStyleA.alignment = RKTextAlignmentCenter;
+	paragraphStyleA.alignment = NSTextAlignmentCenter;
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString:@"This is centered text: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." attributes:@{RKParagraphStyleAttributeName: paragraphStyleA}] withStyle:listStyleA withIndentationLevel:0];
 	NSMutableParagraphStyle *paragraphStyleB = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-	paragraphStyleB.alignment = RKTextAlignmentJustified;
+	paragraphStyleB.alignment = NSTextAlignmentJustified;
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString:@"This is justified text: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua." attributes:@{RKParagraphStyleAttributeName: paragraphStyleB}] withStyle:listStyleB withIndentationLevel:0];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];

@@ -161,19 +161,19 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"right";		// Acc
 	NSString *alignmentValue;
 	
 	switch (paragraphStyle.alignment) {
-		case RKTextAlignmentLeft:
+		case NSTextAlignmentLeft:
 			alignmentValue = RKDOCXParagraphStyleLeftAlignmentAttributeValue;
 			break;
 			
-		case RKTextAlignmentCenter:
+		case NSTextAlignmentCenter:
 			alignmentValue = RKDOCXParagraphStyleCenterAlignmentAttributeValue;
 			break;
 			
-		case RKTextAlignmentRight:
+		case NSTextAlignmentRight:
 			alignmentValue = RKDOCXParagraphStyleRightAlignmentAttributeValue;
 			break;
 			
-		case RKTextAlignmentJustified:
+		case NSTextAlignmentJustified:
 			alignmentValue = RKDOCXParagraphStyleJustifiedAlignmentAttributeValue;
 			break;
 			
@@ -230,17 +230,17 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"right";		// Acc
 		NSString *alignmentValue;
 		
 		switch (tabStop.alignment) {
-			case RKTextAlignmentRight:
+			case NSTextAlignmentRight:
 				alignmentValue = RKDOCXParagraphStyleRightAlignmentAttributeValue;
 				break;
 				
-			case RKTextAlignmentCenter:
+			case NSTextAlignmentCenter:
 				alignmentValue = RKDOCXParagraphStyleCenterAlignmentAttributeValue;
 				break;
 				
-			case RKTextAlignmentJustified: // will never happen
-			case RKTextAlignmentNatural:
-			case RKTextAlignmentLeft:
+			case NSTextAlignmentJustified: // will never happen
+			case NSTextAlignmentNatural:
+			case NSTextAlignmentLeft:
 				alignmentValue = RKDOCXParagraphStyleLeftAlignmentAttributeValue;
 				break;
 		}
@@ -301,7 +301,7 @@ NSString *RKDOCXParagraphStyleRightAlignmentAttributeValue			= @"right";		// Acc
 	NSXMLElement *afterAttribute = [NSXMLElement attributeWithName:RKDOCXParagraphStyleParagraphSpacingAfterAttributeName integerValue:RKPointsToTwips(context.document.footnoteAreaDividerSpacingAfter)];
 	NSXMLElement *spacingProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleSpacingElementName children:nil attributes:@[beforeAttribute, afterAttribute]];
 	
-	NSXMLElement *alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(context.document.footnoteAreaDividerPosition == RKTextAlignmentRight) ? RKDOCXParagraphStyleRightAlignmentAttributeValue : RKDOCXParagraphStyleLeftAlignmentAttributeValue];
+	NSXMLElement *alignmentAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:(context.document.footnoteAreaDividerPosition == NSTextAlignmentRight) ? RKDOCXParagraphStyleRightAlignmentAttributeValue : RKDOCXParagraphStyleLeftAlignmentAttributeValue];
 	NSXMLElement *alignmentProperty = [NSXMLElement elementWithName:RKDOCXParagraphStyleAlignmentElementName children:nil attributes:@[alignmentAttribute]];
 	
 	return @[spacingProperty, alignmentProperty];

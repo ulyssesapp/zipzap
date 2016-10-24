@@ -39,7 +39,7 @@
 	[attributedString addAttribute:RKFootnoteAttributeName value:[[NSAttributedString alloc] initWithString:@"This is the footnote content."] range:NSMakeRange(22, 1)];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	document.footnoteAreaDividerPosition = RKTextAlignmentRight;
+	document.footnoteAreaDividerPosition = NSTextAlignmentRight;
 	
 	[self assertDOCX:document withTestDocument:@"separatorsettings"];
 }

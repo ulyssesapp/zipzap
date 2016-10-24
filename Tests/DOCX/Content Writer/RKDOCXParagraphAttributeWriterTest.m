@@ -68,7 +68,7 @@
 - (void)testParagraphElementWithLeftAlignmentAttribute
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.alignment = RKTextAlignmentLeft;
+	paragraphStyle.alignment = NSTextAlignmentLeft;
 	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Left Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
@@ -80,7 +80,7 @@
 - (void)testParagraphElementWithCenterAlignmentAttribute
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.alignment = RKTextAlignmentCenter;
+	paragraphStyle.alignment = NSTextAlignmentCenter;
 	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Center Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
@@ -92,7 +92,7 @@
 - (void)testParagraphElementWithRightAlignmentAttribute
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.alignment = RKTextAlignmentRight;
+	paragraphStyle.alignment = NSTextAlignmentRight;
 	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Right Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
@@ -104,7 +104,7 @@
 - (void)testParagraphElementWithJustifiedAlignmentAttribute
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.alignment = RKTextAlignmentJustified;
+	paragraphStyle.alignment = NSTextAlignmentJustified;
 	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Justified Alignment Test: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	
@@ -131,9 +131,9 @@
 - (void)testParagraphElementWithCustomTabStops
 {
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
-	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:42 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:123 options:@{}],
-								[[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:321 options:@{}]];
+	paragraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:42 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentCenter location:123 options:@{}],
+								[[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:321 options:@{}]];
 	NSDictionary *attributes = @{RKParagraphStyleAttributeName: paragraphStyle};
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"Custom Tab Stop Test:\t\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est.\tLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.\tAt vero eos et accusam et justo duo dolores et ea rebum.\tStet clita kasd gubergren, no sea takimata sanctus est." attributes:attributes];
 	

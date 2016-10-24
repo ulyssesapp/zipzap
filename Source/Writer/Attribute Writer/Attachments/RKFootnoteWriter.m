@@ -42,7 +42,7 @@
 		[fixedFootnote enumerateAttribute:NSParagraphStyleAttributeName inRange:NSMakeRange(0, fixedFootnote.length) options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:^(NSParagraphStyle *currentParagraphStyle, NSRange range, BOOL *stop) {
 			// Setup indentation for the first tabulators of a footnote to match footnote anchor and content inset
 			NSMutableParagraphStyle *mutableParagraphStyle = [currentParagraphStyle mutableCopy] ?: [NSMutableParagraphStyle new];
-			mutableParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:anchorAlignment location:anchorInset options:@{}], [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentNatural location:contentInset options:@{}]];
+			mutableParagraphStyle.tabStops = @[[[NSTextTab alloc] initWithTextAlignment:anchorAlignment location:anchorInset options:@{}], [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentNatural location:contentInset options:@{}]];
 			mutableParagraphStyle.headIndent += resources.document.footnoteAreaContentInset;
 
 			if (range.location > 0)

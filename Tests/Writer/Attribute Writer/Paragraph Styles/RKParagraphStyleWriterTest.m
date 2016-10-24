@@ -17,7 +17,7 @@
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
         
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKTextAlignmentNatural;
+    paragraphStyle.alignment = NSTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -61,7 +61,7 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"a"];
     
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKTextAlignmentNatural;
+    paragraphStyle.alignment = NSTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -88,7 +88,7 @@
                          );     
     
     // Left alignment
-    paragraphStyle.alignment = RKTextAlignmentLeft;
+    paragraphStyle.alignment = NSTextAlignmentLeft;
     XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\ql\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
@@ -97,7 +97,7 @@
                          ); 
     
     // Center alignment
-    paragraphStyle.alignment = RKTextAlignmentCenter;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
     XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qc\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
@@ -106,7 +106,7 @@
                          ); 
     
     // Right alignment
-    paragraphStyle.alignment = RKTextAlignmentRight;
+    paragraphStyle.alignment = NSTextAlignmentRight;
     XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qr\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
@@ -115,7 +115,7 @@
                          );    
     
     // Right alignment
-    paragraphStyle.alignment = RKTextAlignmentJustified;
+    paragraphStyle.alignment = NSTextAlignmentJustified;
     XCTAssertEqualObjects([RKParagraphStyleWriter styleTagFromParagraphStyle:paragraphStyle ofAttributedString:attributedString range:NSMakeRange(0, 1) resources:nil],
                          @"\\qj\\pardeftab0"
                          // Space required to prevent problems with succeeding commands
@@ -130,7 +130,7 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKTextAlignmentNatural;
+    paragraphStyle.alignment = NSTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -187,7 +187,7 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa"];
     
     // Paragraph Style with defaults
-    paragraphStyle.alignment = RKTextAlignmentNatural;
+    paragraphStyle.alignment = NSTextAlignmentNatural;
     
     paragraphStyle.firstLineHeadIndent = .0f;
     paragraphStyle.headIndent = .0f;
@@ -270,7 +270,7 @@
     NSMutableParagraphStyle *paragraphStyle = [self defaultParagraphStyle];
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"a"];
         
-    paragraphStyle.alignment = RKTextAlignmentRight;
+    paragraphStyle.alignment = NSTextAlignmentRight;
     
     paragraphStyle.firstLineHeadIndent = 1.0f;
     paragraphStyle.headIndent = 2.0f;
@@ -289,9 +289,9 @@
     paragraphStyle.defaultTabInterval = 11.0f;
     
     paragraphStyle.tabStops = [NSArray arrayWithObjects: 
-                               [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentLeft location:10.0f options:@{}],
-                               [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentCenter location:20.0f options:@{}],
-                               [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentRight location:30.0f options:@{}],
+                               [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:10.0f options:@{}],
+                               [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentCenter location:20.0f options:@{}],
+                               [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentRight location:30.0f options:@{}],
                                nil
                                ];
 	
@@ -335,8 +335,8 @@
     NSMutableParagraphStyle *paragraphStyleA = [self defaultParagraphStyle];
     NSMutableParagraphStyle *paragraphStyleB = [self defaultParagraphStyle];
     
-    paragraphStyleA.alignment = RKTextAlignmentCenter;
-    paragraphStyleB.alignment = RKTextAlignmentRight;
+    paragraphStyleA.alignment = NSTextAlignmentCenter;
+    paragraphStyleB.alignment = NSTextAlignmentRight;
 
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"aaa\nbbb"];
     
@@ -381,9 +381,9 @@
     NSMutableParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
     
     // The only default-value we have to override is "alignment", since the natural alignment will be processed by Cocoa
-    paragraphStyleDefault.alignment = RKTextAlignmentLeft;
+    paragraphStyleDefault.alignment = NSTextAlignmentLeft;
     
-    paragraphStyleNonDefault.alignment = RKTextAlignmentRight;
+    paragraphStyleNonDefault.alignment = NSTextAlignmentRight;
 
     paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
     paragraphStyleNonDefault.headIndent = 3.0f;    
@@ -423,9 +423,9 @@
     NSMutableParagraphStyle *paragraphStyleNonDefault = [self defaultParagraphStyle];
     
     // The only default-value we have to override is "alignment", since the natural alignment will be processed by Cocoa
-    paragraphStyleDefault.alignment = RKTextAlignmentLeft;
+    paragraphStyleDefault.alignment = NSTextAlignmentLeft;
     
-    paragraphStyleNonDefault.alignment = RKTextAlignmentRight;
+    paragraphStyleNonDefault.alignment = NSTextAlignmentRight;
     
     paragraphStyleNonDefault.firstLineHeadIndent = 2.0f;
     paragraphStyleNonDefault.headIndent = 3.0f;    

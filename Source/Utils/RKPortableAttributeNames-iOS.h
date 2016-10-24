@@ -182,19 +182,4 @@ extern NSString *RKCategoryDocumentAttribute;
  */
 #define RKLineSeparatorCharacter                ((unichar)0x2028)
 
-/*!
- @abstract Text alignment settings.
- */
-#define RKTextAlignmentLeft						NSTextAlignmentLeft
-#define RKTextAlignmentRight					NSTextAlignmentRight
-#define RKTextAlignmentNatural					NSTextAlignmentNatural
-#define RKTextAlignmentCenter					NSTextAlignmentCenter
-#define RKTextAlignmentJustified				NSTextAlignmentJustified
-
-/*!
- @abstract Alignment conversion
- */
-#define RKTextAlignmentToCTTextAlignment(__nsAlignment)		NSTextAlignmentToCTTextAlignment(__nsAlignment)
-#define RKTextAlignmentFromCTTextAlignment(__ctAlignment)	NSTextAlignmentFromCTTextAlignment(__ctAlignment)
-
 #endif

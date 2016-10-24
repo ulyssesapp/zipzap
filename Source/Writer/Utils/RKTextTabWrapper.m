@@ -24,12 +24,12 @@
 
 - (id)initWithNSTextTab:(NSTextTab *)textTab
 {
-    return [self initWithLocation:textTab.location alignment:RKTextAlignmentToCTTextAlignment(textTab.alignment)];
+    return [self initWithLocation:textTab.location alignment:NSTextAlignmentToCTTextAlignment(textTab.alignment)];
 }
 
 - (NSTextTab *)newNSTextTab
 {
-	return [[NSTextTab alloc] initWithTextAlignment:RKTextAlignmentFromCTTextAlignment(_tabAlignment) location:_location options:@{}];
+	return [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentFromCTTextAlignment(_tabAlignment) location:_location options:@{}];
 }
 
 - (id)initWithLocation:(CGFloat)location alignment:(CTTextAlignment)alignment

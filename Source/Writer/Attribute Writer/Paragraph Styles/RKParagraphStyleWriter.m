@@ -172,16 +172,16 @@
 + (NSString *)styleTagsForTextAlignment:(NSTextAlignment)textAlignment
 {
     switch (textAlignment) {
-        case RKTextAlignmentLeft:
+        case NSTextAlignmentLeft:
             return @"\\ql";
             
-        case RKTextAlignmentRight:
+        case NSTextAlignmentRight:
             return @"\\qr";
             
-        case RKTextAlignmentCenter:
+        case NSTextAlignmentCenter:
             return @"\\qc";
             
-        case RKTextAlignmentJustified:
+        case NSTextAlignmentJustified:
             return @"\\qj";
 			
 		default:
@@ -292,16 +292,16 @@
     NSMutableString *rtf = [NSMutableString new];    
 
     switch (alignment) {
-		case RKTextAlignmentLeft:
-		case RKTextAlignmentNatural:
-		case RKTextAlignmentJustified:
+		case NSTextAlignmentLeft:
+		case NSTextAlignmentNatural:
+		case NSTextAlignmentJustified:
 			break;
 			
-        case RKTextAlignmentCenter:
+        case NSTextAlignmentCenter:
             [rtf appendString:@"\\tqc"];
             break;
             
-        case RKTextAlignmentRight:
+        case NSTextAlignmentRight:
             [rtf appendString:@"\\tqr"];
             break;
     }
