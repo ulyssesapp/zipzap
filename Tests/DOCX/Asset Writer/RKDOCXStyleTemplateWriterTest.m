@@ -314,6 +314,15 @@
 	[self assertDOCX:document withTestDocument:@"defaultstyle"];
 }
 
+- (void)testLocale
+{
+	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"This text should be treated as German, because the test case says so."];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.locale = [NSLocale localeWithLocaleIdentifier: @"de-DE"];
+	
+	[self assertDOCX:document withTestDocument:@"locale"];
+}
 
 #pragma mark - Mixed styles
 
