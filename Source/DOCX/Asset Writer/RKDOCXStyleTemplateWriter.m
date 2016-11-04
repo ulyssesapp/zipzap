@@ -141,6 +141,9 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	// Ignore style templates, to prevent that default style will be based upon its own.
 	NSArray *runProperties = [RKDOCXRunWriter propertyElementsForAttributes:styleAttributes usingContext:context isDefaultStyle:YES];
 	
+	if (!runProperties)
+		runProperties = [NSArray new];
+	
 	// Add locale to default element
 	runProperties = [runProperties arrayByAddingObject: [NSXMLElement elementWithName:RKDOCXStyleTemplateLanguageElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:context.document.locale.localeIdentifier],
 																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageEastAsiaAttributeName stringValue:context.document.locale.localeIdentifier],
