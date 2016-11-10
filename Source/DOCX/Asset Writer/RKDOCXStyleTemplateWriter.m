@@ -145,9 +145,10 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 		runProperties = [NSArray new];
 	
 	// Add locale to default element
-	runProperties = [runProperties arrayByAddingObject: [NSXMLElement elementWithName:RKDOCXStyleTemplateLanguageElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:context.document.locale.localeIdentifier],
-																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageEastAsiaAttributeName stringValue:context.document.locale.localeIdentifier],
-																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageBidiAttibuteName stringValue:context.document.locale.localeIdentifier]]]];
+	NSString *locale = [context.document.locale.localeIdentifier stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
+	runProperties = [runProperties arrayByAddingObject: [NSXMLElement elementWithName:RKDOCXStyleTemplateLanguageElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:locale],
+																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageEastAsiaAttributeName stringValue:locale],
+																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageBidiAttibuteName stringValue:locale]]]];
 	
 	return [RKDOCXRunWriter runPropertiesElementWithProperties: runProperties];
 }

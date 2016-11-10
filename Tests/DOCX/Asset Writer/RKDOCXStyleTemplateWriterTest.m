@@ -319,7 +319,7 @@
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString: @"This text should be treated as German, because the test case says so."];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
-	document.locale = [NSLocale localeWithLocaleIdentifier: @"de-DE"];
+	document.locale = [NSLocale localeWithLocaleIdentifier: @"de_DE"];
 	
 	[self assertDOCX:document withTestDocument:@"locale"];
 }
