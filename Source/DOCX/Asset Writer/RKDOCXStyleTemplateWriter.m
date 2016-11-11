@@ -29,28 +29,31 @@ NSString *RKDOCXStyleTemplateFilename						= @"styles.xml";
 // Elements
 NSString *RKDOCXStyleTemplateBasedOnElementName				= @"w:basedOn";
 NSString *RKDOCXStyleTemplateDocumentDefaultsElementName	= @"w:docDefaults";
-NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
-NSString *RKDOCXStyleTemplatePrimaryStyleElementName		= @"w:qFormat";
-NSString *RKDOCXStyleTemplateUIPriorityElementName			= @"w:uiPriority";
+NSString *RKDOCXStyleTemplateLanguageElementName			= @"w:lang";		// See ISO 29500-1:2012: §17.3.2.20
 NSString *RKDOCXStyleTemplateParagraphDefaultElementName	= @"w:pPrDefault";
 NSString *RKDOCXStyleTemplateParagraphReferenceElementName	= @"w:pStyle";
+NSString *RKDOCXStyleTemplatePrimaryStyleElementName		= @"w:qFormat";
 NSString *RKDOCXStyleTemplateRunDefaultElementName			= @"w:rPrDefault";
 NSString *RKDOCXStyleTemplateRunReferenceElementName		= @"w:rStyle";
 NSString *RKDOCXStyleTemplateSemiHiddenElementName			= @"w:semiHidden";
 NSString *RKDOCXStyleTemplateStyleElementName				= @"w:style";
+NSString *RKDOCXStyleTemplateStyleNameElementName			= @"w:name";
+NSString *RKDOCXStyleTemplateUIPriorityElementName			= @"w:uiPriority";
 NSString *RKDOCXStyleTemplateUnhideWhenUsedElementName		= @"w:unhideWhenUsed";
 
 // Attributes
 NSString *RKDOCXStyleTemplateDefaultAttributeName			= @"w:default";
+NSString *RKDOCXStyleTemplateLanguageEastAsiaAttributeName	= @"w:eastAsia";
+NSString *RKDOCXStyleTemplateLanguageBidiAttibuteName		= @"w:bidi";
 NSString *RKDOCXStyleTemplateStyleIDAttributeName			= @"w:styleId";
 NSString *RKDOCXStyleTemplateTypeAttributeName				= @"w:type";
 
 // Attribute Values
 NSString *RKDOCXStyleTemplateCharacterStyleAttributeValue	= @"character";
 NSString *RKDOCXStyleTemplateDefaultAttributeValue			= @"1";
+NSString *RKDOCXStyleTemplateDefaultStyleName				= @"Normal";
 NSString *RKDOCXStyleTemplateDefaultStyleNameAttributeValue	= @"Normal";
 NSString *RKDOCXStyleTemplateParagraphStyleAttributeValue	= @"paragraph";
-NSString *RKDOCXStyleTemplateDefaultStyleName				= @"Normal";
 
 NSUInteger RKDOCXUIPriorityParagraphStyle					= 1;
 NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
@@ -136,7 +139,18 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 + (NSXMLElement *)defaultRunPropertiesElementForStyleAttributes:(NSDictionary *)styleAttributes usingContext:(RKDOCXConversionContext *)context
 {
 	// Ignore style templates, to prevent that default style will be based upon its own.
-	return [RKDOCXRunWriter runPropertiesElementWithProperties: [RKDOCXRunWriter propertyElementsForAttributes:styleAttributes usingContext:context isDefaultStyle:YES]];
+	NSArray *runProperties = [RKDOCXRunWriter propertyElementsForAttributes:styleAttributes usingContext:context isDefaultStyle:YES];
+	
+	if (!runProperties)
+		runProperties = [NSArray new];
+	
+	// Add locale to default element (converted to LCID-style locales, as requiered by Word; see https://msdn.microsoft.com/en-us/library/cc233965.aspx)
+	NSString *locale = [context.document.locale.localeIdentifier stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
+	runProperties = [runProperties arrayByAddingObject: [NSXMLElement elementWithName:RKDOCXStyleTemplateLanguageElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:locale],
+																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageEastAsiaAttributeName stringValue:locale],
+																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageBidiAttibuteName stringValue:locale]]]];
+	
+	return [RKDOCXRunWriter runPropertiesElementWithProperties: runProperties];
 }
 
 + (NSXMLElement *)styleElementForStyleName:(NSString *)styleName usingContext:(RKDOCXConversionContext *)context isCharacterStyle:(BOOL)isCharacterStyle
