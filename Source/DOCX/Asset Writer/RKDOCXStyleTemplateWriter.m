@@ -144,7 +144,7 @@ NSUInteger RKDOCXUIPriorityCharacterStyle					= 2;
 	if (!runProperties)
 		runProperties = [NSArray new];
 	
-	// Add locale to default element (converted to LCID-style locales, as requiered by Word; see https://msdn.microsoft.com/en-us/library/cc233965.aspx)
+	// Add locale to default element (converted to LCID-style locales, as required by Word; see https://msdn.microsoft.com/en-us/library/cc233965.aspx)
 	NSString *locale = [context.document.locale.localeIdentifier stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
 	runProperties = [runProperties arrayByAddingObject: [NSXMLElement elementWithName:RKDOCXStyleTemplateLanguageElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:locale],
 																																					   [NSXMLElement attributeWithName:RKDOCXStyleTemplateLanguageEastAsiaAttributeName stringValue:locale],
