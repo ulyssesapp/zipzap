@@ -27,7 +27,7 @@
     CTTextTabRef ctTabStop = CTTextTabCreate(kCTTextAlignmentRight, 42, NULL);
     
     NSArray *ctTabStops = [NSArray arrayWithObject: (__bridge id)ctTabStop];
-    
+	
     CTParagraphStyleSetting settings[14] = {
         {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = (CTTextAlignment[]){ kCTJustifiedTextAlignment }},
         {.spec = kCTParagraphStyleSpecifierFirstLineHeadIndent, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 1 }},
@@ -37,7 +37,10 @@
         {.spec = kCTParagraphStyleSpecifierLineHeightMultiple, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 4 }},
         {.spec = kCTParagraphStyleSpecifierMaximumLineHeight, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 5 }},
         {.spec = kCTParagraphStyleSpecifierMinimumLineHeight, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 6 }},
-        {.spec = kCTParagraphStyleSpecifierLineSpacing, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 7 }},
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+		{.spec = kCTParagraphStyleSpecifierLineSpacing, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 7 }},
+#pragma clang diagnostics pop
         {.spec = kCTParagraphStyleSpecifierParagraphSpacing, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 8 }},
         {.spec = kCTParagraphStyleSpecifierParagraphSpacingBefore, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 9 }},
         {.spec = kCTParagraphStyleSpecifierBaseWritingDirection, .valueSize = sizeof(CTWritingDirection), .value = (CTWritingDirection[]){ kCTWritingDirectionRightToLeft }},
@@ -72,7 +75,10 @@
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierTailIndent, sizeof(CGFloat), &tailIndent);
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierDefaultTabInterval, sizeof(CGFloat), &defaultTabInterval);
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierLineBreakMode, sizeof(CTLineBreakMode), &lineBreakMode);
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(CGFloat), &lineHeightMultiple);
+#pragma clang diagnostics pop
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(CGFloat), &maximumLineHeight);
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), &minimumLineHeight);
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &lineSpacing);
