@@ -36,8 +36,8 @@
 		return;
 	
 	NSURL *temporaryDirectoryURL = [NSURL fileURLWithPath: NSTemporaryDirectory()];
-	temporaryDirectoryURL = [temporaryDirectoryURL URLByAppendingPathComponent: @"rtfkit-docx-test-verification"];
-	
+	temporaryDirectoryURL = [[temporaryDirectoryURL URLByAppendingPathComponent: @"rtfkit-docx-test-verification"] URLByAppendingPathComponent: NSStringFromClass(self.class)];
+
 	[NSFileManager.defaultManager createDirectoryAtURL:temporaryDirectoryURL withIntermediateDirectories:YES attributes:nil error:NULL];
 	
 	NSURL *generatedURL = [[temporaryDirectoryURL URLByAppendingPathComponent: filename] URLByAppendingPathExtension: @"docx"];
@@ -55,7 +55,7 @@
 	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[generatedURL.path, @"-d", generatedURL.URLByDeletingPathExtension]] waitUntilExit];
 	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[expectedURL.path, @"-d", expectedURL.URLByDeletingPathExtension]] waitUntilExit];
 	
-	[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[temporaryDirectoryURL]];
+	[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[temporaryDirectoryURL.URLByDeletingPathExtension]];
 #endif
 }
 
