@@ -78,7 +78,18 @@
         [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: baselineOffset] range:range];
         [converted removeAttribute:RKSuperscriptAttributeName range:range];
     }];
-    
+
+	// Emulate baseline offsets.
+	// Note: NSBaselineOffsetAttributeName seems to be ignored by CoreText in OS X < 10.12. However, OS X 10.12 seems to recognize this attribute, even though it is undocumented. Thus, we just use a different attribute name and emulate the offset
+	[attributedString enumerateAttribute:RKBaselineOffsetAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *value, NSRange range, BOOL * _Nonnull stop) {
+		if (!value.floatValue)
+			return;
+		
+		[converted addAttribute:RKPDFRendererBaselineOffsetAttributeName value:value range:range];
+		[converted removeAttribute:RKBaselineOffsetAttributeName range:range];
+		
+	}];
+	
     return converted;
 }
 

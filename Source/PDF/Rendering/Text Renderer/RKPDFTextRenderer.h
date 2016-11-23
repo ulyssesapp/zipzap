@@ -9,6 +9,12 @@
 @class RKPDFRenderingContext, RKPDFLine;
 
 /*!
+ @abstract A custom text attribute that is used to implement base line offsets.
+ @discussion This is used, since NSBaselineOffsetAttributeName is not officially supported by CoreText. However, it seems to be implemented on OS X >10.12.
+ */
+extern NSString *RKPDFRendererBaselineOffsetAttributeName;
+
+/*!
  @abstract Methods used for text attributes requiring special rendering
  */
 @interface RKPDFTextRenderer : NSObject

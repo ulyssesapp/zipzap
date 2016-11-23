@@ -192,10 +192,11 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 		CFRange runRange = CTRunGetStringRange(run);
 		CGRect boundingBox;
 
-		// Apply base line offset, if required
-		CGFloat baselineOffset = [[self.content attribute:RKBaselineOffsetAttributeName atIndex:runRange.location effectiveRange:NULL] floatValue];
-		if (baselineOffset)
+		// Apply base line offset, if required. We emulate baseline offset typesetting, since it is still not officially supported in CoreText, but there is undocumented support starting from macOS 10.12.
+		CGFloat baselineOffset = [[self.content attribute:RKPDFRendererBaselineOffsetAttributeName atIndex:runRange.location effectiveRange:NULL] floatValue];
+		if (baselineOffset) {
 			CGContextTranslateCTM(pdfContext, 0, baselineOffset);
+		}
 		
 		// Get text renderer and objects, if any
 		NSArray *textRenderer = [self.content attribute:RKTextRendererAttributeName atIndex:runRange.location effectiveRange:NULL];
