@@ -50,9 +50,12 @@
     [attributedString enumerateAttribute:(__bridge NSString *)kCTUnderlineStyleAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
         if (!modeObject)
             return;
-        
-        [converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:range];
-		[converted addAttribute:RKPDFRendererUnderlineAttributeName value:modeObject range:range];
+		
+		// Make sure underline attributes are not applied to line breaks
+		[attributedString.string enumerateSubstringsInRange:range options:NSStringEnumerationByLines usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+			[converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:substringRange];
+			[converted addAttribute:RKPDFRendererUnderlineAttributeName value:modeObject range:substringRange];
+		}];
 		
 		[converted removeAttribute:(id)kCTUnderlineStyleAttributeName range:range];
     }];
