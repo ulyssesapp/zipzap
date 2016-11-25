@@ -92,9 +92,18 @@
             XCTAssertEqualObjects(originalShadow, convertedShadow, @"Attributes differ");
         }
         else if ([convertedAttributeValue isKindOfClass: [NSParagraphStyle class]] && [originalAttributeValue isKindOfClass: [NSParagraphStyle class]]) {
-            NSParagraphStyle *convertedStyle = convertedAttributeValue;
-            NSParagraphStyle *originalStyle = originalAttributeValue;
-            
+            NSMutableParagraphStyle *convertedStyle = [convertedAttributeValue mutableCopy];
+            NSMutableParagraphStyle *originalStyle = [originalAttributeValue mutableCopy];
+			
+			if (!convertedStyle.textBlocks)
+				convertedStyle.textBlocks = @[];
+			if (!originalStyle.textBlocks)
+				originalStyle.textBlocks = @[];
+			if (!convertedStyle.textLists)
+				convertedStyle.textLists = @[];
+			if (!originalStyle.textLists)
+				originalStyle.textLists = @[];
+			
             XCTAssertEqualObjects([convertedStyle description], [originalStyle description], @"Attributes differ");
         }
         else if (originalAttributeValue != nil) {        
