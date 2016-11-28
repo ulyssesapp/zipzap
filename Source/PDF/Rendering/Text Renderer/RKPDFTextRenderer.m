@@ -8,6 +8,8 @@
 
 #import "RKPDFTextRenderer.h"
 
+NSString *RKPDFRendererBaselineOffsetAttributeName		= @"RKPDFRendererBaselineOffset";
+
 @implementation RKPDFTextRenderer
 
 + (NSInteger)priority

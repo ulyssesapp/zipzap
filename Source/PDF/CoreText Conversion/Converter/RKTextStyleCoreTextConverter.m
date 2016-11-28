@@ -50,9 +50,12 @@
     [attributedString enumerateAttribute:(__bridge NSString *)kCTUnderlineStyleAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
         if (!modeObject)
             return;
-        
-        [converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:range];
-		[converted addAttribute:RKPDFRendererUnderlineAttributeName value:modeObject range:range];
+		
+		// Make sure underline attributes are not applied to line breaks
+		[attributedString.string enumerateSubstringsInRange:range options:NSStringEnumerationByLines usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+			[converted addTextRenderer:RKPDFTextDecorationRenderer.class forRange:substringRange];
+			[converted addAttribute:RKPDFRendererUnderlineAttributeName value:modeObject range:substringRange];
+		}];
 		
 		[converted removeAttribute:(id)kCTUnderlineStyleAttributeName range:range];
     }];
@@ -78,7 +81,18 @@
         [converted addAttribute:RKBaselineOffsetAttributeName value:[NSNumber numberWithFloat: baselineOffset] range:range];
         [converted removeAttribute:RKSuperscriptAttributeName range:range];
     }];
-    
+
+	// Emulate baseline offsets.
+	// Note: NSBaselineOffsetAttributeName seems to be ignored by CoreText in OS X < 10.12. However, OS X 10.12 seems to recognize this attribute, even though it is undocumented. Thus, we just use a different attribute name and emulate the offset
+	[attributedString enumerateAttribute:RKBaselineOffsetAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *value, NSRange range, BOOL * _Nonnull stop) {
+		if (!value.floatValue)
+			return;
+		
+		[converted addAttribute:RKPDFRendererBaselineOffsetAttributeName value:value range:range];
+		[converted removeAttribute:RKBaselineOffsetAttributeName range:range];
+		
+	}];
+	
     return converted;
 }
 
