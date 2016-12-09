@@ -320,8 +320,6 @@
     [self assertReadingOfSingleSectionDocument:document onAttribute:NSShadowAttributeName inRange:NSMakeRange(0,2)];
 }
 
-#endif
-
 - (void)testStylesheetsAreCompatibleWithReferenceTest
 {
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc] initWithString:@"cstyle default-cstyle\npstyle\npstyle cstyle pstyle\n" ];
@@ -348,5 +346,7 @@
     
     [self assertRTF:[document wordRTF] withTestDocument:@"stylesheet"];
 }
+
+#endif
 
 @end
