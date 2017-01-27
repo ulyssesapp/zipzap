@@ -166,7 +166,7 @@ NSString *RKDOCXFootnoteTextStyleName							= @"footnote text";
 		paragraphStyleWithContentInset.headIndent = context.document.footnoteAreaContentInset;
 		paragraphStyleWithContentInset.firstLineHeadIndent = paragraphStyleWithContentInset.headIndent;
 		
-		NSMutableDictionary *paragraphStyleAttributes = [NSMutableDictionary dictionaryWithDictionary: @{RKParagraphStyleNameAttributeName: paragraphStyleName, RKParagraphStyleAttributeName: paragraphStyleWithContentInset}];
+		NSMutableDictionary *paragraphStyleAttributes = [@{RKParagraphStyleNameAttributeName: paragraphStyleName, RKParagraphStyleAttributeName: paragraphStyleWithContentInset} mutableCopy];
 		
 		// Register font size of reference mark as well to fix whitespace font size (if available)
 		if (referenceMarkAttributes[RKFontAttributeName])
