@@ -7,6 +7,7 @@
 //
 
 #import "XCTestCase+DOCX.h"
+#import "RKFont.h"
 
 @interface RKDOCXFootnotesWriterTest : XCTestCase
 
@@ -106,6 +107,18 @@
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
 	[self assertDOCX:document withTestDocument:@"footnotewithimage"];
+}
+
+- (void)testFootnoteWithDifferingFontSize
+{
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @"Footnote Test where Footnotes use a different font size than the default."];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKFootnoteAttributeName: [[NSAttributedString alloc] initWithString:@"The indent before this footnote should be 12pt in size. 10pt (the default) would be incorrect." attributes:@{RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, 0, kCTFontItalicTrait | kCTFontBoldTrait)}], RKSuperscriptAttributeName: @1}]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	document.defaultStyle = @{RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 10, NULL), 0.0, NULL, 0, kCTFontItalicTrait | kCTFontBoldTrait)};
+	document.footnoteAreaAnchorAttributes = @{RKFontAttributeName: (__bridge RKFont *)CTFontCreateCopyWithSymbolicTraits(CTFontCreateWithName((__bridge CFStringRef)@"Helvetica", 12, NULL), 0.0, NULL, 0, kCTFontItalicTrait | kCTFontBoldTrait)};
+	
+	[self assertDOCX:document withTestDocument:@"footnotewithdifferingfontsize"];
 }
 
 @end
