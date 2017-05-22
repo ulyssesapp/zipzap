@@ -71,8 +71,6 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	if (!imageAttachment.imageFile.preferredFilename)
 		return nil;
 	
-	RKImage *image = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents];
-	
 	// Relationship Handling
 	NSString *filename = [RKDOCXPartWriter packagePathForFilename:[imageAttachment.imageFile.preferredFilename sanitizedFilenameForRTFD] folder:RKDOCXMediaFolder];
 	
@@ -98,7 +96,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 						 [NSXMLElement attributeWithName:RKDOCXImageBottomMarginAttributeName integerValue:RKPointsToEMUs(imageAttachment.margin.bottom)]];
 	
 	// Image Size
-	CGSize scaledImageSize = [self scaledImageSizeForImage:image usingContext:context];
+	CGSize scaledImageSize = [self scaledImageSizeForImageAttachment:imageAttachment attributes:attributes usingContext:context];
 	NSInteger width = RKPointsToEMUs(scaledImageSize.width);
 	NSInteger height = RKPointsToEMUs(scaledImageSize.height);
 	NSXMLElement *extentElement = [NSXMLElement elementWithName:RKDOCXImageExtentElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageCanvasXAttributeName integerValue:width],
@@ -133,15 +131,31 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	return (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)typeIdentifier, kUTTagClassMIMEType);
 }
 
-+ (CGSize)scaledImageSizeForImage:(RKImage *)image usingContext:(RKDOCXConversionContext *)context
++ (CGSize)scaledImageSizeForImageAttachment:(RKImageAttachment *)imageAttachment attributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	CGSize scaledImageSize = image.size;
+	CGSize scaledImageSize = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents].size;
 	
-	CGFloat aspect = scaledImageSize.width / (context.document.pageSize.width - (context.document.pageInsets.inner + context.document.pageInsets.outer));
+	NSParagraphStyle *figureParagraphStyle = attributes[RKParagraphStyleAttributeName];
+	CGFloat figureMargins = figureParagraphStyle.headIndent + figureParagraphStyle.tailIndent * -1;
+	CGFloat maxWidth = context.document.pageSize.width - (context.document.pageInsets.inner + context.document.pageInsets.outer + figureMargins);
+	
+	CGFloat aspect = scaledImageSize.width / maxWidth;
 	
 	if (aspect > 1) {
 		scaledImageSize.width /= aspect;
 		scaledImageSize.height /= aspect;
+	}
+	
+	// Further reduce width if margins are too big
+	if (scaledImageSize.width + imageAttachment.margin.left + imageAttachment.margin.right > maxWidth) {
+		maxWidth -= imageAttachment.margin.left + imageAttachment.margin.right;
+		
+		aspect = scaledImageSize.width / maxWidth;
+		
+		if (aspect > 1) {
+			scaledImageSize.width /= aspect;
+			scaledImageSize.height /= aspect;
+		}
 	}
 	
 	return scaledImageSize;

@@ -18,7 +18,7 @@ extern NSString *RKImageAttachmentAttributeName;
 @interface RKImageAttachment : NSObject
 
 /*!
- @abstract Initializes an init attachment with the given file, title, description and margin.
+ @abstract Initializes an image attachment with the given file, title, description and margin.
  */
 - (id)initWithFile:(NSFileWrapper *)file title:(NSString *)title description:(NSString *)descr margin:(RKEdgeInsets)margin;
 
