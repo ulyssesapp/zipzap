@@ -38,6 +38,6 @@ typedef enum : NSUInteger {
  @abstract Returns an XML element representing a run with a break of the given type.
  @discussion See ISO 29500-1:2012: §17.3.3.1 (Break) and §17.3.3.32 (Tab Character).
  */
-+ (NSXMLElement *)runElementWithSymbolicCharacter:(RKDOCXSymbolicCharacterType)type;
++ (NSXMLElement *)runElementWithSymbolicCharacter:(RKDOCXSymbolicCharacterType)type attributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context;
 
 @end
