@@ -260,13 +260,14 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 
 #pragma mark - Serialization of styles
 
-+ (NSDictionary *)deserializeStylesFromPropertyList:(NSDictionary *)propertyList usingKey:(NSString *)key error:(NSError **)error
++ (NSDictionary *)deserializeStylesFromPropertyList:(NSDictionary *)propertyList usingKey:(NSString *)key error:(NSError **)outError
 {
     NSMutableDictionary *styles = [NSMutableDictionary new];
     RKPersistenceContext *dummyContext = [RKPersistenceContext new];
-    
+	__block NSError *localError;
+	
     [[propertyList objectForKey: key] enumerateKeysAndObjectsUsingBlock:^(NSString *styleName, NSDictionary *attributes, BOOL *stop) {
-        NSDictionary *deserializedAttributes = [NSAttributedString attributeDictionaryFromRTFKitPropertyListRepresentation:attributes usingContext:dummyContext error:error];
+        NSDictionary *deserializedAttributes = [NSAttributedString attributeDictionaryFromRTFKitPropertyListRepresentation:attributes usingContext:dummyContext error:&localError];
         if (!deserializedAttributes) {
             *stop = YES;
             return;
@@ -274,7 +275,8 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
         
         [styles setObject:deserializedAttributes forKey:styleName];
     }];
-    
+	
+	if (outError) *outError = localError;
     return styles;
 }
 

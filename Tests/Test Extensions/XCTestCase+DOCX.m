@@ -52,8 +52,8 @@
 	[NSFileManager.defaultManager removeItemAtURL:generatedURL.URLByDeletingPathExtension error:NULL];
 	[NSFileManager.defaultManager removeItemAtURL:expectedURL.URLByDeletingPathExtension error:NULL];
 	
-	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[generatedURL.path, @"-d", generatedURL.URLByDeletingPathExtension]] waitUntilExit];
-	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[expectedURL.path, @"-d", expectedURL.URLByDeletingPathExtension]] waitUntilExit];
+	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[generatedURL.path, @"-d", generatedURL.URLByDeletingPathExtension.path]] waitUntilExit];
+	[[NSTask launchedTaskWithLaunchPath:@"/usr/bin/unzip" arguments:@[expectedURL.path, @"-d", expectedURL.URLByDeletingPathExtension.path]] waitUntilExit];
 	
 	[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[temporaryDirectoryURL.URLByDeletingPathExtension]];
 #endif
