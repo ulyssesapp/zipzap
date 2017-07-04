@@ -65,9 +65,9 @@ NSString *RKDOCXRunDeletedTextElementName	= @"w:delText";
 			[runElements addObject: [self runElementForAttributes:attributes contentElement:[self textElementOfType:runType withStringValue: [attributedString.string substringWithRange: tokenRange]] usingContext:context]];
 		
 		if (delimiter == '\t')
-			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXTabStopCharacter]];
+			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithSymbolicCharacter:RKDOCXTabStopCharacter attributes:attributes usingContext:context]];
 		else if (delimiter == RKLineSeparatorCharacter)
-			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithSymbolicCharacter: RKDOCXLineBreakCharacter]];
+			[runElements addObject: [RKDOCXPlaceholderWriter runElementWithSymbolicCharacter:RKDOCXLineBreakCharacter attributes:attributes usingContext:context]];
 	}];
 	
 	return runElements;
