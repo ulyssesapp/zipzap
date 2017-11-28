@@ -132,7 +132,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	return mixedStyle;
 }
 
-- (BOOL)isFullNameRequieredForFont:(ULFont *)font
+- (BOOL)isFullNameRequiredForFont:(ULFont *)font
 {
 	NSString *fontName = (__bridge NSString *)CTFontCopyFullName((__bridge CTFontRef)font);
 	
@@ -140,11 +140,15 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (_checkedFontNames[fontName])
 		return [_checkedFontNames[fontName] boolValue];
 	
-	// Ignore font if it doesn't use the requested traits at all
 	CTFontSymbolicTraits fontTraits = CTFontGetSymbolicTraits((__bridge CTFontRef)font);
 	CTFontSymbolicTraits filteredTraits = (kCTFontTraitItalic|kCTFontTraitBold);
+	NSDictionary *detailedTraits = (__bridge NSDictionary *)CTFontCopyTraits((__bridge CTFontRef)font);
 	
-	if ((fontTraits & filteredTraits) == 0) {
+	// Ignore font if it doesn't use the requested traits at all
+	// Don't ignore if the font weight is lighter than regular or the font is condensed/expanded
+	if ((fontTraits & filteredTraits) == 0 &&
+		[detailedTraits[(__bridge NSString *)kCTFontWeightTrait] doubleValue] >= 0 &&
+		[detailedTraits[(__bridge NSString *)kCTFontWidthTrait] doubleValue] == 0) {
 		_checkedFontNames[fontName] = @NO;
 		return NO;
 	}
@@ -172,7 +176,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 			@"Helvetica Neue UltraLight":	@YES,
 			@"Helvetica Neue Light":		@YES,
 			
-			// The following fonts do not support full names on Word 2011. The automatic fallback in -isFullNameRequieredForFont shall not be used:
+			// The following fonts do not support full names on Word 2011. The automatic fallback in -isFullNameRequiredForFont shall not be used:
 			@"Helvetica Neue Italic":		@NO,
 			@"Avenir Next Italic":			@NO,
 			@"Iowan Old Style Bold":		@NO,

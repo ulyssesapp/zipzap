@@ -47,7 +47,7 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	
 	// Font Name (§17.3.2.26)
 	NSString *fontName;
-	BOOL fullFontNameRequired = [context isFullNameRequieredForFont: (__bridge ULFont *)fontAttribute];
+	BOOL fullFontNameRequired = [context isFullNameRequiredForFont: (__bridge ULFont *)fontAttribute];
 	if (fullFontNameRequired)
 		fontName = (__bridge NSString *)CTFontCopyFullName(fontAttribute);
 	else
