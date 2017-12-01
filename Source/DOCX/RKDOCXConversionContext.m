@@ -146,8 +146,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// Use simple font name if no traits are set. However, always use full font name for fonts with special (or ambiguous) weight or width.
 	if ((fontTraits & filteredTraits) == 0 &&
-		[detailedTraits[(__bridge NSString *)kCTFontWeightTrait] doubleValue] >= 0 &&
-		[detailedTraits[(__bridge NSString *)kCTFontWidthTrait] doubleValue] == 0) {
+		[detailedTraits[(__bridge NSString *)kCTFontWeightTrait] doubleValue] == 0 &&
+		[detailedTraits[(__bridge NSString *)kCTFontWidthTrait] doubleValue] == 0 &&
+		[detailedTraits[(__bridge NSString *)kCTFontSlantTrait] doubleValue] == 0) {
 		_checkedFontNames[fontName] = @NO;
 		return NO;
 	}
