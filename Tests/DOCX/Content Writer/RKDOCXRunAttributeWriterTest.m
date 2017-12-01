@@ -165,7 +165,7 @@
 
 - (void)testRunElementWithLigatures
 {
-	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"Zapfino", 12, NULL);
+	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"Gill Sans Light", 12, NULL);
 	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)font};
 	
 	NSMutableDictionary *noLigatures = [attributes mutableCopy];
@@ -176,10 +176,10 @@
 	allLigatures[RKLigatureAttributeName] = @2;
 	NSDictionary *noMentionOfLigatures = [attributes mutableCopy];
 	
-	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"This text is written in Zapfino and is using no ligatures.\n" attributes:noLigatures];
-	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"This text is written in Zapfino and is using default ligatures.\n" attributes:defaultLigatures]];
-	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"This text is written in Zapfino and is using all supported ligatures.\n" attributes:allLigatures]];
-	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"The attributes of this text do not mention ligatures, so the text should be using default ligatures. It is written in Zapfino, by the way." attributes:noMentionOfLigatures]];
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"This field test text is written in Gill Sans Light and is using no ligatures.\n" attributes:noLigatures];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"This field test text is written in Gill Sans Light and is using default ligatures.\n" attributes:defaultLigatures]];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"This field test text is written in Gill Sans Light and is using all supported ligatures.\n" attributes:allLigatures]];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"The attributes of this field test text do not mention ligatures, so the text should be using default ligatures. It is written in Gill Sans Light, by the way." attributes:noMentionOfLigatures]];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	

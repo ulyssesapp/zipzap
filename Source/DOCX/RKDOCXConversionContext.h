@@ -55,7 +55,7 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 /*!
  @abstract Checks the given font family for competing font styles.
  */
-- (BOOL)isFullNameRequieredForFont:(ULFont *)font;
+- (BOOL)isFullNameRequiredForFont:(ULFont *)font;
 
 /*!
  @abstract Contains all relevant character styles.
