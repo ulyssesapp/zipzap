@@ -144,8 +144,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	CTFontSymbolicTraits filteredTraits = (kCTFontTraitItalic|kCTFontTraitBold);
 	NSDictionary *detailedTraits = (__bridge NSDictionary *)CTFontCopyTraits((__bridge CTFontRef)font);
 	
-	// Ignore font if it doesn't use the requested traits at all
-	// Don't ignore if the font weight is lighter than regular or the font is condensed/expanded
+	// Use simple font name if no traits are set. However, always use full font name for fonts with special (or ambiguous) weight or width.
 	if ((fontTraits & filteredTraits) == 0 &&
 		[detailedTraits[(__bridge NSString *)kCTFontWeightTrait] doubleValue] >= 0 &&
 		[detailedTraits[(__bridge NSString *)kCTFontWidthTrait] doubleValue] == 0) {
@@ -159,7 +158,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		if ([otherFont.fontName isEqual: font.fontName])
 			continue;
 		
-		if ((CTFontGetSymbolicTraits((__bridge CTFontRef)otherFont)/* & (kCTFontTraitItalic|kCTFontTraitBold)*/) == fontTraits) {
+		if (CTFontGetSymbolicTraits((__bridge CTFontRef)otherFont) == fontTraits) {
 			_checkedFontNames[fontName] = @YES;
 			return YES;
 		}
@@ -172,10 +171,6 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 + (NSDictionary *)fontNamesRequiringFullNames
 {
 	return @{
-			// The following fonts do not support traits on Word 2011, thus we need to use full font names:
-			@"Helvetica Neue UltraLight":	@YES,
-			@"Helvetica Neue Light":		@YES,
-			
 			// The following fonts do not support full names on Word 2011. The automatic fallback in -isFullNameRequiredForFont shall not be used:
 			@"Helvetica Neue Italic":		@NO,
 			@"Avenir Next Italic":			@NO,
