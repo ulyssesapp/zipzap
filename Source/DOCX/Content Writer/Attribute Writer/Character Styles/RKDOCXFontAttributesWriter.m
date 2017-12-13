@@ -47,7 +47,7 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	// Font Name (§17.3.2.26)
 	CTFontDescriptorRef fontDescriptor = ((__bridge CTFontDescriptorRef)((__bridge ULFont *)fontAttribute).fontDescriptor);
 	CTFontRef font = CTFontCreateWithFontDescriptor(CTFontDescriptorCreateCopyWithSymbolicTraits(fontDescriptor, 0, traits), 0.0, NULL);
-	NSString *fontName = ((__bridge ULFont *)font).displayName;
+	NSString *fontName = (__bridge NSString *)CTFontCopyFullName(font);
 	
 	if (![(__bridge NSString *)CTFontCopyFullName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFullName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
 		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeName stringValue:fontName],
