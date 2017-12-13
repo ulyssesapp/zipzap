@@ -45,9 +45,7 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Font Name (§17.3.2.26)
-	CTFontDescriptorRef fontDescriptor = ((__bridge CTFontDescriptorRef)((__bridge ULFont *)fontAttribute).fontDescriptor);
-	CTFontRef font = CTFontCreateWithFontDescriptor(CTFontDescriptorCreateCopyWithSymbolicTraits(fontDescriptor, 0, traits), 0.0, NULL);
-	NSString *fontName = (__bridge NSString *)CTFontCopyFullName(font);
+	NSString *fontName = [self fontNameForFont:fontAttribute withoutTraits:traits];
 	
 	if (![(__bridge NSString *)CTFontCopyFullName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFullName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
 		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeName stringValue:fontName],
@@ -82,6 +80,17 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	}
 	
 	return properties;
+}
+
++ (NSString *)fontNameForFont:(CTFontRef)font withoutTraits:(CTFontSymbolicTraits)traits
+{
+	CTFontDescriptorRef fontDescriptor = CTFontCopyFontDescriptor(font);
+	CTFontRef baseFont = CTFontCreateWithFontDescriptor(CTFontDescriptorCreateCopyWithSymbolicTraits(fontDescriptor, 0, traits), 0.0, NULL);
+	NSString *fontName = (__bridge NSString *)CTFontCopyFullName(baseFont);
+	
+	CFRelease(fontDescriptor);
+	CFRelease(baseFont);
+	return fontName;
 }
 
 + (NSUInteger)wordFontSizeFromPointSize:(CGFloat)pointSize
