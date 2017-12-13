@@ -53,11 +53,6 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 - (NSDictionary *)cachedStyleFromParagraphStyle:(NSString *)paragraphStyle characterStyle:(NSString *)characterStyle processingDefaultStyle:(BOOL)processingDefaultStyle;
 
 /*!
- @abstract Checks the given font family for competing font styles.
- */
-- (BOOL)isFullNameRequiredForFont:(ULFont *)font;
-
-/*!
  @abstract Contains all relevant character styles.
  */
 @property (nonatomic, readonly) NSDictionary *characterStyles;
