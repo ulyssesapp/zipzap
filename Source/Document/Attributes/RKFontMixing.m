@@ -8,4 +8,4 @@
 
 #import "RKFontMixing.h"
 
-NSString *RKFontMixAttributeName = @"RKFontOverrideAttribute";
+NSString *RKFontMixAttributeName = @"RKFontMixAttributeName";

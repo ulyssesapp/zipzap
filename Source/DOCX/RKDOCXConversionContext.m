@@ -19,7 +19,6 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 {
 	NSMutableDictionary		*_files;
 	NSMutableDictionary		*_styleCache;
-	NSMutableDictionary		*_checkedFontNames;
 	NSUInteger				_imageID;
 	NSUInteger				_reviewID;
 	NSMutableDictionary		*_characterStyles;
@@ -38,7 +37,6 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	if (self) {
 		_files = [NSMutableDictionary new];
 		_styleCache = [NSMutableDictionary new];
-		_checkedFontNames = [[self.class fontNamesRequiringFullNames] mutableCopy];
 		_imageID = 0;
 		_reviewID = 0;
 		_document = document;
@@ -130,53 +128,6 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		mixedStyle[RKFontAttributeName] = [RKDOCXFontAttributesWriter fontByMixingFont:lowPriorityStyleAttributes[RKFontAttributeName] withOverridingFont:highPriorityStyleAttributes[RKFontAttributeName] usingMask:[highPriorityStyleAttributes[RKFontMixAttributeName] unsignedIntegerValue]];
 	
 	return mixedStyle;
-}
-
-- (BOOL)isFullNameRequiredForFont:(ULFont *)font
-{
-	NSString *fontName = (__bridge NSString *)CTFontCopyFullName((__bridge CTFontRef)font);
-	
-	// Look for previously checked font. See also +fontNamesRequiringFullNaming.
-	if (_checkedFontNames[fontName])
-		return [_checkedFontNames[fontName] boolValue];
-	
-	CTFontSymbolicTraits fontTraits = CTFontGetSymbolicTraits((__bridge CTFontRef)font);
-	CTFontSymbolicTraits filteredTraits = (kCTFontTraitItalic|kCTFontTraitBold);
-	NSDictionary *detailedTraits = (__bridge NSDictionary *)CTFontCopyTraits((__bridge CTFontRef)font);
-	
-	// Use simple font name if no traits are set. However, always use full font name for fonts with special (or ambiguous) weight or width.
-	if ((fontTraits & filteredTraits) == 0 &&
-		[detailedTraits[(__bridge NSString *)kCTFontWeightTrait] doubleValue] == 0 &&
-		[detailedTraits[(__bridge NSString *)kCTFontWidthTrait] doubleValue] == 0 &&
-		[detailedTraits[(__bridge NSString *)kCTFontSlantTrait] doubleValue] == 0) {
-		_checkedFontNames[fontName] = @NO;
-		return NO;
-	}
-	
-	// Check all other fonts from family
-	for (NSString *otherFontName in [ULFont fontNamesForFamilyName: font.familyName]) {
-		ULFont *otherFont = [ULFont fontWithName:otherFontName size:font.pointSize];
-		if ([otherFont.fontName isEqual: font.fontName])
-			continue;
-		
-		if (CTFontGetSymbolicTraits((__bridge CTFontRef)otherFont) == fontTraits) {
-			_checkedFontNames[fontName] = @YES;
-			return YES;
-		}
-	}
-	
-	_checkedFontNames[fontName] = @NO;
-	return NO;
-}
-
-+ (NSDictionary *)fontNamesRequiringFullNames
-{
-	return @{
-			// The following fonts do not support full names on Word 2011. The automatic fallback in -isFullNameRequiredForFont shall not be used:
-			@"Helvetica Neue Italic":		@NO,
-			@"Avenir Next Italic":			@NO,
-			@"Iowan Old Style Bold":		@NO,
-			};
 }
 
 - (void)registerCharacterStyle:(NSDictionary *)style withName:(NSString *)name
