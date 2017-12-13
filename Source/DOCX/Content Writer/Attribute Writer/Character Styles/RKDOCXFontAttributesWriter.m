@@ -86,7 +86,7 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 {
 	CTFontDescriptorRef fontDescriptor = CTFontCopyFontDescriptor(font);
 	CTFontRef baseFont = CTFontCreateWithFontDescriptor(CTFontDescriptorCreateCopyWithSymbolicTraits(fontDescriptor, 0, traits), 0.0, NULL);
-	NSString *fontName = (__bridge NSString *)CTFontCopyFullName(baseFont);
+	NSString *fontName = (__bridge_transfer NSString *)CTFontCopyFullName(baseFont);
 	
 	CFRelease(fontDescriptor);
 	CFRelease(baseFont);
@@ -120,7 +120,7 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	// Add bold and italic traits to font
 	resultingFontAttribute = CTFontCreateCopyWithSymbolicTraits(resultingFontAttribute, 0.0, NULL, traits, kCTFontItalicTrait | kCTFontBoldTrait);
 	
-	return (__bridge RKFont *)resultingFontAttribute;
+	return (__bridge_transfer RKFont *)resultingFontAttribute;
 }
 
 @end
