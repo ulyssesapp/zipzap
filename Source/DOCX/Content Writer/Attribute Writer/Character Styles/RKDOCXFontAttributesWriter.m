@@ -115,10 +115,11 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	CTFontSymbolicTraits traits = ((enableItalicTrait) ? kCTFontItalicTrait : 0) | ((enableBoldTrait) ? kCTFontBoldTrait : 0);
 	
 	// Create font with name and size
-	CTFontRef resultingFontAttribute = CTFontCreateWithName(fontName, fontSize, NULL);
+	CTFontRef resultingFontAttributeWithoutTraits = CTFontCreateWithName(fontName, fontSize, NULL);
 	
 	// Add bold and italic traits to font
-	resultingFontAttribute = CTFontCreateCopyWithSymbolicTraits(resultingFontAttribute, 0.0, NULL, traits, kCTFontItalicTrait | kCTFontBoldTrait);
+	CTFontRef resultingFontAttribute = CTFontCreateCopyWithSymbolicTraits(resultingFontAttributeWithoutTraits, 0.0, NULL, traits, kCTFontItalicTrait | kCTFontBoldTrait);
+	CFRelease(resultingFontAttributeWithoutTraits);
 	
 	return (__bridge_transfer RKFont *)resultingFontAttribute;
 }
