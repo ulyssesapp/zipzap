@@ -109,8 +109,8 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	
 	CFStringRef fontName	= (mask & RKFontMixIgnoreFontName) ? CTFontCopyFullName(baseFontRef) : CTFontCopyFullName(overridingFontRef);
 	CGFloat fontSize		= (mask & RKFontMixIgnoreFontSize) ? CTFontGetSize(baseFontRef) : CTFontGetSize(overridingFontRef);
-	BOOL enableBoldTrait	= (mask & RKFontMixIgnoreBoldTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait : !((CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait) == (CTFontGetSymbolicTraits(overridingFontRef) & kCTFontBoldTrait));
-	BOOL enableItalicTrait	= (mask & RKFontMixIgnoreItalicTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait : !((CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait) == (CTFontGetSymbolicTraits(overridingFontRef) & kCTFontItalicTrait));
+	BOOL enableBoldTrait	= (mask & RKFontMixIgnoreBoldTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait : ((CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait) != (CTFontGetSymbolicTraits(overridingFontRef) & kCTFontBoldTrait));
+	BOOL enableItalicTrait	= (mask & RKFontMixIgnoreItalicTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait : ((CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait) != (CTFontGetSymbolicTraits(overridingFontRef) & kCTFontItalicTrait));
 	
 	CTFontSymbolicTraits traits = ((enableItalicTrait) ? kCTFontItalicTrait : 0) | ((enableBoldTrait) ? kCTFontBoldTrait : 0);
 	
