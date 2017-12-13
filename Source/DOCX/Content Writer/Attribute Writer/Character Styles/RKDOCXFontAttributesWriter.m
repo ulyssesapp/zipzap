@@ -36,22 +36,16 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	if (!fontAttribute || ignoreMask == RKFontMixIgnoreAll)
 		return nil;
 	
-	NSMutableArray *properties = [NSMutableArray new];
-	
-	NSUInteger traits = CTFontGetSymbolicTraits(fontAttribute);
-	
 	// Template style for comparison
 	NSDictionary *characterStyle = [context cachedStyleFromParagraphStyle:attributes[RKParagraphStyleNameAttributeName] characterStyle:attributes[RKCharacterStyleNameAttributeName] processingDefaultStyle:isDefaultStyle];
 	CTFontRef characterStyleFontAttribute = (__bridge CTFontRef)characterStyle[RKFontAttributeName];
-	NSUInteger styleTraits = CTFontGetSymbolicTraits(characterStyleFontAttribute);
+	CTFontSymbolicTraits styleTraits = CTFontGetSymbolicTraits(characterStyleFontAttribute);
+	CTFontSymbolicTraits traits = CTFontGetSymbolicTraits(fontAttribute);
+	
+	NSMutableArray *properties = [NSMutableArray new];
 	
 	// Font Name (§17.3.2.26)
-	NSString *fontName;
-	BOOL fullFontNameRequired = [context isFullNameRequiredForFont: (__bridge ULFont *)fontAttribute];
-	if (fullFontNameRequired)
-		fontName = (__bridge NSString *)CTFontCopyFullName(fontAttribute);
-	else
-		fontName = (__bridge NSString *)CTFontCopyFamilyName(fontAttribute);
+	NSString *fontName = [self fontNameForFont:fontAttribute withoutTraits:traits];
 	
 	if (![(__bridge NSString *)CTFontCopyFullName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFullName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
 		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeName stringValue:fontName],
@@ -70,7 +64,7 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	}
 	
 	// Bold Trait (§17.3.2.1)
-	if (((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait) && !(ignoreMask & RKFontMixIgnoreBoldTrait)) && !fullFontNameRequired) {
+	if ((traits & kCTFontBoldTrait) != (styleTraits & kCTFontBoldTrait) && !(ignoreMask & RKFontMixIgnoreBoldTrait)) {
 		if (traits & kCTFontBoldTrait)
 			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeBoldElementName]];
 		else
@@ -78,7 +72,7 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	}
 	
 	// Italic Trait (§17.3.2.16)
-	if (((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait) && !(ignoreMask & RKFontMixIgnoreItalicTrait)) && !fullFontNameRequired) {
+	if ((traits & kCTFontItalicTrait) != (styleTraits & kCTFontItalicTrait) && !(ignoreMask & RKFontMixIgnoreItalicTrait)) {
 		if (traits & kCTFontItalicTrait)
 			[properties addObject: [NSXMLElement elementWithName: RKDOCXFontAttributeItalicElementName]];
 		else
@@ -86,6 +80,17 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	}
 	
 	return properties;
+}
+
++ (NSString *)fontNameForFont:(CTFontRef)font withoutTraits:(CTFontSymbolicTraits)traits
+{
+	CTFontDescriptorRef fontDescriptor = CTFontCopyFontDescriptor(font);
+	CTFontRef baseFont = CTFontCreateWithFontDescriptor(CTFontDescriptorCreateCopyWithSymbolicTraits(fontDescriptor, 0, traits), 0.0, NULL);
+	NSString *fontName = (__bridge_transfer NSString *)CTFontCopyFullName(baseFont);
+	
+	CFRelease(fontDescriptor);
+	CFRelease(baseFont);
+	return fontName;
 }
 
 + (NSUInteger)wordFontSizeFromPointSize:(CGFloat)pointSize
@@ -99,28 +104,24 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 
 + (RKFont *)fontByMixingFont:(RKFont *)baseFont withOverridingFont:(RKFont *)overridingFont usingMask:(RKFontMixMask)mask
 {
-	if (mask == 0)
-		return overridingFont;
-	else if (mask == RKFontMixIgnoreAll)
-		return baseFont;
-	
 	CTFontRef baseFontRef = (__bridge CTFontRef)baseFont;
 	CTFontRef overridingFontRef = (__bridge CTFontRef)overridingFont;
 	
 	CFStringRef fontName	= (mask & RKFontMixIgnoreFontName) ? CTFontCopyFullName(baseFontRef) : CTFontCopyFullName(overridingFontRef);
 	CGFloat fontSize		= (mask & RKFontMixIgnoreFontSize) ? CTFontGetSize(baseFontRef) : CTFontGetSize(overridingFontRef);
-	BOOL enableBoldTrait	= (mask & RKFontMixIgnoreBoldTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait : CTFontGetSymbolicTraits(overridingFontRef) & kCTFontBoldTrait;
-	BOOL enableItalicTrait	= (mask & RKFontMixIgnoreItalicTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait : CTFontGetSymbolicTraits(overridingFontRef) & kCTFontItalicTrait;
+	BOOL enableBoldTrait	= (mask & RKFontMixIgnoreBoldTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait : ((CTFontGetSymbolicTraits(baseFontRef) & kCTFontBoldTrait) != (CTFontGetSymbolicTraits(overridingFontRef) & kCTFontBoldTrait));
+	BOOL enableItalicTrait	= (mask & RKFontMixIgnoreItalicTrait) ? CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait : ((CTFontGetSymbolicTraits(baseFontRef) & kCTFontItalicTrait) != (CTFontGetSymbolicTraits(overridingFontRef) & kCTFontItalicTrait));
 	
 	CTFontSymbolicTraits traits = ((enableItalicTrait) ? kCTFontItalicTrait : 0) | ((enableBoldTrait) ? kCTFontBoldTrait : 0);
 	
 	// Create font with name and size
-	CTFontRef resultingFontAttribute = CTFontCreateWithName(fontName, fontSize, NULL);
+	CTFontRef resultingFontAttributeWithoutTraits = CTFontCreateWithName(fontName, fontSize, NULL);
 	
 	// Add bold and italic traits to font
-	resultingFontAttribute = CTFontCreateCopyWithSymbolicTraits(resultingFontAttribute, 0.0, NULL, traits, kCTFontItalicTrait | kCTFontBoldTrait);
+	CTFontRef resultingFontAttribute = CTFontCreateCopyWithSymbolicTraits(resultingFontAttributeWithoutTraits, 0.0, NULL, traits, kCTFontItalicTrait | kCTFontBoldTrait);
+	CFRelease(resultingFontAttributeWithoutTraits);
 	
-	return (__bridge RKFont *)resultingFontAttribute;
+	return (__bridge_transfer RKFont *)resultingFontAttribute;
 }
 
 @end
