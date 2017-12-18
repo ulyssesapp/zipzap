@@ -71,15 +71,13 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	if (!imageAttachment.imageFile.preferredFilename)
 		return nil;
 	
+	NSString *identifier = context.newImageId;
+	
 	// Relationship Handling
-	NSString *filename = [RKDOCXPartWriter packagePathForFilename:[imageAttachment.imageFile.preferredFilename sanitizedFilenameForRTFD] folder:RKDOCXMediaFolder];
-	
-	// Word does not support spaces in filenames.
-	filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
-	
+	NSString *filename = [RKDOCXPartWriter packagePathForFilename:[NSString stringWithFormat: @"image%@.%@", identifier, imageAttachment.imageFile.filename.pathExtension] folder:RKDOCXMediaFolder];
 	[context addDocumentPartWithData:imageAttachment.imageFile.regularFileContents filename:[RKDOCXPartWriter packagePathForFilename:filename folder:RKDOCXWordFolder] MIMEType:[self preferredMIMETypeForPathExtension: filename.pathExtension]];
-	NSString *identifier = [context newImageId];
 	NSString *relationshipID = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]];
+	
 	NSXMLElement *blipElement = [NSXMLElement elementWithName:RKDOCXImageBlipElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXImageEmbedAttributeName stringValue:relationshipID]]];
 	NSArray *nonVisualPropertyAttributes = @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier], [NSXMLElement attributeWithName:RKDOCXImageNameAttributeName stringValue:imageAttachment.imageFile.preferredFilename]];
 	NSMutableArray *documentPropertyAttributes = [NSMutableArray arrayWithArray: @[[NSXMLElement attributeWithName:RKDOCXImageIdentifierAttributeName stringValue:identifier],

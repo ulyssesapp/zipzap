@@ -173,9 +173,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (void)addDocumentPartWithData:(NSData *)part filename:(NSString *)filename MIMEType:(NSString *)MIMEType
 {
-	// Already added: skip the file (e.g. reused image).
-	if (_files[filename])
-		return;
+	NSAssert(!_files[filename], @"Document parts may be only set once: %@ was reused.", filename);
 	
 	[self addContentType:MIMEType forPathExtension:filename.pathExtension];
 	
