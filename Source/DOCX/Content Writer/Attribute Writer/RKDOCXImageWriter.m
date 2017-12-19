@@ -74,7 +74,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	NSString *identifier = [context newImageId];
 	
 	// Relationship Handling
-	NSString *filename = [RKDOCXPartWriter packagePathForFilename:[NSString stringWithFormat: @"image%@.%@", identifier, imageAttachment.imageFile.filename.pathExtension] folder:RKDOCXMediaFolder];
+	NSString *filename = [RKDOCXPartWriter packagePathForFilename:[NSString stringWithFormat: @"image%@.%@", identifier, imageAttachment.imageFile.preferredFilename.pathExtension ?: imageAttachment.imageFile.filename.pathExtension] folder:RKDOCXMediaFolder];
 	[context addDocumentPartWithData:imageAttachment.imageFile.regularFileContents filename:[RKDOCXPartWriter packagePathForFilename:filename folder:RKDOCXWordFolder] MIMEType:[self preferredMIMETypeForPathExtension: filename.pathExtension]];
 	NSString *relationshipID = [NSString stringWithFormat: @"rId%lu", [context indexForRelationshipWithTarget:filename andType:RKDOCXImageRelationshipType]];
 	
