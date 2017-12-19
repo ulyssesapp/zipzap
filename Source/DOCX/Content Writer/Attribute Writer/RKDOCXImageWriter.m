@@ -71,7 +71,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 	if (!imageAttachment.imageFile.preferredFilename)
 		return nil;
 	
-	NSString *identifier = context.newImageId;
+	NSString *identifier = [context newImageId];
 	
 	// Relationship Handling
 	NSString *filename = [RKDOCXPartWriter packagePathForFilename:[NSString stringWithFormat: @"image%@.%@", identifier, imageAttachment.imageFile.filename.pathExtension] folder:RKDOCXMediaFolder];
