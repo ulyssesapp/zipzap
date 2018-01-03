@@ -44,14 +44,16 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	
 	NSMutableArray *properties = [NSMutableArray new];
 	
-	// Font Name (§17.3.2.26)
-	NSString *fontName = [self fontNameForFont:fontAttribute withoutTraits:traits];
-	
+	// Set font name only if current character style didn't set it already
 	if (![(__bridge NSString *)CTFontCopyFullName(fontAttribute) isEqual: (__bridge NSString *)CTFontCopyFullName(characterStyleFontAttribute)] && !(ignoreMask & RKFontMixIgnoreFontName)) {
-		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeName stringValue:fontName],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeName stringValue:fontName],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeName stringValue:fontName],
-																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeName stringValue:fontName]]];
+		// Get font name without bold/italic traits, since these traits will be set using DOCX style tags. Preserve other traits (e.g. Condensed)
+		NSString *baseFontName = [self fontNameForFont:fontAttribute withoutTraits:(traits & (kCTFontBoldTrait|kCTFontItalicTrait))];
+		
+		// See (§17.3.2.26)
+		NSXMLElement *fontElement = [NSXMLElement elementWithName:RKDOCXFontAttributeFontElementName children:nil attributes:@[[NSXMLElement attributeWithName:RKDOCXFontAttributeAsciiFontAttributeName stringValue:baseFontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeComplexScriptFontAttributeName stringValue:baseFontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeEastAsiaFontAttributeName stringValue:baseFontName],
+																															   [NSXMLElement attributeWithName:RKDOCXFontAttributeHighAnsiFontAttributeName stringValue:baseFontName]]];
 		[properties addObject: fontElement];
 	}
 	
@@ -82,14 +84,21 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	return properties;
 }
 
-+ (NSString *)fontNameForFont:(CTFontRef)font withoutTraits:(CTFontSymbolicTraits)traits
++ (NSString *)fontNameForFont:(CTFontRef)fontWithTraits withoutTraits:(CTFontSymbolicTraits)excludedTraits
 {
-	CTFontDescriptorRef fontDescriptor = CTFontCopyFontDescriptor(font);
-	CTFontRef baseFont = CTFontCreateWithFontDescriptor(CTFontDescriptorCreateCopyWithSymbolicTraits(fontDescriptor, 0, traits), 0.0, NULL);
-	NSString *fontName = (__bridge_transfer NSString *)CTFontCopyFullName(baseFont);
-	
+	// Find a base font by excluding the given traits. Fall back to given font, if the font is only available with traits.
+	CTFontDescriptorRef fontDescriptor = CTFontCopyFontDescriptor(fontWithTraits);
+	CTFontDescriptorRef fontDescriptorWithoutTraits = CTFontDescriptorCreateCopyWithSymbolicTraits(fontDescriptor, 0, excludedTraits);
 	CFRelease(fontDescriptor);
+	if (!fontDescriptorWithoutTraits)
+		return CFBridgingRelease(CTFontCopyFullName(fontWithTraits));
+	
+	// Get full name from base font
+	CTFontRef baseFont = CTFontCreateWithFontDescriptor(fontDescriptorWithoutTraits, 0.0, NULL);
+	NSString *fontName = CFBridgingRelease(CTFontCopyFullName(baseFont));
+	CFRelease(fontDescriptorWithoutTraits);
 	CFRelease(baseFont);
+
 	return fontName;
 }
 
