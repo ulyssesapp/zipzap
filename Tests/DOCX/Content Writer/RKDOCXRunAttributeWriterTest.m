@@ -188,10 +188,10 @@
 
 - (void)testRunElementWithoutBaseFont
 {
-	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"Silom", 12, NULL);
+	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"BradleyHandITCTT-Bold", 12, NULL);
 	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)font};
 	
-	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Silom does not provide base font.\n" attributes:attributes];
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"BradleyHandITCTT-Bold does not provide base font.\n" attributes:attributes];
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	
 	[self assertDOCX:document withTestDocument:@"no-base-font"];
