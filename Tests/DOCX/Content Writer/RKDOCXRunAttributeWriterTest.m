@@ -186,6 +186,70 @@
 	[self assertDOCX:document withTestDocument:@"ligatures"];
 }
 
+- (void)testRunElementWithoutBaseFont
+{
+	CTFontRef font = CTFontCreateWithName((__bridge CFStringRef)@"Silom", 12, NULL);
+	NSDictionary *attributes = @{RKFontAttributeName: (__bridge RKFont *)font};
+	
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Silom does not provide base font.\n" attributes:attributes];
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"no-base-font"];
+}
+
+- (void)testRunElementWithLightFont
+{
+	CTFontRef ultraLightFont = CTFontCreateWithName((__bridge CFStringRef)@"HelveticaNeue-UltraLight", 12, NULL);
+	NSDictionary *ultraLightAttributes = @{RKFontAttributeName: (__bridge RKFont *)ultraLightFont};
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Ultra light font should be preserved.\n" attributes:ultraLightAttributes];
+
+	CTFontRef ultraLightItalicFont = CTFontCreateWithName((__bridge CFStringRef)@"HelveticaNeue-UltraLightItalic", 12, NULL);
+	NSDictionary *ultraLightItalicAttributes = @{RKFontAttributeName: (__bridge RKFont *)ultraLightItalicFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Ultra light italic font should be preserved and marked as italic.\n" attributes:ultraLightItalicAttributes]];
+
+	CTFontRef lightFont = CTFontCreateWithName((__bridge CFStringRef)@"HelveticaNeue-Light", 12, NULL);
+	NSDictionary *lightAttributes = @{RKFontAttributeName: (__bridge RKFont *)lightFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Light italic font should be preserved and marked as italic.\n" attributes:lightAttributes]];
+	
+	CTFontRef lightItalicFont = CTFontCreateWithName((__bridge CFStringRef)@"HelveticaNeue-LightItalic", 12, NULL);
+	NSDictionary *lightItalicAttributes = @{RKFontAttributeName: (__bridge RKFont *)lightItalicFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Light italic font should be preserved and marked as italic.\n" attributes:lightItalicAttributes]];
+	
+	CTFontRef mediumFont = CTFontCreateWithName((__bridge CFStringRef)@"HelveticaNeue-Medium", 12, NULL);
+	NSDictionary *mediumAttributes = @{RKFontAttributeName: (__bridge RKFont *)mediumFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Medium font should be preserved.\n" attributes:mediumAttributes]];
+
+	CTFontRef boldFont = CTFontCreateWithName((__bridge CFStringRef)@"HelveticaNeue-Bold", 12, NULL);
+	NSDictionary *boldAttributes = @{RKFontAttributeName: (__bridge RKFont *)boldFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Bold font should be preserved and marked as bold.\n" attributes:boldAttributes]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	[self assertDOCX:document withTestDocument:@"light-font"];
+}
+
+- (void)testRunElementWithCondensedFont
+{
+	CTFontRef condensedFont = CTFontCreateWithName((__bridge CFStringRef)@"Futura-CondensedMedium", 12, NULL);
+	NSDictionary *condensedAttributes = @{RKFontAttributeName: (__bridge RKFont *)condensedFont};
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Condensed font should be preserved.\n" attributes:condensedAttributes];
+
+	CTFontRef condensedBoldFont = CTFontCreateWithName((__bridge CFStringRef)@"Futura-CondensedExtraBold", 12, NULL);
+	NSDictionary *condensedBoldAttributes = @{RKFontAttributeName: (__bridge RKFont *)condensedBoldFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Bold condensed font should be preserved and marked as bold.\n" attributes:condensedBoldAttributes]];
+
+	CTFontRef baseFont = CTFontCreateWithName((__bridge CFStringRef)@"Futura", 12, NULL);
+	NSDictionary *baseAttributes = @{RKFontAttributeName: (__bridge RKFont *)baseFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Base font of condensed font should be preserved.\n" attributes:baseAttributes]];
+
+	CTFontRef baseBoldFont = CTFontCreateWithName((__bridge CFStringRef)@"Futura Bold", 12, NULL);
+	NSDictionary *baseBoldAttributes = @{RKFontAttributeName: (__bridge RKFont *)baseBoldFont};
+	[attributedString appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"Bold base font of condensed font should be preserved and marked as bold.\n" attributes:baseBoldAttributes]];
+	
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"condensed-font"];
+}
+
 - (void)testPageNumberPlaceholder
 {
 	NSDictionary *attributes = @{RKPlaceholderAttributeName: @(RKPlaceholderPageNumber)};
