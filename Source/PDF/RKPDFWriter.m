@@ -39,9 +39,11 @@
     
     // Convert all sections to core text representation
     for (RKSection *section in document.sections) {
-        // Convert section
-        RKSection *convertedSection = [section coreTextRepresentationUsingContext: context];
-        [context appendSection: convertedSection];
+		@autoreleasepool {
+			// Convert section
+			RKSection *convertedSection = [section coreTextRepresentationUsingContext: context];
+			[context appendSection: convertedSection];
+		}
     }
     
     // Apply rendering per section
