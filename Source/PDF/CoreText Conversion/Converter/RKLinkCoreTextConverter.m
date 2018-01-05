@@ -26,9 +26,9 @@
 {
     NSMutableAttributedString *converted = [attributedString mutableCopy];
     
-    // Emulate superscript
-    [attributedString enumerateAttribute:RKLinkAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *modeObject, NSRange range, BOOL *stop) {
-        if (!modeObject)
+    // Emulate link rendering
+    [attributedString enumerateAttribute:RKLinkAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSString *link, NSRange range, BOOL *stop) {
+        if (!link)
             return;
         
         [converted addTextRenderer:RKPDFLinkRenderer.class forRange:range];
