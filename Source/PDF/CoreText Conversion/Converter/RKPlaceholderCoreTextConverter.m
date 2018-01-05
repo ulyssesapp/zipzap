@@ -29,7 +29,7 @@
     
     // Emulate superscript
     [attributedString enumerateAttribute:RKPlaceholderAttributeName inRange:NSMakeRange(0, attributedString.length) options:0 usingBlock:^(NSNumber *placeholder, NSRange range, BOOL *stop) {
-        if (!placeholder)
+        if (!placeholder.unsignedIntegerValue)
             return;
         
         RKPDFPlaceholder *pdfPlaceholder = [[RKPDFPlaceholder alloc] initWithPlaceholderType:placeholder.unsignedIntegerValue];
