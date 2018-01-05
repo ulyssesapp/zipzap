@@ -13,8 +13,8 @@
     RKPlaceholderSectionNumber     The placeholder should be substituted by the current section number (\sectnum)
 */
 typedef enum : NSUInteger {
-    RKPlaceholderPageNumber         = 0,
-    RKPlaceholderSectionNumber      = 1
+    RKPlaceholderPageNumber         = 1,
+    RKPlaceholderSectionNumber      = 2
 } RKPlaceholderType;
 
 extern NSString *RKPlaceholderAttributeName;
