@@ -117,8 +117,8 @@ NSString *RKDOCXFontAttributeHighAnsiFontAttributeName			= @"w:hAnsi";
 	CTFontRef overridingFontRef = (__bridge CTFontRef)overridingFont;
 	
 	CFStringRef fontName	= (mask & RKFontMixIgnoreFontName
-							   ? CTFontCopyFullName(baseFontRef)
-							   : CTFontCopyFullName(overridingFontRef));
+							   ? CTFontCopyPostScriptName(baseFontRef)
+							   : CTFontCopyPostScriptName(overridingFontRef));
 	CGFloat fontSize		= (mask & RKFontMixIgnoreFontSize
 							   ? CTFontGetSize(baseFontRef)
 							   : CTFontGetSize(overridingFontRef));
