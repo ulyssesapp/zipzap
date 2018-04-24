@@ -73,10 +73,7 @@
         firstLineHeadIndent = paragraphStyle.firstLineHeadIndent;
         headIndent = paragraphStyle.headIndent;
         tailIndent = paragraphStyle.tailIndent;
-        
-        #if !TARGET_OS_IPHONE
-            defaultTabInterval = paragraphStyle.defaultTabInterval;
-        #endif
+		defaultTabInterval = paragraphStyle.defaultTabInterval;
         
         lineBreakMode = (CTLineBreakMode)paragraphStyle.lineBreakMode;
         lineHeightMultiple = paragraphStyle.lineHeightMultiple;
