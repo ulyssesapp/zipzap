@@ -118,7 +118,7 @@
     _listItemIndices[keys[0]] = [NSMutableArray new];
 }
 
-- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
+- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList resetIndex:(NSUInteger)resetIndex
 {
     NSUInteger listIndex = [self indexOfListStyle: textList];
     NSMutableArray *itemNumbers = _listItemIndices[@(listIndex)];
@@ -130,7 +130,7 @@
     
     if (level >= itemNumbers.count) {
         // Fill with 1 if requested, nested list is deeper nested than the current list length
-        for (NSUInteger position = itemNumbers.count; position < level + 1; position ++) {
+        for (NSUInteger position = itemNumbers.count; position < level+ 1; position ++) {
             [itemNumbers addObject: @([textList startNumberForLevel: position])];
         }
     }
@@ -140,12 +140,16 @@
         itemNumbers[level] = @(currentItemNumber);
     }
 	
+	// Override item counter if needed
+	if (resetIndex != NSUIntegerMax)
+		itemNumbers[level] = @(resetIndex);
+	
     return [itemNumbers copy];
 }
 
 - (NSString *)markerForListItem:(RKListItem *)listItem
 {
-    NSArray *itemNumbers = [self incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle];
+	NSArray *itemNumbers = [self incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle resetIndex:listItem.resetIndex];
     return [listItem.listStyle markerForItemNumbers: itemNumbers];
 }
 

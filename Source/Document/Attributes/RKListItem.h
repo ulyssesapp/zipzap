@@ -19,15 +19,9 @@ extern NSString *RKListItemAttributeName;
 
 /*!
  @abstract Initializes a text list item as member of a text list identified by a list style
- @discussion Indentation level must be between 0 and 8
+ @discussion Indentation level must be between 0 and 8. The list item can reset the current enumeration index to the given value, if it has a value different from NSUIntegerMax.
  */
-- (id)initWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel;
-
-/*!
- @abstract Creates a text list item as member of a text list identified by a list style
- @discussion Indentation level must be between 0 and 8
- */
-+ (RKListItem *)listItemWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel;
+- (instancetype)initWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex;
 
 /*!
  @abstract Returns YES, if two list items use the same list style and indentation level.
@@ -37,12 +31,18 @@ extern NSString *RKListItemAttributeName;
 /*!
  @abstract A reference to the list style identifying the text list
  */
-@property(nonatomic,strong,readwrite) RKListStyle *listStyle;
+@property(nonatomic,strong) RKListStyle *listStyle;
 
 /*!
  @abstract The indentation level used by the list
  */
-@property(nonatomic,readwrite) NSUInteger indentationLevel;
+@property(nonatomic) NSUInteger indentationLevel;
+
+/*!
+ @abstract An index that should reset the enumeration index for the current list item (and all subsequent items).
+ @discussion Will be ignored if set to NSUIntegerMax.
+ */
+@property(nonatomic) NSUInteger resetIndex;
 
 @end
 
@@ -54,7 +54,7 @@ extern NSString *RKListItemAttributeName;
 /*!
  @abstract Creates an attributed string containing a list item
  */
-+ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel;
++ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex;
 
 @end
 
@@ -66,11 +66,11 @@ extern NSString *RKListItemAttributeName;
 /*!
  @abstract Inserts a list item paragraph into an attributed string at a certain position
  */
-- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
+- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex atIndex:(NSUInteger)location;
 
 /*!
  @abstract Appends a list item paragraph to an attributed string
  */
-- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel; 
+- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex; 
 
 @end

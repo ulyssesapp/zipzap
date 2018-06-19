@@ -32,7 +32,7 @@
 						];
 		
     RKListStyle *textList = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects:@"%d.", @"%*%r.", @"%*%a.", nil] styles:styles];
-    RKListItem *textListItem = [RKListItem listItemWithStyle:textList indentationLevel:2];
+	RKListItem *textListItem = [[RKListItem alloc] initWithStyle:textList indentationLevel:2 resetIndex:NSUIntegerMax];
 
     return textListItem;
 }
@@ -68,41 +68,41 @@
     
     NSMutableAttributedString *testString = [[NSMutableAttributedString alloc] initWithString:@""];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"A\nB"] withStyle:textList withIndentationLevel:0];
+	[testString appendListItem:[[NSAttributedString alloc] initWithString:@"A\nB"] withStyle:textList withIndentationLevel:0 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] withStyle:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAB"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAC"] withStyle:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AA"] withStyle:textList withIndentationLevel:1 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAA"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAB"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AAC"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AB"] withStyle:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABA"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABB"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABC"] withStyle:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AB"] withStyle:textList withIndentationLevel:1 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABA"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABB"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ABC"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AC"] withStyle:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACA"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACB"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACC"] withStyle:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"AC"] withStyle:textList withIndentationLevel:1 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACA"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACB"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"ACC"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"B"] withStyle:textList withIndentationLevel:0];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"B"] withStyle:textList withIndentationLevel:0 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BA"] withStyle:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAA"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAB"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAC"] withStyle:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BA"] withStyle:textList withIndentationLevel:1 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAA"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAB"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BAC"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BB"] withStyle:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBA"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBB"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBC"] withStyle:textList withIndentationLevel:2];    
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BB"] withStyle:textList withIndentationLevel:1 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBA"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBB"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BBC"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BC"] withStyle:textList withIndentationLevel:1];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCA"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCB"] withStyle:textList withIndentationLevel:2];
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCC"] withStyle:textList withIndentationLevel:2];   
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BC"] withStyle:textList withIndentationLevel:1 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCA"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCB"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"BCC"] withStyle:textList withIndentationLevel:2 resetIndex:NSUIntegerMax];
     
-    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"C"] withStyle:textList withIndentationLevel:0];
+    [testString appendListItem:[[NSAttributedString alloc] initWithString:@"C"] withStyle:textList withIndentationLevel:0 resetIndex:NSUIntegerMax];
 
     return testString;
 }
@@ -125,7 +125,7 @@
     XCTAssertEqual([textLists.allValues objectAtIndex: 0], textListItem.listStyle, @"Invalid text list registered");
 
     // Item counts properly incremented
-    NSArray *itemNumbers = [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle];    
+	NSArray *itemNumbers = [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle resetIndex:NSUIntegerMax];
 
     XCTAssertEqual(itemNumbers.count, (NSUInteger)3, @"Invalid text list count");
     XCTAssertEqual([[itemNumbers objectAtIndex: 0] unsignedIntegerValue], (NSUInteger)1, @"Invalid text list registered");    
@@ -141,12 +141,12 @@
     RKResourcePool *resourcePool = [RKResourcePool new];
     
     // Set item numbers to 2.1.3
-    [resourcePool.listCounter incrementItemNumbersForListLevel:0 ofList:textListItem.listStyle];
-    [resourcePool.listCounter incrementItemNumbersForListLevel:0 ofList:textListItem.listStyle];
+    [resourcePool.listCounter incrementItemNumbersForListLevel:0 ofList:textListItem.listStyle resetIndex:NSUIntegerMax];
+    [resourcePool.listCounter incrementItemNumbersForListLevel:0 ofList:textListItem.listStyle resetIndex:NSUIntegerMax];
 
-    [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle];
-    [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle];
-    [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle];
+    [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle resetIndex:NSUIntegerMax];
+    [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle resetIndex:NSUIntegerMax];
+    [resourcePool.listCounter incrementItemNumbersForListLevel:2 ofList:textListItem.listStyle resetIndex:NSUIntegerMax];
         
     // Generate item number (will increment to 2.1.4)
     [RKListItemWriter addTagsForAttribute:RKListItemAttributeName value:textListItem effectiveRange:NSMakeRange(0,1) toString:taggedString originalString:nil conversionPolicy:0 resources:resourcePool];

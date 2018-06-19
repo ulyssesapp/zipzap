@@ -30,9 +30,9 @@
 
 /*!
  @abstract Returns a new item number of a list level
- @discussion All item numbers for more nested list levels will be reset to the starting number of the level
+ @discussion All item numbers for more nested list levels will be reset to the starting number of the level. If the passed reset index is not NSUInteger, the enumeration index will be reset to the given value.
  */
-- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList;
+- (NSArray *)incrementItemNumbersForListLevel:(NSUInteger)level ofList:(RKListStyle *)textList resetIndex:(NSUInteger)resetIndex;
 
 /*!
  @abstract Returns the collected list styles

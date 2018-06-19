@@ -103,7 +103,7 @@
 {
     if (listItem) {
         NSUInteger listIndex = [resources.listCounter indexOfListStyle: listItem.listStyle];
-        NSArray *itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle];
+        NSArray *itemNumbers = [resources.listCounter incrementItemNumbersForListLevel:listItem.indentationLevel ofList:listItem.listStyle resetIndex:listItem.resetIndex];
         
         NSString *markerString = [RKListStyle systemCompatibleMarker: [[listItem.listStyle markerForItemNumbers:itemNumbers] RTFEscapedString]];
 		NSString *markerStyle = [RKAttributedStringWriter stylesheetTagsFromAttributes:[listItem.listStyle markerStyleForLevel: listItem.indentationLevel] resources:resources];

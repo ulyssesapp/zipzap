@@ -30,21 +30,25 @@
 
     // Create a simple list
     RKListStyle *listStyleA = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%*%d.", @"%*%d.", @"%*%d.", @"%*%d.", nil] styles:nil];
-    RKListItem *listAItemA = [RKListItem listItemWithStyle:listStyleA indentationLevel:0];
-    RKListItem *listAItemAA = [RKListItem listItemWithStyle:listStyleA indentationLevel:1];
-    RKListItem *listAItemAB = [RKListItem listItemWithStyle:listStyleA indentationLevel:1];
-    RKListItem *listAItemABA = [RKListItem listItemWithStyle:listStyleA indentationLevel:2];
-    RKListItem *listAItemABAA = [RKListItem listItemWithStyle:listStyleA indentationLevel:3];
-    RKListItem *listAItemB = [RKListItem listItemWithStyle:listStyleA indentationLevel:0];    
+	RKListItem *listAItemA = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:0 resetIndex:NSUIntegerMax];
+	RKListItem *listAItemAA = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:1 resetIndex:NSUIntegerMax];
+    RKListItem *listAItemAB = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:1 resetIndex:NSUIntegerMax];
+    RKListItem *listAItemABA = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:2 resetIndex:NSUIntegerMax];
+    RKListItem *listAItemABAA = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:3 resetIndex:NSUIntegerMax];
+	RKListItem *listAItemB = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:0 resetIndex:NSUIntegerMax];
+	
+	// Override index for partiuclar item
+	RKListItem *listAItemC = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:0 resetIndex:44];
+	RKListItem *listAItemD = [[RKListItem alloc] initWithStyle:listStyleA indentationLevel:0 resetIndex:NSUIntegerMax];
     
     // Create a list, where level 4 will start the item count with 12
     RKListStyle *listStyleB = [RKListStyle listStyleWithLevelFormats:[NSArray arrayWithObjects: @"%*%d.", @"%*%d.", @"%*%d.", @"%*%d.", nil] styles:nil startNumbers:overrides];
-    RKListItem *listBItemA = [RKListItem listItemWithStyle:listStyleB indentationLevel:0];
-    RKListItem *listBItemAA = [RKListItem listItemWithStyle:listStyleB indentationLevel:1];
-    RKListItem *listBItemAB = [RKListItem listItemWithStyle:listStyleB indentationLevel:1];
-    RKListItem *listBItemABA = [RKListItem listItemWithStyle:listStyleB indentationLevel:2];
-    RKListItem *listBItemABAA = [RKListItem listItemWithStyle:listStyleB indentationLevel:3];
-    RKListItem *listBItemB = [RKListItem listItemWithStyle:listStyleB indentationLevel:0];    
+    RKListItem *listBItemA = [[RKListItem alloc] initWithStyle:listStyleB indentationLevel:0 resetIndex:NSUIntegerMax];
+	RKListItem *listBItemAA = [[RKListItem alloc] initWithStyle:listStyleB indentationLevel:1 resetIndex:NSUIntegerMax];
+    RKListItem *listBItemAB = [[RKListItem alloc] initWithStyle:listStyleB indentationLevel:1 resetIndex:NSUIntegerMax];
+    RKListItem *listBItemABA = [[RKListItem alloc] initWithStyle:listStyleB indentationLevel:2 resetIndex:NSUIntegerMax];
+    RKListItem *listBItemABAA = [[RKListItem alloc] initWithStyle:listStyleB indentationLevel:3 resetIndex:NSUIntegerMax];
+    RKListItem *listBItemB = [[RKListItem alloc] initWithStyle:listStyleB indentationLevel:0 resetIndex:NSUIntegerMax];
     
     RKListCounter *enumerator = [RKListCounter new];
     
@@ -65,7 +69,10 @@
     XCTAssertEqualObjects([enumerator markerForListItem: listBItemABAA], @"1.2.1.13.", @"Invalid marker");
     
     XCTAssertEqualObjects([enumerator markerForListItem: listAItemB], @"2.", @"Invalid marker");
-    XCTAssertEqualObjects([enumerator markerForListItem: listBItemB], @"2.", @"Invalid marker");  
+	XCTAssertEqualObjects([enumerator markerForListItem: listAItemC], @"44.", @"Invalid marker");
+	XCTAssertEqualObjects([enumerator markerForListItem: listAItemD], @"45.", @"Invalid marker");
+	
+    XCTAssertEqualObjects([enumerator markerForListItem: listBItemB], @"2.", @"Invalid marker");
 
     [enumerator resetCounterOfList: listStyleA];
 
