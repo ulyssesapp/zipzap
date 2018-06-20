@@ -39,7 +39,7 @@ NSString *RKDOCXListItemLevelElementName				= @"w:ilvl";
 	NSXMLElement *levelElement = [NSXMLElement elementWithName:RKDOCXListItemLevelElementName children:nil attributes:@[levelAttribute]];
 	
 	// Enumerator element
-	NSXMLElement *numberingIdAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:[context indexForListStyle: listItem.listStyle]];
+	NSXMLElement *numberingIdAttribute = [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName integerValue:[context numberingDefinitionIndexForListItem: listItem]];
 	NSXMLElement *numberingIdElement = [NSXMLElement elementWithName:RKDOCXListItemNumberingIdentifierElementName children:nil attributes:@[numberingIdAttribute]];
 	
 	return @[[NSXMLElement elementWithName:RKDOCXListItemNumberingPropertyElementName children:@[levelElement, numberingIdElement] attributes:nil]];

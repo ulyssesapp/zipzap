@@ -51,14 +51,17 @@
 
 - (void)testDifferentStartNumbers
 {
-	RKListStyle *listStyle = [RKListStyle listStyleWithLevelFormats:@[@"%A.", @"%d.", @"%R."] styles:@[@{RKListStyleMarkerLocationKey: @10, RKListStyleMarkerWidthKey: @20}, @{RKListStyleMarkerLocationKey: @15, RKListStyleMarkerWidthKey: @25}, @{RKListStyleMarkerLocationKey: @20, RKListStyleMarkerWidthKey: @30}] startNumbers:@[@8, @42, @1337]];
+	RKListStyle *listStyle = [RKListStyle listStyleWithLevelFormats:@[@"%A.", @"%d.", @"%R."] styles:@[@{RKListStyleMarkerLocationKey: @10, RKListStyleMarkerWidthKey: @20}, @{RKListStyleMarkerLocationKey: @15, RKListStyleMarkerWidthKey: @25}, @{RKListStyleMarkerLocationKey: @20, RKListStyleMarkerWidthKey: @30}]];
 	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @""];
-	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1"] withStyle:listStyle withIndentationLevel:0 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1"] withStyle:listStyle withIndentationLevel:0 resetIndex:8];
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 2"] withStyle:listStyle withIndentationLevel:0 resetIndex:NSUIntegerMax];
-	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1.1"] withStyle:listStyle withIndentationLevel:1 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1.1"] withStyle:listStyle withIndentationLevel:1 resetIndex:42];
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1.2"] withStyle:listStyle withIndentationLevel:1 resetIndex:NSUIntegerMax];
-	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1.1.1"] withStyle:listStyle withIndentationLevel:2 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1.1.1"] withStyle:listStyle withIndentationLevel:2 resetIndex:1337];
 	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 1.1.2"] withStyle:listStyle withIndentationLevel:2 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 3"] withStyle:listStyle withIndentationLevel:0 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 3.1"] withStyle:listStyle withIndentationLevel:1 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"List item 3.2"] withStyle:listStyle withIndentationLevel:1 resetIndex:9];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
 	

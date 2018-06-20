@@ -1911,6 +1911,14 @@
 			name = "Style Naming";
 			sourceTree = "<group>";
 		};
+		79D9708220D9297700CF24F3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utils;
+			path = DOCX/Utils;
+			sourceTree = "<group>";
+		};
 		79F4E17715AAE135002B1415 /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
@@ -2098,6 +2106,7 @@
 				A074BE5A1AC4423C008B3DED /* RKDOCXConversionContext.m */,
 				A04494201ACACDDD006FB62D /* Content Writer */,
 				A0E438E21AC96C96009EB872 /* Asset Writer */,
+				79D9708220D9297700CF24F3 /* Utils */,
 			);
 			name = DOCX;
 			sourceTree = "<group>";
