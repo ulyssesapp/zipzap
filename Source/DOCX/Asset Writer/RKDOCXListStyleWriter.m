@@ -78,8 +78,9 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 	}
 	
 	// Numbering instances
-	for (NSXMLElement *numberingDefinitionElement in numberingDefinitionElements)
+	for (NSXMLElement *numberingDefinitionElement in numberingDefinitionElements) {
 		[document.rootElement addChild: numberingDefinitionElement];
+	}
 	
 	[context indexForRelationshipWithTarget:RKDOCXNumberingFilename andType:RKDOCXListStyleRelationshipType];
 	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXNumberingFilename folder:RKDOCXWordFolder] contentType:RKDOCXNumberingContentType];
