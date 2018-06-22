@@ -130,7 +130,7 @@
     
     if (level >= itemNumbers.count) {
         // Fill with 1 if requested, nested list is deeper nested than the current list length
-        for (NSUInteger position = itemNumbers.count; position < level+ 1; position ++) {
+        for (NSUInteger position = itemNumbers.count; position < level + 1; position ++) {
             [itemNumbers addObject: @([textList startNumberForLevel: position])];
         }
     }
