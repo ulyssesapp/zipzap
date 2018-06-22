@@ -25,6 +25,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	NSMutableDictionary		*_paragraphStyles;
 	NSMutableDictionary		*_documentRelationships;
 	NSMutableSet			*_consumedListItems;
+	NSMapTable				*_numberingDefinitionsForListStyles;
 }
 @end
 
@@ -52,7 +53,9 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_footerCount = 0;
 		_evenAndOddHeaders = NO;
 		_listStyles = [NSDictionary new];
+		_numberingDefinitions = [NSDictionary new];
 		_consumedListItems = [NSMutableSet new];
+		_numberingDefinitionsForListStyles = [NSMapTable new];
 		_currentRelationshipSource = @"document.xml";
 		_documentRelationships = [NSMutableDictionary new];
 		_packageRelationships = [NSDictionary new];
@@ -265,10 +268,64 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		return index;
 	
 	// Register new list style
-	index = _listStyles.count + 1;
+	index = _listStyles.count;
 	NSMutableDictionary *newListStyles = [_listStyles mutableCopy];
 	newListStyles[@(index)] = listStyle;
 	_listStyles = newListStyles;
+	
+	return index;
+}
+
+- (NSUInteger)numberingDefinitionIndexForListItem:(RKListItem *)listItem
+{
+	NSArray<NSNumber *> *definitions = [self updateNumberingDefinitionsForListItem: listItem];
+	return definitions.lastObject.unsignedIntegerValue;
+}
+
+- (NSArray *)updateNumberingDefinitionsForListItem:(RKListItem *)listItem
+{
+	NSArray *numberingDefinitionIndices = [_numberingDefinitionsForListStyles objectForKey: listItem.listStyle];
+	
+	// We moved back to a higher level: Truncate.
+	if (numberingDefinitionIndices.count > listItem.indentationLevel + 1) {
+		numberingDefinitionIndices = [numberingDefinitionIndices subarrayWithRange: NSMakeRange(0, listItem.indentationLevel+1)];
+	}
+
+	// We stay or switch to a level
+	if (numberingDefinitionIndices.count == listItem.indentationLevel + 1) {
+		// Reset definition index only if the start index should be resetted
+		if (_numberingDefinitions[numberingDefinitionIndices.lastObject].resetIndex != NSUIntegerMax) {
+			NSMutableArray *updatedDefinitionIndices = [numberingDefinitionIndices mutableCopy];
+			updatedDefinitionIndices[updatedDefinitionIndices.count - 1] = [self registerNumberingDefinitionForListItem: listItem];
+			numberingDefinitionIndices = updatedDefinitionIndices;
+		}
+	}
+	
+	// We entered a new level: Append definition
+	if (numberingDefinitionIndices.count < listItem.indentationLevel + 1) {
+		NSMutableArray *updatedDefinitionIndices = [numberingDefinitionIndices mutableCopy] ?: [NSMutableArray new];
+		
+		// Create dummy definitions for intermediate levels (usually not needed, only used to handle malformed input)
+		for (NSInteger index = updatedDefinitionIndices.count; index < listItem.indentationLevel; index ++) {
+			[updatedDefinitionIndices addObject: [self registerNumberingDefinitionForListItem: [[RKListItem alloc] initWithStyle:listItem.listStyle indentationLevel:index resetIndex:NSUIntegerMax]]];
+		}
+		
+		// Create definition for last level
+		[updatedDefinitionIndices addObject: [self registerNumberingDefinitionForListItem: listItem]];
+		numberingDefinitionIndices = updatedDefinitionIndices;
+	}
+
+	// Update definition
+	[_numberingDefinitionsForListStyles setObject:numberingDefinitionIndices forKey:listItem.listStyle];
+	return numberingDefinitionIndices;
+}
+
+- (NSNumber *)registerNumberingDefinitionForListItem:(RKListItem *)listItem
+{
+	NSMutableDictionary *numberingDefinitions = [_numberingDefinitions mutableCopy];
+	NSNumber *index = @(numberingDefinitions.count + 1);
+	numberingDefinitions[index] = listItem;
+	_numberingDefinitions = numberingDefinitions;
 	
 	return index;
 }

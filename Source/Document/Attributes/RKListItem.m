@@ -12,21 +12,17 @@ NSString *RKListItemAttributeName = @"RKTextListItem";
 
 @implementation RKListItem
 
-- (id)initWithStyle:(RKListStyle *)initialListStyle indentationLevel:(NSUInteger)initialIndentationLevel
+- (instancetype)initWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex
 {
     self = [self init];
     
     if (self) {
-        _listStyle = initialListStyle;
-        _indentationLevel = initialIndentationLevel;
+        _listStyle = listStyle;
+        _indentationLevel = indentationLevel;
+		_resetIndex = resetIndex;
     }
 
     return self;
-}
-
-+ (RKListItem *)listItemWithStyle:(RKListStyle *)listStyle indentationLevel:(NSUInteger)indentationLevel
-{
-    return [[RKListItem alloc] initWithStyle:listStyle indentationLevel:indentationLevel];
 }
 
 - (BOOL)isEqualToListItem:(RKListItem *)other
@@ -34,7 +30,7 @@ NSString *RKListItemAttributeName = @"RKTextListItem";
     if (![other isKindOfClass: RKListItem.class])
         return NO;
     
-    return [self.listStyle isEqual: other.listStyle] && (self.indentationLevel == other.indentationLevel);
+    return [self.listStyle isEqual: other.listStyle] && (self.indentationLevel == other.indentationLevel) && (self.resetIndex == other.resetIndex);
 }
 
 - (NSUInteger)hash
@@ -44,17 +40,17 @@ NSString *RKListItemAttributeName = @"RKTextListItem";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"(RKTextListItem list:%@ indentationLevel:%lu)", [self.listStyle description], self.indentationLevel];
+	return [NSString stringWithFormat:@"(RKTextListItem list:%@ indentationLevel:%tu resetIndex:%tu)", [self.listStyle description], self.indentationLevel, self.resetIndex];
 }
 
 @end
 
 @implementation NSAttributedString (RKAttributedStringListItemConvenience)
 
-+ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel
++ (NSAttributedString *)attributedStringWithListItem:(NSAttributedString *)text usingStyle:(RKListStyle *)listStyle withIndentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString: text];
-    RKListItem *listItem = [RKListItem listItemWithStyle:listStyle indentationLevel:indentationLevel];
+	RKListItem *listItem = [[RKListItem alloc] initWithStyle:listStyle indentationLevel:indentationLevel resetIndex:resetIndex];
     
     // A trailing \n is required since a list item must be a paragraph
     if (![attributedString.string hasSuffix:@"\n"])
@@ -69,16 +65,16 @@ NSString *RKListItemAttributeName = @"RKTextListItem";
 
 @implementation NSMutableAttributedString (RKMutableAttributedStringAdditions)
 
-- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle*)listStyle withIndentationLevel:(NSUInteger)indentationLevel atIndex:(NSUInteger)location; 
+- (void)insertListItem:(NSAttributedString *)text withStyle:(RKListStyle*)listStyle withIndentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex atIndex:(NSUInteger)location
 {
-    NSAttributedString *listItemString = [NSAttributedString attributedStringWithListItem:text usingStyle:listStyle withIndentationLevel:indentationLevel];
+    NSAttributedString *listItemString = [NSAttributedString attributedStringWithListItem:text usingStyle:listStyle withIndentationLevel:indentationLevel resetIndex:resetIndex];
     
     [self insertAttributedString:listItemString atIndex:location];
 }
 
-- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle*)listStyle withIndentationLevel:(NSUInteger)indentationLevel
+- (void)appendListItem:(NSAttributedString *)text withStyle:(RKListStyle*)listStyle withIndentationLevel:(NSUInteger)indentationLevel resetIndex:(NSUInteger)resetIndex
 {
-    [self insertListItem:text withStyle:listStyle withIndentationLevel:indentationLevel atIndex:self.length];
+	[self insertListItem:text withStyle:listStyle withIndentationLevel:indentationLevel resetIndex:resetIndex atIndex:self.length];
 }
 
 @end

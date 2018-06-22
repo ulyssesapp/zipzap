@@ -35,6 +35,8 @@ NSString *RKDOCXListStyleMultiLevelTypeElementName						= @"w:multiLevelType";
 NSString *RKDOCXListStyleNumberingElementName							= @"w:num";
 NSString *RKDOCXListStyleEnumerationFormatElementName					= @"w:numFmt";
 NSString *RKDOCXListStyleStartElementName								= @"w:start";
+NSString *RKDOCXListStyleLevelOverrideElementName						= @"w:lvlOverride";
+NSString *RKDOCXListStyleStartIndexOverrideElementName					= @"w:startOverride";
 
 // Attributes
 NSString *RKDOCXListStyleAbstractNumberingAttributeName					= @"w:abstractNumId";
@@ -59,20 +61,25 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 
 + (void)buildNumberingDefinitionsUsingContext:(RKDOCXConversionContext *)context
 {
-	if (!context.listStyles.count)
+	if (!context.numberingDefinitions.count)
 		return;
 	
 	NSXMLDocument *document = [self basicXMLDocumentWithStandardNamespacesAndRootElementName: RKDOCXListStyleRootElementName];
+
+	// Collect numbering definitions
+	NSMutableArray *numberingDefinitionElements = [NSMutableArray new];
+	for (NSNumber *index in [context.numberingDefinitions.allKeys sortedArrayUsingSelector: @selector(compare:)]) {
+		[numberingDefinitionElements addObject: [self numberingDefinitionWithIndex:index listItem:context.numberingDefinitions[index] context:context]];
+	}
 	
 	// Abstract numberings
-	for (NSNumber *index in context.listStyles) {
+	for (NSNumber *index in [context.listStyles.allKeys sortedArrayUsingSelector: @selector(compare:)]) {
 		[document.rootElement addChild: [self abstractNumberingElementFromListStyle:context.listStyles[index] usingContext:context]];
 	}
 	
 	// Numbering instances
-	for (NSNumber *index in context.listStyles) {
-		[document.rootElement addChild: [self numberingElementFromListStyleIndentifier: index.unsignedIntegerValue]];
-	}
+	for (NSXMLElement *numberingDefinitionElement in numberingDefinitionElements)
+		[document.rootElement addChild: numberingDefinitionElement];
 	
 	[context indexForRelationshipWithTarget:RKDOCXNumberingFilename andType:RKDOCXListStyleRelationshipType];
 	[context addDocumentPartWithXMLDocument:document filename:[self packagePathForFilename:RKDOCXNumberingFilename folder:RKDOCXWordFolder] contentType:RKDOCXNumberingContentType];
@@ -82,7 +89,7 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 {
 	// Numbering Identifier (§17.9.2)
 	NSXMLElement *abstractNumberingElement = [NSXMLElement elementWithName: RKDOCXListStyleAbstractNumberingElementName];
-	[abstractNumberingElement addAttribute: [NSXMLElement attributeWithName:RKDOCXListStyleAbstractNumberingAttributeName stringValue:@([context indexForListStyle: listStyle] - 1).stringValue]];
+	[abstractNumberingElement addAttribute: [NSXMLElement attributeWithName:RKDOCXListStyleAbstractNumberingAttributeName stringValue:@([context indexForListStyle: listStyle]).stringValue]];
 	
 	// Multi level type (§17.9.12)
 	NSXMLElement *multiLevelTypeElement = [NSXMLElement elementWithName: RKDOCXListStyleMultiLevelTypeElementName];
@@ -171,12 +178,24 @@ NSString *RKDOCXListStyleEnumerationFormatUpperRomanAttributeValue		= @"upperRom
 	return abstractNumberingElement;
 }
 
-+ (NSXMLElement *)numberingElementFromListStyleIndentifier:(NSUInteger)identifier
++ (NSXMLElement *)numberingDefinitionWithIndex:(NSNumber *)definitionIndex listItem:(RKListItem *)listItem context:(RKDOCXConversionContext *)context
 {
+	NSUInteger listStyleIndex = [context indexForListStyle: listItem.listStyle];
 	NSXMLElement *abstractNumberingElement = [NSXMLElement elementWithName: RKDOCXListStyleAbstractNumberingAttributeName];
-	[abstractNumberingElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@(identifier - 1).stringValue]];
+	[abstractNumberingElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@(listStyleIndex).stringValue]];
+
+	NSXMLElement *numberingDefinitionElement = [NSXMLElement elementWithName:RKDOCXListStyleNumberingElementName children:@[abstractNumberingElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXListStyleNumberingAttributeName stringValue:definitionIndex.stringValue]]];
+	if (listItem.resetIndex != NSUIntegerMax) {
+		NSXMLElement *startOverrideElement = [NSXMLElement elementWithName:RKDOCXListStyleStartIndexOverrideElementName];
+		[startOverrideElement addAttribute: [NSXMLElement attributeWithName:RKDOCXAttributeWriterValueAttributeName stringValue:@(listItem.resetIndex).stringValue]];
+		
+		NSXMLElement *indentationLevelAttribute = [NSXMLElement attributeWithName:RKDOCXListStyleLevelAttributeName stringValue:@(listItem.indentationLevel).stringValue];
+		NSXMLElement *levelOverrideElement = [NSXMLElement elementWithName:RKDOCXListStyleLevelOverrideElementName children:@[startOverrideElement] attributes:@[indentationLevelAttribute]];
+		
+		[numberingDefinitionElement addChild: levelOverrideElement];
+	}
 	
-	return [NSXMLElement elementWithName:RKDOCXListStyleNumberingElementName children:@[abstractNumberingElement] attributes:@[[NSXMLElement attributeWithName:RKDOCXListStyleNumberingAttributeName stringValue:@(identifier).stringValue]]];
+	return numberingDefinitionElement;
 }
 
 @end

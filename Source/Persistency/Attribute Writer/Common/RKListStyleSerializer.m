@@ -12,6 +12,7 @@
 
 NSString *RKListItemListStyleIndexPersistenceKey = @"listStyle";
 NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
+NSString *RKListItemIndentationLevelResetIndexKey = @"resetIndex";
 
 @implementation RKListStyleSerializer
 
@@ -30,11 +31,14 @@ NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
     }
     
     NSUInteger indentationLevel = [[propertyList objectForKey: RKListItemIndentationLevelPersistenceKey] unsignedIntegerValue];
+	NSNumber *resetIndexObject = [propertyList objectForKey: RKListItemIndentationLevelResetIndexKey] ?: @(NSUIntegerMax);
+	NSUInteger resetIndex = [resetIndexObject unsignedIntegerValue];
+	
     RKListStyle *listStyle = [context listStyleForIndex: [[propertyList objectForKey: RKListItemListStyleIndexPersistenceKey] unsignedIntegerValue]];
     if (!listStyle)
         return nil;
     
-    RKListItem *listItem = [RKListItem listItemWithStyle:listStyle indentationLevel:indentationLevel];
+	RKListItem *listItem = [[RKListItem alloc] initWithStyle:listStyle indentationLevel:indentationLevel resetIndex:resetIndex];
     
     return listItem;
 }
@@ -44,6 +48,7 @@ NSString *RKListItemIndentationLevelPersistenceKey = @"indentationLevel";
     return [NSDictionary dictionaryWithObjectsAndKeys:
             [NSNumber numberWithUnsignedInteger: [context indexForListStyle: attributeValue.listStyle]],      RKListItemListStyleIndexPersistenceKey,
             [NSNumber numberWithUnsignedInteger: attributeValue.indentationLevel],                            RKListItemIndentationLevelPersistenceKey,
+			[NSNumber numberWithUnsignedInteger: attributeValue.resetIndex],                            RKListItemIndentationLevelResetIndexKey,
             nil];
 }
 

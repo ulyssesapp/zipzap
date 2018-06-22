@@ -179,12 +179,22 @@ extern NSString *RKDOCXConversionContextRelationshipIdentifierName;
 /*!
  @abstract Mapping from list style identifiers (NSNumber) to list styles (RKListStyle).
  */
-@property (nonatomic, readonly) NSDictionary *listStyles;
+@property (nonatomic, readonly) NSDictionary<NSNumber *, RKListStyle *> *listStyles;
+
+/*!
+ @abstract Mapping from numbering definition identifiers to the list item that used the definition the first time.
+ */
+@property (nonatomic, readonly) NSDictionary<NSNumber *, RKListItem *> *numberingDefinitions;
 
 /*!
  @abstract Creates and returns an identifier for the given list style.
  */
 - (NSUInteger)indexForListStyle:(RKListStyle *)listStyle;
+
+/*!
+ @abstract Provides a numbering definition index for the given list item.
+ */
+- (NSUInteger)numberingDefinitionIndexForListItem:(RKListItem *)listItem;
 
 /*!
  @abstract Returns YES is the passed list item has been used already. Returns NO if not and remembers the visit.
