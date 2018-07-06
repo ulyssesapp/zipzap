@@ -55,7 +55,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_listStyles = [NSDictionary new];
 		_numberingDefinitions = [NSDictionary new];
 		_consumedListItems = [NSMutableSet new];
-		_numberingDefinitionsForListStyles = [NSMapTable new];
+		_numberingDefinitionsForListStyles = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsObjectPointerPersonality|NSPointerFunctionsStrongMemory valueOptions:NSPointerFunctionsObjectPointerPersonality|NSPointerFunctionsStrongMemory];
 		_currentRelationshipSource = @"document.xml";
 		_documentRelationships = [NSMutableDictionary new];
 		_packageRelationships = [NSDictionary new];
@@ -253,7 +253,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSUInteger)indexForListStyle:(RKListStyle *)listStyle
 {
-	__block NSUInteger index = 0;
+	__block NSUInteger index = NSNotFound;
 	
 	// List Style already registered
 	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(NSNumber *currentIndex, RKListStyle *currentListStyle, BOOL *stop) {
@@ -264,7 +264,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	}];
 	
 	// Return index if list style was found
-	if (index)
+	if (index != NSNotFound)
 		return index;
 	
 	// Register new list style
@@ -322,6 +322,19 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 
 - (NSNumber *)registerNumberingDefinitionForListItem:(RKListItem *)listItem
 {
+	// Try to identify an existing definition matching the given neutral start index
+	__block NSNumber *existingIndex;
+	[_numberingDefinitions enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, RKListItem *existingListItem, BOOL *stop) {
+		if ((existingListItem.listStyle == listItem.listStyle) && (existingListItem.resetIndex == listItem.resetIndex)) {
+			existingIndex = key;
+			*stop = YES;
+		}
+	}];
+	
+	if (existingIndex)
+		return existingIndex;
+	
+	// Create a new numbering definition
 	NSMutableDictionary *numberingDefinitions = [_numberingDefinitions mutableCopy];
 	NSNumber *index = @(numberingDefinitions.count + 1);
 	numberingDefinitions[index] = listItem;
