@@ -28,6 +28,25 @@
 	[self assertDOCX:document withTestDocument:@"list"];
 }
 
+- (void)testMultipleLists
+{
+	RKListStyle *listStyleA = [RKListStyle listStyleWithLevelFormats:@[@"%d.", @"%*%d."] styles:@[@{RKListStyleMarkerLocationKey: @10, RKListStyleMarkerWidthKey: @20}, @{RKListStyleMarkerLocationKey: @15, RKListStyleMarkerWidthKey: @25}]];
+	RKListStyle *listStyleB = [RKListStyle listStyleWithLevelFormats:@[@"%d.", @"%*%d."] styles:@[@{RKListStyleMarkerLocationKey: @10, RKListStyleMarkerWidthKey: @20}, @{RKListStyleMarkerLocationKey: @15, RKListStyleMarkerWidthKey: @25}]];
+	XCTAssertEqualObjects(listStyleA, listStyleB);
+	XCTAssertNotEqual(listStyleA, listStyleB);
+	
+	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @""];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"First list, first item – enumerator should be 1"] withStyle:listStyleA withIndentationLevel:0 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"First list, second item – enumerator should be be 2"] withStyle:listStyleA withIndentationLevel:0 resetIndex:NSUIntegerMax];
+	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString: @"Separating paragraph\n"]];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"Second list, first item – enumerator should be 1 again"] withStyle:listStyleB withIndentationLevel:0 resetIndex:NSUIntegerMax];
+	[attributedString appendListItem:[[NSAttributedString alloc] initWithString: @"Second list, second item – enumerator should be be 2"] withStyle:listStyleB withIndentationLevel:0 resetIndex:NSUIntegerMax];
+
+	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
+	
+	[self assertDOCX:document withTestDocument:@"multiple-lists"];
+}
+
 - (void)testMultipleListStyles
 {
 	RKListStyle *listStyle = [RKListStyle listStyleWithLevelFormats:@[@"%d.", @"%*%d", @"%a)", @"-"] styles:@[@{RKListStyleMarkerLocationKey: @10, RKListStyleMarkerWidthKey: @20}, @{RKListStyleMarkerLocationKey: @15, RKListStyleMarkerWidthKey: @25}, @{RKListStyleMarkerLocationKey: @20, RKListStyleMarkerWidthKey: @30}, @{RKListStyleMarkerLocationKey: @25, RKListStyleMarkerWidthKey: @35}]];

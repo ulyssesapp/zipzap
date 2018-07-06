@@ -55,7 +55,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 		_listStyles = [NSDictionary new];
 		_numberingDefinitions = [NSDictionary new];
 		_consumedListItems = [NSMutableSet new];
-		_numberingDefinitionsForListStyles = [NSMapTable new];
+		_numberingDefinitionsForListStyles = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsObjectPointerPersonality|NSPointerFunctionsStrongMemory valueOptions:NSPointerFunctionsObjectPointerPersonality|NSPointerFunctionsStrongMemory];
 		_currentRelationshipSource = @"document.xml";
 		_documentRelationships = [NSMutableDictionary new];
 		_packageRelationships = [NSDictionary new];
@@ -257,7 +257,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	
 	// List Style already registered
 	[_listStyles enumerateKeysAndObjectsUsingBlock: ^(NSNumber *currentIndex, RKListStyle *currentListStyle, BOOL *stop) {
-		if ([currentListStyle isEqual: listStyle]) {
+		if (currentListStyle == listStyle) {
 			index = currentIndex.unsignedIntegerValue;
 			*stop = YES;
 		}
@@ -325,7 +325,7 @@ NSString *RKDOCXConversionContextRelationshipIdentifierName	= @"ID";
 	// Try to identify an existing definition matching the given neutral start index
 	__block NSNumber *existingIndex;
 	[_numberingDefinitions enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, RKListItem *existingListItem, BOOL *stop) {
-		if ([existingListItem.listStyle isEqual: listItem.listStyle] && existingListItem.resetIndex == listItem.resetIndex) {
+		if ((existingListItem.listStyle == listItem.listStyle) && (existingListItem.resetIndex == listItem.resetIndex)) {
 			existingIndex = key;
 			*stop = YES;
 		}
