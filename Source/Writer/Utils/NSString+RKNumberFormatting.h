@@ -14,26 +14,26 @@
 /*!
  @abstract Converts an integer number to lower case roman numerals
  */
-+ (NSString *)lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number;
++ (NSString *)rk_lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number;
 
 /*!
  @abstract Converts an integer number to upper case roman numerals
  */
-+ (NSString *)upperCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number;
++ (NSString *)rk_upperCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number;
 
 /*!
  @abstract Converts an integer number to lower case alphabetic numerals
  */
-+ (NSString *)lowerCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number;
++ (NSString *)rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number;
 
 /*!
  @abstract Converts an integer number to upper case alphabetic numerals
  */
-+ (NSString *)upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number;
++ (NSString *)rk_upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number;
 
 /*!
  @abstract Converts an integer number to chicago manual style numerals
  */
-+ (NSString *)chicagoManualOfStyleNumeralsFromUnsignedInteger:(NSUInteger)number;
++ (NSString *)rk_chicagoManualOfStyleNumeralsFromUnsignedInteger:(NSUInteger)number;
 
 @end

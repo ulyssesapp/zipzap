@@ -148,16 +148,16 @@
 {
     switch (self.sectionNumberingStyle) {
         case RKPageNumberingAlphabeticLowerCase:
-            return [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: sectionNumber];
+            return [NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger: sectionNumber];
             
         case RKPageNumberingAlphabeticUpperCase:
-            return [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: sectionNumber];
+            return [NSString rk_upperCaseAlphabeticNumeralsFromUnsignedInteger: sectionNumber];
             
         case RKPageNumberingRomanLowerCase:
-            return [NSString lowerCaseRomanNumeralsFromUnsignedInteger: sectionNumber];
+            return [NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger: sectionNumber];
             
         case RKPageNumberingRomanUpperCase:
-            return [NSString upperCaseRomanNumeralsFromUnsignedInteger: sectionNumber];
+            return [NSString rk_upperCaseRomanNumeralsFromUnsignedInteger: sectionNumber];
             
         case RKPageNumberingDecimal:
             return [NSString stringWithFormat: @"%lu", sectionNumber];

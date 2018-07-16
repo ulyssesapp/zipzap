@@ -10,7 +10,7 @@
 
 @implementation NSString (RKNumberFormatting)
 
-+ (NSString *)lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
++ (NSString *)rk_lowerCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
 {
     static NSDictionary *romanNumeralsMap = nil;
     static NSArray *romanNumeralsOrdering = nil;
@@ -53,12 +53,12 @@
     return romanNumber;
 }
 
-+ (NSString *)upperCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
++ (NSString *)rk_upperCaseRomanNumeralsFromUnsignedInteger:(NSUInteger)number
 {
-    return [[self lowerCaseRomanNumeralsFromUnsignedInteger:number] uppercaseString];
+    return [[self rk_lowerCaseRomanNumeralsFromUnsignedInteger:number] uppercaseString];
 }
 
-+ (NSString *)lowerCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number
++ (NSString *)rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number
 {
     if (number == 0)
         return @"0";
@@ -66,12 +66,12 @@
     return [NSString stringWithFormat:@"%c", 'a' + (((int)number - 1) % 26) ];
 }
 
-+ (NSString *)upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number
++ (NSString *)rk_upperCaseAlphabeticNumeralsFromUnsignedInteger:(NSUInteger)number
 {
-    return [[self lowerCaseAlphabeticNumeralsFromUnsignedInteger:number] uppercaseString];
+    return [[self rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:number] uppercaseString];
 }
 
-+ (NSString *)chicagoManualOfStyleNumeralsFromUnsignedInteger:(NSUInteger)number
++ (NSString *)rk_chicagoManualOfStyleNumeralsFromUnsignedInteger:(NSUInteger)number
 {
     static NSArray *markers;
 	static dispatch_once_t onceToken;

@@ -114,19 +114,19 @@
                     break;
                     
                 case RKListFormatCodeLowerCaseLetter:
-                    token = [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
+                    token = [NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
                     
                 case RKListFormatCodeUpperCaseLetter:
-                    token = [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
+                    token = [NSString rk_upperCaseAlphabeticNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
                     
                 case RKListFormatCodeLowerCaseRoman:
-                    token = [NSString lowerCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
+                    token = [NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
                     
                 case RKListFormatCodeUpperCaseRoman:
-                    token = [NSString upperCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
+                    token = [NSString rk_upperCaseRomanNumeralsFromUnsignedInteger: currentItemNumber];
                     break;
             }
         }

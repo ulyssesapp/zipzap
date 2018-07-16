@@ -13,27 +13,27 @@
 
 - (void)testRomanNumerals
 {
-    XCTAssertEqualObjects([NSString lowerCaseRomanNumeralsFromUnsignedInteger:0],
+    XCTAssertEqualObjects([NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger:0],
                          @"0",
                          @"Invalid conversion"
                          );
 
-    XCTAssertEqualObjects([NSString lowerCaseRomanNumeralsFromUnsignedInteger:1],
+    XCTAssertEqualObjects([NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger:1],
                          @"i",
                          @"Invalid conversion"
                          );
 
-    XCTAssertEqualObjects([NSString lowerCaseRomanNumeralsFromUnsignedInteger:2],
+    XCTAssertEqualObjects([NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger:2],
                          @"ii",
                          @"Invalid conversion"
                          );
 
-    XCTAssertEqualObjects([NSString lowerCaseRomanNumeralsFromUnsignedInteger:4],
+    XCTAssertEqualObjects([NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger:4],
                          @"iv",
                          @"Invalid conversion"
                          );
     
-    XCTAssertEqualObjects([NSString upperCaseRomanNumeralsFromUnsignedInteger:1984],
+    XCTAssertEqualObjects([NSString rk_upperCaseRomanNumeralsFromUnsignedInteger:1984],
                          @"MXCLXXXIV",
                          @"Invalid conversion"
                          );
@@ -41,37 +41,37 @@
 
 - (void)testAlphabeticNumerals
 {
-    XCTAssertEqualObjects([NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger:0],
+    XCTAssertEqualObjects([NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:0],
                          @"0",
                          @"Invalid conversion"
                          );
     
-    XCTAssertEqualObjects([NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger:1],
+    XCTAssertEqualObjects([NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:1],
                          @"a",
                          @"Invalid conversion"
                          );
     
-    XCTAssertEqualObjects([NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger:2],
+    XCTAssertEqualObjects([NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:2],
                          @"b",
                          @"Invalid conversion"
                          );
     
-    XCTAssertEqualObjects([NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger:26],
+    XCTAssertEqualObjects([NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:26],
                          @"z",
                          @"Invalid conversion"
                          );
 
-    XCTAssertEqualObjects([NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger:27],
+    XCTAssertEqualObjects([NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger:27],
                          @"a",
                          @"Invalid conversion"
                          );
     
-    XCTAssertEqualObjects([NSString upperCaseAlphabeticNumeralsFromUnsignedInteger:28],
+    XCTAssertEqualObjects([NSString rk_upperCaseAlphabeticNumeralsFromUnsignedInteger:28],
                          @"B",
                          @"Invalid conversion"
                          );
     
-    XCTAssertEqualObjects([NSString upperCaseAlphabeticNumeralsFromUnsignedInteger:53],
+    XCTAssertEqualObjects([NSString rk_upperCaseAlphabeticNumeralsFromUnsignedInteger:53],
                          @"A",
                          @"Invalid conversion"
                          );    
