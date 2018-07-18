@@ -100,6 +100,9 @@
 				return;
 			}
 			
+            if ([attributedString.string hasPrefix: @"This      "])
+                NSLog(@"trigger");
+            
 			// Suggested width
 			CGFloat suggestedWidth = [self maximumWidthForAttributedString:attributedString inRange:remainingParagraphRange isFirstInParagraph:isFirstLineOfParagraph];
 			

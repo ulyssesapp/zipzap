@@ -112,9 +112,12 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 			maximumPreferredObjectHeight = MAX(maximumPreferredObjectHeight, [textObject preferredHeightForMaximumSize: CGSizeMake(width, maximumHeight)]);
 	}];
 	
-	// Get position displacement
+	// Get original sting position displacement
 	NSInteger displacement = [[lineContent attribute:RKPDFLineInstantiationOffsetAttributeName atIndex:(suggestedBreak - 1) effectiveRange:NULL] unsignedIntegerValue];
-	
+    
+    // In rare cases, it can happen that the replacement fills the entire line, and because a "," is attached, the displacement length equals the suggested break. Ensure progress here by requiring at least one character to be consumed (which in fact is, as the footnote anchor is consumed).
+    displacement = MIN(suggestedBreak - 1, displacement);
+    
 	// Setup line properties
 	_line = ctLine;
 	_content = lineContent;
