@@ -290,20 +290,13 @@
 - (void)unregisterNote:(RKPDFFootnote *)note
 {
     // Test, whether the note has acutally been registered before
-    if (![self _cachedEnumeratorForNote: note]) {
-        NSLog(@"Error: tring to unregister footnote that has not been registered: %@", note);
-        return;
-    }
+	NSAssert([self _cachedEnumeratorForNote: note], @"Error: tring to unregister footnote that has not been registered: %@", note);
     
 	// Restore counters
-    if (note.isEndnote) {
-        NSAssert(_endnoteCounter > 0, @"Cannot decrement beyond 0");
+    if (note.isEndnote)
         _endnoteCounter --;
-    }
-    else {
-        NSAssert(_footnoteCounter > 0, @"Cannot decrement beyond 0");
-        _footnoteCounter --;
-    }
+    else
+		_footnoteCounter --;
 	
 	// Update footnote index
     RKNoteIndexType noteIndexType = (note.isEndnote) ? [self indexTypeForEndnotes] : [self indexTypeForFootnotes];
