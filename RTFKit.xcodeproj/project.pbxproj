@@ -682,6 +682,20 @@
 			remoteGlobalIDString = 50317D3614C494C800F23C04;
 			remoteInfo = RTFKit;
 		};
+		50E0684820FE0B01007CB579 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79A76B7F1B0CD81200FF7EF6;
+			remoteInfo = KissXML;
+		};
+		50E0684A20FE0B01007CB579 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B251B0C7827000E767C /* zipzap.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79C43C441B0C858B00471132;
+			remoteInfo = "zipzap-ios";
+		};
 		79A15B2B1B0C7827000E767C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 79A15B251B0C7827000E767C /* zipzap.xcodeproj */;
@@ -2527,6 +2541,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				50E0684920FE0B01007CB579 /* PBXTargetDependency */,
+				50E0684B20FE0B01007CB579 /* PBXTargetDependency */,
 			);
 			name = RTFKitiOS;
 			productName = "RTFKit iOS";
@@ -3118,6 +3134,16 @@
 			isa = PBXTargetDependency;
 			target = 50317D3614C494C800F23C04 /* RTFKit */;
 			targetProxy = 50317D4F14C494C800F23C04 /* PBXContainerItemProxy */;
+		};
+		50E0684920FE0B01007CB579 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KissXML;
+			targetProxy = 50E0684820FE0B01007CB579 /* PBXContainerItemProxy */;
+		};
+		50E0684B20FE0B01007CB579 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "zipzap-ios";
+			targetProxy = 50E0684A20FE0B01007CB579 /* PBXContainerItemProxy */;
 		};
 		79A735682007ADD6000FA5AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

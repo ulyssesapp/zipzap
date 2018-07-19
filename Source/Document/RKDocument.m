@@ -166,22 +166,22 @@
 {
     switch (enumerationStyle) {
         case RKFootnoteEnumerationAlphabeticLowerCase:
-            return [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: index];
+            return [NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger: index];
             
         case RKFootnoteEnumerationAlphabeticUpperCase:
-            return [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: index];
+            return [NSString rk_upperCaseAlphabeticNumeralsFromUnsignedInteger: index];
             
         case RKFootnoteEnumerationRomanLowerCase:
-            return [NSString lowerCaseRomanNumeralsFromUnsignedInteger: index];
+            return [NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger: index];
             
         case RKFootnoteEnumerationRomanUpperCase:
-            return [NSString upperCaseRomanNumeralsFromUnsignedInteger: index];
+            return [NSString rk_upperCaseRomanNumeralsFromUnsignedInteger: index];
             
         case RKFootnoteEnumerationDecimal:
             return [NSString stringWithFormat:@"%lu", index];
             
         case RKFootnoteEnumerationChicagoManual:
-            return [NSString chicagoManualOfStyleNumeralsFromUnsignedInteger: index];
+            return [NSString rk_chicagoManualOfStyleNumeralsFromUnsignedInteger: index];
     }
     
 }

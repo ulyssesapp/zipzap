@@ -18,16 +18,16 @@
 {
     switch (self.pageNumberingStyle) {
         case RKPageNumberingAlphabeticLowerCase:
-            return [NSString lowerCaseAlphabeticNumeralsFromUnsignedInteger: pageNumber];
+            return [NSString rk_lowerCaseAlphabeticNumeralsFromUnsignedInteger: pageNumber];
             
         case RKPageNumberingAlphabeticUpperCase:
-            return [NSString upperCaseAlphabeticNumeralsFromUnsignedInteger: pageNumber];
+            return [NSString rk_upperCaseAlphabeticNumeralsFromUnsignedInteger: pageNumber];
 
         case RKPageNumberingRomanLowerCase:
-            return [NSString lowerCaseRomanNumeralsFromUnsignedInteger: pageNumber];
+            return [NSString rk_lowerCaseRomanNumeralsFromUnsignedInteger: pageNumber];
 
         case RKPageNumberingRomanUpperCase:
-            return [NSString upperCaseRomanNumeralsFromUnsignedInteger: pageNumber];
+            return [NSString rk_upperCaseRomanNumeralsFromUnsignedInteger: pageNumber];
             
         case RKPageNumberingDecimal:
             return [NSString stringWithFormat: @"%lu", pageNumber];
