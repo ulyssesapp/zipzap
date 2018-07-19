@@ -115,7 +115,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	// Get original sting position displacement
 	NSInteger displacement = [[lineContent attribute:RKPDFLineInstantiationOffsetAttributeName atIndex:(suggestedBreak - 1) effectiveRange:NULL] unsignedIntegerValue];
     
-    // In rare cases, it can happen that the replacement fills the entire line, and because a "," is attached, the displacement length equals the suggested break. Ensure progress here by requiring at least one character to be consumed (which in fact is, as the footnote anchor is consumed).
+    // It has previously happened, that CoreText exposed some bugs where line breaks would be incorrectly computed. In this cases, it could happen that the line break happens before the end of the replacement, or the displacement length equals the suggested break. Ensure progress here by requiring at least one character to be consumed (which in fact is, as the footnote anchor is consumed).
     displacement = MIN(suggestedBreak - 1, displacement);
     
 	// Setup line properties
