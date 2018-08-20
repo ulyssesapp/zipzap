@@ -244,7 +244,7 @@
 
 #pragma mark - Footnote managment
 
-- (NSString *)enumeratorForNote:(RKPDFFootnote *)note
+- (NSString *)_cachedEnumeratorForNote:(RKPDFFootnote *)note
 {
     RKNoteIndexType noteIndexType = (note.isEndnote) ? [self indexTypeForEndnotes] : [self indexTypeForFootnotes];
     NSMutableArray *noteIndex = [self noteIndexForType: noteIndexType];
@@ -254,8 +254,16 @@
         if ([noteDescriptor objectForKey: RKFootnoteObjectKey] == note)
             return noteDescriptor[RKFootnoteEnumerationStringKey];
     }
+    
+    return nil;
+}
 
-    NSString *enumerationString;
+
+- (NSString *)enumeratorForNote:(RKPDFFootnote *)note
+{
+    NSString *enumerationString = [self _cachedEnumeratorForNote: note];
+    if (enumerationString)
+        return enumerationString;
     
     // Otherwise create an enumeration string
     if (note.isEndnote) {
@@ -273,17 +281,21 @@
         RKFootnoteEnumerationStringKey:     enumerationString
     };
 
-    [noteIndex addObject: noteDescriptor];
+    RKNoteIndexType noteIndexType = (note.isEndnote) ? [self indexTypeForEndnotes] : [self indexTypeForFootnotes];
+    [[self noteIndexForType: noteIndexType] addObject: noteDescriptor];
 
     return enumerationString;
 }
 
 - (void)unregisterNote:(RKPDFFootnote *)note
 {
+    // Test, whether the note has acutally been registered before
+	NSAssert([self _cachedEnumeratorForNote: note], @"Error: tring to unregister footnote that has not been registered: %@", note);
+    
 	// Restore counters
-	if (note.isEndnote)
-		_endnoteCounter --;
-	else
+    if (note.isEndnote)
+        _endnoteCounter --;
+    else
 		_footnoteCounter --;
 	
 	// Update footnote index
