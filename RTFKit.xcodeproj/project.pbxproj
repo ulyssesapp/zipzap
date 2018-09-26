@@ -2518,7 +2518,7 @@
 				50317D4614C494C800F23C04 /* Sources */,
 				50317D4714C494C800F23C04 /* Frameworks */,
 				50317D4814C494C800F23C04 /* Resources */,
-				CF7E35A4215B96DB00C99D18 /* ShellScript */,
+				CF7E35A4215B96DB00C99D18 /* Update Locale */,
 			);
 			buildRules = (
 			);
@@ -2732,7 +2732,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		CF7E35A4215B96DB00C99D18 /* ShellScript */ = {
+		CF7E35A4215B96DB00C99D18 /* Update Locale */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2741,6 +2741,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Update Locale";
 			outputFileListPaths = (
 			);
 			outputPaths = (
