@@ -215,17 +215,17 @@
 	
 	// Adjust text alignment
 	switch (paragraphStyle.textAlignment) {
-		case kCTLeftTextAlignment:
-		case kCTNaturalTextAlignment:
-		case kCTJustifiedTextAlignment:
+		case kCTTextAlignmentLeft:
+		case kCTTextAlignmentNatural:
+		case kCTTextAlignmentJustified:
 			lineRect.origin.x += leftMarginWidth;
 			break;
 			
-		case kCTCenterTextAlignment:
+		case kCTTextAlignmentCenter:
 			lineRect.origin.x += leftMarginWidth + ((_visibleBoundingBox.size.width - leftMarginWidth - rightMarginWidth - line.size.width) / 2.0f);
 			break;
 
-		case kCTRightTextAlignment:
+		case kCTTextAlignmentRight:
 			lineRect.origin.x += _visibleBoundingBox.size.width - rightMarginWidth - line.size.width;
 			break;
 	}

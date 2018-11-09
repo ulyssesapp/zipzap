@@ -48,11 +48,11 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
 {
     @autoreleasepool {
         RKParagraphStyleAlignmentEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    [NSNumber numberWithUnsignedInteger: kCTLeftTextAlignment],         @"left",
-                                                    [NSNumber numberWithUnsignedInteger: kCTRightTextAlignment],        @"right",
-                                                    [NSNumber numberWithUnsignedInteger: kCTCenterTextAlignment],       @"center",
-                                                    [NSNumber numberWithUnsignedInteger: kCTJustifiedTextAlignment],	@"justified",
-                                                    [NSNumber numberWithUnsignedInteger: kCTNaturalTextAlignment],		@"natural",
+                                                    [NSNumber numberWithUnsignedInteger: kCTTextAlignmentLeft],         @"left",
+                                                    [NSNumber numberWithUnsignedInteger: kCTTextAlignmentRight],        @"right",
+                                                    [NSNumber numberWithUnsignedInteger: kCTTextAlignmentCenter],       @"center",
+                                                    [NSNumber numberWithUnsignedInteger: kCTTextAlignmentJustified],	@"justified",
+                                                    [NSNumber numberWithUnsignedInteger: kCTTextAlignmentNatural],		@"natural",
                                                     nil];
         
         RKParagraphStyleLineBreakModeEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -71,9 +71,9 @@ NSDictionary *RKTextTabAlignmentEnumDescription;
                                                                  nil];
         
         RKTextTabAlignmentEnumDescription = [NSDictionary dictionaryWithObjectsAndKeys:
-                                             [NSNumber numberWithUnsignedInteger: kCTLeftTextAlignment],        @"left",
-                                             [NSNumber numberWithUnsignedInteger: kCTRightTextAlignment],       @"right",
-                                             [NSNumber numberWithUnsignedInteger: kCTCenterTextAlignment],      @"center",
+                                             [NSNumber numberWithUnsignedInteger: kCTTextAlignmentLeft],        @"left",
+                                             [NSNumber numberWithUnsignedInteger: kCTTextAlignmentRight],       @"right",
+                                             [NSNumber numberWithUnsignedInteger: kCTTextAlignmentCenter],      @"center",
                                              nil];
         
         [NSAttributedString registerAttributeSerializer:self forAttribute:RKParagraphStyleAttributeName];

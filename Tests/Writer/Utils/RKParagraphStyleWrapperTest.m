@@ -29,7 +29,7 @@
     NSArray *ctTabStops = [NSArray arrayWithObject: (__bridge id)ctTabStop];
 	
     CTParagraphStyleSetting settings[14] = {
-        {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = (CTTextAlignment[]){ kCTJustifiedTextAlignment }},
+        {.spec = kCTParagraphStyleSpecifierAlignment, .valueSize = sizeof(CTTextAlignment), .value = (CTTextAlignment[]){ kCTTextAlignmentJustified }},
         {.spec = kCTParagraphStyleSpecifierFirstLineHeadIndent, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 1 }},
         {.spec = kCTParagraphStyleSpecifierHeadIndent, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 2 }},
         {.spec = kCTParagraphStyleSpecifierTailIndent, .valueSize = sizeof(CGFloat), .value = (CGFloat[]){ 3 }},
@@ -87,7 +87,7 @@
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierBaseWritingDirection, sizeof(CTWritingDirection), &baseWritingDirection);
     CTParagraphStyleGetValueForSpecifier(reconvertedStyle, kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &tabStops);
 
-    XCTAssertEqual(textAlignment, kCTJustifiedTextAlignment, @"Invalid value converted");
+    XCTAssertEqual(textAlignment, kCTTextAlignmentJustified, @"Invalid value converted");
     XCTAssertEqual(firstLineHeadIndent, (CGFloat)1, @"Invalid value converted");
     XCTAssertEqual(headIndent, (CGFloat)2, @"Invalid value converted");
     XCTAssertEqual(tailIndent, (CGFloat)3, @"Invalid value converted");

@@ -15,10 +15,10 @@
 
 #else
 
-#define RKLeftTabStopType           kCTLeftTextAlignment
-#define RKCenterTabStopType         kCTCenterTextAlignment
-#define RKRightTabStopType          kCTRightTextAlignment
-#define RKDecimalTabStopType        kCTJustifiedTextAlignment
+#define RKLeftTabStopType           kCTTextAlignmentLeft
+#define RKCenterTabStopType         kCTTextAlignmentCenter
+#define RKRightTabStopType          kCTTextAlignmentRight
+#define RKDecimalTabStopType        kCTTextAlignmentJustified
 
 #endif
 

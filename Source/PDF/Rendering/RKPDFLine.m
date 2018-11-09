@@ -88,7 +88,7 @@ NSString *RKPDFLineInstantiationOffsetAttributeName			= @"RKPDFLineInstantiation
 	_additionalParagraphStyle = [lineContent attribute:RKAdditionalParagraphStyleAttributeName atIndex:0 effectiveRange:NULL];
 	
 	// Create a justified alignment if requested
-	if ((_paragraphStyle.textAlignment == kCTJustifiedTextAlignment)) {
+	if ((_paragraphStyle.textAlignment == kCTTextAlignmentJustified)) {
 		NSUInteger breakPosition = range.location + suggestedBreak - 1;
 		BOOL isEndOfString = (breakPosition+1 >= NSMaxRange(range));
 		unichar lastCharacter = isEndOfString ? 0 : [attributedString.string characterAtIndex: breakPosition];

@@ -34,7 +34,7 @@
 #define RKUnderlineStyleDouble                  NSUnderlineStyleDouble
 #define RKUnderlineStyleThick                   NSUnderlineStyleThick
 
-#define RKUnderlineByWordMask                   NSUnderlineByWordMask
+#define RKUnderlineByWordMask                   NSUnderlineByWord
 
 #define RKUnderlinePatternDot                   NSUnderlinePatternDot
 #define RKUnderlinePatternDash                  NSUnderlinePatternDash
