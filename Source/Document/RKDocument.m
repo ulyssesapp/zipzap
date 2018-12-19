@@ -42,6 +42,7 @@
 		_footnoteAreaDividerSpacingAfter = 15;
 		_footnoteAreaDividerLength = 100;
 		_footnoteAreaDividerWidth = 1;
+		_footnoteAreaDividerColor = RKColor.blackColor;
 		_footnoteAreaAnchorInset = 0;
 		_footnoteAreaContentInset = 20;
 		_footnoteAreaAnchorAlignment = NSTextAlignmentLeft;
@@ -106,6 +107,7 @@
 	copy.footnoteAreaDividerPosition = _footnoteAreaDividerPosition;
 	copy.footnoteAreaDividerLength = _footnoteAreaDividerLength;
 	copy.footnoteAreaDividerWidth = _footnoteAreaDividerWidth;
+	copy.footnoteAreaDividerColor = _footnoteAreaDividerColor;
 	copy.footnoteAreaAnchorInset = _footnoteAreaAnchorInset;
 	copy.footnoteAreaContentInset = _footnoteAreaContentInset;
 	copy.footnoteAreaAnchorAlignment = _footnoteAreaAnchorAlignment;
@@ -153,6 +155,7 @@
 			&&  (self.footnoteAreaDividerPosition == object.footnoteAreaDividerPosition)
 			&&  (self.footnoteAreaDividerLength == object.footnoteAreaDividerLength)
 			&&  (self.footnoteAreaDividerWidth == object.footnoteAreaDividerWidth)
+			&& 	(self.footnoteAreaDividerColor == object.footnoteAreaDividerColor)
 			&&  (self.footnoteAreaAnchorInset == object.footnoteAreaAnchorInset)
 			&&  (self.footnoteAreaContentInset == object.footnoteAreaContentInset)
 			&&  (self.footnoteAreaAnchorAlignment == object.footnoteAreaAnchorAlignment)

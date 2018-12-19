@@ -138,6 +138,12 @@
 @property(nonatomic) CGFloat footnoteAreaDividerSpacingAfter;
 
 /*!
+ @abstract The fill color of the footnote divider.
+ @discussion Defaults to black.
+ */
+@property(nonatomic) RKColor *footnoteAreaDividerColor;
+
+/*!
  @abstract The alignment of the footnote anchor.
  @discussion Defaults to left alignment.
  */

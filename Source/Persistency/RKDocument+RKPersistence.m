@@ -49,6 +49,7 @@ NSString *RKPersistencyFootnoteAreaSpacingAfterKey		= @"footnoteAreaDividerSpaci
 NSString *RKPersistencyFootnoteDividerPositionKey		= @"footnoteAreaDividerPosition";
 NSString *RKPersistencyFootnoteDividerLengthKey			= @"footnoteAreaDividerLength";
 NSString *RKPersistencyFootnoteDividerWidthKey			= @"footnoteAreaDividerWidth";
+NSString *RKPersistencyFootnoteDividerColorKey			= @"footnoteAreaDividerColor";
 NSString *RKPersistencyFootnoteAreaAnchorInsetKey		= @"footnoteAreaAnchorInset";
 NSString *RKPersistencyFootnoteAreaContentInsetKey		= @"footnoteAreaContentInset";
 NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlignment";
@@ -149,6 +150,9 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 
 		if (propertyList[RKPersistencyFootnoteDividerWidthKey])
 			self.footnoteAreaDividerWidth = [propertyList[RKPersistencyFootnoteDividerWidthKey] floatValue];
+		
+		if (propertyList[RKPersistencyFootnoteDividerColorKey])
+			self.footnoteAreaDividerColor = [RKColor rk_colorWithHexRepresentation: propertyList[RKPersistencyFootnoteDividerColorKey]];
 
 		if (propertyList[RKPersistencyFootnoteAreaAnchorInsetKey])
 			self.footnoteAreaAnchorInset = [propertyList[RKPersistencyFootnoteAreaAnchorInsetKey] floatValue];
@@ -234,6 +238,7 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 	propertyList[RKPersistencyFootnoteDividerPositionKey] = [[self.class serializationTableForFootnoteDividerPosition] stringFromUnsignedEnumValue: self.footnoteAreaDividerPosition];
 	propertyList[RKPersistencyFootnoteDividerLengthKey] = @(self.footnoteAreaDividerLength);
 	propertyList[RKPersistencyFootnoteDividerWidthKey] = @(self.footnoteAreaDividerWidth);
+	propertyList[RKPersistencyFootnoteDividerColorKey] = self.footnoteAreaDividerColor.rk_hexRepresentation;
 	propertyList[RKPersistencyFootnoteAreaAnchorInsetKey] = @(self.footnoteAreaAnchorInset);
 	propertyList[RKPersistencyFootnoteAreaContentInsetKey] = @(self.footnoteAreaContentInset);
 	propertyList[RKPersistencyFootnoteAreaAnchorAlignmentKey] = [[self.class serializationTableForFootnoteAnchorAlignment] stringFromUnsignedEnumValue: self.footnoteAreaAnchorAlignment];

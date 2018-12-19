@@ -121,12 +121,10 @@
 - (void)drawFootnoteSeparatorForBoundingBox:(CGRect)boundingBox toContext:(RKPDFRenderingContext *)context
 {
     CGContextRef pdfContext = context.pdfContext;
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-    CGColorRef black = CGColorCreate(colorSpace, (CGFloat[]){0, 1.0});
-
+	
     CGContextSaveGState(pdfContext);
     
-    CGContextSetStrokeColorWithColor(pdfContext, black);
+    CGContextSetStrokeColorWithColor(pdfContext, self.footnoteAreaDividerColor.CGColor);
     CGContextSetLineWidth(pdfContext, self.footnoteAreaDividerWidth);
     
     CGFloat separatorLength = (boundingBox.size.width < self.footnoteAreaDividerLength) ? boundingBox.size.width : self.footnoteAreaDividerLength;
@@ -139,9 +137,6 @@
     
     CGContextStrokeLineSegments(pdfContext, (CGPoint[]){startPoint, endPoint}, 2);
     CGContextRestoreGState(pdfContext);
-    
-    CFRelease(black);
-    CFRelease(colorSpace);
 }
 
 - (NSString *)stringForSectionNumber:(NSUInteger)sectionNumber
