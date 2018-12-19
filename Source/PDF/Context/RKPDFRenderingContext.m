@@ -201,6 +201,16 @@
     
     CGPDFContextBeginPage(_pdfContext, (__bridge CFDictionaryRef)pageDictionary);
     
+	// Fill background
+	if (_document.backgroundColor) {
+		CGContextSaveGState(_pdfContext);
+		
+		CGContextSetFillColorWithColor(_pdfContext, self.document.backgroundColor.CGColor);
+		CGContextFillRect(_pdfContext, mediaBox);
+		
+		CGContextRestoreGState(_pdfContext);
+	}
+	
     // Update page counter
     _currentPageNumber ++;
     _pageNumberOfCurrentSection ++;
