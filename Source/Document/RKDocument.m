@@ -98,6 +98,7 @@
     copy.sectionNumberingStyle = _sectionNumberingStyle;
 	copy.pageBinding = _pageBinding;
 	copy.twoSided = _twoSided;
+	copy.backgroundColor = _backgroundColor;
 	copy.footnoteAreaAnchorAttributes = [_footnoteAreaAnchorAttributes copy];
 
 	copy.footnoteAreaDividerSpacingBefore = _footnoteAreaDividerSpacingBefore;
@@ -145,6 +146,7 @@
             &&  (self.footerSpacingAfter == object.footerSpacingAfter)
 			&&  (self.pageBinding == object.pageBinding)
 			&&  (self.twoSided == object.twoSided)
+			&&  (self.backgroundColor == object.backgroundColor)
 			&&  ([self.footnoteAreaAnchorAttributes isEqual: object.footnoteAreaAnchorAttributes])
 			&&  (self.footnoteAreaDividerSpacingBefore == object.footnoteAreaDividerSpacingBefore)
 			&&  (self.footnoteAreaDividerSpacingAfter == object.footnoteAreaDividerSpacingAfter)
