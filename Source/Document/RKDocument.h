@@ -139,9 +139,8 @@
 
 /*!
  @abstract The fill color of the footnote divider.
- @discussion Defaults to black.
  */
-@property(nonatomic) RKColor *footnoteAreaDividerColor;
+@property(nonatomic, nullable) RKColor *footnoteAreaDividerColor;
 
 /*!
  @abstract The alignment of the footnote anchor.

@@ -42,7 +42,6 @@
 		_footnoteAreaDividerSpacingAfter = 15;
 		_footnoteAreaDividerLength = 100;
 		_footnoteAreaDividerWidth = 1;
-		_footnoteAreaDividerColor = RKColor.blackColor;
 		_footnoteAreaAnchorInset = 0;
 		_footnoteAreaContentInset = 20;
 		_footnoteAreaAnchorAlignment = NSTextAlignmentLeft;
