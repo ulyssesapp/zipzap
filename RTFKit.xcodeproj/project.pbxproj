@@ -379,6 +379,8 @@
 		79470FE8152C5AB900254072 /* RKListCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79470FE6152C5AB900254072 /* RKListCounter.m */; };
 		79561EA81B3879B300509613 /* RKFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 79561EA51B3879B300509613 /* RKFont.m */; };
 		79561EA91B3879B300509613 /* RKFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 79561EA51B3879B300509613 /* RKFont.m */; };
+		795B294B21F5DA760061C3DF /* KissXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795B294121F5DA710061C3DF /* KissXML.framework */; };
+		795B295021F5FE6C0061C3DF /* KissXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795B294121F5DA710061C3DF /* KissXML.framework */; };
 		795C1BC314EC1AEF0041EB69 /* RKListStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 795C1BC114EC1AEF0041EB69 /* RKListStyle.h */; };
 		795C1BC414EC1AEF0041EB69 /* RKListStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 795C1BC214EC1AEF0041EB69 /* RKListStyle.m */; };
 		795C1BC714EC33620041EB69 /* NSString+RKConvenienceAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 795C1BC514EC33620041EB69 /* NSString+RKConvenienceAdditions.h */; };
@@ -481,15 +483,12 @@
 		79A7356A2007AE5A000FA5AD /* Test Host.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79A735692007AE5A000FA5AD /* Test Host.xcassets */; };
 		79A735712007B02D000FA5AD /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A76B581B0CD27900FF7EF6 /* zipzap.framework */; };
 		79A735722007B02D000FA5AD /* zipzap.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79A76B581B0CD27900FF7EF6 /* zipzap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		79A735752007B03F000FA5AD /* KissXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15B371B0C782A000E767C /* KissXML.framework */; };
-		79A735762007B03F000FA5AD /* KissXML.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15B371B0C782A000E767C /* KissXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79A735792007B04A000FA5AD /* RTFKitiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790B5B551B0B96B9004193F8 /* RTFKitiOS.framework */; };
 		79A7357A2007B04A000FA5AD /* RTFKitiOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 790B5B551B0B96B9004193F8 /* RTFKitiOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		79A76B5B1B0CD28200FF7EF6 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A76B581B0CD27900FF7EF6 /* zipzap.framework */; };
 		79A76B5C1B0CD28D00FF7EF6 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A76B581B0CD27900FF7EF6 /* zipzap.framework */; };
 		79A76B5E1B0CD29F00FF7EF6 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A76B5A1B0CD27900FF7EF6 /* zipzap.framework */; };
 		79A76B5F1B0CD32200FF7EF6 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A76B5A1B0CD27900FF7EF6 /* zipzap.framework */; };
-		79A76BAD1B0CD8B300FF7EF6 /* KissXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15B371B0C782A000E767C /* KissXML.framework */; };
 		79A76BB11B0CDA1700FF7EF6 /* RTFKitiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790B5B551B0B96B9004193F8 /* RTFKitiOS.framework */; };
 		79A76BB41B0CDA3900FF7EF6 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A02631351AD6B6BE00FFE40D /* libxml2.dylib */; };
 		79A8F4671602222300A9DA63 /* RKPDFColumn.h in Headers */ = {isa = PBXBuildFile; fileRef = 79A8F4651602222300A9DA63 /* RKPDFColumn.h */; };
@@ -682,19 +681,47 @@
 			remoteGlobalIDString = 50317D3614C494C800F23C04;
 			remoteInfo = RTFKit;
 		};
-		50E0684820FE0B01007CB579 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 79A76B7F1B0CD81200FF7EF6;
-			remoteInfo = KissXML;
-		};
 		50E0684A20FE0B01007CB579 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 79A15B251B0C7827000E767C /* zipzap.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 79C43C441B0C858B00471132;
 			remoteInfo = "zipzap-ios";
+		};
+		795B294021F5DA710061C3DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0DCD8DCA1E54A3A3001D9832;
+			remoteInfo = "KissXML (iOS)";
+		};
+		795B294221F5DA710061C3DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D94131BA1E5CEBE700189BD5;
+			remoteInfo = "KissXML (macOS)";
+		};
+		795B294421F5DA710061C3DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D94131D31E5CEC8300189BD5;
+			remoteInfo = "KissXML (tvOS)";
+		};
+		795B294621F5DA710061C3DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D94131EC1E5CECC700189BD5;
+			remoteInfo = "KissXML (watchOS)";
+		};
+		795B294E21F5DCE20061C3DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0DCD8DC91E54A3A3001D9832;
+			remoteInfo = "KissXML (iOS)";
 		};
 		79A15B2B1B0C7827000E767C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -717,13 +744,6 @@
 			remoteGlobalIDString = D899CF96162C5EC100112F49;
 			remoteInfo = zipzapTests;
 		};
-		79A15B361B0C782A000E767C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 40E53ED31729F68F001664EC;
-			remoteInfo = KissXML;
-		};
 		79A735672007ADD6000FA5AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50317D2E14C494C800F23C04 /* Project object */;
@@ -737,13 +757,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 79C43C441B0C858B00471132;
 			remoteInfo = "zipzap-ios";
-		};
-		79A735772007B03F000FA5AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 79A15B311B0C782A000E767C /* KissXML.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 79A76B7F1B0CD81200FF7EF6;
-			remoteInfo = KissXML;
 		};
 		79A7357B2007B04A000FA5AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -790,7 +803,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				79A735722007B02D000FA5AD /* zipzap.framework in Embed Frameworks */,
-				79A735762007B03F000FA5AD /* KissXML.framework in Embed Frameworks */,
 				79A7357A2007B04A000FA5AD /* RTFKitiOS.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -1253,7 +1265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79A76BB41B0CDA3900FF7EF6 /* libxml2.dylib in Frameworks */,
-				79A76BAD1B0CD8B300FF7EF6 /* KissXML.framework in Frameworks */,
+				795B294B21F5DA760061C3DF /* KissXML.framework in Frameworks */,
 				79A15A7F1B0C6E83000E767C /* CoreText.framework in Frameworks */,
 				79A15A7D1B0C6E7D000E767C /* MobileCoreServices.framework in Frameworks */,
 				79A15A7C1B0C6E76000E767C /* UIKit.framework in Frameworks */,
@@ -1268,6 +1280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A04A92AB1B1F109100DEE254 /* libxml2.dylib in Frameworks */,
+				795B295021F5FE6C0061C3DF /* KissXML.framework in Frameworks */,
 				79A15A861B0C70AF000E767C /* MobileCoreServices.framework in Frameworks */,
 				79A15A851B0C70A6000E767C /* UIKit.framework in Frameworks */,
 				79A15A841B0C7091000E767C /* CoreText.framework in Frameworks */,
@@ -1282,7 +1295,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79A735752007B03F000FA5AD /* KissXML.framework in Frameworks */,
 				79A735712007B02D000FA5AD /* zipzap.framework in Frameworks */,
 				79A735792007B04A000FA5AD /* RTFKitiOS.framework in Frameworks */,
 			);
@@ -1824,7 +1836,10 @@
 		79A15B321B0C782A000E767C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				79A15B371B0C782A000E767C /* KissXML.framework */,
+				795B294121F5DA710061C3DF /* KissXML.framework */,
+				795B294321F5DA710061C3DF /* KissXML.framework */,
+				795B294521F5DA710061C3DF /* KissXML.framework */,
+				795B294721F5DA710061C3DF /* KissXML.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2542,7 +2557,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				50E0684920FE0B01007CB579 /* PBXTargetDependency */,
 				50E0684B20FE0B01007CB579 /* PBXTargetDependency */,
 			);
 			name = RTFKitiOS;
@@ -2561,6 +2575,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				795B294F21F5DCE20061C3DF /* PBXTargetDependency */,
 				79A76BB31B0CDA2400FF7EF6 /* PBXTargetDependency */,
 				79A735682007ADD6000FA5AD /* PBXTargetDependency */,
 			);
@@ -2582,7 +2597,6 @@
 			);
 			dependencies = (
 				79A735742007B02D000FA5AD /* PBXTargetDependency */,
-				79A735782007B03F000FA5AD /* PBXTargetDependency */,
 				79A7357C2007B04A000FA5AD /* PBXTargetDependency */,
 			);
 			name = "RTFKit Test Host";
@@ -2653,6 +2667,34 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		795B294121F5DA710061C3DF /* KissXML.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = KissXML.framework;
+			remoteRef = 795B294021F5DA710061C3DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		795B294321F5DA710061C3DF /* KissXML.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = KissXML.framework;
+			remoteRef = 795B294221F5DA710061C3DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		795B294521F5DA710061C3DF /* KissXML.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = KissXML.framework;
+			remoteRef = 795B294421F5DA710061C3DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		795B294721F5DA710061C3DF /* KissXML.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = KissXML.framework;
+			remoteRef = 795B294621F5DA710061C3DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		79A15B2C1B0C7827000E767C /* libzipzap.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2672,13 +2714,6 @@
 			fileType = wrapper.cfbundle;
 			path = zipzapTests.xctest;
 			remoteRef = 79A15B2F1B0C7827000E767C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		79A15B371B0C782A000E767C /* KissXML.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = KissXML.framework;
-			remoteRef = 79A15B361B0C782A000E767C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		79A76B581B0CD27900FF7EF6 /* zipzap.framework */ = {
@@ -3157,15 +3192,15 @@
 			target = 50317D3614C494C800F23C04 /* RTFKit */;
 			targetProxy = 50317D4F14C494C800F23C04 /* PBXContainerItemProxy */;
 		};
-		50E0684920FE0B01007CB579 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KissXML;
-			targetProxy = 50E0684820FE0B01007CB579 /* PBXContainerItemProxy */;
-		};
 		50E0684B20FE0B01007CB579 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "zipzap-ios";
 			targetProxy = 50E0684A20FE0B01007CB579 /* PBXContainerItemProxy */;
+		};
+		795B294F21F5DCE20061C3DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "KissXML (iOS)";
+			targetProxy = 795B294E21F5DCE20061C3DF /* PBXContainerItemProxy */;
 		};
 		79A735682007ADD6000FA5AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3176,11 +3211,6 @@
 			isa = PBXTargetDependency;
 			name = "zipzap-ios";
 			targetProxy = 79A735732007B02D000FA5AD /* PBXContainerItemProxy */;
-		};
-		79A735782007B03F000FA5AD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KissXML;
-			targetProxy = 79A735772007B03F000FA5AD /* PBXContainerItemProxy */;
 		};
 		79A7357C2007B04A000FA5AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

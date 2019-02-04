@@ -8,6 +8,10 @@
 
 #import <zipzap/zipzap.h>
 
+#if TARGET_OS_IPHONE
+#import <libxml/globals.h>
+#endif
+
 @implementation XCTestCase (RKDOCXTest)
 
 - (void)assertGeneratedDOCXData:(NSData *)generated withExpectedData:(NSData *)expected filename:(NSString *)filename
