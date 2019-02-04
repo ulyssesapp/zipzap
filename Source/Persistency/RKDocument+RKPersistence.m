@@ -41,6 +41,7 @@ NSString *RKPersistencyCharacterStylesKey               = @"characterStyles";
 NSString *RKPersistencySectionNumberingStyleKey         = @"sectionNumberingStyle";
 NSString *RKPersistencyPageBindingKey					= @"pageBinding";
 NSString *RKPersistencyTwoSidedKey						= @"twoSided";
+NSString *RKPersistencyBackgroundColorKey				= @"backgroundColor";
 
 NSString *RKPersistencyFootnoteAreaAnchorAttributesKey	= @"footnoteAreaAnchorAttributes";
 NSString *RKPersistencyFootnoteAreaSpacingBeforeKey		= @"footnoteAreaDividerSpacingBefore";
@@ -48,6 +49,7 @@ NSString *RKPersistencyFootnoteAreaSpacingAfterKey		= @"footnoteAreaDividerSpaci
 NSString *RKPersistencyFootnoteDividerPositionKey		= @"footnoteAreaDividerPosition";
 NSString *RKPersistencyFootnoteDividerLengthKey			= @"footnoteAreaDividerLength";
 NSString *RKPersistencyFootnoteDividerWidthKey			= @"footnoteAreaDividerWidth";
+NSString *RKPersistencyFootnoteDividerColorKey			= @"footnoteAreaDividerColor";
 NSString *RKPersistencyFootnoteAreaAnchorInsetKey		= @"footnoteAreaAnchorInset";
 NSString *RKPersistencyFootnoteAreaContentInsetKey		= @"footnoteAreaContentInset";
 NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlignment";
@@ -127,6 +129,9 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 		
 		if ([propertyList objectForKey: RKPersistencyTwoSidedKey])
 			self.twoSided = [propertyList[RKPersistencyTwoSidedKey] boolValue];
+		
+		if ([propertyList objectForKey: RKPersistencyBackgroundColorKey])
+			self.backgroundColor = [RKColor rk_colorWithHexRepresentation: propertyList[RKPersistencyBackgroundColorKey]];
 
 		if (propertyList[RKPersistencyFootnoteAreaSpacingBeforeKey])
 			self.footnoteAreaDividerSpacingBefore = [propertyList[RKPersistencyFootnoteAreaSpacingBeforeKey] floatValue];
@@ -145,6 +150,9 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
 
 		if (propertyList[RKPersistencyFootnoteDividerWidthKey])
 			self.footnoteAreaDividerWidth = [propertyList[RKPersistencyFootnoteDividerWidthKey] floatValue];
+		
+		if (propertyList[RKPersistencyFootnoteDividerColorKey])
+			self.footnoteAreaDividerColor = [RKColor rk_colorWithHexRepresentation: propertyList[RKPersistencyFootnoteDividerColorKey]];
 
 		if (propertyList[RKPersistencyFootnoteAreaAnchorInsetKey])
 			self.footnoteAreaAnchorInset = [propertyList[RKPersistencyFootnoteAreaAnchorInsetKey] floatValue];
@@ -223,12 +231,14 @@ NSString *RKPersistencyFootnoteAreaAnchorAlignmentKey	= @"footnoteAreaAnchorAlig
     propertyList[RKPersistencySectionNumberingStyleKey] = [[self.class serializationTableForSectionNumberingStyle] stringFromSignedEnumValue: self.sectionNumberingStyle];
 	propertyList[RKPersistencyPageBindingKey] = [[self.class serializationTableForPageBinding] stringFromSignedEnumValue: self.pageBinding];
 	propertyList[RKPersistencyTwoSidedKey] = @(self.twoSided);
+	propertyList[RKPersistencyBackgroundColorKey] = self.backgroundColor.rk_hexRepresentation;
 
 	propertyList[RKPersistencyFootnoteAreaSpacingBeforeKey] = @(self.footnoteAreaDividerSpacingBefore);
 	propertyList[RKPersistencyFootnoteAreaSpacingAfterKey] = @(self.footnoteAreaDividerSpacingAfter);
 	propertyList[RKPersistencyFootnoteDividerPositionKey] = [[self.class serializationTableForFootnoteDividerPosition] stringFromUnsignedEnumValue: self.footnoteAreaDividerPosition];
 	propertyList[RKPersistencyFootnoteDividerLengthKey] = @(self.footnoteAreaDividerLength);
 	propertyList[RKPersistencyFootnoteDividerWidthKey] = @(self.footnoteAreaDividerWidth);
+	propertyList[RKPersistencyFootnoteDividerColorKey] = self.footnoteAreaDividerColor.rk_hexRepresentation;
 	propertyList[RKPersistencyFootnoteAreaAnchorInsetKey] = @(self.footnoteAreaAnchorInset);
 	propertyList[RKPersistencyFootnoteAreaContentInsetKey] = @(self.footnoteAreaContentInset);
 	propertyList[RKPersistencyFootnoteAreaAnchorAlignmentKey] = [[self.class serializationTableForFootnoteAnchorAlignment] stringFromUnsignedEnumValue: self.footnoteAreaAnchorAlignment];

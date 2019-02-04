@@ -12,9 +12,9 @@
 #import "RKPDFRenderingContext.h"
 
 NSString *RKPDFRendererUnderlineAttributeName			= @"RKPDFRendererUnderlineAttributeName";
-NSString *RKPDFRendererUnderlineColorAttributeName		= @"RKPDFRendererStrikethroughColorAttributeName";
+NSString *RKPDFRendererUnderlineColorAttributeName		= @"RKPDFRendererUnderlineColorAttributeName";
 
-NSString *RKPDFRendererStrikethroughAttributeName		=@"RKPDFRendererStrikethroughAttributeName";
+NSString *RKPDFRendererStrikethroughAttributeName		= @"RKPDFRendererStrikethroughAttributeName";
 NSString *RKPDFRendererStrikethroughColorAttributeName	= @"RKPDFRendererStrikethroughColorAttributeName";
 
 @implementation RKPDFTextDecorationRenderer

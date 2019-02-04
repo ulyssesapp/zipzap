@@ -98,6 +98,7 @@
     copy.sectionNumberingStyle = _sectionNumberingStyle;
 	copy.pageBinding = _pageBinding;
 	copy.twoSided = _twoSided;
+	copy.backgroundColor = _backgroundColor;
 	copy.footnoteAreaAnchorAttributes = [_footnoteAreaAnchorAttributes copy];
 
 	copy.footnoteAreaDividerSpacingBefore = _footnoteAreaDividerSpacingBefore;
@@ -105,6 +106,7 @@
 	copy.footnoteAreaDividerPosition = _footnoteAreaDividerPosition;
 	copy.footnoteAreaDividerLength = _footnoteAreaDividerLength;
 	copy.footnoteAreaDividerWidth = _footnoteAreaDividerWidth;
+	copy.footnoteAreaDividerColor = _footnoteAreaDividerColor;
 	copy.footnoteAreaAnchorInset = _footnoteAreaAnchorInset;
 	copy.footnoteAreaContentInset = _footnoteAreaContentInset;
 	copy.footnoteAreaAnchorAlignment = _footnoteAreaAnchorAlignment;
@@ -145,12 +147,14 @@
             &&  (self.footerSpacingAfter == object.footerSpacingAfter)
 			&&  (self.pageBinding == object.pageBinding)
 			&&  (self.twoSided == object.twoSided)
+			&&  (self.backgroundColor == object.backgroundColor)
 			&&  ([self.footnoteAreaAnchorAttributes isEqual: object.footnoteAreaAnchorAttributes])
 			&&  (self.footnoteAreaDividerSpacingBefore == object.footnoteAreaDividerSpacingBefore)
 			&&  (self.footnoteAreaDividerSpacingAfter == object.footnoteAreaDividerSpacingAfter)
 			&&  (self.footnoteAreaDividerPosition == object.footnoteAreaDividerPosition)
 			&&  (self.footnoteAreaDividerLength == object.footnoteAreaDividerLength)
 			&&  (self.footnoteAreaDividerWidth == object.footnoteAreaDividerWidth)
+			&& 	(self.footnoteAreaDividerColor == object.footnoteAreaDividerColor)
 			&&  (self.footnoteAreaAnchorInset == object.footnoteAreaAnchorInset)
 			&&  (self.footnoteAreaContentInset == object.footnoteAreaContentInset)
 			&&  (self.footnoteAreaAnchorAlignment == object.footnoteAreaAnchorAlignment)
