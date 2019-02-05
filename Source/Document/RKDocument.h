@@ -140,7 +140,7 @@
 /*!
  @abstract The fill color of the footnote divider.
  */
-@property(nonatomic, nullable) RKColor *footnoteAreaDividerColor;
+@property(nonatomic) RKColor *footnoteAreaDividerColor;
 
 /*!
  @abstract The alignment of the footnote anchor.
