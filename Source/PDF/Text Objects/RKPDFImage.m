@@ -35,39 +35,26 @@
 {
     self = [self init];
     
-    if (self) {
-        _imageAttachment = attachment;
-        
-        #if !TARGET_OS_IPHONE
-            NSImage *image = [[NSImage alloc] initWithData:_imageAttachment.imageFile.regularFileContents];
-            if (!image || NSEqualSizes(image.size, NSZeroSize))
-                return nil;
-        
-            _image = [image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
-			if (!_image)
-				return nil;
-		
-            CFRetain(_image);
-        #else
-            UIImage *image = [[UIImage alloc] initWithData:_imageAttachment.imageFile.regularFileContents];
-            if (!image || CGSizeEqualToSize(image.size, CGSizeZero))
-                return nil;
-        
-            _image = image.CGImage;
-			if (!_image)
-				return nil;
-		
-            CFRetain(_image);
-        #endif
+	_imageAttachment = attachment;
+	if (!attachment.image || NSEqualSizes(attachment.size, NSZeroSize))
+		return nil;
+	
+	#if !TARGET_OS_IPHONE
+		_image = [attachment.image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
+	#else
+		_image = image.CGImage;
+	#endif
 
-        if (_image) {
-			RKEdgeInsets margin = self.imageAttachment.margin;
-			
-            _imageSize = CGSizeMake(CGImageGetWidth(_image), CGImageGetHeight(_image));
-			_fullSize = CGSizeMake(_imageSize.width + margin.left + margin.right, _imageSize.height + margin.top + margin.bottom);
-		}
-    }
-    
+	CFRetain(_image);
+
+	if (!_image)
+		return nil;
+
+	RKEdgeInsets margin = self.imageAttachment.margin;
+		
+	_imageSize = attachment.size;
+	_fullSize = CGSizeMake(_imageSize.width + margin.left + margin.right, _imageSize.height + margin.top + margin.bottom);
+		
     return self;
 }
 
