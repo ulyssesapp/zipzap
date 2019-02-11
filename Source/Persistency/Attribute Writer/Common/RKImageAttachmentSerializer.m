@@ -16,6 +16,8 @@ NSString *RKImageAttachmentMarginTopKey					= @"marginTop";
 NSString *RKImageAttachmentMarginLeftKey				= @"marginLeft";
 NSString *RKImageAttachmentMarginBottomKey				= @"marginBottom";
 NSString *RKImageAttachmentMarginRightKey				= @"marginRight";
+NSString *RKImageAttachmentWidthKey						= @"width";
+NSString *RKImageAttachmentHeightKey					= @"height";
 
 @implementation RKImageAttachmentSerializer
 
@@ -40,7 +42,8 @@ NSString *RKImageAttachmentMarginRightKey				= @"marginRight";
     
 	RKEdgeInsets margin = RKEdgeInsetsMake([propertyList[RKImageAttachmentMarginTopKey] doubleValue], [propertyList[RKImageAttachmentMarginLeftKey] doubleValue], [propertyList[RKImageAttachmentMarginBottomKey] doubleValue], [propertyList[RKImageAttachmentMarginRightKey] doubleValue]);
 	
-    return [[RKImageAttachment alloc] initWithFile:file title:nil description:nil margin:margin];
+	NSSize size = NSMakeSize([propertyList[RKImageAttachmentWidthKey] doubleValue], [propertyList[RKImageAttachmentHeightKey] doubleValue]);
+	return [[RKImageAttachment alloc] initWithFile:file title:nil description:nil margin:margin size:size];
 }
 
 + (id)propertyListForAttribute:(NSString *)attributeName value:(RKImageAttachment *)imageAttachment context:(RKPersistenceContext *)context
@@ -54,6 +57,8 @@ NSString *RKImageAttachmentMarginRightKey				= @"marginRight";
 	propertyList[RKImageAttachmentMarginLeftKey] = @(imageAttachment.margin.left);
 	propertyList[RKImageAttachmentMarginBottomKey] = @(imageAttachment.margin.bottom);
 	propertyList[RKImageAttachmentMarginRightKey] = @(imageAttachment.margin.right);
+	propertyList[RKImageAttachmentWidthKey] = @(imageAttachment.size.width);
+	propertyList[RKImageAttachmentHeightKey] = @(imageAttachment.size.height);
 	
 	return propertyList;
 }
