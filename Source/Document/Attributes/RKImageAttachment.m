@@ -12,7 +12,7 @@ NSString *RKImageAttachmentAttributeName		= @"RKImageAttachment";
 
 @implementation RKImageAttachment
 
-- (id)initWithFile:(NSFileWrapper *)file title:(NSString *)title description:(NSString *)descr margin:(RKEdgeInsets)margin size:(NSSize)proposedSize
+- (id)initWithFile:(NSFileWrapper *)file title:(NSString *)title description:(NSString *)descr margin:(RKEdgeInsets)margin size:(CGSize)proposedSize
 {
 	self = [super init];
 	
@@ -23,14 +23,14 @@ NSString *RKImageAttachmentAttributeName		= @"RKImageAttachment";
 		_descr = descr;
 		_margin = margin;
 		
-		NSSize actualImageSize = _image.size;
+		CGSize actualImageSize = _image.size;
 		CGFloat ratio = actualImageSize.height / actualImageSize.width;
 		
 		if (proposedSize.width && !proposedSize.height)
-			_size = NSMakeSize(proposedSize.width, proposedSize.width * ratio);
+			_size = CGSizeMake(proposedSize.width, proposedSize.width * ratio);
 		
 		else if (proposedSize.height && !proposedSize.width)
-			_size = NSMakeSize(proposedSize.height * (1.0  / ratio), proposedSize.height);
+			_size = CGSizeMake(proposedSize.height * (1.0  / ratio), proposedSize.height);
 		
 		else if (proposedSize.height && proposedSize.width)
 			_size = proposedSize;

@@ -23,7 +23,7 @@ extern NSString *RKImageAttachmentAttributeName;
  @abstract Initializes an image attachment with the given file, title, description and margin.
  @discussion The given size can be incomplete. If all dimensions are set to 0, the image's original size is used. If a single dimension is set to 0, it is derived from the other dimension maintaining the original aspect ratio.
  */
-- (instancetype)initWithFile:(NSFileWrapper *)file title:(NSString *)title description:(NSString *)descr margin:(RKEdgeInsets)margin size:(NSSize)size;
+- (instancetype)initWithFile:(NSFileWrapper *)file title:(NSString *)title description:(NSString *)descr margin:(RKEdgeInsets)margin size:(CGSize)size;
 
 /*!
  @abstract The NSFileWrapper containing the actual image file.
@@ -54,6 +54,6 @@ extern NSString *RKImageAttachmentAttributeName;
 /*!
  @abstract The size of the image in points.
  */
-@property(nonatomic, readonly) NSSize size;
+@property(nonatomic, readonly) CGSize size;
 
 @end
