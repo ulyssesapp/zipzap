@@ -36,13 +36,13 @@
     self = [self init];
     
 	_imageAttachment = attachment;
-	if (!attachment.image || NSEqualSizes(attachment.size, NSZeroSize))
+	if (!attachment.image || CGSizeEqualToSize(attachment.size, CGSizeZero))
 		return nil;
 	
 	#if !TARGET_OS_IPHONE
 		_image = [attachment.image CGImageForProposedRect:NULL context:context.nsPdfContext hints:NULL];
 	#else
-		_image = image.CGImage;
+		_image = attachment.image.CGImage;
 	#endif
 
 	CFRetain(_image);

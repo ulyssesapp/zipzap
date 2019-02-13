@@ -42,7 +42,7 @@ NSString *RKImageAttachmentHeightKey					= @"height";
     
 	RKEdgeInsets margin = RKEdgeInsetsMake([propertyList[RKImageAttachmentMarginTopKey] doubleValue], [propertyList[RKImageAttachmentMarginLeftKey] doubleValue], [propertyList[RKImageAttachmentMarginBottomKey] doubleValue], [propertyList[RKImageAttachmentMarginRightKey] doubleValue]);
 	
-	NSSize size = NSMakeSize([propertyList[RKImageAttachmentWidthKey] doubleValue], [propertyList[RKImageAttachmentHeightKey] doubleValue]);
+	CGSize size = CGSizeMake([propertyList[RKImageAttachmentWidthKey] doubleValue], [propertyList[RKImageAttachmentHeightKey] doubleValue]);
 	return [[RKImageAttachment alloc] initWithFile:file title:nil description:nil margin:margin size:size];
 }
 
