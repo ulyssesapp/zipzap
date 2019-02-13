@@ -131,8 +131,7 @@ NSString *RKDOCXImageRelationshipType				= @"http://schemas.openxmlformats.org/o
 
 + (CGSize)scaledImageSizeForImageAttachment:(RKImageAttachment *)imageAttachment attributes:(NSDictionary *)attributes usingContext:(RKDOCXConversionContext *)context
 {
-	CGSize scaledImageSize = [[RKImage alloc] initWithData: imageAttachment.imageFile.regularFileContents].size;
-	
+	CGSize scaledImageSize = imageAttachment.size;
 	NSParagraphStyle *figureParagraphStyle = attributes[RKParagraphStyleAttributeName];
 	CGFloat figureMargins = figureParagraphStyle.headIndent + figureParagraphStyle.tailIndent * -1;
 	CGFloat maxWidth = context.document.pageSize.width - (context.document.pageInsets.inner + context.document.pageInsets.outer + figureMargins);
