@@ -20,7 +20,7 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 - (void)testPNGImageSupport
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"png" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSZeroSize];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeZero];
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -31,7 +31,7 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 - (void)testJPGImageSupport
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"jpg" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSZeroSize];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeZero];
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -42,7 +42,7 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 - (void)testAutomaticImageSize
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"jpg" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSMakeSize(0, 0)];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeMake(0, 0)];
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -53,7 +53,7 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 - (void)testFixedImageSize
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"jpg" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSMakeSize(RKDOCXImageWriterTestSizeA, RKDOCXImageWriterTestSizeB)];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeMake(RKDOCXImageWriterTestSizeA, RKDOCXImageWriterTestSizeB)];
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -64,7 +64,7 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 - (void)testImageFixedWidth
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"jpg" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSMakeSize(RKDOCXImageWriterTestSizeA, 0)];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeMake(RKDOCXImageWriterTestSizeA, 0)];
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -75,7 +75,7 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 - (void)testImageFixedHeight
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"image" withExtension:@"jpg" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSMakeSize(0, RKDOCXImageWriterTestSizeA)];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeMake(0, RKDOCXImageWriterTestSizeA)];
 	NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: imageAttachment}];
 	
 	RKDocument *document = [[RKDocument alloc] initWithAttributedString: attributedString];
@@ -86,7 +86,7 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 - (void)testLargeImageAndMarginSupport
 {
 	NSURL *imageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"large-image" withExtension:@"png" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSZeroSize];
+	RKImageAttachment *imageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:imageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeZero];
 	NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle.defaultParagraphStyle mutableCopy];
 	paragraphStyle.headIndent = 42;
 	paragraphStyle.firstLineHeadIndent = 42;
@@ -102,8 +102,8 @@ const CGFloat RKDOCXImageWriterTestSizeB		= 425.1968503937008;		// 15cm
 {
 	NSURL *uppercaseImageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"uppercase-image" withExtension:@"PNG" subdirectory:@"Test Data/resources"];
 	NSURL *lowercaseImageURL = [[NSBundle bundleForClass: [self class]] URLForResource:@"lowercase-image" withExtension:@"png" subdirectory:@"Test Data/resources"];
-	RKImageAttachment *uppercaseImageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:uppercaseImageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSZeroSize];
-	RKImageAttachment *lowercaseImageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:lowercaseImageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:NSZeroSize];
+	RKImageAttachment *uppercaseImageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:uppercaseImageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeZero];
+	RKImageAttachment *lowercaseImageAttachment = [[RKImageAttachment alloc] initWithFile:[[NSFileWrapper alloc] initWithURL:lowercaseImageURL options:0 error:NULL] title:nil description:nil margin:RKEdgeInsetsMake(0, 0, 0, 0) size:CGSizeZero];
 	
 	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString: @"Uppercase file extension:\n"];
 	[attributedString appendAttributedString: [[NSAttributedString alloc] initWithString:@"\ufffc" attributes:@{RKImageAttachmentAttributeName: uppercaseImageAttachment}]];

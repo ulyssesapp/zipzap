@@ -28,7 +28,7 @@
 
 - (RKImageAttachment *)imageAttachmentWithName:(NSString *)name withExtension:(NSString *)extension margin:(RKEdgeInsets)margin
 {
-	return [[RKImageAttachment alloc] initWithFile:[self testFileWithName:name withExtension:extension] title:nil description:nil margin:margin size:NSZeroSize];
+	return [[RKImageAttachment alloc] initWithFile:[self testFileWithName:name withExtension:extension] title:nil description:nil margin:margin size:CGSizeZero];
 }
 
 
