@@ -2635,11 +2635,10 @@
 			};
 			buildConfigurationList = 50317D3114C494C800F23C04 /* Build configuration list for PBXProject "RTFKit" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				English,
 				Base,
 			);
 			mainGroup = 50317D2C14C494C800F23C04;
