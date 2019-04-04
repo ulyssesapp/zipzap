@@ -2533,7 +2533,6 @@
 				50317D4614C494C800F23C04 /* Sources */,
 				50317D4714C494C800F23C04 /* Frameworks */,
 				50317D4814C494C800F23C04 /* Resources */,
-				CF7E35A4215B96DB00C99D18 /* Update Locale */,
 			);
 			buildRules = (
 			);
@@ -2764,27 +2763,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		CF7E35A4215B96DB00C99D18 /* Update Locale */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Update Locale";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Ensure locale is correctly set to en_US, since xctests without a test host ignore the settings (rdar://problem/43139603)\ndefaults write xctest AppleLanguages \"(en)\" \ndefaults write xctest AppleLocale \"en_US\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		50317D3314C494C800F23C04 /* Sources */ = {
