@@ -212,7 +212,7 @@
     NSAssert(!(page & (~RKPageSelectionFirst)) || !(page & (~RKPageSelectionLeft)) || !(page & (~RKPageSelectionRight)), 
              @"Invalid page mask used in query.");   
     
-    NSNumber *key = [NSNumber numberWithUnsignedInt:page];
+    NSNumber *key = @(page);
         
     if (object) {
         dictionary[key] = object;

@@ -40,7 +40,7 @@ NSString *RKListItemAttributeName = @"RKTextListItem";
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"(RKTextListItem list:%@ indentationLevel:%tu resetIndex:%tu)", [self.listStyle description], self.indentationLevel, self.resetIndex];
+	return [NSString stringWithFormat:@"(RKTextListItem list:%@ indentationLevel:%lu resetIndex:%lu)", [self.listStyle description], (unsigned long)self.indentationLevel, (unsigned long)self.resetIndex];
 }
 
 @end

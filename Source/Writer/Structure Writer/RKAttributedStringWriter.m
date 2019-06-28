@@ -33,7 +33,7 @@ NSMutableArray *RKAttributedStringWriterHandlers;
     // Register handler
     [RKAttributedStringWriterHandlers addObject:
      @{@"attributeName": attributeName,
-        @"priority": [NSNumber numberWithInt:priority],
+        @"priority": @(priority),
         @"writerClass": attributeWriter}
     ];
     

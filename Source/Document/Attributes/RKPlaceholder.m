@@ -15,7 +15,7 @@ NSString *RKPlaceholderAttributeName = @"RKPlaceholder";
 
 + (NSAttributedString *)attributedStringWithPlaceholder:(RKPlaceholderType)placeholder
 {
-    return [NSAttributedString attributedStringWithAttachment:[NSNumber numberWithInt: placeholder] attributeName:RKPlaceholderAttributeName];
+    return [NSAttributedString attributedStringWithAttachment:@(placeholder) attributeName:RKPlaceholderAttributeName];
 }
 
 @end

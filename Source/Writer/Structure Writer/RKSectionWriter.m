@@ -136,13 +136,13 @@ NSDictionary *RSectionWriterFootnoteStyleNames;
 
 	
     // Footnote styling
-    NSString *footnoteStyle = RSectionWriterFootnoteStyleNames[[NSNumber numberWithInt:document.footnoteEnumerationStyle]];
+    NSString *footnoteStyle = RSectionWriterFootnoteStyleNames[@(document.footnoteEnumerationStyle)];
     
     if (footnoteStyle != nil)
         [attributes appendFormat:@"\\sftnn%@", footnoteStyle];
 	
     // Endnote layouting (using \aftnn and \saftn improves compatibility with Word)
-    NSString *endnoteStyle = RSectionWriterFootnoteStyleNames[[NSNumber numberWithInt:document.endnoteEnumerationStyle]];
+    NSString *endnoteStyle = RSectionWriterFootnoteStyleNames[@(document.endnoteEnumerationStyle)];
     
     if (footnoteStyle != nil)
         [attributes appendFormat:@"\\saftnn%@", endnoteStyle];
