@@ -671,6 +671,7 @@
 		A0EE06C81B039C4A00C7A8D2 /* RKFontMixing.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EE06C51B039C4A00C7A8D2 /* RKFontMixing.m */; };
 		CF576D0016CBA01C00EADC01 /* RKListStyle+WriterAdditionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7935615614DB3C5B00FC0C1C /* RKListStyle+WriterAdditionsTest.m */; };
 		CF576D0316CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = CF576D0216CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m */; };
+		CFE7AA3B22CB64A30018F7FF /* RKLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFE7AA3A22CB64A30018F7FF /* RKLaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1232,6 +1233,7 @@
 		A0EE06C51B039C4A00C7A8D2 /* RKFontMixing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKFontMixing.m; path = Document/Attributes/RKFontMixing.m; sourceTree = "<group>"; };
 		CF576D0116CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SenTestCase+RKCocoaIntegrationTest.h"; path = "Test Extensions/SenTestCase+RKCocoaIntegrationTest.h"; sourceTree = "<group>"; };
 		CF576D0216CBA04D00EADC01 /* SenTestCase+RKCocoaIntegrationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SenTestCase+RKCocoaIntegrationTest.m"; path = "Test Extensions/SenTestCase+RKCocoaIntegrationTest.m"; sourceTree = "<group>"; };
+		CFE7AA3A22CB64A30018F7FF /* RKLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = RKLaunchScreen.storyboard; path = Other/RKLaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1430,6 +1432,7 @@
 				50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */,
 				79E76C53151759A90073153D /* RTFKit-iOS-Tests-Prefix.pch */,
 				79A3597E14D024A80076A5F7 /* Test Data */,
+				CFE7AA3A22CB64A30018F7FF /* RKLaunchScreen.storyboard */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -2759,6 +2762,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79A7356A2007AE5A000FA5AD /* Test Host.xcassets in Resources */,
+				CFE7AA3B22CB64A30018F7FF /* RKLaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3559,7 +3563,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = TestHost;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = TestImage;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3591,7 +3594,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = TestHost;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = TestImage;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
