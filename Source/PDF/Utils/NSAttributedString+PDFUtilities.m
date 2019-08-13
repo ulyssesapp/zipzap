@@ -92,7 +92,7 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
         NSAttributedString *note = [self attributedStringWithNote:[noteDescriptor objectForKey: RKFootnoteObjectKey] enumerationString:[noteDescriptor objectForKey: RKFootnoteEnumerationStringKey] context:context];
         
         if ((noteList.length > 0) && ![noteList.string hasSuffix: @"\n"])
-            [noteList.mutableString appendString: @"\n"];
+            [noteList appendNewline];
         
         [noteList appendAttributedString: note];
     }
@@ -175,6 +175,20 @@ NSString *RKHyphenationCharacterAttributeName = @"RKHyphenationCharacter";
 {
     [self addAttribute:RKPDFAnchorLinkAttributeName value:anchorName range:range];
     [self addTextRenderer:RKAnchorLinkRenderer.class forRange:range];
+}
+
+- (void)appendNewline
+{
+	NSMutableDictionary *paragraphAttributes = [NSMutableDictionary new];
+	
+	if (self.length > 0) {
+		NSDictionary *preceedingAttributes = [self attributesAtIndex:self.length-1 effectiveRange:NULL];
+		paragraphAttributes[RKParagraphStyleAttributeName] = preceedingAttributes[RKParagraphStyleAttributeName];
+		paragraphAttributes[RKAdditionalParagraphStyleAttributeName] = preceedingAttributes[RKAdditionalParagraphStyleAttributeName];
+	}
+	
+	NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:paragraphAttributes];
+	[self appendAttributedString: newlineString];
 }
 
 @end
