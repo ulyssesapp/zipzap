@@ -96,4 +96,9 @@ extern NSString *RKPDFAnchorLinkAttributeName;
  */
 - (void)addLocalDestinationLinkForAnchor:(NSString *)anchorName forRange:(NSRange)range;
 
+/*!
+ @abstract Appends a newline to the given string, without setting incorrect character attributes.
+ */
+- (void)appendNewline;
+
 @end
