@@ -85,7 +85,7 @@
 			// Add single newline to footnote, if required
 			[footnoteString.mutableString replaceOccurrencesOfString:@"\n" withString:@"" options:NSAnchoredSearch|NSBackwardsSearch range:NSMakeRange(0, footnoteString.length)];
 			if (footnoteIndex < registeredFootnotes.count)
-				[footnoteString.mutableString appendString:@"\n"];
+				[footnoteString appendNewline];
 
 			// Append footnote. If there isn't enough space, keep remainder of footnote in remainingFootnoteContents. Only if there isn't even space for the first footnote, skip it entirely.
 			NSUInteger appendedFootnoteLength = [self appendFootnote:footnoteString forContentLine:_contentFrame.lines.count-1 isFirstFootnoteOfLine:(footnoteIndex == 0)];
