@@ -110,9 +110,9 @@ extern NSString *RKCategoryDocumentAttribute;
 
 /*!
  @abstract Superscript attribute
- @discussion See kCTSuperscriptAttributeName
+ @discussion We use NSSuperScript as hard-coded string here, since iOS 13 has dropped support for kCTSuperScriptAttributeName.	
  */
-#define RKSuperscriptAttributeName				((NSString *)kCTSuperscriptAttributeName)
+#define RKSuperscriptAttributeName				(@"NSSuperScript")
 
 /*!
  @abstract Paragraph style attribute
