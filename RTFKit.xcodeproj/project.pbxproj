@@ -11,6 +11,7 @@
 		50317D4E14C494C800F23C04 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3A14C494C800F23C04 /* Cocoa.framework */; };
 		50317D5114C494C800F23C04 /* RTFKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 50317D3714C494C800F23C04 /* RTFKit.dylib */; };
 		50317D6B14C4951D00F23C04 /* RTFKit-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */; };
+		50AEB0C02447217800115D01 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AEB0B92447217800115D01 /* CoreServices.framework */; };
 		790AD8B515BAB9C10011E40E /* RKParagraphStyleWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B315BAB9C10011E40E /* RKParagraphStyleWrapper.h */; };
 		790AD8BB15BABD940011E40E /* RKTextTabWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 790AD8B915BABD940011E40E /* RKTextTabWrapper.h */; };
 		790AD8BC15BABD940011E40E /* RKTextTabWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 790AD8BA15BABD940011E40E /* RKTextTabWrapper.m */; };
@@ -465,7 +466,6 @@
 		79A15A741B0C6DBA000E767C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15A731B0C6DBA000E767C /* CoreGraphics.framework */; };
 		79A15A761B0C6DC0000E767C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15A751B0C6DC0000E767C /* ImageIO.framework */; };
 		79A15A7C1B0C6E76000E767C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15A7B1B0C6E76000E767C /* UIKit.framework */; };
-		79A15A7D1B0C6E7D000E767C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0587F4E1AE1558500909686 /* MobileCoreServices.framework */; };
 		79A15A7F1B0C6E83000E767C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15A7E1B0C6E83000E767C /* CoreText.framework */; };
 		79A15A821B0C7087000E767C /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15A751B0C6DC0000E767C /* ImageIO.framework */; };
 		79A15A831B0C708C000E767C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A15A731B0C6DBA000E767C /* CoreGraphics.framework */; };
@@ -821,6 +821,7 @@
 		50317D6814C4951C00F23C04 /* RTFKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RTFKit-Prefix.pch"; sourceTree = "<group>"; };
 		50317D6914C4951C00F23C04 /* RTFKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTFKit.h; sourceTree = "<group>"; };
 		50317D7B14C4962900F23C04 /* RTFKitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RTFKitTests-Prefix.pch"; sourceTree = "<group>"; };
+		50AEB0B92447217800115D01 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		790AD8B315BAB9C10011E40E /* RKParagraphStyleWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKParagraphStyleWrapper.h; path = Writer/Utils/RKParagraphStyleWrapper.h; sourceTree = "<group>"; };
 		790AD8B415BAB9C10011E40E /* RKParagraphStyleWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKParagraphStyleWrapper.m; path = Writer/Utils/RKParagraphStyleWrapper.m; sourceTree = "<group>"; };
 		790AD8B915BABD940011E40E /* RKTextTabWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKTextTabWrapper.h; path = Writer/Utils/RKTextTabWrapper.h; sourceTree = "<group>"; };
@@ -1269,7 +1270,7 @@
 				79A76BB41B0CDA3900FF7EF6 /* libxml2.dylib in Frameworks */,
 				795B294B21F5DA760061C3DF /* KissXML.framework in Frameworks */,
 				79A15A7F1B0C6E83000E767C /* CoreText.framework in Frameworks */,
-				79A15A7D1B0C6E7D000E767C /* MobileCoreServices.framework in Frameworks */,
+				50AEB0C02447217800115D01 /* CoreServices.framework in Frameworks */,
 				79A15A7C1B0C6E76000E767C /* UIKit.framework in Frameworks */,
 				79A76B5B1B0CD28200FF7EF6 /* zipzap.framework in Frameworks */,
 				79A15A761B0C6DC0000E767C /* ImageIO.framework in Frameworks */,
@@ -1331,6 +1332,7 @@
 		50317D3914C494C800F23C04 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50AEB0B92447217800115D01 /* CoreServices.framework */,
 				79A15A8E1B0C727A000E767C /* libxml2.dylib */,
 				79A15A8C1B0C726D000E767C /* libxml2.2.dylib */,
 				79A15A891B0C725D000E767C /* libKissXML.a */,
