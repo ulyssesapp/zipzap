@@ -40,7 +40,7 @@ xcodebuild clean test \
     -project "RTFKit.xcodeproj" \
     -scheme "RTFKitiOS" \
     -derivedDataPath "iOS" \
-    -destination "platform=iOS Simulator,name=iPad Pro (11-inch),OS=latest" &>iOS.log &
+    -destination "platform=iOS Simulator,name=iPad Pro (11-inch) (2nd generation),OS=latest" &>iOS.log &
 
 # Test macOS
 xcodebuild clean test \
