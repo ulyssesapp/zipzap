@@ -71,8 +71,7 @@
 				insertionOffset += markerString.length;
 			}
 			
-			// Convert paragraph style
-			[converted removeAttribute:NSParagraphStyleAttributeName range:convertedRange];
+			// Convert paragraph style. We do not remove NSParagraphStyleAttribute due to quirky side-effects on the enumerated source string. NSParagraphStyleAttributeName and kCTParagraphStyleAttributeName are aliases, so it seems to be fine.
 			[converted addAttribute:(id)kCTParagraphStyleAttributeName value:(id)[wrappedParagraphStyle newCTParagraphStyle] range:convertedRange];
 		}];
 	}];
