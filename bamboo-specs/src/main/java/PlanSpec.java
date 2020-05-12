@@ -11,9 +11,9 @@ import com.atlassian.bamboo.specs.api.builders.project.Project;
 import com.atlassian.bamboo.specs.api.builders.requirement.Requirement;
 import com.atlassian.bamboo.specs.builders.task.ScriptTask;
 import com.atlassian.bamboo.specs.builders.task.TestParserTask;
+import com.atlassian.bamboo.specs.builders.task.VcsCheckoutTask;
 import com.atlassian.bamboo.specs.builders.trigger.BitbucketServerTrigger;
 import com.atlassian.bamboo.specs.builders.trigger.ScheduledTrigger;
-import com.atlassian.bamboo.specs.model.task.ScriptTaskProperties;
 import com.atlassian.bamboo.specs.model.task.TestParserTaskProperties;
 import com.atlassian.bamboo.specs.util.BambooServer;
 
@@ -29,22 +29,21 @@ public class PlanSpec {
             new BambooKey("RTFKIT"))
             .oid(new BambooOid("1qtlf4ebdlb0v"))
             .pluginConfigurations(new ConcurrentBuilds())
-            .stages(new Stage("Default Stage")
-                    .jobs(new Job("Default Job",
-                            new BambooKey("JOB1"))
-                            .tasks(new ScriptTask()
+            .stages(
+            	new Stage("Default Stage")
+                    .jobs(
+                    	new Job("Default Job", new BambooKey("JOB1"))
+                            .tasks(
+                            	new VcsCheckoutTask()
+                            		.addCheckoutOfDefaultRepository(),
+                            	new ScriptTask()
                                     .description("Test")
                                     .inlineBody(SpecsHelpers.file("test.sh")),
-                                new ScriptTask()
-                                    .description("Download Test Results")
-                                    .location(ScriptTaskProperties.Location.FILE)
-                                    .fileFromPath("/usr/local/bamboo/bin/downloadTestArtifacts.sh")
-                                    .argument("test-reports"),
                                 new TestParserTask(TestParserTaskProperties.TestType.JUNIT)
                                     .description("Parse Test Results")
                                     .resultDirectories("test-reports/merged.xml"))
-                            .requirements(new Requirement("remotePort"),
-                                new Requirement("remoteAddress"))))
+                            .requirements(
+                            	new Requirement("isRemote"))))
             .linkedRepositories("RTFKit")
             
             .triggers(new BitbucketServerTrigger(),

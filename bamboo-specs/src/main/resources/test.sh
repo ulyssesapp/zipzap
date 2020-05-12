@@ -19,16 +19,6 @@ readonly repository_url="${bamboo_planRepository_repositoryUrl}"
 readonly repository_name="${bamboo_planRepository_name}"
 
 
-############
-#          #
-# Checkout #
-#          #
-############
-
-checkout.sh -b "$current_branch" -d "$build_directory" -n "$repository_name" -u "$repository_url"
-cd "${build_directory}"
-
-
 ########
 #      #
 # Test #
