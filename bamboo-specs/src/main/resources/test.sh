@@ -1,4 +1,4 @@
-#!/usr/local/bamboo/bin/runOnRemoteAgent.sh agent@${bamboo.capability.remoteAddress} ${bamboo.capability.remotePort}
+#!/bin/bash
 
 #########
 #       #
