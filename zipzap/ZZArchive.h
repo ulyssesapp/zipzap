@@ -31,7 +31,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZZConstants.h"
+#import <zipzap/ZZConstants.h>
 
 /**
  * The ZZArchive class represents a zip file for reading only.
