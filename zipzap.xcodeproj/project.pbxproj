@@ -158,7 +158,6 @@
 		79C43C651B0C860800471132 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		79C43C671B0C860E00471132 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		79C43CA61B0C870A00471132 /* zipzap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = zipzap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		79C43CA91B0C870A00471132 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79C43CC41B0C873C00471132 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		79C43CC61B0C874100471132 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D804E4C8187645FE00289404 /* ZZDataProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZZDataProvider.h; sourceTree = "<group>"; };
@@ -342,45 +341,11 @@
 			path = assets;
 			sourceTree = "<group>";
 		};
-		79C43C461B0C858B00471132 /* zipzap-ios */ = {
-			isa = PBXGroup;
-			children = (
-				79C43C471B0C858B00471132 /* Supporting Files */,
-			);
-			path = "zipzap-ios";
-			sourceTree = "<group>";
-		};
-		79C43C471B0C858B00471132 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				79C43C481B0C858B00471132 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		79C43CA71B0C870A00471132 /* zipzap-mac */ = {
-			isa = PBXGroup;
-			children = (
-				79C43CA81B0C870A00471132 /* Supporting Files */,
-			);
-			path = "zipzap-mac";
-			sourceTree = "<group>";
-		};
-		79C43CA81B0C870A00471132 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				79C43CA91B0C870A00471132 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		D899CF75162C5E8400112F49 = {
 			isa = PBXGroup;
 			children = (
 				D899CF8B162C5EC100112F49 /* zipzap */,
 				D899CF9D162C5EC100112F49 /* zipzapTests */,
-				79C43C461B0C858B00471132 /* zipzap-ios */,
-				79C43CA71B0C870A00471132 /* zipzap-mac */,
 				D899CF84162C5EC100112F49 /* Frameworks */,
 				D899CF83162C5EC100112F49 /* Products */,
 				D8A32673163C2240008606AC /* LICENSE.text */,
@@ -431,6 +396,7 @@
 		D899CF8C162C5EC100112F49 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				79C43C481B0C858B00471132 /* Info.plist */,
 				D899CF8D162C5EC100112F49 /* zipzap-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -814,7 +780,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "zipzap-mac/Info.plist";
+				INFOPLIST_FILE = zipzap/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -864,7 +830,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = "zipzap-mac/Info.plist";
+				INFOPLIST_FILE = zipzap/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
