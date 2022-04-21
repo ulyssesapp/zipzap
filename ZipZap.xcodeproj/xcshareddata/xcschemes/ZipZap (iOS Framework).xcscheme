@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D87BA1F71B3D6DEA00ED7EB3"
                BuildableName = "ZipZap.framework"
-               BlueprintName = "ZipZap (iOS Framework)"
+               BlueprintName = "ZipZap"
                ReferencedContainer = "container:ZipZap.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,8 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -47,12 +45,10 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D87BA1F71B3D6DEA00ED7EB3"
             BuildableName = "ZipZap.framework"
-            BlueprintName = "ZipZap (iOS Framework)"
+            BlueprintName = "ZipZap"
             ReferencedContainer = "container:ZipZap.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -65,7 +61,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D87BA1F71B3D6DEA00ED7EB3"
             BuildableName = "ZipZap.framework"
-            BlueprintName = "ZipZap (iOS Framework)"
+            BlueprintName = "ZipZap"
             ReferencedContainer = "container:ZipZap.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
