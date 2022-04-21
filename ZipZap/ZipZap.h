@@ -42,4 +42,3 @@ FOUNDATION_EXPORT double ZipZapVersionNumber;
 
 //! Project version string for ZipZap.
 FOUNDATION_EXPORT const unsigned char ZipZapVersionString[];
-
