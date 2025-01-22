@@ -31,7 +31,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <ZipZap/ZZConstants.h>
+#import "ZZConstants.h"
 
 @class ZZArchiveEntry;
 

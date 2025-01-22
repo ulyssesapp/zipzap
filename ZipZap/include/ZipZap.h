@@ -32,10 +32,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import <ZipZap/ZZArchive.h>
-#import <ZipZap/ZZArchiveEntry.h>
-#import <ZipZap/ZZConstants.h>
-#import <ZipZap/ZZError.h>
+#import "ZZArchive.h"
+#import "ZZArchiveEntry.h"
+#import "ZZConstants.h"
+#import "ZZError.h"
 
 //! Project version number for ZipZap.
 FOUNDATION_EXPORT double ZipZapVersionNumber;
