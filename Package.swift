@@ -23,8 +23,8 @@ let package = Package(
 			path: "ZipZap",
 			publicHeadersPath: "include",
 			cSettings: [
-				.headerSearchPath("Public/"),
-				.headerSearchPath("./")
+				.headerSearchPath("include"),
+				.headerSearchPath(".")
 			],
 			cxxSettings: [
 				.define("CLANG_CXX_LIBRARY", to: "libc++"),
