@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "26968980-6E2B-40B3-9E53-53B23AE791EA",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "performanceAntipatternCheckerEnabled" : true,
+    "testInteropMode" : "complete"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ZipZapTests",
+        "name" : "ZipZapTests"
+      }
+    }
+  ],
+  "version" : 1
+}

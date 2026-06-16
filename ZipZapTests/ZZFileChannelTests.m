@@ -8,6 +8,7 @@
 
 #import <ZipZap/ZZFileChannel.h>
 
+#import "ZZTasks.h"
 #import "ZZFileChannelTests.h"
 
 @implementation ZZFileChannelTests
@@ -20,8 +21,8 @@
 {
 	[super setUp];
 
-	_oldFileURL = [[NSBundle bundleForClass:self.class] URLForResource:@"pangram"
-														 withExtension:@"txt"];
+	_oldFileURL = [ZZTasks.resourceBundle URLForResource:@"pangram"
+											 withExtension:@"txt"];
 	_newFileURL = [NSURL fileURLWithPath:@"/tmp/xxyyzz.xyz"];
 
 	[[NSFileManager defaultManager] removeItemAtURL:_newFileURL

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012, Pixelglow Software. All rights reserved.
 //
 
-#import <ZipZap/ZipZap.h>
+@import ZipZap;
 
 #import "ZZTasks.h"
 #import "ZZZipTests.h"
@@ -60,8 +60,8 @@ static NSString* zipInfoDecodeString(NSString* string)
 
 - (NSData*)dataAtFilePath:(NSString*)filePath
 {
-	return [NSData dataWithContentsOfFile:[[NSBundle bundleForClass:self.class] pathForResource:filePath
-																						 ofType:nil]];
+	return [NSData dataWithContentsOfFile:[ZZTasks.resourceBundle pathForResource:filePath
+																			ofType:nil]];
 }
 
 - (NSArray*)recordsForZipEntries:(NSArray*)zipEntries

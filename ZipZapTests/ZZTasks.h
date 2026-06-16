@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZZTasks : NSObject
 
+// The bundle that holds the test resources (the SwiftPM resource bundle).
++ (NSBundle*)resourceBundle;
+// The list of test asset file names (formerly the ZZTestFiles Info.plist key).
++ (NSArray*)testFiles;
+
 + (void)zipFiles:(NSArray*)filePaths toPath:(NSString*)zipPath;
 + (BOOL)testZipAtPath:(NSString*)path;
 + (NSData*)unzipFile:(NSString*)filePath fromPath:(NSString*)zipPath;

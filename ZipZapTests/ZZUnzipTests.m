@@ -10,7 +10,7 @@
 
 #include <ImageIO/ImageIO.h>
 
-#import <ZipZap/ZipZap.h>
+@import ZipZap;
 
 #import "ZZTasks.h"
 #import "ZZUnzipTests.h"
@@ -35,8 +35,7 @@
 	[[NSFileManager defaultManager] removeItemAtURL:_zipFileURL
 											  error:nil];
 	
-	NSBundle* bundle = [NSBundle bundleForClass:self.class];
-	_entryFilePaths = [bundle objectForInfoDictionaryKey:@"ZZTestFiles"];
+	_entryFilePaths = ZZTasks.testFiles;
 	
 	[ZZTasks zipFiles:_entryFilePaths
 			   toPath:_zipFileURL.path];
@@ -54,8 +53,8 @@
 
 - (NSData*)dataAtFilePath:(NSString*)filePath
 {
-	return [NSData dataWithContentsOfFile:[[NSBundle bundleForClass:self.class] pathForResource:filePath
-																						 ofType:nil]];
+	return [NSData dataWithContentsOfFile:[ZZTasks.resourceBundle pathForResource:filePath
+																			ofType:nil]];
 }
 
 - (void)checkExtractingZipEntryStreamWithChunkSize:(NSUInteger)chunkSize
@@ -250,7 +249,7 @@
 			CGImageSourceRef dataProviderImageSource = CGImageSourceCreateWithDataProvider(dataProvider, NULL);
 			CGImageRef dataProviderImage = CGImageSourceCreateImageAtIndex(dataProviderImageSource, 0, NULL);
 			
-			CGImageSourceRef fileImageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[[NSBundle bundleForClass:self.class] URLForResource:nextEntryFilePath
+			CGImageSourceRef fileImageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[ZZTasks.resourceBundle URLForResource:nextEntryFilePath
 																																	withExtension:nil],
 																		  NULL);
 			CGImageRef fileImage = CGImageSourceCreateImageAtIndex(fileImageSource, 0, NULL);

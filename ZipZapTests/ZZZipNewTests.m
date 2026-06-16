@@ -6,8 +6,9 @@
 //  Copyright (c) 2014, Pixelglow Software. All rights reserved.
 //
 
-#import <ZipZap/ZipZap.h>
+@import ZipZap;
 
+#import "ZZTasks.h"
 #import "ZZZipNewTests.h"
 
 @implementation ZZZipNewTests
@@ -20,8 +21,7 @@
 {
     [super setUp];
 
-	NSBundle* bundle = [NSBundle bundleForClass:self.class];
-	_entryFilePaths = [bundle objectForInfoDictionaryKey:@"ZZTestFiles"];
+	_entryFilePaths = ZZTasks.testFiles;
 
 	_zipFile = [[ZZArchive alloc] initWithURL:self.zipFileURL
 									  options:@{ ZZOpenOptionsCreateIfMissingKey: @YES }
@@ -103,7 +103,7 @@
 																  compress:compressed
 														 dataConsumerBlock:^(CGDataConsumerRef dataConsumer, NSError** error)
 								   {
-									   CGImageSourceRef fileImageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[[NSBundle bundleForClass:self.class] URLForResource:entryFilePath
+									   CGImageSourceRef fileImageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)[ZZTasks.resourceBundle URLForResource:entryFilePath
 																																							   withExtension:nil],
 																									 NULL);
 

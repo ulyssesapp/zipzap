@@ -10,9 +10,32 @@
 
 @implementation ZZTasks
 
++ (NSBundle*)resourceBundle
+{
+#if SWIFT_PACKAGE
+	// Under SwiftPM the test assets live in the generated resource bundle, not
+	// the bundle that contains the test code.
+	return SWIFTPM_MODULE_BUNDLE;
+#else
+	return [NSBundle bundleForClass:self];
+#endif
+}
+
++ (NSArray*)testFiles
+{
+	return @[
+		@"li-europan-lingues.txt",
+		@"lorem-ipsum.txt",
+		@"pangram.txt",
+		@"拉链.txt",
+		@"dog.png",
+		@"dog.jpg"
+	];
+}
+
 + (void)zipFiles:(NSArray*)filePaths toPath:(NSString*)zipPath
 {
-	NSBundle* bundle = [NSBundle bundleForClass:self.class];
+	NSBundle* bundle = [self resourceBundle];
 	
 	NSMutableArray* arguments = [NSMutableArray array];
 	[arguments addObject:@"--junk-paths"];

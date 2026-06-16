@@ -1,4 +1,4 @@
-// swift-tools-version: 5.4
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -7,14 +7,15 @@ let package = Package(
 	name: "ZipZap",
 	defaultLocalization: "en",
 	platforms: [
-		.iOS(.v12),
-		.macOS(.v10_13),
-		.tvOS(.v12),
-		.watchOS(.v4)
+		.iOS(.v18),
+		.macOS(.v15),
+		.tvOS(.v18),
+		.watchOS(.v11)
 	],
 	products: [
 		.library(
 			name: "ZipZap",
+			type: .dynamic,
 			targets: ["ZipZap"]),
 	],
 	targets: [
@@ -37,7 +38,13 @@ let package = Package(
 		.testTarget(
 			name: "ZipZapTests",
 			dependencies: ["ZipZap"],
-			path: "ZipZapTests"),
+			path: "ZipZapTests",
+			resources: [
+				.process("assets")
+			],
+			cSettings: [
+				.headerSearchPath("../")
+			])
 	],
 	cxxLanguageStandard: .cxx11
 )

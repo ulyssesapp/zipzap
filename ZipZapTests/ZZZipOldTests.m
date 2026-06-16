@@ -6,7 +6,7 @@
 //  Copyright (c) 2014, Pixelglow Software. All rights reserved.
 //
 
-#import <ZipZap/ZipZap.h>
+@import ZipZap;
 
 #import "ZZTasks.h"
 #import "ZZZipOldTests.h"
@@ -22,8 +22,7 @@
 {
     [super setUp];
 
-	NSBundle* bundle = [NSBundle bundleForClass:self.class];
-	NSArray* allEntryFilePaths = [bundle objectForInfoDictionaryKey:@"ZZTestFiles"];
+	NSArray* allEntryFilePaths = ZZTasks.testFiles;
 	_entryFilePaths = [allEntryFilePaths subarrayWithRange:NSMakeRange(0, allEntryFilePaths.count - 1)];
 	_extraFilePath = [allEntryFilePaths lastObject];
 
