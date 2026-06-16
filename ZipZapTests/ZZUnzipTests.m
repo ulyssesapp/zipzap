@@ -25,7 +25,7 @@
 @implementation ZZUnzipTests
 {
 	NSURL* _zipFileURL;
-	NSMutableArray* _entryFilePaths;
+	NSArray* _entryFilePaths;
 	ZZArchive* _zipFile;
 }
 

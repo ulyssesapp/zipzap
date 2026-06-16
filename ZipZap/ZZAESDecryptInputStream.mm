@@ -8,6 +8,8 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 
+#include <vector>
+
 #import "ZZAESDecryptInputStream.h"
 #import "ZZHeaders.h"
 #import "ZZError.h"
@@ -46,9 +48,9 @@ static const uint WINZIP_PBKDF2_ROUNDS = 1000;
 		uint8_t* headerSalt = header;
 		uint16_t* headerVerifier = (uint16_t*)(header + saltLength);
 		
-		uint8_t derivedKeyMacVerifier[keyMacVerifierLength];
-		uint8_t* derivedKey = derivedKeyMacVerifier;
-		uint16_t* derivedVerifier = (uint16_t*)(derivedKeyMacVerifier + keyLength + macLength);
+		std::vector<uint8_t> derivedKeyMacVerifier(keyMacVerifierLength);
+		uint8_t* derivedKey = derivedKeyMacVerifier.data();
+		uint16_t* derivedVerifier = (uint16_t*)(derivedKeyMacVerifier.data() + keyLength + macLength);
 		
 		// Should we use the Zip's filename encoding for the password? We have to figure that out...
 		NSData* passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
@@ -60,7 +62,7 @@ static const uint WINZIP_PBKDF2_ROUNDS = 1000;
 							 saltLength,
 							 kCCPRFHmacAlgSHA1,
 							 WINZIP_PBKDF2_ROUNDS,
-							 derivedKeyMacVerifier,
+							 derivedKeyMacVerifier.data(),
 							 keyMacVerifierLength);
 		
 		// NSData *macKey = [NSData dataWithBytes:((char *)_key.bytes + keyLength) length:macLength]; // TODO: Use for authentication

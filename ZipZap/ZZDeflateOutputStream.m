@@ -11,7 +11,7 @@
 #import "ZZChannelOutput.h"
 #import "ZZDeflateOutputStream.h"
 
-static const uInt _flushLength = 1024;
+enum { _flushLength = 1024 };
 
 @implementation ZZDeflateOutputStream
 {

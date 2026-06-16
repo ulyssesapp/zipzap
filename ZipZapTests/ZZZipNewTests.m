@@ -7,6 +7,7 @@
 //
 
 @import ZipZap;
+@import UniformTypeIdentifiers;
 
 #import "ZZTasks.h"
 #import "ZZZipNewTests.h"
@@ -107,9 +108,7 @@
 																																							   withExtension:nil],
 																									 NULL);
 
-									   CFStringRef fileType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
-																									(__bridge CFStringRef)entryPathExtension,
-																									NULL);
+									   CFStringRef fileType = (__bridge CFStringRef)[UTType typeWithFilenameExtension:entryPathExtension].identifier;
 
 									   // copy image from file to the given zip data consumer
 									   CGImageDestinationRef dataConsumerImageDestination = CGImageDestinationCreateWithDataConsumer(dataConsumer,
@@ -140,8 +139,6 @@
 										   CFRelease(checkImageDestination);
 									   if (dataConsumerImageDestination)
 										   CFRelease(dataConsumerImageDestination);
-									   if (fileType)
-										   CFRelease(fileType);
 									   if (fileImageSource)
 										   CFRelease(fileImageSource);
 
