@@ -7,10 +7,10 @@ let package = Package(
 	name: "ZipZap",
 	defaultLocalization: "en",
 	platforms: [
-		.iOS(.v18),
-		.macOS(.v15),
-		.tvOS(.v18),
-		.watchOS(.v11)
+		.iOS(.v17),
+		.macOS(.v14),
+		.tvOS(.v17),
+		.watchOS(.v10)
 	],
 	products: [
 		.library(
